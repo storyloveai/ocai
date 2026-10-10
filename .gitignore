@@ -1,5 +1,6 @@
-.openai/
-.vercel/
-.netlify/
-.env*
 node_modules/
+.netlify/
+.openai/
+.env
+.env.*
+!.env.example
