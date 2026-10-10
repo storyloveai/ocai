@@ -1,0 +1,39 @@
+{
+  "schema": "oocai-research-memory-v0.1",
+  "note": "原创设计提议，非OOC内部格式；未接入线上",
+  "conversation_id": "demo",
+  "branch_id": "main",
+  "scene_state": {
+    "location": "灯塔工坊",
+    "time": "暴风雨前的傍晚",
+    "present_characters": [
+      "岚舟",
+      "用户"
+    ],
+    "goal": "诊断无线电故障",
+    "relationship": {
+      "stage": "初识",
+      "confirmed_events": []
+    }
+  },
+  "memory_items": [
+    {
+      "id": "fact-1",
+      "kind": "world_fact",
+      "subject": "潮汐钟",
+      "fact": "每天黄昏慢三分钟",
+      "known_to": [
+        "岚舟"
+      ],
+      "source": "character_book:1",
+      "status": "confirmed",
+      "supersedes": null
+    }
+  ],
+  "update_rules": [
+    "只有被接受的消息更新当前分支",
+    "用户修正事实时标记旧条目retracted并创建新条目",
+    "推断写为proposed，不自动变成confirmed",
+    "重生成未选择候选不写入已发生事件"
+  ]
+}

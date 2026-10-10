@@ -1,0 +1,50 @@
+{
+  "note": "原创结构示例，不是训练集；先人工确认输出再训练",
+  "sft": {
+    "messages": [
+      {
+        "role": "system",
+        "content": "角色核心与场景"
+      },
+      {
+        "role": "user",
+        "content": "用户消息"
+      },
+      {
+        "role": "assistant",
+        "content": "人工审核的理想回复"
+      }
+    ]
+  },
+  "dpo": {
+    "prompt": [
+      {
+        "role": "system",
+        "content": "同一角色与场景"
+      },
+      {
+        "role": "user",
+        "content": "同一用户消息"
+      }
+    ],
+    "chosen": [
+      {
+        "role": "assistant",
+        "content": "更符合角色且经审核的回复"
+      }
+    ],
+    "rejected": [
+      {
+        "role": "assistant",
+        "content": "偏离人设的候选回复"
+      }
+    ]
+  },
+  "metadata": {
+    "character_version": "0.1",
+    "prompt_version": "0.1",
+    "model_version": "待填写",
+    "reason": "声音/记忆/动机/节奏",
+    "split": "train/validation/test"
+  }
+}

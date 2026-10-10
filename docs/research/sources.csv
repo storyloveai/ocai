@@ -1,0 +1,59 @@
+﻿id,name,url,type,evidence,what_to_read
+1,ST API connections,https://docs.sillytavern.app/usage/api-connections/,官方文档,A,接口类型与模型服务
+2,ST Prompt Manager,https://docs.sillytavern.app/usage/prompts/prompt-manager/,官方文档,A,提示顺序、角色与深度
+3,ST World Info,https://docs.sillytavern.app/usage/core-concepts/worldinfo/,官方文档,A,关键词、递归、预算
+4,ST Summarize,https://docs.sillytavern.app/extensions/summarize/,官方文档,A,摘要更新、编辑、回退
+5,ST Chat Vectorization,https://docs.sillytavern.app/extensions/chat-vectorization/,官方文档,A,旧聊天召回和缓存影响
+6,ST Data Bank,https://docs.sillytavern.app/usage/core-concepts/data-bank/,官方文档,A,文档检索
+7,ST character design,https://github.com/SillyTavern/SillyTavern-Docs/blob/main/Usage/Characters/characterdesign.md,官方文档,A,字段、开场、示例
+8,ST Default preset JSON,https://github.com/SillyTavern/SillyTavern/blob/release/default/content/presets/openai/Default.json,配置文件,A,直接查看默认提示预设
+9,ST instruct template JSON,https://github.com/SillyTavern/SillyTavern/blob/release/default/content/presets/instruct/Llama%203%20Instruct.json,配置文件,A,stop与模型模板
+10,RisuAI,https://github.com/kwaroran/RisuAI,源码,A,API、世界书、素材、插件；GPL-3.0
+11,Agnai,https://github.com/agnaistic/agnai,源码,A,多用户、多模型、长期记忆管线
+12,Chub API,https://docs.chub.ai/docs/the-basics/api-connections,官方文档,A,第三方 API 与自家 Mars
+13,Chub Lorebook,https://docs.chub.ai/docs/advanced-setups/lorebooks,官方文档,A,scan depth和token budget
+14,Chub prompting,https://docs.chub.ai/docs/advanced-setups/prompting,官方文档,A,宏与提示编译
+15,CAI Definition,https://book.character.ai/character-guide/character-attributes/definition.md,官方文档,A,示例对话及截断
+16,CAI memory,https://blog.character.ai/memory/,官方产品说明,A,Story Memory、Facts、用量
+17,CAI Kaiju,https://blog.character.ai/inside-kaiju-building-conversational-models-at-scale/,官方技术博客,A,历史 SFT、online DPO、分类器
+18,CAI inference,https://blog.character.ai/optimizing-ai-inference-at-character-ai-2/,官方技术博客,A,缓存与推理成本
+19,NovelAI story settings,https://docs.novelai.net/en/text/editor/storysettings/,官方文档,A,Memory 与 Author Note
+20,NovelAI lorebook,https://docs.novelai.net/en/text/lorebook/,官方文档,A,背景条目
+21,NovelAI legacy modules,https://docs.novelai.net/en/text/modules/,官方文档,A,旧自定义 Modules 已弃用
+22,DreamGen scenario,https://v2.dreamgen.com/docs/how-to-create-scenario,官方文档,A,剧情、地点、对象和风格
+23,DreamGen Lucid,https://huggingface.co/dreamgen/lucid-v1-nemo,模型卡,A,多角色格式；非商业限制
+24,DreamGen RP preset,https://huggingface.co/dreamgen/lucid-v1-nemo/resolve/main/resources/sillytavern/presets/role_play_basic.json,配置文件,A,可导入研究用预设；核查使用条款
+25,OOC help,https://help.ooc.ai/,官方帮助,A,四层记忆、重复、长度、User Notes
+26,OOC character tutorial,https://help.ooc.ai/guide/user/tutorial/character,官方教程,A,创建步骤
+27,OOC prompt tutorial,https://help.ooc.ai/guide/user/tutorial/character/3,官方教程,U,正文提取有限，不推断具体私有提示
+28,Replika memory,https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work,官方帮助,A,用户记忆体验；算法未公开
+29,CHAI engagement paper,https://arxiv.org/abs/2303.06135,作者论文,A,奖励模型、互动指标、A/B
+30,OpenRouter quickstart,https://openrouter.ai/docs/cookbook/get-started/quickstart,官方文档,A,多轮、流式、环境变量
+31,Pygmalion 3 12B,https://huggingface.co/PygmalionAI/Pygmalion-3-12B,模型卡,A,Nemo、ChatML、Apache-2.0
+32,Euryale 2.3,https://huggingface.co/Sao10K/L3.3-70B-Euryale-v2.3,模型卡,A,模板、采样、Axolotl配置
+33,ST local backend guide,https://docs.sillytavern.app/usage/api-connections/,官方文档,A,llama.cpp、KoboldCpp、Ollama；与1同一来源
+34,Card V2 spec,https://github.com/malfoyslastname/character-card-spec-v2/blob/main/spec_v2.md,规范文件,A,字段与角色书
+35,Card V3 spec,https://github.com/kwaroran/character-card-spec-v3/blob/main/SPEC_V3.md,规范文件,A,资源与CHARX；实现兼容性
+36,ChatHaruhi,https://github.com/LC1332/Chat-Haruhi-Suzumiya,作者源码,A,system_prompt.txt 与角色文本
+37,RoleLLM,https://github.com/InteractiveNLP-Team/RoleLLM-public,作者仓库,A,知识、声音、RoleBench
+38,Character-LLM,https://github.com/choosewhatulike/trainable-agents,作者源码,A,经历重建、prompted/generated 数据
+39,Ditto,https://github.com/OFA-Sys/Ditto,作者源码,A,自对齐与WikiRoleEval JSONL
+40,Card format discussion,https://www.reddit.com/r/SillyTavernAI/comments/1ewx77c,社区讨论,C,W++和自然语言；正文打开失败，仅检索摘要
+41,Behavior examples discussion,https://www.reddit.com/r/SillyTavernAI/comments/1wi2e16/how_you_make_your_own_character_cards/,社区讨论,C,行为示例而非只有语气
+42,World Info Encyclopedia,https://rentry.co/world-info-encyclopedia,官方链接的社区指南,B,深入世界书设置；逐条实测
+43,Janitor API discussion,https://www.reddit.com/r/JanitorAI_Official/comments/184y3xk/api_settings_and_generation_settings/,社区历史讨论,C,旧 API 体验；不能当当前事实
+44,Janitor context script,https://github.com/Tydorius/JanitorAI_Scripts/blob/main/Context_Control_Template_README.md,社区脚本,B,预算协调；不等于官方实现
+45,CharacterGLM,https://github.com/thu-coai/CharacterGLM-6B/blob/main/README_en.md,作者仓库,A,中文属性行为、人评；研究使用限制
+46,character_AI_open,https://github.com/Minami-su/character_AI_open,作者源码,B,seed_prompt.json、生成与去重；合成偏差
+47,PIPPA,https://huggingface.co/datasets/PygmalionAI/PIPPA,数据入口,A,当前Apache-2.0；正文受内容提示限制
+48,CoSER,https://arxiv.org/abs/2502.09082,作者论文,A,文学场景、经历、思想、训练评测
+49,LlamaFactory,https://github.com/hiyouga/LlamaFactory,训练源码,A,SFT、LoRA等训练工具入口
+50,TRL DPO,https://huggingface.co/docs/trl/dpo_trainer,官方训练文档,A,prompt/chosen/rejected 数据格式
+51,InCharacter,https://github.com/Neph0s/InCharacter,作者评测源码,A,心理访谈人格忠实度
+52,RP-Bench,https://github.com/LeviTheWeasel/rp-benchmark,作者评测源码,B,多轮种子、方法、人工与AI评分分歧
+53,RPLA survey,https://arxiv.org/abs/2404.18231,综述论文,A,角色类型、构建、数据与评测
+54,RP-Bench methodology,https://github.com/LeviTheWeasel/rp-benchmark/blob/main/docs/METHODOLOGY.md,作者方法文档,B,样本与偏差；单轮部分依赖未公开数据
+55,RoleBench data,https://huggingface.co/datasets/ZenMoore/RoleBench,数据入口,A,角色知识与风格数据；需进一步审查文件许可
+56,Character-LLM data,https://huggingface.co/datasets/fnlp/character-llm-data,作者README链接的数据入口,A,prompted/与generated/；本次未下载全集
+57,Chinese multi-turn data,https://huggingface.co/datasets/Minami-su/roleplay_multiturn_chat_1k_zh_v0.1,作者README链接的数据入口,B,中文合成多轮；需进一步许可和质量审查
+58,PIPPA license change,https://huggingface.co/datasets/PygmalionAI/PIPPA/commit/1aab09b6487b392f2367c9723b1f21cc8cbfd517,版本记录,A,旧AGPL讨论不代表当前标签
