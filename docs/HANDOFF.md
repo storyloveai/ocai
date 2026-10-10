@@ -82,3 +82,11 @@ https://docs.netlify.com/build/functions/api/
 ## 保存检查点
 代码和接续记录已提交 main：31b41aca2ca58d044a22edfe037fab33409c9701。三张PNG尚待GitHub上传；完整PNG包含于本次备份ZIP。不要忽略此步骤后直接部署。
 完整持久备份：oocai-checkpoint-2026-10-10.zip，含三张PNG、全部源码、研究资料及旧版打包。备份已成功保存，可从本次回复下载。备份身份 libfile_b8fa50b724608191bea5e5e036f3b5c7。当前网站依然旧版，没有完成Netlify连接/部署或填入API密钥。用户最新要求停止探索，优先保存，因此暂不处理新授权。
+
+## 接续检查 — 2026-10-10 19:14（Asia/Shanghai）
+
+- 已收到重新附上的完整备份 ZIP；源码 blob 哈希与仓库一致，保留比备份更新的交接记录。
+- 研究报告、来源列表和数据示例已提交 docs/research；历史恢复脚本与使用限制说明提交 docs/archive（2576a73）。这些资料不扩大当前 MVP 范围。
+- 原始三张 PNG 已通过 GitHub 文件上传恢复到 dist/assets/lara.png、tifa.png、chunli.png（07dc3aa）；文件哈希与备份一致。
+- npm run build 与 npm test 再次通过，实际服务端测试为 6 项。尚未做付费真实聊天验收。
+- 用户已明确批准浏览器上传、继续 Netlify 连接及更新交接记录。Netlify 尚待本轮连接/部署核验；新应用权限仍按当前步骤处理，未充值、未创建 API key。
