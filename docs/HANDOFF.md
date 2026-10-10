@@ -78,3 +78,7 @@ https://www.gamespark.jp/article/2020/03/01/97163.html
 https://news.capcomusa.com/2022/06/02/street-fighter-6-redefines-the-genre-in-2023/
 https://realotakugamer.com/street-fighter-30th-anniversary-character-popularity-poll-results-revealed/32524/
 https://docs.netlify.com/build/functions/api/
+
+## 保存检查点
+代码和接续记录已提交 main：31b41aca2ca58d044a22edfe037fab33409c9701。三张PNG尚待GitHub上传；完整PNG包含于本次备份ZIP。不要忽略此步骤后直接部署。
+完整持久备份：oocai-checkpoint-2026-10-10.zip，含三张PNG、全部源码、研究资料及旧版打包。备份已成功保存，可从本次回复下载。备份身份 libfile_b8fa50b724608191bea5e5e036f3b5c7。当前网站依然旧版，没有完成Netlify连接/部署或填入API密钥。用户最新要求停止探索，优先保存，因此暂不处理新授权。
