@@ -92,3 +92,17 @@ https://docs.netlify.com/build/functions/api/
 - 用户已明确批准浏览器上传、继续 Netlify 连接及更新交接记录。Netlify 尚待本轮连接/部署核验；新应用权限仍按当前步骤处理，未充值、未创建 API key。
 
 - Netlify GitHub 连接向导已进入 Authorize Netlify 页面；请求验证身份、知晓可访问资源、代表用户操作以及读取邮箱地址。尚未点击 Authorize，等待对该具体新权限的当前步骤确认。后续安装必须优先限制到 ocai 仓库。本轮未完成部署。
+
+## 最新上线状态 — 2026-10-10 19:30（Asia/Shanghai）
+
+本节覆盖前文的历史待办状态。
+
+- 用户已逐步确认 Netlify OAuth 与具体仓库安装权限；Netlify App 已安装，仅选择 allliiita/ocai（一个仓库），GitHub 安装密码经安全输入验证，未保存凭证。
+- Netlify 已连接 GitHub main，npm run build、dist、netlify/functions 已识别；Node22由 netlify.toml 配置。部署 6aca201990d71fd1d77c5eb0（main@531a0bb）已于19:23发布，2个Functions部署成功。
+- 公开网站 https://oocai.netlify.app/ 已是新版三角色页面，不再是旧静态演示。
+- AI_BASE_URL 与 AI_MODEL 在连接向导中未实际保存，已在项目环境变量页重新创建并确认存在。当前免费计划无法选单独Functions scope，两者为All scopes。AI_API_KEY 尚无，未充值。
+- 生产接口实测：GET /api/status → 200 JSON {ready:false}；合法POST /api/chat → 503 JSON（非HTML）；高频请求返回429。
+- 部署Post-processing日志确认成功处理1条programmatic限流规则，window_limit8、window_size60。首次9个并发请求未立即429；后续复测已出现429。Netlify官方说明计数异步，超限后最多10秒开始拦截：https://docs.netlify.com/manage/security/secure-access-to-sites/rate-limiting/ 。这不是账户总预算上限。
+- 桌面浏览器验收：三角色分别独立开场；所有PNG完整加载（1024x1536）；发送失败提示、重试、发送锁释放、刷新恢复未完成消息、新对话清除测试消息均通过。浏览器未完成窄屏移动视口实测，不应称手机验收完成。
+- npm run build 和6项服务端测试通过；没有付费模型回复，真实语气/上下文/SSE上游尚待密钥后验证。
+- 下一步：用户在Netlify安全填写AI_API_KEY（Contains secret values），先设置专用key硬预算、关闭自动充值；保存后重新部署。不得在聊天索取/输出key，不擅自充值。随后验收3角色真实回复、上下文及流式，并完成移动布局检查。3D仍不是上线前置。
