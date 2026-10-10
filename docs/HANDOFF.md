@@ -90,3 +90,5 @@ https://docs.netlify.com/build/functions/api/
 - 原始三张 PNG 已通过 GitHub 文件上传恢复到 dist/assets/lara.png、tifa.png、chunli.png（07dc3aa）；文件哈希与备份一致。
 - npm run build 与 npm test 再次通过，实际服务端测试为 6 项。尚未做付费真实聊天验收。
 - 用户已明确批准浏览器上传、继续 Netlify 连接及更新交接记录。Netlify 尚待本轮连接/部署核验；新应用权限仍按当前步骤处理，未充值、未创建 API key。
+
+- Netlify GitHub 连接向导已进入 Authorize Netlify 页面；请求验证身份、知晓可访问资源、代表用户操作以及读取邮箱地址。尚未点击 Authorize，等待对该具体新权限的当前步骤确认。后续安装必须优先限制到 ocai 仓库。本轮未完成部署。
