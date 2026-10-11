@@ -118,3 +118,8 @@ https://docs.netlify.com/build/functions/api/
 - 浏览器Tifa额外2轮真实对话：首轮提供测试称呼“小禾”、不喝咖啡、喜欢热饮；第二轮能准确复述，并指出尚未提供甜度偏好。完成后刷新，真实回复保留，发送按钮可用。这是最近聊天上下文和localStorage验收，不是长期记忆。
 - 前轮503/重试/新对话/429验收仍有效。本轮没有充值、开自动充值或更改模型。API key额度与预算由用户在提供商端维护，本轮未查询剩余额度。
 - 当前真实聊天可用。剩余明确未验收：窄屏移动视口、长期RP质量、压力负载、重新生成真实回复。下一步可先完成移动布局与提示词细化，3D仍可后续独立规划。
+
+
+## 2026-10-11 — Six additional character configurations
+
+User replaced the earlier unshipped four-character request with six uploaded portraits. Cancel Rin; retain original Lara/Tifa/Chun-Li. Add Mai Shiranui, Fujiko Mine, Nami, Nico Robin, Boa Hancock and Misa Amane (explicit adult22 fan daily-life version). Identity of Mai/Fujiko/Misa confirmed by user. Each has individual personality, voice, motivation, first-meeting scene, opening and three suggestions. See docs/characters.md. All nine IDs supported by server; private prompts excluded from public build. Hero rotation/count/help now derive from roster length. npm run build, npm test (6 tests), node --check dist/app.js passed. Production verification follows after deployment.
