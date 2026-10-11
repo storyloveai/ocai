@@ -123,3 +123,9 @@ https://docs.netlify.com/build/functions/api/
 ## 2026-10-11 — Six additional character configurations
 
 User replaced the earlier unshipped four-character request with six uploaded portraits. Cancel Rin; retain original Lara/Tifa/Chun-Li. Add Mai Shiranui, Fujiko Mine, Nami, Nico Robin, Boa Hancock and Misa Amane (explicit adult22 fan daily-life version). Identity of Mai/Fujiko/Misa confirmed by user. Each has individual personality, voice, motivation, first-meeting scene, opening and three suggestions. See docs/characters.md. All nine IDs supported by server; private prompts excluded from public build. Hero rotation/count/help now derive from roster length. npm run build, npm test (6 tests), node --check dist/app.js passed. Production verification follows after deployment.
+
+### Production verification — 2026-10-11
+
+Deployed configuration commit: 76b6cc73fd8fdc36a21af9a39de19dcc73adde12. /api/status ready:true; deployed public roster exactly nine, no Rin, no persona/speaking_style. Six GitHub image blob hashes match the uploaded original PNGs. Browser verified every new hero control, corresponding loaded image, six chat openings and suggestion buttons; all nine card images loaded. Six real /api/chat SSE requests ultimately returned HTTP200 and done:true with distinct Chinese replies. Initial concurrent provider failures502 and subsequent site429 were resolved by waiting for the normal8/minute limit and retrying sequentially, without weakening limits or changing provider. See docs/verification/six-characters-live-2026-10-11.json (successful replies and failed-attempt statuses). Netlify dashboard was signed out in this resumed browser; deployment is verified from live app/API content rather than an authenticated dashboard.
+
+Browser Misa roundtrip also passed: sent a new question about relaxing after filming, received a complete character-specific reply, regenerate control reappeared, and browser refresh retained both question and answer.
