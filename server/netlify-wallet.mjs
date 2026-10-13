@@ -8,7 +8,7 @@ export function createNetlifyWallet({store,now=()=>Date.now(),mode='live'}={}){
  return {async rpc(name,p){const user=p.p_user;switch(name){
  case 'storylove_wallet':return update(user,s=>({noop:true,value:wallet(s)}));
  case 'storylove_checkin':return update(user,s=>{const reference='checkin:'+day();if(s.ledger.some(x=>x.reference===reference))return {noop:true,value:{...wallet(s),claimed:false}};s.balance+=100;s.ledger.push({reference,kind:'checkin',delta:100,created_at:new Date(now()).toISOString()});return {value:{...wallet(s),claimed:true}};});
- case 'storylove_purchase':return update(user,s=>{if(!packs[p.p_credits]||!/^cs_[\w]+$/.test(p.p_session))throw new HttpError(400,'无效订单。');const reference='stripe:'+p.p_session;if(s.ledger.some(x=>x.reference===reference))return {noop:true,value:wallet(s)};s.balance+=p.p_credits;s.ledger.push({reference,kind:'purchase',delta:p.p_credits,created_at:new Date(now()).toISOString()});return {value:wallet(s)};});
+ case 'storylove_purchase':return update(user,s=>{if(!Number.isSafeInteger(p.p_credits)||!Object.hasOwn(packs,p.p_credits)||!/^cs_[\w]+$/.test(p.p_session))throw new HttpError(400,'无效订单。');const reference='stripe:'+p.p_session;if(s.ledger.some(x=>x.reference===reference))return {noop:true,value:wallet(s)};s.balance+=p.p_credits;s.ledger.push({reference,kind:'purchase',delta:p.p_credits,created_at:new Date(now()).toISOString()});return {value:wallet(s)};});
  case 'storylove_chat_limit':return update(user,s=>{const r=s.rate||{start:0,count:0};s.rate=now()-r.start>=60000?{start:now(),count:1}:{start:r.start,count:r.count+1};return {value:s.rate.count<=8};});
  default:throw new HttpError(400,'不支持的账户操作。');
  }}};
