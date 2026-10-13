@@ -9,3 +9,8 @@ DeepSeek direct streaming is preferred when DEEPSEEK_API_KEY is configured; the 
 Google login uses Supabase OAuth/PKCE. Sign-in, server wallets, daily check-in (Asia/Shanghai), and Stripe Checkout require the environment configuration and SQL migration described in the setup guide. Missing configuration is shown explicitly; there are no simulated login or payment successes. Conversations/custom titles are still browser-local. Credits are not yet charged for chat.
 
 Nine adult fan characters and twelve original interactive story scenarios share bounded recent-history SSE chat. AI output may be inaccurate. Character assets are generated fan illustrations; existing fictional character names belong to their rights holders. Custom publishing, cloud conversation sync, long-term memory, credit usage/refunds and full localization remain future work.
+
+
+## Role prompts and analytics
+
+Nine independent private role contracts: [prompt engineering and fine-tuning preparation](docs/prompts/ROLE-ENGINEERING.md). Generate seed/evaluation JSONL with `npm run export:roles`; no user chat is harvested. First-party events and admin dashboard: [event definitions and setup](docs/analytics/EVENTS.md). Netlify stores events in native Blobs; Vercel uses the Supabase analytics migration. `/analytics.html` requires an allow-listed Supabase admin.
