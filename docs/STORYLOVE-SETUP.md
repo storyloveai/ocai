@@ -35,3 +35,13 @@ Netlify: build `npm run build`, output `dist`, functions `netlify/functions`, us
 ## Live Netlify verification — 2026-10-13
 
 Merged PR #1 and confirmed auto-deployment at https://oocai.netlify.app/. Browser verified StoryLove logo/banner, honest unconfigured wallet/login/payment states, one real Lara response and one real novel continuation via the retained OpenRouter configuration. DeepSeek is still awaiting its key. Vercel dashboard is signed into lindsey-cyber, but importing all liiita/ocai (allliiita/ocai) returns “Could not access the repository”; no new Vercel project was created. Netlify admin currently requires sign-in for environment configuration.
+
+## Netlify native Google login path (added 2026-10-13)
+
+On Netlify, when no Supabase credentials are configured, the app now uses Netlify Identity and a site-wide `storylove-wallets-v1` Blobs store. Enable Identity for oocai, enable Google under Registration → External providers, keep Open registration for public Google sign-in. Netlify's default OAuth app is adequate for test-mode payment verification; visitors see Netlify Identity on the Google consent screen. Branded StoryLove OAuth still needs your Google client credentials. No password signup form is added by this implementation.
+
+The locally bundled @netlify/identity SDK handles OAuth callback/session refresh/logout. Backend verifies the nf_jwt cookie or bearer token at the canonical site's Identity /user endpoint; it never trusts a client user ID. Check-in and Stripe wallet grants use strong reads and ETag compare-and-swap, with deterministic ledger references. Concurrent requests preserve balances; duplicate daily claims/Stripe sessions do not double-grant. There is no anonymous wallet API.
+
+Production Stripe secrets, test prices and signed webhook setup are still required. Use test mode first; signing into Google alone does not imply payment is configured. Native Netlify Identity users can be allow-listed by UUID in ANALYTICS_ADMIN_IDS for the analytics dashboard.
+
+Vercel continues to use the Supabase path and its SQL migrations; exporting users/wallets and establishing identity mapping is required before moving an existing native-Netlify account system. Do not silently change auth providers once real paid accounts exist.
