@@ -53,7 +53,7 @@ async function generate(){
  const timer=setTimeout(()=>controller.abort(),55000);
  let succeeded=false;
  try{
-  const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json',...(account.user?{Authorization:'Bearer '+(await account.client.auth.getSession()).data.session?.access_token}:{})},body:JSON.stringify({characterId:id,messages}),signal:controller.signal});
+  const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json',...(account.user&&account.provider!=='netlify'?{Authorization:'Bearer '+(await account.client.auth.getSession()).data.session?.access_token}:{})},body:JSON.stringify({characterId:id,messages}),signal:controller.signal});
   if(!response.ok){let error;try{error=(await response.json()).error}catch{}throw Error(error||(response.status===429?'请求较多，请稍等一分钟再试。':'聊天服务暂时不可用，请重试。'));}
   if(!response.headers.get('content-type')?.includes('text/event-stream')||!response.body)throw Error('聊天接口尚未部署，请稍后再试。');
   const reader=response.body.getReader(),decoder=new TextDecoder();let buffer='',doneEvent=false;
