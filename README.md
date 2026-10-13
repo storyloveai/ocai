@@ -17,6 +17,6 @@ Nine independent private role contracts: [prompt engineering and fine-tuning pre
 
 ## Product flow refresh
 
-Human-readable browser source is in `src/`; `npm run build` generates `dist/app.js`, `dist/account.js` and locally bundled auth SDKs. `npm run dev` serves the app and the same API handlers on port 4173. Original PNG art lives in `assets/source/`; deployable WebP lives in `dist/assets/` (regenerate with `python scripts/optimize-assets.py`, Pillow required).
+Human-readable browser source is in `src/`; `npm run build` generates `dist/app.js`, `dist/account.js` and locally bundled auth SDKs. `npm run dev` serves the app and the same API handlers on port 4173. Original PNG art is retained in `dist/assets/`; the browser uses compressed WebP from the same directory (regenerate with `python scripts/optimize-assets.py`, Pillow required).
 
 Sandbox wallet activation and verified limitations: [product refresh notes](docs/verification/2026-10-14-product-refresh.md). Apply the checkout-status migration before deploying; `SUPABASE_TEST_PROJECT_REF` must match a dedicated sandbox database for test Checkout. Never use test payments against a live wallet database.
