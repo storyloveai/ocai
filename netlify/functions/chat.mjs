@@ -1,8 +1,10 @@
 import {characters,systemPrompt} from '../../data/characters.mjs';
+import {createPlatform} from '../../server/platform.mjs';
+import {stories,storyPrompt} from '../../data/stories.mjs';
 export const config={path:'/api/chat',rateLimit:{windowLimit:8,windowSize:60,aggregateBy:['ip','domain'],action:'rate_limit'}};
 const json=(status,error)=>Response.json({error},{status,headers:{'Cache-Control':'no-store'}});
 export function validate(p){
- const character=characters.find(c=>c.id===p?.characterId);
+ const character=[...characters,...stories].find(c=>c.id===p?.characterId);
  if(!character)throw Error('请选择有效的角色。');
  if(!Array.isArray(p.messages)||!p.messages.length||p.messages.length>20)throw Error('聊天记录必须包含1—20条消息。');
  let length=0;const messages=p.messages.map(m=>{if(!m||!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim()||m.content.length>4000)throw Error('消息格式有误，每条最多4000个字符。');length+=m.content.length;return {role:m.role,content:m.content};});
@@ -18,14 +20,18 @@ export async function readPayload(req){
 export function createHandler({env=process.env,fetchImpl=fetch}={}){return async req=>{
  if(req.method!=='POST')return json(405,'只支持POST。');const origin=req.headers.get('origin');if(origin&&origin!==new URL(req.url).origin)return json(403,'不允许跨站请求。');
  let input;try{input=validate(await readPayload(req));}catch(e){return json(400,e.message);}
- if(!env.AI_API_KEY||!env.AI_BASE_URL||!env.AI_MODEL)return json(503,'角色聊天暂未连接，请稍后再试。');
- if(/openrouter\/auto|:free|latest/i.test(env.AI_MODEL))return json(503,'模型配置需要固定版本。');
- let url;try{url=new URL(env.AI_BASE_URL.replace(/\/$/,'')+'/chat/completions');if(url.protocol!=='https:')throw Error();}catch{return json(503,'聊天服务配置有误。');}
+ const key=env.DEEPSEEK_API_KEY||env.AI_API_KEY,base=env.DEEPSEEK_API_KEY?'https://api.deepseek.com':env.AI_BASE_URL,model=env.DEEPSEEK_API_KEY?(env.DEEPSEEK_MODEL||'deepseek-flash'):env.AI_MODEL;
+ if(!key||!base||!model)return json(503,'角色聊天暂未连接，请稍后再试。');
+ if(/openrouter\/auto|:free|latest/i.test(model))return json(503,'模型配置需要固定版本。');
+ let url;try{url=new URL(base.replace(/\/$/,'')+'/chat/completions');if(url.protocol!=='https:'||!['api.deepseek.com','openrouter.ai'].includes(url.hostname))throw Error();}catch{return json(503,'聊天服务配置有误。');}
+ const platform=createPlatform({env,fetchImpl});
+ if(platform.configured()){try{const u=await platform.user(req);if(!await platform.rpc('storylove_chat_limit',{p_user:u.id}))return json(429,'请求较多，请稍等一分钟再试。');}catch(e){return json(e.status||503,e.message||'账户服务暂时不可用。');}}
  const abort=new AbortController(),onAbort=()=>abort.abort();req.signal.addEventListener('abort',onAbort,{once:true});
  const timer=setTimeout(()=>abort.abort(),50000),cleanup=()=>{clearTimeout(timer);req.signal.removeEventListener('abort',onAbort);};
- const body={model:env.AI_MODEL,messages:[{role:'system',content:systemPrompt(input.character)},...input.messages],stream:true,max_tokens:600,temperature:0.8};
- if(url.hostname==='openrouter.ai'){body.provider={allow_fallbacks:false,...(env.AI_MODEL==='anthropic/claude-sonnet-4.6'?{only:['anthropic']}:{})};body.reasoning={enabled:false,exclude:true};}
- let upstream;try{upstream=await fetchImpl(url,{method:'POST',signal:abort.signal,headers:{Authorization:`Bearer ${env.AI_API_KEY}`,'Content-Type':'application/json','HTTP-Referer':new URL(req.url).origin,'X-Title':'OOC AI'},body:JSON.stringify(body)});}catch{cleanup();return json(504,'连接超时或暂时不可用，请重试。');}
+ const body={model,messages:[{role:'system',content:input.character.type==='story'?storyPrompt(input.character):systemPrompt(input.character)},...input.messages],stream:true,max_tokens:600,temperature:0.8};
+ if(url.hostname==='openrouter.ai'){body.provider={allow_fallbacks:false,...(model==='anthropic/claude-sonnet-4.6'?{only:['anthropic']}:{})};body.reasoning={enabled:false,exclude:true};}
+ if(url.hostname==='api.deepseek.com')body.thinking={type:'disabled'};
+ let upstream;try{upstream=await fetchImpl(url,{method:'POST',signal:abort.signal,headers:{Authorization:`Bearer ${key}`,'Content-Type':'application/json','HTTP-Referer':new URL(req.url).origin,'X-Title':'StoryLove'},body:JSON.stringify(body)});}catch{cleanup();return json(504,'连接超时或暂时不可用，请重试。');}
  if(!upstream.ok||!upstream.body){cleanup();await upstream.body?.cancel();return json(upstream.status===429?429:502,upstream.status===429?'请求较多，请稍等一分钟再试。':'模型服务暂时不可用，请稍后重试。');}
  const reader=upstream.body.getReader(),encoder=new TextEncoder();
  const stream=new ReadableStream({async start(controller){
@@ -35,6 +41,7 @@ export function createHandler({env=process.env,fetchImpl=fetch}={}){return async
   catch{try{emit({error:'回复中断，请重试。',retryable:true});}catch{}}
   finally{cleanup();await reader.cancel().catch(()=>{});try{controller.close();}catch{}}
  },cancel(){abort.abort();cleanup();return reader.cancel().catch(()=>{});}});
- return new Response(stream,{headers:{'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-cache, no-store','X-Content-Type-Options':'nosniff'}});
+ return new Response(stream,{headers:{'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-cache, no-store','X-Content-Type-Options':'nosniff','X-Accel-Buffering':'no'}});
 };}
 export default createHandler();
+
