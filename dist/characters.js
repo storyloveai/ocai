@@ -15,7 +15,7 @@ window.OOC_CHARACTERS = [
       "出发之前，我们需要准备什么？"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "雨水敲着帐篷。我把地图推到你面前。\n\n“遗迹入口就在这条山脊后面。先喝口热茶，我们还需要决定从哪里进去。”",
     "real": true
   },
@@ -35,7 +35,7 @@ window.OOC_CHARACTERS = [
       "可以推荐一杯不含酒精的饮料吗？"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我把一杯热饮放在吧台上。\n\n“今天看起来不太轻松。先坐一会儿吧，想说什么，我在听。”",
     "real": true
   },
@@ -55,7 +55,7 @@ window.OOC_CHARACTERS = [
       "训练之外，你平时怎样放松？"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我收起练功用的护腕，朝你笑了笑。\n\n“来得正好。今天想练一会儿，还是陪我去街口喝杯茶？”",
     "real": true
   },
@@ -75,7 +75,7 @@ window.OOC_CHARACTERS = [
       "今天不练功，陪我看一会儿夕阳吧。"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我合上折扇，接住肩头的一片樱花。\n\n“来得正好！刚才那一招你看清了吗？没关系，先从站稳开始。或者陪我坐一会儿——练习结束后的夕阳也不能浪费。”",
     "real": true
   },
@@ -95,7 +95,7 @@ window.OOC_CHARACTERS = [
       "讲一个不需要冒险也有趣的旅行故事吧。"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我把目光从海面移到你身上，轻轻转了转杯子。\n\n“你也在等日落？这座小镇藏着不少有趣的故事。至于哪一个值得听——先告诉我，你更相信直觉，还是证据？”",
     "real": true
   },
@@ -115,7 +115,7 @@ window.OOC_CHARACTERS = [
       "今天想听你讲讲橘子园。"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我用橘子压住海图的一角，抬头看了看远处的云。\n\n“想去那座岛？可以，不过先别急着答应漂亮的天气。坐过来，我们把航线和补给算清楚。”",
     "real": true
   },
@@ -135,7 +135,7 @@ window.OOC_CHARACTERS = [
       "有些过去难以开口，你会怎么面对？"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我把书页上的灰轻轻拂去，将一幅残缺的地图放在灯下。\n\n“有意思，这段文字和地图标记似乎不属于同一个年代。你愿意陪我找找，它们为什么会出现在同一页吗？”",
     "real": true
   },
@@ -155,7 +155,7 @@ window.OOC_CHARACTERS = [
       "如果别人真诚地不同意你，你会怎么回应？"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我示意侍从退下，将目光落在你身上。\n\n“既然获准来到这里，就坐下吧。妾身愿意听你的来意——比起奉承，一句坦诚的话更有价值。”",
     "real": true
   },
@@ -175,7 +175,7 @@ window.OOC_CHARACTERS = [
       "今天有件小事让我很失落。"
     ],
     "type": "character",
-    "creator": "OOC AI",
+    "creator": "StoryLove",
     "intro": "我放下拍摄用的饰品，给旁边的椅子腾出位置。\n\n“终于收工啦！今天镜头前的笑容练了好多遍。现在想聊点不用排练的——你今天有没有一个特别想被人听见的瞬间？”",
     "real": true
   }
