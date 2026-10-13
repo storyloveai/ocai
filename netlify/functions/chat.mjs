@@ -5,7 +5,7 @@ export const config={path:'/api/chat',rateLimit:{windowLimit:8,windowSize:60,agg
 const json=(status,error)=>Response.json({error},{status,headers:{'Cache-Control':'no-store'}});
 export function validate(p){
  const character=[...characters,...stories].find(c=>c.id===p?.characterId);
- if(!character)throw Error('请选择有效的角色。');
+ if(!character)throw Error('请选择有效的角色。');if(character.type==='story'&&character.status!=='published')throw Error('这部小说正在准备中，请先选择角色聊天。');
  if(!Array.isArray(p.messages)||!p.messages.length||p.messages.length>20)throw Error('聊天记录必须包含1—20条消息。');
  let length=0;const messages=p.messages.map(m=>{if(!m||!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim()||m.content.length>4000)throw Error('消息格式有误，每条最多4000个字符。');length+=m.content.length;return {role:m.role,content:m.content};});
  if(length>20000)throw Error('最近聊天过长，请开始新对话。');if(messages.at(-1).role!=='user')throw Error('最后一条消息必须来自用户。');return {character,messages};
