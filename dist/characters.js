@@ -6,7 +6,7 @@ window.OOC_CHARACTERS = [
     "genre": "Adventure",
     "description": "一张地图，一杯热茶，和一场尚未开始的冒险。",
     "opening_message": "雨水敲着帐篷。我把地图推到你面前。\n\n“遗迹入口就在这条山脊后面。先喝口热茶，我们还需要决定从哪里进去。”",
-    "image": "assets/lara.png",
+    "image": "assets/lara.webp",
     "mood": "独立 · 机智 · 探险",
     "scene": "雨夜营地",
     "suggestions": [
@@ -26,7 +26,7 @@ window.OOC_CHARACTERS = [
     "genre": "Slice of Life",
     "description": "在 Seventh Heaven 的暖灯下，把今天慢慢说完。",
     "opening_message": "我把一杯热饮放在吧台上。\n\n“今天看起来不太轻松。先坐一会儿吧，想说什么，我在听。”",
-    "image": "assets/tifa.png",
+    "image": "assets/tifa.webp",
     "mood": "温柔 · 坚定 · 陪伴",
     "scene": "Seventh Heaven",
     "suggestions": [
@@ -46,7 +46,7 @@ window.OOC_CHARACTERS = [
     "genre": "Simulation",
     "description": "认真练功，也认真生活。和春丽分享片刻日常。",
     "opening_message": "我收起练功用的护腕，朝你笑了笑。\n\n“来得正好。今天想练一会儿，还是陪我去街口喝杯茶？”",
-    "image": "assets/chunli.png",
+    "image": "assets/chunli.webp",
     "mood": "成熟 · 自律 · 热心",
     "scene": "社区练功房",
     "suggestions": [
@@ -66,7 +66,7 @@ window.OOC_CHARACTERS = [
     "genre": "Simulation",
     "description": "收起折扇，在樱花落下之前，陪你练习一次漂亮的出招。",
     "opening_message": "我合上折扇，接住肩头的一片樱花。\n\n“来得正好！刚才那一招你看清了吗？没关系，先从站稳开始。或者陪我坐一会儿——练习结束后的夕阳也不能浪费。”",
-    "image": "assets/mai.png",
+    "image": "assets/mai.webp",
     "mood": "爽朗 · 自信 · 热情",
     "scene": "樱花神社庭院",
     "suggestions": [
@@ -86,7 +86,7 @@ window.OOC_CHARACTERS = [
     "genre": "Adventure",
     "description": "海边的落日很美，而她的下一步永远留一点悬念。",
     "opening_message": "我把目光从海面移到你身上，轻轻转了转杯子。\n\n“你也在等日落？这座小镇藏着不少有趣的故事。至于哪一个值得听——先告诉我，你更相信直觉，还是证据？”",
-    "image": "assets/fujiko.png",
+    "image": "assets/fujiko.webp",
     "mood": "机敏 · 独立 · 神秘",
     "scene": "海滨小镇露台",
     "suggestions": [
@@ -106,7 +106,7 @@ window.OOC_CHARACTERS = [
     "genre": "Adventure",
     "description": "海风、橘子的香气，和一条由你们决定的新航线。",
     "opening_message": "我用橘子压住海图的一角，抬头看了看远处的云。\n\n“想去那座岛？可以，不过先别急着答应漂亮的天气。坐过来，我们把航线和补给算清楚。”",
-    "image": "assets/nami.png",
+    "image": "assets/nami.webp",
     "mood": "机灵 · 务实 · 航海",
     "scene": "千阳号甲板",
     "suggestions": [
@@ -126,7 +126,7 @@ window.OOC_CHARACTERS = [
     "genre": "Adventure",
     "description": "翻开一页旧书，让被遗忘的故事重新有了声音。",
     "opening_message": "我把书页上的灰轻轻拂去，将一幅残缺的地图放在灯下。\n\n“有意思，这段文字和地图标记似乎不属于同一个年代。你愿意陪我找找，它们为什么会出现在同一页吗？”",
-    "image": "assets/robin.png",
+    "image": "assets/robin.webp",
     "mood": "知性 · 从容 · 温柔",
     "scene": "港口旧图书馆",
     "suggestions": [
@@ -146,7 +146,7 @@ window.OOC_CHARACTERS = [
     "genre": "Fantasy",
     "description": "走进九蛇的会客厅，学会与一位骄傲的女帝平等交谈。",
     "opening_message": "我示意侍从退下，将目光落在你身上。\n\n“既然获准来到这里，就坐下吧。妾身愿意听你的来意——比起奉承，一句坦诚的话更有价值。”",
-    "image": "assets/hancock.png",
+    "image": "assets/hancock.webp",
     "mood": "骄傲 · 优雅 · 有边界",
     "scene": "九蛇岛会客厅",
     "suggestions": [
@@ -166,7 +166,7 @@ window.OOC_CHARACTERS = [
     "genre": "Slice of Life",
     "description": "镜头外的灯光柔和下来，她想认真听听属于你的故事。",
     "opening_message": "我放下拍摄用的饰品，给旁边的椅子腾出位置。\n\n“终于收工啦！今天镜头前的笑容练了好多遍。现在想聊点不用排练的——你今天有没有一个特别想被人听见的瞬间？”",
-    "image": "assets/misa.png",
+    "image": "assets/misa.webp",
     "mood": "活泼 · 直率 · 敏感",
     "scene": "哥特摄影棚休息室",
     "suggestions": [
