@@ -1,3 +1,177 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="StoryLove 角色聊天：与 Lara Croft、蒂法、春丽开启你的故事。"><title>StoryLove · 角色聊天</title><link rel="icon" href="assets/storylove-mark.svg"><link rel="stylesheet" href="style.css"></head><body><aside id="sidebar"><div class="logo"><b><img class="brandmark" src="assets/storylove-mark.svg" alt=""> StoryLove</b><button id="collapse" aria-label="Collapse sidebar">☰</button></div><nav><button data-page="search">⌕ <span>Search</span></button><button data-page="story">▣ <span>Story</span></button><button data-page="character">◉ <span>Character</span></button><hr><button data-page="titles">▤ <span>My Titles</span></button><button data-page="notifications">♧ <span>Notifications</span></button><button data-page="credits"><span class="credit-icon" aria-hidden="true">✦</span> <span>Credits</span></button></nav><div class="sidehistory"><small>History</small><div id="historyList"></div></div><div class="sidebottom"><button class="create" data-action="create">＋ <span>Create a title</span></button><button id="profileBtn" data-page="profile">◉ <span>Guest Creator</span><span>⚙</span></button></div></aside><header class="mobile"><b><img class="brandmark" src="assets/storylove-mark.svg" alt=""> StoryLove</b><button data-page="story">Story</button><button data-page="character">Character</button><button data-page="search">⌕</button></header><main id="app"></main><nav class="bottomnav"><button data-page="story">⌂<small>Home</small></button><button data-page="history">◷<small>History</small></button><button data-page="titles">▤<small>My Titles</small></button><button data-page="profile">◉<small>MY</small></button></nav><dialog id="modal"></dialog><div id="toast" role="status"></div><script src="stories.js"></script><script src="characters.js"></script><script src="analytics.js"></script><script src="credit-packs.js"></script><script src="account.js"></script><script src="app.js"></script></body></html>
-
-
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#141715" />
+    <meta
+      name="description"
+      content="StoryLove：探索原创小说世界，与鲜明的角色开启一段属于你的故事。"
+    />
+    <title>StoryLove · 每一种想象都有下一页</title>
+    <link rel="icon" href="assets/storylove-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#app">跳到主要内容</a>
+    <aside id="sidebar" aria-label="主导航">
+      <div class="logo">
+        <a href="#story" aria-label="StoryLove 首页"
+          ><img
+            class="brandmark"
+            src="assets/storylove-mark.svg"
+            alt=""
+            width="32"
+            height="32"
+          /><b>StoryLove<span>每一种想象都有下一页</span></b></a
+        ><button id="collapse" aria-label="收起导航" aria-expanded="true">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+      <nav aria-label="探索">
+        <button data-page="story">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M12 6C9 3 5 3 3 4v15c3-1 6-1 9 2 3-3 6-3 9-2V4c-2-1-6-1-9 2Z"
+            />
+            <path d="M12 6v15" /></svg
+          ><span>小说书架</span></button
+        ><button data-page="character">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+          >
+            <rect x="3" y="4" width="18" height="16" rx="6" />
+            <path d="M8 10h.01M16 10h.01M8 15c2 2 6 2 8 0" /></svg
+          ><span>角色相遇</span></button
+        ><button data-page="search">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+          >
+            <circle cx="10.5" cy="10.5" r="6.5" />
+            <path d="m16 16 4 4" /></svg
+          ><span>发现故事</span>
+        </button>
+        <hr />
+        <button data-page="titles">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+          >
+            <path
+              d="M20.8 5.8a5 5 0 0 0-7.1 0L12 7.5l-1.7-1.7a5 5 0 0 0-7.1 7.1L12 21l8.8-8.1a5 5 0 0 0 0-7.1Z"
+            /></svg
+          ><span>我的收藏</span></button
+        ><button data-page="history">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linecap="round"
+          >
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3 2" /></svg
+          ><span>最近对话</span></button
+        ><button data-page="credits">
+          <svg
+            class="icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.7"
+            stroke-linejoin="round"
+          >
+            <path
+              d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5Z"
+            /></svg
+          ><span>我的灵感</span>
+        </button>
+      </nav>
+      <div class="sidehistory">
+        <small>继续你的故事</small>
+        <div id="historyList"></div>
+      </div>
+      <div class="sidebottom">
+        <button id="profileBtn" data-page="profile"></button
+        ><small>一点想象，一点陪伴。</small>
+      </div>
+    </aside>
+    <header class="mobile">
+      <a href="#story"
+        ><img
+          class="brandmark"
+          src="assets/storylove-mark.svg"
+          alt=""
+          width="28"
+          height="28"
+        /><b>StoryLove</b></a
+      ><button data-page="search" aria-label="搜索">
+        <svg
+          class="icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+        >
+          <circle cx="10.5" cy="10.5" r="6.5" />
+          <path d="m16 16 4 4" />
+        </svg>
+      </button>
+    </header>
+    <main id="app" tabindex="-1">
+      <div class="empty"><p>正在翻开故事…</p></div>
+    </main>
+    <nav class="bottomnav" aria-label="移动导航">
+      <button data-page="story">
+        <span aria-hidden="true">▱</span><small>小说</small></button
+      ><button data-page="character">
+        <span aria-hidden="true">☺</span><small>角色</small></button
+      ><button data-page="titles">
+        <span aria-hidden="true">♡</span><small>收藏</small></button
+      ><button data-page="profile">
+        <span aria-hidden="true">◉</span><small>我的</small>
+      </button>
+    </nav>
+    <dialog id="modal" aria-label="StoryLove 对话框"></dialog>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <script src="stories.js" defer></script>
+    <script src="characters.js" defer></script>
+    <script src="analytics.js" defer></script>
+    <script src="credit-packs.js" defer></script>
+    <script src="icons.js" defer></script>
+    <script src="account.js" defer></script>
+    <script src="app.js" defer></script>
+  </body>
+</html>
