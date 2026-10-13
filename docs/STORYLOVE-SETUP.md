@@ -18,7 +18,7 @@ Once Supabase is configured, chat requires verified login and a persistent per-u
 
 ## Stripe test mode
 
-Create one-time USD prices: 1000 credits/$4.99, 5500/$24.99, 12000/$49.99. Set STRIPE_PRICE_1000, STRIPE_PRICE_5500, STRIPE_PRICE_12000, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET and APP_URL (exact HTTPS deployment origin).
+Create one-time USD prices: 200 credits/$1.99, 2500/$19.99, 5000/$29.99. Set STRIPE_PRICE_200, STRIPE_PRICE_2500, STRIPE_PRICE_5000, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET and APP_URL (exact HTTPS deployment origin).
 
 Register `https://<deployment>/api/webhook` for checkout.session.completed and checkout.session.async_payment_succeeded. The raw-body signature is checked, then the session is retrieved from Stripe to validate paid status, currency, total, price, quantity, user and metadata. Database transactions and unique Stripe-session references prevent duplicate grants. Pending/cancelled/failed payments grant nothing; success URL alone cannot add credits. Methods available depend on the merchant account/region and its Stripe configuration.
 
@@ -45,3 +45,9 @@ The locally bundled @netlify/identity SDK handles OAuth callback/session refresh
 Production Stripe secrets, test prices and signed webhook setup are still required. Use test mode first; signing into Google alone does not imply payment is configured. Native Netlify Identity users can be allow-listed by UUID in ANALYTICS_ADMIN_IDS for the analytics dashboard.
 
 Vercel continues to use the Supabase path and its SQL migrations; exporting users/wallets and establishing identity mapping is required before moving an existing native-Netlify account system. Do not silently change auth providers once real paid accounts exist.
+
+Sandbox keys select the built-in StoryLove sandbox price IDs and an isolated Netlify wallet namespace (`wallet/test/`). Live payments require explicit `STRIPE_LIVE_ENABLED=true` plus all three live price environment variables. Sandbox balances never change existing live wallets. Supabase sandbox wallet mutations fail closed; use a separate test project with an explicit isolated wallet adapter before enabling them.
+
+Checkout requires a per-attempt UUID `request_id`; the browser preserves it for network retries and clears it on a checkout return. Server Stripe API requests use a user/mode/pack/request-scoped Idempotency-Key. Adaptive Pricing is explicitly disabled while fulfillment verifies exact USD totals. The Stripe API version is pinned to 2026-08-26.dahlia.
+
+For sandbox-only deployments, omitted APP_URL defaults to the request origin, so checkout returns to the unpublished preview. Live deployment still requires an explicit HTTPS APP_URL. Apply migration 202610130003_credit_packs.sql for the changed Supabase pack allowlist. Current Netlify wallet does not need SQL.

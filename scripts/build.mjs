@@ -11,3 +11,6 @@ await writeFile(new URL('../dist/stories.js',import.meta.url),`window.STORYLOVE_
 
 import {build} from 'esbuild';
 await build({entryPoints:[new URL('./identity-client.mjs',import.meta.url).pathname],outfile:new URL('../dist/vendor/netlify-identity.js',import.meta.url).pathname,bundle:true,format:'esm',platform:'browser',target:'es2022',minify:true,external:['next/headers','@netlify/functions','node:async_hooks']});
+
+import {creditPacks} from '../data/credit-packs.mjs';
+await writeFile(new URL('../dist/credit-packs.js',import.meta.url),`window.STORYLOVE_CREDIT_PACKS = ${JSON.stringify(creditPacks.map(({credits,amount,currency,label})=>({credits,amount,currency,label})))};\n`);

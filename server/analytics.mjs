@@ -1,3 +1,4 @@
+import {packs} from '../data/credit-packs.mjs';
 import {readLimited,sameOrigin,response,HttpError,createPlatform} from './platform.mjs';
 export const clientEvents=new Set(['page_view','element_impression','ui_click','character_view','chat_start','message_send','reply_complete','reply_failed','generation_stop','login_start','login_complete','login_failed','logout','checkin_start','checkin_complete','checkin_failed','checkout_start','checkout_redirect','checkout_return','checkout_failed','title_create_start','title_create_complete','conversation_regenerate','conversation_restart','conversation_export']);
 const props=new Set(['page','element','item_id','character_id','placement','kind','pack','method','outcome','reason','duration_ms','first_delta_ms','message_count','prompt_version','model','provider','test','page_view_id','flow_id']);
@@ -15,7 +16,7 @@ export function cleanEvent(e,now=Date.now()){
   else if(key==='page'&&typeof value==='string'&&/^(character|story|search|titles|history|credits|profile|notifications|builder|(?:chat|detail)\/(?:lara|tifa|chunli|mai|fujiko|nami|robin|hancock|misa|title-[0-9]{1,2}|created-[0-9]{10,16}))$/.test(value))properties[key]=value;
   else if(key==='element'&&typeof value==='string'&&/^(title_card|chat_cta|banner_dot|refill|regenerate|suggestion|favorite|sidebar_collapse|send_message|(?:nav|action|genre|builder_step)_[a-zA-Z0-9_ -]{1,35})$/.test(value))properties[key]=value;
   else if(enums[key]?.includes(value))properties[key]=value;
-  else if(key==='pack'&&[1000,5500,12000].includes(value))properties[key]=value;
+  else if(key==='pack'&&Object.hasOwn(packs,value))properties[key]=value;
   else if(['duration_ms','first_delta_ms','message_count'].includes(key)&&Number.isFinite(value)&&value>=0&&value<=10000000)properties[key]=value;
   else if(key==='provider'&&['deepseek','openrouter'].includes(value))properties[key]=value;
   else if(key==='prompt_version'&&typeof value==='string'&&/^(role-v[0-9]+\.[0-9-]{10}|story-v[0-9]+)$/.test(value))properties[key]=value;

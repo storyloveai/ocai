@@ -1,0 +1,1 @@
+window.STORYLOVE_CREDIT_PACKS = [{"credits":200,"amount":199,"currency":"usd","label":"初次启程"},{"credits":2500,"amount":1999,"currency":"usd","label":"更多可能"},{"credits":5000,"amount":2999,"currency":"usd","label":"长篇相伴"}];

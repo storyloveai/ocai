@@ -4,7 +4,7 @@ window.storyAccount={ready:false,user:null,wallet:null,payments:false,error:''};
 window.accountReady=(async()=>{
  const a=window.storyAccount;
  try{
-  const r=await fetch('/api/config');if(!r.ok)throw Error('账户服务暂时不可用。');const cfg=await r.json();a.payments=cfg.payments;
+  const r=await fetch('/api/config');if(!r.ok)throw Error('账户服务暂时不可用。');const cfg=await r.json();a.payments=cfg.payments;a.walletMode=cfg.walletMode;
   if(!cfg.auth){a.error='Google 登录和签到正在准备中。';return;}
   a.provider=cfg.auth.provider||'supabase';
   if(a.provider==='netlify'){
