@@ -26,8 +26,12 @@ Before live payments: verify success, cancellation, decline, delayed fulfillment
 
 ## Hosting
 
-Netlify: build `npm run build`, output `dist`, functions `netlify/functions`, use existing netlify.toml. Vercel: import all liiita/ocai (canonical repository: https://github.com/allliiita/ocai), Framework Other, build `npm run build`, output `dist`; `api/*.mjs` uses Vercel Web method handlers, API routes bypass static rewrites. Node 22+, chat maxDuration 60 seconds and request cancellation. Add secrets via host settings and redeploy. Check /api/status and /api/config, then bind storylove.ai using DNS records provided by the host. Google OAuth is supported on either host when callbacks are configured correctly.
+Netlify: build `npm run build`, output `dist`, functions `netlify/functions`, use existing netlify.toml. Vercel: import allliiita/ocai (canonical repository: https://github.com/allliiita/ocai), Framework Other, build `npm run build`, output `dist`; `api/*.mjs` uses Vercel Web method handlers, API routes bypass static rewrites. Node 22+, chat maxDuration 60 seconds and request cancellation. Add secrets via host settings and redeploy. Check /api/status and /api/config, then bind storylove.ai using DNS records provided by the host. Google OAuth is supported on either host when callbacks are configured correctly.
 
 ## Verification limits
 
-17 local tests cover mocked provider streams, DeepSeek routing/non-thinking, story prompts/user agency, authentication rejection, frontend frame batching and switching races, fixed checkout pricing, webhook signature/replay/tampering, and Stripe amount checks. `npm run build` regenerates manifests. These are not live Google OAuth, database concurrency or Stripe/DeepSeek integration tests. Complete those after configuration. No production secrets were changed.
+18 local tests cover mocked provider streams, DeepSeek routing/non-thinking, story prompts/user agency, authentication rejection, frontend frame batching and switching races, fixed checkout pricing, webhook signature/replay/tampering, and Stripe amount checks. `npm run build` regenerates manifests. These are not live Google OAuth, database concurrency or Stripe/DeepSeek integration tests. Complete those after configuration. No production secrets were changed.
+
+## Live Netlify verification — 2026-10-13
+
+Merged PR #1 and confirmed auto-deployment at https://oocai.netlify.app/. Browser verified StoryLove logo/banner, honest unconfigured wallet/login/payment states, one real Lara response and one real novel continuation via the retained OpenRouter configuration. DeepSeek is still awaiting its key. Vercel dashboard is signed into lindsey-cyber, but importing all liiita/ocai (allliiita/ocai) returns “Could not access the repository”; no new Vercel project was created. Netlify admin currently requires sign-in for environment configuration.
