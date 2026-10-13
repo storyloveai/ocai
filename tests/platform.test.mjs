@@ -16,3 +16,13 @@ test('sandbox Stripe prices cannot enable live payments by accident',async()=>{c
 test('checkout rejects missing retry ID before Stripe request',async()=>{let calls=0;const p=createPlatform({env,fetchImpl:async()=>{calls++;return json({id:'verified'});}});assert.equal((await p.checkout(request('checkout',{pack:200}))).status,400);assert.equal(calls,1);});
 
 test('webhook from wrong payment environment is rejected before resource lookup',async()=>{let calls=0;const p=createPlatform({env,fetchImpl:async()=>{calls++;return json({});}});const raw=JSON.stringify({livemode:false,type:'checkout.session.completed',data:{object:{id:'cs_test'}}});const req=new Request('https://storylove.ai/api/webhook',{method:'POST',headers:{'stripe-signature':signature(raw)},body:raw});assert.equal((await p.webhook(req)).status,400);assert.equal(calls,0);});
+
+test('dedicated Supabase sandbox permits wallet and checkout but rejects a mismatched project',async()=>{
+ const ref='gixohkydrqoabmjcqquq';const sandbox={...env,SUPABASE_URL:'https://'+ref+'.supabase.co',SUPABASE_TEST_PROJECT_REF:ref,STRIPE_SECRET_KEY:'sk_test_fixture'};let grants=0;
+ const fetchImpl=async(url)=>{if(url.endsWith('/auth/v1/user'))return json({id:'verified'});if(url.includes('/rest/v1/rpc/')){grants++;return json({balance:200});}return json({url:'https://checkout.stripe.com/c/pay/test'});};
+ const p=createPlatform({env:sandbox,fetchImpl});assert.equal((await(await p.config(request('config'))).json()).payments,true);assert.equal((await p.wallet(request('wallet'))).status,200);assert.equal((await p.checkout(request('checkout',{pack:200,request_id:'12345678-1234-1234-1234-123456789012'}))).status,200);assert.equal(grants,1);
+ const wrong=createPlatform({env:{...sandbox,SUPABASE_TEST_PROJECT_REF:'aaaaaaaaaaaaaaaaaaaa'},fetchImpl});assert.equal((await wrong.wallet(request('wallet'))).status,503);assert.equal((await(await wrong.config(request('config'))).json()).payments,false);
+ const live=createPlatform({env:{...sandbox,STRIPE_SECRET_KEY:'sk_live_fixture'},fetchImpl});assert.equal((await live.wallet(request('wallet'))).status,503);assert.equal((await(await live.config(request('config'))).json()).payments,false);assert.equal(grants,1);
+});
+
+test('analytics RPC remains available when payment wallet configuration is incomplete',async()=>{let called=false;const p=createPlatform({env:{...env,STRIPE_SECRET_KEY:'sk_test_fixture'},fetchImpl:async url=>{assert.ok(url.endsWith('/rest/v1/rpc/storylove_ingest_events'));called=true;return json({accepted:1});}});await p.rpc('storylove_ingest_events',{p_events:[]});assert.equal(called,true);});
