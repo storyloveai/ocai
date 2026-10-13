@@ -1,4 +1,4 @@
-import {characters,systemPrompt} from '../../data/characters.mjs';
+import {characters,systemPrompt,PROMPT_VERSION} from '../../data/characters.mjs';
 import {createPlatform} from '../../server/platform.mjs';
 import {stories,storyPrompt} from '../../data/stories.mjs';
 export const config={path:'/api/chat',rateLimit:{windowLimit:8,windowSize:60,aggregateBy:['ip','domain'],action:'rate_limit'}};
@@ -37,11 +37,12 @@ export function createHandler({env=process.env,fetchImpl=fetch}={}){return async
  const stream=new ReadableStream({async start(controller){
   const emit=e=>controller.enqueue(encoder.encode(`data: ${JSON.stringify(e)}\n\n`));let buffer='',complete=false,emitted=false;const decoder=new TextDecoder();
   const line=raw=>{if(!raw.startsWith('data:'))return;const data=raw.slice(5).trim();if(!data)return;if(data==='[DONE]'){complete=true;return;}const e=JSON.parse(data);if(e.error)throw Error('upstream');const delta=e.choices?.[0]?.delta?.content;if(typeof delta==='string'&&delta){emitted=true;emit({delta});}if(e.choices?.[0]?.finish_reason==='error')throw Error('upstream');};
-  try{while(!complete){const {done,value}=await reader.read();buffer+=done?decoder.decode():decoder.decode(value,{stream:true});const lines=buffer.split('\n');buffer=lines.pop();for(const part of lines)line(part.replace(/\r$/,''));if(buffer.length>64000)throw Error('invalid stream');if(done){if(buffer)line(buffer);break;}}if(!complete||!emitted)throw Error('incomplete');emit({done:true});}
+  try{while(!complete){const {done,value}=await reader.read();buffer+=done?decoder.decode():decoder.decode(value,{stream:true});const lines=buffer.split('\n');buffer=lines.pop();for(const part of lines)line(part.replace(/\r$/,''));if(buffer.length>64000)throw Error('invalid stream');if(done){if(buffer)line(buffer);break;}}if(!complete||!emitted)throw Error('incomplete');emit({done:true,promptVersion:input.character.type==='story'?'story-v1':PROMPT_VERSION,provider:url.hostname==='api.deepseek.com'?'deepseek':'openrouter',model});}
   catch{try{emit({error:'回复中断，请重试。',retryable:true});}catch{}}
   finally{cleanup();await reader.cancel().catch(()=>{});try{controller.close();}catch{}}
  },cancel(){abort.abort();cleanup();return reader.cancel().catch(()=>{});}});
  return new Response(stream,{headers:{'Content-Type':'text/event-stream; charset=utf-8','Cache-Control':'no-cache, no-store','X-Content-Type-Options':'nosniff','X-Accel-Buffering':'no'}});
 };}
 export default createHandler();
+
 
