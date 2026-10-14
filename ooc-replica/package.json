@@ -4,10 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check dist/app.js && node --check dist/assets/reference.js && node --check dist/assets/interaction.js && node --check dist/assets/stream.js && node --test tests/stream.test.mjs",
+    "check": "node --check dist/app.js && node --check dist/assets/reference.js && node --check dist/assets/interaction.js && node --check dist/assets/stream.js && node --test tests/*.test.mjs && node --check api/chat.js && node --check api/config.js",
     "start": "python3 server.py"
   },
   "dependencies": {
+    "@ai-sdk/openai-compatible": "^3.0.68",
     "ai": "^7.0.140"
   },
   "devDependencies": {

@@ -1,1 +1,9 @@
-{"outputDirectory":"dist","rewrites":[{"source":"/((?!assets/|app\\.js|style\\.css|data\\.json).*)","destination":"/index.html"}]}
+{
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/((?!api/|assets/|app\\.js|style\\.css|data\\.json).*)",
+      "destination": "/index.html"
+    }
+  ]
+}
