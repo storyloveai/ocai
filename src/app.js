@@ -497,7 +497,7 @@ modal.addEventListener("close", () => {
 let loginIntent = {};
 function showLogin(intent = {}) {
   loginIntent = intent;
-  openModal(`<section class="login-panel"><span class="eyebrow">STORYLOVE</span><h2>${intent.action === "checkout" ? "登录后继续充值" : "欢迎回来"}</h2><p>对话保存在此浏览器，登录不会清除记录。</p><button class="primary" data-action="googleLogin">使用 Google 继续</button>${account.provider === "supabase" ? '<form id="emailLoginForm"><label for="loginEmail">或使用邮箱登录 / 注册</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="你的邮箱"><button class="secondary" type="submit">发送登录链接</button><p id="emailLoginStatus" role="status"></p></form>' : ""}<button class="text-button" data-action="closeModal">继续浏览</button></section>`);
+  openModal(`<section class="login-panel"><span class="eyebrow">STORYLOVE</span><h2>${intent.action === "checkout" ? "登录后继续充值" : "欢迎回来"}</h2><p>对话保存在此浏览器，登录不会清除记录。</p><button class="primary" data-action="googleLogin">使用 Google 继续</button>${account.emailLoginEnabled ? '<form id="emailLoginForm"><label for="loginEmail">或使用邮箱登录 / 注册</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="你的邮箱"><button class="secondary" type="submit">发送登录链接</button><p id="emailLoginStatus" role="status"></p></form>' : ""}<button class="text-button" data-action="closeModal">继续浏览</button></section>`);
 }
 function openModal(html) {
   paymentController?.abort();
