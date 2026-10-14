@@ -1,15 +1,17 @@
 // Public DOM snapshots supply layout; this module supplies independent interactions.
+const style=document.createElement('link');
+style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
+const stylesheetReady=new Promise((resolve,reject)=>{style.onload=resolve;style.onerror=()=>reject(new Error('Reference stylesheet could not load'));});
+document.head.append(style);
 const [evidence, coreAssets] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
-  fetch('/assets/core-assets.json').then(r => r.json())
+  fetch('/assets/core-assets.json').then(r => r.json()),
+  stylesheetReady
 ]);
 const assets={...coreAssets};
 const host = document.createElement('div');
 host.id = 'precision-view';
 document.body.insertBefore(host, document.querySelector('#modal'));
-const style = document.createElement('link');
-style.rel = 'stylesheet'; style.href = '/assets/reference.css'; style.disabled = true;
-document.head.append(style);
 // Keep the first paint small; the complete offline asset catalogue arrives later.
 fetch('/assets/catalog-assets.json').then(r=>r.json()).then(full=>{Object.assign(assets,full);if(context&&!host.hidden)hydrate();}).catch(()=>{});
 const legacy = document.querySelector('link[href="/style.css"]');
@@ -186,7 +188,7 @@ function bindSearch() {
 export function show(path, helpers) {
   clearInterval(carousel);context=helpers;
   const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':null;
-  host.hidden=!page;style.disabled=!page;legacy.disabled=Boolean(page);
+  host.hidden=!page;style.media=page?'all':'not all';legacy.disabled=Boolean(page);
   host.dataset.page=page||'';
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
