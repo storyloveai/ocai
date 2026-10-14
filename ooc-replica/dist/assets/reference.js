@@ -223,3 +223,6 @@ export function show(path, helpers) {
   document.title=(page==='detail'||page==='captured-detail')?(q('h1')?.textContent||'Information')+' · OOC':'OOC · Interactive stories';
   return true;
 }
+
+// Authenticated layouts use the same captured stylesheet and asset map.
+export function mountInteraction(html,helpers){clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
