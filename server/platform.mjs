@@ -46,11 +46,25 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
     const key = (env.STRIPE_PUBLISHABLE_KEY || "").trim();
     return key.startsWith("pk_" + stripeMode(env) + "_") ? key : null;
   };
+  const isolatedLiveWallet = () => {
+    try {
+      return (
+        env.SUPABASE_LIVE_WALLET_ENABLED === "true" &&
+        /^[a-z]{20}$/.test(env.SUPABASE_LIVE_PROJECT_REF || "") &&
+        new URL(env.SUPABASE_URL).origin ===
+          "https://" + env.SUPABASE_LIVE_PROJECT_REF + ".supabase.co"
+      );
+    } catch {
+      return false;
+    }
+  };
   const walletCompatible = () =>
     nativeIdentity() ||
     (stripeMode(env) === "test"
       ? isolatedTestDatabase()
-      : !env.SUPABASE_TEST_PROJECT_REF);
+      : env.SUPABASE_LIVE_WALLET_ENABLED === "true"
+        ? isolatedLiveWallet()
+        : !env.SUPABASE_TEST_PROJECT_REF);
   const identityRoot = (req) =>
     (env.IDENTITY_URL || env.URL || new URL(req.url).origin).replace(
       /\/$/,
@@ -109,6 +123,17 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       !walletCompatible()
     )
       throw new HttpError(503, "数据库与付款环境不匹配，请配置独立测试项目。");
+    if (
+      stripeMode(env) === "live" &&
+      isolatedLiveWallet() &&
+      [
+        "storylove_wallet",
+        "storylove_checkin",
+        "storylove_purchase",
+        "storylove_purchase_status",
+      ].includes(name)
+    )
+      name = name.replace("storylove_", "storylove_live_");
     return sb("/rest/v1/rpc/" + name, { body });
   };
   async function stripe(path, params, idempotencyKey) {
