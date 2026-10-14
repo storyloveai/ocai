@@ -72,3 +72,24 @@ test('Elements refuses missing/mixed-mode publishable keys before requesting Str
   const result=await p.checkout(request('checkout',{pack:200,ui_mode:'elements',request_id:'12345678-1234-1234-1234-123456789012'}));assert.equal(result.status,503);assert.equal(calls,1);
  }
 });
+
+test('live wallet opt-in routes all balance operations into isolated RPCs',async()=>{
+ const ref='abcdefghijklmnopqrst', paths=[];
+ const liveEnv={...env,SUPABASE_URL:`https://${ref}.supabase.co`,SUPABASE_TEST_PROJECT_REF:ref,SUPABASE_LIVE_PROJECT_REF:ref,SUPABASE_LIVE_WALLET_ENABLED:'true'};
+ const session={id:'cs_live_fixture',livemode:true,mode:'payment',payment_status:'paid',currency:'usd',amount_total:199,client_reference_id:'user-id',metadata:{user_id:'user-id',credits:'200',wallet_mode:'live'},line_items:{data:[{quantity:1,price:{id:'price_test'}}]}};
+ const platform=createPlatform({env:liveEnv,fetchImpl:async(url,o)=>{
+  if(url.endsWith('/auth/v1/user'))return json({id:'user-id'});
+  if(url.startsWith('https://api.stripe.com/'))return json(session);
+  paths.push(new URL(url).pathname);return json(url.endsWith('purchase_status')?true:{balance:200});
+ }});
+ assert.equal((await platform.wallet(request('wallet'))).status,200);
+ assert.equal((await platform.checkin(request('checkin',{}))).status,200);
+ assert.equal((await platform.checkoutStatus(request('checkout-status?session_id=cs_live_fixture'))).status,200);
+ const raw=JSON.stringify({livemode:true,type:'checkout.session.completed',data:{object:{id:session.id}}});
+ assert.equal((await platform.webhook(new Request('https://storylove.ai/api/webhook',{method:'POST',headers:{'stripe-signature':signature(raw)},body:raw}))).status,200);
+ assert.deepEqual(paths,['/rest/v1/rpc/storylove_live_wallet','/rest/v1/rpc/storylove_live_checkin','/rest/v1/rpc/storylove_live_purchase_status','/rest/v1/rpc/storylove_live_purchase']);
+});
+test('live wallet opt-in fails closed on mismatched project',async()=>{
+ const platform=createPlatform({env:{...env,SUPABASE_LIVE_WALLET_ENABLED:'true',SUPABASE_LIVE_PROJECT_REF:'abcdefghijklmnopqrst'},fetchImpl:async()=>json({id:'user-id'})});
+ assert.equal((await platform.wallet(request('wallet'))).status,503);
+});
