@@ -75,7 +75,7 @@ test('Elements refuses missing/mixed-mode publishable keys before requesting Str
 
 test('live wallet opt-in routes all balance operations into isolated RPCs',async()=>{
  const ref='abcdefghijklmnopqrst', paths=[];
- const liveEnv={...env,SUPABASE_URL:`https://${ref}.supabase.co`,SUPABASE_TEST_PROJECT_REF:ref,SUPABASE_LIVE_PROJECT_REF:ref,SUPABASE_LIVE_WALLET_ENABLED:'true'};
+ const liveEnv={...env,STRIPE_SECRET_KEY:'sk_test_fixture',STRIPE_LIVE_SECRET_KEY:'rk_live_fixture',SUPABASE_URL:`https://${ref}.supabase.co`,SUPABASE_TEST_PROJECT_REF:ref,SUPABASE_LIVE_PROJECT_REF:ref,SUPABASE_LIVE_WALLET_ENABLED:'true'};
  const session={id:'cs_live_fixture',livemode:true,mode:'payment',payment_status:'paid',currency:'usd',amount_total:199,client_reference_id:'user-id',metadata:{user_id:'user-id',credits:'200',wallet_mode:'live'},line_items:{data:[{quantity:1,price:{id:'price_test'}}]}};
  const platform=createPlatform({env:liveEnv,fetchImpl:async(url,o)=>{
   if(url.endsWith('/auth/v1/user'))return json({id:'user-id'});
@@ -92,4 +92,16 @@ test('live wallet opt-in routes all balance operations into isolated RPCs',async
 test('live wallet opt-in fails closed on mismatched project',async()=>{
  const platform=createPlatform({env:{...env,SUPABASE_LIVE_WALLET_ENABLED:'true',SUPABASE_LIVE_PROJECT_REF:'abcdefghijklmnopqrst'},fetchImpl:async()=>json({id:'user-id'})});
  assert.equal((await platform.wallet(request('wallet'))).status,503);
+});
+
+test('live-only webhook signing secret cannot authorize sandbox events',async()=>{
+ const liveSecret='live-only-secret';
+ for(const mode of ['live','test']){
+  const p=createPlatform({env:{...env,STRIPE_SECRET_KEY:`sk_${mode}_fixture`,STRIPE_LIVE_WEBHOOK_SECRET:liveSecret}});
+  const raw=JSON.stringify({livemode:mode==='live',type:'irrelevant.event'}),t=Math.floor(Date.now()/1000);
+  const sig=secret=>`t=${t},v1=${createHmac('sha256',secret).update(t+'.'+raw).digest('hex')}`;
+  const req=secret=>new Request('https://storylove.ai/api/webhook',{method:'POST',headers:{'stripe-signature':sig(secret)},body:raw});
+  assert.equal((await p.webhook(req(mode==='live'?liveSecret:env.STRIPE_WEBHOOK_SECRET))).status,200);
+  assert.equal((await p.webhook(req(mode==='live'?env.STRIPE_WEBHOOK_SECRET:liveSecret))).status,400);
+ }
 });
