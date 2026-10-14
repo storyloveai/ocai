@@ -1846,3 +1846,5 @@ dialog p {
 .login-panel{display:grid;gap:16px}.login-panel h2,.login-panel p{margin:0}.login-panel p{font-size:13px}#emailLoginForm{display:grid;gap:12px}#loginEmail{width:100%;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--side);color:inherit}
 @media(max-width:760px){main{margin-left:0}.card{padding:7px;border-radius:12px}.heroart{overflow:hidden}.plans{gap:12px}}
 @media(prefers-reduced-motion:reduce){.card,.plan{transition:none}.card:hover,.plan:hover{transform:none}}
+
+.conversation-archives{margin-top:32px}.conversation-archives .settingrow{width:100%;text-align:left}.conversation-archives small{display:block;color:var(--muted);margin-top:5px}.archive-messages{max-height:60dvh;overflow:auto;padding:12px 4px}.archive-messages .msg{max-width:100%}
