@@ -44,11 +44,16 @@ Apple Pay/Google Pay sandbox 测试通常使用 Wallet 中已有有效卡；不�
 
 ## 已验证与限制
 
-- 本地构建和 50 项自动测试通过，覆盖原有登录/聊天/钱包/Webhook及新增 Elements 配置、重复确认、钱包可用性、关闭销毁和失败重试。
+- 本地构建和 52 项自动测试通过，覆盖原有登录/聊天/钱包/Webhook及新增 Elements 配置、重复确认、钱包可用性、关闭销毁和失败重试。
 - 通过现有 Stripe sandbox 创建了 `ui_mode=elements` Session：open、livemode=false、amount_total=199，返回 client_secret。未确认付款，测试 Session 会自动过期。
 - 新增前端确认测试使用 SDK 接口模拟；它们不代表真实设备钱包或 Stripe iframe 已完成端到端验收。
-- GitHub/Vercel 连接器仍返回 403；已通过授权浏览器上传全部 17 个文件到 `stripe-elements-checkout`，创建 PR #5。远端文件与已测试版本逐字节一致。Vercel 预览构建 Ready、PR 两项检查通过。尚未合并生产：缺少同账户的 STRIPE_PUBLISHABLE_KEY。
-- 已通过 Stripe MCP 注册测试支付域名 `ocai-murex.vercel.app`，Apple Pay/Google Pay 状态 active。正式账户尚未在 MCP 会话授权；用户要求通过官方 AI/MCP 路径接续配置，停止 Stripe 云浏览器登录。正式授权应使用 Stripe MCP OAuth 的账户管理链接，在用户自己的浏览器选择 live 账户和所需权限。MCP 的账户授权不等于网站运行时的密钥配置；Elements 仍需 Publishable Key，服务器仍需现有服务端凭据及 Webhook Secret。
+- GitHub/Vercel 连接器仍返回 403；已通过授权浏览器上传全部 17 个文件到 `stripe-elements-checkout`，创建 PR #5。远端文件与已测试版本逐字节一致。Vercel 预览构建 Ready、PR 两项检查通过。尚未合并生产：正式 publishable key 已保存到 Vercel，仍需同账户的正式服务端受限密钥。
+- Stripe MCP OAuth 已授权正式账户 acct_1UPzaoA85MgDT2yA；使用现有 live 价格，正式域名 Apple Pay/Google Pay active。
+- 正式 Webhook we_1UQHcdA85MgDT2yAyxqfeElB 已创建，订阅 completed / async_payment_succeeded，API 2026-08-26.dahlia；部署前保持 disabled。
+- 正式余额使用私有 storylove_live schema，仅 service_role 能执行四个 RPC，RLS 作为额外保护；测试余额表保持原样。Supabase migration live_wallet_isolation 已应用。事务验证初始余额 0、重复购买/签到幂等、测试订单拒绝、测试余额不变，全部回滚。权限验证 anon/authenticated 不可购买，正式表没有遗留测试行。
+- 安全检查没有新增 WARN/ERROR；私有 service-only 表无公开策略的 INFO 符合设计。原有密码保护 WARN 与 Google OAuth 支付改动无关。
+- 生产配置需要 SUPABASE_LIVE_WALLET_ENABLED=true、SUPABASE_LIVE_PROJECT_REF=gixohkydrqoabmjcqquq；Preview 保持 test。STRIPE_SECRET_KEY 必须由账户持有人安全配置为同账户 rk_live…，至少 Checkout Sessions 写及读取、Prices 读取（含展开读取权限）。MCP OAuth 不会自动生成运行时私钥。不要把私钥发到聊天或仓库。
+- 发布顺序：保存正式私钥和 Webhook Secret、三个 live 价格及上述钱包配置；合并 PR 并等待生产 Ready；检查 config 为 live/payments/embeddedPayments=true；启用正式 Webhook；再由持有人进行真实设备小额付款验收。不得在 live 页面使用 Stripe 测试卡。
 
 官方依据：
 - https://docs.stripe.com/payments/elements/build-a-payment-page
