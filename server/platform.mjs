@@ -237,6 +237,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
           provider: "supabase",
           url: env.SUPABASE_URL,
           key: env.SUPABASE_ANON_KEY,
+          emailLoginEnabled: env.AUTH_EMAIL_LOGIN_ENABLED === "true",
         };
       return response({
         auth,

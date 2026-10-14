@@ -122,6 +122,13 @@ const account = (window.storyAccount = {
       throw Error("无法打开 Google 登录，请重试。");
     }
   },
+  async loginEmail(email, intent = {}) {
+    await window.accountReady;
+    if (!this.ready || this.provider !== "supabase" || !this.emailLoginEnabled) throw Error(this.error || "邮箱登录暂不可用。");
+    storage.set(intentKey, { ...intent, created: Date.now() });
+    const { error } = await this.client.auth.signInWithOtp({ email, options: { emailRedirectTo: location.origin + "/" } });
+    if (error) { storage.remove(intentKey); throw Error("邮件发送失败，请稍后重试或使用 Google 登录。"); }
+  },
   takeIntent() {
     if (!this.user) return null;
     const intent = storage.get(intentKey);
@@ -167,6 +174,7 @@ window.accountReady = (async () => {
     account.stripePublishableKey = config.stripePublishableKey;
     if (!config.auth) throw Error("登录服务正在准备中，请稍后再试。");
     account.provider = config.auth.provider || "supabase";
+    account.emailLoginEnabled = config.auth.emailLoginEnabled === true;
     const update = (user) => {
       if (account.user?.id !== user?.id) {
         account.wallet = null;

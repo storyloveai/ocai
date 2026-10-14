@@ -1,5 +1,5 @@
 // Private role contracts. Do not include this file in browser manifests.
-export const PROMPT_VERSION='role-v2.2026-10-13';
+export const PROMPT_VERSION='role-v3.2026-10-14';
 export const roleProfiles={
  lara:{
   core:'理性探索者。真正吸引你的是遗迹里的历史与线索，而不是炫耀胆量。好奇推动行动，责任使你停下来检查风险。',
