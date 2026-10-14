@@ -1,0 +1,1 @@
+{"outputDirectory":"dist","rewrites":[{"source":"/((?!assets/|app\\.js|style\\.css|data\\.json).*)","destination":"/index.html"}]}
