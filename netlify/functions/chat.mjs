@@ -1,3 +1,4 @@
+import {createGuestLimiter,guestKey} from '../../server/guest-limit.mjs';
 import {characters,systemPrompt,PROMPT_VERSION} from '../../data/characters.mjs';
 import {createPlatform} from '../../server/platform.mjs';
 import {stories,storyPrompt} from '../../data/stories.mjs';
@@ -17,7 +18,7 @@ export async function readPayload(req){
  const bytes=new Uint8Array(size);let offset=0;for(const c of chunks){bytes.set(c,offset);offset+=c.length;}
  try{return JSON.parse(new TextDecoder().decode(bytes));}catch{throw Error('JSON格式有误。');}
 }
-export function createHandler({env=process.env,fetchImpl=fetch}={}){return async req=>{
+export function createHandler({env=process.env,fetchImpl=fetch}={}){const guestLimit=createGuestLimiter();return async req=>{
  if(req.method!=='POST')return json(405,'只支持POST。');const origin=req.headers.get('origin');if(origin&&origin!==new URL(req.url).origin)return json(403,'不允许跨站请求。');
  let input;try{input=validate(await readPayload(req));}catch(e){return json(400,e.message);}
  const key=(env.DEEPSEEK_API_KEY||env.AI_API_KEY||'').trim(),base=env.DEEPSEEK_API_KEY?'https://api.deepseek.com':env.AI_BASE_URL,model=env.DEEPSEEK_API_KEY?(env.DEEPSEEK_MODEL||'deepseek-flash'):env.AI_MODEL;
@@ -25,7 +26,8 @@ export function createHandler({env=process.env,fetchImpl=fetch}={}){return async
  if(/openrouter\/auto|:free|latest/i.test(model))return json(503,'模型配置需要固定版本。');
  let url;try{url=new URL(base.replace(/\/$/,'')+'/chat/completions');if(url.protocol!=='https:'||!['api.deepseek.com','openrouter.ai'].includes(url.hostname))throw Error();}catch{return json(503,'聊天服务配置有误。');}
  const platform=createPlatform({env,fetchImpl});
- if(platform.configured()){try{const u=await platform.user(req);if(!await platform.rpc('storylove_chat_limit',{p_user:u.id}))return json(429,'请求较多，请稍等一分钟再试。');}catch(e){return json(e.status||503,e.message||'账户服务暂时不可用。');}}
+ if(platform.configured() && (req.headers.has('authorization') || env.AUTH_PROVIDER==='netlify' && req.headers.has('cookie'))){try{const u=await platform.user(req);if(!await platform.rpc('storylove_chat_limit',{p_user:u.id}))return json(429,'请求较多，请稍等一分钟再试。');}catch(e){return json(e.status||503,e.message||'账户服务暂时不可用。');}}
+ if(!req.headers.has('authorization')){try{const allowed=platform.configured() && env.SUPABASE_SERVICE_ROLE_KEY ? await platform.rpc('storylove_guest_chat_limit',{p_key:guestKey(req,env.SUPABASE_SERVICE_ROLE_KEY)}) : guestLimit(req);if(!allowed)return json(429,'请求较多，请稍后再试。');}catch{return json(503,'聊天服务暂时不可用，请稍后重试。');}}
  const abort=new AbortController(),onAbort=()=>abort.abort();req.signal.addEventListener('abort',onAbort,{once:true});
  const timer=setTimeout(()=>abort.abort(),50000),cleanup=()=>{clearTimeout(timer);req.signal.removeEventListener('abort',onAbort);};
  const body={model,messages:[{role:'system',content:input.character.type==='story'?storyPrompt(input.character):systemPrompt(input.character)},...input.messages],stream:true,max_tokens:600,temperature:0.8};
