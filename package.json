@@ -15,7 +15,9 @@
   "dependencies": {
     "@netlify/blobs": "11.1.4",
     "@netlify/identity": "2.0.0",
-    "@supabase/supabase-js": "2.49.8"
+    "@stripe/stripe-js": "^10.1.0",
+    "@supabase/supabase-js": "2.49.8",
+    "stripe": "^23.0.0"
   },
   "devDependencies": {
     "esbuild": "0.25.10",
