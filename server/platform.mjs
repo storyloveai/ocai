@@ -1,3 +1,4 @@
+import Stripe from "stripe";
 import { packs, stripeMode, priceId } from "../data/credit-packs.mjs";
 export { packs } from "../data/credit-packs.mjs";
 import { createHmac, timingSafeEqual } from "node:crypto";
@@ -15,6 +16,11 @@ export function sameOrigin(req) {
     throw new HttpError(403, "不允许跨站请求。");
 }
 export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
+  // A Production-only live key leaves Preview's existing sandbox key intact.
+  env = {
+    ...env,
+    STRIPE_SECRET_KEY: env.STRIPE_LIVE_SECRET_KEY || env.STRIPE_SECRET_KEY,
+  };
   const supabaseConfigured = () =>
     Boolean(
       env.SUPABASE_URL &&
@@ -41,11 +47,33 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       return false;
     }
   };
+  const publishableKey = () => {
+    const key = (env.STRIPE_PUBLISHABLE_KEY || "").trim();
+    return key.startsWith("pk_" + stripeMode(env) + "_") ? key : null;
+  };
+  const isolatedLiveWallet = () => {
+    try {
+      return (
+        env.SUPABASE_LIVE_WALLET_ENABLED === "true" &&
+        /^[a-z]{20}$/.test(env.SUPABASE_LIVE_PROJECT_REF || "") &&
+        new URL(env.SUPABASE_URL).origin ===
+          "https://" + env.SUPABASE_LIVE_PROJECT_REF + ".supabase.co"
+      );
+    } catch {
+      return false;
+    }
+  };
+  const webhookSecret = () =>
+    stripeMode(env) === "live"
+      ? env.STRIPE_LIVE_WEBHOOK_SECRET || env.STRIPE_WEBHOOK_SECRET
+      : env.STRIPE_WEBHOOK_SECRET;
   const walletCompatible = () =>
     nativeIdentity() ||
     (stripeMode(env) === "test"
       ? isolatedTestDatabase()
-      : !env.SUPABASE_TEST_PROJECT_REF);
+      : env.SUPABASE_LIVE_WALLET_ENABLED === "true"
+        ? isolatedLiveWallet()
+        : !env.SUPABASE_TEST_PROJECT_REF);
   const identityRoot = (req) =>
     (env.IDENTITY_URL || env.URL || new URL(req.url).origin).replace(
       /\/$/,
@@ -104,30 +132,39 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       !walletCompatible()
     )
       throw new HttpError(503, "数据库与付款环境不匹配，请配置独立测试项目。");
+    if (
+      stripeMode(env) === "live" &&
+      isolatedLiveWallet() &&
+      [
+        "storylove_wallet",
+        "storylove_checkin",
+        "storylove_purchase",
+        "storylove_purchase_status",
+      ].includes(name)
+    )
+      name = name.replace("storylove_", "storylove_live_");
     return sb("/rest/v1/rpc/" + name, { body });
   };
   async function stripe(path, params, idempotencyKey) {
     if (!env.STRIPE_SECRET_KEY) throw new HttpError(503, "付款服务尚未配置。");
     if (stripeMode(env) === "live" && env.STRIPE_LIVE_ENABLED !== "true")
       throw new HttpError(503, "正式付款尚未启用。");
-    const r = await fetchImpl("https://api.stripe.com/v1/" + path, {
-      method: params ? "POST" : "GET",
-      headers: {
-        Authorization: `Bearer ${env.STRIPE_SECRET_KEY.trim()}`,
-        "Stripe-Version": "2026-08-26.dahlia",
-        ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {}),
-        ...(params
-          ? { "Content-Type": "application/x-www-form-urlencoded" }
-          : {}),
-      },
-      ...(params ? { body: params.toString() } : {}),
-      signal: AbortSignal.timeout(12000),
+    const client = new Stripe(env.STRIPE_SECRET_KEY.trim(), {
+      apiVersion: "2026-08-26.dahlia",
+      httpClient: Stripe.createFetchHttpClient(fetchImpl),
+      maxNetworkRetries: 0,
+      timeout: 12000,
     });
-    if (!r.ok) {
-      let detail;
-      try {
-        detail = await r.json();
-      } catch {}
+    try {
+      if (params)
+        return await client.checkout.sessions.create(params, {
+          idempotencyKey,
+        });
+      return await client.checkout.sessions.retrieve(
+        path.replace("checkout/sessions/", "").split("?")[0],
+        { expand: ["line_items"] },
+      );
+    } catch (error) {
       const safe = (value) =>
         typeof value === "string" && /^[a-zA-Z0-9_\[\].-]{1,100}$/.test(value)
           ? value
@@ -135,15 +172,14 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       console.warn(
         JSON.stringify({
           event: "stripe_request_failed",
-          providerStatus: r.status,
-          code: safe(detail?.error?.code),
-          param: safe(detail?.error?.param),
-          requestId: safe(r.headers.get("request-id")),
+          providerStatus: error.statusCode,
+          code: safe(error.code),
+          param: safe(error.param),
+          requestId: safe(error.requestId),
         }),
       );
       throw new HttpError(502, "付款服务暂时不可用。");
     }
-    return r.json();
   }
 
   function validateCheckout(s) {
@@ -207,12 +243,14 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
         payments: Boolean(
           auth &&
             env.STRIPE_SECRET_KEY &&
-            env.STRIPE_WEBHOOK_SECRET &&
+            webhookSecret() &&
             Object.values(packs).every((p) => priceId(p, env)) &&
             (stripeMode(env) === "test" ||
               env.STRIPE_LIVE_ENABLED === "true") &&
             walletCompatible(),
         ),
+        embeddedPayments: Boolean(publishableKey()),
+        stripePublishableKey: publishableKey(),
         walletMode: stripeMode(env),
         checkinTimezone: "Asia/Shanghai",
       });
@@ -244,11 +282,16 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       if (!walletCompatible())
         throw new HttpError(503, "测试钱包隔离尚未配置。");
       const { pack, request_id } = input;
+      const embedded = input.ui_mode === "elements";
+      if (input.ui_mode && !embedded)
+        throw new HttpError(400, "无效付款界面。");
+      if (embedded && !publishableKey())
+        throw new HttpError(503, "站内付款尚未配置。");
       const aid = (v) => typeof v === "string" && /^[a-f0-9-]{36}$/i.test(v);
       const metric = input.analytics || {};
       if (!aid(request_id)) throw new HttpError(400, "无效订单请求编号。");
       const p = packs[pack];
-      if (!p || !priceId(p, env) || !env.STRIPE_WEBHOOK_SECRET)
+      if (!p || !priceId(p, env) || !webhookSecret())
         throw new HttpError(503, "此充值方案尚未开通。");
       let base;
       try {
@@ -260,26 +303,32 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       } catch {
         throw new HttpError(503, "付款回调地址尚未配置。");
       }
-      const params = new URLSearchParams({
+      const returnUrl =
+        base.origin +
+        "/?checkout=success&session_id={CHECKOUT_SESSION_ID}#credits";
+      const params = {
         mode: "payment",
-        "line_items[0][price]": priceId(p, env),
-        "line_items[0][quantity]": "1",
+        line_items: [{ price: priceId(p, env), quantity: 1 }],
         client_reference_id: u.id,
-        "metadata[user_id]": u.id,
-        "metadata[credits]": String(pack),
-        "metadata[wallet_mode]": stripeMode(env),
-        integration_identifier: "storylove-hosted-qrxkntva",
-        "adaptive_pricing[enabled]": "false",
-        "managed_payments[enabled]": "false",
-        success_url:
-          base.origin +
-          "/?checkout=success&session_id={CHECKOUT_SESSION_ID}#credits",
-        cancel_url: base.origin + "/?checkout=cancelled#credits",
-      });
-      if (u.email) params.set("customer_email", u.email);
+        metadata: {
+          user_id: u.id,
+          credits: String(pack),
+          wallet_mode: stripeMode(env),
+          analytics_flow: request_id,
+        },
+        integration_identifier: "storylove-elements-qrxkntva",
+        adaptive_pricing: { enabled: false },
+        managed_payments: { enabled: false },
+        ...(embedded
+          ? { ui_mode: "elements", return_url: returnUrl }
+          : {
+              success_url: returnUrl,
+              cancel_url: base.origin + "/?checkout=cancelled#credits",
+            }),
+      };
+      if (u.email) params.customer_email = u.email;
       if (aid(metric.session_id))
-        params.set("metadata[analytics_session]", metric.session_id);
-      params.set("metadata[analytics_flow]", request_id);
+        params.metadata.analytics_session = metric.session_id;
       const s = await stripe(
         "checkout/sessions",
         params,
@@ -290,8 +339,14 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
           ":" +
           pack +
           ":" +
+          (embedded ? "elements:" : "") +
           request_id,
       );
+      if (embedded) {
+        if (!s.client_secret || !s.id?.startsWith("cs_"))
+          throw new HttpError(502, "无法打开安全付款界面。");
+        return response({ client_secret: s.client_secret, session_id: s.id });
+      }
       if (!s.url?.startsWith("https://checkout.stripe.com/"))
         throw new HttpError(502, "无法打开安全付款页面。");
       return response({ url: s.url });
@@ -328,14 +383,13 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
     }),
     webhook: safely(async (req) => {
       if (req.method !== "POST") throw new HttpError(405, "只支持 POST。");
-      if (!env.STRIPE_WEBHOOK_SECRET)
-        throw new HttpError(503, "Webhook 尚未配置。");
+      if (!webhookSecret()) throw new HttpError(503, "Webhook 尚未配置。");
       const raw = await readLimited(req, 262144);
       if (
         !verifySignature(
           raw,
           req.headers.get("stripe-signature"),
-          env.STRIPE_WEBHOOK_SECRET,
+          webhookSecret(),
         )
       )
         throw new HttpError(400, "无效签名。");

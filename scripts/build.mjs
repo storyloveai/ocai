@@ -46,6 +46,15 @@ await build({
   target: "es2022",
   minify: true,
 });
+await build({
+  entryPoints: [new URL("src/checkout.js", root).pathname],
+  outfile: new URL("dist/checkout.js", root).pathname,
+  bundle: true,
+  format: "esm",
+  platform: "browser",
+  target: "es2022",
+  minify: true,
+});
 // Human-readable source is kept in src/. Browser files are deterministic build outputs.
 await build({
   entryPoints: ["app", "account", "icons"].map(

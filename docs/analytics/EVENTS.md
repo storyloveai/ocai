@@ -10,7 +10,7 @@
 | Conversation | message_send, reply_complete, reply_failed, generation_stop | No message contents; duration_ms measures whole reply; first_delta_ms measures first visible model content after sending |
 | Auth | login_start, login_complete, login_failed, logout | Completion after session exchange; restored existing sessions are not new conversions |
 | Check-in | checkin_start, checkin_complete, checkin_failed | Claimed vs already_claimed; duplicate claims excluded from successful-claim funnel |
-| Payment | checkout_start, checkout_redirect, checkout_return, checkout_failed | Starting checkout requires logged-in user; return is not purchase |
+| Payment | checkout_start, checkout_ready (Elements), checkout_redirect (hosted legacy), checkout_return, checkout_failed | Starting checkout requires logged-in user; return is not purchase |
 | Verified payment | purchase_complete | Server-only event after Stripe verification + ledger grant; deterministic ID deduplicates retries |
 | Creator | title_create_start, title_create_complete | Current creation is browser-local |
 | Other controls | conversation_regenerate, conversation_restart, conversation_export | IDs only; export contents never collected |

@@ -6,7 +6,7 @@ const signature=(raw,t=Math.floor(Date.now()/1000))=>'t='+t+',v1='+createHmac('s
 test('public config reveals no server secrets; wallet requires login',async()=>{const platform=createPlatform({env});const config=await(await platform.config(request('config'))).text();assert.match(config,/public/);assert.doesNotMatch(config,/private/);assert.equal((await platform.wallet(request('wallet',null,false))).status,401);});
 test('checkin derives user from verified token, not client body',async()=>{let rpc;const platform=createPlatform({env,fetchImpl:async(url,o)=>{if(url.endsWith('/auth/v1/user'))return json({id:'verified-user'});rpc=JSON.parse(o.body);return json({claimed:true,balance:100});}});const r=await platform.checkin(request('checkin',{p_user:'attacker',amount:100000}));assert.equal(r.status,200);assert.deepEqual(rpc,{p_user:'verified-user'});});
 test('cross-origin mutations rejected',async()=>{const platform=createPlatform({env});const req=new Request('https://storylove.ai/api/checkin',{method:'POST',headers:{Origin:'https://evil.example'}});assert.equal((await platform.checkin(req)).status,403);});
-test('checkout uses fixed price and configured return URL',async()=>{let params,headers;const platform=createPlatform({env,fetchImpl:async(url,o)=>{if(url.endsWith('/auth/v1/user'))return json({id:'verified'});params=new URLSearchParams(o.body);headers=o.headers;return json({url:'https://checkout.stripe.com/c/pay/test'});}});assert.equal((await platform.checkout(request('checkout',{pack:200,amount:1,request_id:'12345678-1234-1234-1234-123456789012'}))).status,200);assert.equal(params.get('line_items[0][price]'),'price_test');assert.equal(params.get('success_url'),'https://storylove.ai/?checkout=success&session_id={CHECKOUT_SESSION_ID}#credits');assert.equal(params.get('metadata[user_id]'),'verified');assert.equal(headers['Idempotency-Key'],'storylove:live:verified:200:12345678-1234-1234-1234-123456789012');assert.equal(headers['Stripe-Version'],'2026-08-26.dahlia');assert.equal(params.get('adaptive_pricing[enabled]'),'false');assert.equal(params.get('metadata[wallet_mode]'),'live');assert.equal((await platform.checkout(request('checkout',{pack:999,request_id:'12345678-1234-1234-1234-123456789012'}))).status,503);});
+test('checkout uses fixed price and configured return URL',async()=>{let params,headers;const platform=createPlatform({env,fetchImpl:async(url,o)=>{if(url.endsWith('/auth/v1/user'))return json({id:'verified'});params=new URLSearchParams(o.body);headers=new Headers(o.headers);return json({url:'https://checkout.stripe.com/c/pay/test'});}});assert.equal((await platform.checkout(request('checkout',{pack:200,amount:1,request_id:'12345678-1234-1234-1234-123456789012'}))).status,200);assert.equal(params.get('line_items[0][price]'),'price_test');assert.equal(params.get('success_url'),'https://storylove.ai/?checkout=success&session_id={CHECKOUT_SESSION_ID}#credits');assert.equal(params.get('metadata[user_id]'),'verified');assert.equal(headers.get('Idempotency-Key'),'storylove:live:verified:200:12345678-1234-1234-1234-123456789012');assert.equal(headers.get('Stripe-Version'),'2026-08-26.dahlia');assert.equal(params.get('adaptive_pricing[enabled]'),'false');assert.equal(params.get('metadata[wallet_mode]'),'live');assert.equal((await platform.checkout(request('checkout',{pack:999,request_id:'12345678-1234-1234-1234-123456789012'}))).status,503);});
 test('webhook signature rejects tampering and replay outside time window',()=>{const raw='{"event":"test"}';const sig=signature(raw);assert.equal(verifySignature(raw,sig,env.STRIPE_WEBHOOK_SECRET),true);assert.equal(verifySignature(raw+' ',sig,env.STRIPE_WEBHOOK_SECRET),false);assert.equal(verifySignature(raw,signature(raw,1),env.STRIPE_WEBHOOK_SECRET),false);assert.equal(verifySignature(raw,'t=bad,v1=abc',env.STRIPE_WEBHOOK_SECRET),false);});
 test('paid checkout validates Stripe amount and sends session id for database idempotency',async()=>{const grants=[];let amount=199;const platform=createPlatform({env,fetchImpl:async(url,o)=>{if(url.startsWith('https://api.stripe.com/'))return json({id:'cs_test',livemode:true,mode:'payment',payment_status:'paid',currency:'usd',amount_total:amount,client_reference_id:'user-id',metadata:{user_id:'user-id',credits:'200',wallet_mode:'live'},line_items:{data:[{quantity:1,price:{id:'price_test'}}]}});grants.push(JSON.parse(o.body));return json({balance:200});}});const raw=JSON.stringify({livemode:true,type:'checkout.session.completed',data:{object:{id:'cs_test'}}});const req=()=>new Request('https://storylove.ai/api/webhook',{method:'POST',headers:{'stripe-signature':signature(raw)},body:raw});assert.equal((await platform.webhook(req())).status,200);assert.deepEqual(grants[0],{p_user:'user-id',p_session:'cs_test',p_credits:200});amount=1;assert.equal((await platform.webhook(req())).status,400);assert.equal(grants.length,1);});
 
@@ -49,3 +49,59 @@ test('dedicated Supabase sandbox permits wallet and checkout but rejects a misma
 test('analytics RPC remains available when payment wallet configuration is incomplete',async()=>{let called=false;const p=createPlatform({env:{...env,STRIPE_SECRET_KEY:'sk_test_fixture'},fetchImpl:async url=>{assert.ok(url.endsWith('/rest/v1/rpc/storylove_ingest_events'));called=true;return json({accepted:1});}});await p.rpc('storylove_ingest_events',{p_events:[]});assert.equal(called,true);});
 
 test('Stripe failure logs diagnostic codes without upstream messages or credentials',async()=>{const logs=[];const original=console.warn;console.warn=s=>logs.push(s);try{const p=createPlatform({env,fetchImpl:async url=>url.endsWith('/auth/v1/user')?json({id:'verified'}):Response.json({error:{code:'parameter_unknown',param:'integration_identifier',message:'private-secret user@example.com',request_log_url:'https://private.example'}},{status:400,headers:{'request-id':'req_fixture'}})});const r=await p.checkout(request('checkout',{pack:200,request_id:'12345678-1234-1234-1234-123456789012'}));assert.equal(r.status,502);assert.deepEqual(JSON.parse(logs[0]),{event:'stripe_request_failed',providerStatus:400,code:'parameter_unknown',param:'integration_identifier',requestId:'req_fixture'});assert.doesNotMatch(logs.join(''),/private-secret|user@example|private.example/);}finally{console.warn=original;}});
+
+test('Elements session preserves catalog, identity and metadata and returns only client secret/session ID',async()=>{
+ let params,headers;
+ const p=createPlatform({env:{...env,STRIPE_PUBLISHABLE_KEY:'pk_live_fixture'},fetchImpl:async(url,o)=>{
+  if(url.endsWith('/auth/v1/user'))return json({id:'verified',email:'buyer@example.com'});
+  params=new URLSearchParams(o.body);headers=new Headers(o.headers);
+  return json({id:'cs_elements',client_secret:'cs_elements_secret_fixture'});
+ }});
+ const result=await(await p.checkout(request('checkout',{pack:200,amount:1,ui_mode:'elements',request_id:'12345678-1234-1234-1234-123456789012'}))).json();
+ assert.deepEqual(result,{session_id:'cs_elements',client_secret:'cs_elements_secret_fixture'});
+ assert.equal(params.get('ui_mode'),'elements');assert.equal(params.get('line_items[0][price]'),'price_test');
+ assert.equal(params.get('return_url'),'https://storylove.ai/?checkout=success&session_id={CHECKOUT_SESSION_ID}#credits');
+ assert.equal(params.has('success_url'),false);assert.equal(params.has('cancel_url'),false);assert.equal(params.has('payment_method_types'),false);
+ assert.equal(params.get('metadata[user_id]'),'verified');assert.equal(params.get('customer_email'),'buyer@example.com');
+ assert.equal(headers.get('idempotency-key'),'storylove:live:verified:200:elements:12345678-1234-1234-1234-123456789012');
+});
+test('Elements refuses missing/mixed-mode publishable keys before requesting Stripe',async()=>{
+ for(const key of [undefined,'pk_test_fixture','sk_live_private']){
+  let calls=0;const p=createPlatform({env:{...env,STRIPE_PUBLISHABLE_KEY:key},fetchImpl:async()=>{calls++;return json({id:'verified'});}});
+  const cfg=await(await p.config(request('config'))).json();assert.equal(cfg.embeddedPayments,false);assert.equal(cfg.stripePublishableKey,null);
+  const result=await p.checkout(request('checkout',{pack:200,ui_mode:'elements',request_id:'12345678-1234-1234-1234-123456789012'}));assert.equal(result.status,503);assert.equal(calls,1);
+ }
+});
+
+test('live wallet opt-in routes all balance operations into isolated RPCs',async()=>{
+ const ref='abcdefghijklmnopqrst', paths=[];
+ const liveEnv={...env,STRIPE_SECRET_KEY:'sk_test_fixture',STRIPE_LIVE_SECRET_KEY:'rk_live_fixture',SUPABASE_URL:`https://${ref}.supabase.co`,SUPABASE_TEST_PROJECT_REF:ref,SUPABASE_LIVE_PROJECT_REF:ref,SUPABASE_LIVE_WALLET_ENABLED:'true'};
+ const session={id:'cs_live_fixture',livemode:true,mode:'payment',payment_status:'paid',currency:'usd',amount_total:199,client_reference_id:'user-id',metadata:{user_id:'user-id',credits:'200',wallet_mode:'live'},line_items:{data:[{quantity:1,price:{id:'price_test'}}]}};
+ const platform=createPlatform({env:liveEnv,fetchImpl:async(url,o)=>{
+  if(url.endsWith('/auth/v1/user'))return json({id:'user-id'});
+  if(url.startsWith('https://api.stripe.com/'))return json(session);
+  paths.push(new URL(url).pathname);return json(url.endsWith('purchase_status')?true:{balance:200});
+ }});
+ assert.equal((await platform.wallet(request('wallet'))).status,200);
+ assert.equal((await platform.checkin(request('checkin',{}))).status,200);
+ assert.equal((await platform.checkoutStatus(request('checkout-status?session_id=cs_live_fixture'))).status,200);
+ const raw=JSON.stringify({livemode:true,type:'checkout.session.completed',data:{object:{id:session.id}}});
+ assert.equal((await platform.webhook(new Request('https://storylove.ai/api/webhook',{method:'POST',headers:{'stripe-signature':signature(raw)},body:raw}))).status,200);
+ assert.deepEqual(paths,['/rest/v1/rpc/storylove_live_wallet','/rest/v1/rpc/storylove_live_checkin','/rest/v1/rpc/storylove_live_purchase_status','/rest/v1/rpc/storylove_live_purchase']);
+});
+test('live wallet opt-in fails closed on mismatched project',async()=>{
+ const platform=createPlatform({env:{...env,SUPABASE_LIVE_WALLET_ENABLED:'true',SUPABASE_LIVE_PROJECT_REF:'abcdefghijklmnopqrst'},fetchImpl:async()=>json({id:'user-id'})});
+ assert.equal((await platform.wallet(request('wallet'))).status,503);
+});
+
+test('live-only webhook signing secret cannot authorize sandbox events',async()=>{
+ const liveSecret='live-only-secret';
+ for(const mode of ['live','test']){
+  const p=createPlatform({env:{...env,STRIPE_SECRET_KEY:`sk_${mode}_fixture`,STRIPE_LIVE_WEBHOOK_SECRET:liveSecret}});
+  const raw=JSON.stringify({livemode:mode==='live',type:'irrelevant.event'}),t=Math.floor(Date.now()/1000);
+  const sig=secret=>`t=${t},v1=${createHmac('sha256',secret).update(t+'.'+raw).digest('hex')}`;
+  const req=secret=>new Request('https://storylove.ai/api/webhook',{method:'POST',headers:{'stripe-signature':sig(secret)},body:raw});
+  assert.equal((await p.webhook(req(mode==='live'?liveSecret:env.STRIPE_WEBHOOK_SECRET))).status,200);
+  assert.equal((await p.webhook(req(mode==='live'?env.STRIPE_WEBHOOK_SECRET:liveSecret))).status,400);
+ }
+});

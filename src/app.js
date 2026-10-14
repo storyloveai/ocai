@@ -490,7 +490,15 @@ function send(text) {
   generate();
 }
 
+let paymentController = null,
+  paymentUser = null;
+modal.addEventListener("close", () => {
+  paymentController?.abort();
+  paymentController = null;
+});
 function openModal(html) {
+  paymentController?.abort();
+  paymentController = null;
   modal.innerHTML = `<button class="close" data-action="closeModal" aria-label="关闭">${icon("close")}</button>${html}`;
   if (!modal.open) modal.showModal();
 }
@@ -519,23 +527,58 @@ async function checkout(pack) {
       pack: Number(pack),
       flow_id: pending.id,
     });
+    if (!account.embeddedPayments)
+      throw Error("站内付款正在准备中，请稍后再试。");
+    const controller = new AbortController();
+    const packInfo = window.STORYLOVE_CREDIT_PACKS.find(
+      (p) => p.credits === Number(pack),
+    );
+    openModal(
+      `<section class="embedded-checkout"><h2 id="payment-title">${esc(packInfo.label)} · ${Number(pack).toLocaleString()} Credits</h2><p>${esc(new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(packInfo.amount / 100))} USD · 一次性${account.walletMode === "test" ? " · 测试付款" : ""}</p><form aria-labelledby="payment-title"><div data-wallet-section><div data-express-element></div></div><p class="payment-separator" data-wallet-separator hidden>或使用其他付款方式</p><div data-payment-element></div><p data-payment-error role="alert"></p><p data-payment-status role="status">正在加载安全付款界面…</p><button class="primary payment-submit" type="submit" disabled>确认付款</button></form><p class="quiet">支付信息由 Stripe 安全处理。余额将在交易确认后到账。</p></section>`,
+    );
+    paymentController = controller;
+    paymentUser = account.user.id;
+    const userId = account.user.id;
     const result = await account.api("checkout", {
       pack: Number(pack),
       request_id: pending.id,
+      ui_mode: "elements",
       analytics: { session_id: analytics.session },
     });
-    analytics.track("checkout_redirect", {
-      pack: Number(pack),
-      flow_id: pending.id,
+    if (controller.signal.aborted || account.user?.id !== userId) return;
+    sessionStorage.setItem("storylove-payment-return", result.session_id);
+    const { mountCheckout } = await import("/checkout.js");
+    if (controller.signal.aborted || account.user?.id !== userId) return;
+    await mountCheckout({
+      root: modal.querySelector(".embedded-checkout"),
+      publishableKey: account.stripePublishableKey,
+      clientSecret: result.client_secret,
+      signal: controller.signal,
+      onComplete(sessionId) {
+        sessionStorage.removeItem(key);
+        paymentSession = sessionId;
+        sessionStorage.setItem("storylove-payment-return", sessionId);
+        paymentState = "pending";
+        modal.close();
+        location.hash = "credits";
+        verifyPayment();
+      },
     });
-    analytics.beacon?.();
-    location.assign(result.url);
+    if (!controller.signal.aborted)
+      analytics.track("checkout_ready", {
+        pack: Number(pack),
+        flow_id: pending.id,
+      });
   } catch (error) {
     analytics.track("checkout_failed", {
       pack: Number(pack),
       reason: "unavailable",
     });
-    toast(error.message);
+    const paymentError = modal.querySelector("[data-payment-error]");
+    if (modal.open && paymentError) {
+      paymentError.textContent = error.message;
+      modal.querySelector("[data-payment-status]").textContent = "";
+    } else toast(error.message);
   } finally {
     walletBusy = false;
     if (page === "credits") render();
@@ -577,6 +620,9 @@ async function verifyPayment() {
       );
       if (status.credited) {
         paymentState = "credited";
+        for (const key of Object.keys(sessionStorage))
+          if (key.startsWith("storylove-checkout:" + account.user.id + ":"))
+            sessionStorage.removeItem(key);
         sessionStorage.removeItem("storylove-payment-return");
         await account.refreshWallet();
         break;
@@ -612,6 +658,10 @@ async function resumeIntent() {
 }
 window.addEventListener("accountchange", () => {
   historyList();
+  if (paymentController && account.user?.id !== paymentUser) {
+    paymentController.abort();
+    if (modal.querySelector(".embedded-checkout") && modal.open) modal.close();
+  }
   if (account.user) resumeIntent().catch((error) => toast(error.message));
   if (["credits", "profile"].includes(page)) render();
   else if (page === "chat" && !busy) {
