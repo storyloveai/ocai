@@ -23,3 +23,8 @@ The browser's two screenshot files were JPEG-encoded despite their .png filename
 ## Remaining boundaries
 
 Authenticated behavior is unobserved. Sign-in, AI generation, payments and real backend state are not connected. Uncaptured detail pages and desktop search are adaptations, explicitly identified as previews where appropriate. The original responsive rules are preserved but mobile screenshots were not tested. Public counts and rankings are captured snapshots and may change.
+
+
+## Authenticated follow-up
+
+After explicit action-time consent and secure user sign-in, the name, audience/genre, and recommendation stages were captured, together with story and character chat shells. Name nezuko, Male audience and all genres were selected as requested. One neutral library question and one neutral café question established the distinct chat layouts. Raw account evidence, birthday and private episode URLs were excluded from the repository. The previous consent observations describe the earlier public-only pass. See stream-analysis.md for the limits of timing observations.
