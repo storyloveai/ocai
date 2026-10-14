@@ -10,7 +10,7 @@ const style = document.createElement('link');
 style.rel = 'stylesheet'; style.href = '/assets/reference.css'; style.disabled = true;
 document.head.append(style);
 const legacy = document.querySelector('link[href="/style.css"]');
-let context, carousel, current = 1;
+let context, carousel, current = 1, activeFeatures=evidence.features;
 const featureIds = ['6ab3b736e2e641b7fbeb6312','6ab70e13499de207c7ca13c4','6aaad8746c080a5d3ff0402a','6ac749a7ab586f53935a023d','6ac749fc973e4d7b825f7520','6ab2217bfa760164cd6c2f12'];
 evidence.features.forEach((d,i) => d.href = '/story/' + featureIds[i]);
 const source = d => assets[d.asset] || d.image;
@@ -18,12 +18,14 @@ const q = s => host.querySelector(s);
 const all = s => [...host.querySelectorAll(s)];
 const text = e => e.textContent.trim();
 const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const catalog = evidence.catalog;
+const catalog = [...evidence.catalog,...(evidence.characters||[])];
 const cardMarkup = new Map();
 const templateDocument = new DOMParser().parseFromString(evidence.pages.home,'text/html');
 templateDocument.querySelectorAll('a[href^="/story/"]').forEach(a => {
   if (a.querySelector('[data-name]')) cardMarkup.set(a.getAttribute('href').split('/').pop(),a.outerHTML);
 });
+const characterDocument=new DOMParser().parseFromString(evidence.pages.character,'text/html');
+characterDocument.querySelectorAll('a[href^="/character/"]').forEach(a=>{if(a.querySelector('[data-radix-aspect-ratio-wrapper]')&&a.querySelector('p'))cardMarkup.set(a.getAttribute('href').split('/').pop(),a.outerHTML);});
 export const extraStories = catalog.map(d => ({...d, image:source(d),genre:'Others'}));
 
 function hydrate() {
@@ -40,6 +42,13 @@ function hydrate() {
     if(b.getAttribute('aria-label')==='Back to Previous Page') b.onclick=()=>context.navigate('/');
   });
   all('a[href^="/announcement/"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Title Publishing Bug Resolved</h2><p>The publishing issue has been resolved.</p>');});
+  all('a').filter(a=>text(a)==='View All').forEach(a=>{
+    let parent=a.parentElement;
+    while(parent&&parent!==host){const heading=parent.querySelector('h2');if(heading){a.href='/collection?name='+encodeURIComponent(text(heading));break;}parent=parent.parentElement;}
+  });
+  all('a[href^="/policy/"]').forEach(a=>{a.href='https://ooc.ai'+a.getAttribute('href');a.target='_blank';a.rel='noopener noreferrer';});
+  all('a[href="/profile"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Your profile</h2><p>This independent replica uses local bookmarks and story sessions. Account services are not connected.</p>');});
+  all('a[href^="/arpg/"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Dice of Fate</h2><p>This public banner is reproduced visually. AIRPG backend services are not connected to this replica.</p>');});
   const sidebar=q('[data-shrink]');
   if(sidebar){
     const toggle=sidebar.querySelector('button');
@@ -54,15 +63,15 @@ function hydrate() {
 }
 
 function updateHero(step) {
-  current=(current+step+6)%6;
-  const f=evidence.features[current],desktop=q('[data-hero-desktop]');
+  current=(current+step+activeFeatures.length)%activeFeatures.length;
+  const f=activeFeatures[current],desktop=q('[data-hero-desktop]');
   if(!desktop||!f)return;
   desktop.querySelector('h1').textContent=f.title;
   desktop.querySelector('h1 + p').textContent=f.description;
   desktop.querySelector('a').href=f.href;
   const imgs=[...desktop.querySelectorAll('img')];
   imgs.forEach((img,i)=>{
-    const d=evidence.features[(current+i+5)%6];img.src=source(d);img.alt=d.title;
+    const d=activeFeatures[(current+i+activeFeatures.length-1)%activeFeatures.length];img.src=source(d);img.alt=d.title;
   });
   const active=imgs[1]?.parentElement.querySelector('a');if(active)active.href=f.href;
   const mobile=q('[data-mobile-track]');
@@ -71,7 +80,10 @@ function updateHero(step) {
 }
 
 function bindHome(page) {
-  all('[data-ref-step]').forEach(b=>b.onclick=()=>updateHero(Number(b.dataset.refStep)));
+  activeFeatures=page==='character'?(evidence.characterFeatures||[]):evidence.features;
+  all('button').filter(b=>text(b)==='Previous slide'||text(b)==='Next slide').forEach(b=>{
+    b.setAttribute('aria-label',text(b));b.dataset.refStep=text(b)==='Previous slide'?'-1':'1';b.onclick=()=>updateHero(Number(b.dataset.refStep));
+  });
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
     b.onclick=()=>{
       const label=text(b);
@@ -81,17 +93,17 @@ function bindHome(page) {
   });
   all('button').filter(b=>text(b).startsWith('#')).forEach(b=>b.onclick=()=>context.navigate('/search?q='+encodeURIComponent(text(b).slice(1))));
   const title=q('[data-hero-desktop] h1');
-  current=Math.max(0,evidence.features.findIndex(f=>f.title===title?.textContent));
-  if(page==='home'){
+  current=Math.max(0,activeFeatures.findIndex(f=>f.title===title?.textContent));
+  if(activeFeatures.length){
     updateHero(0);
-    if(!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
+    if(!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
       if(!document.hidden&&!document.querySelector('#modal').open)updateHero(1);
     },6500);
   }
   // The captured mobile carousel retains its six original slides.
   const mobileHeading=all('h2').find(h=>h.classList.contains('text-white'));
   const mobileTrack=mobileHeading?.parentElement?.parentElement?.parentElement;
-  if(mobileTrack&&mobileTrack.children.length===6){
+  if(mobileTrack&&mobileTrack.children.length===activeFeatures.length){
     mobileTrack.dataset.mobileTrack='';
     mobileTrack.style.transition='transform 500ms ease';
     let start;
@@ -101,6 +113,7 @@ function bindHome(page) {
 }
 
 function bindDetail() {
+  const id=location.pathname.split('/')[2];
   all('button').filter(b=>text(b)==='Information'||text(b)==='Comment').forEach(b=>b.onclick=()=>{
     if(text(b)==='Comment') all('h2, h3, span').find(h=>text(h)==='Comments')?.scrollIntoView({behavior:'smooth'});
     else window.scrollTo({top:0,behavior:'smooth'});
@@ -125,7 +138,7 @@ function bindDetail() {
   if(play){
     const bookmark=play.nextElementSibling;
     if(bookmark?.tagName==='BUTTON'){
-      bookmark.dataset.favorite='69f414d90abbab6f6a2c8131';bookmark.setAttribute('aria-label','Bookmark story');
+      bookmark.dataset.favorite=id;bookmark.setAttribute('aria-label','Bookmark story');
       if(context.read('ooc-favorites',[]).includes(bookmark.dataset.favorite))bookmark.innerHTML='♥';
     }
   }
@@ -155,11 +168,19 @@ function bindSearch() {
 
 export function show(path, helpers) {
   clearInterval(carousel);context=helpers;
-  const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':path==='/collection'?'collection':null;
+  const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':null;
   host.hidden=!page;style.disabled=!page;legacy.disabled=Boolean(page);
   document.body.dataset.reference=String(Boolean(page));
+  delete document.body.dataset.inspection;
   if(!page)return false;
-  host.innerHTML=evidence.pages[page==='collection'?'home':page];
+  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'?'home':page==='captured-detail'?path:page];
+  if(page==='character-detail'){
+    const d=catalog.find(d=>d.type==='character'&&d.id===path.split('/')[2]);
+    const content=q('[data-shrink]')?.nextElementSibling;
+    if(d&&content){
+      content.innerHTML=`<div class="precision-collection"><a href="/character">‹ Character Information</a><div class="precision-character-detail"><img src="${source(d)}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1><p>${safe(d.author)}</p><p>${safe(d.description||'')}</p><button class="precision-play" data-play="${d.id}">New Play</button><button class="precision-play" data-favorite="${d.id}" aria-label="Bookmark character">♡</button></div></div><small>Independent local preview. This character's complete information has not been captured.</small></div>`;
+    }else if(content)content.innerHTML='<div class="precision-collection"><a href="/character">‹ Back to characters</a><h1>Character unavailable</h1></div>';
+  }
   if(page==='collection'){
     const name=new URLSearchParams(location.search).get('name')||'Top Ranked';
     const content=q('[data-shrink]')?.nextElementSibling;
@@ -171,8 +192,14 @@ export function show(path, helpers) {
   }
   hydrate();
   if(page==='home'||page==='character')bindHome(page);
-  if(page==='detail')bindDetail();
+  if(page==='detail'||page==='captured-detail')bindDetail();
   if(page==='search')bindSearch();
-  document.title=page==='detail'?'Lumencia Academy · OOC':'OOC · Interactive stories';
+  // Read-only captured consent state for screenshot comparison; no acceptance action.
+  if(page==='home'&&new URLSearchParams(location.search).get('inspection')==='reference-terms'){
+    document.body.dataset.inspection='reference-terms';
+    q('#reference-root').firstElementChild.insertAdjacentHTML('beforeend',evidence.overlays||'');
+    all('[role="dialog"] button').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();});
+  }
+  document.title=(page==='detail'||page==='captured-detail')?(q('h1')?.textContent||'Information')+' · OOC':'OOC · Interactive stories';
   return true;
 }
