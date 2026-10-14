@@ -127,6 +127,10 @@ function bindHome(page) {
 
 function bindDetail() {
   const id=location.pathname.split('/')[2];
+  all('button').filter(b=>b.querySelector('path')?.getAttribute('d')?.startsWith('M11.31 2.16')).forEach(b=>{
+    b.dataset.favorite=id;b.dataset.referenceFavorite='true';b.setAttribute('aria-label','Bookmark story');
+    const selected=context.read('ooc-favorites',[]).includes(id);b.setAttribute('aria-pressed',String(selected));b.style.color=selected?'#e0ff2e':'';
+  });
   all('button').filter(b=>text(b)==='Information'||text(b)==='Comment').forEach(b=>b.onclick=()=>{
     if(text(b)==='Comment') all('h2, h3, span').find(h=>text(h)==='Comments')?.scrollIntoView({behavior:'smooth'});
     else window.scrollTo({top:0,behavior:'smooth'});
