@@ -6,3 +6,4 @@ test('switching characters cancels old request without clearing the new busy sta
 
 test('assistant formatting escapes HTML before adding emphasis',()=>{const app=setup(async()=>{});const result=app.run('formatReply("**bold** <img src=x onerror=alert(1)> *gentle*")');assert.match(result,/<strong>bold<\/strong>/);assert.match(result,/<em>gentle<\/em>/);assert.doesNotMatch(result,/<img/);assert.match(result,/&lt;img/);});
 
+test('guest sends and persists without invoking login',async()=>{const app=setup(async()=>new Response('data: {"delta":"你好"}\n\ndata: {"done":true}\n\n',{headers:{'Content-Type':'text/event-stream'}}));app.run('account.user=null; account.login=()=>{throw Error("unexpected redirect")}; state.chats.lara.push({role:"user",text:"你好"})');assert.equal(await app.run('generate()'),true);assert.equal(app.run('state.chats.lara.at(-1).text'),'你好');});
