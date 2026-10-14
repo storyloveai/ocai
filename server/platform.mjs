@@ -16,6 +16,11 @@ export function sameOrigin(req) {
     throw new HttpError(403, "不允许跨站请求。");
 }
 export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
+  // A Production-only live key leaves Preview's existing sandbox key intact.
+  env = {
+    ...env,
+    STRIPE_SECRET_KEY: env.STRIPE_LIVE_SECRET_KEY || env.STRIPE_SECRET_KEY,
+  };
   const supabaseConfigured = () =>
     Boolean(
       env.SUPABASE_URL &&
