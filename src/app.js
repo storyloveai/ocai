@@ -30,6 +30,7 @@ const state = {
     !Array.isArray(saved.chats)
       ? saved.chats
       : {},
+  archives: Array.isArray(saved?.archives) ? saved.archives : [],
   created: Array.isArray(saved?.created) ? saved.created : [],
   nickname: typeof saved?.nickname === "string" ? saved.nickname : "旅行者",
   avatar: typeof saved?.avatar === "string" ? saved.avatar : "你",
@@ -225,7 +226,7 @@ function render() {
             .filter(Boolean);
     app.innerHTML =
       head(page === "titles" ? "我的收藏" : "最近对话") +
-      `<div class="content">${titles.length ? `<div class="cards book-grid">${titles.map(card).join("")}</div>` : empty(page === "titles" ? "把喜欢的故事留在这里" : "第一次相遇，从这里开始", page === "titles" ? "在小说或角色档案里点一下收藏。" : "和一位角色聊聊，随时回来继续。")}${state.created.length && page === "titles" ? `<details class="legacy-drafts"><summary>以前保存的本地草稿（${state.created.length}）</summary><p class="quiet">这些草稿仍保存在浏览器中，内容未发布。</p><div class="cards">${state.created.map(card).join("")}</div></details>` : ""}</div>`;
+      `<div class="content">${titles.length ? `<div class="cards book-grid">${titles.map(card).join("")}</div>` : empty(page === "titles" ? "把喜欢的故事留在这里" : "第一次相遇，从这里开始", page === "titles" ? "在小说或角色档案里点一下收藏。" : "和一位角色聊聊，随时回来继续。")}${page === "history" ? archiveList() : ""}${state.created.length && page === "titles" ? `<details class="legacy-drafts"><summary>以前保存的本地草稿（${state.created.length}）</summary><p class="quiet">这些草稿仍保存在浏览器中，内容未发布。</p><div class="cards">${state.created.map(card).join("")}</div></details>` : ""}</div>`;
   } else app.innerHTML = empty("这一页还没写好", "回到角色页继续探索。");
   historyList();
   if (page === "chat") {
@@ -235,6 +236,14 @@ function render() {
   analytics.pageView(
     ["chat", "detail"].includes(page) ? page + "/" + selected?.id : page,
   );
+}
+function archiveCurrentChat() {
+  const messages = (state.chats[selected.id] || []).filter(m => !m.pending);
+  if (!messages.some(m => m.role === "user")) return;
+  state.archives.push({ characterId: selected.id, created: Date.now(), messages: messages.map(m => ({ role: m.role, text: m.text })) });
+}
+function archiveList() {
+  return state.archives.length ? `<section class="conversation-archives"><h2>以前的对话</h2>${state.archives.map((entry, index) => `<button class="settingrow" data-archive="${index}"><span>${esc(items().find(t => t.id === entry.characterId)?.name || entry.characterId)}<small>${esc(new Date(entry.created).toLocaleString("zh-CN"))}</small></span>${icon("arrow")}</button>`).reverse().join("")}</section>` : "";
 }
 function startChat(id) {
   const next = items().find((t) => t.id === id);
@@ -472,6 +481,7 @@ function send(text) {
       state.chats[selected.id].filter((m) => m.role === "user").length + 1,
   });
   drafts[selected.id] = "";
+  persistDraft();
   if ($("#message")) $("#message").value = "";
   state.chats[selected.id].push({ role: "user", text });
   persist();
@@ -726,6 +736,13 @@ document.addEventListener("click", async (event) => {
       location.hash = "title/" + data.title;
       return;
     }
+    if (data.archive !== undefined) {
+      const entry = state.archives[Number(data.archive)];
+      if (!entry) return;
+      const name = items().find(t => t.id === entry.characterId)?.name || entry.characterId;
+      openModal(`<h2>${esc(name)} · 以前的对话</h2><div class="archive-messages">${entry.messages.map(m => `<div class="msg ${m.role}"><small>${esc(m.role === "user" ? state.nickname : name)}</small><div class="bubble">${m.role === "assistant" ? formatReply(m.text) : esc(m.text)}</div></div>`).join("")}</div>`);
+      return;
+    }
     if (data.chat) {
       if (location.hash === "#chat/" + data.chat) startChat(data.chat);
       else location.hash = "chat/" + data.chat;
@@ -824,12 +841,13 @@ document.addEventListener("click", async (event) => {
       case "confirmRestart":
         if (busy) break;
         openModal(
-          '<h2>重新开始这段故事？</h2><p class="quiet">当前对话将被替换。你可以先导出保存。</p><div class="modalactions"><button class="secondary" data-action="exportChat">先导出</button><button class="primary" data-action="doRestart">重新开始</button></div>',
+          '<h2>重新开始这段故事？</h2><p class="quiet">当前对话会保留在最近对话中。</p><div class="modalactions"><button class="secondary" data-action="exportChat">先导出</button><button class="primary" data-action="doRestart">重新开始</button></div>',
         );
         break;
       case "doRestart":
         if (busy) break;
         analytics.track("conversation_restart", { character_id: selected.id });
+        archiveCurrentChat();
         state.chats[selected.id] = [
           { role: "assistant", text: selected.intro },
         ];
@@ -866,7 +884,7 @@ document.addEventListener("click", async (event) => {
       }
       case "help":
         openModal(
-          "<h2>让故事自然开始</h2><p>在角色页选择一位角色，直接开始对话。第一次发送时登录，回来后继续写下的话。</p><p>小说书架正在筹备正文，你可以先收藏喜欢的题材。</p><p>对话和收藏保存在当前浏览器；账户余额与登录关联。聊天暂不消耗 Credits。</p>",
+          "<h2>让故事自然开始</h2><p>在角色页选择一位角色，直接开始对话。无需登录即可聊天；充值前再选择登录方式。</p><p>小说书架正在筹备正文，你可以先收藏喜欢的题材。</p><p>对话和收藏保存在当前浏览器；账户余额与登录关联。聊天暂不消耗 Credits。</p>",
         );
         break;
     }
