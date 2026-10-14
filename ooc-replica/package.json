@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check dist/app.js",
+    "check": "node --check dist/app.js && node --check dist/assets/reference.js",
     "start": "python3 server.py"
   }
 }

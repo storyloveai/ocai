@@ -1,31 +1,22 @@
-# OOC interactive interface replica
+# OOC interface replica
 
-A standalone HTML/CSS/JavaScript reproduction of the observed public OOC interface, captured on 2026-10-14. No build dependencies are required.
+A standalone, interactive reproduction of the publicly observed OOC interface. The precision pass on 2026-10-14 uses complete read-only browser DOM captures, original CSS, 12 local font faces and 299 downloaded image variants. No build dependencies are required.
 
-## Run locally
+## Run and deploy
 
-```sh
-npm start
-```
+Run `npm start`, then open http://127.0.0.1:3000. `npm run check` validates both JavaScript modules. Vercel serves `dist/` with the supplied SPA fallback. The application lives in `ooc-replica/` so the existing repository application is preserved.
 
-Open http://127.0.0.1:3000. The server supports direct links and refreshing application routes. `npm run check` checks JavaScript syntax. Deploy `dist/` on a static host with SPA fallback; `vercel.json` is included.
+## Precision pass
 
-## Implemented
+- Exact public home and character catalogue structure, original SVG icons/logo, three-cover carousel stack, gradients, badges, ranking cards, rails, genre strip and responsive rules.
+- 99 observed story records and 50 character records, plus featured characters. Search, collections and local bookmarks work independently.
+- Captured full details for Lumencia Academy, SOVEREIGN SA, APEX Heroes Academy, Dating the Strongest Hero, and Your New beautiful neighbour.
+- A 552 KB core image pack renders the first viewport; the complete local asset pack loads in the background.
+- At 1363 × 936, measured home landmarks match the reference: main x=336; Top Ranked y=548; first cover x=337, y=586.59375, 190×286 inside its 192×288 frame; OOC Originals y=1172.75. The initial text-width and wrapping differences were resolved by loading the real Inter fonts.
+- Browser-local scripted play sessions, saved history, preferences, drafts and comments remain available. Their demo status is explicit.
 
-- Dark sidebar, six-slide carousel, category strip, horizontal ranking rails, originals, tags, and responsive mobile layout.
-- 28 downloaded original story covers and source metadata.
-- Search by title, creator and genre; category filtering; collection pages.
-- Story information pages, bookmarks, avatar settings, character/prologue tabs.
-- Browser-local drafts, comments, bookmarks, conversation history and content preference.
-- Clearly labeled scripted story demo with persisted sessions.
-- Character page, credits display, notification and sign-in explanation dialogs.
+## Verification and limits
 
-## Boundaries
+All four REA skills were reread. REA screenshot comparison was run on the real original and replica in the same carousel/consent-modal state. See `research/precision/REPORT.md`; the source screenshot is obstructed by an unaccepted binding terms modal, so the result is not a whole-site pixel-equivalence score. `?inspection=reference-terms` reproduces that read-only captured state for inspection and performs no consent acceptance.
 
-This is an independent interface replica, not an official OOC client. No original backend, OAuth, payments, actual credit balance or AI model is connected. Detail content other than the observed Lumencia Academy description is demo content. Character asset downloads returned HTTP 403, so character previews use story-cover demo artwork. Genre assignments are local demo metadata. Preferences are stored locally and do not personalize the catalogue.
-
-## Investigation
-
-GitHub plugin retrieved REA's browser-observation documentation. REA CLI 6.4.0 was installed through its official npm package and invoked against the downloaded public JavaScript. See `research/REPORT.md` for capture evidence and limitations.
-
-The original site displayed a binding terms-confirmation modal. It was not accepted. Public DOM structure behind the modal was read without changing it. Authenticated behavior and interactions blocked by that modal have not been verified. Managed preview browser QA was unavailable because the required control-browser skill is not installed; no pixel-equivalence claim is made.
+This is an independent interface reproduction, not an official OOC client. No original backend, OAuth, payments, real credit balance or AI model is connected. Uncaptured details use clearly identified local previews. Genre assignments for uncaptured records are not authoritative. Desktop search combines observed mobile search structure with a functional desktop adaptation because its original interactive state remains blocked by consent. Mobile CSS is preserved; mobile browser screenshots were not independently verified in this environment.
