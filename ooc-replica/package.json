@@ -4,7 +4,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check dist/app.js && node --check dist/assets/reference.js",
+    "check": "node --check dist/app.js && node --check dist/assets/reference.js && node --check dist/assets/interaction.js && node --check dist/assets/stream.js && node --test tests/stream.test.mjs",
     "start": "python3 server.py"
+  },
+  "dependencies": {
+    "ai": "^7.0.140"
+  },
+  "devDependencies": {
+    "linkedom": "^0.18.13"
   }
 }
