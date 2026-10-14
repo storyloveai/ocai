@@ -1,17 +1,28 @@
 // Public DOM snapshots supply layout; this module supplies independent interactions.
-const [evidence, assets] = await Promise.all([
+const [evidence, coreAssets] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
-  fetch('/assets/catalog-assets.json').then(r => r.json())
+  fetch('/assets/core-assets.json').then(r => r.json())
 ]);
+const assets={...coreAssets};
 const host = document.createElement('div');
 host.id = 'precision-view';
 document.body.insertBefore(host, document.querySelector('#modal'));
 const style = document.createElement('link');
 style.rel = 'stylesheet'; style.href = '/assets/reference.css'; style.disabled = true;
 document.head.append(style);
+// Keep the first paint small; the complete offline asset catalogue arrives later.
+fetch('/assets/catalog-assets.json').then(r=>r.json()).then(full=>{Object.assign(assets,full);if(context&&!host.hidden)hydrate();}).catch(()=>{});
 const legacy = document.querySelector('link[href="/style.css"]');
 let context, carousel, current = 1, activeFeatures=evidence.features;
 const featureIds = ['6ab3b736e2e641b7fbeb6312','6ab70e13499de207c7ca13c4','6aaad8746c080a5d3ff0402a','6ac749a7ab586f53935a023d','6ac749fc973e4d7b825f7520','6ab2217bfa760164cd6c2f12'];
+const palettes={
+  'Sovereign SA':['rgb(165, 146, 126)','rgb(144, 137, 187)','rgb(0, 39, 28)'],
+  'Dating the Strongest Hero':['rgb(65, 50, 75)','rgb(135, 103, 98)','rgb(209, 186, 224)'],
+  'APEX Heroes Academy':['rgb(140, 160, 213)','rgb(186, 163, 143)','rgb(27, 36, 57)'],
+  'Failed Knight of the Swordsmanship Family SA':['rgb(66, 73, 96)','rgb(187, 206, 226)','rgb(60, 45, 36)'],
+  'Hey There Goes Your Girlfriend':['rgb(195, 177, 150)','rgb(188, 186, 205)','rgb(63, 44, 26)'],
+  'I Became the Commander of the Trash Knight Order':['rgb(204, 164, 138)','rgb(164, 161, 191)','rgb(7, 8, 1)']
+};
 evidence.features.forEach((d,i) => d.href = '/story/' + featureIds[i]);
 const source = d => assets[d.asset] || d.image;
 const q = s => host.querySelector(s);
@@ -19,6 +30,7 @@ const all = s => [...host.querySelectorAll(s)];
 const text = e => e.textContent.trim();
 const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const catalog = [...evidence.catalog,...(evidence.characters||[])];
+for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
 const cardMarkup = new Map();
 const templateDocument = new DOMParser().parseFromString(evidence.pages.home,'text/html');
 templateDocument.querySelectorAll('a[href^="/story/"]').forEach(a => {
@@ -74,6 +86,7 @@ function updateHero(step) {
     const d=activeFeatures[(current+i+activeFeatures.length-1)%activeFeatures.length];img.src=source(d);img.alt=d.title;
   });
   const active=imgs[1]?.parentElement.querySelector('a');if(active)active.href=f.href;
+  if(palettes[f.title])all('[style*="radial-gradient"]').forEach((e,i)=>e.style.color=palettes[f.title][i]);
   const mobile=q('[data-mobile-track]');
   if(mobile)mobile.style.transform=`translate3d(${-current*100}%,0,0)`;
   all('[data-ref-dot]').forEach((b,i)=>b.setAttribute('aria-current',String(i===current)));
@@ -154,11 +167,11 @@ function bindSearch() {
   inputs.forEach(i=>{i.setAttribute('aria-label','Search stories and characters');i.oninput=()=>{
     inputs.forEach(other=>other.value=i.value);
     let results=q('#precision-results');
-    if(!results){results=document.createElement('section');results.id='precision-results';results.className='precision-search-results';q('#reference-root').append(results);}
+    if(!results){results=document.createElement('section');results.id='precision-results';results.className='precision-search-results';const content=q('[class*="space-y-4"]');(content||q('#reference-root')).prepend(results);}
     const query=i.value.trim().toLowerCase();
     const found=catalog.filter(d=>(d.title+' '+d.author).toLowerCase().includes(query));
     results.innerHTML=query?`<h2>${found.length} results</h2>${found.length?grid(found):'<p>No matching stories found.</p>'}`:'';
-    all('[data-slot="empty-inline"]').forEach(e=>e.parentElement.parentElement.hidden=Boolean(query));
+    [...results.parentElement.children].filter(e=>e!==results).forEach(e=>e.style.display=query?'none':'');
     hydrate();
   };});
   const query=new URLSearchParams(location.search).get('q');
@@ -170,6 +183,7 @@ export function show(path, helpers) {
   clearInterval(carousel);context=helpers;
   const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':null;
   host.hidden=!page;style.disabled=!page;legacy.disabled=Boolean(page);
+  host.dataset.page=page||'';
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;
