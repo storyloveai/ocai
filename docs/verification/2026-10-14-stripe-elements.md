@@ -47,7 +47,8 @@ Apple Pay/Google Pay sandbox 测试通常使用 Wallet 中已有有效卡；不�
 - 本地构建和 50 项自动测试通过，覆盖原有登录/聊天/钱包/Webhook及新增 Elements 配置、重复确认、钱包可用性、关闭销毁和失败重试。
 - 通过现有 Stripe sandbox 创建了 `ui_mode=elements` Session：open、livemode=false、amount_total=199，返回 client_secret。未确认付款，测试 Session 会自动过期。
 - 新增前端确认测试使用 SDK 接口模拟；它们不代表真实设备钱包或 Stripe iframe 已完成端到端验收。
-- GitHub 连接创建改版分支返回 403 `Resource not accessible by integration`，Vercel 指定团队访问也仍被拒绝。改动尚未推送或部署。仍需要新 publishable key 和支付域名配置才能线上验收。
+- GitHub/Vercel 连接器仍返回 403；已通过授权浏览器上传全部 17 个文件到 `stripe-elements-checkout`，创建 PR #5。远端文件与已测试版本逐字节一致。Vercel 预览构建 Ready、PR 两项检查通过。尚未合并生产：缺少同账户的 STRIPE_PUBLISHABLE_KEY。
+- 已通过 Stripe MCP 注册测试支付域名 `ocai-murex.vercel.app`，Apple Pay/Google Pay 状态 active。正式账户尚未在 MCP 会话授权；用户要求通过官方 AI/MCP 路径接续配置，停止 Stripe 云浏览器登录。正式授权应使用 Stripe MCP OAuth 的账户管理链接，在用户自己的浏览器选择 live 账户和所需权限。MCP 的账户授权不等于网站运行时的密钥配置；Elements 仍需 Publishable Key，服务器仍需现有服务端凭据及 Webhook Secret。
 
 官方依据：
 - https://docs.stripe.com/payments/elements/build-a-payment-page
@@ -55,3 +56,5 @@ Apple Pay/Google Pay sandbox 测试通常使用 Wallet 中已有有效卡；不�
 - https://docs.stripe.com/js/elements_object/create_express_checkout_element
 - https://docs.stripe.com/payments/payment-methods/pmd-registration
 - https://docs.stripe.com/checkout/fulfillment
+
+AI 配置指南：https://docs.stripe.com/mcp 、https://docs.stripe.com/agents 、https://docs.stripe.com/keys 。OAuth 可以分别授权 sandbox 和 live 账户；自动代理也可使用 Agent-tagged Restricted API Key。不要将私钥放入聊天或公开仓库。
