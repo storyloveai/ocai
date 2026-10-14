@@ -58,6 +58,10 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       return false;
     }
   };
+  const webhookSecret = () =>
+    stripeMode(env) === "live"
+      ? env.STRIPE_LIVE_WEBHOOK_SECRET || env.STRIPE_WEBHOOK_SECRET
+      : env.STRIPE_WEBHOOK_SECRET;
   const walletCompatible = () =>
     nativeIdentity() ||
     (stripeMode(env) === "test"
@@ -234,7 +238,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
         payments: Boolean(
           auth &&
             env.STRIPE_SECRET_KEY &&
-            env.STRIPE_WEBHOOK_SECRET &&
+            webhookSecret() &&
             Object.values(packs).every((p) => priceId(p, env)) &&
             (stripeMode(env) === "test" ||
               env.STRIPE_LIVE_ENABLED === "true") &&
@@ -282,7 +286,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
       const metric = input.analytics || {};
       if (!aid(request_id)) throw new HttpError(400, "无效订单请求编号。");
       const p = packs[pack];
-      if (!p || !priceId(p, env) || !env.STRIPE_WEBHOOK_SECRET)
+      if (!p || !priceId(p, env) || !webhookSecret())
         throw new HttpError(503, "此充值方案尚未开通。");
       let base;
       try {
@@ -374,14 +378,13 @@ export function createPlatform({ env = process.env, fetchImpl = fetch } = {}) {
     }),
     webhook: safely(async (req) => {
       if (req.method !== "POST") throw new HttpError(405, "只支持 POST。");
-      if (!env.STRIPE_WEBHOOK_SECRET)
-        throw new HttpError(503, "Webhook 尚未配置。");
+      if (!webhookSecret()) throw new HttpError(503, "Webhook 尚未配置。");
       const raw = await readLimited(req, 262144);
       if (
         !verifySignature(
           raw,
           req.headers.get("stripe-signature"),
-          env.STRIPE_WEBHOOK_SECRET,
+          webhookSecret(),
         )
       )
         throw new HttpError(400, "无效签名。");
