@@ -161,8 +161,10 @@ window.accountReady = (async () => {
     }
     if (!response.ok) throw Error("账户服务暂时不可用。");
     const config = await response.json();
-    account.payments = config.payments;
+    account.payments = Boolean(config.payments && config.embeddedPayments);
     account.walletMode = config.walletMode;
+    account.embeddedPayments = config.embeddedPayments;
+    account.stripePublishableKey = config.stripePublishableKey;
     if (!config.auth) throw Error("登录服务正在准备中，请稍后再试。");
     account.provider = config.auth.provider || "supabase";
     const update = (user) => {
