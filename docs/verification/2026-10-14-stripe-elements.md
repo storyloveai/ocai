@@ -67,3 +67,25 @@ AI 配置指南：https://docs.stripe.com/mcp 、https://docs.stripe.com/agents 
 正式 Webhook 签名密钥已存为 Production-only STRIPE_LIVE_WEBHOOK_SECRET；test 模式仍只使用原 STRIPE_WEBHOOK_SECRET。
 
 正式三个价格和钱包环境开关已保存到 Production。持有人只需新增 Production-only Secret STRIPE_LIVE_SECRET_KEY（rk_live…），保留原共享 STRIPE_SECRET_KEY 供 Preview 测试；服务器优先使用正式密钥。
+
+## 生产部署验收：2026-10-14（上海时间）
+
+PR #5 已 squash 合并，生产代码提交 dc5b242，Vercel deployment 3cYBeqYwLami3rGxmMeAMmzep7GN（构建 15 秒，Ready）。Production-only 正式服务端 Secret 已由持有人配置；正式 Webhook 已启用。公开 /api/config 返回 live、payments=true、embeddedPayments=true。
+
+已实测：
+- Google OAuth 登录成功，登录后正式初始余额为 0。
+- 通过正常每日签到领取 100 Credits，界面显示今日已签到，流水只显示一笔 +100；数据库正式余额 100、签到 1 笔、充值 0 笔，原测试余额总额 500 保持不变。
+- 未登录 wallet/checkout/checkout-status 返回 401；跨站签到返回 403；无有效签名的 Webhook 返回 400。
+- 首页、checkout.js、account.js、style.css 均 200；检查的公开资源没有 sk/rk/whsec 服务端密钥。
+- 正式支付域名 enabled，Apple Pay/Google Pay domain status 均 active。
+
+已定位的账户端阻塞：
+- 浏览器点击 $1.99 充值，服务端到 Stripe 请求返回 400，request_id req_xDlP6l3J2h64rz。
+- 通过独立 Stripe MCP OAuth 使用同账户同价格创建 Elements Session，Stripe 明确返回 No valid payment method types for this Checkout Session。
+- 账户默认 payment method configuration 中 Card display preference=on、available=false；Apple Pay 同样 on/false。所有付款方式均 unavailable。默认独立账户配置的 Google Pay preference=off；账户收款能力激活后应再核对其开关。
+- Stripe 官方说明 available=true 同时要求能力 active 和显示偏好 on；live 服务要求完成账户验证及激活。持有人确认身份验证尚未完成，因此当前阻塞与未激活收款能力高度一致。现有 MCP 未提供账户具体 verification requirements/disabled_reason，未独立确认具体待补字段。
+- 按持有人指示保留正式配置与入口，不更换账户、密钥、价格或付款流程。此次没有进行真实扣款。
+
+验收限制与复测：完成身份验证并等待 Stripe 收款能力激活后，重新创建三个档位的 Session，再实测卡/3DS、钱包和 Apple Pay 跨设备付款。当前尚不能验证 Stripe iframe 实际挂载、原生钱包、真实交易到 Webhook 到余额的完整链路；53 项自动测试与既有数据库事务测试不能代替这些验收。
+
+依据：https://docs.stripe.com/get-started/account/set-up 、https://docs.stripe.com/connect/multiple-payment-method-configurations 。
