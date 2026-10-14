@@ -104,7 +104,7 @@ function historyList() {
   $("#historyList").innerHTML =
     Object.keys(state.chats)
       .reverse()
-      .slice(0, 5)
+      .slice(0, 10)
       .map((id) => {
         const item = items().find((t) => t.id === id);
         return item
@@ -141,10 +141,67 @@ function home() {
       .join(
         "",
       )}</div><p class="fan-note">当前为书架占位，正文和互动剧情正在准备中。</p></div>${footer()}`;
-  const h = realCharacters[hero % realCharacters.length];
-  if (!h) return empty("角色正在准备中", "稍后再来看看。");
-  return `<section class="hero characterhero"><div class="herocopy"><span class="eyebrow">A LITTLE COMPANY, A NEW STORY</span><h1>一次相遇，<br>一段属于你的故事。</h1><p>选一个角色，聊聊今天。</p><button class="primary" data-chat="${esc(h.id)}">与 ${esc(h.name)} 交谈 ${icon("arrow")}</button><span class="hero-caption">${esc(h.scene)}</span></div><div class="heroart"><img src="${esc(h.image)}" alt="${esc(h.name)}" decoding="async" fetchpriority="high" width="700" height="700"></div><div class="herodots">${realCharacters.map((item, i) => `<button data-feature="${i}" class="${i === hero ? "selected" : ""}" aria-label="查看${esc(item.name)}" aria-pressed="${i === hero}"></button>`).join("")}</div></section><div class="content"><div class="sectionhead"><h2>今天，想和谁聊聊？</h2><span class="quiet">${realCharacters.length} 位角色 · 各有自己的世界</span></div><div class="cards character-grid">${realCharacters.map(card).join("")}</div><p class="fan-note">角色设定为原创同人内容，与原作权利人无关联。</p></div>${footer()}`;
+  if (!realCharacters.length) return empty("角色正在准备中", "稍后再来看看。");
+  return `<section class="hero characterhero" aria-label="角色相遇" aria-roledescription="轮播"><div class="hero-track" id="heroTrack" tabindex="0" aria-label="角色轮播，使用左右方向键切换">${realCharacters.map((h, i) => `<article class="hero-slide" role="group" aria-roledescription="幻灯片" aria-label="${i + 1} / ${realCharacters.length} · ${esc(h.name)}"><div class="herocopy"><span class="eyebrow">A LITTLE COMPANY, A NEW STORY</span><h1>一次相遇，<br>一段属于你的故事。</h1><p>选一个角色，聊聊今天。</p><button class="primary" data-chat="${esc(h.id)}">与 ${esc(h.name)} 交谈 ${icon("arrow")}</button><span class="hero-caption">${esc(h.scene)}</span></div><div class="heroart"><img src="${esc(h.image)}" alt="${esc(h.name)}" decoding="async" loading="${i === hero ? "eager" : "lazy"}" width="700" height="700" draggable="false"></div></article>`).join("")}</div><div class="herodots">${realCharacters.map((item, i) => `<button data-feature="${i}" class="${i === hero ? "selected" : ""}" aria-label="查看${esc(item.name)}" aria-pressed="${i === hero}"></button>`).join("")}</div></section><div class="content"><div class="sectionhead"><h2>今天，想和谁聊聊？</h2><span class="quiet">${realCharacters.length} 位角色 · 各有自己的世界</span></div><div class="cards character-grid">${realCharacters.map(card).join("")}</div><p class="fan-note">角色设定为原创同人内容，与原作权利人无关联。</p></div>${footer()}`;
 }
+function scrollHero(index) {
+  const track = $("#heroTrack");
+  if (!track) return;
+  const next = Math.max(0, Math.min(realCharacters.length - 1, index));
+  track.scrollTo({ left: next * track.clientWidth, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+}
+function initHeroCarousel() {
+  const track = $("#heroTrack");
+  if (!track) return;
+  track.scrollLeft = hero * track.clientWidth;
+  let frame = 0, drag = null;
+  const update = () => {
+    frame = 0;
+    hero = Math.max(0, Math.min(realCharacters.length - 1, Math.round(track.scrollLeft / (track.clientWidth || 1))));
+    track.closest(".characterhero").querySelectorAll("[data-feature]").forEach((dot, index) => {
+      dot.classList.toggle("selected", index === hero);
+      dot.setAttribute("aria-pressed", String(index === hero));
+    });
+  };
+  track.addEventListener("scroll", () => { if (!frame) frame = requestAnimationFrame(update); }, { passive: true });
+  track.addEventListener("keydown", event => {
+    if (event.target !== track || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    scrollHero(event.key === "Home" ? 0 : event.key === "End" ? realCharacters.length - 1 : hero + (event.key === "ArrowRight" ? 1 : -1));
+  });
+  // Touch and trackpad use the browser's native scrolling and momentum.
+  // This handler only adds the equivalent grab-and-drag for a mouse.
+  track.addEventListener("pointerdown", event => {
+    if (event.pointerType !== "mouse" || event.button !== 0 || event.target.closest("button, a")) return;
+    drag = { id: event.pointerId, x: event.clientX, left: track.scrollLeft, moved: false };
+  });
+  track.addEventListener("pointermove", event => {
+    if (!drag || event.pointerId !== drag.id) return;
+    const dx = event.clientX - drag.x;
+    if (!drag.moved && Math.abs(dx) < 5) return;
+    if (!drag.moved) {
+      drag.moved = true;
+      track.classList.add("dragging");
+      track.setPointerCapture(event.pointerId);
+    }
+    event.preventDefault();
+    track.scrollLeft = drag.left - dx;
+  });
+  const finish = event => {
+    if (!drag || event.pointerId !== drag.id) return;
+    const moved = drag.moved;
+    drag = null;
+    track.classList.remove("dragging");
+    if (track.hasPointerCapture(event.pointerId)) track.releasePointerCapture(event.pointerId);
+    if (moved) scrollHero(Math.round(track.scrollLeft / (track.clientWidth || 1)));
+  };
+  track.addEventListener("pointerup", finish);
+  track.addEventListener("pointercancel", finish);
+  track.addEventListener("pointerleave", event => { if (drag && !drag.moved) finish(event); });
+  track.addEventListener("lostpointercapture", finish);
+  update();
+}
+
 function detail() {
   const t = selected,
     coming = t.type === "story" && t.status !== "published";
@@ -229,6 +286,7 @@ function render() {
       `<div class="content">${titles.length ? `<div class="cards book-grid">${titles.map(card).join("")}</div>` : empty(page === "titles" ? "把喜欢的故事留在这里" : "第一次相遇，从这里开始", page === "titles" ? "在小说或角色档案里点一下收藏。" : "和一位角色聊聊，随时回来继续。")}${page === "history" ? archiveList() : ""}${state.created.length && page === "titles" ? `<details class="legacy-drafts"><summary>以前保存的本地草稿（${state.created.length}）</summary><p class="quiet">这些草稿仍保存在浏览器中，内容未发布。</p><div class="cards">${state.created.map(card).join("")}</div></details>` : ""}</div>`;
   } else app.innerHTML = empty("这一页还没写好", "回到角色页继续探索。");
   historyList();
+  if (page === "character") initHeroCarousel();
   if (page === "chat") {
     if ($("#message")) $("#message").value = drafts[selected.id] || "";
     scrollChat();
@@ -754,8 +812,7 @@ document.addEventListener("click", async (event) => {
       return;
     }
     if (data.feature !== undefined) {
-      hero = Number(data.feature);
-      render();
+      scrollHero(Number(data.feature));
       return;
     }
     if (data.like) {
@@ -971,7 +1028,6 @@ const boot = async () => {
 };
 boot().catch(() => toast("页面初始化失败，请刷新重试。"));
 
-let heroGesture = null;
 document.addEventListener("pointermove", event => {
   const card = event.target.closest(".card, .plan");
   if (!card || event.pointerType === "touch") return;
@@ -979,26 +1035,3 @@ document.addEventListener("pointermove", event => {
   card.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
   card.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
 });
-document.addEventListener("pointerdown", event => {
-  if (event.target.closest(".characterhero") && !event.target.closest("button") && event.button === 0)
-    heroGesture = { x: event.clientX, y: event.clientY, id: event.pointerId };
-});
-document.addEventListener("pointerup", event => {
-  const start = heroGesture; heroGesture = null;
-  if (!start || start.id !== event.pointerId) return;
-  const dx = event.clientX - start.x, dy = event.clientY - start.y;
-  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-    hero = (hero + (dx < 0 ? 1 : -1) + realCharacters.length) % realCharacters.length;
-    render();
-  }
-});
-document.addEventListener("pointercancel", () => { heroGesture = null; });
-document.addEventListener("wheel", event => {
-  if (!event.target.closest(".characterhero") || Math.abs(event.deltaX) < 30 || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
-  event.preventDefault();
-  if (window.heroWheelLock) return;
-  window.heroWheelLock = true;
-  hero = (hero + (event.deltaX > 0 ? 1 : -1) + realCharacters.length) % realCharacters.length;
-  render();
-  setTimeout(() => { window.heroWheelLock = false; }, 350);
-}, { passive: false });

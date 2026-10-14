@@ -100,7 +100,7 @@ img {
 #sidebar {
   position: fixed;
   inset: 0 auto 0 0;
-  width: 204px;
+  width: 184px;
   z-index: 20;
   display: flex;
   flex-direction: column;
@@ -219,7 +219,7 @@ hr {
   white-space: nowrap;
 }
 main {
-  margin-left: 204px;
+  margin-left: 184px;
   min-height: 100dvh;
 }
 .content {
@@ -1836,15 +1836,22 @@ dialog p {
 @media(max-width:480px){#modal:has(.embedded-checkout){padding:24px 16px}.embedded-checkout h2{font-size:20px}}
 
 /* Compact navigation and responsive interactive surfaces. */
-.logo{padding:24px 14px 18px}.logo b{font-size:19px}.logo b span,.sidebottom>small{display:none}
+.logo{padding:20px 12px 14px;justify-content:flex-start;gap:8px}.logo b{font-size:17px}.logo b span,.sidebottom>small{display:none}
 .sidebottom{padding:14px 12px}#profileBtn{padding:12px 10px;border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.035)}
 #profileBtn:hover{background:rgba(255,255,255,.08)}.account-avatar{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:rgba(185,215,149,.12);flex-shrink:0}.account-label{display:flex;flex-direction:column;gap:4px}.account-label b{font-weight:600}.account-label small{margin:0;font-size:10px}
 .card,.plan{position:relative;border:1px solid transparent;border-radius:18px;padding:12px;transition:transform .2s,border-color .2s,box-shadow .2s,background .2s}
 @media(hover:hover){.card:hover,.plan:hover{transform:translateY(-4px);border-color:rgba(189,219,159,.45);box-shadow:0 12px 32px #0003;background:radial-gradient(240px circle at var(--pointer-x,50%) var(--pointer-y,50%),rgba(189,219,159,.12),transparent 80%)}}
 .card:focus-visible,.plan:focus-within{outline:2px solid var(--brand);outline-offset:3px}.plan.recommended{border-color:var(--line)}
-.characterhero{touch-action:pan-y;user-select:none}.heroart img{pointer-events:none}.herodots button{min-width:24px;min-height:32px}
+.characterhero{user-select:none}.heroart img{pointer-events:none}.herodots button{min-width:24px;min-height:32px}
 .login-panel{display:grid;gap:16px}.login-panel h2,.login-panel p{margin:0}.login-panel p{font-size:13px}#emailLoginForm{display:grid;gap:12px}#loginEmail{width:100%;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--side);color:inherit}
 @media(max-width:760px){main{margin-left:0}.card{padding:7px;border-radius:12px}.heroart{overflow:hidden}.plans{gap:12px}}
 @media(prefers-reduced-motion:reduce){.card,.plan{transition:none}.card:hover,.plan:hover{transform:none}}
 
 .conversation-archives{margin-top:32px}.conversation-archives .settingrow{width:100%;text-align:left}.conversation-archives small{display:block;color:var(--muted);margin-top:5px}.archive-messages{max-height:60dvh;overflow:auto;padding:12px 4px}.archive-messages .msg{max-width:100%}
+
+/* Native carousel: fractional horizontal scroll, platform momentum and release snapping. */
+#sidebar > nav{padding:6px 10px;flex-shrink:0}#sidebar nav button{font-size:12.5px;padding:9px 10px;gap:10px;margin-bottom:2px}#sidebar nav .icon{width:18px;height:18px}#sidebar hr{margin:12px 10px}
+#sidebar .brandmark{width:26px;height:26px}.logo a{gap:6px}.logo button{padding:3px}.logo button .icon{width:19px;height:19px}.sidehistory{padding:16px 14px;min-height:0}.sidehistory>small{font-size:10px;letter-spacing:.5px}.historyitem{font-size:11.5px;gap:8px}.sidebottom{flex-shrink:0}
+.characterhero{padding:0}.hero-track{display:flex;height:100%;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:none;cursor:grab;touch-action:auto}.hero-track::-webkit-scrollbar{display:none}.hero-track:focus-visible{outline:2px solid var(--brand);outline-offset:-3px}.hero-slide{position:relative;flex:0 0 100%;min-width:0;height:100%;padding:42px 42px 58px;overflow:hidden;scroll-snap-align:start;background:#263025}.hero-track.dragging{scroll-snap-type:none;cursor:grabbing}.hero-slide .herocopy{pointer-events:none}.hero-slide .herocopy button{pointer-events:auto}
+@media(max-width:760px){.collapsed main{margin-left:0}.hero-slide{padding:30px 30px 50px}}
+@media(max-width:500px){.hero-slide{padding:26px 22px 48px}}
