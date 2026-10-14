@@ -112,7 +112,7 @@ function historyList() {
       })
       .join("") || '<p class="quiet sidehint">开始一段对话，它会留在这里。</p>';
   $("#profileBtn").innerHTML =
-    `${icon("user")}<span>${esc(account.user?.user_metadata?.full_name || (account.user ? state.nickname : "登录 / 我的账户"))}</span>`;
+    `<span class="account-avatar">${icon("user")}</span><span class="account-label"><b>${esc(account.user?.user_metadata?.full_name || state.nickname)}</b><small>${account.user ? "我的账户" : "访客 · 对话已保存"}</small></span>`;
 }
 function cover(item) {
   if (item.type === "story" && item.status !== "published")
@@ -121,7 +121,7 @@ function cover(item) {
 }
 function card(item) {
   const coming = item.type === "story" && item.status !== "published";
-  return `<button class="card ${item.type === "character" ? "character" : "story-card"}" data-title="${esc(item.id)}"><div class="cover">${cover(item)}<span class="badge">${coming ? "即将上线" : "角色聊天"}</span></div><h3>${esc(item.name)}</h3><p>${esc(item.description)}</p><div class="meta">${esc(genres[item.genre] || item.mood || "原创故事")}</div></button>`;
+  return `<button class="card ${item.type === "character" ? "character" : "story-card"}" data-title="${esc(item.id)}"><div class="cover">${cover(item)}<span class="badge">${coming ? "即将上线" : "角色聊天"}</span></div><h3>${esc(item.name)}</h3><div class="meta">${esc(genres[item.genre] || item.mood || "原创故事")}</div></button>`;
 }
 function empty(title, description) {
   return `<div class="empty">${icon("book")}<h2>${esc(title)}</h2><p>${esc(description)}</p><button class="secondary" data-page="character">去认识角色 ${icon("arrow")}</button></div>`;
@@ -134,7 +134,7 @@ function footer() {
 }
 function home() {
   if (page === "story")
-    return `<div class="content library"><section class="libraryhero"><div><span class="eyebrow">YOUR NEXT CHAPTER</span><h1>故事还未开始，<br>想象已经抵达。</h1><p>这里将收录许多可以走进去的小说。先收藏喜欢的世界，等下一章到来。</p><button class="primary" data-page="character">先与角色相遇 ${icon("arrow")}</button></div><div class="library-illustration" aria-hidden="true"><div class="floating-spark">✧</div><div class="hero-book"><span>STORYLOVE</span>${icon("book")}<b>每一种想象<br>都有下一页</b></div><div class="orbit">✦</div></div></section><div class="sectionhead"><div><span class="eyebrow">THE STORY SHELF</span><h2>挑一个喜欢的世界</h2></div><span class="quiet">${original.length} 部小说筹备中</span></div><div class="tabs" aria-label="小说类型">${[["all", "全部"], ...Object.entries(genres).filter(([key]) => key !== "SchoolLife")].map(([key, label]) => `<button class="chip ${genre === key ? "selected" : ""}" data-genre="${key}" aria-pressed="${genre === key}">${label}</button>`).join("")}</div><div class="cards book-grid">${original
+    return `<div class="content library"><section class="libraryhero"><div><span class="eyebrow">YOUR NEXT CHAPTER</span><h1>故事还未开始，<br>想象已经抵达。</h1><p>收藏喜欢的世界，等待新章。</p><button class="primary" data-page="character">先与角色相遇 ${icon("arrow")}</button></div><div class="library-illustration" aria-hidden="true"><div class="floating-spark">✧</div><div class="hero-book"><span>STORYLOVE</span>${icon("book")}<b>每一种想象<br>都有下一页</b></div><div class="orbit">✦</div></div></section><div class="sectionhead"><div><span class="eyebrow">THE STORY SHELF</span><h2>挑一个喜欢的世界</h2></div><span class="quiet">${original.length} 部小说筹备中</span></div><div class="tabs" aria-label="小说类型">${[["all", "全部"], ...Object.entries(genres).filter(([key]) => key !== "SchoolLife")].map(([key, label]) => `<button class="chip ${genre === key ? "selected" : ""}" data-genre="${key}" aria-pressed="${genre === key}">${label}</button>`).join("")}</div><div class="cards book-grid">${original
       .filter((t) => genre === "all" || t.genre === genre)
       .map(card)
       .join(
@@ -142,12 +142,12 @@ function home() {
       )}</div><p class="fan-note">当前为书架占位，正文和互动剧情正在准备中。</p></div>${footer()}`;
   const h = realCharacters[hero % realCharacters.length];
   if (!h) return empty("角色正在准备中", "稍后再来看看。");
-  return `<section class="hero characterhero"><div class="herocopy"><span class="eyebrow">A LITTLE COMPANY, A NEW STORY</span><h1>一次相遇，<br>一段属于你的故事。</h1><p>冒险、日常，或只是分享今天。<br>选择一位角色，让对话自然开始。</p><button class="primary" data-chat="${esc(h.id)}">与 ${esc(h.name)} 交谈 ${icon("arrow")}</button><span class="hero-caption">${esc(h.scene)}</span></div><div class="heroart"><img src="${esc(h.image)}" alt="${esc(h.name)}" decoding="async" fetchpriority="high" width="700" height="700"></div><div class="herodots">${realCharacters.map((item, i) => `<button data-feature="${i}" class="${i === hero ? "selected" : ""}" aria-label="查看${esc(item.name)}" aria-pressed="${i === hero}"></button>`).join("")}</div></section><div class="content"><div class="sectionhead"><h2>今天，想和谁聊聊？</h2><span class="quiet">${realCharacters.length} 位角色 · 各有自己的世界</span></div><div class="cards character-grid">${realCharacters.map(card).join("")}</div><p class="fan-note">角色设定为原创同人内容，与原作权利人无关联。</p></div>${footer()}`;
+  return `<section class="hero characterhero"><div class="herocopy"><span class="eyebrow">A LITTLE COMPANY, A NEW STORY</span><h1>一次相遇，<br>一段属于你的故事。</h1><p>选一个角色，聊聊今天。</p><button class="primary" data-chat="${esc(h.id)}">与 ${esc(h.name)} 交谈 ${icon("arrow")}</button><span class="hero-caption">${esc(h.scene)}</span></div><div class="heroart"><img src="${esc(h.image)}" alt="${esc(h.name)}" decoding="async" fetchpriority="high" width="700" height="700"></div><div class="herodots">${realCharacters.map((item, i) => `<button data-feature="${i}" class="${i === hero ? "selected" : ""}" aria-label="查看${esc(item.name)}" aria-pressed="${i === hero}"></button>`).join("")}</div></section><div class="content"><div class="sectionhead"><h2>今天，想和谁聊聊？</h2><span class="quiet">${realCharacters.length} 位角色 · 各有自己的世界</span></div><div class="cards character-grid">${realCharacters.map(card).join("")}</div><p class="fan-note">角色设定为原创同人内容，与原作权利人无关联。</p></div>${footer()}`;
 }
 function detail() {
   const t = selected,
     coming = t.type === "story" && t.status !== "published";
-  return `<div class="content detail"><button class="text-button" data-page="${t.type === "story" ? "story" : "character"}">${icon("back")} 返回${t.type === "story" ? "书架" : "角色"}</button><div class="detailtop"><div class="detailcover cover">${cover(t)}</div><div><span class="eyebrow">${coming ? "STORYLOVE ORIGINALS · COMING SOON" : esc(t.origin || "角色聊天")}</span><h1>${esc(t.name)}</h1><p>${esc(t.description)}</p><span class="chip">${esc(genres[t.genre] || t.mood || "原创")}</span><div class="detailactions">${coming ? '<span class="coming-note">正文筹备中，敬请期待</span>' : `<button class="primary" data-chat="${esc(t.id)}">${state.chats[t.id] ? "继续对话" : "开始对话"} ${icon("arrow")}</button>`}<button class="secondary" data-like="${esc(t.id)}" aria-pressed="${state.favorites.includes(t.id)}">${icon("heart")} ${state.favorites.includes(t.id) ? "已收藏" : "收藏"}</button></div></div></div><div class="detailtext"><h2>${coming ? "在这里等待下一章" : "故事从这里开始"}</h2><p class="opening">${esc(coming ? "这是一部筹备中的小说。正式内容上线后，你可以在这里开始阅读和互动。" : t.intro)}</p>${coming ? '<button class="text-button" data-page="character">先去认识一位角色 ' + icon("arrow") + "</button>" : '<p class="quiet">你决定自己的行动，角色回应你的故事。近期对话用于保持上下文。</p>'}</div></div>`;
+  return `<div class="content detail"><button class="text-button" data-page="${t.type === "story" ? "story" : "character"}">${icon("back")} 返回${t.type === "story" ? "书架" : "角色"}</button><div class="detailtop"><div class="detailcover cover">${cover(t)}</div><div><span class="eyebrow">${coming ? "STORYLOVE ORIGINALS · COMING SOON" : esc(t.origin || "角色聊天")}</span><h1>${esc(t.name)}</h1><p>${esc(t.description)}</p><span class="chip">${esc(genres[t.genre] || t.mood || "原创")}</span><div class="detailactions">${coming ? '<span class="coming-note">正文筹备中，敬请期待</span>' : `<button class="primary" data-chat="${esc(t.id)}">${state.chats[t.id] ? "继续对话" : "开始对话"} ${icon("arrow")}</button>`}<button class="secondary" data-like="${esc(t.id)}" aria-pressed="${state.favorites.includes(t.id)}">${icon("heart")} ${state.favorites.includes(t.id) ? "已收藏" : "收藏"}</button></div></div></div><div class="detailtext"><h2>${coming ? "在这里等待下一章" : "故事从这里开始"}</h2><p class="opening">${esc(coming ? "这是一部筹备中的小说。正式内容上线后，你可以在这里开始阅读和互动。" : t.intro)}</p>${coming ? '<button class="text-button" data-page="character">先去认识一位角色 ' + icon("arrow") + "</button>" : ''}</div></div>`;
 }
 function searchResults() {
   const matches = items().filter(
@@ -175,13 +175,13 @@ function credits() {
   };
   return (
     head("我的灵感", "给下一段故事，留一点期待。") +
-    `<div class="content wallet-page">${paymentState ? `<div class="payment-notice ${paymentState === "credited" ? "success" : ""}" role="status">${icon(paymentState === "credited" ? "check" : "clock")}<span>${paymentMessages[paymentState]}</span>${["waiting", "error", "processing"].includes(paymentState) ? '<button class="secondary" data-action="verifyPayment">重新确认</button>' : ""}</div>` : ""}<div class="balance"><span class="eyebrow">YOUR STORY WALLET ${account.walletMode === "test" ? "· 测试环境" : ""}</span><p>我的 Credits</p><b>${creditIcon} ${w ? Number(w.balance).toLocaleString() : "—"}</b><div class="wallet-actions">${account.user ? `<button class="primary" data-action="checkin" ${disabled || w?.checked || !w ? "disabled" : ""}>${w?.checked ? icon("check") + " 今日已签到" : walletBusy ? "正在处理…" : "每日签到 · +100"}</button><button class="secondary" data-action="creditHistory" ${!w ? "disabled" : ""}>查看流水</button><button class="text-button" data-action="refreshWallet" ${disabled ? "disabled" : ""}>刷新余额</button>` : `<button class="primary" data-action="login" ${disabled ? "disabled" : ""}>${account.loading ? "正在恢复账户…" : "Google 登录，领取每日灵感"}</button>`}</div><small>每日 00:00（上海时间）刷新${account.walletMode === "test" ? " · 测试余额与正式余额独立" : ""}</small></div>${account.error || account.walletError ? `<p class="account-notice" role="status">${esc(account.error || account.walletError)}${account.user ? '<button data-action="refreshWallet">重试</button>' : ""}</p>` : ""}<div class="sectionhead"><div><h2>为下一章补充灵感</h2><p class="quiet">${account.walletMode === "test" ? "当前为测试结账，不会产生真实扣款。" : "一次充值，随时使用。通过 Stripe 安全付款。"}</p></div></div><div class="plans">${(window.STORYLOVE_CREDIT_PACKS || []).map(({ credits: n, amount, label }, i) => `<div class="plan ${i === 1 ? "recommended" : ""}">${i === 1 ? '<span class="plan-tag">更多可能</span>' : ""}<span class="eyebrow">${esc(label)}</span><h2>${creditIcon} ${n.toLocaleString()}</h2><p>${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount / 100)} <small>USD · 一次性</small></p><button class="${i === 1 ? "primary" : "secondary"}" data-refill="${n}" ${disabled || !account.payments ? "disabled" : ""}>${walletBusy ? "正在处理…" : account.payments ? (account.walletMode === "test" ? "测试充值" : "充值") : "充值准备中"}</button></div>`).join("")}</div><p class="demohint">${account.payments ? "付款和到账状态以 Stripe 确认及账户流水为准。" : "充值服务尚未开放。"} 当前角色聊天暂不扣除 Credits。</p></div>`
+    `<div class="content wallet-page">${paymentState ? `<div class="payment-notice ${paymentState === "credited" ? "success" : ""}" role="status">${icon(paymentState === "credited" ? "check" : "clock")}<span>${paymentMessages[paymentState]}</span>${["waiting", "error", "processing"].includes(paymentState) ? '<button class="secondary" data-action="verifyPayment">重新确认</button>' : ""}</div>` : ""}<div class="balance"><span class="eyebrow">YOUR STORY WALLET ${account.walletMode === "test" ? "· 测试环境" : ""}</span><p>我的 Credits</p><b>${creditIcon} ${w ? Number(w.balance).toLocaleString() : "—"}</b><div class="wallet-actions">${account.user ? `<button class="primary" data-action="checkin" ${disabled || w?.checked || !w ? "disabled" : ""}>${w?.checked ? icon("check") + " 今日已签到" : walletBusy ? "正在处理…" : "每日签到 · +100"}</button><button class="secondary" data-action="creditHistory" ${!w ? "disabled" : ""}>查看流水</button><button class="text-button" data-action="refreshWallet" ${disabled ? "disabled" : ""}>刷新余额</button>` : `<button class="primary" data-action="login" ${disabled ? "disabled" : ""}>${account.loading ? "正在恢复账户…" : "登录领取灵感"}</button>`}</div><small>每日 00:00（上海时间）刷新${account.walletMode === "test" ? " · 测试余额与正式余额独立" : ""}</small></div>${account.error || account.walletError ? `<p class="account-notice" role="status">${esc(account.error || account.walletError)}${account.user ? '<button data-action="refreshWallet">重试</button>' : ""}</p>` : ""}<div class="sectionhead"><div><h2>为下一章补充灵感</h2><p class="quiet">${account.walletMode === "test" ? "当前为测试结账，不会产生真实扣款。" : "一次充值，随时使用。通过 Stripe 安全付款。"}</p></div></div><div class="plans">${(window.STORYLOVE_CREDIT_PACKS || []).map(({ credits: n, amount, label }, i) => `<div class="plan ${i === 1 ? "recommended" : ""}">${i === 1 ? '<span class="plan-tag">更多可能</span>' : ""}<span class="eyebrow">${esc(label)}</span><h2>${creditIcon} ${n.toLocaleString()}</h2><p>${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(amount / 100)} <small>USD · 一次性</small></p><button class="${i === 1 ? "primary" : "secondary"}" data-refill="${n}" ${disabled || !account.payments ? "disabled" : ""}>${walletBusy ? "正在处理…" : account.payments ? (account.walletMode === "test" ? "测试充值" : "充值") : "充值准备中"}</button></div>`).join("")}</div><p class="demohint">${account.payments ? "付款和到账状态以 Stripe 确认及账户流水为准。" : "充值服务尚未开放。"} 当前角色聊天暂不扣除 Credits。</p></div>`
   );
 }
 function profile() {
   return (
     head("我的账户") +
-    `<div class="content profile-page"><div class="profile-card"><div class="profile-avatar">${icon("character")}</div><h2>${esc(account.user?.user_metadata?.full_name || state.nickname)}</h2><p class="quiet">${account.user ? "已登录，余额和签到与账户关联。" : "浏览书架无需登录。开始聊天或充值时，只需登录一次。"}</p>${account.loading ? "<p>正在恢复账户…</p>" : account.user ? '<button class="secondary" data-action="logout">退出登录</button>' : '<button class="primary" data-action="login">使用 Google 登录</button>'}${account.error ? `<p class="account-notice">${esc(account.error)}</p>` : ""}</div><form id="profileForm"><label for="nickname">对话中的称呼</label><input id="nickname" maxlength="40" value="${esc(state.nickname)}" autocomplete="nickname"><button class="secondary" type="submit">保存称呼</button></form><div class="setting-links"><button data-page="titles">${icon("heart")} 我的收藏 ${icon("arrow")}</button><button data-page="history">${icon("clock")} 最近对话 ${icon("arrow")}</button><button data-page="credits">${icon("spark")} 我的灵感 ${icon("arrow")}</button></div><p class="fan-note">收藏和对话保存在当前浏览器；余额与账户关联。退出登录不会删除本地对话。</p></div>`
+    `<div class="content profile-page"><div class="profile-card"><div class="profile-avatar">${icon("character")}</div><h2>${esc(account.user?.user_metadata?.full_name || state.nickname)}</h2><p class="quiet">${account.user ? "已登录，余额和签到与账户关联。" : "可以直接聊天。充值前登录，余额将与账户关联。"}</p>${account.loading ? "<p>正在恢复账户…</p>" : account.user ? '<button class="secondary" data-action="logout">退出登录</button>' : '<button class="primary" data-action="login">登录 / 注册</button>'}${account.error ? `<p class="account-notice">${esc(account.error)}</p>` : ""}</div><form id="profileForm"><label for="nickname">对话中的称呼</label><input id="nickname" maxlength="40" value="${esc(state.nickname)}" autocomplete="nickname"><button class="secondary" type="submit">保存称呼</button></form><div class="setting-links"><button data-page="titles">${icon("heart")} 我的收藏 ${icon("arrow")}</button><button data-page="history">${icon("clock")} 最近对话 ${icon("arrow")}</button><button data-page="credits">${icon("spark")} 我的灵感 ${icon("arrow")}</button></div><p class="fan-note">收藏和对话保存在当前浏览器；余额与账户关联。退出登录不会删除本地对话。</p></div>`
   );
 }
 function render() {
@@ -269,7 +269,7 @@ function startChat(id) {
 }
 function chat() {
   const ms = state.chats[selected.id] || [];
-  return `<div class="chat-layout"><div class="chat"><div class="chathead"><button data-action="backDetail" aria-label="返回角色">${icon("back")}</button><div class="chat-title"><b>${esc(selected.name)}</b><small>${esc(selected.scene || (selected.type === "story" ? "互动小说" : "角色场景"))}</small></div><button class="secondary new-chat" data-action="restartChat" ${busy ? "disabled" : ""}>新对话</button><button data-action="chatMenu" aria-label="对话菜单">${icon("more")}</button></div><div class="messages" id="messages" aria-label="对话记录"><div class="chatintro"><img src="${esc(selected.image)}" alt="${esc(selected.name)}"><span class="eyebrow">${esc(selected.origin || "故事预览")}</span><h2>${esc(selected.name)}</h2><p>${esc(selected.description)}</p></div>${ms.map((m, i) => `<div class="msg ${m.role} ${m.pending ? "pending" : ""}"><small>${m.role === "user" ? esc(state.avatar) : esc(selected.name)}</small><div class="bubble" ${m.pending ? 'id="streamBubble"' : ""}>${m.pending && !m.text ? '<span class="typing"><i></i><i></i><i></i></span>' : m.role === "assistant" ? formatReply(m.text) : esc(m.text)}</div>${m.role === "assistant" && i === ms.length - 1 && i > 0 && !m.pending ? `<button data-regenerate="${i}" ${busy ? "disabled" : ""}>↻ 重新生成</button>` : ""}</div>`).join("")}<div id="chatError" class="chat-error" role="alert" ${chatError ? "" : "hidden"}><span>${esc(chatError)}</span>${chatError.includes("登录") ? '<button class="secondary" data-action="login">登录</button>' : ""}<button class="secondary" data-action="retryChat" ${busy ? "disabled" : ""}>重试</button></div></div><div class="composer">${ms.length <= 1 ? `<div class="suggestions">${(selected.suggestions || []).map((t) => `<button data-suggestion="${esc(t)}">${esc(t)}</button>`).join("")}</div>` : ""}<form id="sendForm" class="inputrow"><textarea id="message" maxlength="4000" rows="1" placeholder="${account.user ? "说些什么，或描述你的行动…" : "写下第一句话，登录后即可发送…"}" data-character="${esc(selected.id)}" aria-label="消息"></textarea><button type="submit" aria-label="发送消息" ${busy || account.loading ? "disabled" : ""}>${icon("send")}</button>${busy ? '<button type="button" class="stop-generation" data-action="stopChat">停止</button>' : ""}</form><div class="demohint">${busy ? "正在回复…" : selected.real ? (selected.type === "story" ? "互动小说" : "AI 角色") + " · 对话保存在此浏览器 · Enter 发送，Shift+Enter 换行" : "占位故事暂未接入聊天"}${serviceReady === false && selected.real ? " · 服务暂时不可用" : ""}</div></div></div><aside class="character-rail"><img src="${esc(selected.image)}" alt=""><div><span class="eyebrow">${esc(selected.origin || "PREVIEW")}</span><h2>${esc(selected.name)}</h2><p>${esc(selected.mood || selected.genre)}</p><p>${esc(selected.description)}</p><small>你的行动，由你决定。</small></div></aside></div>`;
+  return `<div class="chat-layout"><div class="chat"><div class="chathead"><button data-action="backDetail" aria-label="返回角色">${icon("back")}</button><div class="chat-title"><b>${esc(selected.name)}</b><small>${esc(selected.scene || (selected.type === "story" ? "互动小说" : "角色场景"))}</small></div><button class="secondary new-chat" data-action="restartChat" ${busy ? "disabled" : ""}>新对话</button><button data-action="chatMenu" aria-label="对话菜单">${icon("more")}</button></div><div class="messages" id="messages" aria-label="对话记录"><div class="chatintro"><img src="${esc(selected.image)}" alt="${esc(selected.name)}"><span class="eyebrow">${esc(selected.origin || "故事预览")}</span><h2>${esc(selected.name)}</h2><p>${esc(selected.description)}</p></div>${ms.map((m, i) => `<div class="msg ${m.role} ${m.pending ? "pending" : ""}"><small>${m.role === "user" ? esc(state.avatar) : esc(selected.name)}</small><div class="bubble" ${m.pending ? 'id="streamBubble"' : ""}>${m.pending && !m.text ? '<span class="typing"><i></i><i></i><i></i></span>' : m.role === "assistant" ? formatReply(m.text) : esc(m.text)}</div>${m.role === "assistant" && i === ms.length - 1 && i > 0 && !m.pending ? `<button data-regenerate="${i}" ${busy ? "disabled" : ""}>↻ 重新生成</button>` : ""}</div>`).join("")}<div id="chatError" class="chat-error" role="alert" ${chatError ? "" : "hidden"}><span>${esc(chatError)}</span>${chatError.includes("登录") ? '<button class="secondary" data-action="login">登录</button>' : ""}<button class="secondary" data-action="retryChat" ${busy ? "disabled" : ""}>重试</button></div></div><div class="composer">${ms.length <= 1 ? `<div class="suggestions">${(selected.suggestions || []).map((t) => `<button data-suggestion="${esc(t)}">${esc(t)}</button>`).join("")}</div>` : ""}<form id="sendForm" class="inputrow"><textarea id="message" maxlength="4000" rows="1" placeholder="${"说些什么，或描述你的行动…"}" data-character="${esc(selected.id)}" aria-label="消息"></textarea><button type="submit" aria-label="发送消息" ${busy ? "disabled" : ""}>${icon("send")}</button>${busy ? '<button type="button" class="stop-generation" data-action="stopChat">停止</button>' : ""}</form><div class="demohint">${busy ? "正在回复…" : selected.real ? (selected.type === "story" ? "互动小说" : "AI 角色") + " · 已保存到此浏览器" : "占位故事暂未接入聊天"}${serviceReady === false && selected.real ? " · 服务暂时不可用" : ""}</div></div></div><aside class="character-rail"><img src="${esc(selected.image)}" alt=""><div><span class="eyebrow">${esc(selected.origin || "PREVIEW")}</span><h2>${esc(selected.name)}</h2><p>${esc(selected.mood || selected.genre)}</p><p>${esc(selected.description)}</p></div></aside></div>`;
 }
 function scrollChat(force = true) {
   const m = $("#messages");
@@ -294,10 +294,6 @@ async function generate() {
   if (!selected.real) {
     chatError = "这部小说正在准备中。";
     render();
-    return;
-  }
-  if (!account.user) {
-    await account.login({ route: "#chat/" + selected.id, action: "chat" });
     return;
   }
   const id = selected.id,
@@ -337,7 +333,7 @@ async function generate() {
       account.user && account.provider !== "netlify"
         ? (await account.client.auth.getSession()).data.session
         : null;
-    if (account.provider !== "netlify" && !session)
+    if (account.user && account.provider !== "netlify" && !session)
       throw Object.assign(Error("登录已过期，请重新登录。"), { status: 401 });
     controller.signal.throwIfAborted();
     const response = await fetch("/api/chat", {
@@ -465,14 +461,6 @@ function send(text) {
   text = text.trim();
   if (!text || busy) return;
   if (!selected.real) return toast("这部小说正在准备中。");
-  if (!account.user) {
-    drafts[selected.id] = text;
-    persistDraft();
-    account
-      .login({ route: "#chat/" + selected.id, action: "chat" })
-      .catch((e) => toast(e.message));
-    return;
-  }
   if (chatError && state.chats[selected.id]?.at(-1)?.role === "user") {
     toast("请重试上一条消息，或开始新对话。");
     return;
@@ -496,6 +484,11 @@ modal.addEventListener("close", () => {
   paymentController?.abort();
   paymentController = null;
 });
+let loginIntent = {};
+function showLogin(intent = {}) {
+  loginIntent = intent;
+  openModal(`<section class="login-panel"><span class="eyebrow">STORYLOVE</span><h2>${intent.action === "checkout" ? "登录后继续充值" : "欢迎回来"}</h2><p>对话保存在此浏览器，登录不会清除记录。</p><button class="primary" data-action="googleLogin">使用 Google 继续</button>${account.provider === "supabase" ? '<form id="emailLoginForm"><label for="loginEmail">或使用邮箱登录 / 注册</label><input id="loginEmail" type="email" autocomplete="email" required placeholder="你的邮箱"><button class="secondary" type="submit">发送登录链接</button><p id="emailLoginStatus" role="status"></p></form>' : ""}<button class="text-button" data-action="closeModal">继续浏览</button></section>`);
+}
 function openModal(html) {
   paymentController?.abort();
   paymentController = null;
@@ -506,11 +499,7 @@ async function checkout(pack) {
   if (walletBusy || !account.payments) return;
   await window.accountReady;
   if (!account.user)
-    return account.login({
-      route: "#credits",
-      action: "checkout",
-      pack: Number(pack),
-    });
+    return showLogin({ route: "#credits", action: "checkout", pack: Number(pack) });
   walletBusy = true;
   render();
   try {
@@ -667,7 +656,7 @@ window.addEventListener("accountchange", () => {
   else if (page === "chat" && !busy) {
     // Preserve composer, scroll and focus when tokens/session refresh in the background.
     const button = $('#sendForm button[type="submit"]');
-    if (button) button.disabled = account.loading;
+    if (button) button.disabled = busy;
   }
 });
 document.addEventListener("input", (event) => {
@@ -683,6 +672,15 @@ document.addEventListener("input", (event) => {
   }
 });
 document.addEventListener("submit", (event) => {
+  if (event.target.id === "emailLoginForm") {
+    event.preventDefault();
+    const button = event.target.querySelector("button"), status = $("#emailLoginStatus");
+    button.disabled = true;
+    account.loginEmail($("#loginEmail").value.trim(), loginIntent)
+      .then(() => { status.textContent = "登录链接已发送，请检查邮箱。"; })
+      .catch(e => { status.textContent = e.message; })
+      .finally(() => { button.disabled = false; });
+  }
   if (event.target.id === "sendForm") {
     event.preventDefault();
     send($("#message").value);
@@ -787,10 +785,10 @@ document.addEventListener("click", async (event) => {
         nav("character");
         break;
       case "login":
-        await account.login({
-          route: location.hash || "#profile",
-          action: page === "chat" ? "chat" : undefined,
-        });
+        showLogin({ route: location.hash || "#profile" });
+        break;
+      case "googleLogin":
+        await account.login(loginIntent);
         break;
       case "logout":
         await account.logout();
@@ -954,3 +952,35 @@ const boot = async () => {
   if (paymentSession && account.user) await verifyPayment();
 };
 boot().catch(() => toast("页面初始化失败，请刷新重试。"));
+
+let heroGesture = null;
+document.addEventListener("pointermove", event => {
+  const card = event.target.closest(".card, .plan");
+  if (!card || event.pointerType === "touch") return;
+  const rect = card.getBoundingClientRect();
+  card.style.setProperty("--pointer-x", `${event.clientX - rect.left}px`);
+  card.style.setProperty("--pointer-y", `${event.clientY - rect.top}px`);
+});
+document.addEventListener("pointerdown", event => {
+  if (event.target.closest(".characterhero") && !event.target.closest("button") && event.button === 0)
+    heroGesture = { x: event.clientX, y: event.clientY, id: event.pointerId };
+});
+document.addEventListener("pointerup", event => {
+  const start = heroGesture; heroGesture = null;
+  if (!start || start.id !== event.pointerId) return;
+  const dx = event.clientX - start.x, dy = event.clientY - start.y;
+  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+    hero = (hero + (dx < 0 ? 1 : -1) + realCharacters.length) % realCharacters.length;
+    render();
+  }
+});
+document.addEventListener("pointercancel", () => { heroGesture = null; });
+document.addEventListener("wheel", event => {
+  if (!event.target.closest(".characterhero") || Math.abs(event.deltaX) < 30 || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+  event.preventDefault();
+  if (window.heroWheelLock) return;
+  window.heroWheelLock = true;
+  hero = (hero + (event.deltaX > 0 ? 1 : -1) + realCharacters.length) % realCharacters.length;
+  render();
+  setTimeout(() => { window.heroWheelLock = false; }, 350);
+}, { passive: false });
