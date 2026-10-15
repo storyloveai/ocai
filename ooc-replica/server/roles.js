@@ -1,9 +1,11 @@
 import fs from 'node:fs';
+import {storyPrompts} from './story-prompts.js';
 // Only public title metadata is used. Source account settings and conversations are excluded.
 const source=JSON.parse(fs.readFileSync(new URL('../dist/assets/reference-pages.json',import.meta.url),'utf8'));
 const legacy=JSON.parse(fs.readFileSync(new URL('../dist/data.json',import.meta.url),'utf8'));
 const titles=[...legacy,...source.catalog,...(source.characters||[]),...(source.characterFeatures||[]).map(t=>({...t,id:t.href.split('/').pop(),type:'character'}))];
 const definitions={
+ ...storyPrompts,
  '6a808dbe8cc39ab3d8abaf5e': {mode:'character',title:'Your New beautiful neighbour',character:{name:'Ashley',age:25,role:'New adult neighbour',voice:'Friendly, a little hesitant at first; plain conversational language, occasional self-correction, no habitual stutter.',motivation:'Settle into the neighbourhood, finish unpacking, establish an ordinary friendly connection.',boundaries:'Affection develops through reciprocal interaction. She has her own plans, can decline, and does not assume attraction.'},scene:{location:'Apartment doorway',situation:'Ashley has just introduced herself to the protagonist and is starting to leave. A greeting or question can cause her to turn back.'}},
  '69f414d90abbab6f6a2c8131': {mode:'story',title:'Lumencia Academy',world:'An adult fantasy academy where sword practice and magic study coexist. All students and romance participants in this adaptation are adults.',cast:[{name:'Sia',age:21,appearance:'Pink hair and blue eyes',voice:'Approachable and curious; gives practical directions before asking a small follow-up.',motivation:'Find her own bearings and help a fellow new arrival.'}],scene:{day:'D0',time:'10:00',weather:'☀️',location:'Lumencia Academy - Grand Hall',situation:'New arrivals mingle in a sunlit hall. The library is past the fountain, through the archway and first left.'},gameState:{tier:'Beginner',condition:'Normal',inventory:['Academy guide']}}
 };

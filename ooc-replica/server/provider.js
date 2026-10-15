@@ -9,7 +9,7 @@ export function providerConfig(env=process.env){
  if(url.protocol!=='https:'||url.username||url.password||url.search||url.hash)return null;
  return {key,model,baseURL:url.href.replace(/\/$/,''),name:custom?'configured-provider':'deepseek'};
 }
-export function createModel(config){return createOpenAICompatible({baseURL:config.baseURL,name:config.name,apiKey:config.key}).chatModel(config.model);}
+export function createModel(config,hooks={}){return createOpenAICompatible({fetch:async(url,init)=>{hooks.onConnecting?.();const response=await fetch(url,init);hooks.onHeaders?.(response.status);return response;},baseURL:config.baseURL,name:config.name,apiKey:config.key}).chatModel(config.model);}
 // Provider-specific latency policy stays outside model-independent narrative prompts.
 export function generationOptions(config){
  return new URL(config.baseURL).hostname==='api.deepseek.com'
