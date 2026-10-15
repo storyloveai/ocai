@@ -10,3 +10,8 @@ export function providerConfig(env=process.env){
  return {key,model,baseURL:url.href.replace(/\/$/,''),name:custom?'configured-provider':'deepseek'};
 }
 export function createModel(config){return createOpenAICompatible({baseURL:config.baseURL,name:config.name,apiKey:config.key}).chatModel(config.model);}
+// Provider-specific latency policy stays outside model-independent narrative prompts.
+export function generationOptions(config){
+ return new URL(config.baseURL).hostname==='api.deepseek.com'
+  ? {providerOptions:{[config.name]:{thinking:{type:'disabled'}}}} : {};
+}
