@@ -12,5 +12,5 @@
       "maxDuration": 180
     }
   },
-  "buildCommand": "npm run build"
+  "buildCommand": "npm run build && npm run check"
 }
