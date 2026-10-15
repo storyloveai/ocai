@@ -1,8 +1,9 @@
 import {randomUUID} from 'node:crypto';
-import {streamText,toTextStream,pipeTextStreamToResponse} from 'ai';
+import {once} from 'node:events';
+import {streamText} from 'ai';
 import {buildPrompt} from '../server/prompt-engine.js';
 import {providerConfig,createModel,generationOptions} from '../server/provider.js';
-export const config={maxDuration:60};
+
 const windows=new Map();let active=0;
 export function classifyError(error,{timedOut=false,finishReason,reasoningTokens=0}={}){
  const upstream=Number(error?.statusCode||error?.cause?.statusCode)||null;
@@ -24,14 +25,28 @@ export default async function handler(req,res){
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [key,v]of windows)if(v.until<now)windows.delete(key);
  const window=windows.get(ip)||{until:now+60000,count:0};if(window.count>=8||active>=4||windows.size>=5000)return res.status(429).json({error:'Please wait before trying again'});window.count++;windows.set(ip,window);
  let packet;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>48000)throw new Error('Request too large');packet=buildPrompt(body);}catch{return res.status(400).json({error:'Invalid title or conversation'});}
- const requestId=randomUUID(),started=Date.now();let timedOut=false,finishReason,reasoningTokens=0;const abort=new AbortController();const disconnect=()=>{if(!res.writableFinished)abort.abort();};res.on('close',disconnect);const timeout=setTimeout(()=>{timedOut=true;abort.abort();},55000);active++;
+ const requestId=randomUUID(),started=Date.now();let timedOut=false,finishReason,reasoningTokens=0,reasoningChunks=0,upstreamStatus=null,upstreamHeadersMs=null,firstTextMs=null,phase='connecting',hasText=false;
+ const framed=String(req.headers.accept||'').includes('application/x-ndjson');
+ const abort=new AbortController();const disconnect=()=>{if(!res.writableFinished)abort.abort();};res.on('close',disconnect);const timeout=setTimeout(()=>{timedOut=true;abort.abort();},165000);active++;
+ const headers=()=>{res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Prompt-Version',packet.promptVersion);res.setHeader('X-Request-Id',requestId);res.setHeader('Content-Type',framed?'application/x-ndjson; charset=utf-8':'text/plain; charset=utf-8');};
+ const emit=async(event)=>{if(res.destroyed||res.writableEnded)return;const data=framed?JSON.stringify(event)+'\n':event.type==='text'?event.text:'';if(data&&!res.write(data))await once(res,'drain',{signal:abort.signal});res.flush?.();};
+ const status=()=>emit({type:'status',phase,elapsedSeconds:Math.floor((Date.now()-started)/1000),requestId});
+ let heartbeat;
  try{
-  const result=streamText({model:createModel(config),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...generationOptions(config),maxRetries:1,abortSignal:abort.signal,onError:()=>{}});
-  const checked=result.stream.pipeThrough(new TransformStream({transform(part,c){if(part.type==='error')throw part.error;if(part.type==='finish-step'||part.type==='finish'){finishReason=part.finishReason;reasoningTokens=part.usage?.outputTokens?.reasoning||part.totalUsage?.outputTokens?.reasoning||reasoningTokens;}c.enqueue(part);}}));
-  const reader=toTextStream({stream:checked}).getReader();
-  const first=await reader.read();if(first.done)throw Object.assign(new Error('No response text'),{code:'AI_EMPTY_RESPONSE'});
-  const stream=new ReadableStream({start(c){c.enqueue(first.value);},async pull(c){try{const next=await reader.read();if(next.done)c.close();else c.enqueue(next.value);}catch{c.error(new Error('Generation interrupted'));}},cancel(){abort.abort();return reader.cancel();}});
-  await pipeTextStreamToResponse({response:res,stream,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Prompt-Version':packet.promptVersion,'X-Request-Id':requestId}});
- }catch(error){if(abort.signal.aborted&&!timedOut)return;const failure=classifyError(error,{timedOut,finishReason,reasoningTokens});console.error(JSON.stringify({event:'ai_response_failed',requestId,code:failure.code,upstreamStatus:Number(error?.statusCode)||null,finishReason,reasoningTokens,outputTokenLimit:packet.maxOutputTokens,durationMs:Date.now()-started,model:config.model,promptVersion:packet.promptVersion}));if(!res.headersSent&&!res.destroyed)res.status(failure.status).json({...failure,requestId});else if(!res.writableEnded)res.destroy();}
- finally{clearTimeout(timeout);res.off('close',disconnect);abort.abort();active--;}
+  if(framed){headers();await status();heartbeat=setInterval(()=>status().catch(()=>{}),10000);}
+  const result=streamText({model:createModel(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...generationOptions(config),maxRetries:1,abortSignal:abort.signal,onError:()=>{}});
+  for await(const part of result.stream){
+   if(abort.signal.aborted)break;
+   if(part.type==='error')throw part.error;
+   if(part.type==='reasoning-delta'){reasoningChunks++;phase='thinking';}
+   if(part.type==='finish-step'||part.type==='finish'){finishReason=part.finishReason;reasoningTokens=part.usage?.outputTokens?.reasoning||part.totalUsage?.outputTokens?.reasoning||reasoningTokens;}
+   if(part.type==='text-delta'&&part.text){if(!hasText){hasText=true;firstTextMs=Date.now()-started;if(!framed)headers();}phase='streaming';await emit({type:'text',text:part.text});}
+  }
+  if(timedOut)throw new Error('Request deadline reached');
+  if(abort.signal.aborted)return;
+  if(!hasText)throw Object.assign(new Error('No response text'),{code:'AI_EMPTY_RESPONSE'});
+  await emit({type:'done',requestId,finishReason});res.end();
+  console.info(JSON.stringify({event:'ai_response_complete',requestId,model:config.model,promptVersion:packet.promptVersion,firstTextMs,durationMs:Date.now()-started,finishReason,reasoningTokens}));
+ }catch(error){if(abort.signal.aborted&&!timedOut)return;const failure=classifyError(error,{timedOut,finishReason,reasoningTokens});console.error(JSON.stringify({event:'ai_response_failed',requestId,code:failure.code,upstreamStatus,upstreamHeadersMs,phase,reasoningChunks,finishReason,reasoningTokens,outputTokenLimit:packet.maxOutputTokens,durationMs:Date.now()-started,model:config.model,promptVersion:packet.promptVersion}));if(framed&&!res.destroyed){await emit({type:'error',...failure,requestId});res.end();}else if(!res.headersSent&&!res.destroyed)res.status(failure.status).json({...failure,requestId});else if(!res.writableEnded)res.destroy();}
+ finally{clearTimeout(timeout);clearInterval(heartbeat);res.off('close',disconnect);abort.abort();active--;}
 }
