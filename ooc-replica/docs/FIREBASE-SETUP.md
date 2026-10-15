@@ -46,8 +46,19 @@ Only then set `FIREBASE_APPLE_ENABLED=true` in Vercel and redeploy. The Apple bu
 
 On the deployed exact host: check `/api/config`, sign in with Google, complete onboarding, refresh, add a bookmark and a chat, open a second device with the same account and verify synchronization, sign out and verify guest state, then sign in with a different account and confirm isolation. Test denied access to another UID via the Firestore emulator/Rules Playground. Test popup cancellation and mobile Safari. Enable and repeat with Apple only after its console setup. Verify that root app wallets and Stripe remain intact.
 
-## Rollout status (2026-10-15)
+## Production rollout verified (2026-10-15)
 
-The cloud browser is signed in to Firebase as the account selected by the owner. Project `storylove-zzy` now has a Web app `ocai-ooc-replica`. Its four public config values are saved in the target Vercel production environment. Vercel Root Directory is `ooc-replica`; the build command is `npm run build && npm run check` on Node 24. GitHub and Vercel web access work even though the connectors returned 403. Code is staged on `feat/firebase-replica-accounts` for review against `feat/ooc-high-fidelity-replica`.
+PR #8 was merged into `feat/ooc-high-fidelity-replica`; Vercel production deployment for merge commit `672518e` reached Ready. Both production domains remain assigned to this project: `ocai-ooc-replica.vercel.app` and `project-zhmv2.vercel.app`. Vercel Root Directory is `ooc-replica`, with Node 24 and `npm run build && npm run check`. The four public Firebase config values are scoped to Production; Preview intentionally has no production Firebase config.
 
-Google provider activation, authorized domains and owner-only Firestore rules still need to be applied and verified. Apple remains disabled until its developer credentials are available. No Supabase data has been imported or deleted; no real OAuth success has yet been verified.
+Firebase project `storylove-zzy` has the `ocai-ooc-replica` Web app. Google sign-in is enabled, both production hosts are authorized, and the default Firestore Standard database is in `asia-northeast1` (Tokyo). The project remains on the no-cost Spark plan. The checked-in owner-only rules were published and compiled successfully.
+
+Verification evidence:
+
+- Build succeeded; 24 automated checks passed. GitHub showed all checks passing and no merge conflicts. The uploaded tree was compared against the tested local tree and matched exactly.
+- Live Rules Playground: an authenticated owner could read `users/{sameUID}/state/ooc-profile`; a different UID was denied for that same path. These were simulations, not test user creation.
+- A real Google OAuth flow completed on the primary production host using the owner's selected account. Firebase Authentication listed the resulting Google user; the app displayed the signed-in name and Sign out control.
+- A bookmark added through the real UI created the expected private Firestore `ooc-favorites` document with a server timestamp. After refresh, the session was restored and the bookmark remained selected. The test bookmark was then removed through the UI, and the cloud document returned to an empty list.
+- Sign out returned to the Google sign-in control. The site remained a guest after refresh. The account is left signed out for the owner.
+- First-login onboarding opens as designed; no real birthday or personal preference values were invented or submitted. Full onboarding can be completed by the account owner.
+
+Limits: Apple is implemented but disabled pending Apple Developer credentials and provider setup. Existing Supabase records, wallets, payments and analytics were not migrated or deleted. Cross-device synchronization, mobile Safari and Apple OAuth were not independently verified. This replica's credits and billing remain demo-only. Do not retire Supabase until the separate data/identity migration and wallet reconciliation are complete.
