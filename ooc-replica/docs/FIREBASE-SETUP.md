@@ -46,6 +46,8 @@ Only then set `FIREBASE_APPLE_ENABLED=true` in Vercel and redeploy. The Apple bu
 
 On the deployed exact host: check `/api/config`, sign in with Google, complete onboarding, refresh, add a bookmark and a chat, open a second device with the same account and verify synchronization, sign out and verify guest state, then sign in with a different account and confirm isolation. Test denied access to another UID via the Firestore emulator/Rules Playground. Test popup cancellation and mobile Safari. Enable and repeat with Apple only after its console setup. Verify that root app wallets and Stripe remain intact.
 
-## Access status during implementation
+## Rollout status (2026-10-15)
 
-GitHub source read access succeeded. Vercel returned 403 for the named team; no Vercel CLI was available in the workspace. Firebase administrative access was not connected, so no Firebase project, provider, rules or Vercel env configuration was changed, no Supabase data was moved, and real OAuth was not validated.
+The cloud browser is signed in to Firebase as the account selected by the owner. Project `storylove-zzy` now has a Web app `ocai-ooc-replica`. Its four public config values are saved in the target Vercel production environment. Vercel Root Directory is `ooc-replica`; the build command is `npm run build && npm run check` on Node 24. GitHub and Vercel web access work even though the connectors returned 403. Code is staged on `feat/firebase-replica-accounts` for review against `feat/ooc-high-fidelity-replica`.
+
+Google provider activation, authorized domains and owner-only Firestore rules still need to be applied and verified. Apple remains disabled until its developer credentials are available. No Supabase data has been imported or deleted; no real OAuth success has yet been verified.
