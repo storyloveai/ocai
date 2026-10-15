@@ -1,6 +1,6 @@
 # OOC interface replica
 
-A standalone, interactive reproduction of the publicly observed OOC interface. The precision pass on 2026-10-14 uses complete read-only browser DOM captures, original CSS, 12 local font faces and 299 downloaded image variants. No build dependencies are required.
+A standalone, interactive reproduction of the publicly observed OOC interface. The precision pass on 2026-10-14 uses complete read-only browser DOM captures, original CSS, 12 local font faces and 299 downloaded image variants. Run `npm ci && npm run build` to bundle the Firebase SDK.
 
 ## Run and deploy
 
@@ -27,7 +27,7 @@ The replica now includes `/onboarding/1` through `/onboarding/4`: birthday selec
 
 `/play/<public-title-id>` distinguishes story narration from character bubbles. The captured shell preserves the 256 px navigation, 56 px header, 768 px message container, model chooser and composer. Simulated transport feeds a separate grapheme-aware typewriter, with waiting spinner, cancellable stop control, partial response persistence, suggestions, message editing/regeneration, settings and local notes. Reading above the bottom pauses automatic following.
 
-Chat mode is explicit: Demo uses simulated replies; AI uses `/api/chat` and the configured server-side model. `/api/config` exposes availability, model name and prompt version, never a key. New sessions default to AI when configured; an explicitly saved Demo preference is preserved. Google/Apple buttons still open local onboarding, not OAuth. Credits remain a visual demo control and are not charged.
+Chat mode is explicit: Demo uses simulated replies; AI uses `/api/chat` and the configured server-side model. `/api/config` exposes availability, model name and prompt version, never a key. New sessions default to AI when configured; an explicitly saved Demo preference is preserved. Google/Apple account integration is implemented using Firebase; see [Firebase setup and migration status](docs/FIREBASE-SETUP.md). Providers require console and Vercel configuration. Credits remain a visual demo control and are not charged.
 
 See [可迁移提示词工程](docs/PROMPT-ENGINEERING.md) for the shared character/story system, provider rotation and regression rubric. Existing `DEEPSEEK_API_KEY` + `DEEPSEEK_MODEL` are supported. An alternative OpenAI-compatible provider uses the complete `AI_API_KEY` + `AI_BASE_URL` + `AI_MODEL` group. Only the server sees secrets.
 
@@ -49,3 +49,7 @@ Production now automatically prefers `GEMINI_API_KEY` (also accepts `GOOGLE_GENE
 - Auto selection order: Gemini key, custom `AI_*` configuration, DeepSeek configuration. Existing DeepSeek variables may remain while Gemini is active.
 - Shared role prompts, history, stream framing, cancel and retry work across providers. Gemini 3 Flash uses low thinking depth; thought summaries are not displayed. Redeploy after changing Vercel environment variables.
 - Production-only keys do not apply to Preview deployments. Verify the production domain after deployment.
+
+## Firebase accounts
+
+See [Firebase setup](docs/FIREBASE-SETUP.md) for deployment variables, Google and Apple activation, Firestore rules, verification and the separate Supabase data migration plan. The implementation is ready for configuration; provider setup and production OAuth have not yet been verified.

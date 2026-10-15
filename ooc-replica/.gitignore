@@ -1,6 +1,2 @@
-node_modules/
-research/original.html
-research/index.js
-research/original.css
-research/rea-analysis.json
-research/rea-sources/
+# Rebuilt from src/firebase-client.js with the pinned SDK on every deployment.
+dist/assets/firebase-client.js
