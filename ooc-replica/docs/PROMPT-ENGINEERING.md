@@ -97,3 +97,14 @@ DeepSeek 官方当前说明默认启用 high 思考模式；互动故事现在�
 排查时，DeepSeek 官方状态页报告 2026-10-15 00:11 UTC（北京时间 08:11）起发生网页/API 中断，影响 Flash 与 Pro；原因已识别，修复进行中。此前早晨的两次成功调用发生在该故障之前。
 
 官方事件记录：https://status.deepseek.com/incidents/7116348214287 。这一记录说明排查当时的外部服务故障，不应硬编码成永久停机提示，也不意味着所有未来超时都有相同原因。网站对等待、取消、错误分类、有限超时及上下文的修复已独立完成；供应商恢复之前，不将真实多轮调用标记为通过。
+
+
+## Gemini provider configuration
+
+Production now automatically prefers `GEMINI_API_KEY` (also accepts `GOOGLE_GENERATIVE_AI_API_KEY`). The native `@ai-sdk/google` adapter sends the key only to Google's official Gemini API, through a server-side header. Keys are never returned by `/api/config` or included in prompts.
+
+- Default model: `gemini-3.8-flash`, verified against Google's stable model catalog on 2026-10-15. Override with `GEMINI_MODEL`.
+- Optional `AI_PROVIDER`: `gemini` / `google`, `deepseek`, or `compatible`. An explicit incomplete selection fails closed; it never borrows another provider's key.
+- Auto selection order: Gemini key, custom `AI_*` configuration, DeepSeek configuration. Existing DeepSeek variables may remain while Gemini is active.
+- Shared role prompts, history, stream framing, cancel and retry work across providers. Gemini 3 Flash uses low thinking depth; thought summaries are not displayed. Redeploy after changing Vercel environment variables.
+- Production-only keys do not apply to Preview deployments. Verify the production domain after deployment.
