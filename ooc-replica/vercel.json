@@ -5,5 +5,11 @@
       "source": "/((?!api/|assets/|app\\.js|style\\.css|data\\.json).*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "fluid": true,
+  "functions": {
+    "api/chat.js": {
+      "maxDuration": 180
+    }
+  }
 }

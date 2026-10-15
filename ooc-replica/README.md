@@ -32,3 +32,9 @@ Chat mode is explicit: Demo uses simulated replies; AI uses `/api/chat` and the 
 See [可迁移提示词工程](docs/PROMPT-ENGINEERING.md) for the shared character/story system, provider rotation and regression rubric. Existing `DEEPSEEK_API_KEY` + `DEEPSEEK_MODEL` are supported. An alternative OpenAI-compatible provider uses the complete `AI_API_KEY` + `AI_BASE_URL` + `AI_MODEL` group. Only the server sees secrets.
 
 Validation: `npm run check` includes stream drain, split Unicode graphemes, cancellation, failure recovery and unsafe markup escaping. Authenticated observation reports are sanitized; raw account captures remain outside the repository.
+
+### Five independent story profiles and timeout repair
+
+`server/story-prompts.js` adds SOVEREIGN SA, APEX Heroes Academy, Dating the Strongest Hero, Failed Knight of the Swordsmanship Family SA and I Became the Commander of the Trash Knight Order. See [five complete prompt templates and trial cases](docs/FIVE-STORY-PROMPTS.md). Their openings and suggested prompts are exported to `dist/assets/scenarios.json`; public source premises and original adaptation details are labeled separately.
+
+The prior generic provider error was reproduced as a 55-second timeout. Interactive DeepSeek requests explicitly disable thinking; other providers receive no DeepSeek-only parameter. Error codes distinguish timeout, authentication, insufficient balance, rate limiting, invalid upstream configuration, exhausted output budget and empty responses. Failed assistant placeholders are filtered from subsequent requests and can be retried without duplicating the user message. Diagnostic logs omit secrets and conversation content.
