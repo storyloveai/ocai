@@ -1,7 +1,7 @@
 import {randomUUID} from 'node:crypto';
 import {streamText,toTextStream,pipeTextStreamToResponse} from 'ai';
 import {buildPrompt} from '../server/prompt-engine.js';
-import {providerConfig,createModel} from '../server/provider.js';
+import {providerConfig,createModel,generationOptions} from '../server/provider.js';
 export const config={maxDuration:60};
 const windows=new Map();let active=0;
 export function classifyError(error,{timedOut=false,finishReason,reasoningTokens=0}={}){
@@ -26,12 +26,12 @@ export default async function handler(req,res){
  let packet;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>48000)throw new Error('Request too large');packet=buildPrompt(body);}catch{return res.status(400).json({error:'Invalid title or conversation'});}
  const requestId=randomUUID(),started=Date.now();let timedOut=false,finishReason,reasoningTokens=0;const abort=new AbortController();const disconnect=()=>{if(!res.writableFinished)abort.abort();};res.on('close',disconnect);const timeout=setTimeout(()=>{timedOut=true;abort.abort();},55000);active++;
  try{
-  const result=streamText({model:createModel(config),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,maxRetries:0,abortSignal:abort.signal,onError:()=>{}});
+  const result=streamText({model:createModel(config),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...generationOptions(config),maxRetries:1,abortSignal:abort.signal,onError:()=>{}});
   const checked=result.stream.pipeThrough(new TransformStream({transform(part,c){if(part.type==='error')throw part.error;if(part.type==='finish-step'||part.type==='finish'){finishReason=part.finishReason;reasoningTokens=part.usage?.outputTokens?.reasoning||part.totalUsage?.outputTokens?.reasoning||reasoningTokens;}c.enqueue(part);}}));
   const reader=toTextStream({stream:checked}).getReader();
   const first=await reader.read();if(first.done)throw Object.assign(new Error('No response text'),{code:'AI_EMPTY_RESPONSE'});
   const stream=new ReadableStream({start(c){c.enqueue(first.value);},async pull(c){try{const next=await reader.read();if(next.done)c.close();else c.enqueue(next.value);}catch{c.error(new Error('Generation interrupted'));}},cancel(){abort.abort();return reader.cancel();}});
   await pipeTextStreamToResponse({response:res,stream,headers:{'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Prompt-Version':packet.promptVersion,'X-Request-Id':requestId}});
- }catch(error){const failure=classifyError(error,{timedOut,finishReason,reasoningTokens});console.error(JSON.stringify({event:'ai_response_failed',requestId,code:failure.code,upstreamStatus:Number(error?.statusCode)||null,finishReason,reasoningTokens,outputTokenLimit:packet.maxOutputTokens,durationMs:Date.now()-started,model:config.model,promptVersion:packet.promptVersion}));if(!res.headersSent&&!res.destroyed)res.status(failure.status).json({...failure,requestId});else if(!res.writableEnded)res.destroy();}
+ }catch(error){if(abort.signal.aborted&&!timedOut)return;const failure=classifyError(error,{timedOut,finishReason,reasoningTokens});console.error(JSON.stringify({event:'ai_response_failed',requestId,code:failure.code,upstreamStatus:Number(error?.statusCode)||null,finishReason,reasoningTokens,outputTokenLimit:packet.maxOutputTokens,durationMs:Date.now()-started,model:config.model,promptVersion:packet.promptVersion}));if(!res.headersSent&&!res.destroyed)res.status(failure.status).json({...failure,requestId});else if(!res.writableEnded)res.destroy();}
  finally{clearTimeout(timeout);res.off('close',disconnect);abort.abort();active--;}
 }
