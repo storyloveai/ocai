@@ -8,6 +8,7 @@
     "start": "python3 server.py"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.96",
     "@ai-sdk/openai-compatible": "^3.0.68",
     "ai": "^7.0.140"
   },

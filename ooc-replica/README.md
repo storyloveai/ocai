@@ -38,3 +38,14 @@ Validation: `npm run check` includes stream drain, split Unicode graphemes, canc
 `server/story-prompts.js` adds SOVEREIGN SA, APEX Heroes Academy, Dating the Strongest Hero, Failed Knight of the Swordsmanship Family SA and I Became the Commander of the Trash Knight Order. See [five complete prompt templates and trial cases](docs/FIVE-STORY-PROMPTS.md). Their openings and suggested prompts are exported to `dist/assets/scenarios.json`; public source premises and original adaptation details are labeled separately.
 
 The prior generic provider error was reproduced as a 55-second timeout. Interactive DeepSeek requests explicitly disable thinking; other providers receive no DeepSeek-only parameter. Error codes distinguish timeout, authentication, insufficient balance, rate limiting, invalid upstream configuration, exhausted output budget and empty responses. Failed assistant placeholders are filtered from subsequent requests and can be retried without duplicating the user message. Diagnostic logs omit secrets and conversation content.
+
+
+## Gemini provider configuration
+
+Production now automatically prefers `GEMINI_API_KEY` (also accepts `GOOGLE_GENERATIVE_AI_API_KEY`). The native `@ai-sdk/google` adapter sends the key only to Google's official Gemini API, through a server-side header. Keys are never returned by `/api/config` or included in prompts.
+
+- Default model: `gemini-3.8-flash`, verified against Google's stable model catalog on 2026-10-15. Override with `GEMINI_MODEL`.
+- Optional `AI_PROVIDER`: `gemini` / `google`, `deepseek`, or `compatible`. An explicit incomplete selection fails closed; it never borrows another provider's key.
+- Auto selection order: Gemini key, custom `AI_*` configuration, DeepSeek configuration. Existing DeepSeek variables may remain while Gemini is active.
+- Shared role prompts, history, stream framing, cancel and retry work across providers. Gemini 3 Flash uses low thinking depth; thought summaries are not displayed. Redeploy after changing Vercel environment variables.
+- Production-only keys do not apply to Preview deployments. Verify the production domain after deployment.
