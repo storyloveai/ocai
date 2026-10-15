@@ -4,3 +4,6 @@ research/index.js
 research/original.css
 research/rea-analysis.json
 research/rea-sources/
+
+# Bundled at build time
+dist/assets/firebase-client.js
