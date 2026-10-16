@@ -26,3 +26,7 @@ test('return URL queries fulfillment but cannot mutate balance locally',async()=
  const f=setup();globalThis.location={href:'https://replica.example/credit?checkout=success&session_id=cs_fixture'};globalThis.history={replaceState(){}};
  const calls=[];f.account.api=async path=>{calls.push(path);return path.startsWith('checkout-status')?{paid:true,credited:true}:{balance:200,checked:false,ledger:[]};};f.payments.sync();f.payments.mount(f.root);await tick();assert.ok(calls.includes('checkout-status?session_id=cs_fixture'));assert.ok(calls.every(p=>p==='wallet'||p.startsWith('checkout-status')));assert.match(f.root.textContent,/充值已到账/);assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);
 });
+
+test('guest page receives catalog after async public config without an identity change',async()=>{
+ const f=setup();f.account.user=null;const config=f.account.paymentConfig;f.account.paymentConfig={};f.payments.sync();f.payments.mount(f.root);assert.equal(f.root.querySelectorAll('[data-pack]').length,0);f.account.paymentConfig=config;f.payments.sync();assert.equal(f.root.querySelectorAll('[data-pack]').length,1);assert.match(f.root.textContent,/\$1\.99/);
+});
