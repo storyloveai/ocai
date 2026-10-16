@@ -30,3 +30,10 @@ test('return URL queries fulfillment but cannot mutate balance locally',async()=
 test('guest page receives catalog after async public config without an identity change',async()=>{
  const f=setup();f.account.user=null;const config=f.account.paymentConfig;f.account.paymentConfig={};f.payments.sync();f.payments.mount(f.root);assert.equal(f.root.querySelectorAll('[data-pack]').length,0);f.account.paymentConfig=config;f.payments.sync();assert.equal(f.root.querySelectorAll('[data-pack]').length,1);assert.match(f.root.textContent,/\$1\.99/);
 });
+
+test('initial guest mount before account sync never reads a payment session',async()=>{
+ const {document}=parseHTML('<html><body><div id="wallet"></div><dialog></dialog></body></html>');
+ const account={user:null,paymentConfig:{}};
+ const payments=createPayments({account,modal:document.querySelector('dialog'),storage:{getItem(){throw Error('guest must not read payment storage');}},show(){},notify(){}});
+ payments.mount(document.querySelector('#wallet'));await tick();assert.match(document.querySelector('#wallet').textContent,/登录查看余额/);
+});
