@@ -31,3 +31,12 @@ This creates a new Firebase wallet. No Supabase, Netlify, or demo balances/recei
 ## Verification for this change
 
 Local automated coverage includes verified identity, fixed catalog, return routing, signed webhook processing, duplicate/concurrent receipts, mode/project/account isolation, server-side daily claims, SDK lifecycle and frontend state. The Firestore transaction tests use an in-memory store, not a deployed emulator or production database. No actual Stripe payment, deployed Admin credentials, Firestore permissions or wallet device eligibility has been verified in this change. Target Vercel project inspection returned 403 for the connected account; no CLI was available. Deployment configuration remains blocked on authorized access to that project.
+
+
+## Browser rollout update — 2026-10-16
+
+GitHub and Vercel browser access succeeds under the owner's existing sessions. The complete change is in PR #9 targeting the actual production branch `feat/ooc-high-fidelity-replica`; the uploaded tree was compared byte-for-byte with the tested local files. `APP_URL=https://project-zhmv2.vercel.app` and the existing account's public live `STRIPE_PUBLISHABLE_KEY` are now saved in the replica's Production environment. Its three live price IDs already existed.
+
+The first preview exposed a real cold-start failure: Vercel's loader cannot load `jwks-rsa`'s CommonJS require with ESM-only jose 6. The scoped dependency override uses compatible jose 5.10.x; a new regression test imports API modules with `--no-experimental-require-module`. Another test covers catalog refresh after asynchronous configuration without an auth-state change. Build and 40 tests pass.
+
+Remaining credentials: `STRIPE_LIVE_SECRET_KEY` (or `STRIPE_SECRET_KEY`), a new replica endpoint's webhook signing secret, and `FIREBASE_CLIENT_EMAIL`/`FIREBASE_PRIVATE_KEY`. The original Vercel project's private Stripe secrets are write-only; they cannot be copied or revealed through that UI. No credentials were rotated. Opening the Stripe dashboard was denied by automatic approval review because Stripe-account/credential access was not explicitly authorized; no alternate access route was attempted. Live enablement and a real paid transaction remain pending.
