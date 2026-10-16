@@ -30,7 +30,7 @@ Only then set `FIREBASE_APPLE_ENABLED=true` in Vercel and redeploy. The Apple bu
 - Every Firebase UID has a separate local cache and private `users/{uid}/state/{key}` documents. JSON state documents are bounded to 750 KB by rules; large conversations produce a visible sync error and remain local.
 - Cloud writes are debounced; failure keeps a local pending marker for retry after reload. Logout waits for pending writes and stays signed in if saving fails. Switching accounts invalidates old chat callbacks.
 - Initial load restores cloud state; local unsynced keys take precedence. Simultaneous edits on multiple devices use last successful write per key. This is not collaborative editing.
-- Credits remain explicitly demo-only. These rules allow no client wallet, receipt, entitlement or balance updates. Public comments/creator publishing still need a separate server-authorized data model.
+- Credits now use an Admin-only Firestore wallet and Stripe Elements when server configuration is complete; see [PAYMENTS-SETUP.md](PAYMENTS-SETUP.md). These rules allow no client wallet, receipt, entitlement or balance updates. Existing Supabase balances are not migrated. Public comments/creator publishing still need a separate server-authorized data model.
 
 ## Supabase migration still required before full cutover
 
