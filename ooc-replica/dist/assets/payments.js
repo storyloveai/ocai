@@ -1,6 +1,6 @@
 export function createPayments({ account, show, modal, notify, storage = sessionStorage }) {
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-  let root, wallet, error = '', notice = '', busy = false, owner = Symbol(), generation = 0, controller, polling = false, observedConfig;
+  let root, wallet, error = '', notice = '', busy = false, owner = null, generation = 0, controller, polling = false, observedConfig;
   const cfg = () => account.paymentConfig;
   const key = () => `replica-payment:${cfg().auth?.config?.projectId}:${cfg().walletMode}:${owner}`;
   const current = version => version === generation && owner === account.user?.uid;
@@ -26,8 +26,9 @@ export function createPayments({ account, show, modal, notify, storage = session
     finally { if (current(version)) { busy = false; draw(); } }
   }
   async function verify() {
-    const session = owner && storage.getItem(key());
-    if (!session || polling || !account.user) return;
+    if (!account.user || owner !== account.user.uid || polling) return;
+    const session = storage.getItem(key());
+    if (!session) return;
     const version = generation; polling = true;
     try {
       for (let i = 0; i < 8 && current(version); i++) {
