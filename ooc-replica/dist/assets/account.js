@@ -9,6 +9,18 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
     if (id) storage.setItem(dirtyKey(id), JSON.stringify([...pending].filter(([, item]) => item.uid === id).map(([key]) => key)));
   }
   const a = {
+    paymentConfig: {},
+    async api(path, body) {
+      const user = a.user;
+      if (!user) throw Error('请先登录。');
+      const token = await user.getIdToken();
+      if (a.user !== user) throw Error('账户已更换，请重试。');
+      const response = await fetchImpl('/api/' + path, { method: body ? 'POST' : 'GET', headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' }, ...(body ? { body: JSON.stringify(body) } : {}) });
+      const result = await response.json();
+      if (a.user !== user) throw Error('账户已更换，请重试。');
+      if (!response.ok) throw Error(result.error || '请求失败，请重试。');
+      return result;
+    },
     user: null, ready: false, busy: true, providers: {}, error: '', syncError: '',
     read: (key, fallback) => cache.read(key, fallback),
     scope() {
@@ -69,7 +81,9 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
       try {
         const response = await fetchImpl('/api/config');
         if (!response.ok) throw Error('无法读取账户配置。');
-        const { auth } = await response.json();
+        const config = await response.json();
+        a.paymentConfig = config;
+        const { auth } = config;
         if (!auth) throw Error('Firebase 登录尚未配置，请联系站点管理员。');
         a.providers = auth.providers;
         const sdk = await loadClient();
