@@ -1,8 +1,8 @@
 import { renderCredits } from './credits-view.js';
-export function createPayments({ account, show, modal, notify, storage = sessionStorage }) {
+export function createPayments({ account, show, modal, notify, storage = sessionStorage, redirect = url => location.assign(url) }) {
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let tab = ['buy','auto','free'].includes(new URL(location.href).searchParams.get('creditTab')) ? new URL(location.href).searchParams.get('creditTab') : 'buy', selected;
-  let root, wallet, error = '', notice = '', busy = false, owner = null, generation = 0, controller, polling = false, observedConfig;
+  let root, wallet, error = '', notice = '', busy = false, owner = null, generation = 0, polling = false, observedConfig;
   const cfg = () => account.paymentConfig;
   const key = () => `replica-payment:${cfg().auth?.config?.projectId}:${cfg().walletMode}:${owner}`;
   const current = version => version === generation && owner === account.user?.uid;
@@ -61,42 +61,33 @@ export function createPayments({ account, show, modal, notify, storage = session
     if (!account.user) { account.login(); return; }
     if (busy) return;
     const version = generation; const pendingKey = key(); busy = true; error = ''; draw();
-    controller?.abort(); controller = new AbortController(); const signal = controller.signal;
-    const attemptKey = pendingKey + ':attempt:' + pack;
+    const attemptKey = pendingKey + ':attempt:hosted:' + pack;
     let requestId = storage.getItem(attemptKey);
     if (!requestId) { requestId = crypto.randomUUID(); storage.setItem(attemptKey, requestId); }
     try {
-      show(`<h2>充值 ${pack.toLocaleString()} Credits</h2><form><div data-wallet-section><div data-express-element></div></div><p data-wallet-separator hidden>或使用其他付款方式</p><div data-payment-element></div><p data-payment-error role="alert"></p><p data-payment-status role="status">正在加载安全付款界面…</p><button class="primary" type="submit" disabled>确认付款</button></form><p>支付信息由 Stripe 安全处理，交易确认后到账。</p>`);
-      const result = await account.api('checkout', { pack, request_id: requestId, ui_mode: 'elements' });
-      if (!current(version) || signal.aborted) return;
-      storage.setItem(pendingKey, result.session_id); storage.removeItem(attemptKey);
-      const { mountCheckout } = await import('./checkout.js');
-      if (!current(version) || signal.aborted) return;
-      await mountCheckout({ root: modal, publishableKey: cfg().stripePublishableKey, clientSecret: result.client_secret, signal, onComplete(session) {
-        if (!current(version)) return;
-        storage.setItem(pendingKey, session); storage.removeItem(attemptKey);
-        modal.close(); notice = '正在确认到账…'; draw(); void verify();
-      } });
+      notice = '正在跳转至 Stripe 安全收银台…'; draw();
+      const result = await account.api('checkout', { pack, request_id: requestId, ui_mode: 'hosted' });
+      if (!current(version)) return;
+      const target = new URL(result.url);
+      if (target.protocol !== 'https:' || target.hostname !== 'checkout.stripe.com' || target.username || target.password || target.port) throw Error('无法打开安全付款页面。');
+      if (/^cs_[\w]+$/.test(result.session_id || '')) storage.setItem(pendingKey, result.session_id);
+      storage.removeItem(attemptKey);
+      redirect(target.href);
     } catch (e) {
-      if (current(version) && !signal.aborted) {
-        error = e.message; const box = modal.querySelector('[data-payment-error]');
-        if (modal.open && box) { box.textContent = e.message; modal.querySelector('[data-payment-status]').textContent = ''; }
-        else notify(e.message);
-      }
+      if (current(version)) { error = e.message; notice = ''; notify(e.message); }
     } finally { if (current(version)) { busy = false; draw(); } }
   }
-  modal.addEventListener('close', () => { controller?.abort(); controller = null; busy = false; draw(); });
+
   return {
     mount(element) { root = element; root.classList.add('credits-root'); const doc=root.ownerDocument;if (!doc.querySelector('link[data-credits-style]')) { const link=doc.createElement('link');link.rel='stylesheet';link.href='/assets/credits.css';link.dataset.creditsStyle='';doc.head.append(link); } draw(); void refresh(); void verify(); },
     sync() {
       if (observedConfig !== cfg()) { observedConfig = cfg(); draw(); }
       if (owner !== account.user?.uid) {
         owner = account.user?.uid; generation++; wallet = null; error = ''; notice = ''; busy = false; polling = false;
-        if (controller) { controller.abort(); controller = null; if (modal.open) modal.close(); }
         const url = new URL(location.href), session = url.searchParams.get('session_id');
         if (owner && url.searchParams.get('checkout')) {
           if (/^cs_[\w]+$/.test(session || '')) storage.setItem(key(), session);
-          if (url.searchParams.get('checkout') === 'cancelled') notice = '付款已取消。';
+          if (url.searchParams.get('checkout') === 'cancelled') { storage.removeItem(key()); notice = '付款已取消，未扣款。'; }
           url.searchParams.delete('session_id'); url.searchParams.delete('checkout'); history.replaceState({}, '', url);
         }
         draw(); void refresh(); void verify();
