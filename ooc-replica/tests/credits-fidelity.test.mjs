@@ -34,7 +34,7 @@ test('radio selection reaches existing checkout API with selected real pack and 
  assert.match(document.querySelector('.credits-balance').textContent,/123/);
  const input=document.querySelector('[name=credits-pack][value="5000"]');input.dispatchEvent(new window.Event('change'));
  document.querySelector('[data-buy-selected]').click();await new Promise(resolve=>setImmediate(resolve));
- const checkout=calls.find(([path])=>path==='checkout');assert.equal(checkout[1].pack,5000);assert.equal(checkout[1].ui_mode,'elements');assert.match(checkout[1].request_id,/^[a-f0-9-]{36}$/);
+ const checkout=calls.find(([path])=>path==='checkout');assert.equal(checkout[1].pack,5000);assert.equal(checkout[1].ui_mode,'hosted');assert.match(checkout[1].request_id,/^[a-f0-9-]{36}$/);
  document.querySelector('[data-credit-tab="free"]').click();assert.match(location.href,/creditTab=free/);assert.equal(document.querySelector('[role=tabpanel]').getAttribute('aria-labelledby'),'credits-tab-free');
  assert.match(document.querySelector('[role=alert]').textContent,/Stopped before Stripe form/);
 });

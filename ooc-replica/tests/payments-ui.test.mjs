@@ -9,8 +9,8 @@ function setup(){
  const rows=new Map(),storage={getItem:k=>rows.get(k)??null,setItem:(k,v)=>rows.set(k,v),removeItem:k=>rows.delete(k)};
  globalThis.location={href:'https://replica.example/credit'};globalThis.history={replaceState(){}};
  const account={user:{uid:'alice'},paymentConfig:{walletConfigured:true,payments:true,embeddedPayments:true,walletMode:'test',auth:{config:{projectId:'fixture'}},creditPacks:[{credits:200,amount:199,label:'Small'}]},async api(path){return {balance:321,checked:false,ledger:[]};}};
- const payments=createPayments({account,modal,storage,show(){},notify(){}});
- return {account,payments,root:document.querySelector('#wallet'),storage};
+ const redirects=[];const payments=createPayments({account,modal,storage,show(){throw Error("Hosted checkout must not open an embedded form");},notify(){},redirect:url=>redirects.push(url)});
+ return {account,payments,root:document.querySelector('#wallet'),storage,redirects};
 }
 test('credit UI shows server balance and configured catalog; daily claim reloads ledger',async()=>{
  const f=setup();f.payments.sync();f.payments.mount(f.root);await tick();
@@ -36,4 +36,24 @@ test('initial guest mount before account sync never reads a payment session',asy
  const account={user:null,paymentConfig:{}};
  const payments=createPayments({account,modal:document.querySelector('dialog'),storage:{getItem(){throw Error('guest must not read payment storage');}},show(){},notify(){}});
  payments.mount(document.querySelector('#wallet'));await tick();assert.match(document.querySelector('#wallet').textContent,/Sign in to view your balance/);
+});
+
+test('hosted checkout redirects to Stripe without requiring an embedded publishable key',async()=>{
+ const f=setup();f.account.paymentConfig.embeddedPayments=false;let payload;
+ f.account.api=async(path,body)=>{if(path==='checkout'){payload=body;return {url:'https://checkout.stripe.com/c/pay/fixture',session_id:'cs_hosted'};}return {balance:100,checked:false,ledger:[]};};
+ f.payments.sync();f.payments.mount(f.root);await tick();
+ assert.equal(f.root.querySelector('[data-buy-selected]').disabled,false);
+ f.root.querySelector('[data-buy-selected]').click();await tick();
+ assert.equal(payload.ui_mode,'hosted');assert.equal(payload.pack,200);
+ assert.deepEqual(f.redirects,['https://checkout.stripe.com/c/pay/fixture']);assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),'cs_hosted');
+});
+test('checkout refuses a provider response redirecting outside Stripe',async()=>{
+ const f=setup();f.account.api=async path=>path==='checkout'?{url:'https://checkout.stripe.com.evil.example/pay'}:{balance:100,ledger:[]};
+ f.payments.sync();f.payments.mount(f.root);await tick();f.root.querySelector('[data-buy-selected]').click();await tick();
+ assert.deepEqual(f.redirects,[]);assert.match(f.root.textContent,/安全付款页面/);
+});
+test('cancel return clears the pending session and does not report an unpaid order',async()=>{
+ const f=setup();f.storage.setItem('replica-payment:fixture:test:alice','cs_old');globalThis.location={href:'https://replica.example/credit?checkout=cancelled'};
+ const calls=[];f.account.api=async path=>{calls.push(path);return {balance:100,ledger:[]};};f.payments.sync();f.payments.mount(f.root);await tick();
+ assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);assert.ok(calls.every(p=>p==='wallet'));assert.match(f.root.textContent,/付款已取消/);
 });

@@ -69,3 +69,9 @@ test('Vercel webhook adapter preserves original signed whitespace and raw bytes'
  const req=Readable.from([Buffer.from(raw.slice(0,17)),Buffer.from(raw.slice(17))]);Object.assign(req,{method:'POST',url:'/api/webhook',headers:{host:'replica.example','stripe-signature':event.headers.get('stripe-signature')}});
  let status,body;const res={setHeader(){},status(s){status=s;return this;},json(v){body=v;}};await paymentHandler('webhook', f.platform)(req,res);assert.equal(status,200);assert.equal(body.received,true);assert.equal((await(await f.platform.wallet(request('wallet'))).json()).balance,200);
 });
+
+test('hosted Stripe session uses return and cancel URLs and preserves verified ownership',async()=>{
+ const {platform,calls}=fixture();const result=await platform.checkout(request('checkout',{pack:200,request_id:'12345678-1234-1234-1234-123456789012',ui_mode:'hosted'}));
+ assert.equal(result.status,200);const body=await result.json();assert.equal(body.url,'https://checkout.stripe.com/c/pay/fixture');assert.equal(body.session_id,'cs_fixture');
+ assert.equal(calls[0].get('ui_mode'),'hosted');assert.equal(calls[0].get('success_url'),'https://replica.example/credit?checkout=success&session_id={CHECKOUT_SESSION_ID}');assert.equal(calls[0].get('cancel_url'),'https://replica.example/credit?checkout=cancelled');assert.equal(calls[0].has('return_url'),false);assert.equal(calls[0].get('metadata[user_id]'),'alice');
+});
