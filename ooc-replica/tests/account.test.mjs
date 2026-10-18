@@ -21,6 +21,14 @@ test('login, cloud hydrate, failure retry, logout and account switch use verifie
 test('missing Firebase config leaves browsing available and reports login unavailability',async()=>{
  let message;const a=createAccount({storage:memory(),fetchImpl:async()=>({ok:true,json:async()=>({auth:null})}),notify:m=>message=m});await a.init();assert.equal(a.busy,false);await a.login();assert.match(message,/Firebase/);
 });
+test('unreachable cloud history cannot indefinitely block an authenticated wallet session',async()=>{
+ let callback,finishLoad;
+ const a=createAccount({storage:memory(),cloudLoadTimeoutMs:10,fetchImpl:async()=>({ok:true,json:async()=>({auth:{config:{},providers:{google:true}}})}),loadClient:async()=>({connectFirebase:async()=>({subscribe:fn=>callback=fn,load:()=>new Promise(resolve=>finishLoad=resolve),save:async()=>{}})})});
+ await a.init();await callback({uid:'alice'});
+ assert.equal(a.user.uid,'alice');assert.equal(a.busy,false);assert.match(a.syncError,/云端/);
+ finishLoad([['ooc-profile',{name:'late cloud value'}]]);await Promise.resolve();
+ assert.equal(a.read('ooc-profile',null),null);
+});
 test('late writes from an old chat are discarded after account switching',async()=>{
  let callback;const a=createAccount({storage:memory(),fetchImpl:async()=>({ok:true,json:async()=>({auth:{config:{},providers:{google:true}}})}),loadClient:async()=>({connectFirebase:async()=>({subscribe:fn=>callback=fn,load:async()=>[],save:async()=>{}})})});await a.init();await callback({uid:'alice'});const oldChat=a.scope();await callback({uid:'bob'});oldChat.save('ooc-session-v2-story',[{text:'private to Alice'}]);assert.equal(a.read('ooc-session-v2-story',null),null);
 });
