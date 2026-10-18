@@ -10,7 +10,7 @@ test('account routes use the captured shell, keep real private history isolated,
  const append=window.HTMLElement.prototype.append;
  window.HTMLElement.prototype.append=function(...nodes){const r=append.apply(this,nodes);for(const n of nodes)if(n.tagName==='LINK')queueMicrotask(()=>n.onload?.());return r;};
  Object.assign(globalThis,{document,window,DOMParser,location:{pathname:'/profile',search:'',href:'https://replica.example/profile'},matchMedia:()=>({matches:true}),fetch:async path=>new Response(await readFile(join(dist,path)),{headers:{'Content-Type':'application/json'}})});
- const values=new Map([['ooc-profile',{name:'Current owner'}],['ooc-history',['story']],['ooc-favorites',['story']],['ooc-chat-story',[{text:'Private local response'}]]]);
+ const values=new Map([['ooc-profile',{name:'Current owner'}],['ooc-history',['story']],['ooc-favorites',['story']],['ooc-session-v2-story',[{text:'Private local response'}]]]);
  const data=[{id:'story',title:'Saved story',type:'story',image:'/cover.webp',author:'Creator',plays:'10'},{id:'character',title:'Character',type:'character',image:'/character.webp'}];
  const account={user:{uid:'alice'},providers:{google:true},api:async()=>({balance:23})};
  const h={read:(k,f)=>values.get(k)??f,save:(k,v)=>values.set(k,v),navigate(){},show(){},data,account,categories:[]};
@@ -20,6 +20,8 @@ test('account routes use the captured shell, keep real private history isolated,
  assert.match(document.querySelector('.shell-history').textContent,/Private local response/);
  community.show('/liked',h);reference.syncAccount(account);assert.equal(document.querySelectorAll('.library-items article').length,1);
  document.querySelector('[data-library-type=Character]').click();assert.match(document.querySelector('.library-items').textContent,/No favorites/);
+ community.show('/history',h);assert.equal(document.querySelectorAll('.library-items article').length,1);
+ community.show('/profile/setting/chat',h);const output=document.querySelector('[data-output-length]');output.querySelectorAll('option').forEach(o=>o.removeAttribute('selected'));output.querySelector('[value=long]').setAttribute('selected','');output.onchange();assert.equal(values.get('ooc-output-length'),'long');
  community.show('/my-title',h);assert.match(document.querySelector('.library-items').textContent,/There are no titles/);assert.equal(document.querySelectorAll('.library-draft').length,0);
  location.pathname='/story/6ac749a7ab586f53935a023d';
  reference.show(location.pathname,h);assert.ok(document.querySelector('.story-public-body'));assert.match(document.querySelector('.replica-story-detail').textContent,/Failed Knight/);assert.equal(document.querySelector('[data-play]').dataset.play,'6ac749a7ab586f53935a023d');
