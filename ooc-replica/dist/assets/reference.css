@@ -4,15 +4,15 @@
 :root{--safe-top:0px;--safe-right:0px;--safe-bottom:0px;--safe-left:0px}
 body[data-reference=true]>aside,body[data-reference=true]>main{display:none}
 #precision-view[hidden]{display:none}
-body[data-reference=true] dialog{color:#fafafa;background:#191919;border:1px solid #333;border-radius:16px;padding:24px;width:360px;max-width:calc(100vw - 32px)}
-body[data-reference=true] dialog::backdrop{background:#000b}
-body[data-reference=true] dialog h2{font-size:18px;margin:12px 0;text-align:center}
-body[data-reference=true] dialog p{font-size:14px;color:#aaa;margin:16px 0;line-height:1.6}
-body[data-reference=true] dialog .primary{display:block;width:100%;background:#fafafa;color:#171717;border-radius:8px;padding:12px;margin-top:12px;cursor:pointer}
-body[data-reference=true] dialog .close{position:absolute;top:8px;right:12px;font-size:22px}
-body[data-reference=true] dialog .choices{display:flex;gap:10px;margin:24px 0}
-body[data-reference=true] dialog .choices button{flex:1;padding:14px;background:#262626;border:1px solid #333;border-radius:8px}
-body[data-reference=true] dialog .choices button.active{border-color:#e0ff2e;color:#e0ff2e}
+body[data-reference=true] dialog:not(.title-preview-dialog){color:#fafafa;background:#191919;border:1px solid #333;border-radius:16px;padding:24px;width:360px;max-width:calc(100vw - 32px)}
+body[data-reference=true] dialog:not(.title-preview-dialog)::backdrop{background:#000b}
+body[data-reference=true] dialog:not(.title-preview-dialog) h2{font-size:18px;margin:12px 0;text-align:center}
+body[data-reference=true] dialog:not(.title-preview-dialog) p{font-size:14px;color:#aaa;margin:16px 0;line-height:1.6}
+body[data-reference=true] dialog:not(.title-preview-dialog) .primary{display:block;width:100%;background:#fafafa;color:#171717;border-radius:8px;padding:12px;margin-top:12px;cursor:pointer}
+body[data-reference=true] dialog:not(.title-preview-dialog) .close{position:absolute;top:8px;right:12px;font-size:22px}
+body[data-reference=true] dialog:not(.title-preview-dialog) .choices{display:flex;gap:10px;margin:24px 0}
+body[data-reference=true] dialog:not(.title-preview-dialog) .choices button{flex:1;padding:14px;background:#262626;border:1px solid #333;border-radius:8px}
+body[data-reference=true] dialog:not(.title-preview-dialog) .choices button.active{border-color:#e0ff2e;color:#e0ff2e}
 #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#e4e4e4;color:#222;border-radius:8px;padding:12px 22px;z-index:100;display:none;font-size:14px}
 .precision-collection{padding:32px 80px}.precision-collection h1{font-size:24px;margin:24px 0}.precision-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:32px 12px}.precision-grid img{max-width:100%}.precision-search-results{max-width:1024px;margin:20px auto;padding:20px}.precision-search-results h2{margin-bottom:24px;font-size:18px}
 @media(max-width:767px){.precision-collection{padding:72px 16px}.precision-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 12px}}
@@ -129,3 +129,7 @@ body[data-reference=true] dialog .choices button.active{border-color:#e0ff2e;col
     .precision-character-detail{display:flex;gap:32px;margin:36px 0}.precision-character-detail>img{width:192px;aspect-ratio:2/3;object-fit:cover;border-radius:12px}.precision-character-detail p{margin:16px 0;color:#aaa}.precision-play{background:#fafafa;color:#171717;border-radius:8px;padding:12px 24px;margin:16px 8px 0 0}.precision-collection>small{color:#737373;font-size:12px}@media(max-width:767px){.precision-character-detail{gap:16px}.precision-character-detail>img{width:120px;height:180px}}
 body[data-inspection=reference-terms]{overflow:hidden!important;overscroll-behavior:contain;position:relative!important;margin-right:10px!important;--removed-body-scroll-bar-size:10px}
 #precision-view[data-page=search]{padding:24px 16px}#precision-view[data-page=search] #reference-root{max-width:768px;margin:0 auto}#precision-view[data-page=search] [class~="w-dvw"]{width:100%;padding-top:0}#precision-view[data-page=search] header[class~="fixed"]{display:block!important;position:sticky;top:0}#precision-view[data-page=search] .precision-search-results{padding:16px;margin:0}#precision-view[data-page=search] .precision-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr))}@media(max-width:767px){#precision-view[data-page=search]{padding:0}#precision-view[data-page=search] .precision-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* Observed title quick view: 768px, 80dvh, fixed header/footer and an independent body scroll. */
+#title-preview{position:fixed;inset:auto;left:50%;top:50%;transform:translate(-50%,-50%);margin:0;padding:0;width:min(768px,calc(100vw - 24px));max-width:calc(100vw - 24px);height:80vh;height:80dvh;max-height:90dvh;border:1px solid #ffffff1a;border-radius:16px;overflow:visible;background:#171717;color:#fafafa;font:14px/21px Inter,sans-serif;box-shadow:0 25px 50px -12px #0004;gap:16px}
+#title-preview[open]{display:flex;flex-direction:column}#title-preview::backdrop{background:rgb(0 0 0 / .8)}#title-preview .title-preview-header{position:relative;flex:none}#title-preview .title-preview-header h2{font-size:16px;font-weight:500;line-height:19.2px}#title-preview .title-preview-body{min-height:0;flex:1;overflow:auto;overscroll-behavior:contain}#title-preview .title-preview-footer{flex:none}#title-preview .title-preview-menu{position:absolute;z-index:5;max-height:200px;overflow:auto;border:1px solid #ffffff1a;border-radius:6px;background:#262626;padding:4px;box-shadow:0 4px 12px #0008}#title-preview .title-preview-menu button{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:34px;gap:16px;text-align:left;padding:6px 8px;border-radius:3px;color:#fafafa;font:14px/21px Inter,sans-serif}#title-preview .title-preview-menu button:hover,#title-preview .title-preview-menu button:focus{background:#ffffff1a;outline:none}#title-preview .title-preview-menu button>span:last-child{color:#e0ff2e}
+@media(max-width:767px){#title-preview{height:90dvh;max-height:calc(100dvh - 24px)}#title-preview .title-preview-body{padding-left:16px;padding-right:16px}#title-preview .title-preview-header,#title-preview .title-preview-footer{padding:18px 16px}#title-preview .title-preview-header{padding-right:52px}}

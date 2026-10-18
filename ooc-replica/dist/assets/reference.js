@@ -1,11 +1,13 @@
+import {openTitlePreview,closeTitlePreview} from './title-preview.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const stylesheetReady=new Promise((resolve,reject)=>{style.onload=resolve;style.onerror=()=>reject(new Error('Reference stylesheet could not load'));});
 document.head.append(style);
-const [evidence, coreAssets] = await Promise.all([
+const [evidence, coreAssets, titlePreviews] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
   fetch('/assets/core-assets.json').then(r => r.json()),
+  fetch('/assets/title-previews.json').then(r=>r.ok?r.json():{titles:{}}).catch(()=>({titles:{}})),
   stylesheetReady
 ]);
 const assets={...coreAssets};
@@ -186,6 +188,7 @@ function bindSearch() {
 }
 
 export function show(path, helpers) {
+  closeTitlePreview();
   clearInterval(carousel);context=helpers;
   const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':null;
   host.hidden=!page;style.media=page?'all':'not all';legacy.disabled=Boolean(page);
@@ -225,4 +228,6 @@ export function show(path, helpers) {
 }
 
 // Authenticated layouts use the same captured stylesheet and asset map.
-export function mountInteraction(html,helpers){clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
+export function mountInteraction(html,helpers){closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
+
+export function preview(path,helpers){const match=/^\/story\/([a-f0-9]{24})$/.exec(path);if(!match||!['home','character','collection','search'].includes(host.dataset.page))return false;const record=titlePreviews.titles[match[1]];if(!record)return false;openTitlePreview(record,match[1],{...helpers,assets});return true;}
