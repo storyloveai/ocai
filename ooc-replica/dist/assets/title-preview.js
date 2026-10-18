@@ -1,6 +1,7 @@
 import {escapeHTML as safe} from './stream.js';
 let active;
-export function closeTitlePreview(){active?.close();}
+const dismissers=new WeakMap();
+export function closeTitlePreview(){if(active)dismissers.get(active)?.();}
 export function openTitlePreview(record,id,{navigate,read,save,assets={}}){
  closeTitlePreview();
  const previousFocus=document.activeElement;
@@ -15,26 +16,32 @@ export function openTitlePreview(record,id,{navigate,read,save,assets={}}){
  const selected=()=>read('ooc-favorites',[]).includes(id);
  const paintBookmark=()=>dialog.querySelectorAll('[data-preview-bookmark]').forEach(b=>{b.setAttribute('aria-pressed',String(selected()));b.style.color=selected()?'#e0ff2e':'';});paintBookmark();
  const originalOverflow=document.documentElement.style.overflow;document.documentElement.style.overflow='hidden';
- let menu;
- const closeMenu=()=>{menu?.remove();menu=null;dialog.querySelectorAll('[aria-expanded=true][role=combobox]').forEach(b=>b.setAttribute('aria-expanded','false'));};
+ let menu,menuButton;
+ const closeMenu=(restoreFocus=false)=>{const trigger=menuButton;menu?.remove();menu=null;menuButton=null;trigger?.setAttribute('aria-expanded','false');if(restoreFocus&&trigger?.isConnected)trigger.focus({preventScroll:true});};
  function choose(button,heading,options){
-  closeMenu();button.setAttribute('aria-expanded','true');menu=document.createElement('div');menu.className='title-preview-menu';menu.setAttribute('role','listbox');menu.setAttribute('aria-label',heading);
-  options.forEach(({label,run})=>{const option=document.createElement('button');option.type='button';option.setAttribute('role','option');option.setAttribute('aria-selected','true');option.innerHTML=`<span>${safe(label)}</span><span aria-hidden="true">✓</span>`;option.onclick=()=>{closeMenu();run?.();button.focus();};menu.append(option);});
+  closeMenu();menuButton=button;button.setAttribute('aria-expanded','true');menu=document.createElement('div');menu.className='title-preview-menu';menu.setAttribute('role','listbox');menu.setAttribute('aria-label',heading);
+  options.forEach(({label,run})=>{const option=document.createElement('button');option.type='button';option.setAttribute('role','option');option.setAttribute('aria-selected','true');option.innerHTML=`<span>${safe(label)}</span><span aria-hidden="true">✓</span>`;option.onclick=()=>{closeMenu();run?.();if(button.isConnected)button.focus({preventScroll:true});};menu.append(option);});
   dialog.append(menu);const r=button.getBoundingClientRect(),d=dialog.getBoundingClientRect();menu.style.left=Math.max(12,Math.min(r.left-d.left,dialog.clientWidth-240))+'px';menu.style.width=Math.min(Math.max(r.width,220),dialog.clientWidth-24)+'px';menu.style.top=Math.min(r.bottom-d.top+4,dialog.clientHeight-menu.offsetHeight-12)+'px';menu.querySelector('button')?.focus();
  }
  dialog.addEventListener('click',event=>{
-  if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();return;}
+  if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dismiss();return;}
   const button=event.target.closest('button');if(!button){if(!event.target.closest('.title-preview-menu'))closeMenu();return;}
-  if(button.hasAttribute('data-preview-close'))dialog.close();
-  if(button.dataset.previewPlay){dialog.close();navigate('/play/'+id);}
+  if(button.hasAttribute('data-preview-close'))dismiss();
+  if(button.dataset.previewPlay){dismiss();navigate('/play/'+id);}
   if(button.dataset.previewBookmark){const values=read('ooc-favorites',[]);save('ooc-favorites',selected()?values.filter(value=>value!==id):[...values,id]);paintBookmark();}
   if(button.hasAttribute('data-preview-expand')){const expanded=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!expanded));button.textContent=expanded?'View All':'Fold';const clipped=button.parentElement.parentElement.querySelector('[class*="max-h-"]');if(clipped)clipped.style.maxHeight=expanded?'':'none';}
   if(button.hasAttribute('data-preview-avatar'))choose(button,'Avatar settings',[{label:profile.name||'Default avatar'}]);
   if(button.hasAttribute('data-preview-scenario'))choose(button,'Starting scenario',[{label:button.querySelector('span').textContent.trim()}]);
-  if(button.hasAttribute('data-preview-more'))choose(button,'Story options',[{label:'Open full information',run:()=>{dialog.close();navigate('/story/'+id);}}]);
+  if(button.hasAttribute('data-preview-more'))choose(button,'Story options',[{label:'Open full information',run:()=>{dismiss();navigate('/story/'+id);}}]);
  });
- dialog.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu){event.preventDefault();event.stopPropagation();closeMenu();}else if(menu&&['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();menu.querySelector('button')?.focus();}});
- dialog.addEventListener('close',()=>{document.documentElement.style.overflow=originalOverflow;dialog.remove();if(active===dialog)active=null;if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});},{once:true});
+ dialog.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu){event.preventDefault();event.stopPropagation();closeMenu(true);}else if(menu&&['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();menu.querySelector('button')?.focus();}});
+ // Native close events are queued: release state now, before a replacement dialog or route mounts.
+ let cleaned=false;
+ const cleanup=()=>{if(cleaned)return;cleaned=true;closeMenu();document.documentElement.style.overflow=originalOverflow;dialog.remove();if(active===dialog)active=null;dismissers.delete(dialog);if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});};
+ function dismiss(){dialog.close();cleanup();}
+ dismissers.set(dialog,dismiss);
+ dialog.addEventListener('cancel',event=>{event.preventDefault();dismiss();});
+ dialog.addEventListener('close',cleanup,{once:true});
  document.body.append(dialog);active=dialog;dialog.showModal();body.scrollTop=0;dialog.querySelector('[data-preview-close]')?.focus({preventScroll:true});
  return dialog;
 }
