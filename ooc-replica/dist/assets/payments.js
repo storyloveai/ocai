@@ -79,7 +79,7 @@ export function createPayments({ account, show, modal, notify, storage = session
   }
 
   return {
-    mount(element) { root = element; root.classList.add('credits-root'); const doc=root.ownerDocument;if (!doc.querySelector('link[data-credits-style]')) { const link=doc.createElement('link');link.rel='stylesheet';link.href='/assets/credits.css';link.dataset.creditsStyle='';doc.head.append(link); } draw(); void refresh(); void verify(); },
+    mount(element) { const requestedTab=new URL(location.href).searchParams.get('creditTab');tab=['buy','auto','free'].includes(requestedTab)?requestedTab:'buy';root = element; root.classList.add('credits-root'); const doc=root.ownerDocument;if (!doc.querySelector('link[data-credits-style]')) { const link=doc.createElement('link');link.rel='stylesheet';link.href='/assets/credits.css';link.dataset.creditsStyle='';doc.head.append(link); } draw(); void refresh(); void verify(); },
     sync() {
       if (observedConfig !== cfg()) { observedConfig = cfg(); draw(); }
       if (owner !== account.user?.uid) {

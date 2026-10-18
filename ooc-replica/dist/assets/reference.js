@@ -7,7 +7,7 @@ const stylesheetReady=new Promise((resolve,reject)=>{style.onload=resolve;style.
 document.head.append(style);
 const [evidence, coreAssets, titlePreviews] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
-  fetch('/assets/core-assets.json').then(r => r.json()),
+  fetch('/assets/core-assets-index.json').then(r => r.json()),
   fetch('/assets/title-previews.json').then(r=>r.ok?r.json():{titles:{}}).catch(()=>({titles:{}})),
   stylesheetReady
 ]);
@@ -16,7 +16,7 @@ const host = document.createElement('div');
 host.id = 'precision-view';
 document.body.insertBefore(host, document.querySelector('#modal'));
 // Keep the first paint small; the complete offline asset catalogue arrives later.
-fetch('/assets/catalog-assets.json').then(r=>r.json()).then(full=>{Object.assign(assets,full);if(context&&!host.hidden)hydrate();}).catch(()=>{});
+fetch('/assets/catalog-assets-index.json').then(r=>r.json()).then(full=>{Object.assign(assets,full);if(context&&!host.hidden)hydrate();}).catch(()=>{});
 const legacy = document.querySelector('link[href="/style.css"]');
 let context, carousel, current = 1, activeFeatures=evidence.features;
 const featureIds = ['6ab3b736e2e641b7fbeb6312','6ab70e13499de207c7ca13c4','6aaad8746c080a5d3ff0402a','6ac749a7ab586f53935a023d','6ac749fc973e4d7b825f7520','6ab2217bfa760164cd6c2f12'];
@@ -49,6 +49,8 @@ function hydrate() {
   all('img[data-asset]').forEach(img => {
     const local = assets[img.dataset.asset];
     if(local) img.src = local;
+    img.decoding='async';
+    if(!img.closest('[data-hero-desktop],[data-mobile-track]'))img.loading='lazy';
   });
   all('button').forEach(b => {
     const label=text(b);
@@ -56,12 +58,11 @@ function hydrate() {
     if(label==='Search') b.onclick=()=>context.navigate('/search');
     if(label.startsWith('Continue with')) b.dataset.action='login';
     if(label==='New Play') b.dataset.play=location.pathname.split('/')[2];
-    if(b.getAttribute('aria-label')==='Back to Previous Page') b.onclick=()=>context.navigate('/');
+    if(b.getAttribute('aria-label')==='Back to Previous Page') b.onclick=()=>window.history.length>1?window.history.back():context.navigate('/');
   });
-  all('a[href^="/announcement/"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Title Publishing Bug Resolved</h2><p>The publishing issue has been resolved.</p>');});
   all('a').filter(a=>text(a)==='View All').forEach(a=>{
     let parent=a.parentElement;
-    while(parent&&parent!==host){const heading=parent.querySelector('h2');if(heading){a.href='/collection?name='+encodeURIComponent(text(heading));break;}parent=parent.parentElement;}
+    while(parent&&parent!==host){const heading=parent.querySelector('h2');if(heading){a.href='/collection?name='+encodeURIComponent(text(heading))+(host.dataset.page==='character'?'&type=character':'');break;}parent=parent.parentElement;}
   });
   all('a[href^="/policy/"]').forEach(a=>{a.href='https://ooc.ai'+a.getAttribute('href');a.target='_blank';a.rel='noopener noreferrer';});
   all('a[href^="/arpg/"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Dice of Fate</h2><p>This public banner is reproduced visually. AIRPG backend services are not connected to this replica.</p>');});
@@ -105,7 +106,7 @@ function bindHome(page) {
     b.onclick=()=>{
       const label=text(b);
       if(label==='Main')context.navigate(page==='character'?'/character':'/');
-      else context.navigate('/collection?name='+encodeURIComponent(label));
+      else context.navigate('/collection?name='+encodeURIComponent(label)+(page==='character'?'&type=character':''));
     };
   });
   all('button').filter(b=>text(b).startsWith('#')).forEach(b=>b.onclick=()=>context.navigate('/search?q='+encodeURIComponent(text(b).slice(1))));
@@ -169,7 +170,7 @@ function bindDetail() {
   });
 }
 
-function grid(items){return `<div class="precision-grid">${items.map(d=>cardMarkup.get(d.id)||`<a href="/story/${d.id}"><img src="${source(d)}" alt="${safe(d.title)}"><p>${safe(d.title)}</p></a>`).join('')}</div>`;}
+function grid(items){return `<div class="precision-grid">${items.map(d=>cardMarkup.get(d.id)||`<a href="/${d.type==='character'?'character':'story'}/${d.id}"><img src="${source(d)}" alt="${safe(d.title)}"><p>${safe(d.title)}</p></a>`).join('')}</div>`;}
 function bindSearch() {
   const inputs=all('input');
   inputs.forEach(i=>{i.setAttribute('aria-label','Search stories and characters');i.oninput=()=>{
@@ -205,7 +206,7 @@ export function show(path, helpers) {
       const body=wrapper.children[1];body.classList.add('story-public-body');
       content.innerHTML=`<header class="shell-page-header"><a href="/">‹ Story Information</a></header><article class="replica-story-detail">${body.outerHTML}<div class="story-play-bar"><button class="shell-white-button" data-play="${id}">New Play</button></div></article>`;
       content.querySelectorAll('img').forEach(img=>{const url=img.getAttribute('src');if(assets[url])img.src=assets[url];});
-      content.querySelectorAll('[style]').forEach(el=>{for(const [url,local]of Object.entries(assets))if(el.style.backgroundImage?.includes(url))el.style.backgroundImage=`url("${local}")`;});
+      content.querySelectorAll('[style]').forEach(el=>{const match=/url\(["']?([^"')]+)["']?\)/.exec(el.style.backgroundImage||'');if(match&&assets[match[1]])el.style.backgroundImage=`url("${assets[match[1]]}")`;});
       const avatar=content.querySelector('[data-preview-avatar]');if(avatar)avatar.innerHTML=`<span>${safe(context.read('ooc-profile',{}).name||'Default avatar')}</span>`;
       content.querySelectorAll('[data-preview-bookmark]').forEach(b=>{b.dataset.favorite=id;b.dataset.referenceFavorite='true';b.setAttribute('aria-label','Bookmark story');});
       content.querySelectorAll('[role="combobox"]').forEach(b=>{b.onclick=()=>context.show(`<h2>${b.hasAttribute('data-preview-avatar')?'Avatar Settings':'Starting Scenarios'}</h2><p>${safe(b.textContent)}</p><button class="shell-white-button" data-action="close">Done</button>`);});
@@ -227,7 +228,9 @@ export function show(path, helpers) {
     const content=q('[data-shrink]')?.nextElementSibling;
     if(content){
       const known=context.data.filter(d=>d.genre===name);
-      const items=name==='OOC Originals'?catalog.filter(d=>d.original):name==='Fantasy'||name==='Romance'?known:catalog;
+      const kind=new URLSearchParams(location.search).get('type');
+      const available=catalog.filter(d=>kind==='character'?d.type==='character':d.type!=='character');
+      const items=name==='OOC Originals'?available.filter(d=>d.original):name==='Fantasy'||name==='Romance'?known.filter(d=>kind==='character'?d.type==='character':d.type!=='character'):available;
       content.innerHTML=`<div class="precision-collection"><a href="/">‹ Back</a><h1>${safe(name)}</h1>${grid(items)}</div>`;
     }
   }

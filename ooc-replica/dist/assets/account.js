@@ -1,4 +1,5 @@
 import { createAccountStorage, cloudKey } from './account-storage.js';
+import { loadPublicConfig } from './public-config.js';
 export function createAccount({ storage = localStorage, fetchImpl = fetch, loadClient = () => import('./firebase-client.js'), changed = () => {}, notify = () => {}, cloudLoadTimeoutMs = 8000 } = {}) {
   const cache = createAccountStorage(storage);
   let client, uid = null, generation = 0, hydrating = false;
@@ -21,7 +22,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
       if (!response.ok) throw Error(result.error || '请求失败，请重试。');
       return result;
     },
-    user: null, ready: false, busy: true, providers: {}, error: '', syncError: '',
+    user: null, ready: false, restored: false, busy: true, providers: {}, error: '', syncError: '',
     read: (key, fallback) => cache.read(key, fallback),
     scope() {
       const version = generation;
@@ -80,9 +81,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
     },
     async init() {
       try {
-        const response = await fetchImpl('/api/config');
-        if (!response.ok) throw Error('无法读取账户配置。');
-        const config = await response.json();
+        const config = await loadPublicConfig(fetchImpl);
         a.paymentConfig = config;
         const { auth } = config;
         if (!auth) throw Error('Firebase 登录尚未配置，请联系站点管理员。');
@@ -115,12 +114,12 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
           }
           // Local unsynced values win over an older cloud copy.
           for (const [key, value] of rows) if (cloudKey(key) && !pending.has(key)) cache.save(key, value);
-          a.user = user; a.syncError = syncError; hydrating = false; a.busy = false;
+          a.user = user; a.syncError = syncError; hydrating = false; a.busy = false; a.restored = true;
           changed(true);
           if (uid && pending.size) a.flush();
         });
         a.ready = true;
-      } catch (e) { a.error = e.message; a.busy = false; }
+      } catch (e) { a.error = e.message; a.busy = false; a.restored = true; }
       changed();
     },
   };
