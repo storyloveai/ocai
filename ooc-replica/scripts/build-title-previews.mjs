@@ -3,7 +3,7 @@ import {parseHTML} from 'linkedom';
 import {resolve} from 'node:path';
 const captureDirectory=process.argv[2];
 if(!captureDirectory)throw Error('Usage: node scripts/build-title-previews.mjs <private-capture-directory>');
-const observed=[['apex','6aaad8746c080a5d3ff0402a'],['sovereign','6ab3b736e2e641b7fbeb6312'],['dating','6ab70e13499de207c7ca13c4'],['knight','6ac749a7ab586f53935a023d'],['commander','6ab2217bfa760164cd6c2f12']];
+const observed=[['lumencia','69f414d90abbab6f6a2c8131'],['apex','6aaad8746c080a5d3ff0402a'],['sovereign','6ab3b736e2e641b7fbeb6312'],['dating','6ab70e13499de207c7ca13c4'],['knight','6ac749a7ab586f53935a023d'],['commander','6ab2217bfa760164cd6c2f12']];
 const result={captured:'2026-10-18',source:'Public Story Information dialogs observed on ooc.ai',titles:{}};
 for(const [name,id]of observed){
  const {document}=parseHTML(await readFile(resolve(captureDirectory,name+'-modal-observed.html'),'utf8'));
