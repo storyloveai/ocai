@@ -1,5 +1,5 @@
 import { createAccountStorage, cloudKey } from './account-storage.js';
-export function createAccount({ storage = localStorage, fetchImpl = fetch, loadClient = () => import('./firebase-client.js'), changed = () => {}, notify = () => {} } = {}) {
+export function createAccount({ storage = localStorage, fetchImpl = fetch, loadClient = () => import('./firebase-client.js'), changed = () => {}, notify = () => {}, cloudLoadTimeoutMs = 8000 } = {}) {
   const cache = createAccountStorage(storage);
   let client, uid = null, generation = 0, hydrating = false;
   const pending = new Map();
@@ -65,6 +65,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
           'auth/popup-blocked': '浏览器拦截了登录窗口，请允许本站弹窗后重试。',
           'auth/unauthorized-domain': '当前域名尚未加入 Firebase 授权域名。',
           'auth/operation-not-allowed': '请先在 Firebase 启用此登录方式。',
+          'auth/network-request-failed': '登录服务连接超时，请检查网络后重试。',
           'auth/account-exists-with-different-credential': '此邮箱已使用另一种方式注册，请使用原方式登录。',
         };
         notify(errors[e.code] || '登录失败，请检查网络和 Firebase 配置后重试。');
@@ -95,8 +96,15 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
           changed();
           let rows = [], syncError = '';
           if (user) {
-            try { rows = await client.load(user.uid); }
+            let loadTimer;
+            try {
+              rows = await Promise.race([
+                client.load(user.uid),
+                new Promise((_, reject) => { loadTimer = setTimeout(() => reject(Error('Cloud state timed out')), cloudLoadTimeoutMs); }),
+              ]);
+            }
             catch { syncError = '无法读取云端数据，暂时使用本设备缓存。请检查网络和 Firestore 规则。'; }
+            finally { clearTimeout(loadTimer); }
           }
           if (current !== generation) return;
           uid = user?.uid || null; cache.useAccount(uid);
