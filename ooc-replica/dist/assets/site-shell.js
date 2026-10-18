@@ -23,7 +23,7 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
   }
  }
  if(user){bottom.classList.add('shell-account-slot');bottom.innerHTML=`<a class="shell-account" href="/profile"><span class="shell-avatar">✱</span><span>${safe(profile.name||user.displayName||'My account')}</span>${symbol('arrow',14)}</a>`;}
- else {bottom.classList.remove('shell-account-slot');bottom.innerHTML=bottom.dataset.guestMarkup;for(const text of bottom.querySelectorAll('*'))if(text.children.length===0&&text.textContent==='Sign up and get 500 credits!')text.textContent='Sign in to save your stories';bottom.querySelectorAll('button').forEach(b=>{b.dataset.action='login';b.dataset.provider=/Apple/.test(b.textContent)?'apple':'google';b.hidden=b.dataset.provider==='apple'&&!account.providers.apple;});}
+ else {bottom.classList.remove('shell-account-slot');bottom.innerHTML=bottom.dataset.guestMarkup.replaceAll('Sign up and get 500 credits!','Sign in to save your stories');bottom.querySelectorAll('button').forEach(b=>{b.dataset.action='login';b.dataset.provider=/Apple/.test(b.textContent)?'apple':'google';b.hidden=b.dataset.provider==='apple'&&!account.providers.apple;});}
  side.querySelectorAll('a[href]').forEach(a=>{const selected=a.getAttribute('href')===location.pathname;a.dataset.status=selected?'active':'inactive';if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  return true;
 }
