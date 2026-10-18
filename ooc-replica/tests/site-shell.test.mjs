@@ -20,7 +20,7 @@ test('account routes use the captured shell, keep real private history isolated,
  assert.match(document.querySelector('.shell-history').textContent,/Private local response/);
  community.show('/liked',h);reference.syncAccount(account);assert.equal(document.querySelectorAll('.library-items article').length,1);
  document.querySelector('[data-library-type=Character]').click();assert.match(document.querySelector('.library-items').textContent,/No favorites/);
- community.show('/history',h);assert.equal(document.querySelectorAll('.library-items article').length,1);
+ community.show('/history',h);assert.equal(document.querySelectorAll('.library-items article').length,1);assert.equal(document.querySelector('.library-items article a').getAttribute('href'),'/play/story');
  community.show('/profile/setting/chat',h);const output=document.querySelector('[data-output-length]');output.querySelectorAll('option').forEach(o=>o.removeAttribute('selected'));output.querySelector('[value=long]').setAttribute('selected','');output.onchange();assert.equal(values.get('ooc-output-length'),'long');
  community.show('/my-title',h);assert.match(document.querySelector('.library-items').textContent,/There are no titles/);assert.equal(document.querySelectorAll('.library-draft').length,0);
  location.pathname='/story/6ac749a7ab586f53935a023d';
