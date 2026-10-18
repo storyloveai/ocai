@@ -1,3 +1,4 @@
+import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
 const style=document.createElement('link');
@@ -63,7 +64,6 @@ function hydrate() {
     while(parent&&parent!==host){const heading=parent.querySelector('h2');if(heading){a.href='/collection?name='+encodeURIComponent(text(heading));break;}parent=parent.parentElement;}
   });
   all('a[href^="/policy/"]').forEach(a=>{a.href='https://ooc.ai'+a.getAttribute('href');a.target='_blank';a.rel='noopener noreferrer';});
-  all('a[href="/profile"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Your profile</h2><p>This independent replica uses local bookmarks and story sessions. Account services are not connected.</p>');});
   all('a[href^="/arpg/"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Dice of Fate</h2><p>This public banner is reproduced visually. AIRPG backend services are not connected to this replica.</p>');});
   const sidebar=q('[data-shrink]');
   if(sidebar){
@@ -190,13 +190,31 @@ function bindSearch() {
 export function show(path, helpers) {
   closeTitlePreview();
   clearInterval(carousel);context=helpers;
-  const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':null;
+  const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':path.startsWith('/story/')?'story-detail':null;
   host.hidden=!page;style.media=page?'all':'not all';legacy.disabled=Boolean(page);
   host.dataset.page=page||'';
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;
-  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'?'home':page==='captured-detail'?path:page];
+  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];
+  if(page==='story-detail'){
+    const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=titlePreviews.titles[id];
+    const content=q('[data-shrink]')?.nextElementSibling;
+    if(content&&record){
+      const wrapper=document.createElement('div');wrapper.innerHTML=record.html;
+      const body=wrapper.children[1];body.classList.add('story-public-body');
+      content.innerHTML=`<header class="shell-page-header"><a href="/">‹ Story Information</a></header><article class="replica-story-detail">${body.outerHTML}<div class="story-play-bar"><button class="shell-white-button" data-play="${id}">New Play</button></div></article>`;
+      content.querySelectorAll('img').forEach(img=>{const url=img.getAttribute('src');if(assets[url])img.src=assets[url];});
+      content.querySelectorAll('[style]').forEach(el=>{for(const [url,local]of Object.entries(assets))if(el.style.backgroundImage?.includes(url))el.style.backgroundImage=`url("${local}")`;});
+      const avatar=content.querySelector('[data-preview-avatar]');if(avatar)avatar.innerHTML=`<span>${safe(context.read('ooc-profile',{}).name||'Default avatar')}</span>`;
+      content.querySelectorAll('[data-preview-bookmark]').forEach(b=>{b.dataset.favorite=id;b.dataset.referenceFavorite='true';b.setAttribute('aria-label','Bookmark story');});
+      content.querySelectorAll('[role="combobox"]').forEach(b=>{b.onclick=()=>context.show(`<h2>${b.hasAttribute('data-preview-avatar')?'Avatar Settings':'Starting Scenarios'}</h2><p>${safe(b.textContent)}</p><button class="shell-white-button" data-action="close">Done</button>`);});
+      content.querySelectorAll('[data-preview-more]').forEach(b=>b.onclick=()=>context.show('<h2>Story Information</h2><p>Public story information and the default starting scenario are available.</p>'));
+      content.querySelectorAll('[data-preview-expand]').forEach(b=>{let parent=b.parentElement;parent.querySelectorAll('[class*="max-h-"]').forEach(el=>el.style.maxHeight='none');});
+    }else if(content&&d){
+      content.innerHTML=`<header class="shell-page-header"><a href="/">‹ Story Information</a></header><article class="replica-story-detail"><div class="replica-story-top"><img src="${source(d)}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1><p>${safe(d.author||'')}</p><p>${safe(d.genre||'Story')}</p><p>${safe(d.plays||'')} plays</p><button class="shell-white-button" data-favorite="${id}">Bookmark</button></div></div><h2>Story Description</h2><p class="story-description">${safe(d.description||d.title)}</p><h2>Settings</h2><div class="story-settings"><span>Avatar Settings</span><span>${safe(context.read('ooc-profile',{}).name||'Default avatar')}</span></div><div class="story-play-bar"><button class="shell-white-button" data-play="${id}">New Play</button></div></article>`;
+    }else if(content)content.innerHTML='<div class="shell-empty">Story unavailable.<br><a href="/">Back to stories</a></div>';
+  }
   if(page==='character-detail'){
     const d=catalog.find(d=>d.type==='character'&&d.id===path.split('/')[2]);
     const content=q('[data-shrink]')?.nextElementSibling;
@@ -231,3 +249,11 @@ export function show(path, helpers) {
 export function mountInteraction(html,helpers){closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
 
 export function preview(path,helpers){const match=/^\/story\/([a-f0-9]{24})$/.exec(path);if(!match||!['home','character','collection','search'].includes(host.dataset.page))return false;const record=titlePreviews.titles[match[1]];if(!record)return false;openTitlePreview(record,match[1],{...helpers,assets});return true;}
+
+export function mountShell(html,helpers,page='account'){
+ closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page=page;host.innerHTML=evidence.pages.home;
+ const content=q('[data-shrink]')?.nextElementSibling;
+ if(content){content.innerHTML=html;content.classList.add('shell-content');}
+ hydrate();return host;
+}
+export function syncAccount(account){if(host.hidden||host.dataset.page==='interaction')return false;return paintSidebar(host,account,{read:context?.read||(()=>[]),data:context?.data||[],navigate:context?.navigate,show:context?.show});}

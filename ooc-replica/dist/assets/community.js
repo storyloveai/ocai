@@ -1,0 +1,49 @@
+import {mountShell} from './reference.js';
+import {symbol as icon} from './site-shell.js';
+import {escapeHTML as safe} from './stream.js';
+const footer=()=>`<footer class="shell-footer"><div><strong>Explore</strong><a href="/">Story</a><a href="/character">Character</a><a href="/credit">Credits</a><a href="/my-title">My titles</a><a href="/profile">Profile</a></div><div><strong>Support</strong><a href="https://help.ooc.ai/" target="_blank" rel="noopener noreferrer">Original site support</a><a href="https://ooc.ai/policy/service" target="_blank" rel="noopener noreferrer">Original Terms of Service</a><a href="https://ooc.ai/policy/privacy" target="_blank" rel="noopener noreferrer">Original Privacy Policy</a></div><p>Independent OOC interface reproduction. Your account, purchases and conversations belong to this site.</p></footer>`;
+const header=(name,settings=false)=>`<header class="shell-page-header"><h1>${safe(name)}</h1>${settings?`<a href="/profile/setting" aria-label="Account settings">${icon('gear',24)}</a>`:''}</header>`;
+const row=(label,href,symbol)=>`<a href="${href}">${icon(symbol)}<span>${safe(label)}</span>${icon('arrow',14)}</a>`;
+function itemsMarkup(items){return items.map(d=>`<article><a href="/${d.type==='character'?'character':'story'}/${safe(d.id)}"><img src="${safe(d.image.startsWith('assets/')?'/'+d.image:d.image)}" alt="${safe(d.title)}"><h2>${safe(d.title)}</h2><p>${safe(d.plays||'')} ${d.author?'· '+safe(d.author):''}</p></a></article>`).join('');}
+export function show(path,h){
+ if(!['/my-title','/history','/liked','/profile','/profile/setting','/profile/setting/chat','/profile/setting/personalization','/profile/setting/block-management','/profile/setting/customer-support'].includes(path))return false;
+ const profile=h.read('ooc-profile',{}),name=profile.name||h.account?.user?.displayName||'Your profile';
+ if(path==='/profile'){
+  const root=mountShell(`${header('MY',true)}<div class="profile-content"><section class="profile-card"><a href="/profile/setting/personalization" class="profile-identity"><span class="shell-avatar">✱</span><div><strong>${safe(name)}</strong><small>Profile and preferences</small></div>${icon('arrow',14)}</a><div class="profile-credit">${icon('credit')}<span data-profile-balance>—</span><a href="/credit">Recharge</a></div></section><section class="profile-menu"><h2>Content Settings</h2>${row('Session Settings','/profile/setting/chat','chat')}${row('Personalization','/profile/setting/personalization','person')}${row('Favorites','/liked','heart')}${row('Manage Blocked Content','/profile/setting/block-management','shield')}</section><section class="profile-menu"><h2>Benefits</h2>${row('Claim Free Credits','/credit?creditTab=free','star')}${row('Credit History','/credit','credit')}</section><section class="profile-menu"><h2>Creator</h2>${row('My Titles','/my-title','book')}</section><section class="profile-menu"><h2>Inquiries and Notice</h2><button data-community-notice>${icon('bell')}<span>Notice</span>${icon('arrow',14)}</button>${row('Customer Support','/profile/setting/customer-support','chat')}</section></div>${footer()}`,h,'profile');
+  root.querySelector('[data-community-notice]').onclick=()=>h.show('<h2>Notifications</h2><p>No new notifications.</p>');
+  if(h.account?.user)h.account.api('wallet').then(wallet=>{const node=root.querySelector('[data-profile-balance]');if(node&&location.pathname==='/profile')node.textContent=Number(wallet.balance).toLocaleString();}).catch(()=>{});
+ }else if(path.startsWith('/profile/setting')){
+  let body='';const personal=path.endsWith('/personalization'),chat=path.endsWith('/chat'),blocked=path.endsWith('/block-management'),support=path.endsWith('/customer-support');
+  const title=personal?'Personalization':chat?'Session Settings':blocked?'Manage Blocked Content':support?'Customer Support':'Settings';
+  if(personal)body=`<form data-profile-form><label for="profile-name">Name</label><input id="profile-name" name="name" value="${safe(name)}" maxlength="24" required><label for="profile-gender">Content preference</label><select id="profile-gender" name="audience">${['Male','Female','All'].map(v=>`<option ${v===profile.audience?'selected':''}>${v}</option>`).join('')}</select><label for="profile-bio">About your character</label><textarea id="profile-bio" name="bio" rows="4" maxlength="2000">${safe(profile.bio||'')}</textarea><button class="shell-white-button" type="submit">Save changes</button><p data-save-status role="status"></p></form>`;
+  else if(chat)body=`<div class="settings-row"><span>Output Length</span><select data-output-length aria-label="Output Length">${['1000','2000','3000','4000'].map(v=>`<option value="${v}" ${v===String(h.read('ooc-output-length','2000'))?'selected':''}>${v}</option>`).join('')}</select></div><label class="settings-row"><span>Suggested responses</span><input type="checkbox" data-suggestion-preference ${h.read('ooc-suggestions-visible',true)?'checked':''}></label><p data-save-status role="status"></p>`;
+  else if(blocked)body=`<div class="shell-empty">${icon('shield',36)}No blocked content.</div>`;
+  else if(support)body=`<h2>Customer Support</h2><p>For account, payment or conversation issues, contact the owner of this site. Include the page and the time of the issue.</p><a href="/credit" class="shell-white-button">View Credits</a>`;
+  else body=`<section class="profile-menu">${row('Personalization','/profile/setting/personalization','person')}${row('Session Settings','/profile/setting/chat','chat')}${row('Favorites','/liked','heart')}<button data-action="logout">${icon('person')}<span>Sign out</span>${icon('arrow',14)}</button></section>`;
+  const root=mountShell(`${header(title)}<div class="profile-settings"><a class="shell-back" href="/profile">‹ Back to MY</a>${body}</div>`,h,'settings');
+  const status=()=>{root.querySelector('[data-save-status]').textContent='Saved.';};
+  const form=root.querySelector('[data-profile-form]');if(form)form.onsubmit=e=>{e.preventDefault();h.save('ooc-profile',{...profile,name:form.elements.name.value.trim(),audience:form.elements.audience.value,bio:form.elements.bio.value.trim()});status();h.repaint?.();};
+  const output=root.querySelector('[data-output-length]');if(output)output.onchange=()=>{h.save('ooc-output-length',Number(output.value));status();};
+  const suggest=root.querySelector('[data-suggestion-preference]');if(suggest)suggest.onchange=()=>{h.save('ooc-suggestions-visible',suggest.checked);status();};
+ }else{
+  const isCreated=path==='/my-title',isHistory=path==='/history',title=isCreated?'My Titles':isHistory?'History':'Favorites';
+  let tab='All',sort='Latest';
+  const ids=isCreated?[]:h.read(isHistory?'ooc-history':'ooc-favorites',[]);
+  const root=mountShell(`<div class="library-content"><header class="library-header"><h1>${title}</h1>${isCreated?'<button class="shell-white-button" data-community-create>Create Title</button>':''}</header><div class="library-tabs" role="tablist" aria-label="Title type">${['All','Story','Character',...(isCreated?['Unregistered']:[])].map(t=>`<button role="tab" data-library-type="${t}" aria-selected="${t==='All'}">${t}</button>`).join('')}</div><div class="library-controls"><span data-library-count>All 0</span><select aria-label="Sort titles"><option>Latest</option><option>Title A–Z</option></select></div><div class="library-items"></div></div>${footer()}`,h,'library');
+  function draw(){
+   let entries=isCreated?h.read('ooc-custom',[]).map((d,i)=>({...d,id:String(i),draft:true})):ids.map(id=>h.data.find(d=>d.id===id)).filter(Boolean);
+   entries=entries.filter(d=>tab==='All'||tab==='Unregistered'&&d.draft||tab==='Character'&&d.type==='character'||tab==='Story'&&d.type!=='character');
+   if(sort==='Title A–Z')entries.sort((a,b)=>a.title.localeCompare(b.title));
+   root.querySelector('[data-library-count]').textContent=`${tab} ${entries.length}`;
+   root.querySelector('.library-items').innerHTML=entries.length?(isCreated?entries.map(d=>`<article class="library-draft"><h2>${safe(d.title)}</h2><p>${safe(d.description)}</p><small>Unregistered draft</small></article>`).join(''):itemsMarkup(entries)):`<div class="shell-empty">${icon(isHistory?'chat':isCreated?'book':'heart',40)}${isCreated?'There are no titles.':isHistory?'No recent conversations.':'No favorites yet.'}<br><a href="/">Explore stories</a></div>`;
+  }
+  root.querySelectorAll('[data-library-type]').forEach(b=>b.onclick=()=>{tab=b.dataset.libraryType;root.querySelectorAll('[data-library-type]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));draw();});
+  root.querySelector('select').onchange=e=>{sort=e.target.value;draw();};draw();
+  const create=root.querySelector('[data-community-create]');if(create)create.onclick=()=>{
+   h.show('<h2>Create Title</h2><form data-community-draft><label for="draft-title">Title</label><input id="draft-title" name="title" placeholder="Title" required maxlength="120"><label for="draft-description">Description</label><textarea id="draft-description" name="description" placeholder="Introduce your story" rows="5" maxlength="2000" required></textarea><button class="shell-white-button" type="submit">Save draft</button><p>This draft is private to your account.</p></form>');
+   const form=document.querySelector('[data-community-draft]');form.onsubmit=e=>{e.preventDefault();const title=form.elements.title.value.trim(),description=form.elements.description.value.trim();if(!title||!description)return;h.save('ooc-custom',[...h.read('ooc-custom',[]),{title,description}]);form.closest('dialog').close();draw();};
+  };
+ }
+ document.title=(path==='/profile'?'MY':path==='/my-title'?'My Titles':path==='/history'?'History':path==='/liked'?'Favorites':'Settings')+' · OOC';
+ return true;
+}

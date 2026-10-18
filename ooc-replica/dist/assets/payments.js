@@ -1,12 +1,26 @@
+import { renderCredits } from './credits-view.js';
 export function createPayments({ account, show, modal, notify, storage = sessionStorage }) {
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  let tab = ['buy','auto','free'].includes(new URL(location.href).searchParams.get('creditTab')) ? new URL(location.href).searchParams.get('creditTab') : 'buy', selected;
   let root, wallet, error = '', notice = '', busy = false, owner = null, generation = 0, controller, polling = false, observedConfig;
   const cfg = () => account.paymentConfig;
   const key = () => `replica-payment:${cfg().auth?.config?.projectId}:${cfg().walletMode}:${owner}`;
   const current = version => version === generation && owner === account.user?.uid;
   function draw() {
     if (!root?.isConnected) return;
-    root.innerHTML = `<div class="preview"><h2>Your credits ${cfg().walletMode === 'test' ? '· 测试环境' : ''}</h2><h1>${wallet ? wallet.balance.toLocaleString() : '—'} <span style="color:#dfff2c">✱</span></h1><p role="status">${esc(error || notice)}</p>${account.user ? `<button class="secondary" data-wallet-refresh ${busy ? 'disabled' : ''}>刷新余额 / 确认到账</button> <button class="primary" data-checkin ${busy || !cfg().walletConfigured || wallet?.checked ? 'disabled' : ''}>${wallet?.checked ? '今日已签到' : '每日签到 +100'}</button>` : '<button class="primary" data-action="login">登录查看余额</button>'}<p>每日 00:00（上海时间）刷新。当前聊天暂不扣除 Credits。</p></div><h2>为下一章补充灵感</h2><p>${cfg().walletMode === 'test' ? '测试结账，不会真实扣款。' : '通过 Stripe 安全付款，USD 一次性充值。'}</p>${!cfg().payments ? '<p>充值服务尚未配置完成。</p>' : ''}<div class="credit-plans">${(cfg().creditPacks || []).map(p => `<section class="preview"><h3>${esc(p.label)}</h3><h2>${p.credits.toLocaleString()} Credits</h2><p>${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(p.amount / 100)}</p><button class="primary" data-pack="${p.credits}" ${busy || !cfg().payments || !cfg().embeddedPayments ? 'disabled' : ''}>${cfg().walletMode === 'test' ? '测试充值' : '充值'}</button></section>`).join('')}</div><h2>最近流水</h2>${(wallet?.ledger || []).map(item => `<p>${esc(item.at)} · ${item.type === 'purchase' ? '充值' : '签到'} +${item.amount}</p>`).join('') || '<p>暂无流水</p>'}`;
+    const packs = cfg().creditPacks || [];
+    if (!packs.some(p => p.credits === selected)) selected = packs[1]?.credits || packs[0]?.credits;
+    root.innerHTML = renderCredits({config:cfg(),wallet,user:account.user,error,notice,busy,tab,selected});
+    const selectTab = next => {tab=next;const url=new URL(location.href);url.searchParams.set('creditTab',tab);history.replaceState({},'',url);draw();root.querySelector(`#credits-tab-${tab}`)?.focus();};
+    root.querySelectorAll('[data-credit-tab]').forEach(button=>button.addEventListener('click',()=>selectTab(button.dataset.creditTab)));
+    root.querySelector('[role=tablist]')?.addEventListener('keydown',event=>{
+      if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+      event.preventDefault();const tabs=['buy','auto','free'];selectTab(event.key==='Home'?'buy':event.key==='End'?'free':tabs[(tabs.indexOf(tab)+(event.key==='ArrowRight'?1:2))%3]);
+    });
+    root.querySelectorAll('[name=credits-pack]').forEach(input=>input.addEventListener('change',()=>{selected=Number(input.value);root.querySelectorAll('.credits-pack').forEach(row=>row.classList.toggle('is-selected',Number(row.querySelector('input').value)===selected));}));
+    root.querySelector('[data-buy-selected]')?.addEventListener('click',()=>checkout(selected));
+    root.querySelector('[data-credit-history]')?.addEventListener('click',()=>show(`<div class="credits-history-dialog"><h2>Credit History</h2>${error?`<p role="alert">${esc(error)}</p>`:''}${wallet?`<p>Current balance: ${wallet.balance.toLocaleString()} Credits</p>`:'<p>Balance unavailable. Sign in or refresh your balance to load your history.</p>'}${(wallet?.ledger||[]).map(item=>`<div class="credits-ledger-row"><span>${item.type==='purchase'?'Credit purchase':'Daily check-in'}<small>${esc(item.at)}</small></span><strong>+${esc(item.amount)}</strong></div>`).join('')||'<p>No transactions to show.</p>'}</div>`));
+    root.querySelector('[data-credit-info]')?.addEventListener('click',()=>show('<h2>About Credits</h2><p>Credits belong to your signed-in account. Payments are securely processed by Stripe. Current chats do not deduct credits.</p>'));
     root.querySelector('[data-wallet-refresh]')?.addEventListener('click', async () => { await refresh(); await verify(); });
     root.querySelector('[data-checkin]')?.addEventListener('click', checkin);
     root.querySelectorAll('[data-pack]').forEach(button => button.addEventListener('click', () => checkout(Number(button.dataset.pack))));
@@ -73,7 +87,7 @@ export function createPayments({ account, show, modal, notify, storage = session
   }
   modal.addEventListener('close', () => { controller?.abort(); controller = null; busy = false; draw(); });
   return {
-    mount(element) { root = element; draw(); void refresh(); void verify(); },
+    mount(element) { root = element; root.classList.add('credits-root'); const doc=root.ownerDocument;if (!doc.querySelector('link[data-credits-style]')) { const link=doc.createElement('link');link.rel='stylesheet';link.href='/assets/credits.css';link.dataset.creditsStyle='';doc.head.append(link); } draw(); void refresh(); void verify(); },
     sync() {
       if (observedConfig !== cfg()) { observedConfig = cfg(); draw(); }
       if (owner !== account.user?.uid) {
