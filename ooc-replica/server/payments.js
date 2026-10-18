@@ -192,7 +192,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
         throw new HttpError(503, "Firebase 钱包尚未配置。");
       const { pack, request_id } = input;
       const embedded = input.ui_mode === "elements";
-      if (input.ui_mode && !embedded)
+      if (input.ui_mode && !embedded && input.ui_mode !== "hosted")
         throw new HttpError(400, "无效付款界面。");
       if (embedded && !publishableKey())
         throw new HttpError(503, "站内付款尚未配置。");
@@ -231,6 +231,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
         ...(embedded
           ? { ui_mode: "elements", return_url: returnUrl }
           : {
+              ui_mode: "hosted",
               success_url: returnUrl,
               cancel_url: base.origin + "/credit?checkout=cancelled",
             }),
@@ -259,7 +260,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
       }
       if (!s.url?.startsWith("https://checkout.stripe.com/"))
         throw new HttpError(502, "无法打开安全付款页面。");
-      return response({ url: s.url });
+      return response({ url: s.url, session_id: s.id });
     }),
 
     checkoutStatus: safely(async (req) => {
