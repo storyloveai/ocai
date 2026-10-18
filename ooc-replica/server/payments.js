@@ -56,9 +56,15 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
       throw new HttpError(503,"账户服务暂时无法验证登录，请稍后重试。");
     }
   }
-  const rpc = (name, body) => {
+  const rpc = async (name, body) => {
     if (!configured()) throw new HttpError(503, "账户钱包尚未配置。");
-    return createWallet(services().db, stripeMode(env)).rpc(name, body);
+    try { return await createWallet(services().db, stripeMode(env)).rpc(name, body); }
+    catch(error) {
+      const raw = error?.code;
+      const code = Number.isInteger(raw) ? raw : typeof raw === 'string' && /^[a-zA-Z0-9_/-]{1,80}$/.test(raw) ? raw : 'unknown';
+      console.warn(JSON.stringify({event:'firebase_wallet_failed',operation:name,code}));
+      throw new HttpError(503, "钱包暂时无法读取，请联系站点管理员。");
+    }
   };
   async function stripe(path, params, idempotencyKey) {
     if (!env.STRIPE_SECRET_KEY) throw new HttpError(503, "付款服务尚未配置。");
