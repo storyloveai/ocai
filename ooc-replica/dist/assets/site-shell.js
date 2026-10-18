@@ -9,7 +9,7 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
  const group=desktop.children[1]?.children[2];
  if(user&&group&&!group.querySelector('[data-shell-notifications]')){
   const credit=group.querySelector('a[href="/credit"]');
-  if(credit){const notification=credit.cloneNode(true);notification.removeAttribute('href');notification.tagName==='A'&&notification.setAttribute('role','button');notification.tabIndex=0;notification.dataset.shellNotifications='';notification.innerHTML=`${symbol('bell')}<span>Notifications</span>`;notification.onclick=()=>show('<h2>Notifications</h2><p>No new notifications.</p>');notification.onkeydown=e=>{if(e.key==='Enter'||e.key===' ')notification.click();};credit.before(notification);}
+  if(credit){const notification=credit.cloneNode(true);notification.removeAttribute('href');notification.tagName==='A'&&notification.setAttribute('role','button');notification.tabIndex=0;notification.dataset.shellNotifications='';notification.innerHTML=`${symbol('bell')}<span>Notifications</span>`;notification.onclick=()=>showNotifications(show);notification.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();notification.click();}};credit.before(notification);}
  }
  if(!user)group?.querySelector('[data-shell-notifications]')?.remove();
  const historySlot=desktop.children[1]?.lastElementChild;
@@ -26,4 +26,12 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
  else {bottom.classList.remove('shell-account-slot');bottom.innerHTML=bottom.dataset.guestMarkup.replaceAll('Sign up and get 500 credits!','Sign in to save your stories');bottom.querySelectorAll('button').forEach(b=>{b.dataset.action='login';b.dataset.provider=/Apple/.test(b.textContent)?'apple':'google';b.hidden=b.dataset.provider==='apple'&&!account.providers.apple;});}
  side.querySelectorAll('a[href]').forEach(a=>{const selected=a.getAttribute('href')===location.pathname;a.dataset.status=selected?'active':'inactive';if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  return true;
+}
+export function showNotifications(show){
+ const tabs=['All','News','Like','Comment','Follow'];
+ show(`<section class="shell-notifications"><h2>Notification</h2><div role="tablist" aria-label="Notification categories">${tabs.map((name,i)=>`<button role="tab" id="notification-tab-${i}" aria-selected="${i===0}" aria-controls="notification-panel" tabindex="${i===0?0:-1}">${name}</button>`).join('')}</div><div id="notification-panel" role="tabpanel" aria-labelledby="notification-tab-0"><strong>No notifications</strong><p>You don't have any notifications yet.</p></div></section>`);
+ const root=document.querySelector('.shell-notifications');
+ const buttons=[...root.querySelectorAll('[role=tab]')];
+ const select=index=>{buttons.forEach((b,i)=>{b.setAttribute('aria-selected',String(i===index));b.tabIndex=i===index?0:-1;});root.querySelector('[role=tabpanel]').setAttribute('aria-labelledby',buttons[index].id);};
+ buttons.forEach((button,index)=>{button.onclick=()=>select(index);button.onkeydown=e=>{let next;if(e.key==='ArrowRight')next=(index+1)%tabs.length;else if(e.key==='ArrowLeft')next=(index+tabs.length-1)%tabs.length;else if(e.key==='Home')next=0;else if(e.key==='End')next=tabs.length-1;if(next!==undefined){e.preventDefault();select(next);buttons[next].focus();}};});
 }
