@@ -9,3 +9,6 @@ research/rea-sources/
 dist/assets/firebase-client.js
 
 dist/assets/checkout.js
+dist/assets/media/
+dist/assets/core-assets-index.json
+dist/assets/catalog-assets-index.json

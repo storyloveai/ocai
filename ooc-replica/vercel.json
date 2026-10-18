@@ -12,5 +12,16 @@
       "maxDuration": 180
     }
   },
-  "buildCommand": "npm run build && npm run check"
+  "buildCommand": "npm run build && npm run check",
+  "headers": [
+    {
+      "source": "/assets/media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
 }
