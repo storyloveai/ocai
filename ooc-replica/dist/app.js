@@ -13,7 +13,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 const icons={Search:'<circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/>',Story:'<path d="M4 3h12v18H4zM8 7h5M8 11h5M8 15h5M18 6h2v15"/>',Character:'<circle cx="12" cy="7" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/>','My Titles':'<path d="M5 4h14v18l-7-4-7 4z"/>',Credits:'<path d="m12 2 2 7 7 3-7 2-2 8-2-8-7-2 7-3z"/>'};
 const nav=[['Search','/search'],['Story','/'],['Character','/character'],['My Titles','/my-title'],['Credits','/credit']];
 function navigate(url){window.history.pushState({},'',url);render();window.scrollTo(0,0)}
-document.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.getAttribute('href')?.startsWith('/')&&!e.metaKey&&!e.ctrlKey){e.preventDefault();navigate(a.getAttribute('href'))}});
+document.addEventListener('click',e=>{const a=e.target.closest('a');if(a&&a.getAttribute('href')?.startsWith('/')&&!e.metaKey&&!e.ctrlKey){e.preventDefault();const url=a.getAttribute('href');if(!a.closest('dialog')&&reference.preview(url,{navigate,read,save:(key,value)=>{save(key,value);if(key==='ooc-favorites')favorites=value;}}))return;navigate(url)}});
 window.addEventListener('popstate',render);
 function toast(text){$('#toast').textContent=text;$('#toast').style.display='block';clearTimeout(timer);timer=setTimeout(()=>$('#toast').style.display='none',2800)}
 function show(html){modal.innerHTML='<button class="close" aria-label="Close dialog">×</button>'+html;modal.showModal();modal.querySelector('.close').onclick=()=>modal.close()}
