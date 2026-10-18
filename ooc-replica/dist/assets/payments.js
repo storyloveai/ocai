@@ -61,7 +61,7 @@ export function createPayments({ account, show, modal, notify, storage = session
     if (!account.user) { account.login(); return; }
     if (busy) return;
     const version = generation; const pendingKey = key(); busy = true; error = ''; draw();
-    const attemptKey = pendingKey + ':attempt:hosted:' + pack;
+    const attemptKey = pendingKey + ':attempt:hosted-page:' + pack;
     let requestId = storage.getItem(attemptKey);
     if (!requestId) { requestId = crypto.randomUUID(); storage.setItem(attemptKey, requestId); }
     try {
