@@ -36,10 +36,18 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
     if (!configured()) throw new HttpError(503, "账户钱包尚未配置。");
     const token = req.headers.get("authorization")?.match(/^Bearer (\S+)$/)?.[1];
     if (!token) throw new HttpError(401, "请先登录。");
+    const report=(error,stage)=>{const code=typeof error?.code==='string'&&/^[a-zA-Z0-9_/-]{1,80}$/.test(error.code)?error.code:'unknown';console.warn(JSON.stringify({event:'firebase_auth_failed',stage,code}));return code;};
+    let auth;
+    try { auth=services().auth; }
+    catch(error){report(error,'initialization');throw new HttpError(503,"账户服务配置异常，请联系站点管理员。");}
     try {
-      const u = await services().auth.verifyIdToken(token, true);
+      const u = await auth.verifyIdToken(token, true);
       return { id: u.uid, email: u.email };
-    } catch { throw new HttpError(401, "登录已过期，请重新登录。"); }
+    } catch(error) {
+      const code=report(error,'verification');
+      if(code==='unknown'||['auth/id-token-expired','auth/id-token-revoked','auth/invalid-id-token','auth/argument-error','auth/user-disabled','auth/user-not-found'].includes(code))throw new HttpError(401,"登录已过期，请重新登录。");
+      throw new HttpError(503,"账户服务暂时无法验证登录，请稍后重试。");
+    }
   }
   const rpc = (name, body) => {
     if (!configured()) throw new HttpError(503, "账户钱包尚未配置。");
