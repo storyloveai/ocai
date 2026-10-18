@@ -236,6 +236,8 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
             }),
       };
       if (u.email) params.customer_email = u.email;
+      // Do not open a new payment while the wallet database is unavailable.
+      await rpc("storylove_wallet", { p_user: u.id });
       const s = await stripe(
         "checkout/sessions",
         params,
