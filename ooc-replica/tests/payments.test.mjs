@@ -43,6 +43,17 @@ test('only signed paid webhook grants credits, duplicates are idempotent and sta
  f.set({paid:true});const responses=await Promise.all(Array.from({length:5},()=>f.platform.webhook(f.event('checkout.session.async_payment_succeeded'))));assert.ok(responses.every(r=>r.status===200));assert.equal((await(await status()).json()).credited,true);assert.equal((await(await f.platform.wallet(request('wallet'))).json()).balance,200);
  assert.equal((await f.platform.checkoutStatus(request('checkout-status?session_id=cs_fixture',null,'bob'))).status,404);
 });
+test('unavailable wallet prevents new Stripe checkout and records only safe database diagnostics',async()=>{
+ let contactedStripe=false;const logs=[],warn=console.warn;
+ const platform=createPlatform({env,services:()=>({auth:{verifyIdToken:async()=>({uid:'alice'})},db:{collection(){const error=Error('private provider details');error.code=7;throw error;}}}),fetchImpl:async()=>{contactedStripe=true;throw Error('unexpected Stripe request');}});
+ console.warn=value=>logs.push(value);
+ try{
+  const response=await platform.checkout(request('checkout',{pack:200,request_id:'12345678-1234-1234-1234-123456789012',ui_mode:'elements'}));
+  assert.equal(response.status,503);assert.equal(contactedStripe,false);
+  assert.deepEqual(JSON.parse(logs.at(-1)),{event:'firebase_wallet_failed',operation:'storylove_wallet',code:7});
+  assert.doesNotMatch(JSON.stringify(logs),/private provider details/);
+ }finally{console.warn=warn;}
+});
 test('wrong amount, Stripe mode, backend and Firebase project cannot fulfill',async()=>{
  for(const values of [{amount:1},{mode:false},{backend:'old-supabase'},{project:'other-project'}]){const f=fixture();f.set(values);assert.equal((await f.platform.webhook(f.event())).status,400);assert.equal((await(await f.platform.wallet(request('wallet'))).json()).balance,0);}
 });
