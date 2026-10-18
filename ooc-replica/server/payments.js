@@ -231,7 +231,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
         ...(embedded
           ? { ui_mode: "elements", return_url: returnUrl }
           : {
-              ui_mode: "hosted",
+              ui_mode: "hosted_page",
               success_url: returnUrl,
               cancel_url: base.origin + "/credit?checkout=cancelled",
             }),
