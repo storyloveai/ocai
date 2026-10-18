@@ -250,7 +250,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
           ":" +
           pack +
           ":" +
-          (embedded ? "elements:" : "") +
+          (embedded ? "elements:" : "hosted-page:") +
           request_id,
       );
       if (embedded) {
