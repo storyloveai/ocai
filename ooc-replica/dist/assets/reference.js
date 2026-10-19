@@ -1,3 +1,4 @@
+import {sortStories} from './catalog-sort.js';
 import {threeKingdoms} from './three-kingdoms.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
@@ -179,12 +180,23 @@ function pinThreeKingdoms(){
   card.querySelector('[data-name]').textContent=threeKingdoms.title;
   const cover=card.querySelector('img');cover.src=threeKingdoms.image;cover.alt=threeKingdoms.title;cover.removeAttribute('data-asset');cover.loading='eager';
   const meta=card.querySelector('p:not([data-name])');if(meta)meta.textContent=threeKingdoms.plays;
-  first.parentElement.prepend(card);cardMarkup.set(threeKingdoms.id,card.outerHTML);
-  const rank=card.querySelector('span.typo-text-base_leading-none_semibold');if(rank){rank.textContent='MVP';rank.style.fontSize='10px';}
+  const slide=first.closest('[aria-roledescription="slide"]');
+  if(slide){const slot=slide.cloneNode(false);const wrap=document.createElement("div");wrap.className="w-full";wrap.append(card);slot.append(wrap);slide.parentElement.prepend(slot);}else first.parentElement.before(card);
+  cardMarkup.set(threeKingdoms.id,card.outerHTML);
+  const section=first.closest('section');section.querySelectorAll('span.typo-text-base_leading-none_semibold').forEach((rank,i)=>rank.textContent=String(i+1));
   card.querySelectorAll('img').forEach(img=>{if(img.alt==='Lumencia Academy'){img.alt=threeKingdoms.title;img.src=threeKingdoms.image;img.removeAttribute('data-asset');}});
  }
  const mobile=all('h2').find(h=>h.classList.contains('text-white'))?.closest('a');
  if(mobile){mobile.href=threeKingdoms.href;mobile.querySelector('h2').textContent=threeKingdoms.title;const desc=mobile.querySelector('h2')?.nextElementSibling;if(desc)desc.textContent=threeKingdoms.description;mobile.querySelectorAll('img').forEach(img=>{img.src=threeKingdoms.image;img.alt=threeKingdoms.title;img.removeAttribute('data-asset');});}
+}
+
+function bindExploreSort(page){
+ const heading=all('h2').find(h=>text(h)==='Explore'),section=heading?.closest('section'),button=heading?.parentElement.querySelector('button');
+ if(!section||!button)return;
+ const select=document.createElement('select');select.setAttribute('aria-label','Sort stories');select.style.cssText='background:#19191c;border:1px solid #36363c;border-radius:8px;color:#ccc;padding:7px 12px;font:inherit;font-size:13px';select.innerHTML='<option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option>';button.replaceWith(select);
+ const container=section.children[1];const nodes=[...container.children];
+ const records=nodes.map(node=>({node,id:node.querySelector('a')?.getAttribute('href')?.split('/').pop()}));
+ const draw=()=>{const available=records.map(r=>({...catalog.find(d=>d.id===r.id),id:r.id,node:r.node})).filter(d=>d.title);sortStories(available,select.value).forEach(d=>container.append(d.node));};select.onchange=draw;draw();
 }
 
 function grid(items){return `<div class="precision-grid">${items.map(d=>cardMarkup.get(d.id)||`<a href="/${d.type==='character'?'character':'story'}/${d.id}"><img src="${source(d)}" alt="${safe(d.title)}"><p>${safe(d.title)}</p></a>`).join('')}</div>`;}
@@ -253,7 +265,7 @@ export function show(path, helpers) {
   }
   if(page==='home')pinThreeKingdoms();
   hydrate();
-  if(page==='home'||page==='character')bindHome(page);
+  if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);}
   if(page==='detail'||page==='captured-detail')bindDetail();
   if(page==='search')bindSearch();
   // Read-only captured consent state for screenshot comparison; no acceptance action.
