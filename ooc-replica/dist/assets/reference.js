@@ -204,7 +204,15 @@ function bindExploreSort(page){
  const draw=()=>{const available=records.map(r=>({...catalog.find(d=>d.id===r.id),id:r.id,node:r.node})).filter(d=>d.title);sortStories(available,select.value).forEach(d=>container.append(d.node));};select.onchange=draw;draw();
 }
 
-function grid(items){return `<div class="precision-grid">${items.map(d=>cardMarkup.get(d.id)||`<a href="/${d.type==='character'?'character':'story'}/${d.id}"><img src="${source(d)}" alt="${safe(d.title)}"><p>${safe(d.title)}</p></a>`).join('')}</div>`;}
+function grid(items,ranked=false){
+ return `<div class="precision-grid">${items.map((d,index)=>{
+  const holder=document.createElement('div');holder.innerHTML=cardMarkup.get(d.id)||`<a href="/${d.type==='character'?'character':'story'}/${d.id}"><img src="${source(d)}" alt="${safe(d.title)}"><p>${safe(d.title)}</p></a>`;
+  const anchor=holder.firstElementChild;
+  anchor.querySelectorAll('span[class~="typo-text-base_leading-none_semibold"]').forEach(rank=>{if(/^\d+$/.test(text(rank))){const badge=rank.parentElement;if(text(badge)===text(rank))badge.remove();else rank.remove();}});
+  if(ranked)anchor.dataset.gridRank=String(index+1);
+  return anchor.outerHTML;
+ }).join('')}</div>`;
+}
 function bindSearch() {
   const inputs=all('input');
   inputs.forEach(i=>{i.setAttribute('aria-label','Search stories and characters');i.oninput=()=>{
@@ -267,8 +275,8 @@ export function show(path, helpers) {
       let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):available.filter(d=>context.data.find(v=>v.id===d.id)?.genre===name);
       if(!items.length&&!context.categories.includes(name))items=available;
       if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,...items.filter(d=>d.id!==threeKingdoms.id)];
-      content.innerHTML=`<div class="precision-collection"><a href="${kind==='character'?'/character':'/'}">‹ Back</a><div class="collection-heading"><h1>${safe(name)}</h1><label>Sort by <select aria-label="Sort collection"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><p class="collection-count">${items.length} ${kind==='character'?'characters':'stories'}</p><div data-collection-grid>${items.length?grid(items):'<p>No titles in this category yet.</p>'}</div></div>`;
-      const sort=content.querySelector('select');sort.onchange=()=>{content.querySelector('[data-collection-grid]').innerHTML=grid(sort.value==='featured'?items:sortStories(items,sort.value));hydrate();};
+      content.innerHTML=`<div class="precision-collection"><a href="${kind==='character'?'/character':'/'}">‹ Back</a><div class="collection-heading"><h1>${safe(name)}</h1><label>Sort by <select aria-label="Sort collection"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><p class="collection-count">${items.length} ${kind==='character'?'characters':'stories'}</p><div data-collection-grid>${items.length?grid(items,name==='Top Ranked'):'<p>No titles in this category yet.</p>'}</div></div>`;
+      const sort=content.querySelector('select');sort.onchange=()=>{content.querySelector('[data-collection-grid]').innerHTML=grid(sort.value==='featured'?items:sortStories(items,sort.value),name==='Top Ranked');hydrate();};
     }
   }
   if(page==='home')pinThreeKingdoms();

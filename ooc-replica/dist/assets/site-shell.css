@@ -14,3 +14,5 @@ body[data-reference=true] #account-status{display:none}#precision-view [data-shr
 .collection-heading{display:flex;justify-content:space-between;align-items:center;gap:16px}.collection-heading label{color:#999;font:13px system-ui;display:flex;gap:8px;align-items:center}.collection-heading select{border:1px solid #ffffff24;border-radius:8px;background:#1d1d20;color:#eee;padding:8px 12px}.collection-count{color:#999;font:13px system-ui;margin:0 0 24px}@media(max-width:600px){.collection-heading{align-items:flex-start;flex-direction:column}.collection-heading h1{margin-bottom:0}}
 
 @media(max-width:640px){.native-carousel{scroll-padding-inline-start:16px}}
+
+.precision-grid>a[data-grid-rank]{position:relative}.precision-grid>a[data-grid-rank]::before{content:attr(data-grid-rank);position:absolute;z-index:2;top:8px;left:8px;min-width:20px;padding:3px;border-radius:4px;background:#000a;color:white;text-align:center;font:600 14px/18px system-ui}
