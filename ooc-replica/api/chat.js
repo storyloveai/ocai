@@ -2,7 +2,7 @@ import {randomUUID} from 'node:crypto';
 import {once} from 'node:events';
 import {streamText} from 'ai';
 import {buildPrompt} from '../server/prompt-engine.js';
-import {providerConfig,createModel,generationOptions} from '../server/provider.js';
+import {providerConfig,fallbackConfig,createModel,generationOptions} from '../server/provider.js';
 
 const windows=new Map();let active=0;
 export function classifyError(error,{timedOut=false,finishReason,reasoningTokens=0}={}){
@@ -21,7 +21,7 @@ export default async function handler(req,res){
  const origin=req.headers.origin,host=req.headers.host;
  if(!origin||!host||origin!==`https://${host}`)return res.status(403).json({error:'Same-origin browser requests only'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({error:'JSON required'});
- const config=providerConfig();if(!config)return res.status(503).json({error:'AI configuration is incomplete'});
+ let config=providerConfig();if(!config)return res.status(503).json({error:'AI configuration is incomplete'});
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [key,v]of windows)if(v.until<now)windows.delete(key);
  const window=windows.get(ip)||{until:now+60000,count:0};if(window.count>=8||active>=4||windows.size>=5000)return res.status(429).json({error:'Please wait before trying again'});window.count++;windows.set(ip,window);
  let packet;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>48000)throw new Error('Request too large');packet=buildPrompt(body);}catch{return res.status(400).json({error:'Invalid title or conversation'});}
@@ -34,17 +34,29 @@ export default async function handler(req,res){
  let heartbeat;
  try{
   if(framed){headers();await status();heartbeat=setInterval(()=>status().catch(()=>{}),10000);}
-  const result=streamText({model:createModel(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...generationOptions(config),maxRetries:1,abortSignal:abort.signal,onError:()=>{}});
+  const candidates=[config,fallbackConfig(config)].filter(Boolean);
+  for(let attempt=0;attempt<candidates.length;attempt++){
+  config=candidates[attempt];
+  const attemptAbort=new AbortController(),attemptTimer=attempt<candidates.length-1?setTimeout(()=>attemptAbort.abort(),20000):null;
+  try{
+  const result=streamText({model:createModel(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...generationOptions(config),maxRetries:0,abortSignal:AbortSignal.any([abort.signal,attemptAbort.signal]),onError:()=>{}});
   for await(const part of result.stream){
    if(abort.signal.aborted)break;
    if(part.type==='error')throw part.error;
    if(part.type==='reasoning-delta'){reasoningChunks++;phase='thinking';}
    if(part.type==='finish-step'||part.type==='finish'){finishReason=part.finishReason;reasoningTokens=part.usage?.outputTokens?.reasoning||part.totalUsage?.outputTokens?.reasoning||reasoningTokens;}
-   if(part.type==='text-delta'&&part.text){if(!hasText){hasText=true;firstTextMs=Date.now()-started;if(!framed)headers();}phase='streaming';await emit({type:'text',text:part.text});}
+   if(part.type==='text-delta'&&part.text){if(!hasText){clearTimeout(attemptTimer);hasText=true;firstTextMs=Date.now()-started;if(!framed)headers();}phase='streaming';await emit({type:'text',text:part.text});}
   }
   if(timedOut)throw new Error('Request deadline reached');
   if(abort.signal.aborted)return;
   if(!hasText)throw Object.assign(new Error('No response text'),{code:'AI_EMPTY_RESPONSE'});
+  break;
+  }catch(error){
+   if(hasText||abort.signal.aborted||attempt===candidates.length-1)throw error;
+   console.warn(JSON.stringify({event:'ai_provider_fallback',from:config.name,to:candidates[attempt+1].name}));
+   phase='connecting';finishReason=undefined;reasoningTokens=0;
+  }finally{clearTimeout(attemptTimer);}
+  }
   await emit({type:'done',requestId,finishReason});res.end();
   console.info(JSON.stringify({event:'ai_response_complete',requestId,model:config.model,promptVersion:packet.promptVersion,firstTextMs,durationMs:Date.now()-started,finishReason,reasoningTokens}));
  }catch(error){if(abort.signal.aborted&&!timedOut)return;const failure=classifyError(error,{timedOut,finishReason,reasoningTokens});console.error(JSON.stringify({event:'ai_response_failed',requestId,code:failure.code,upstreamStatus,upstreamHeadersMs,phase,reasoningChunks,finishReason,reasoningTokens,outputTokenLimit:packet.maxOutputTokens,durationMs:Date.now()-started,model:config.model,promptVersion:packet.promptVersion}));if(framed&&!res.destroyed){await emit({type:'error',...failure,requestId});res.end();}else if(!res.headersSent&&!res.destroyed)res.status(failure.status).json({...failure,requestId});else if(!res.writableEnded)res.destroy();}
