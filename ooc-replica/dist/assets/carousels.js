@@ -1,4 +1,7 @@
 export function bindCarousels(root,moveHero){
+ const category=[...root.querySelectorAll('button')].find(b=>b.textContent.trim()==='Main');
+ const categoryTrack=category?.parentElement?.parentElement,categoryViewport=categoryTrack?.parentElement;
+ if(categoryViewport&&categoryViewport.classList.contains('overflow-hidden')){categoryTrack.style.transform='none';categoryViewport.classList.add('native-carousel');categoryViewport.tabIndex=0;categoryViewport.setAttribute('aria-label','Story categories');}
  const reduced=()=>matchMedia('(prefers-reduced-motion: reduce)').matches;
  for(const region of root.querySelectorAll('[aria-roledescription="carousel"]')){
   const slide=region.querySelector('[aria-roledescription="slide"]');if(!slide)continue;
