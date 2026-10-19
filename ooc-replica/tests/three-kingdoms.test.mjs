@@ -67,7 +67,7 @@ async function prototypeWithModel(api){
  await new Promise(r=>setTimeout(r,10));const click=el=>el.dispatchEvent(new window.Event('click',{bubbles:true}));click(document.querySelector('.ep'));click(document.querySelector('.intro .btn'));return {document,click,memory};
 }
 test('ambiguous intent becomes clickable choices without a second interpretation',async()=>{
- let calls=0;const {document,click,memory}=await prototypeWithModel(async opts=>{if(JSON.parse(opts.body).phase==='express')return new Response(JSON.stringify({output:{blocks:[{type:'narration',speaker:null,text:'曹操端起酒杯，望着你。'}]}}));calls++;return new Response(JSON.stringify({output:{kind:'clarify',candidates:['a_play_farmer','a_plead_ignorance']}}));});
+ let calls=0;const {document,click,memory}=await prototypeWithModel(async opts=>{if(JSON.parse(opts.body).phase==='express'){assert.equal(JSON.parse(opts.body).context.characters_present[0].id,'c_cao');return new Response(JSON.stringify({output:{blocks:[{type:'dialogue',speaker:'曹操',text:'玄德，且饮一杯。'}]}}));}calls++;return new Response(JSON.stringify({output:{kind:'clarify',candidates:['a_play_farmer','a_plead_ignorance']}}));});
  document.querySelector('textarea').value='我只种菜，也不识英雄';click(document.querySelector('.inrow .btn'));await new Promise(r=>setTimeout(r,10));
  assert.deepEqual([...document.querySelectorAll('.sug')].map(e=>e.textContent),['说自己如今只管种菜','推说自己不识英雄']);
  click(document.querySelector('.sug'));await new Promise(r=>setTimeout(r,10));assert.equal(calls,1);assert.equal(JSON.parse(memory.get('tk3.game.sg03_heroes_over_plums')).save.state.suspicion,2);
@@ -86,6 +86,7 @@ test('story sorting respects real counts, title order and source data',async()=>
  assert.deepEqual(sortStories(items).map(x=>x.id),['a','c','b','three-kingdoms']);
  assert.deepEqual(sortStories(items,'title').slice(0,3).map(x=>x.title),['Alpha','Beta','Gamma']);
  assert.equal(items[0].id,'three-kingdoms');
+ assert.deepEqual(sortStories([{id:'mvp',title:'MVP',plays:'3 个篇章 · 12 个结局'},{id:'one',title:'One',plays:'1'},{id:'many',title:'Many',plays:'1,200'}]).map(x=>x.id),['many','one','mvp']);
 });
 
 test('expression endpoint streams structured partials before its complete result',async()=>{
@@ -105,6 +106,6 @@ test('live expression appears before completion and preserves the next draft',as
   return new Response(new ReadableStream({start(c){const enc=new TextEncoder();c.enqueue(enc.encode(JSON.stringify({type:'partial',output:{blocks}})+'\n'));finish=()=>{c.enqueue(enc.encode(JSON.stringify({type:'done',output:{blocks}})+'\n'));c.close();};}}),{headers:{'Content-Type':'application/x-ndjson'}});
  });
  document.querySelector('textarea').value='丞相，别来无恙？';click(document.querySelector('.inrow .btn'));await new Promise(r=>setTimeout(r,20));
- assert.ok(document.querySelector('#live-response'));assert.equal(document.querySelector('textarea').disabled,false);document.querySelector('textarea').value='下一句先写在这里';finish();await new Promise(r=>setTimeout(r,30));
+ assert.ok(document.querySelector('#live-response'));assert.equal(document.querySelector('#live-response .b-narr').childNodes.length,1);assert.equal(document.querySelector('textarea').disabled,false);document.querySelector('textarea').value='下一句先写在这里';finish();await new Promise(r=>setTimeout(r,30));
  assert.equal(document.querySelector('textarea').value,'下一句先写在这里');assert.equal(document.querySelector('.inrow .btn').disabled,false);assert.ok(document.querySelector('#log').textContent.includes('亭外传来雨声'));
 });
