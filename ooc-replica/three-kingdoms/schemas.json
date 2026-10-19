@@ -1,0 +1,2104 @@
+[
+  {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "segment_plan.schema.json",
+    "title": "Segment Plan v0.1",
+    "description": "一本书的剧情段切分表：AI 拆解第一步的产出。每段说明用哪套玩法模板、轻重、为什么。",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "plan_version",
+      "source",
+      "book_bible",
+      "segments"
+    ],
+    "properties": {
+      "plan_version": {
+        "const": "0.1"
+      },
+      "source": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "author",
+          "original_language",
+          "first_published",
+          "edition_used",
+          "rights_status",
+          "rights_note"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "original_language": {
+            "type": "string"
+          },
+          "first_published": {
+            "type": "string"
+          },
+          "edition_used": {
+            "type": "string"
+          },
+          "rights_status": {
+            "enum": [
+              "public_domain_confirmed_by_human",
+              "licensed_confirmed_by_human",
+              "original",
+              "NOT_CONFIRMED"
+            ],
+            "description": "必须由人确认后填写。AI 不得自行判断为 confirmed；不确定时填 NOT_CONFIRMED"
+          },
+          "rights_note": {
+            "type": "string"
+          }
+        }
+      },
+      "book_bible": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "setting",
+          "tone",
+          "main_characters"
+        ],
+        "properties": {
+          "setting": {
+            "type": "string"
+          },
+          "tone": {
+            "type": "string"
+          },
+          "main_characters": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "name",
+                "role",
+                "age_note",
+                "is_minor"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                },
+                "age_note": {
+                  "type": "string",
+                  "description": "原文依据或推断，写明是哪一种"
+                },
+                "is_minor": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "segments": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "segment_id",
+            "title",
+            "source_range",
+            "summary",
+            "template",
+            "intensity",
+            "priority",
+            "player_role",
+            "core_question",
+            "why_this_template",
+            "interactive_hook",
+            "key_choices",
+            "characters",
+            "minors_present",
+            "romance_with_minor",
+            "content_flags",
+            "canon_anchor",
+            "recommend_produce"
+          ],
+          "properties": {
+            "segment_id": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_]*$"
+            },
+            "title": {
+              "type": "string",
+              "description": "英文，面向玩家"
+            },
+            "source_range": {
+              "type": "string",
+              "description": "对应原文的章节或回目"
+            },
+            "summary": {
+              "type": "string"
+            },
+            "template": {
+              "enum": [
+                "investigation",
+                "relationship",
+                "quest",
+                "dilemma"
+              ]
+            },
+            "intensity": {
+              "enum": [
+                "light",
+                "medium",
+                "heavy"
+              ]
+            },
+            "priority": {
+              "enum": [
+                "signature",
+                "standard",
+                "bridge"
+              ],
+              "description": "signature 卖点段；standard 常规段；bridge 过渡段"
+            },
+            "player_role": {
+              "type": "string"
+            },
+            "core_question": {
+              "type": "string",
+              "description": "这一段玩家要解决的一个问题"
+            },
+            "why_this_template": {
+              "type": "string",
+              "description": "玩家在这一段主要做什么，为什么选这套模板"
+            },
+            "interactive_hook": {
+              "type": "string",
+              "description": "比读原文多出来的乐趣是什么"
+            },
+            "key_choices": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "characters": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "minors_present": {
+              "type": "boolean"
+            },
+            "romance_with_minor": {
+              "const": false
+            },
+            "content_flags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "canon_anchor": {
+              "type": "string",
+              "description": "这一段如果走向“如果”结局，下一段怎样回到原著"
+            },
+            "recommend_produce": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "notes": {
+        "type": "string"
+      }
+    }
+  },
+  {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "express.schema.json",
+    "title": "Express Output v0.2",
+    "description": "表达模块（模型）返回的结构。只有文字分段，不含任何状态或结果字段。",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "blocks"
+    ],
+    "properties": {
+      "blocks": {
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 6,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "text"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "narration",
+                "dialogue"
+              ]
+            },
+            "speaker": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "dialogue 时为在场角色的 id"
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "save.schema.json",
+    "title": "Save v0.2",
+    "description": "一位玩家在一个内容包里的进度。与内容包分开存储，绑定 pack_version。",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "save_id",
+      "pack_id",
+      "pack_version",
+      "turn",
+      "location",
+      "state",
+      "known",
+      "items",
+      "fired_events",
+      "done_actions",
+      "asked_topics",
+      "ended",
+      "history"
+    ],
+    "properties": {
+      "save_id": {
+        "type": "string"
+      },
+      "pack_id": {
+        "type": "string"
+      },
+      "pack_version": {
+        "type": "string"
+      },
+      "turn": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "location": {
+        "type": "string"
+      },
+      "state": {
+        "type": "object",
+        "additionalProperties": {
+          "type": [
+            "boolean",
+            "integer",
+            "string"
+          ]
+        }
+      },
+      "known": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "uniqueItems": true
+      },
+      "fired_events": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "done_actions": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "asked_topics": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "ended": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "history": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "turn_id",
+            "turn",
+            "input",
+            "intent",
+            "status",
+            "effects",
+            "revealed",
+            "response"
+          ],
+          "properties": {
+            "turn_id": {
+              "type": "string"
+            },
+            "turn": {
+              "type": "integer"
+            },
+            "input": {
+              "type": "object"
+            },
+            "intent": {
+              "type": "object"
+            },
+            "status": {
+              "type": "string"
+            },
+            "effects": {
+              "type": "array"
+            },
+            "revealed": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "response": {
+              "type": "object",
+              "description": "当轮返回给前端的完整 display，用于幂等重放和恢复"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "display.schema.json",
+    "title": "Display Response v0.2",
+    "description": "后端每轮返回给前端的全部内容。前端只按这个结构渲染，不自行推断状态。",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "save_id",
+      "pack_id",
+      "turn",
+      "status",
+      "blocks",
+      "scene",
+      "characters_present",
+      "suggestions",
+      "visible_state",
+      "ended",
+      "meta"
+    ],
+    "properties": {
+      "save_id": {
+        "type": "string"
+      },
+      "pack_id": {
+        "type": "string"
+      },
+      "turn": {
+        "type": "integer",
+        "minimum": 0
+      },
+      "status": {
+        "enum": [
+          "opening",
+          "ok",
+          "denied",
+          "clarify",
+          "unsupported",
+          "contradiction",
+          "unclear",
+          "ended"
+        ]
+      },
+      "blocks": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "type",
+            "text"
+          ],
+          "properties": {
+            "type": {
+              "enum": [
+                "narration",
+                "dialogue",
+                "system"
+              ],
+              "description": "system 用于“没听懂/做不到”这类系统提示，前端可用不同样式"
+            },
+            "speaker_id": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "speaker_name": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "text": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "scene": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "location_id",
+          "name",
+          "image"
+        ],
+        "properties": {
+          "location_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "characters_present": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "name",
+            "image"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "image": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "suggestions": {
+        "type": "array",
+        "maxItems": 3,
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "label",
+            "kind"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "kind": {
+              "enum": [
+                "action",
+                "topic"
+              ]
+            }
+          }
+        }
+      },
+      "notebook": {
+        "description": "仅当内容包启用 notebook 扩展时出现",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "info_id",
+            "label",
+            "kind",
+            "is_new"
+          ],
+          "properties": {
+            "info_id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "kind": {
+              "type": "string"
+            },
+            "is_new": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "inventory": {
+        "description": "仅当内容包启用 inventory 扩展时出现",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "visible_state": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "label",
+            "value"
+          ],
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "label": {
+              "type": "string"
+            },
+            "value": {
+              "type": [
+                "boolean",
+                "integer",
+                "string"
+              ]
+            }
+          }
+        }
+      },
+      "ended": {
+        "oneOf": [
+          {
+            "type": "null"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "outcome_id",
+              "title",
+              "text"
+            ],
+            "properties": {
+              "outcome_id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
+      "meta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text_source"
+        ],
+        "properties": {
+          "text_source": {
+            "enum": [
+              "content",
+              "model",
+              "fallback"
+            ],
+            "description": "content：开场等内容包原文；model：表达模块输出并通过检查；fallback：模型失败或未通过检查，改用兜底文本"
+          },
+          "replayed": {
+            "type": "boolean",
+            "description": "同一 turn_id 重发时为 true"
+          }
+        }
+      }
+    }
+  },
+  {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "intent.schema.json",
+    "title": "Intent v0.1",
+    "description": "理解模块（模型）每轮只返回这个结构，不返回剧情文本，也不直接修改状态。",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "kind"
+    ],
+    "properties": {
+      "kind": {
+        "enum": [
+          "talk",
+          "action",
+          "accuse",
+          "clarify",
+          "unsupported",
+          "contradiction",
+          "unclear",
+          "meta"
+        ],
+        "description": "talk 向角色提问/交谈；action 执行内容包里定义的行动；accuse 推理指认（需 deduction 扩展）；clarify 有多个可能行动；unsupported 本故事没有这种行动；contradiction 玩家把与世界事实冲突的内容当作事实；unclear 无法理解；meta 试图修改规则或索取设定"
+      },
+      "character": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "topic": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "action": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "suspect": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "evidence": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "candidates": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "description": "kind=clarify 时列出可能的行动 id"
+      },
+      "asserted": {
+        "type": "string",
+        "description": "kind=contradiction 时，玩家断言的内容摘要"
+      },
+      "confidence": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+      }
+    }
+  },
+  {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "pack.schema.json",
+    "title": "Interactive Story Content Pack v0.2",
+    "description": "一个内容包 = 一段可独立体验的剧情（episode）。只描述故事定义，不包含任何玩家进度。",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "spec_version",
+      "pack_id",
+      "version",
+      "title",
+      "template",
+      "intensity",
+      "genre_tags",
+      "rights",
+      "player",
+      "opening",
+      "info",
+      "characters",
+      "locations",
+      "state",
+      "actions",
+      "outcomes",
+      "tests"
+    ],
+    "properties": {
+      "spec_version": {
+        "const": "0.2"
+      },
+      "pack_id": {
+        "$ref": "#/$defs/id"
+      },
+      "version": {
+        "type": "string",
+        "pattern": "^\\d+\\.\\d+\\.\\d+$"
+      },
+      "title": {
+        "type": "string",
+        "minLength": 1
+      },
+      "genre_tags": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1
+      },
+      "template": {
+        "enum": [
+          "investigation",
+          "relationship",
+          "quest",
+          "dilemma"
+        ],
+        "description": "玩法模板。v0.2 工程只需正式支持 investigation 与 relationship；quest/dilemma 的样本可加载运行，但不作为第一版验收范围"
+      },
+      "intensity": {
+        "enum": [
+          "light",
+          "medium",
+          "heavy"
+        ],
+        "description": "轻重档位：light 以有边界的对话为主；medium 3–6 个行动；heavy 完整机制与测试"
+      },
+      "content_notes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "rights": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "source_type",
+          "source_note",
+          "cleared_for"
+        ],
+        "properties": {
+          "source_type": {
+            "enum": [
+              "original",
+              "public_domain",
+              "licensed"
+            ]
+          },
+          "source_note": {
+            "type": "string"
+          },
+          "edition_or_translation": {
+            "type": "string"
+          },
+          "cleared_for": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "internal_test",
+                "public_release"
+              ]
+            },
+            "minItems": 1
+          },
+          "regions_checked": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "extensions": {
+        "type": "array",
+        "items": {
+          "enum": [
+            "notebook",
+            "deduction",
+            "inventory"
+          ]
+        },
+        "uniqueItems": true
+      },
+      "ext": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "notebook": {
+            "$ref": "#/$defs/ext_notebook"
+          },
+          "deduction": {
+            "$ref": "#/$defs/ext_deduction"
+          },
+          "inventory": {
+            "$ref": "#/$defs/ext_inventory"
+          }
+        }
+      },
+      "player": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "display_name",
+          "brief",
+          "starting_location",
+          "starting_known"
+        ],
+        "properties": {
+          "display_name": {
+            "type": "string"
+          },
+          "brief": {
+            "type": "string"
+          },
+          "starting_location": {
+            "$ref": "#/$defs/id"
+          },
+          "starting_known": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      },
+      "opening": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string",
+            "minLength": 1
+          },
+          "speaker": {
+            "$ref": "#/$defs/id"
+          },
+          "image": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      },
+      "info": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/info"
+        },
+        "minItems": 1
+      },
+      "characters": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/character"
+        },
+        "minItems": 1
+      },
+      "locations": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/location"
+        },
+        "minItems": 1
+      },
+      "objects": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/object"
+        }
+      },
+      "state": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/state_var"
+        }
+      },
+      "actions": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/action"
+        },
+        "minItems": 1
+      },
+      "events": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/event"
+        }
+      },
+      "outcomes": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/outcome"
+        },
+        "minItems": 1
+      },
+      "assets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/asset"
+        }
+      },
+      "tests": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/test"
+        },
+        "minItems": 1
+      }
+    },
+    "$defs": {
+      "id": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_]*$"
+      },
+      "atom": {
+        "description": "条件的最小单元。v0.1 只支持这些类型。",
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "flag",
+              "is"
+            ],
+            "properties": {
+              "flag": {
+                "$ref": "#/$defs/id"
+              },
+              "is": {
+                "type": "boolean"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "int",
+              "op",
+              "value"
+            ],
+            "properties": {
+              "int": {
+                "$ref": "#/$defs/id"
+              },
+              "op": {
+                "enum": [
+                  "==",
+                  "!=",
+                  ">",
+                  ">=",
+                  "<",
+                  "<="
+                ]
+              },
+              "value": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "enum",
+              "is"
+            ],
+            "properties": {
+              "enum": {
+                "$ref": "#/$defs/id"
+              },
+              "is": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "enum",
+              "is_not"
+            ],
+            "properties": {
+              "enum": {
+                "$ref": "#/$defs/id"
+              },
+              "is_not": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "knows"
+            ],
+            "properties": {
+              "knows": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "not_knows"
+            ],
+            "properties": {
+              "not_knows": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "has_item"
+            ],
+            "properties": {
+              "has_item": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "not_has_item"
+            ],
+            "properties": {
+              "not_has_item": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "at"
+            ],
+            "properties": {
+              "at": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        ]
+      },
+      "cond": {
+        "description": "单个条件，或一层 all / any 组合。不支持嵌套。",
+        "oneOf": [
+          {
+            "$ref": "#/$defs/atom"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "all"
+            ],
+            "properties": {
+              "all": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/atom"
+                },
+                "minItems": 1
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "any"
+            ],
+            "properties": {
+              "any": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/atom"
+                },
+                "minItems": 1
+              }
+            }
+          }
+        ]
+      },
+      "effect": {
+        "description": "规则程序允许执行的变化。v0.1 只支持这些类型。",
+        "oneOf": [
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "set",
+              "to"
+            ],
+            "properties": {
+              "set": {
+                "$ref": "#/$defs/id"
+              },
+              "to": {
+                "type": [
+                  "boolean",
+                  "integer",
+                  "string"
+                ]
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "add",
+              "by"
+            ],
+            "properties": {
+              "add": {
+                "$ref": "#/$defs/id"
+              },
+              "by": {
+                "type": "integer"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "reveal"
+            ],
+            "properties": {
+              "reveal": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "give_item"
+            ],
+            "properties": {
+              "give_item": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "remove_item"
+            ],
+            "properties": {
+              "remove_item": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "move_to"
+            ],
+            "properties": {
+              "move_to": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "end"
+            ],
+            "properties": {
+              "end": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        ]
+      },
+      "info": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "is_true",
+          "visibility",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "kind": {
+            "enum": [
+              "fact",
+              "clue",
+              "secret",
+              "claim"
+            ],
+            "description": "fact 世界事实；clue 可调查得到的线索；secret 某角色在条件下才说的信息；claim 某角色的说法（可能为假）"
+          },
+          "is_true": {
+            "type": "boolean",
+            "description": "世界中是否真实。claim 可以为 false。"
+          },
+          "visibility": {
+            "enum": [
+              "public",
+              "discoverable",
+              "author_only"
+            ],
+            "description": "public 开局即可谈论；discoverable 需通过行动或披露获得；author_only 永不发给生成模块"
+          },
+          "text": {
+            "type": "string",
+            "description": "内部陈述，英文，供规则与生成使用"
+          },
+          "player_label": {
+            "type": "string",
+            "description": "玩家笔记中显示的短标签（英文）"
+          },
+          "leak_terms": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "玩家未获知前，展示文本中不得出现的词"
+          }
+        }
+      },
+      "disclosure": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "info",
+          "topic",
+          "line"
+        ],
+        "properties": {
+          "info": {
+            "$ref": "#/$defs/id"
+          },
+          "topic": {
+            "$ref": "#/$defs/id"
+          },
+          "when": {
+            "$ref": "#/$defs/cond"
+          },
+          "line": {
+            "type": "string",
+            "description": "披露时的兜底台词（英文）"
+          }
+        }
+      },
+      "topic": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "examples",
+          "fallback"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "label": {
+            "type": "string"
+          },
+          "examples": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "available_when": {
+            "$ref": "#/$defs/cond"
+          },
+          "fallback": {
+            "type": "string",
+            "description": "没有可披露信息时的兜底回应（英文）"
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/effect"
+            }
+          }
+        }
+      },
+      "character": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "age",
+          "role",
+          "location",
+          "voice",
+          "goal",
+          "knows",
+          "disclosures",
+          "topics"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "age": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "role": {
+            "type": "string"
+          },
+          "location": {
+            "$ref": "#/$defs/id"
+          },
+          "image": {
+            "$ref": "#/$defs/id"
+          },
+          "voice": {
+            "type": "string",
+            "description": "说话方式（英文），发送给生成模块"
+          },
+          "goal": {
+            "type": "string",
+            "description": "角色此刻想要什么，发送给生成模块；不得写入未披露真相"
+          },
+          "author_notes": {
+            "type": "string",
+            "description": "只给作者与测试看，永不发给生成模块"
+          },
+          "knows": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/id"
+            },
+            "description": "可以自由谈论的信息"
+          },
+          "claims": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/id"
+            },
+            "description": "会坚持的说法（可为假）"
+          },
+          "disclosures": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/disclosure"
+            }
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/topic"
+            }
+          },
+          "refusals": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "present_when": {
+            "$ref": "#/$defs/cond",
+            "description": "角色何时在场。提供时以它为准；不提供时以 location 等于玩家所在地判断"
+          },
+          "short_name": {
+            "type": "string",
+            "description": "玩家视角下的称呼，用于建议按钮（例如 'Captain Wentworth'）。不填则用 name"
+          }
+        }
+      },
+      "location": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      },
+      "object": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "location",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "name": {
+            "type": "string"
+          },
+          "location": {
+            "$ref": "#/$defs/id"
+          },
+          "description": {
+            "type": "string"
+          },
+          "image": {
+            "$ref": "#/$defs/id"
+          }
+        }
+      },
+      "state_var": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type",
+          "initial",
+          "player_visible"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "type": {
+            "enum": [
+              "bool",
+              "int",
+              "enum"
+            ]
+          },
+          "initial": {
+            "type": [
+              "boolean",
+              "integer",
+              "string"
+            ]
+          },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 2
+          },
+          "min": {
+            "type": "integer"
+          },
+          "max": {
+            "type": "integer"
+          },
+          "player_visible": {
+            "type": "boolean"
+          },
+          "label": {
+            "type": "string"
+          }
+        }
+      },
+      "action": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "label",
+          "kind",
+          "examples",
+          "effects",
+          "text_success",
+          "text_denied"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "label": {
+            "type": "string",
+            "description": "建议按钮上的英文"
+          },
+          "kind": {
+            "enum": [
+              "examine",
+              "use",
+              "give",
+              "take",
+              "move",
+              "custom"
+            ]
+          },
+          "target": {
+            "$ref": "#/$defs/id"
+          },
+          "examples": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1,
+            "description": "玩家可能的说法，用于意图识别"
+          },
+          "conditions": {
+            "$ref": "#/$defs/cond"
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/effect"
+            }
+          },
+          "effects_on_denied": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/effect"
+            }
+          },
+          "text_success": {
+            "type": "string"
+          },
+          "text_denied": {
+            "type": "string"
+          },
+          "suggest_when": {
+            "$ref": "#/$defs/cond"
+          },
+          "repeatable": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "event": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "when",
+          "effects",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "when": {
+            "$ref": "#/$defs/cond"
+          },
+          "effects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/effect"
+            }
+          },
+          "text": {
+            "type": "string"
+          },
+          "once": {
+            "type": "boolean",
+            "default": true
+          }
+        }
+      },
+      "outcome": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "title",
+          "text"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "title": {
+            "type": "string"
+          },
+          "when": {
+            "$ref": "#/$defs/cond"
+          },
+          "text": {
+            "type": "string"
+          },
+          "text_variants": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "when",
+                "append"
+              ],
+              "properties": {
+                "when": {
+                  "$ref": "#/$defs/cond"
+                },
+                "append": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "asset": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "type",
+          "file",
+          "alt"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "type": {
+            "enum": [
+              "character",
+              "scene",
+              "prop",
+              "cover"
+            ]
+          },
+          "file": {
+            "type": "string"
+          },
+          "alt": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "placeholder",
+              "commissioned",
+              "final"
+            ]
+          }
+        }
+      },
+      "intent": {
+        "description": "理解模块（模型）返回的结构；测试里也用它直接驱动规则层。与 intent.schema.json 一致。",
+        "$ref": "intent.schema.json"
+      },
+      "test": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "layer",
+          "description",
+          "setup",
+          "input",
+          "expect"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/$defs/id"
+          },
+          "layer": {
+            "enum": [
+              "rules",
+              "model"
+            ],
+            "description": "rules：给定意图，自动检查规则层；model：检查理解/生成模块，需人工或评测脚本"
+          },
+          "description": {
+            "type": "string"
+          },
+          "setup": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "location": {
+                "$ref": "#/$defs/id"
+              },
+              "state": {
+                "type": "object"
+              },
+              "known": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              }
+            }
+          },
+          "input": {
+            "type": "string",
+            "description": "玩家原话（英文）"
+          },
+          "intent": {
+            "$ref": "#/$defs/intent"
+          },
+          "expect": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "intent_kind": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "ok",
+                  "denied",
+                  "clarify",
+                  "unsupported",
+                  "contradiction",
+                  "unclear",
+                  "ended"
+                ]
+              },
+              "state": {
+                "type": "object",
+                "description": "这些变量在本轮后应等于给定值"
+              },
+              "reveals": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              },
+              "must_not_reveal": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              },
+              "items_after": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/id"
+                }
+              },
+              "outcome": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "no_change": {
+                "type": "boolean"
+              },
+              "notes": {
+                "type": "string"
+              },
+              "location": {
+                "$ref": "#/$defs/id"
+              }
+            }
+          }
+        }
+      },
+      "ext_notebook": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "show_kinds"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "show_kinds": {
+            "type": "array",
+            "items": {
+              "enum": [
+                "fact",
+                "clue",
+                "secret",
+                "claim"
+              ]
+            },
+            "minItems": 1
+          }
+        }
+      },
+      "ext_deduction": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "suspects",
+          "min_evidence",
+          "no_evidence_text",
+          "rules"
+        ],
+        "properties": {
+          "suspects": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/id"
+            },
+            "minItems": 2
+          },
+          "min_evidence": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "no_evidence_text": {
+            "type": "string"
+          },
+          "rules": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "suspect",
+                "text"
+              ],
+              "properties": {
+                "suspect": {
+                  "$ref": "#/$defs/id"
+                },
+                "evidence_all": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/id"
+                  }
+                },
+                "evidence_min": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "effects": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/effect"
+                  }
+                },
+                "outcome": {
+                  "$ref": "#/$defs/id"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "ext_inventory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "starting_items"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "id",
+                "name",
+                "description"
+              ],
+              "properties": {
+                "id": {
+                  "$ref": "#/$defs/id"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "image": {
+                  "$ref": "#/$defs/id"
+                }
+              }
+            }
+          },
+          "starting_items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/id"
+            }
+          }
+        }
+      }
+    }
+  },
+  {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "turn_request.schema.json",
+    "title": "Turn Request v0.2",
+    "description": "前端每轮发给后端的内容。turn_id 由前端生成，用于幂等：同一个 turn_id 重发时，后端返回第一次的结果，不重复执行。",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "turn_id",
+      "input"
+    ],
+    "properties": {
+      "turn_id": {
+        "type": "string",
+        "minLength": 8
+      },
+      "input": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mode"
+        ],
+        "properties": {
+          "mode": {
+            "enum": [
+              "typed",
+              "suggestion"
+            ]
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "mode=typed 时必填"
+          },
+          "suggestion_id": {
+            "type": "string",
+            "description": "mode=suggestion 时必填，取自上一轮返回的 suggestions[].id"
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "typed"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "text"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "mode": {
+                  "const": "suggestion"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "suggestion_id"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+]

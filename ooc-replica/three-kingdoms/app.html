@@ -1,0 +1,693 @@
+<title>Three Kingdoms Interactive</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;700&display=swap">
+<style>
+:root{
+  --paper:#f3ede1;--paper-2:#e9e0cd;--card:#faf6ee;--ink:#1e1a15;--ink-2:#5b5246;--ink-3:#8a7f70;--line:#d5c9b2;
+  --seal:#a5302a;--seal-soft:#a5302a1a;--jade:#2e5b4f;--jade-soft:#2e5b4f17;--gold:#8c6d24;--you:#e4dccb;--warn:#9a5a12;
+  --serif:"EB Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;--cjk:"Ma Shan Zheng","Noto Serif SC","Songti SC","STKaiti",serif;
+  --zh:"Noto Serif SC","Songti SC","STSong","SimSun",serif;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#14120e;--paper-2:#1d1a15;--card:#1a1813;--ink:#ece3d1;--ink-2:#b3a893;--ink-3:#857b6b;--line:#383128;
+  --seal:#d4594c;--seal-soft:#d4594c22;--jade:#79b3a0;--jade-soft:#79b3a01c;--gold:#cfae5d;--you:#2a261f;--warn:#e0a052;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#14120e;--paper-2:#1d1a15;--card:#1a1813;--ink:#ece3d1;--ink-2:#b3a893;--ink-3:#857b6b;--line:#383128;
+  --seal:#d4594c;--seal-soft:#d4594c22;--jade:#79b3a0;--jade-soft:#79b3a01c;--gold:#cfae5d;--you:#2a261f;--warn:#e0a052;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
+html[lang="zh"] body{font-family:var(--zh);font-size:17px;line-height:1.75}
+html[lang="zh"] .lbl{letter-spacing:.06em}
+.wrap{max-width:820px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+button{font:inherit;color:inherit;cursor:pointer}
+.lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-family:var(--serif);font-weight:600}
+.cjk{font-family:var(--cjk);font-weight:400}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px;color:var(--ink-2);background:var(--card)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ink-3)}
+.dot.on{background:var(--jade)}.dot.warn{background:var(--warn)}
+.linkbtn{background:none;border:none;padding:4px 0;color:var(--ink-2);font-size:15px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
+.linkbtn:hover{color:var(--ink)}
+/* home */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin:18px 0 26px}
+.seal{width:64px;height:64px;background:var(--seal);color:#fff8ef;display:grid;place-items:center;border-radius:6px;font-family:var(--cjk);font-size:24px;line-height:1;letter-spacing:1px;white-space:nowrap;box-shadow:inset 0 0 0 3px var(--seal),inset 0 0 0 4px #fff8ef55}
+h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0;font-weight:500;text-wrap:balance}
+.sub{color:var(--ink-2);margin:6px 0 0;font-size:17px;max-width:60ch}
+.eps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:720px){.eps{grid-template-columns:1fr}}
+.ep{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px;display:grid;grid-template-columns:1fr auto;gap:6px 12px;min-height:240px;transition:border-color .15s,transform .15s}
+.ep:hover{border-color:var(--ink-3);transform:translateY(-1px)}
+.ep .zh{grid-column:2;grid-row:1/5;writing-mode:vertical-rl;font-family:var(--cjk);font-size:40px;line-height:1.05;color:var(--seal);letter-spacing:4px}
+.ep .chap{font-size:13px;color:var(--ink-3);letter-spacing:.08em}
+.ep h3{margin:0;font-size:23px;font-weight:500;line-height:1.15}
+.ep .role{font-size:15px;color:var(--ink-2)}
+.ep .meta{grid-column:1/3;display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:8px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
+.tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--jade-soft);color:var(--jade);font-weight:600}
+.found{margin-left:auto;font-size:13px;color:var(--ink-3)}
+.foot{margin-top:28px;color:var(--ink-3);font-size:14px;max-width:70ch}
+/* intro */
+.intro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;margin-top:10px;display:grid;grid-template-columns:1fr auto;gap:18px}
+@media (max-width:560px){.intro{grid-template-columns:1fr}.intro .zh{writing-mode:horizontal-tb!important;font-size:34px!important}}
+.intro .zh{writing-mode:vertical-rl;font-family:var(--cjk);font-size:54px;color:var(--seal);line-height:1.05;letter-spacing:6px}
+.intro h2{font-size:32px;margin:4px 0 8px;font-weight:500;line-height:1.1}
+.intro p{margin:0 0 12px;max-width:60ch}
+.how{font-size:15px;color:var(--ink-2);border-left:3px solid var(--line);padding-left:12px;margin:14px 0}
+.btn{background:var(--ink);color:var(--paper);border:none;border-radius:8px;padding:10px 18px;font-size:17px;font-weight:500}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn:disabled{opacity:.45;cursor:default}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+/* play */
+.scene{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px;display:grid;gap:8px}
+.scene-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.scene h2{font-size:24px;margin:0;font-weight:500}
+.scene .loc{color:var(--ink-2);font-size:16px;font-style:italic;max-width:62ch}
+.cast{display:flex;gap:6px;flex-wrap:wrap}
+.cast .chip b{font-weight:600;color:var(--ink);white-space:nowrap}
+.meters{display:flex;gap:16px;flex-wrap:wrap}
+.meter{display:grid;gap:3px;min-width:150px}
+.meter .bar{height:6px;background:var(--paper-2);border-radius:3px;overflow:hidden}
+.meter .bar i{display:block;height:100%;background:var(--seal);transition:width .4s}
+.meter .v{font-size:15px}
+.log{display:grid;gap:14px;padding:16px 0 8px}
+.b-narr{white-space:pre-wrap;max-width:64ch}
+.b-dia{display:grid;grid-template-columns:auto 1fr;gap:10px;max-width:66ch}
+.b-dia .who{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--seal);font-weight:600;padding-top:5px;min-width:0}
+.b-dia .say{white-space:pre-wrap;min-width:0}
+.b-sys{font-size:15px;color:var(--ink-2);font-style:italic;border-left:2px solid var(--line);padding-left:10px}
+.b-you{justify-self:end;background:var(--you);border-radius:12px 12px 2px 12px;padding:8px 12px;max-width:80%;font-size:17px}
+.b-you small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.b-new{font-size:14px;color:var(--jade);display:flex;gap:6px;flex-wrap:wrap}
+.b-new span{background:var(--jade-soft);padding:2px 8px;border-radius:4px}
+.thinking{color:var(--ink-3);font-style:italic}
+.ending{border:1px solid var(--seal);border-radius:12px;padding:20px;background:var(--card);display:grid;gap:10px}
+.ending h3{margin:0;font-size:28px;font-weight:500}
+.ending .t{white-space:pre-wrap;max-width:64ch}
+.endlist{display:flex;gap:6px;flex-wrap:wrap;font-size:14px}
+.endlist span{border:1px solid var(--line);border-radius:4px;padding:2px 8px;color:var(--ink-2)}
+.endlist span.got{border-color:var(--seal);color:var(--seal)}
+.dock{position:sticky;bottom:0;background:linear-gradient(to bottom,transparent,var(--paper) 18px);padding-top:22px;padding-bottom:env(safe-area-inset-bottom,0px);display:grid;gap:10px}
+.sugs{display:flex;gap:8px;flex-wrap:wrap}
+.sug{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:16px;text-align:left}
+.sug:hover{border-color:var(--ink-2)}
+.sug.topic{border-style:dashed}
+.inrow{display:grid;grid-template-columns:1fr auto;gap:8px}
+textarea{font:inherit;font-size:17px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;resize:none;min-height:46px;max-height:140px;width:100%}
+textarea:focus,.sug:focus-visible,.btn:focus-visible,.ep:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.tools{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px}
+.drawer{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
+.drawer h4{margin:0}
+.drawer ul{margin:0;padding-left:18px}
+.drawer li{margin:2px 0}
+.kv{font-family:var(--mono);font-size:12px;white-space:pre-wrap;word-break:break-word;background:var(--paper-2);padding:8px;border-radius:6px;max-height:280px;overflow:auto;color:var(--ink-2)}
+.dev{font-family:var(--mono);font-size:12px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.seg button{border:none;background:transparent;padding:4px 10px;font-size:14px;color:var(--ink-2)}
+.seg button.on{background:var(--ink);color:var(--paper)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--card)}
+.stat .n{font-size:26px;line-height:1.1}
+.stat .s{font-size:13px;color:var(--ink-3)}
+.pass{color:var(--jade)}.fail{color:var(--seal)}
+table{border-collapse:collapse;font-size:14px;width:100%}
+td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
+.tablewrap{overflow-x:auto}
+.note{font-size:14px;color:var(--ink-3)}
+
+:root{--paper:#111113;--paper-2:#1a1a1d;--card:#19191d;--ink:#f1eee5;--ink-2:#c1bbb0;--ink-3:#99938a;--line:#343238;--seal:#d5ba7d;--seal-soft:#d5ba7d18;--jade:#bfcf77;--jade-soft:#bfcf7718;--gold:#d5ba7d;--you:#24242a;--warn:#d9a465;color-scheme:dark}
+body{margin:0;background:var(--paper)}.wrap{max-width:900px;margin:auto;padding:20px 28px 40px}.dock{background:var(--paper);bottom:0;padding-bottom:16px}.thinking{display:flex;align-items:center;gap:8px}.thinking:after{content:"故事正在回应…";font-size:13px;color:var(--ink-3)}.log{min-height:240px}.btn:disabled,.sug:disabled{opacity:.45;cursor:wait}.b-you{margin-left:auto}.ep:hover{border-color:var(--gold);transform:translateY(-2px)}
+@media(max-width:600px){.wrap{padding:12px 16px 28px}.topbar{flex-wrap:wrap}.dock{padding-bottom:max(12px,env(safe-area-inset-bottom))}.scene-head{flex-wrap:wrap}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script id="packs" type="application/json">/*__PACKS__*/</script>
+<script id="prompts" type="application/json">/*__PROMPTS__*/</script>
+<script>/*__ENGINE__*/</script>
+<script>
+(() => {
+"use strict";
+const BUILD = "proto-0.3 (2026-10-16)";
+const PACKS = JSON.parse(document.getElementById("packs").textContent);
+const PROMPTS = JSON.parse(document.getElementById("prompts").textContent);
+const ORDER = ["sg03_heroes_over_plums", "sg08_arrows_from_fog", "sg09_huarong_road"];
+const ART = {
+  sg03_heroes_over_plums: { zh: "煮酒論英雄", chap: { en: "Chapter 21", zh: "第二十一回" }, tpl: { en: "Relationship", zh: "关系" }, year: { en: "199 AD", zh: "建安四年" } },
+  sg08_arrows_from_fog: { zh: "草船借箭", chap: { en: "Chapter 46", zh: "第四十六回" }, tpl: { en: "Quest", zh: "闯关" }, year: { en: "208 AD", zh: "建安十三年" } },
+  sg09_huarong_road: { zh: "華容道", chap: { en: "Chapter 50", zh: "第五十回" }, tpl: { en: "Dilemma", zh: "抉择" }, year: { en: "208 AD", zh: "建安十三年" } },
+};
+const HOW = {
+  en: { relationship: "Talk your way through. Cao Cao is watching how you react, and a meter shows how suspicious he is.", quest: "Gather what you need, choose your moment, and run the raid step by step.", dilemma: "Hear everyone out, then make a choice that cannot be unmade." },
+  zh: { relationship: "靠说话过关。曹操在看你的每一个反应，屏幕上会显示他的猜疑有多深。", quest: "备齐所需之物，选准时机，一步步完成这次夜袭。", dilemma: "先听各方把话说完，再做一个无法收回的决定。" },
+};
+const UI = {
+  en: { proto: "Playtest prototype", dev: "开发面板", devHide: "隐藏开发面板", h1: "Romance of the Three Kingdoms", sub: "Three scenes from the novel. You play one of its heroes, say what you would say, and the story answers. The novel's ending is only one of the ways each scene can go.", youAre: "You are ", inprog: "In progress", endings: (a, b) => `Endings ${a}/${b}`, foot: "Text adapted from the public-domain translation by C. H. Brewitt-Taylor (1925), with names in pinyin. MVP: progress is saved automatically. Type freely or choose a suggestion.", data: "查看试玩数据（编辑者可见）", all: "← All scenes", typeHint: " Type anything you like, or tap a suggestion. ", content: "Content: ", cont: "Continue", over: "Start over", begin: "Begin", you: "You", chose: "You chose", noted: "Noted:", ending: "Ending", found: (a, b) => `Endings found ${a} of ${b}`, again: "Play this scene again", next: "Next scene: ", ph: "Say or do anything…", aria: "Your move", send: "Send", nbClose: "Close notebook", nb: n => `Notebook (${n})`, carry: "Carrying: ", nbTitle: "Notebook", g1: "What you know", g2: "What you've found out", g3: "What people claim", aiOn: "AI: connected", aiBusy: "AI: busy", aiOff: "AI: off", aiChk: "AI: checking", aiTip: "Typed lines are understood by the configured model; story results come from the rules.", noAI: "AI isn't available in this view, so typed lines use simple keyword matching.", declined: "AI was declined or is unavailable, so typed lines now use simple keyword matching.", limited: "AI is rate-limited for a moment; this line used keyword matching.", lets: n => `${n} lets that pass without an answer.`, ask: (n, l) => `Ask ${n}: ${l}`, sys: { clarify: "Do you mean: {opts}?", unsupported: "That isn't something you can do in this story. You could try: {opts}.", contradiction: "That doesn't match what you know so far.", unclear: "Sorry—I didn't follow that. You could try: {opts}.", ended: "This story has ended.", not_here: "{name} isn't here.", none: "looking around", sep: ", ", or: " / " } },
+  zh: { proto: "试玩原型", dev: "开发面板", devHide: "隐藏开发面板", h1: "三国演义", sub: "原著里的三个名场面。你扮演其中一位英雄，想说什么就说什么，故事会回应你。原著的结局，只是每一段的可能走向之一。", youAre: "你是", inprog: "进行中", endings: (a, b) => `结局 ${a}/${b}`, foot: "文字据《三国演义》原著（公版）改写，部分对白直接引用原文。当前为 MVP：进度自动保存，支持自由输入与建议选项。", data: "查看试玩数据（编辑者可见）", all: "← 全部场景", typeHint: "可以随意输入，也可以点建议。", content: "内容提示：", cont: "继续", over: "重新开始", begin: "开始", you: "你", chose: "你选择了", noted: "记下：", ending: "结局", found: (a, b) => `已解锁结局 ${a}/${b}`, again: "再玩一次", next: "下一段：", ph: "说点什么，或做点什么……", aria: "你的行动", send: "发送", nbClose: "合上笔记", nb: n => `笔记（${n}）`, carry: "随身：", nbTitle: "笔记", g1: "你知道的", g2: "你查到的", g3: "别人的说法", aiOn: "AI：已连接", aiBusy: "AI：繁忙", aiOff: "AI：关闭", aiChk: "AI：检测中", aiTip: "你输入的话由当前模型理解；故事结果由规则决定。", noAI: "当前视图不能使用 AI，输入将用简单的关键词匹配。", declined: "AI 被拒绝或不可用，之后的输入改用关键词匹配。", limited: "AI 暂时限流，这一句用了关键词匹配。", lets: n => `${n}没有接这句话。`, ask: (n, l) => `问${n}：${l}`, sys: { clarify: "你是想：{opts}？", unsupported: "这个故事里做不了这件事。可以试试：{opts}。", contradiction: "这和你目前所知的情况不符。", unclear: "抱歉，没明白你的意思。可以试试：{opts}。", ended: "这段故事已经结束。", not_here: "{name}不在这里。", none: "四处看看", sep: "、", or: " / " } },
+};
+const STOP = new Set("a an the i me my you your we our to of and or in on at for with is are was be it this that do does did will would can could should have has had he she him her his they them their what why how who where when so just please now then there here let lets let's today tonight really tell think know about some any very much more all yes no not ok okay well".split(" "));
+const $ = (s, r = document) => r.querySelector(s);
+const h = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) { if (k === "class") e.className = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else if (v !== null && v !== undefined && v !== false) e.setAttribute(k, v === true ? "" : v); } kids.flat().forEach(k => { if (k !== null && k !== undefined && k !== false) e.append(k.nodeType ? k : String(k)); }); return e; };
+const embedded = window.parent !== window;
+let snapshot = {};
+const store = { get(k,d) { if(embedded)return Object.hasOwn(snapshot,k)?snapshot[k]:d; try{return JSON.parse(localStorage.getItem("tk3."+k))??d;}catch{return d;} }, set(k,v) { if(embedded){snapshot[k]=v;window.parent.postMessage({type:"tk3-save",key:k,value:v},location.origin);return;}try{localStorage.setItem("tk3."+k,JSON.stringify(v));}catch{} }, del(k) { if(embedded){delete snapshot[k];window.parent.postMessage({type:"tk3-save",key:k,value:null},location.origin);return;}localStorage.removeItem("tk3."+k); } };
+
+const rid = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
+
+/* ---------------- runtime capabilities ---------------- */
+const RT = { sample: null, db: null, user: null, uid: null, ai: "checking", aiNote: "", canEdit: false };
+const anon = store.get("anon", null) || (() => { const a = "anon-" + rid(); store.set("anon", a); return a; })();
+const settings = Object.assign({ textMode: "fixed_first", dev: false, lang: "zh" }, store.get("settings", {}));
+const L = () => UI[settings.lang];
+const applyLang = () => { document.documentElement.lang = settings.lang === "zh" ? "zh" : "en"; };
+const saveSettings = () => store.set("settings", settings);
+
+async function initRuntime() {
+  const use = n => (window.claude && typeof window.claude.use === "function") ? window.claude.use(n).catch(() => null) : Promise.resolve(null);
+  const [sample, db, user] = await Promise.all([use("sample"), use("db"), use("user")]);
+  RT.sample = sample; RT.db = db; RT.user = user;
+  if (!sample && !db && /^https?:$/.test(location.protocol)) await useLocalServer(); // 独立部署：接本地 server/server.js
+  RT.ai = RT.sample ? "ready" : "off";
+  if (!RT.sample) RT.aiNote = "noAI";
+  if (user) { try { RT.uid = await user.id(); } catch {} try { RT.canEdit = await user.canEdit(); } catch {} }
+  render();
+}
+
+/* 本地服务器适配：接口形状与 claude.ai 的 sample / db 一致，页面其余代码不用改 */
+async function useLocalServer() {
+  try {
+    const health=await fetch("/api/config",{signal:AbortSignal.timeout(8000)}).then(r=>r.json());
+    if(!health.configured)return;
+    const call=async(_input,opts={})=>{
+      const r=await fetch("/api/three-kingdoms",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phase:opts.phase,context:opts.context,lang:settings.lang}),signal:AbortSignal.any([...(turnController?[turnController.signal]:[]),AbortSignal.timeout(14000)])});
+      const d=await r.json();if(!r.ok)throw {code:d.code||"upstream_error"};return d;
+    };
+    call.json=async(input,opts)=> (await call(input,opts)).output;
+    RT.sample=call;
+  } catch {}
+}
+
+/* ---------------- analytics (05_埋点与试玩指标) ---------------- */
+const EVENTS = "playtest_events";
+function track(name, fields) {
+  const doc = Object.assign({ event: name, ts: Date.now(), player: RT.uid || anon, build: BUILD, ai: RT.ai, text_mode: settings.textMode, lang: settings.lang }, fields);
+  if (settings.dev) console.log("[track]", doc);
+  if (!RT.db) return;
+  try { RT.db.collection(EVENTS).add(doc).catch(() => {}); } catch {}
+}
+
+/* ---------------- state ---------------- */
+let turnController=null;
+let view = { screen: "home", packId: null };
+let G = null; // current game: {pack, save, save_id, log:[], history:[], shownFixed:Set, ended, busy, counts}
+const packOf = (id, lang) => PACKS[lang || settings.lang].find(p => p.pack_id === id);
+const endingsFound = id => store.get("endings." + id, []);
+const present = (pack, c, s) => ("present_when" in c) ? SV.ok(c.present_when, s) : c.location === s.location;
+
+/* 记录里只存“文本键”，渲染时按当前语言取文字，切换语言后整段记录一起换 */
+function textIndex(pack) {
+  const m = new Map(), put = (t, k) => { if (t && !m.has(t)) m.set(t, k); };
+  put(pack.opening.text, "open");
+  pack.actions.forEach(a => { put(a.text_success, `a:${a.id}:ok`); put(a.text_denied, `a:${a.id}:no`); });
+  (pack.events || []).forEach(e => put(e.text, `e:${e.id}`));
+  pack.characters.forEach(c => { c.disclosures.forEach((d, i) => put(d.line, `d:${c.id}:${i}`)); c.topics.forEach(t => put(t.fallback, `f:${c.id}:${t.id}`)); });
+  return m;
+}
+const IDX = {}; const idxOf = (lang, id) => (IDX[lang + id] = IDX[lang + id] || textIndex(packOf(id, lang)));
+function keyText(pack, k) {
+  const [kind, a, b] = k.split(":");
+  if (kind === "open") return pack.opening.text;
+  if (kind === "a") { const x = pack.actions.find(x => x.id === a); return x && (b === "ok" ? x.text_success : x.text_denied); }
+  if (kind === "e") { const x = (pack.events || []).find(x => x.id === a); return x && x.text; }
+  const c = pack.characters.find(x => x.id === a); if (!c) return null;
+  if (kind === "d") return (c.disclosures[+b] || {}).line;
+  if (kind === "f") return (c.topics.find(t => t.id === b) || {}).fallback;
+  return null;
+}
+function sugLabel(pack, sg) {
+  if (!sg || !sg.intent) return null;
+  if (sg.intent.kind === "action") { const a = pack.actions.find(x => x.id === sg.intent.action); return a && a.label; }
+  if (sg.intent.kind === "talk") { const c = pack.characters.find(x => x.id === sg.intent.character), t = c && c.topics.find(t => t.id === sg.intent.topic); return t && L().ask(c.short_name || c.name, t.label); }
+  return null;
+}
+/* 旧版存档（只有文字）转成文本键：在两种语言里反查 */
+function migrateLog(pack, log) {
+  const id = pack.pack_id, idx = [idxOf("en", id), idxOf("zh", id)];
+  const labelMap = new Map();
+  ["en", "zh"].forEach(lg => { const p = packOf(id, lg);
+    p.actions.forEach(a => labelMap.set(a.label, { kind: "action", intent: { kind: "action", action: a.id } }));
+    p.characters.forEach(c => c.topics.forEach(t => labelMap.set(UI[lg].ask(c.short_name || c.name, t.label), { kind: "topic", intent: { kind: "talk", character: c.id, topic: t.id } })));
+    p.info.forEach(i => i.player_label && labelMap.set("info:" + i.player_label, i.id)); });
+  return log.map(e => {
+    if (e.k || e.t === "fx" || e.t === "gen" || e.t === "lets") return e;
+    if (e.t === "narr" || e.t === "dia") { const k = idx[0].get(e.text) || idx[1].get(e.text); return k ? { t: "fx", k, role: e.t, speaker: e.speaker || null } : e; }
+    if (e.t === "you" && e.mode === "suggestion" && !e.sug) { const sg = labelMap.get(e.text); return sg ? Object.assign({}, e, { sug: sg }) : e; }
+    if (e.t === "new" && e.items && !e.ids) { const ids = e.items.map(x => labelMap.get("info:" + x)); return ids.every(Boolean) ? { t: "new", ids } : e; }
+    return e;
+  });
+}
+function persist() { if (!G) return; store.set("game." + G.pack.pack_id, { save: G.save, save_id: G.save_id, log: G.log, history: G.history, shownFixed: [...G.shownFixed], counts: G.counts, ended: G.ended }); }
+function newGame(pack) {
+  G = { pack, save: SV.newSave(pack), save_id: "s_" + rid(), log: [], history: [], shownFixed: new Set(), counts: { typed: 0, suggestion: 0 }, ended: null, busy: false, dev: [] };
+  const o = pack.opening;
+  G.log.push({ t: "fx", k: "open", role: "narr", speaker: o.speaker || null });
+  G.shownFixed.add("open");
+  track("episode_started", { save_id: G.save_id, pack_id: pack.pack_id, pack_version: pack.version, template: pack.template, intensity: pack.intensity });
+  persist();
+}
+function loadGame(pack) {
+  const d = store.get("game." + pack.pack_id, null);
+  if (!d || d.save.pack_version !== pack.version) return false;
+  G = { pack, save: d.save, save_id: d.save_id, log: migrateLog(pack, d.log), history: d.history, shownFixed: new Set(d.shownFixed), counts: d.counts, ended: d.ended, busy: false, dev: [] };
+  return true;
+}
+
+/* ---------------- understand ---------------- */
+function understandInput(pack, s, text) {
+  const info = Object.fromEntries(pack.info.map(i => [i.id, i]));
+  const out = {
+    player_role: pack.player.display_name,
+    location: pack.locations.find(l => l.id === s.location).name,
+    characters_present: pack.characters.filter(c => present(pack, c, s)).map(c => ({ id: c.id, name: c.name, topics: c.topics.map(t => ({ id: t.id, label: t.label, examples: t.examples })) })),
+    actions: pack.actions.map(a => ({ id: a.id, label: a.label, examples: a.examples })),
+    player_knows: s.known.map(k => ({ id: k, summary: info[k].player_label || info[k].text })),
+    recent_turns: G.history.slice(-4).map(x => ({ player: x.input, shown: x.shown })),
+    player_input: text,
+  };
+  const d = (pack.ext || {}).deduction;
+  if (d) out.accusation = { suspects: d.suspects.map(id => ({ id, name: pack.characters.find(c => c.id === id).name })), evidence_ids_player_knows: s.known.filter(k => ["clue", "secret", "claim"].includes(info[k].kind)) };
+  return out;
+}
+const KINDS = ["talk", "action", "accuse", "clarify", "unsupported", "contradiction", "unclear", "meta"];
+const intentOk = x => x && typeof x === "object" && !Array.isArray(x) && KINDS.includes(x.kind);
+
+const ZSTOP = new Set("你的 我的 一下 什么 怎么 这个 那个 我们 你们 他们 是不 不是 可以 现在 就是 还是 一个 吗？".split(" "));
+function tokens(t) {
+  const latin = (t.toLowerCase().match(/[a-z']+/g) || []).map(w => w.replace(/'s$/, "").replace(/s$/, "")).filter(w => w.length > 1 && !STOP.has(w));
+  const runs = t.match(/[\u4e00-\u9fff]+/g) || [], big = [];
+  runs.forEach(r => { if (r.length === 1) big.push(r); for (let i = 0; i + 1 < r.length; i++) big.push(r.slice(i, i + 2)); });
+  return latin.concat(big.filter(b => !ZSTOP.has(b)));
+}
+function overlap(a, b) { if (!a.length || !b.length) return 0; const A = new Set(a), B = new Set(b); let n = 0; A.forEach(w => { if (B.has(w)) n++; }); return 2 * n / (A.size + B.size); }
+function matchIntent(pack, s, text) {
+  const tk = tokens(text); let best = { score: 0, intent: { kind: "unclear" } };
+  const consider = (phrases, intent) => phrases.forEach(p => { const sc = overlap(tk, tokens(p)); if (sc > best.score) best = { score: sc, intent }; });
+  const both = ["en", "zh"].map(lg => packOf(pack.pack_id, lg)); // 中英文输入都能匹配（两种语言 id 相同）
+  both.forEach(pk => pk.actions.forEach(a => consider([a.label, ...a.examples], { kind: "action", action: a.id })));
+  const chars = pack.characters.filter(c => present(pack, c, s));
+  both.forEach(pk => pk.characters.filter(c => chars.some(x => x.id === c.id)).forEach(c => c.topics.forEach(t => consider([t.label, ...t.examples], { kind: "talk", character: c.id, topic: t.id }))));
+  if (best.score >= 0.34) return best.intent;
+  const named = chars.find(c => tk.some(w => both.some(pk => { const x = pk.characters.find(y => y.id === c.id); return tokens(x.name + " " + (x.short_name || "")).includes(w); })));
+  if (named) return { kind: "talk", character: named.id, topic: null };
+  return { kind: "unclear" };
+}
+
+async function understand(text, meta) {
+  const pack = G.pack;
+  if (!RT.sample || RT.ai === "off") { meta.understand_source = "matcher"; return matchIntent(pack, G.save, text); }
+  const input = [{ role: "user", content: PROMPTS.understand + "\n\nThe player may write in English or Chinese; map either to the same ids.\n\nThe input JSON follows. Reply with only the intent JSON object.\n\n" + JSON.stringify(understandInput(pack, G.save, text)) }];
+  const t0 = performance.now();
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const out = await RT.sample.json(input, { modelTier: "quick", cache: false, phase:"understand", context:understandInput(pack,G.save,text) });
+      meta.latency_ms_understand = Math.round(performance.now() - t0);
+      if (intentOk(out)) { RT.ai="ready";RT.aiNote="";meta.understand_source = "model"; return out; }
+      meta.understand_retries = attempt + 1;
+    } catch (e) {
+      meta.latency_ms_understand = Math.round(performance.now() - t0);
+      const code = e && e.code;
+      meta.understand_error = code || "error";
+      if (code === "not_granted" || code === "sampling_disabled" || code === "not_declared" || code === "capability_disabled" || code === "capability_removed") { RT.ai = "off"; RT.aiNote = "declined"; break; }
+      if (code === "rate_limited") { RT.ai = "limited"; RT.aiNote = "limited"; break; }
+      if (code === "invalid_json" && attempt === 0) { meta.understand_retries = 1; continue; }
+      break;
+    }
+  }
+  RT.aiNote="limited";
+  meta.understand_source = "matcher";
+  return matchIntent(pack, G.save, text);
+}
+
+/* ---------------- express ---------------- */
+function expressPrompt() {
+  if (settings.lang !== "zh") return PROMPTS.express;
+  return PROMPTS.express.replace(/6\. English only\.[^\n]*/, "6. Write in Simplified Chinese only, in a plain, lightly classical style that echoes the novel Romance of the Three Kingdoms (半文半白, easy to read). 1 to 4 blocks. 220 Chinese characters or fewer in total.");
+}
+function sysText(key, pack, s, name) {
+  const T = L().sys; const labs = suggestionsL(pack, s).map(x => x.label);
+  return T[key].replace("{opts}", labs.join(T.sep) || T.none).replace("{name}", name || "");
+}
+function suggestionsL(pack, s) {
+  return SV.suggestions(pack, s).map(x => {
+    if (x.kind !== "topic") return x;
+    const c = pack.characters.find(c => c.id === x.intent.character), t = c.topics.find(t => t.id === x.intent.topic);
+    return Object.assign({}, x, { label: L().ask(c.short_name || c.name, t.label) });
+  });
+}
+function expressProblems(pack, saveAfter, out) {
+  if (!out || !Array.isArray(out.blocks) || out.blocks.length < 1 || out.blocks.length > 6) return ["schema: blocks"];
+  const P = [];
+  const ids = new Set(pack.characters.filter(c => present(pack, c, saveAfter)).map(c => c.id));
+  for (const b of out.blocks) {
+    if (!b || !["narration", "dialogue"].includes(b.type) || typeof b.text !== "string" || !b.text.trim()) return ["schema: block"];
+    if (b.type === "dialogue" && !ids.has(b.speaker)) P.push("speaker_not_present:" + b.speaker);
+  }
+  const text = out.blocks.map(b => b.text).join(" ");
+  if (settings.lang === "zh") { const n = text.replace(/\s/g, "").length; if (n > 320) P.push("too_long:" + n + "chars"); if (!/[\u4e00-\u9fff]/.test(text)) P.push("wrong_language"); }
+  else { const words = text.split(/\s+/).filter(Boolean).length; if (words > 150) P.push("too_long:" + words); }
+  SV.leakCheck(pack, saveAfter, text).forEach(([i, t]) => P.push("leak:" + i + ":" + t));
+  return P;
+}
+async function express(r, saveAfter, playerInput, meta) {
+  const ctx = Object.assign({}, r.generation_context, { outcome: null, player_input: playerInput, recent_turns: G.history.slice(-3).map(x => ({ player: x.input, shown: x.shown })) });
+  const input = [{ role: "user", content: expressPrompt() + "\n\nThe input JSON follows. Reply with only the JSON object.\n\n" + JSON.stringify(ctx) }];
+  const t0 = performance.now(); meta.express_problems = [];
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const out = await RT.sample.json(input, { modelTier: "quick", cache: false, phase:"express", context:ctx });
+      const probs = expressProblems(G.pack, saveAfter, out);
+      meta.latency_ms_express = Math.round(performance.now() - t0);
+      if (!probs.length) return out.blocks;
+      meta.express_problems.push(...probs); meta.express_retries = attempt + 1;
+    } catch (e) {
+      meta.latency_ms_express = Math.round(performance.now() - t0);
+      const code = e && e.code; meta.express_problems.push("error:" + (code || "unknown"));
+      if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(code)) { RT.ai = "off"; RT.aiNote = "declined"; break; }
+      if (code === "rate_limited") { RT.ai = "limited"; break; }
+      if (code !== "invalid_json") break;
+      meta.express_retries = attempt + 1;
+    }
+  }
+  return null;
+}
+
+/* ---------------- routing: fixed vs generated (对话机制设计报告 · 路由规则) ---------------- */
+function route(r, intent, mode) {
+  if (!["ok", "denied", "ended"].includes(r.status)) return { gen: false, why: "system" };
+  if (!RT.sample || RT.ai === "off") return { gen: false, why: "ai_off" };
+  if (intent.kind === "talk" && !intent.topic) return { gen: true, why: "small_talk" };
+  if (mode === "suggestion") return { gen: false, why: "suggestion_click" };
+  if (settings.textMode === "generated") return { gen: true, why: "mode_generated" };
+  if (r.texts.length && r.texts.every(t => G.shownFixed.has(idxOf(settings.lang, G.pack.pack_id).get(t) || t))) return { gen: true, why: "repeat_variation" };
+  return { gen: false, why: "typed_defined" };
+}
+function fixedEntries(pack, r, intent, before) {
+  const sys = ["clarify", "unsupported", "contradiction", "unclear"].includes(r.status) || (r.status === "ended" && !r.outcome);
+  if (intent.kind === "talk" && !intent.topic && r.status === "ok" && r.speaker) return [{ t: "lets", c: r.speaker }];
+  if (sys) {
+    const key = r.status === "ended" ? "ended" : r.status;
+    if (key === "clarify") return [{ t: "sys", key, cand: (intent.candidates || []).filter(id => pack.actions.some(a => a.id === id)) }];
+    return [{ t: "sys", key, opts: SV.suggestions(pack, before).map(x => ({ kind: x.kind, intent: x.intent })) }];
+  }
+  if (r.status === "denied" && intent.kind === "talk") {
+    const c = pack.characters.find(x => x.id === intent.character);
+    if (c && !present(pack, c, before)) return [{ t: "sys", key: "not_here", c: c.id }];
+  }
+  const idx = idxOf(settings.lang, pack.pack_id);
+  return r.texts.map((t, i) => {
+    const role = (i === 0 && r.speaker && /^["“]/.test(t)) ? "dia" : "narr";
+    const k = idx.get(t);
+    return k ? { t: "fx", k, role, speaker: role === "dia" ? r.speaker : null } : { t: role, text: t, speaker: role === "dia" ? r.speaker : null };
+  });
+}
+/* 当前语言下，一条记录显示成什么 */
+function entryBlocks(pack, e) {
+  const T = L();
+  if (e.t === "fx") { const text = keyText(pack, e.k); return text ? [{ type: e.role === "dia" ? "dialogue" : "narration", speaker: e.speaker, text }] : []; }
+  if (e.t === "lets") return [{ type: "narration", text: T.lets(nameOf(pack, e.c)) }];
+  if (e.t === "sys" && e.key) {
+    if (e.key === "clarify") return [{ type: "system", text: T.sys.clarify.replace("{opts}", (e.cand || []).map(id => (pack.actions.find(a => a.id === id) || {}).label).filter(Boolean).join(T.sys.or) || T.sys.none) }];
+    if (e.key === "not_here") return [{ type: "system", text: T.sys.not_here.replace("{name}", nameOf(pack, e.c)) }];
+    const labs = (e.opts || []).map(o => sugLabel(pack, o)).filter(Boolean);
+    return [{ type: "system", text: T.sys[e.key].replace("{opts}", labs.join(T.sys.sep) || T.sys.none) }];
+  }
+  if (e.t === "gen") return e.lang === settings.lang ? e.blocks : e.fb.flatMap(x => entryBlocks(pack, x));
+  if (e.t === "sys") return [{ type: "system", text: e.text }];
+  if (e.t === "narr" || e.t === "dia") return [{ type: e.t === "dia" ? "dialogue" : "narration", speaker: e.speaker, text: e.text }];
+  return [];
+}
+
+/* ---------------- turn ---------------- */
+async function submit({ text, suggestion }) {
+  if (!G || G.busy || G.ended) return;
+  const pack = G.pack, mode = suggestion ? "suggestion" : "typed";
+  const shownInput = suggestion ? suggestion.label : text.trim();
+  if (!shownInput) return;
+  G.busy = true;
+  turnController=new AbortController();
+  const game=G, outputStart=($("#log")?.children.length||0)+1;
+  const turnId = "t_" + rid();
+  G.log.push({ t: "you", text: shownInput, mode, sug: suggestion ? { kind: suggestion.kind, intent: suggestion.intent } : null });
+  const meta = { understand_retries: 0, express_retries: 0, express_problems: [], latency_ms_understand: null, latency_ms_express: null };
+  renderPlay();
+  let intent;
+  if (suggestion) { intent = suggestion.intent; meta.understand_source = "click"; }
+  else intent = await understand(shownInput, meta);
+  if(game!==G || turnController.signal.aborted){ if(game===G){G.log.pop();G.busy=false;renderPlay();}return; }
+  const before = G.save;
+  const [r, s2] = SV.processTurn(pack, before, intent);
+  const rt = route(r, intent, mode);
+  let blocks = null, source = "fallback";
+  if (rt.gen) { blocks = await express(r, s2, shownInput, meta); if (blocks) source = "model"; }
+  if(game!==G || turnController.signal.aborted){if(game===G){G.log.pop();G.busy=false;renderPlay();}return;}
+  const fixed = fixedEntries(pack, r, intent, before);
+  if (blocks) G.log.push({ t: "gen", lang: settings.lang, blocks, fb: fixed });
+  else { fixed.forEach(e => G.log.push(e)); blocks = fixed.flatMap(e => entryBlocks(pack, e)); source = rt.gen ? "fallback" : (["clarify", "unsupported", "contradiction", "unclear"].includes(r.status) ? "system" : "fixed"); }
+  r.texts.forEach(t => { const k = idxOf(settings.lang, pack.pack_id).get(t); G.shownFixed.add(k || t); });
+  if (r.revealed.length) G.log.push({ t: "new", ids: r.revealed.slice() });
+  G.save = s2; G.counts[mode]++;
+  G.history.push({ input: shownInput, shown: blocks.map(b => b.text).join(" ") });
+  const devRow = { turn: s2.turn, input: shownInput, mode, intent, status: r.status, route: rt.why, text_source: source, effects: r.effects_applied, revealed: r.revealed, meta, state: s2.state };
+  G.dev.unshift(devRow);
+  track("turn_completed", { save_id: G.save_id, pack_id: pack.pack_id, turn: s2.turn, turn_id: turnId, input_mode: mode, input_chars: mode === "typed" ? shownInput.length : 0, intent_kind: intent.kind, status: r.status, revealed_count: r.revealed.length, text_source: source, route: rt.why, understand_source: meta.understand_source, understand_retries: meta.understand_retries, express_retries: meta.express_retries, express_problems: meta.express_problems, latency_ms_understand: meta.latency_ms_understand, latency_ms_express: meta.latency_ms_express, unsupported_text: (mode === "typed" && ["unsupported", "unclear"].includes(r.status)) ? shownInput.slice(0, 200) : null });
+  if (r.status === "ended" && r.outcome) {
+    const o = pack.outcomes.find(x => x.id === r.outcome);
+    G.ended = endingOf(pack, o.id, s2);
+    const got = new Set(endingsFound(pack.pack_id)); got.add(o.id); store.set("endings." + pack.pack_id, [...got]);
+    track("episode_ended", { save_id: G.save_id, pack_id: pack.pack_id, outcome_id: o.id, turns: s2.turn, typed_turns: G.counts.typed, suggestion_turns: G.counts.suggestion });
+  }
+  persist();
+  renderPlay();
+  await revealTurn(outputStart);
+  if(game===G){G.busy=false;turnController=null;renderPlay();}
+
+}
+
+async function revealTurn(start){
+ const nodes=[...($("#log")?.children||[])].slice(start).flatMap(e=>e.classList.contains("b-dia")?[e.querySelector(".say")]:e.matches(".b-narr,.b-sys")?[e]:[]).filter(Boolean);
+ if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+ const texts=nodes.map(e=>e.textContent);nodes.forEach(e=>e.textContent="");
+ for(let n=0;n<nodes.length;n++){
+   const chars=Array.from(texts[n]);let i=0,last=performance.now();
+   await new Promise(resolve=>{const tick=now=>{if(!nodes[n].isConnected||turnController?.signal.aborted){nodes[n].textContent=texts[n];resolve();return;}if(now-last>=18){i=Math.min(chars.length,i+3);nodes[n].textContent=chars.slice(0,i).join("");last=now;}if(i<chars.length)requestAnimationFrame(tick);else resolve();};requestAnimationFrame(tick);});
+ }
+}
+/* ---------------- views ---------------- */
+function aiChip() {
+  const T = L(); const m = { ready: ["on", T.aiOn], limited: ["warn", T.aiBusy], off: ["", T.aiOff], checking: ["", T.aiChk] }[RT.ai] || ["", "AI"];
+  return h("span", { class: "chip", title: RT.aiNote ? T[RT.aiNote] : T.aiTip }, h("span", { class: "dot " + m[0] }), m[1]);
+}
+function topbar(left) {
+  if(G?.busy && left?.tagName==="BUTTON")left.disabled=true;
+  const langSeg = h("span", { class: "seg", role: "group", "aria-label": "Language / 语言" }, [["en", "EN"], ["zh", "中文"]].map(([v, l]) => h("button", { disabled: G?.busy, class: settings.lang === v ? "on" : "", "aria-pressed": settings.lang === v ? "true" : "false", onclick: () => setLang(v) }, l)));
+  return h("div", { class: "topbar" }, left, h("div", { class: "row" }, langSeg, aiChip(),
+    new URLSearchParams(location.search).has("inspect") ? h("button", { class: "linkbtn", onclick: () => { settings.dev = !settings.dev; saveSettings(); render(); } }, settings.dev ? L().devHide : L().dev) : null));
+}
+function setLang(v) {
+  if(G?.busy)return;
+  if (settings.lang === v) return;
+  settings.lang = v; saveSettings(); applyLang();
+  if (G) { G.pack = packOf(G.pack.pack_id); if (G.ended) G.ended = endingOf(G.pack, G.ended.id, G.save); persist(); }
+  render();
+}
+function endingOf(pack, id, s) {
+  const o = pack.outcomes.find(x => x.id === id);
+  return { id: o.id, title: o.title, text: o.text + (o.text_variants || []).filter(v => SV.ok(v.when, s)).map(v => (settings.lang === "zh" ? "" : " ") + v.append).join("") };
+}
+function render() { if (view.screen === "home") renderHome(); else if (view.screen === "intro") renderIntro(); else if (view.screen === "play") renderPlay(); else if (view.screen === "data") renderData(); }
+
+function renderHome() {
+  const app = $("#app"); app.replaceChildren();
+  const T = L();
+  app.append(topbar(h("span", { class: "lbl" }, T.proto + " · " + BUILD)));
+  app.append(h("div", { class: "hero" }, h("div", { class: "seal", "aria-hidden": "true" }, "三國"),
+    h("div", {}, h("h1", {}, T.h1),
+      h("p", { class: "sub" }, T.sub))));
+  const eps = h("div", { class: "eps" });
+  ORDER.forEach(id => {
+    const p = packOf(id), a = ART[id], found = endingsFound(id).length, inprog = !!store.get("game." + id, null) && !(store.get("game." + id, {}).ended);
+    eps.append(h("button", { class: "ep", onclick: () => { view = { screen: "intro", packId: id }; track("detail_viewed", { pack_id: id }); render(); } },
+      h("div", { class: "chap" }, a.chap[settings.lang] + " · " + a.year[settings.lang]),
+      h("h3", {}, p.title),
+      h("div", { class: "role" }, T.youAre + p.player.display_name),
+      h("div", { class: "zh", "aria-hidden": "true" }, a.zh),
+      h("div", { class: "meta" }, h("span", { class: "tag" }, a.tpl[settings.lang]), inprog ? h("span", {}, T.inprog) : null, h("span", { class: "found" }, T.endings(found, p.outcomes.length)))));
+  });
+  app.append(eps);
+  app.append(h("p", { class: "foot" }, T.foot));
+  if (RT.canEdit) app.append(h("p", {}, h("button", { class: "linkbtn", onclick: () => { view = { screen: "data" }; render(); } }, T.data)));
+}
+
+function renderIntro() {
+  const p = packOf(view.packId), a = ART[p.pack_id], app = $("#app"), T = L();
+  const saved = store.get("game." + p.pack_id, null);
+  const canResume = saved && !saved.ended && saved.save.pack_version === p.version;
+  app.replaceChildren(topbar(h("button", { class: "linkbtn", onclick: () => { view = { screen: "home" }; render(); } }, T.all)));
+  app.append(h("div", { class: "intro" },
+    h("div", {}, h("div", { class: "lbl" }, a.chap[settings.lang] + " · " + a.tpl[settings.lang]), h("h2", {}, p.title),
+      h("p", {}, p.player.brief),
+      h("div", { class: "how" }, HOW[settings.lang][p.template], T.typeHint, (p.content_notes || []).length ? T.content + p.content_notes.join(settings.lang === "zh" ? "；" : "; ") + (settings.lang === "zh" ? "。" : ".") : ""),
+      h("div", { class: "row" },
+        canResume ? h("button", { class: "btn", onclick: () => { loadGame(p); view = { screen: "play", packId: p.pack_id }; render(); } }, T.cont) : null,
+        h("button", { class: canResume ? "btn ghost" : "btn", onclick: () => { newGame(p); view = { screen: "play", packId: p.pack_id }; render(); } }, canResume ? T.over : T.begin))),
+    h("div", { class: "zh", "aria-hidden": "true" }, a.zh)));
+}
+
+function stateMeters(pack, s) {
+  const vis = pack.state.filter(v => v.player_visible);
+  if (!vis.length) return null;
+  return h("div", { class: "meters" }, vis.map(v => {
+    const val = s.state[v.id];
+    if (v.type === "int" && v.max !== undefined) {
+      const lo = v.min || 0, pct = Math.max(0, Math.min(100, (val - lo) / (v.max - lo) * 100));
+      return h("div", { class: "meter" }, h("span", { class: "lbl" }, v.label || v.id), h("span", { class: "v" }, `${val} / ${v.max}`), h("div", { class: "bar" }, h("i", { style: `width:${pct}%` })));
+    }
+    return h("div", { class: "meter" }, h("span", { class: "lbl" }, v.label || v.id), h("span", { class: "v" }, String(val)));
+  }));
+}
+function nameOf(pack, id) { const c = pack.characters.find(x => x.id === id); return c ? (c.short_name || c.name) : ""; }
+function renderLog(thinking) {
+  const box = $("#log"); if (!box || !G) return;
+  const pack = G.pack, info = Object.fromEntries(pack.info.map(i => [i.id, i])), out = [];
+  G.log.forEach(e => {
+    if (e.t === "you") { out.push(h("div", { class: "b-you" }, h("small", {}, e.mode === "suggestion" ? L().chose : L().you), (e.sug && sugLabel(pack, e.sug)) || e.text)); return; }
+    if (e.t === "new") { const items = e.ids ? e.ids.map(k => info[k] ? (info[k].player_label || info[k].text) : k) : e.items; out.push(h("div", { class: "b-new" }, L().noted, items.map(x => h("span", {}, x)))); return; }
+    entryBlocks(pack, e).forEach(b => {
+      if (b.type === "dialogue") out.push(h("div", { class: "b-dia" }, h("div", { class: "who" }, nameOf(pack, b.speaker)), h("div", { class: "say" }, b.text)));
+      else if (b.type === "system") out.push(h("div", { class: "b-sys" }, b.text));
+      else out.push(h("div", { class: "b-narr" }, b.text));
+    });
+  });
+  box.replaceChildren(...out);
+  if (thinking) box.append(h("div", { class: "thinking" }, "…"));
+  const last = box.lastElementChild; if (last) last.scrollIntoView({ block: "nearest", behavior: "smooth" });
+}
+let panel = null; // "notes" | "dev" | null
+function renderPlay() {
+  const app = $("#app"); if (!G) { view = { screen: "home" }; return renderHome(); }
+  const pack = G.pack, s = G.save, a = ART[pack.pack_id], T = L();
+  const loc = pack.locations.find(l => l.id === s.location);
+  const cast = pack.characters.filter(c => present(pack, c, s));
+  app.replaceChildren(topbar(h("button", { class: "linkbtn", onclick: () => { if (!G.ended) track("episode_exit", { save_id: G.save_id, pack_id: pack.pack_id, turn: s.turn }); view = { screen: "home" }; render(); } }, T.all)));
+  app.append(h("div", { class: "scene" },
+    h("div", { class: "scene-head" }, h("span", { class: "cjk", style: "color:var(--seal);font-size:26px" }, a.zh), settings.lang === "zh" ? null : h("h2", {}, pack.title), h("span", { class: "lbl" }, T.youAre + pack.player.display_name)),
+    h("div", { class: "loc" }, loc.name + (settings.lang === "zh" ? "。" : ". ") + loc.description),
+    h("div", { class: "cast" }, cast.map(c => h("span", { class: "chip" }, h("b", {}, c.short_name || c.name), " · ", c.role))),
+    stateMeters(pack, s)));
+  app.append(h("div", { class: "log", id: "log", "aria-live": "polite" }));
+  renderLog(G.busy);
+  if (G.ended) {
+    const all = pack.outcomes, got = new Set(endingsFound(pack.pack_id));
+    const idx = ORDER.indexOf(pack.pack_id), next = ORDER[idx + 1];
+    app.append(h("div", { class: "ending" }, h("div", { class: "lbl" }, T.ending), h("h3", {}, G.ended.title), h("div", { class: "t" }, G.ended.text),
+      h("div", { class: "lbl" }, T.found(got.size, all.length)),
+      h("div", { class: "endlist" }, all.map(o => h("span", { class: got.has(o.id) ? "got" : "" }, got.has(o.id) ? o.title : "???"))),
+      h("div", { class: "row" },
+        h("button", { class: "btn", onclick: () => { track("replay_clicked", { save_id: G.save_id, pack_id: pack.pack_id, outcome_id: G.ended.id }); newGame(pack); render(); } }, T.again),
+        next ? h("button", { class: "btn ghost", onclick: () => { track("next_episode_clicked", { save_id: G.save_id, pack_id: pack.pack_id, outcome_id: G.ended.id }); view = { screen: "intro", packId: next }; render(); } }, T.next + packOf(next).title) : null)));
+  } else {
+    const sugs = suggestionsL(pack, s);
+    if (G.lastSugTurn !== s.turn) { G.lastSugTurn = s.turn; track("suggestion_shown", { save_id: G.save_id, pack_id: pack.pack_id, turn: s.turn, suggestion_ids: sugs.map(x => x.id) }); }
+    const ta = h("textarea", { rows: 1, placeholder: T.ph, "aria-label": T.aria, maxlength: 400, onkeydown: e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); go(); } }, oninput: e => { e.target.style.height = "auto"; e.target.style.height = Math.min(140, e.target.scrollHeight) + "px"; } });
+    const go = () => { const v = ta.value; if (!v.trim()) return; ta.value = ""; submit({ text: v }); };
+    app.append(h("div", { class: "dock" },
+      h("div", { class: "sugs" }, sugs.map(x => h("button", { class: "sug " + x.kind, disabled: G.busy, onclick: () => submit({ suggestion: x }) }, x.label))),
+      h("div", { class: "inrow" }, ta, h("button", { class: "btn", disabled: G.busy, onclick: go }, T.send)),
+      h("div", { class: "tools" },
+        h("button", { class: "linkbtn", disabled:G.busy, onclick: () => { panel = panel === "notes" ? null : "notes"; renderPlay(); } }, panel === "notes" ? T.nbClose : T.nb(s.known.length)),
+        s.items.length ? h("span", { class: "note" }, T.carry + s.items.map(i => pack.ext.inventory.items.find(x => x.id === i).name).join(T.sys.sep)) : null,
+        RT.aiNote ? h("span", { class: "note" }, T[RT.aiNote]) : null)));
+  }
+  if (panel === "notes") app.append(notebook(pack, s));
+  if (settings.dev) app.append(devPanel(pack, s));
+  if(G.busy) { $("textarea")?.setAttribute("disabled", ""); $(".dock .inrow")?.append(h("button",{class:"linkbtn",onclick:()=>turnController?.abort()}, settings.lang==="zh"?"停止等待":"Stop")); }
+  if (!G.busy && !G.ended) { const t = $("textarea"); if (t && window.matchMedia("(pointer:fine)").matches) t.focus({ preventScroll: true }); }
+}
+function notebook(pack, s) {
+  const info = Object.fromEntries(pack.info.map(i => [i.id, i]));
+  const T = L(), groups = [[T.g1, ["fact"]], [T.g2, ["clue", "secret"]], [T.g3, ["claim"]]];
+  return h("div", { class: "drawer" }, h("h4", {}, T.nbTitle), groups.map(([t, kinds]) => {
+    const xs = s.known.filter(k => kinds.includes(info[k].kind));
+    return xs.length ? h("div", {}, h("div", { class: "lbl" }, t), h("ul", {}, xs.map(k => h("li", {}, info[k].player_label || info[k].text)))) : null;
+  }));
+}
+function devPanel(pack, s) {
+  const seg = (key, opts) => h("span", { class: "seg" }, opts.map(([v, l]) => h("button", { class: settings[key] === v ? "on" : "", onclick: () => { settings[key] = v; saveSettings(); renderPlay(); } }, l)));
+  return h("div", { class: "drawer dev" },
+    h("h4", {}, "开发面板"),
+    h("div", { class: "row" }, "文本策略：", seg("textMode", [["fixed_first", "固定优先"], ["generated", "全部生成"]])),
+    h("div", { class: "note" }, "固定优先：点建议、系统提示、结局用写好的文本；打字且命中已定义行动/话题也用写好的文本；闲聊和重复内容才调用表达模型。全部生成：打字命中的结果也交给表达模型改写（失败时回落到写好的文本）。"),
+    h("div", { class: "lbl" }, "当前状态"), h("div", { class: "kv" }, JSON.stringify({ turn: s.turn, location: s.location, state: s.state, known: s.known, items: s.items }, null, 1)),
+    h("div", { class: "lbl" }, "最近回合（新的在上）"),
+    h("div", { class: "kv" }, G.dev.length ? G.dev.slice(0, 8).map(d => JSON.stringify(d, null, 1)).join("\n\n") : "（还没有回合）"));
+}
+
+/* ---------------- playtest data (editors) ---------------- */
+async function renderData() {
+  const app = $("#app");
+  app.replaceChildren(topbar(h("button", { class: "linkbtn", onclick: () => { view = { screen: "home" }; render(); } }, "← 返回")));
+  app.append(h("h2", {}, "试玩数据"), h("p", { class: "note" }, "口径见交付包 05_埋点与试玩指标.md。门槛按 10 人试玩设定，人数不足时只看趋势。"));
+  const box = h("div", {}, "读取中…"); app.append(box);
+  if (!RT.db) { box.textContent = "这个视图里没有数据存储。"; return; }
+  let docs = [];
+  try { const snap = await RT.db.collection(EVENTS).limit(1000).get(); docs = snap.docs.map(d => d.data()).filter(Boolean); } catch (e) { box.textContent = "读取失败：" + (e && e.code || "error"); return; }
+  box.replaceChildren(dataView(docs));
+}
+function dataView(ev) {
+  const by = n => ev.filter(e => e.event === n);
+  const players = new Set(by("episode_started").map(e => e.player));
+  const finished = new Set(by("episode_ended").map(e => e.player));
+  const firstEnd = {}; by("episode_ended").sort((a, b) => a.ts - b.ts).forEach(e => { if (!firstEnd[e.player]) firstEnd[e.player] = e; });
+  const active = Object.values(firstEnd).filter(e => e.typed_turns > e.suggestion_turns).length;
+  const more = new Set(ev.filter(e => e.event === "next_episode_clicked" || e.event === "replay_clicked").map(e => e.player));
+  const turns = by("turn_completed"), typed = turns.filter(t => t.input_mode === "typed");
+  const gen = turns.filter(t => t.route && !["system", "ai_off", "suggestion_click", "typed_defined"].includes(t.route));
+  const pct = (a, b) => b ? Math.round(a / b * 100) + "%" : "—";
+  const lat = turns.map(t => t.latency_ms_understand).filter(x => typeof x === "number").sort((a, b) => a - b);
+  const p90 = lat.length ? lat[Math.floor(lat.length * .9)] : null;
+  const stat = (n, s, ok) => h("div", { class: "stat" }, h("div", { class: "n " + (ok === undefined ? "" : ok ? "pass" : "fail") }, n), h("div", { class: "s" }, s));
+  const P = players.size;
+  const perPack = ORDER.map(id => { const st = new Set(by("episode_started").filter(e => e.pack_id === id).map(e => e.player)); const en = by("episode_ended").filter(e => e.pack_id === id); const outs = {}; en.forEach(e => outs[e.outcome_id] = (outs[e.outcome_id] || 0) + 1); return [packOf(id).title, st.size, new Set(en.map(e => e.player)).size, Object.entries(outs).map(([k, v]) => k + "×" + v).join(", ")]; });
+  const exits = by("episode_exit").map(e => e.pack_id + "@" + e.turn);
+  const unsup = turns.filter(t => t.unsupported_text).slice(-30).reverse();
+  return h("div", {},
+    h("div", { class: "lbl" }, `玩家 ${P} 人 · 事件 ${ev.length} 条`),
+    h("div", { class: "grid2" },
+      stat(`${finished.size}/${P}`, "完成率（门槛 ≥6/10）", P ? finished.size / P >= .6 : undefined),
+      stat(`${active}/${Object.keys(firstEnd).length}`, "主动表达：首局打字多于点选（门槛 ≥5/10）", Object.keys(firstEnd).length ? active / Object.keys(firstEnd).length >= .5 : undefined),
+      stat(`${more.size}/${P}`, "想要更多：点了重玩或下一段（门槛 ≥4/10，另加访谈）", P ? more.size / P >= .4 : undefined)),
+    h("div", { class: "lbl", style: "margin-top:14px" }, "诊断"),
+    h("div", { class: "grid2" },
+      stat(pct(gen.filter(t => t.text_source === "fallback").length, gen.length), "兜底率（调用表达模型的轮次）"),
+      stat(pct(typed.filter(t => t.intent_kind === "unclear").length, typed.length), "理解失败率（打字轮）"),
+      stat(pct(turns.filter(t => t.status === "denied").length, turns.length), "拒绝率"),
+      stat(pct(typed.filter(t => t.status === "unsupported").length, typed.length), "不支持率（打字轮）"),
+      stat(String(turns.reduce((n, t) => n + (t.express_problems || []).filter(x => String(x).startsWith("leak:")).length, 0)), "泄露拦截次数"),
+      stat(p90 === null ? "—" : p90 + " ms", "理解延迟 P90")),
+    h("div", { class: "lbl", style: "margin-top:14px" }, "分段"),
+    h("div", { class: "tablewrap" }, h("table", {}, h("tr", {}, h("th", {}, "段落"), h("th", {}, "开始人数"), h("th", {}, "完成人数"), h("th", {}, "结局分布")), perPack.map(r => h("tr", {}, r.map(c => h("td", {}, String(c))))))),
+    h("div", { class: "lbl", style: "margin-top:14px" }, "流失位置（段落@回合）"), h("div", { class: "note" }, exits.join("  ") || "—"),
+    h("div", { class: "lbl", style: "margin-top:14px" }, "玩家想做但做不了的事（最近 30 条，用来补行动）"),
+    h("ul", {}, unsup.length ? unsup.map(t => h("li", {}, `${t.pack_id}: ${t.unsupported_text} → ${t.status}`)) : h("li", {}, "—")));
+}
+
+window.addEventListener("pagehide", () => { if (view.screen === "play" && G && !G.ended && G.save.turn > 0) track("episode_exit", { save_id: G.save_id, pack_id: G.pack.pack_id, turn: G.save.turn }); });
+async function boot(){
+ if(embedded){
+   await new Promise(resolve=>{const receive=e=>{if(e.origin!==location.origin||e.source!==parent||e.data?.type!=="tk3-init")return;snapshot=e.data.snapshot||{};window.removeEventListener("message",receive);resolve();};window.addEventListener("message",receive);parent.postMessage({type:"tk3-ready"},location.origin);});
+   Object.assign(settings,{lang:"zh",dev:false},store.get("settings",{}));
+ }
+ applyLang();render();initRuntime();
+}
+boot();
+})();
+</script>
