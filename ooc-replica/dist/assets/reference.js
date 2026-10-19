@@ -180,7 +180,8 @@ function pinThreeKingdoms(){
   const cover=card.querySelector('img');cover.src=threeKingdoms.image;cover.alt=threeKingdoms.title;cover.removeAttribute('data-asset');cover.loading='eager';
   const meta=card.querySelector('p:not([data-name])');if(meta)meta.textContent=threeKingdoms.plays;
   first.parentElement.prepend(card);cardMarkup.set(threeKingdoms.id,card.outerHTML);
-  [...card.parentElement.children].forEach((a,i)=>{const rank=a.querySelector('span.typo-text-base_leading-none_semibold');if(rank)rank.textContent=String(i+1);});
+  const rank=card.querySelector('span.typo-text-base_leading-none_semibold');if(rank){rank.textContent='MVP';rank.style.fontSize='10px';}
+  card.querySelectorAll('img').forEach(img=>{if(img.alt==='Lumencia Academy'){img.alt=threeKingdoms.title;img.src=threeKingdoms.image;img.removeAttribute('data-asset');}});
  }
  const mobile=all('h2').find(h=>h.classList.contains('text-white'))?.closest('a');
  if(mobile){mobile.href=threeKingdoms.href;mobile.querySelector('h2').textContent=threeKingdoms.title;const desc=mobile.querySelector('h2')?.nextElementSibling;if(desc)desc.textContent=threeKingdoms.description;mobile.querySelectorAll('img').forEach(img=>{img.src=threeKingdoms.image;img.alt=threeKingdoms.title;img.removeAttribute('data-asset');});}

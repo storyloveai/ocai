@@ -13,6 +13,7 @@ export function mountThreeKingdoms(path,{reference,account,helpers}){
    if(typeof key!=='string'||!/^(settings|anon|game\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road)|endings\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road))$/.test(key)||JSON.stringify(value)?.length>160000)return;
    if(value===null)delete snapshot[key];else snapshot[key]=value;
    helpers.save('ooc-session-v2-three-kingdoms',snapshot);
+   if(key.startsWith('game.')&&helpers.read('ooc-history',[])[0]!==threeKingdoms.id)helpers.save('ooc-history',[threeKingdoms.id,...helpers.read('ooc-history',[]).filter(id=>id!==threeKingdoms.id)]);
   }
  };
  window.addEventListener('message',receive);
