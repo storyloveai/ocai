@@ -57,3 +57,12 @@ test('cancel return clears the pending session and does not report an unpaid ord
  const calls=[];f.account.api=async path=>{calls.push(path);return {balance:100,ledger:[]};};f.payments.sync();f.payments.mount(f.root);await tick();
  assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);assert.ok(calls.every(p=>p==='wallet'));assert.match(f.root.textContent,/付款已取消/);
 });
+test('reentering credits follows the current deep link instead of a previous tab',async()=>{
+ const f=setup();f.payments.sync();f.payments.mount(f.root);await tick();
+ f.root.querySelector('[data-credit-tab=auto]').click();
+ globalThis.location.href='https://replica.example/credit?creditTab=free';f.payments.mount(f.root);
+ assert.equal(f.root.querySelector('#credits-tab-free').getAttribute('aria-selected'),'true');
+ assert.ok(f.root.querySelector('[data-checkin]'));
+ globalThis.location.href='https://replica.example/credit';f.payments.mount(f.root);
+ assert.equal(f.root.querySelector('#credits-tab-buy').getAttribute('aria-selected'),'true');
+});
