@@ -479,13 +479,19 @@ async function submit({ text, suggestion }) {
 
 }
 
+function scrollLatest(){
+ const target=G?.ended?$(".ending"):$("#log")?.lastElementChild;
+ if(!target)return;
+ target.style.scrollMarginBottom=(( $(".dock")?.offsetHeight||0)+24)+"px";
+ target.scrollIntoView({block:"end",behavior:"instant"});
+}
 async function revealTurn(start){
  const nodes=[...($("#log")?.children||[])].slice(start).flatMap(e=>e.classList.contains("b-dia")?[e.querySelector(".say")]:e.matches(".b-narr,.b-sys")?[e]:[]).filter(Boolean);
  if(document.hidden||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  const texts=nodes.map(e=>e.textContent);nodes.forEach(e=>e.textContent="");
  for(let n=0;n<nodes.length;n++){
    const chars=Array.from(texts[n]),started=performance.now();
-   await new Promise(resolve=>{const tick=()=>{if(!nodes[n].isConnected||document.hidden||turnController?.signal.aborted){nodes[n].textContent=texts[n];resolve();return;}const i=Math.min(chars.length,Math.floor((performance.now()-started)/10));nodes[n].textContent=chars.slice(0,i).join("");if(i<chars.length)setTimeout(tick,24);else resolve();};tick();});
+   await new Promise(resolve=>{const tick=()=>{if(!nodes[n].isConnected||document.hidden||turnController?.signal.aborted){nodes[n].textContent=texts[n];resolve();return;}const i=Math.min(chars.length,Math.floor((performance.now()-started)/10));nodes[n].textContent=chars.slice(0,i).join("");scrollLatest();if(i<chars.length)setTimeout(tick,24);else resolve();};tick();});
  }
 }
 /* ---------------- views ---------------- */
@@ -618,6 +624,7 @@ function renderPlay() {
   if (settings.dev) app.append(devPanel(pack, s));
   if(G.busy) { $("textarea")?.setAttribute("disabled", ""); $(".dock .inrow")?.append(h("button",{class:"linkbtn",onclick:()=>turnController?.abort()}, settings.lang==="zh"?"停止等待":"Stop")); }
   if (!G.busy && !G.ended) { const t = $("textarea"); if (t && window.matchMedia("(pointer:fine)").matches) t.focus({ preventScroll: true }); }
+  scrollLatest();
 }
 function notebook(pack, s) {
   const info = Object.fromEntries(pack.info.map(i => [i.id, i]));
