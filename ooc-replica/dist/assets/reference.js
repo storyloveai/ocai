@@ -1,3 +1,4 @@
+import {threeKingdoms} from './three-kingdoms.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
@@ -34,7 +35,8 @@ const q = s => host.querySelector(s);
 const all = s => [...host.querySelectorAll(s)];
 const text = e => e.textContent.trim();
 const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const catalog = [...evidence.catalog,...(evidence.characters||[])];
+const catalog = [threeKingdoms,...evidence.catalog,...(evidence.characters||[])];
+evidence.features[0]={...threeKingdoms};
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
 const cardMarkup = new Map();
 const templateDocument = new DOMParser().parseFromString(evidence.pages.home,'text/html');
@@ -111,7 +113,7 @@ function bindHome(page) {
   });
   all('button').filter(b=>text(b).startsWith('#')).forEach(b=>b.onclick=()=>context.navigate('/search?q='+encodeURIComponent(text(b).slice(1))));
   const title=q('[data-hero-desktop] h1');
-  current=Math.max(0,activeFeatures.findIndex(f=>f.title===title?.textContent));
+  current=page==='home'?0:Math.max(0,activeFeatures.findIndex(f=>f.title===title?.textContent));
   if(activeFeatures.length){
     updateHero(0);
     if(!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
@@ -168,6 +170,20 @@ function bindDetail() {
     context.show('<h2>Sort comments</h2><button class="primary" data-ref-sort="Most Liked">Most Liked</button><button class="primary" data-ref-sort="Newest">Newest</button>');
     document.querySelectorAll('[data-ref-sort]').forEach(choice=>choice.onclick=()=>{b.textContent=choice.dataset.refSort;document.querySelector('#modal').close();});
   });
+}
+
+function pinThreeKingdoms(){
+ const first=all('h2').find(h=>text(h)==='Top Ranked')?.closest('section')?.querySelector('a [data-name]')?.closest('a');
+ if(first){
+  const card=first.cloneNode(true);card.href=threeKingdoms.href;
+  card.querySelector('[data-name]').textContent=threeKingdoms.title;
+  const cover=card.querySelector('img');cover.src=threeKingdoms.image;cover.alt=threeKingdoms.title;cover.removeAttribute('data-asset');cover.loading='eager';
+  const meta=card.querySelector('p:not([data-name])');if(meta)meta.textContent=threeKingdoms.plays;
+  first.parentElement.prepend(card);cardMarkup.set(threeKingdoms.id,card.outerHTML);
+  [...card.parentElement.children].forEach((a,i)=>{const rank=a.querySelector('span.typo-text-base_leading-none_semibold');if(rank)rank.textContent=String(i+1);});
+ }
+ const mobile=all('h2').find(h=>h.classList.contains('text-white'))?.closest('a');
+ if(mobile){mobile.href=threeKingdoms.href;mobile.querySelector('h2').textContent=threeKingdoms.title;const desc=mobile.querySelector('h2')?.nextElementSibling;if(desc)desc.textContent=threeKingdoms.description;mobile.querySelectorAll('img').forEach(img=>{img.src=threeKingdoms.image;img.alt=threeKingdoms.title;img.removeAttribute('data-asset');});}
 }
 
 function grid(items){return `<div class="precision-grid">${items.map(d=>cardMarkup.get(d.id)||`<a href="/${d.type==='character'?'character':'story'}/${d.id}"><img src="${source(d)}" alt="${safe(d.title)}"><p>${safe(d.title)}</p></a>`).join('')}</div>`;}
@@ -234,6 +250,7 @@ export function show(path, helpers) {
       content.innerHTML=`<div class="precision-collection"><a href="/">‹ Back</a><h1>${safe(name)}</h1>${grid(items)}</div>`;
     }
   }
+  if(page==='home')pinThreeKingdoms();
   hydrate();
   if(page==='home'||page==='character')bindHome(page);
   if(page==='detail'||page==='captured-detail')bindDetail();
