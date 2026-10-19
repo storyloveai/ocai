@@ -1,122 +1,16 @@
 <title>Three Kingdoms Interactive</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600&family=Noto+Serif+SC:wght@500;600&display=swap">
 <style>
-:root{
-  --paper:#f3ede1;--paper-2:#e9e0cd;--card:#faf6ee;--ink:#1e1a15;--ink-2:#5b5246;--ink-3:#8a7f70;--line:#d5c9b2;
-  --seal:#a5302a;--seal-soft:#a5302a1a;--jade:#2e5b4f;--jade-soft:#2e5b4f17;--gold:#8c6d24;--you:#e4dccb;--warn:#9a5a12;
-  --serif:"EB Garamond","Iowan Old Style","Palatino Linotype",Georgia,serif;--cjk:"Ma Shan Zheng","Noto Serif SC","Songti SC","STKaiti",serif;
-  --zh:"Noto Serif SC","Songti SC","STSong","SimSun",serif;--mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
-}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --paper:#14120e;--paper-2:#1d1a15;--card:#1a1813;--ink:#ece3d1;--ink-2:#b3a893;--ink-3:#857b6b;--line:#383128;
-  --seal:#d4594c;--seal-soft:#d4594c22;--jade:#79b3a0;--jade-soft:#79b3a01c;--gold:#cfae5d;--you:#2a261f;--warn:#e0a052;color-scheme:dark}}
-:root[data-theme="dark"]{
-  --paper:#14120e;--paper-2:#1d1a15;--card:#1a1813;--ink:#ece3d1;--ink-2:#b3a893;--ink-3:#857b6b;--line:#383128;
-  --seal:#d4594c;--seal-soft:#d4594c22;--jade:#79b3a0;--jade-soft:#79b3a01c;--gold:#cfae5d;--you:#2a261f;--warn:#e0a052;color-scheme:dark}
-*{box-sizing:border-box}
-body{background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.55;-webkit-font-smoothing:antialiased}
-html[lang="zh"] body{font-family:var(--zh);font-size:17px;line-height:1.75}
-html[lang="zh"] .lbl{letter-spacing:.06em}
-.wrap{max-width:820px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-button{font:inherit;color:inherit;cursor:pointer}
-.lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);font-family:var(--serif);font-weight:600}
-.cjk{font-family:var(--cjk);font-weight:400}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px}
-.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:13px;color:var(--ink-2);background:var(--card)}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--ink-3)}
-.dot.on{background:var(--jade)}.dot.warn{background:var(--warn)}
-.linkbtn{background:none;border:none;padding:4px 0;color:var(--ink-2);font-size:15px;text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--line)}
-.linkbtn:hover{color:var(--ink)}
-/* home */
-.hero{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;margin:18px 0 26px}
-.seal{width:64px;height:64px;background:var(--seal);color:#fff8ef;display:grid;place-items:center;border-radius:6px;font-family:var(--cjk);font-size:24px;line-height:1;letter-spacing:1px;white-space:nowrap;box-shadow:inset 0 0 0 3px var(--seal),inset 0 0 0 4px #fff8ef55}
-h1{font-size:clamp(28px,5vw,40px);line-height:1.1;margin:0;font-weight:500;text-wrap:balance}
-.sub{color:var(--ink-2);margin:6px 0 0;font-size:17px;max-width:60ch}
-.eps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-@media (max-width:720px){.eps{grid-template-columns:1fr}}
-.ep{position:relative;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 16px 14px;display:grid;grid-template-columns:1fr auto;gap:6px 12px;min-height:240px;transition:border-color .15s,transform .15s}
-.ep:hover{border-color:var(--ink-3);transform:translateY(-1px)}
-.ep .zh{grid-column:2;grid-row:1/5;writing-mode:vertical-rl;font-family:var(--cjk);font-size:40px;line-height:1.05;color:var(--seal);letter-spacing:4px}
-.ep .chap{font-size:13px;color:var(--ink-3);letter-spacing:.08em}
-.ep h3{margin:0;font-size:23px;font-weight:500;line-height:1.15}
-.ep .role{font-size:15px;color:var(--ink-2)}
-.ep .meta{grid-column:1/3;display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:auto;padding-top:8px;border-top:1px dashed var(--line);font-size:14px;color:var(--ink-2)}
-.tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:4px;background:var(--jade-soft);color:var(--jade);font-weight:600}
-.found{margin-left:auto;font-size:13px;color:var(--ink-3)}
-.foot{margin-top:28px;color:var(--ink-3);font-size:14px;max-width:70ch}
-/* intro */
-.intro{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;margin-top:10px;display:grid;grid-template-columns:1fr auto;gap:18px}
-@media (max-width:560px){.intro{grid-template-columns:1fr}.intro .zh{writing-mode:horizontal-tb!important;font-size:34px!important}}
-.intro .zh{writing-mode:vertical-rl;font-family:var(--cjk);font-size:54px;color:var(--seal);line-height:1.05;letter-spacing:6px}
-.intro h2{font-size:32px;margin:4px 0 8px;font-weight:500;line-height:1.1}
-.intro p{margin:0 0 12px;max-width:60ch}
-.how{font-size:15px;color:var(--ink-2);border-left:3px solid var(--line);padding-left:12px;margin:14px 0}
-.btn{background:var(--ink);color:var(--paper);border:none;border-radius:8px;padding:10px 18px;font-size:17px;font-weight:500}
-.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-.btn:disabled{opacity:.45;cursor:default}
-.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-/* play */
-.scene{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:6px;display:grid;gap:8px}
-.scene-head{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
-.scene h2{font-size:24px;margin:0;font-weight:500}
-.scene .loc{color:var(--ink-2);font-size:16px;font-style:italic;max-width:62ch}
-.cast{display:flex;gap:6px;flex-wrap:wrap}
-.cast .chip b{font-weight:600;color:var(--ink);white-space:nowrap}
-.meters{display:flex;gap:16px;flex-wrap:wrap}
-.meter{display:grid;gap:3px;min-width:150px}
-.meter .bar{height:6px;background:var(--paper-2);border-radius:3px;overflow:hidden}
-.meter .bar i{display:block;height:100%;background:var(--seal);transition:width .4s}
-.meter .v{font-size:15px}
-.log{display:grid;gap:14px;padding:16px 0 8px}
-.b-narr{white-space:pre-wrap;max-width:64ch}
-.b-dia{display:grid;grid-template-columns:auto 1fr;gap:10px;max-width:66ch}
-.b-dia .who{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--seal);font-weight:600;padding-top:5px;min-width:0}
-.b-dia .say{white-space:pre-wrap;min-width:0}
-.b-sys{font-size:15px;color:var(--ink-2);font-style:italic;border-left:2px solid var(--line);padding-left:10px}
-.b-you{justify-self:end;background:var(--you);border-radius:12px 12px 2px 12px;padding:8px 12px;max-width:80%;font-size:17px}
-.b-you small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
-.b-new{font-size:14px;color:var(--jade);display:flex;gap:6px;flex-wrap:wrap}
-.b-new span{background:var(--jade-soft);padding:2px 8px;border-radius:4px}
-.thinking{color:var(--ink-3);font-style:italic}
-.ending{border:1px solid var(--seal);border-radius:12px;padding:20px;background:var(--card);display:grid;gap:10px}
-.ending h3{margin:0;font-size:28px;font-weight:500}
-.ending .t{white-space:pre-wrap;max-width:64ch}
-.endlist{display:flex;gap:6px;flex-wrap:wrap;font-size:14px}
-.endlist span{border:1px solid var(--line);border-radius:4px;padding:2px 8px;color:var(--ink-2)}
-.endlist span.got{border-color:var(--seal);color:var(--seal)}
-.dock{position:sticky;bottom:0;background:linear-gradient(to bottom,transparent,var(--paper) 18px);padding-top:22px;padding-bottom:env(safe-area-inset-bottom,0px);display:grid;gap:10px}
-.sugs{display:flex;gap:8px;flex-wrap:wrap}
-.sug{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:16px;text-align:left}
-.sug:hover{border-color:var(--ink-2)}
-.sug.topic{border-style:dashed}
-.inrow{display:grid;grid-template-columns:1fr auto;gap:8px}
-textarea{font:inherit;font-size:17px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 12px;resize:none;min-height:46px;max-height:140px;width:100%}
-textarea:focus,.sug:focus-visible,.btn:focus-visible,.ep:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
-.tools{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:15px}
-.drawer{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:grid;gap:10px}
-.drawer h4{margin:0}
-.drawer ul{margin:0;padding-left:18px}
-.drawer li{margin:2px 0}
-.kv{font-family:var(--mono);font-size:12px;white-space:pre-wrap;word-break:break-word;background:var(--paper-2);padding:8px;border-radius:6px;max-height:280px;overflow:auto;color:var(--ink-2)}
-.dev{font-family:var(--mono);font-size:12px}
-.seg{display:inline-flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
-.seg button{border:none;background:transparent;padding:4px 10px;font-size:14px;color:var(--ink-2)}
-.seg button.on{background:var(--ink);color:var(--paper)}
-.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
-.stat{border:1px solid var(--line);border-radius:8px;padding:10px;background:var(--card)}
-.stat .n{font-size:26px;line-height:1.1}
-.stat .s{font-size:13px;color:var(--ink-3)}
-.pass{color:var(--jade)}.fail{color:var(--seal)}
-table{border-collapse:collapse;font-size:14px;width:100%}
-td,th{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left;vertical-align:top}
-.tablewrap{overflow-x:auto}
-.note{font-size:14px;color:var(--ink-3)}
-
-:root{--paper:#111113;--paper-2:#1a1a1d;--card:#19191d;--ink:#f1eee5;--ink-2:#c1bbb0;--ink-3:#99938a;--line:#343238;--seal:#d5ba7d;--seal-soft:#d5ba7d18;--jade:#bfcf77;--jade-soft:#bfcf7718;--gold:#d5ba7d;--you:#24242a;--warn:#d9a465;color-scheme:dark}
-body{margin:0;background:var(--paper)}.wrap{max-width:900px;margin:auto;padding:20px 28px 40px}.dock{background:var(--paper);bottom:0;padding-bottom:16px}.thinking{display:flex;align-items:center;gap:8px}.thinking:after{content:"故事正在回应…";font-size:13px;color:var(--ink-3)}.log{min-height:240px}.btn:disabled,.sug:disabled{opacity:.45;cursor:wait}.b-you{margin-left:auto}.ep:hover{border-color:var(--gold);transform:translateY(-2px)}
-@media(max-width:600px){.wrap{padding:12px 16px 28px}.topbar{flex-wrap:wrap}.dock{padding-bottom:max(12px,env(safe-area-inset-bottom))}.scene-head{flex-wrap:wrap}}
+:root{color-scheme:dark;--paper:#111113;--paper-2:#202024;--card:#1a1a1e;--ink:#ededf0;--ink-2:#b0b0bb;--ink-3:#74747f;--line:#2c2c34;--seal:#dfc48a;--jade:#d5e588;--gold:#dfc48a;--you:#27272f;--warn:#e5b777;--serif:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans SC",sans-serif;--zh:var(--serif);--cjk:"Noto Serif SC","Songti SC",serif;--mono:ui-monospace,monospace}
+*{box-sizing:border-box}html,body{margin:0;height:100%;overflow:hidden;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:15px}button,textarea,select{font:inherit}button{color:inherit;cursor:pointer}button:disabled{cursor:default;opacity:.45}button:focus-visible,textarea:focus-visible{outline:2px solid #bcca7a;outline-offset:3px}.wrap{height:100%;max-width:none;padding:0}#app{height:100%}.view-home,.view-intro{overflow:auto;padding:32px clamp(20px,5vw,72px) 56px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:48px;flex-wrap:wrap}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.lbl{color:var(--ink-3);font-size:12px;letter-spacing:.07em}.linkbtn{border:0;background:none;color:var(--ink-2);padding:8px 0;font-size:13px;text-decoration:none}.linkbtn:hover{color:white}.seg{display:flex;border:1px solid var(--line);border-radius:8px;padding:3px;background:#17171b}.seg button{border:0;background:none;border-radius:5px;color:var(--ink-3);font-size:11px;padding:5px 9px}.seg button.on{background:#303038;color:#eee}.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:5px 8px;border:1px solid var(--line);border-radius:6px;color:var(--ink-2)}.dot{width:5px;height:5px;border-radius:50%;background:var(--ink-3)}.dot.on{background:#bed47b}.dot.warn{background:#d2a66a}
+.hero{max-width:1040px;margin:36px auto 44px;position:relative;padding:36px 0 44px 144px;min-height:230px;border-bottom:1px solid var(--line)}.seal{position:absolute;left:0;top:24px;width:110px;height:165px;background:url('/assets/three-kingdoms-cover.svg') center/cover;border:1px solid #615238;border-radius:9px;color:transparent;box-shadow:0 16px 40px #0006}h1{font:500 clamp(30px,4vw,44px)/1.2 var(--cjk);letter-spacing:.04em;margin:8px 0 18px}.sub{max-width:650px;color:var(--ink-2);font-size:15px;line-height:1.9;margin:0}.eps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;max-width:1040px;margin:auto}.ep{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;padding:24px;text-align:left;background:linear-gradient(135deg,#23232b,#16161b);min-height:290px;display:flex;flex-direction:column;gap:14px;transition:border-color .2s,transform .2s}.ep:hover{border-color:#75684e;transform:translateY(-3px)}.ep .chap{font-size:11px;color:#8d8d99}.ep h3{font:500 25px/1.4 var(--cjk);margin:8px 0 0;z-index:1}.ep .role{font-size:13px;color:#b5b5c0;z-index:1}.ep .zh{position:absolute;right:12px;bottom:30px;font:500 64px/1 var(--cjk);writing-mode:vertical-rl;color:#c4aa6c;opacity:.08;letter-spacing:10px;pointer-events:none}.ep .meta{margin-top:auto;display:flex;gap:8px;align-items:center;font-size:11px;padding-top:20px;border-top:1px solid #ffffff0d}.tag{background:#c6d58b16;color:#c6d58b;border-radius:4px;padding:4px 7px;font-size:11px}.found{margin-left:auto;color:var(--ink-3);white-space:nowrap}.foot{max-width:1040px;margin:28px auto;color:var(--ink-3);line-height:1.8;font-size:12px}.intro{max-width:940px;margin:40px auto;display:grid;grid-template-columns:1fr 130px;gap:36px;padding:40px;border:1px solid var(--line);border-radius:16px;background:radial-gradient(ellipse at top right,#51412830,transparent 70%),#19191e}.intro h2{font:500 32px/1.4 var(--cjk);margin:12px 0 24px}.intro p{line-height:1.95;color:#c0c0ca;margin:0}.intro .zh{font:500 54px/1.4 var(--cjk);writing-mode:vertical-rl;color:#c3aa79;opacity:.35}.how{margin:24px 0;line-height:1.85;color:var(--ink-3);font-size:13px;border-left:2px solid #746447;padding-left:16px}.btn{background:#e4e8cc;color:#161813;border:0;border-radius:9px;padding:11px 19px;font-size:14px;font-weight:600}.btn.ghost{background:transparent;border:1px solid #42424c;color:#ccc}
+.view-play{display:grid;grid-template-rows:50px auto minmax(0,1fr) auto;max-width:100%;position:relative;overflow:hidden}.view-play>.topbar{padding:0 28px;border-bottom:1px solid var(--line);flex-wrap:nowrap;min-height:50px;background:#151518}.scene{display:grid;gap:10px;padding:18px max(28px,calc((100% - 780px)/2));border-bottom:1px solid #24242b;background:linear-gradient(90deg,#19191e,#141418)}.scene-head{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.scene-head .cjk{font:500 20px/1.4 var(--cjk)!important;color:#e4d4af!important}.scene-head h2{font-size:16px;margin:0}.scene .loc{font-size:12px;color:#888894;line-height:1.6;max-width:760px}.cast{display:flex;gap:6px;flex-wrap:wrap}.cast .chip{font-size:10px;padding:4px 7px;color:#8f8f9b;border-color:#ffffff0b;background:#ffffff03}.cast .chip b{color:#bdbdc8;font-weight:500}.meters{display:flex;gap:20px;flex-wrap:wrap}.meter{display:grid;grid-template-columns:auto auto;column-gap:10px;row-gap:5px;min-width:150px}.meter .lbl{font-size:10px}.meter .v{font-size:10px;text-align:right;color:#c8b584}.bar{grid-column:1/3;height:3px;background:#2d2c32;border-radius:3px;overflow:hidden}.bar i{display:block;background:#c6ae78;height:100%;transition:width .3s}
+.live-response{display:flex;flex-direction:column;gap:22px;flex-shrink:0}.log{overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#42424c transparent;padding:28px max(28px,calc((100% - 760px)/2)) 40px;display:flex;flex-direction:column;gap:22px;min-height:0;overflow-anchor:none}.b-narr,.b-dia{font-size:15px;line-height:1.95;color:#c3c3ce;letter-spacing:.015em;flex-shrink:0;max-width:100%;word-break:break-word}.b-narr p{margin:0 0 16px}.b-narr p:last-child{margin-bottom:0}.b-dia{display:grid;grid-template-columns:30px 1fr;gap:12px;color:#e8e8ef}.who{width:30px;height:30px;display:grid;place-items:center;border:1px solid #76644577;border-radius:50%;background:#7761401f;color:#d8c08b;font-size:10px;line-height:1;overflow:hidden;margin-top:2px}.say{min-width:0;white-space:pre-wrap}.b-you{align-self:flex-end;background:#282830;border:1px solid #ffffff07;border-radius:14px 14px 4px 14px;padding:12px 17px;max-width:85%;font-size:14px;line-height:1.8;flex-shrink:0}.b-you small{display:none}.b-sys{font-size:12px;line-height:1.8;padding:12px 16px;background:#202026;border:1px solid #303039;border-radius:9px;color:#9999a7;flex-shrink:0}.b-new{display:flex;flex-wrap:wrap;gap:8px;align-items:center;color:#abbc8c;font-size:11px;flex-shrink:0}.b-new span{padding:5px 8px;border-radius:5px;background:#a9bd7e0b;border:1px solid #a9bd7e20}.thinking{display:flex;gap:9px;align-items:center;color:#8d8d9b;font-size:12px;min-height:28px;flex-shrink:0}.thinking:before{content:'';width:5px;height:5px;border-radius:50%;background:#d8c08b;box-shadow:9px 0 #d8c08b88,18px 0 #d8c08b44;animation:pulse 1.3s ease-in-out infinite;margin-right:20px}.thinking:after{content:'故事正在继续';font-size:12px}@keyframes pulse{50%{opacity:.3}}
+.dock{position:relative;background:#141418;border-top:1px solid #27272f;padding:14px max(28px,calc((100% - 780px)/2)) max(12px,env(safe-area-inset-bottom));display:grid;gap:10px;min-width:0}.sugs{display:flex;gap:7px;overflow:auto;scrollbar-width:none;flex-wrap:nowrap;padding:2px 0}.sug{font-size:11px;line-height:1.5;color:#aaaab6;background:#1c1c22;border:1px solid #34343d;border-radius:7px;padding:7px 10px;white-space:nowrap;transition:background .15s,border-color .15s}.sug:hover{background:#2a2a32;border-color:#625b48;color:#eee}.inrow{display:flex;gap:10px;align-items:flex-end;background:#222229;border:1px solid #3a3a46;border-radius:12px;padding:7px 8px 7px 14px}.inrow:focus-within{border-color:#8b8e70;box-shadow:0 0 0 2px #bcca7a0c}textarea{font:inherit;font-size:14px;line-height:1.75;color:#eee;background:transparent;border:0;resize:none;min-height:32px;max-height:128px;flex:1;min-width:0;padding:4px 0;width:100%;outline:none!important;box-shadow:none!important}textarea::placeholder{color:#777783}.inrow .btn{height:34px;padding:0 14px;font-size:12px;flex-shrink:0}.stop-button{height:34px;border:1px solid #56515b;border-radius:7px;background:#302a30;color:#d6c4ce;font-size:11px;padding:0 9px;white-space:nowrap}.tools{display:flex;gap:14px;align-items:center;flex-wrap:wrap;font-size:10px;color:#777784}.tools .linkbtn{font-size:10px;padding:0}.note{font-size:10px;color:#777784}.ending{margin:16px max(28px,calc((100% - 760px)/2));padding:24px;background:linear-gradient(135deg,#342c1e66,#19191e);border:1px solid #6e5c3e;border-radius:12px;overflow:auto;line-height:1.9}.view-play:has(>.ending){grid-template-rows:50px auto minmax(100px,1fr) minmax(180px,45%)}.ending h3{font:500 27px/1.5 var(--cjk);margin:8px 0 16px}.ending .t{color:#c2c2cb;font-size:14px}.endlist{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 20px}.endlist span{font-size:11px;color:#777;border:1px solid #3e3e46;padding:3px 8px;border-radius:5px}.endlist .got{color:#d4bc88;border-color:#6e5c3e}.drawer{position:absolute;right:20px;top:65px;bottom:20px;width:min(380px,calc(100% - 40px));overflow:auto;z-index:5;border:1px solid #41414d;border-radius:12px;padding:22px;background:#1c1c23;box-shadow:0 24px 90px #0009;font-size:13px;line-height:1.8}.drawer h4{font-size:17px;margin:0 0 18px}.drawer ul{padding-left:18px;color:#aaaab8}.kv{font:11px/1.6 var(--mono);white-space:pre-wrap;word-break:break-all;background:#111115;padding:10px;border-radius:7px}.dev{width:min(520px,calc(100% - 40px))}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.stat{padding:12px;border:1px solid var(--line);border-radius:9px}.stat .n{font-size:24px}.pass{color:#bbd486}.fail{color:#e9a0a0}table{font-size:11px;border-collapse:collapse}td,th{padding:6px;border-bottom:1px solid var(--line)}
+@media(max-width:760px){.view-home,.view-intro{padding:18px 20px 36px}.hero{padding:12px 0 26px 100px;min-height:180px;margin:20px auto 28px}.seal{width:78px;height:117px;top:10px}h1{font-size:29px}.sub{font-size:13px;line-height:1.8}.eps{grid-template-columns:1fr;gap:12px}.ep{min-height:180px;padding:20px}.ep .zh{font-size:42px;right:24px;writing-mode:horizontal-tb;bottom:48px}.ep h3{font-size:23px}.ep .meta{padding-top:16px}.intro{padding:24px;grid-template-columns:1fr;margin:24px auto}.intro .zh{display:none}.scene{padding:14px 20px;gap:7px}.scene .loc{display:none}.cast .chip{border:0;padding:0;background:none}.cast .chip:not(:first-child){margin-left:8px}.cast .chip{font-size:10px}.meters{gap:12px}.meter{min-width:130px}.view-play>.topbar{padding:0 20px}.log{padding:22px 20px 30px;gap:20px}.dock{padding:12px 16px max(12px,env(safe-area-inset-bottom))}.b-narr,.b-dia{font-size:14px;line-height:1.95}.b-you{font-size:13px;max-width:90%}.ending{margin:12px 20px;padding:20px}.chip{font-size:10px}.topbar .row{gap:8px}.view-play:has(>.ending){grid-template-rows:50px auto minmax(80px,1fr) minmax(180px,45%)}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
 <div class="wrap" id="app"></div>
@@ -178,7 +72,12 @@ async function useLocalServer() {
     const health=await fetch("/api/config",{signal:AbortSignal.timeout(8000)}).then(r=>r.json());
     if(!health.configured)return;
     const call=async(_input,opts={})=>{
-      const r=await fetch("/api/three-kingdoms",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phase:opts.phase,context:opts.context,lang:settings.lang}),signal:AbortSignal.any([...(turnController?[turnController.signal]:[]),AbortSignal.timeout(16000)])});
+      const r=await fetch("/api/three-kingdoms",{method:"POST",headers:{"Content-Type":"application/json",...(opts.phase==="express"&&!opts.buffered?{Accept:"application/x-ndjson"}:{})},body:JSON.stringify({phase:opts.phase,context:opts.context,lang:settings.lang}),signal:AbortSignal.any([...(turnController?[turnController.signal]:[]),AbortSignal.timeout(opts.phase==="express"?24000:16000)])});
+      if(r.ok&&(r.headers.get("content-type")||"").includes("application/x-ndjson")){
+        const reader=r.body.getReader(),decoder=new TextDecoder();let buffer="",output=null;
+        const consume=line=>{if(!line.trim())return;const item=JSON.parse(line);if(item.type==="error")throw {code:item.code};if(item.type==="partial")opts.onPartial?.(item.output);if(item.type==="done")output=item.output;};
+        try{for(;;){const {value,done}=await reader.read();if(done)break;buffer+=decoder.decode(value,{stream:true});let at;while((at=buffer.indexOf("\n"))>=0){consume(buffer.slice(0,at));buffer=buffer.slice(at+1);}}buffer+=decoder.decode();if(buffer.trim())consume(buffer);if(!output)throw {code:"stream_interrupted"};return {output};}finally{await reader.cancel().catch(()=>{});reader.releaseLock();}
+      }
       const d=await r.json();if(!r.ok)throw {code:d.code||"upstream_error"};return d;
     };
     call.json=async(input,opts)=> (await call(input,opts)).output;
@@ -247,6 +146,7 @@ function migrateLog(pack, log) {
 }
 function persist() { if (!G) return; store.set("game." + G.pack.pack_id, { save: G.save, save_id: G.save_id, log: G.log, history: G.history, shownFixed: [...G.shownFixed], counts: G.counts, ended: G.ended, pendingChoices:G.pendingChoices||[] }); }
 function newGame(pack) {
+  following=true;
   G = { pack, save: SV.newSave(pack), save_id: "s_" + rid(), log: [], history: [], shownFixed: new Set(), counts: { typed: 0, suggestion: 0 }, ended: null, busy: false, dev: [] };
   const o = pack.opening;
   G.log.push({ t: "fx", k: "open", role: "narr", speaker: o.speaker || null });
@@ -255,6 +155,7 @@ function newGame(pack) {
   persist();
 }
 function loadGame(pack) {
+  following=true;
   const d = store.get("game." + pack.pack_id, null);
   if (!d || d.save.pack_version !== pack.version) return false;
   G = { pack, save: d.save, save_id: d.save_id, log: migrateLog(pack, d.log), history: d.history, shownFixed: new Set(d.shownFixed), counts: d.counts, ended: d.ended, pendingChoices:d.pendingChoices||[], busy: false, dev: [] };
@@ -350,7 +251,7 @@ function suggestionsL(pack, s) {
   });
 }
 function expressProblems(pack, saveAfter, out) {
-  if (!out || !Array.isArray(out.blocks) || out.blocks.length < 1 || out.blocks.length > 6) return ["schema: blocks"];
+  if (!out || !Array.isArray(out.blocks) || out.blocks.length < 1 || out.blocks.length > 8) return ["schema: blocks"];
   const P = [];
   const ids = new Set(pack.characters.filter(c => present(pack, c, saveAfter)).map(c => c.id));
   for (const b of out.blocks) {
@@ -358,8 +259,8 @@ function expressProblems(pack, saveAfter, out) {
     if (b.type === "dialogue" && !ids.has(b.speaker)) P.push("speaker_not_present:" + b.speaker);
   }
   const text = out.blocks.map(b => b.text).join(" ");
-  if (settings.lang === "zh") { const n = text.replace(/\s/g, "").length; if (n > 320) P.push("too_long:" + n + "chars"); if (!/[\u4e00-\u9fff]/.test(text)) P.push("wrong_language"); }
-  else { const words = text.split(/\s+/).filter(Boolean).length; if (words > 150) P.push("too_long:" + words); }
+  if (settings.lang === "zh") { const n = text.replace(/\s/g, "").length; if (n > 1000) P.push("too_long:" + n + "chars"); if (!/[\u4e00-\u9fff]/.test(text)) P.push("wrong_language"); }
+  else { const words = text.split(/\s+/).filter(Boolean).length; if (words > 450) P.push("too_long:" + words); }
   SV.leakCheck(pack, saveAfter, text).forEach(([i, t]) => P.push("leak:" + i + ":" + t));
   return P;
 }
@@ -369,16 +270,18 @@ async function express(r, saveAfter, playerInput, meta) {
   const t0 = performance.now(); meta.express_problems = [];
   for (let attempt = 0; attempt < 2; attempt++) {
     try {
-      const out = await RT.sample.json(input, { modelTier: "quick", cache: false, phase:"express", context:ctx });
+      const out = await RT.sample.json(input, { modelTier: "quick", cache: false, phase:"express", context:ctx,buffered:meta.buffered_fallback,onPartial:out=>{if(!expressProblems(G.pack,saveAfter,out).length){G.liveValidated=out.blocks;meta.live_streamed=true;showLiveBlocks(out.blocks);}} });
       const probs = expressProblems(G.pack, saveAfter, out);
       meta.latency_ms_express = Math.round(performance.now() - t0);
       if (!probs.length) return out.blocks;
       meta.express_problems.push(...probs); meta.express_retries = attempt + 1;
     } catch (e) {
       meta.latency_ms_express = Math.round(performance.now() - t0);
+      if(turnController?.signal.aborted&&G.liveValidated?.length)return G.liveValidated;
       const code = e && e.code; meta.express_problems.push("error:" + (code || "unknown"));
       if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed"].includes(code)) { RT.ai = "off"; RT.aiNote = "declined"; break; }
       if (code === "rate_limited") { RT.ai = "limited"; break; }
+      if(attempt===0&&["model_configuration","stream_interrupted"].includes(code)){meta.buffered_fallback=true;continue;}
       if (code !== "invalid_json") break;
       meta.express_retries = attempt + 1;
     }
@@ -391,7 +294,8 @@ function route(r, intent, mode) {
   if (!["ok", "denied", "ended"].includes(r.status)) return { gen: false, why: "system" };
   if (!RT.sample || RT.ai === "off") return { gen: false, why: "ai_off" };
   if (intent.kind === "talk" && !intent.topic) return { gen: true, why: "small_talk" };
-  if (mode === "suggestion") return { gen: false, why: "suggestion_click" };
+  if (mode === "suggestion") return { gen: true, why: "immersive_choice" };
+  if (mode === "typed") return { gen: true, why: "immersive_typed" };
   if (settings.textMode === "generated") return { gen: true, why: "mode_generated" };
   if (r.texts.length && r.texts.every(t => G.shownFixed.has(idxOf(settings.lang, G.pack.pack_id).get(t) || t))) return { gen: true, why: "repeat_variation" };
   return { gen: false, why: "typed_defined" };
@@ -438,8 +342,10 @@ async function submit({ text, suggestion }) {
   const pack = G.pack, mode = suggestion ? "suggestion" : "typed";
   const shownInput = suggestion ? suggestion.label : text.trim();
   if (!shownInput) return;
+  following=true;
   G.busy = true;
   turnController=new AbortController();
+  G.liveValidated=null;
   const game=G, outputStart=($("#log")?.children.length||0)+1;
   const turnId = "t_" + rid();
   G.log.push({ t: "you", text: shownInput, mode, sug: suggestion ? { kind: suggestion.kind, intent: suggestion.intent } : null });
@@ -448,14 +354,14 @@ async function submit({ text, suggestion }) {
   let intent;
   if (suggestion) { intent = suggestion.intent; meta.understand_source = "click"; }
   else intent = await understand(shownInput, meta);
-  if(game!==G || turnController.signal.aborted){ if(game===G){G.log.pop();G.busy=false;renderPlay();const input=$("textarea");if(input)input.value=shownInput;}return; }
+  if(game!==G || turnController.signal.aborted){ if(game===G){G.log.pop();G.busy=false;renderPlay();const input=$("textarea");if(input&&!input.value)input.value=shownInput;}return; }
   const before = G.save;
   const [r, s2] = SV.processTurn(pack, before, intent);
   const rt = route(r, intent, mode);
   G.pendingChoices=r.status==="clarify"?(intent.candidates||[]):[];
   let blocks = null, source = "fallback";
   if (rt.gen) { blocks = await express(r, s2, shownInput, meta); if (blocks) source = "model"; }
-  if(game!==G || turnController.signal.aborted){if(game===G){G.log.pop();G.busy=false;renderPlay();const input=$("textarea");if(input)input.value=shownInput;}return;}
+  if(game!==G || (turnController.signal.aborted&&!blocks)){if(game===G){G.log.pop();G.busy=false;renderPlay();const input=$("textarea");if(input&&!input.value)input.value=shownInput;}return;}
   const fixed = fixedEntries(pack, r, intent, before);
   if (blocks) G.log.push({ t: "gen", lang: settings.lang, blocks, fb: fixed });
   else { fixed.forEach(e => G.log.push(e)); blocks = fixed.flatMap(e => entryBlocks(pack, e)); source = rt.gen ? "fallback" : (["clarify", "unsupported", "contradiction", "unclear"].includes(r.status) ? "system" : "fixed"); }
@@ -474,24 +380,51 @@ async function submit({ text, suggestion }) {
   }
   persist();
   renderPlay();
-  await revealTurn(outputStart);
-  if(game===G){G.busy=false;turnController=null;renderPlay();}
+  if(!meta.live_streamed)await revealTurn(outputStart);
+  if(game===G){
+    G.busy=false;turnController=null;
+    $("#log .thinking")?.remove();$("[data-stop]")?.remove();
+    document.querySelectorAll("#app button:disabled,#app textarea:disabled").forEach(el=>el.removeAttribute("disabled"));
+    $("#app")?.setAttribute("aria-busy","false");
+    const input=$("textarea");if(input&&window.matchMedia("(pointer:fine)").matches)input.focus({preventScroll:true});
+    scrollLatest();
+  }
 
 }
 
-function scrollLatest(){
- const target=G?.ended?$(".ending"):$("#log")?.lastElementChild;
- if(!target)return;
- target.style.scrollMarginBottom=(( $(".dock")?.offsetHeight||0)+24)+"px";
- target.scrollIntoView({block:"end",behavior:"instant"});
+function showLiveBlocks(blocks){
+ const box=$("#log");if(!box)return;
+ let root=$("#live-response");if(!root){root=h("div",{id:"live-response",class:"live-response"});box.querySelector(".thinking")?.remove();box.append(root);}
+ blocks.forEach((b,i)=>{
+   let node=root.children[i];if(!node){node=b.type==="dialogue"?h("div",{class:"b-dia"},h("div",{class:"who"},nameOf(G.pack,b.speaker)),h("div",{class:"say"})):h("div",{class:"b-narr"});root.append(node);}
+   const text=node.querySelector(".say")||node;
+   if(text.dataset.target===b.text)return;text.dataset.target=b.text;
+   if(text.dataset.painting)return;text.dataset.painting="true";
+   const tick=()=>{if(!text.isConnected){return;}const goal=text.dataset.target||"",old=text.textContent||"";
+     if(document.hidden||turnController?.signal.aborted||!goal.startsWith(old)){text.textContent=goal;delete text.dataset.painting;scrollLatest();return;}
+     const remaining=Array.from(goal.slice(old.length));if(!remaining.length){delete text.dataset.painting;return;}
+     const next=remaining.slice(0,Math.max(2,Math.ceil(remaining.length/7))).join("");text.append(document.createTextNode(next));scrollLatest();setTimeout(tick,16);
+   };tick();
+ });
+}
+let following=true;
+function scrollLatest(force=false){
+ const box=$("#log");if(!box)return;
+ if(force||following)box.scrollTop=box.scrollHeight;
 }
 async function revealTurn(start){
- const nodes=[...($("#log")?.children||[])].slice(start).flatMap(e=>e.classList.contains("b-dia")?[e.querySelector(".say")]:e.matches(".b-narr,.b-sys")?[e]:[]).filter(Boolean);
+ const nodes=[...($("#log")?.children||[])].slice(start).flatMap(e=>e.classList.contains("b-dia")?[e.querySelector(".say")]:e.classList.contains("b-narr")?[...e.querySelectorAll("p")]:e.matches(".b-sys")?[e]:[]).filter(Boolean);
  if(document.hidden||matchMedia("(prefers-reduced-motion: reduce)").matches)return;
  const texts=nodes.map(e=>e.textContent);nodes.forEach(e=>e.textContent="");
+ const segmenter=typeof Intl.Segmenter==='function'?new Intl.Segmenter(settings.lang,{granularity:'grapheme'}):null;
  for(let n=0;n<nodes.length;n++){
-   const chars=Array.from(texts[n]),started=performance.now();
-   await new Promise(resolve=>{const tick=()=>{if(!nodes[n].isConnected||document.hidden||turnController?.signal.aborted){nodes[n].textContent=texts[n];resolve();return;}const i=Math.min(chars.length,Math.floor((performance.now()-started)/10));nodes[n].textContent=chars.slice(0,i).join("");scrollLatest();if(i<chars.length)setTimeout(tick,24);else resolve();};tick();});
+   const chars=segmenter?[...segmenter.segment(texts[n])].map(x=>x.segment):Array.from(texts[n]);const target=nodes[n].appendChild(document.createTextNode(''));let shown=0;const started=performance.now();
+   await new Promise(resolve=>{const tick=()=>{
+     if(!nodes[n].isConnected||document.hidden||turnController?.signal.aborted){target.textContent=texts[n];scrollLatest();resolve();return;}
+     const count=Math.min(chars.length,Math.floor((performance.now()-started)/8));
+     if(count>shown){target.appendData(chars.slice(shown,count).join(''));shown=count;scrollLatest();}
+     if(shown<chars.length)setTimeout(tick,16);else resolve();
+   };tick();});
  }
 }
 /* ---------------- views ---------------- */
@@ -519,7 +452,7 @@ function endingOf(pack, id, s) {
 function render() { if (view.screen === "home") renderHome(); else if (view.screen === "intro") renderIntro(); else if (view.screen === "play") renderPlay(); else if (view.screen === "data") renderData(); }
 
 function renderHome() {
-  const app = $("#app"); app.replaceChildren();
+  const app = $("#app");app.className="view-home"; app.replaceChildren();
   const T = L();
   app.append(topbar(h("span", { class: "lbl" }, T.proto + " · " + BUILD)));
   app.append(h("div", { class: "hero" }, h("div", { class: "seal", "aria-hidden": "true" }, "三國"),
@@ -542,6 +475,7 @@ function renderHome() {
 
 function renderIntro() {
   const p = packOf(view.packId), a = ART[p.pack_id], app = $("#app"), T = L();
+  app.className="view-intro";
   const saved = store.get("game." + p.pack_id, null);
   const canResume = saved && !saved.ended && saved.save.pack_version === p.version;
   app.replaceChildren(topbar(h("button", { class: "linkbtn", onclick: () => { view = { screen: "home" }; render(); } }, T.all)));
@@ -577,16 +511,19 @@ function renderLog(thinking) {
     entryBlocks(pack, e).forEach(b => {
       if (b.type === "dialogue") out.push(h("div", { class: "b-dia" }, h("div", { class: "who" }, nameOf(pack, b.speaker)), h("div", { class: "say" }, b.text)));
       else if (b.type === "system") out.push(h("div", { class: "b-sys" }, b.text));
-      else out.push(h("div", { class: "b-narr" }, b.text));
+      else out.push(h("div", { class: "b-narr" }, ...b.text.split(/\n\s*\n/).map(t=>h("p",{},t))));
     });
   });
   box.replaceChildren(...out);
   if (thinking) box.append(h("div", { class: "thinking" }, "…"));
-  const last = box.lastElementChild; if (last) last.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  box.onscroll=()=>{following=box.scrollHeight-box.scrollTop-box.clientHeight<90;};
+  scrollLatest();
 }
 let panel = null; // "notes" | "dev" | null
 function renderPlay() {
+  const draft=$("textarea")?.value||"",oldScroll=$("#log")?.scrollTop||0;
   const app = $("#app"); if (!G) { view = { screen: "home" }; return renderHome(); }
+  app.className="view-play";app.setAttribute("aria-busy",String(G.busy));
   const pack = G.pack, s = G.save, a = ART[pack.pack_id], T = L();
   const loc = pack.locations.find(l => l.id === s.location);
   const cast = pack.characters.filter(c => present(pack, c, s));
@@ -611,6 +548,7 @@ function renderPlay() {
     const sugs = suggestionsL(pack, s);
     if (G.lastSugTurn !== s.turn) { G.lastSugTurn = s.turn; track("suggestion_shown", { save_id: G.save_id, pack_id: pack.pack_id, turn: s.turn, suggestion_ids: sugs.map(x => x.id) }); }
     const ta = h("textarea", { rows: 1, placeholder: T.ph, "aria-label": T.aria, maxlength: 400, onkeydown: e => { if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); go(); } }, oninput: e => { e.target.style.height = "auto"; e.target.style.height = Math.min(140, e.target.scrollHeight) + "px"; } });
+    ta.value=draft;
     const go = () => { const v = ta.value; if (!v.trim()) return; ta.value = ""; submit({ text: v }); };
     app.append(h("div", { class: "dock" },
       h("div", { class: "sugs" }, sugs.map(x => h("button", { class: "sug " + x.kind, disabled: G.busy, onclick: () => submit({ suggestion: x }) }, x.label))),
@@ -622,8 +560,9 @@ function renderPlay() {
   }
   if (panel === "notes") app.append(notebook(pack, s));
   if (settings.dev) app.append(devPanel(pack, s));
-  if(G.busy) { $("textarea")?.setAttribute("disabled", ""); $(".dock .inrow")?.append(h("button",{class:"linkbtn",onclick:()=>turnController?.abort()}, settings.lang==="zh"?"停止等待":"Stop")); }
+  if(G.busy) { $(".dock .inrow")?.append(h("button",{class:"stop-button","data-stop":"",onclick:()=>turnController?.abort()}, settings.lang==="zh"?"停止等待":"Stop")); }
   if (!G.busy && !G.ended) { const t = $("textarea"); if (t && window.matchMedia("(pointer:fine)").matches) t.focus({ preventScroll: true }); }
+  if(!following)$("#log").scrollTop=oldScroll;
   scrollLatest();
 }
 function notebook(pack, s) {
