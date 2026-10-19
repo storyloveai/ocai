@@ -13,11 +13,13 @@ test('five new novels have distinct casts, direction, state and public openings'
 test('Gemini uses its own key and native adapter while explicit providers remain isolated',async()=>{
  const {createModel,generationOptions}=await import('../server/provider.js');
  const env={GEMINI_API_KEY:'google-test',DEEPSEEK_API_KEY:'deepseek-test',DEEPSEEK_MODEL:'legacy'};
- const config=providerConfig(env);assert.equal(config.name,'google');assert.equal(config.key,'google-test');assert.equal(config.model,'gemini-3.8-flash');assert.equal(createModel(config).modelId,config.model);
- assert.equal(providerConfig({...env,GEMINI_MODEL:'custom-google-model'}).model,'custom-google-model');
+ const config=providerConfig({...env,AI_PROVIDER:'gemini'});assert.equal(config.name,'google');assert.equal(config.key,'google-test');assert.equal(config.model,'gemini-3.8-flash');assert.equal(createModel(config).modelId,config.model);
+ assert.equal(providerConfig({...env,AI_PROVIDER:'gemini',GEMINI_MODEL:'custom-google-model'}).model,'custom-google-model');
  assert.equal(providerConfig({...env,AI_PROVIDER:'deepseek'}).key,'deepseek-test');
  assert.equal(providerConfig({...env,AI_PROVIDER:'compatible'}),null);
  assert.equal(providerConfig({AI_PROVIDER:'google',DEEPSEEK_API_KEY:'never-send'}),null);
  assert.equal(providerConfig({...env,AI_PROVIDER:'typo'}),null);
  assert.deepEqual(generationOptions(config),{providerOptions:{google:{thinkingConfig:{thinkingLevel:'low',includeThoughts:false}}}});
 });
+
+test('DeepSeek defaults to current Flash with separately keyed Gemini backup',async()=>{const {fallbackConfig}=await import('../server/provider.js');const env={DEEPSEEK_API_KEY:'ds',GEMINI_API_KEY:'gg'};const primary=providerConfig(env);assert.equal(primary.model,'deepseek-flash');assert.equal(primary.key,'ds');assert.equal(fallbackConfig(primary,env).key,'gg');assert.equal(fallbackConfig(primary,{}),null);assert.equal(fallbackConfig(providerConfig({GEMINI_API_KEY:'gg'}),env),null);});

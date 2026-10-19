@@ -109,3 +109,14 @@ test('live expression appears before completion and preserves the next draft',as
  assert.ok(document.querySelector('#live-response'));assert.equal(document.querySelector('#live-response .b-narr').childNodes.length,1);assert.equal(document.querySelector('textarea').disabled,false);document.querySelector('textarea').value='下一句先写在这里';finish();await new Promise(r=>setTimeout(r,30));
  assert.equal(document.querySelector('textarea').value,'下一句先写在这里');assert.equal(document.querySelector('.inrow .btn').disabled,false);assert.ok(document.querySelector('#log').textContent.includes('亭外传来雨声'));
 });
+
+test('DeepSeek failure falls back to Gemini before output, never after visible text',async()=>{
+ const old=process.env.GEMINI_API_KEY;process.env.GEMINI_API_KEY='mock-backup-key';
+ try{for(const visible of [false,true]){
+  const calls=[],chunks=[];
+  const handler=createHandler({config:()=>({name:'deepseek',kind:'compatible',baseURL:'https://api.deepseek.com',model:'deepseek-flash'}),model:c=>{calls.push(c.name);return c.name;},stream:opts=>({partialOutputStream:(async function*(){if(opts.model==='deepseek'){if(visible)yield {blocks:[{type:'narration',speaker:null,text:'已显示的正文'}]};throw Object.assign(Error('private-upstream-detail'),{statusCode:503});}yield {blocks:[{type:'narration',speaker:null,text:'备用模型回复'}]};})(),output:Promise.resolve({blocks:[{type:'narration',speaker:null,text:'备用模型回复'}]})})});
+  const req={method:'POST',headers:{origin:'https://test.example',host:'test.example','content-type':'application/json',accept:'application/x-ndjson','x-forwarded-for':'fallback-'+visible},body:{phase:'express',lang:'zh',context:{player_input:'敬酒',status:'ok'}}};
+  const res={setHeader(){},status(n){this.code=n;return this;},json(b){this.body=b;},write(s){this.headersSent=true;chunks.push(JSON.parse(s));return true;},end(s){if(s)chunks.push(JSON.parse(s));this.writableFinished=true;}};
+  await handler(req,res);assert.deepEqual(calls,visible?['deepseek']:['deepseek','google']);assert.equal(chunks.at(-1).type,visible?'error':'done');assert.ok(!JSON.stringify(chunks).includes('private-upstream-detail'));
+ }}finally{if(old===undefined)delete process.env.GEMINI_API_KEY;else process.env.GEMINI_API_KEY=old;}
+});
