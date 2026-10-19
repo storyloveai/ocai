@@ -30,13 +30,12 @@ export function createHandler({config=providerConfig,model=createModel,generate=
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),14000);const close=()=>{if(!res.writableFinished)controller.abort();};res.on?.('close',close);
  try{
   const options=generationOptions(cfg);
-  if(cfg.kind==='google'&&/^gemini-3\./.test(cfg.model)&&/flash/i.test(cfg.model))options.providerOptions={google:{thinkingConfig:{thinkingLevel:"minimal",includeThoughts:false}}};
-  const result=await generate({model:model(cfg),...packet,...options,maxOutputTokens:body.phase==='understand'?700:1000,maxRetries:0,abortSignal:controller.signal});
+  const result=await generate({model:model(cfg),...packet,...options,maxOutputTokens:1500,maxRetries:0,abortSignal:controller.signal});
   const output=parseModelJSON(result.text);
   if(body.phase==='understand'&&!['talk','action','accuse','clarify','unsupported','contradiction','unclear','meta'].includes(output?.kind))throw Error('Invalid intent');
   if(body.phase==='express'&&!Array.isArray(output?.blocks))throw Error('Invalid blocks');
   return res.status(200).json({output});
- }catch{return res.status(503).json({code:controller.signal.aborted?'model_timeout':'model_unavailable'});}
+ }catch(error){const status=Number(error?.statusCode||error?.cause?.statusCode)||null;const code=controller.signal.aborted?'model_timeout':[400,404,422].includes(status)?'model_configuration':'model_unavailable';console.warn(JSON.stringify({event:'three_kingdoms_model_failed',phase:body.phase,status,code}));return res.status(503).json({code});}
  finally{active--;clearTimeout(timer);res.off?.('close',close);}
 };}
 export default createHandler();
