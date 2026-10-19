@@ -75,3 +75,13 @@ test('hosted Stripe session uses return and cancel URLs and preserves verified o
  assert.equal(result.status,200);const body=await result.json();assert.equal(body.url,'https://checkout.stripe.com/c/pay/fixture');assert.equal(body.session_id,'cs_fixture');
  assert.equal(calls[0].get('ui_mode'),'hosted_page');assert.equal(calls[0].get('success_url'),'https://replica.example/credit?checkout=success&session_id={CHECKOUT_SESSION_ID}');assert.equal(calls[0].get('cancel_url'),'https://replica.example/credit?checkout=cancelled');assert.equal(calls[0].has('return_url'),false);assert.equal(calls[0].get('metadata[user_id]'),'alice');
 });
+
+test('signed wallet readiness skips a duplicate read across Vercel instances and is bound to the account',async()=>{
+ const f=fixture();let reads=0;const original=f.db.runTransaction;f.db.runTransaction=fn=>{reads++;return original(fn);};
+ const ready=await(await f.platform.wallet(request('wallet'))).json();assert.match(ready.checkoutReady,/^\d{13}\.[a-f0-9]{64}$/);const before=reads;
+ const second=createPlatform({env,services:()=>({db:f.db,auth:{verifyIdToken:async token=>({uid:token})}}),fetchImpl:async()=>Response.json({id:'cs_fixture',url:'https://checkout.stripe.com/c/pay/fixture'})});
+ const payload={pack:200,request_id:'123e4567-e89b-42d3-a456-426614174099',ui_mode:'hosted',checkoutReady:ready.checkoutReady};
+ assert.equal((await second.checkout(request('checkout',payload))).status,200);assert.equal(reads,before);
+ assert.equal((await second.checkout(request('checkout',payload,'bob'))).status,200);assert.ok(reads>before);
+ const after=reads;await second.checkout(request('checkout',{...payload,checkoutReady:ready.checkoutReady.slice(0,-1)+'x'}));assert.ok(reads>after);
+});

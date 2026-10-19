@@ -24,7 +24,7 @@ test('late wallet response from another account cannot overwrite current balance
 });
 test('return URL queries fulfillment but cannot mutate balance locally',async()=>{
  const f=setup();globalThis.location={href:'https://replica.example/credit?checkout=success&session_id=cs_fixture'};globalThis.history={replaceState(){}};
- const calls=[];f.account.api=async path=>{calls.push(path);return path.startsWith('checkout-status')?{paid:true,credited:true}:{balance:200,checked:false,ledger:[]};};f.payments.sync();f.payments.mount(f.root);await tick();assert.ok(calls.includes('checkout-status?session_id=cs_fixture'));assert.ok(calls.every(p=>p==='wallet'||p.startsWith('checkout-status')));assert.match(f.root.textContent,/充值已到账/);assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);
+ const calls=[];f.account.api=async path=>{calls.push(path);return path.startsWith('checkout-status')?{paid:true,credited:true}:{balance:200,checked:false,ledger:[]};};f.payments.sync();f.payments.mount(f.root);await tick();assert.ok(calls.includes('checkout-status?session_id=cs_fixture'));assert.ok(calls.every(p=>p==='wallet'||p.startsWith('checkout-status')));assert.match(f.root.textContent,/Your Credits have been added/);assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);
 });
 
 test('guest page receives catalog after async public config without an identity change',async()=>{
@@ -50,12 +50,12 @@ test('hosted checkout redirects to Stripe without requiring an embedded publisha
 test('checkout refuses a provider response redirecting outside Stripe',async()=>{
  const f=setup();f.account.api=async path=>path==='checkout'?{url:'https://checkout.stripe.com.evil.example/pay'}:{balance:100,ledger:[]};
  f.payments.sync();f.payments.mount(f.root);await tick();f.root.querySelector('[data-buy-selected]').click();await tick();
- assert.deepEqual(f.redirects,[]);assert.match(f.root.textContent,/安全付款页面/);
+ assert.deepEqual(f.redirects,[]);assert.match(f.root.textContent,/secure checkout/);
 });
 test('cancel return clears the pending session and does not report an unpaid order',async()=>{
  const f=setup();f.storage.setItem('replica-payment:fixture:test:alice','cs_old');globalThis.location={href:'https://replica.example/credit?checkout=cancelled'};
  const calls=[];f.account.api=async path=>{calls.push(path);return {balance:100,ledger:[]};};f.payments.sync();f.payments.mount(f.root);await tick();
- assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);assert.ok(calls.every(p=>p==='wallet'));assert.match(f.root.textContent,/付款已取消/);
+ assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);assert.ok(calls.every(p=>p==='wallet'));assert.match(f.root.textContent,/Checkout cancelled/);
 });
 test('reentering credits follows the current deep link instead of a previous tab',async()=>{
  const f=setup();f.payments.sync();f.payments.mount(f.root);await tick();
@@ -65,4 +65,7 @@ test('reentering credits follows the current deep link instead of a previous tab
  assert.ok(f.root.querySelector('[data-checkin]'));
  globalThis.location.href='https://replica.example/credit';f.payments.mount(f.root);
  assert.equal(f.root.querySelector('#credits-tab-buy').getAttribute('aria-selected'),'true');
+});
+test('checkout retains immediate loading feedback and cannot redirect after leaving the page',async()=>{
+ const f=setup();let finish;f.account.api=async(path)=>path==='checkout'?new Promise(r=>finish=r):{balance:100,ledger:[]};f.payments.sync();f.payments.mount(f.root);await tick();f.root.querySelector('[data-buy-selected]').click();assert.match(f.root.textContent,/Opening checkout/);assert.equal(f.root.querySelector('[name=credits-pack]').disabled,true);f.root.remove();finish({url:'https://checkout.stripe.com/c/pay/fixture',session_id:'cs_fixture'});await tick();assert.deepEqual(f.redirects,[]);
 });
