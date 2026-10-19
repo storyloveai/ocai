@@ -43,3 +43,38 @@ test('built Chinese story supports chapter selection, suggestions, free text and
  assert.ok(document.querySelector('.ending'));assert.ok(memory.has('tk3.game.sg03_heroes_over_plums'));
  assert.ok(JSON.parse(memory.get('tk3.game.sg03_heroes_over_plums')).ended);
 });
+
+test('embedded save bridge checks origin, stores account-scoped progress and adds resume history',async()=>{
+ const {mountThreeKingdoms}=await import('../dist/assets/three-kingdoms.js');
+ const {document,window}=parseHTML('<html><body></body></html>');Object.assign(globalThis,{window,document,location:{origin:'https://test.example'}});
+ const values=new Map(),sent=[];const helpers={read:(k,d)=>values.get(k)??d,save:(k,v)=>values.set(k,structuredClone(v))};
+ let frame;
+ const reference={mountShell(html){const root=document.createElement('div');root.innerHTML=html;document.body.append(root);frame=root.querySelector('iframe');Object.defineProperty(frame,'contentWindow',{value:{postMessage:message=>sent.push(message)}});return root;}};
+ assert.ok(mountThreeKingdoms('/story/three-kingdoms',{reference,account:{},helpers}));
+ const send=(data,origin='https://test.example')=>{const e=new window.Event('message');Object.assign(e,{origin,source:frame.contentWindow,data});window.dispatchEvent(e);};
+ send({type:'tk3-ready'});assert.equal(sent[0].type,'tk3-init');
+ send({type:'tk3-save',key:'game.sg03_heroes_over_plums',value:{save:{turn:1}}},'https://evil.example');assert.equal(values.size,0);
+ send({type:'tk3-save',key:'game.sg03_heroes_over_plums',value:{save:{turn:1}}});
+ assert.equal(values.get('ooc-session-v2-three-kingdoms')['game.sg03_heroes_over_plums'].save.turn,1);
+ assert.deepEqual(values.get('ooc-history'),['three-kingdoms']);
+ send({type:'tk3-save',key:'__proto__',value:{bad:true}});assert.equal(values.get('ooc-session-v2-three-kingdoms').bad,undefined);
+});
+
+async function prototypeWithModel(api){
+ const html=await readFile(new URL('../dist/assets/three-kingdoms.html',import.meta.url),'utf8');const {document,window}=parseHTML(html);window.parent=window;window.HTMLElement.prototype.scrollIntoView=()=>{};window.HTMLElement.prototype.focus=()=>{};window.matchMedia=()=>({matches:true});
+ const memory=new Map();const context=createContext({SV,window,document,navigator:{language:'zh'},location:{protocol:'https:',search:'',origin:'https://test.example'},localStorage:{getItem:k=>memory.get(k),setItem:(k,v)=>memory.set(k,v),removeItem:k=>memory.delete(k)},URLSearchParams,AbortController,AbortSignal,performance,matchMedia:window.matchMedia,console,setTimeout,clearTimeout,fetch:async(path,opts)=>path==='/api/config'?new Response('{"configured":true}'):api(opts)});
+ for(const script of document.querySelectorAll('script:not([type="application/json"])'))new Script(script.textContent).runInContext(context);
+ await new Promise(r=>setTimeout(r,10));const click=el=>el.dispatchEvent(new window.Event('click',{bubbles:true}));click(document.querySelector('.ep'));click(document.querySelector('.intro .btn'));return {document,click,memory};
+}
+test('ambiguous model intent becomes clickable clarification choices without another model request',async()=>{
+ let calls=0;const {document,click,memory}=await prototypeWithModel(async()=>{calls++;return new Response(JSON.stringify({output:{kind:'clarify',candidates:['a_play_farmer','a_plead_ignorance']}}));});
+ document.querySelector('textarea').value='我只种菜，也不识英雄';click(document.querySelector('.inrow .btn'));await new Promise(r=>setTimeout(r,10));
+ assert.deepEqual([...document.querySelectorAll('.sug')].map(e=>e.textContent),['说自己如今只管种菜','推说自己不识英雄']);
+ click(document.querySelector('.sug'));await new Promise(r=>setTimeout(r,10));assert.equal(calls,1);assert.equal(JSON.parse(memory.get('tk3.game.sg03_heroes_over_plums')).save.state.suspicion,2);
+});
+test('stop aborts a waiting model, preserves the draft and does not advance story state',async()=>{
+ const {document,click,memory}=await prototypeWithModel(opts=>new Promise((_resolve,reject)=>opts.signal.addEventListener('abort',()=>reject(new Error('aborted')),{once:true})));
+ const move='曹操，我有一件别的事情想问你';document.querySelector('textarea').value=move;click(document.querySelector('.inrow .btn'));await new Promise(r=>setTimeout(r,5));
+ click([...document.querySelectorAll('.inrow button')].find(e=>e.textContent==='停止等待'));await new Promise(r=>setTimeout(r,10));
+ assert.equal(document.querySelector('textarea').value,move);assert.equal(document.querySelector('.inrow .btn').disabled,false);assert.equal(JSON.parse(memory.get('tk3.game.sg03_heroes_over_plums')).save.turn,0);
+});
