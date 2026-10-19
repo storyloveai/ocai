@@ -1,3 +1,4 @@
+import {mountThreeKingdoms} from './assets/three-kingdoms.js';
 import {createPayments} from './assets/payments.js';
 import {createAccount} from './assets/account.js';
 const [data,reference,community]=await Promise.all([
@@ -50,6 +51,7 @@ function chat(id){const d=data.find(d=>d.id===id);if(!d){navigate('/');return}hi
 function preferences(){let choice=read('ooc-preference','All');show(`<h2>Content Preference</h2><p>Select the type of content you'd like to see.</p><div class="choices">${['All','Male','Female'].map(x=>`<button data-choice="${x}" class="${choice===x?'active':''}">${x}</button>`).join('')}</div><small class="demo">This demo stores your preference locally.</small><button class="primary" id="confirm-preference">Confirm</button>`);modal.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{choice=b.dataset.choice;modal.querySelectorAll('[data-choice]').forEach(x=>x.classList.toggle('active',x===b))});$('#confirm-preference').onclick=()=>{save('ooc-preference',choice);modal.close();toast('Content preference saved')}}
 function render(){renderPage();paintAccount();document.body.removeAttribute('data-booting');$('#boot-screen')?.remove();}
 function renderPage(){clearInterval(window.carousel);const path=location.pathname,version=++routeVersion;
+ if(path==='/story/three-kingdoms'||path==='/play/three-kingdoms'){interaction?.show('/three-kingdoms',{navigate,show,...account.scope(),categories,data});mountThreeKingdoms(path,{reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(path.startsWith('/play/')||path.startsWith('/onboarding/')||/^\/(story|character)\/[^/]+\/episode\//.test(path)){
   if(interaction){interaction.show(path,{navigate,show,...account.scope(),categories,data});return;}
   reference.mountShell('<div class="route-loading" role="status">Loading your story…</div>',{navigate,show,...account.scope(),categories,data},'loading');
