@@ -73,21 +73,21 @@ export function createPayments({ account, show, modal, notify, storage = session
   async function checkout(pack) {
     if (!account.user) { account.login(); return; }
     if (busy) return;
-    const version = generation; const pendingKey = key(); busy = true; error = ''; notice = 'Opening secure Stripe checkout…'; draw();
+    const version = generation; const checkoutRoot=root;let redirected=false;const pendingKey = key(); busy = true; error = ''; notice = 'Opening secure Stripe checkout…'; draw();
     const attemptKey = pendingKey + ':attempt:hosted-page:' + pack;
     let requestId = storage.getItem(attemptKey);
     if (!requestId) { requestId = crypto.randomUUID(); storage.setItem(attemptKey, requestId); }
     try {
       const result = await account.api('checkout', { pack, request_id: requestId, ui_mode: 'hosted', ...(wallet?.checkoutReady?{checkoutReady:wallet.checkoutReady}:{}) });
-      if (!current(version)) return;
+      if (!current(version)||root!==checkoutRoot||!checkoutRoot.isConnected) return;
       const target = new URL(result.url);
       if (target.protocol !== 'https:' || target.hostname !== 'checkout.stripe.com' || target.username || target.password || target.port) throw Error('Unable to open secure checkout. Please try again.');
       if (/^cs_[\w]+$/.test(result.session_id || '')) storage.setItem(pendingKey, result.session_id);
       storage.removeItem(attemptKey);
-      redirect(target.href);
+      redirect(target.href);redirected=true;
     } catch (e) {
       if (current(version)) { error = paymentError(e); notice = ''; notify(paymentError(e)); }
-    } finally { if (current(version)) { busy = false; draw(); } }
+    } finally { if (current(version)&&!redirected) { busy = false; draw(); } }
   }
 
   return {
