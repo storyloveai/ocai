@@ -1,7 +1,16 @@
+function paymentError(error){
+ const message=String(error?.message||'');
+ if(!/[\u3400-\u9fff]/.test(message))return message||'Something went wrong. Please try again.';
+ if(/登录|账户已更换/.test(message))return 'Please sign in again to continue.';
+ if(/钱包|到账/.test(message))return 'Your balance is temporarily unavailable. Please try again shortly.';
+ if(/过期|超时/.test(message))return 'The request timed out. Please try again.';
+ return 'Unable to complete this request. Please try again shortly.';
+}
 import { renderCredits } from './credits-view.js';
 export function createPayments({ account, show, modal, notify, storage = sessionStorage, redirect = url => location.assign(url) }) {
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let tab = ['buy','auto','free'].includes(new URL(location.href).searchParams.get('creditTab')) ? new URL(location.href).searchParams.get('creditTab') : 'buy', selected;
+  let walletRequest, walletRequestVersion;
   let root, wallet, error = '', notice = '', busy = false, owner = null, generation = 0, polling = false, observedConfig;
   const cfg = () => account.paymentConfig;
   const key = () => `replica-payment:${cfg().auth?.config?.projectId}:${cfg().walletMode}:${owner}`;
@@ -21,22 +30,26 @@ export function createPayments({ account, show, modal, notify, storage = session
     root.querySelector('[data-buy-selected]')?.addEventListener('click',()=>checkout(selected));
     root.querySelector('[data-credit-history]')?.addEventListener('click',()=>show(`<div class="credits-history-dialog"><h2>Credit History</h2>${error?`<p role="alert">${esc(error)}</p>`:''}${wallet?`<p>Current balance: ${wallet.balance.toLocaleString()} Credits</p>`:'<p>Balance unavailable. Sign in or refresh your balance to load your history.</p>'}${(wallet?.ledger||[]).map(item=>`<div class="credits-ledger-row"><span>${item.type==='purchase'?'Credit purchase':'Daily check-in'}<small>${esc(item.at)}</small></span><strong>+${esc(item.amount)}</strong></div>`).join('')||'<p>No transactions to show.</p>'}</div>`));
     root.querySelector('[data-credit-info]')?.addEventListener('click',()=>show('<h2>About Credits</h2><p>Credits belong to your signed-in account. Payments are securely processed by Stripe. Current chats do not deduct credits.</p>'));
-    root.querySelector('[data-wallet-refresh]')?.addEventListener('click', async () => { await refresh(); await verify(); });
+    root.querySelector('[data-wallet-refresh]')?.addEventListener('click', async () => { await refresh(true); await verify(); });
     root.querySelector('[data-checkin]')?.addEventListener('click', checkin);
     root.querySelectorAll('[data-pack]').forEach(button => button.addEventListener('click', () => checkout(Number(button.dataset.pack))));
   }
-  async function refresh() {
+  async function refresh(force=false) {
     if (!account.user || !cfg().walletConfigured) { draw(); return; }
     const version = generation;
+    if(walletRequest&&walletRequestVersion===version){if(!force)return walletRequest;await walletRequest;if(!current(version))return;}
+    walletRequestVersion=version;
+    const request=(async()=>{
     try { const result = await account.api('wallet'); if (current(version)) { wallet = result; error = ''; } }
-    catch (e) { if (current(version)) error = e.message; }
+    catch (e) { if (current(version)) error = paymentError(e); }
     if (current(version)) draw();
+    })();walletRequest=request;try{await request;}finally{if(walletRequest===request)walletRequest=null;}
   }
   async function checkin() {
     if (busy) return;
     const version = generation; busy = true; draw();
     try { const result = await account.api('checkin', {}); if (current(version)) { wallet = result; error = ''; } }
-    catch (e) { if (current(version)) error = e.message; }
+    catch (e) { if (current(version)) error = paymentError(e); }
     finally { if (current(version)) { busy = false; draw(); } }
   }
   async function verify() {
@@ -48,33 +61,32 @@ export function createPayments({ account, show, modal, notify, storage = session
       for (let i = 0; i < 8 && current(version); i++) {
         const status = await account.api('checkout-status?session_id=' + encodeURIComponent(session));
         if (!current(version)) return;
-        if (status.credited) { storage.removeItem(key()); notice = '充值已到账。'; error = ''; await refresh(); return; }
-        if (status.status === 'expired') { storage.removeItem(key()); notice = '订单已过期，未到账。'; draw(); return; }
-        notice = status.paid ? '付款已确认，正在等待到账。可稍后刷新余额。' : '订单尚未完成付款。'; draw();
+        if (status.credited) { storage.removeItem(key()); notice = 'Your Credits have been added.'; error = ''; draw();await refresh(true); return; }
+        if (status.status === 'expired') { storage.removeItem(key()); notice = 'This checkout expired. No Credits were added.'; draw(); return; }
+        notice = status.paid ? 'Payment confirmed. Your Credits are being added.' : 'Payment has not been completed.'; draw();
         if (!status.paid) return;
         await new Promise(resolve => setTimeout(resolve, 1500));
       }
-    } catch (e) { if (current(version)) { error = e.message; draw(); } }
+    } catch (e) { if (current(version)) { error = paymentError(e); draw(); } }
     finally { if (current(version)) polling = false; }
   }
   async function checkout(pack) {
     if (!account.user) { account.login(); return; }
     if (busy) return;
-    const version = generation; const pendingKey = key(); busy = true; error = ''; draw();
+    const version = generation; const pendingKey = key(); busy = true; error = ''; notice = 'Opening secure Stripe checkout…'; draw();
     const attemptKey = pendingKey + ':attempt:hosted-page:' + pack;
     let requestId = storage.getItem(attemptKey);
     if (!requestId) { requestId = crypto.randomUUID(); storage.setItem(attemptKey, requestId); }
     try {
-      notice = '正在跳转至 Stripe 安全收银台…'; draw();
-      const result = await account.api('checkout', { pack, request_id: requestId, ui_mode: 'hosted' });
+      const result = await account.api('checkout', { pack, request_id: requestId, ui_mode: 'hosted', ...(wallet?.checkoutReady?{checkoutReady:wallet.checkoutReady}:{}) });
       if (!current(version)) return;
       const target = new URL(result.url);
-      if (target.protocol !== 'https:' || target.hostname !== 'checkout.stripe.com' || target.username || target.password || target.port) throw Error('无法打开安全付款页面。');
+      if (target.protocol !== 'https:' || target.hostname !== 'checkout.stripe.com' || target.username || target.password || target.port) throw Error('Unable to open secure checkout. Please try again.');
       if (/^cs_[\w]+$/.test(result.session_id || '')) storage.setItem(pendingKey, result.session_id);
       storage.removeItem(attemptKey);
       redirect(target.href);
     } catch (e) {
-      if (current(version)) { error = e.message; notice = ''; notify(e.message); }
+      if (current(version)) { error = paymentError(e); notice = ''; notify(paymentError(e)); }
     } finally { if (current(version)) { busy = false; draw(); } }
   }
 
@@ -87,7 +99,7 @@ export function createPayments({ account, show, modal, notify, storage = session
         const url = new URL(location.href), session = url.searchParams.get('session_id');
         if (owner && url.searchParams.get('checkout')) {
           if (/^cs_[\w]+$/.test(session || '')) storage.setItem(key(), session);
-          if (url.searchParams.get('checkout') === 'cancelled') { storage.removeItem(key()); notice = '付款已取消，未扣款。'; }
+          if (url.searchParams.get('checkout') === 'cancelled') { storage.removeItem(key()); notice = 'Checkout cancelled. No payment was taken.'; }
           url.searchParams.delete('session_id'); url.searchParams.delete('checkout'); history.replaceState({}, '', url);
         }
         draw(); void refresh(); void verify();

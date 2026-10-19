@@ -1,3 +1,4 @@
+import {toggleDisclosure} from './disclosure.js';
 import {escapeHTML as safe} from './stream.js';
 let active;
 const dismissers=new WeakMap();
@@ -29,7 +30,7 @@ export function openTitlePreview(record,id,{navigate,read,save,assets={}}){
   if(button.hasAttribute('data-preview-close'))dismiss();
   if(button.dataset.previewPlay){dismiss();navigate('/play/'+id);}
   if(button.dataset.previewBookmark){const values=read('ooc-favorites',[]);save('ooc-favorites',selected()?values.filter(value=>value!==id):[...values,id]);paintBookmark();}
-  if(button.hasAttribute('data-preview-expand')){const expanded=button.getAttribute('aria-expanded')==='true';button.setAttribute('aria-expanded',String(!expanded));button.textContent=expanded?'View All':'Fold';const clipped=button.parentElement.parentElement.querySelector('[class*="max-h-"]');if(clipped)clipped.style.maxHeight=expanded?'':'none';}
+  if(button.hasAttribute('data-preview-expand'))toggleDisclosure(button);
   if(button.hasAttribute('data-preview-avatar'))choose(button,'Avatar settings',[{label:profile.name||'Default avatar'}]);
   if(button.hasAttribute('data-preview-scenario'))choose(button,'Starting scenario',[{label:button.querySelector('span').textContent.trim()}]);
   if(button.hasAttribute('data-preview-more'))choose(button,'Story options',[{label:'Open full information',run:()=>{dismiss();navigate('/story/'+id);}}]);

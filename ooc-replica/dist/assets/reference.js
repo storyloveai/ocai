@@ -1,3 +1,5 @@
+import {bindDisclosures} from './disclosure.js';
+import {bindCarousels} from './carousels.js';
 import {paintBrand} from './brand.js';
 import {sortStories} from './catalog-sort.js';
 import {threeKingdoms} from './three-kingdoms.js';
@@ -47,6 +49,14 @@ templateDocument.querySelectorAll('a[href^="/story/"]').forEach(a => {
 });
 const characterDocument=new DOMParser().parseFromString(evidence.pages.character,'text/html');
 characterDocument.querySelectorAll('a[href^="/character/"]').forEach(a=>{if(a.querySelector('[data-radix-aspect-ratio-wrapper]')&&a.querySelector('p'))cardMarkup.set(a.getAttribute('href').split('/').pop(),a.outerHTML);});
+const collections=new Map();
+for(const [kind,doc]of [['story',templateDocument],['character',characterDocument]]){
+ for(const section of doc.querySelectorAll('section')){
+  const heading=section.querySelector('h2');if(!heading)continue;
+  const ids=[...section.querySelectorAll(`a[href^="/${kind}/"]`)].map(a=>a.getAttribute('href').split('/')[2]);
+  if(ids.length)collections.set(kind+':'+text(heading),[...new Set(ids)]);
+ }
+}
 export const extraStories = catalog.map(d => ({...d, image:source(d),genre:'Others'}));
 
 function hydrate() {
@@ -153,13 +163,7 @@ function bindDetail() {
       if(choice.dataset.refPreview==='prologue')heading?.scrollIntoView({behavior:'smooth'});
     });
   });
-  all('button').filter(b=>text(b)==='View AllFold').forEach(b=>{
-    b.textContent='View All'; b.onclick=()=>{
-      const expanded=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!expanded));b.textContent=expanded?'View All':'Fold';
-      const section=b.parentElement.parentElement;
-      const clipping=section.querySelector('[class*="max-h-"]');if(clipping)clipping.style.maxHeight=expanded?'':'none';
-    };
-  });
+  bindDisclosures(host);
   const play=all('button').find(b=>text(b)==='New Play');
   if(play){
     const bookmark=play.nextElementSibling;
@@ -257,16 +261,20 @@ export function show(path, helpers) {
     const name=new URLSearchParams(location.search).get('name')||'Top Ranked';
     const content=q('[data-shrink]')?.nextElementSibling;
     if(content){
-      const known=context.data.filter(d=>d.genre===name);
-      const kind=new URLSearchParams(location.search).get('type');
+      const kind=new URLSearchParams(location.search).get('type')==='character'?'character':'story';
       const available=catalog.filter(d=>kind==='character'?d.type==='character':d.type!=='character');
-      const items=name==='OOC Originals'?available.filter(d=>d.original):name==='Fantasy'||name==='Romance'?known.filter(d=>kind==='character'?d.type==='character':d.type!=='character'):available;
-      content.innerHTML=`<div class="precision-collection"><a href="/">‹ Back</a><h1>${safe(name)}</h1>${grid(items)}</div>`;
+      const ids=collections.get(kind+':'+name);
+      let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):available.filter(d=>context.data.find(v=>v.id===d.id)?.genre===name);
+      if(!items.length&&!context.categories.includes(name))items=available;
+      if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,...items.filter(d=>d.id!==threeKingdoms.id)];
+      content.innerHTML=`<div class="precision-collection"><a href="${kind==='character'?'/character':'/'}">‹ Back</a><div class="collection-heading"><h1>${safe(name)}</h1><label>Sort by <select aria-label="Sort collection"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><p class="collection-count">${items.length} ${kind==='character'?'characters':'stories'}</p><div data-collection-grid>${items.length?grid(items):'<p>No titles in this category yet.</p>'}</div></div>`;
+      const sort=content.querySelector('select');sort.onchange=()=>{content.querySelector('[data-collection-grid]').innerHTML=grid(sort.value==='featured'?items:sortStories(items,sort.value));hydrate();};
     }
   }
   if(page==='home')pinThreeKingdoms();
   hydrate();
-  if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);}
+  if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);bindCarousels(host,updateHero);}
+  bindDisclosures(host);
   if(page==='detail'||page==='captured-detail')bindDetail();
   if(page==='search')bindSearch();
   // Read-only captured consent state for screenshot comparison; no acceptance action.
