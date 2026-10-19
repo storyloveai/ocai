@@ -23,6 +23,11 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
   env = { ...env, STRIPE_SECRET_KEY: env.STRIPE_LIVE_SECRET_KEY || env.STRIPE_SECRET_KEY };
   const configured = () => Boolean(firebaseConfig(env) && adminConfigured(env));
   const walletCompatible = configured;
+  // Short-lived signed readiness receipt travels across separate Vercel functions.
+  // It only skips a duplicate availability read; ownership and fulfillment are always verified.
+  const readySignature=(uid,at)=>createHmac('sha256',env.STRIPE_SECRET_KEY).update(['wallet-ready-v1',env.FIREBASE_PROJECT_ID,stripeMode(env),uid,at].join(':')).digest('hex');
+  const readyReceipt=uid=>{if(!env.STRIPE_SECRET_KEY)return undefined;const at=String(Date.now());return at+'.'+readySignature(uid,at);};
+  const readyValid=(uid,receipt)=>{if(!env.STRIPE_SECRET_KEY||typeof receipt!=='string'||!/^\d{13}\.[a-f0-9]{64}$/.test(receipt))return false;const[at,sig]=receipt.split('.');const age=Date.now()-Number(at);return age>=0&&age<30000&&timingSafeEqual(Buffer.from(sig,'hex'),Buffer.from(readySignature(uid,at),'hex'));};
   const validAppUrl = () => {
     try { return new URL(env.APP_URL).protocol === 'https:'; } catch { return false; }
   };
@@ -58,7 +63,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
   }
   const rpc = async (name, body) => {
     if (!configured()) throw new HttpError(503, "账户钱包尚未配置。");
-    try { return await createWallet(services().db, stripeMode(env)).rpc(name, body); }
+    try { const result=await createWallet(services().db, stripeMode(env)).rpc(name, body);return result; }
     catch(error) {
       const raw = error?.code;
       const code = Number.isInteger(raw) ? raw : typeof raw === 'string' && /^[a-zA-Z0-9_/-]{1,80}$/.test(raw) ? raw : 'unknown';
@@ -167,7 +172,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
     wallet: safely(async (req) => {
       if (req.method !== "GET") throw new HttpError(405, "只支持 GET。");
       const u = await user(req);
-      return response(await rpc("storylove_wallet", { p_user: u.id }));
+      const wallet=await rpc("storylove_wallet", { p_user: u.id });return response({...wallet,checkoutReady:readyReceipt(u.id)});
     }),
     checkin: safely(async (req) => {
       if (req.method !== "POST") throw new HttpError(405, "只支持 POST。");
@@ -178,7 +183,8 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
     checkout: safely(async (req) => {
       if (req.method !== "POST") throw new HttpError(405, "只支持 POST。");
       sameOrigin(req);
-      const u = await user(req);
+      const started=Date.now();
+      const u = await user(req);const authenticated=Date.now();
       if (Number(req.headers.get("content-length")) > 2000)
         throw new HttpError(413, "请求过长。");
       let input;
@@ -238,7 +244,8 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
       };
       if (u.email) params.customer_email = u.email;
       // Do not open a new payment while the wallet database is unavailable.
-      await rpc("storylove_wallet", { p_user: u.id });
+      if(!readyValid(u.id,input.checkoutReady))await rpc("storylove_wallet", { p_user: u.id });
+      const preflighted=Date.now();
       const s = await stripe(
         "checkout/sessions",
         params,
@@ -253,6 +260,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
           (embedded ? "elements:" : "hosted-page:") +
           request_id,
       );
+      console.info(JSON.stringify({event:"checkout_ready",authMs:authenticated-started,walletMs:preflighted-authenticated,stripeMs:Date.now()-preflighted,totalMs:Date.now()-started}));
       if (embedded) {
         if (!s.client_secret || !s.id?.startsWith("cs_"))
           throw new HttpError(502, "无法打开安全付款界面。");
