@@ -255,6 +255,7 @@ function expressProblems(pack, saveAfter, out) {
   const P = [];
   const ids = new Set(pack.characters.filter(c => present(pack, c, saveAfter)).map(c => c.id));
   for (const b of out.blocks) {
+    if(b?.type==="dialogue"&&!ids.has(b.speaker)){const actor=pack.characters.find(c=>ids.has(c.id)&&[c.name,c.short_name].includes(b.speaker));if(actor)b.speaker=actor.id;}
     if (!b || !["narration", "dialogue"].includes(b.type) || typeof b.text !== "string" || !b.text.trim()) return ["schema: block"];
     if (b.type === "dialogue" && !ids.has(b.speaker)) P.push("speaker_not_present:" + b.speaker);
   }
@@ -265,7 +266,7 @@ function expressProblems(pack, saveAfter, out) {
   return P;
 }
 async function express(r, saveAfter, playerInput, meta) {
-  const ctx = Object.assign({}, r.generation_context, { outcome: null, player_input: playerInput, recent_turns: G.history.slice(-3).map(x => ({ player: x.input, shown: x.shown })) });
+  const ctx = Object.assign({}, r.generation_context, { characters_present:G.pack.characters.filter(c=>present(G.pack,c,saveAfter)).map(c=>({id:c.id,name:c.name,voice:c.voice,role:c.role})),outcome: null, player_input: playerInput, recent_turns: G.history.slice(-3).map(x => ({ player: x.input, shown: x.shown })) });
   const input = [{ role: "user", content: expressPrompt() + "\n\nThe input JSON follows. Reply with only the JSON object.\n\n" + JSON.stringify(ctx) }];
   const t0 = performance.now(); meta.express_problems = [];
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -403,7 +404,7 @@ function showLiveBlocks(blocks){
    const tick=()=>{if(!text.isConnected){return;}const goal=text.dataset.target||"",old=text.textContent||"";
      if(document.hidden||turnController?.signal.aborted||!goal.startsWith(old)){text.textContent=goal;delete text.dataset.painting;scrollLatest();return;}
      const remaining=Array.from(goal.slice(old.length));if(!remaining.length){delete text.dataset.painting;return;}
-     const next=remaining.slice(0,Math.max(2,Math.ceil(remaining.length/7))).join("");text.append(document.createTextNode(next));scrollLatest();setTimeout(tick,16);
+     const next=remaining.slice(0,Math.max(2,Math.ceil(remaining.length/7))).join("");if(!text.firstChild)text.append(document.createTextNode(""));text.firstChild.appendData(next);scrollLatest();setTimeout(tick,16);
    };tick();
  });
 }
