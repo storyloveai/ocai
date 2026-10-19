@@ -2,7 +2,7 @@ export const threeKingdoms={id:'three-kingdoms',title:'三国演义 · 命运由
 export function mountThreeKingdoms(path,{reference,account,helpers}){
  if(!['/story/three-kingdoms','/play/three-kingdoms'].includes(path))return false;
  const snapshot=helpers.read('ooc-session-v2-three-kingdoms',{});
- const root=reference.mountShell('<header class="shell-page-header" style="gap:20px;min-height:56px"><a href="/">‹ 返回 Story</a><h1 style="font-size:16px">三国演义</h1><span style="margin-left:auto;font-size:12px;color:#aaa">MVP · 自动存档</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/three-kingdoms.html" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>',helpers,'three-kingdoms');
+ const root=reference.mountShell('<header class="shell-page-header" style="gap:20px;min-height:56px"><a href="/">‹ 返回 Story</a><h1 style="font-size:16px">三国演义</h1><span style="margin-left:auto;font-size:12px;color:#aaa">进度自动保存</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/three-kingdoms.html" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>',helpers,'three-kingdoms');
  const frame=root.querySelector('#three-kingdoms-frame');
  const receive=event=>{
   if(!frame.isConnected){window.removeEventListener('message',receive);return;}
