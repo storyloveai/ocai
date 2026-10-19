@@ -8,7 +8,7 @@ export function bindCarousels(root,moveHero){
   const track=slide.parentElement,viewport=track.parentElement;
   if(region.querySelector('[data-hero-desktop]')||track.hasAttribute('data-mobile-track'))continue;
   track.style.transform='none';viewport.classList.add('native-carousel');
-  viewport.setAttribute('tabindex','0');viewport.setAttribute('aria-label',(region.closest('section')?.querySelector('h2')?.textContent||'Stories')+' carousel');
+  viewport.setAttribute('tabindex','0');viewport.setAttribute('aria-label',viewport===categoryViewport?'Story categories':(region.closest('section')?.querySelector('h2')?.textContent||'Stories')+' carousel');
   const step=direction=>viewport.scrollBy({left:direction*Math.max(200,viewport.clientWidth*.8),behavior:reduced()?'instant':'smooth'});
   region.querySelectorAll('button').forEach(button=>{const label=button.getAttribute('aria-label')||button.textContent.trim();if(/previous|next/i.test(label))button.onclick=()=>step(/previous/i.test(label)?-1:1);});
   viewport.addEventListener('keydown',event=>{if(event.target!==viewport||!['ArrowLeft','ArrowRight'].includes(event.key))return;event.preventDefault();step(event.key==='ArrowRight'?1:-1);});
