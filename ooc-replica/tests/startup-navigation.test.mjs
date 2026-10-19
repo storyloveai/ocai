@@ -20,6 +20,8 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  }});
  await import('../dist/app.js');
  assert.ok(document.querySelector('#precision-view a[href^="/story/"]'));
+ assert.equal(document.querySelector('[data-hero-desktop] h1').textContent,'三国演义 · 命运由你');
+ assert.equal(document.querySelector('section a [data-name]')?.textContent,'三国演义 · 命运由你');
  assert.equal(document.body.hasAttribute('data-booting'),false);
  assert.equal(document.querySelector('#precision-view').inert,false);
  assert.ok(!requests.some(path=>/interaction-pages|scenarios/.test(path)));
