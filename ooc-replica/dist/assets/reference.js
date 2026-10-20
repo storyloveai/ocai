@@ -122,7 +122,7 @@ function bindHome(page) {
   });
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
     let pointerOrigin;
-    b.onpointerdown=()=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};};
+    b.onpointerdown=event=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};event.preventDefault();b.focus({preventScroll:true});};
     b.onclick=()=>{
       const scroll=pointerOrigin||{x:window.scrollX||0,y:window.scrollY||0};pointerOrigin=null;host.style.overflowAnchor='none';
       const label=text(b);

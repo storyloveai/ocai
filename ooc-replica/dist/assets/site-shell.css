@@ -29,3 +29,4 @@ body[data-reference=true] #account-status{display:none}#precision-view [data-shr
 #title-preview .captured-dialog-body{padding:24px}#title-preview .captured-dialog-body>div:first-child>div:first-child{flex-shrink:0}.search-dialog-content [data-name]{overflow-wrap:anywhere}#precision-view button[aria-pressed=false].category-selected{background:transparent!important}.creator-work-controls[hidden]{display:none}.builder-ai [hidden]{display:none!important}
 @media(max-width:767px){#title-preview .captured-dialog-body{padding:16px}}
 #precision-view button[data-category-tab][aria-pressed=false]{background:transparent!important;color:#a3a3a3!important}#precision-view button[data-category-tab][aria-pressed=true]{background:#303033!important;color:#fafafa!important}
+html:has(#precision-view[data-page=home]),html:has(#precision-view[data-page=character]){overflow-anchor:none}
