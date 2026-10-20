@@ -1,3 +1,4 @@
+import {paintBrand} from './brand.js';
 import {toggleDisclosure} from './disclosure.js';
 import {escapeHTML as safe} from './stream.js';
 let active;
@@ -7,7 +8,7 @@ export function openTitlePreview(record,id,{navigate,read,save,assets={}}){
  closeTitlePreview();
  const previousFocus=document.activeElement;
  const dialog=document.createElement('dialog');dialog.id='title-preview';dialog.className='title-preview-dialog';
- dialog.setAttribute('aria-label','Story Information');dialog.innerHTML=record.html;
+ dialog.setAttribute('aria-label','Story Information');dialog.innerHTML=record.html;paintBrand(dialog);
  const header=dialog.firstElementChild,body=header.nextElementSibling,footer=dialog.lastElementChild;
  header.classList.add('title-preview-header');body.classList.add('title-preview-body');footer.classList.add('title-preview-footer');
  const profile=read('ooc-profile',{name:'nezuko'}),avatar=dialog.querySelector('[data-preview-avatar]');

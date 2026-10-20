@@ -1,4 +1,6 @@
 export function paintBrand(root=document){
+ for(const badge of root.querySelectorAll('img[alt="ORIGINAL"]')){badge.src="/assets/original-badge.svg";badge.removeAttribute("data-asset");badge.classList.add("storydate-original-badge");}
+
  for(const image of root.querySelectorAll('img[alt="OOC"],img[alt="Storylove"],img[alt="StoryDate"]')){
   const compact=Number(image.getAttribute('width'))<40;
   image.src=compact?'/assets/storydate-mark.svg':'/assets/storydate-logo.svg';image.alt='StoryDate';

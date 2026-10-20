@@ -10,7 +10,7 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
  const group=desktop.children[1]?.children[2];
  if(user&&group&&!group.querySelector('[data-shell-notifications]')){
   const credit=group.querySelector('a[href="/credit"]');
-  if(credit){const notification=credit.cloneNode(true);notification.removeAttribute('href');notification.tagName==='A'&&notification.setAttribute('role','button');notification.tabIndex=0;notification.dataset.shellNotifications='';notification.innerHTML=`${symbol('bell')}<span>Notifications</span>`;notification.onclick=()=>showNotifications(show);notification.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();notification.click();}};credit.before(notification);}
+  if(credit){const notification=credit.cloneNode(true);notification.removeAttribute('href');notification.tagName==='A'&&notification.setAttribute('role','button');notification.tabIndex=0;notification.dataset.shellNotifications='';notification.innerHTML=`${symbol('bell')}<span class="${credit.querySelector('span')?.className||''}">Notifications</span>`;notification.onclick=()=>showNotifications(show);notification.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();notification.click();}};credit.before(notification);}
  }
  if(!user)group?.querySelector('[data-shell-notifications]')?.remove();
  const historySlot=desktop.children[1]?.lastElementChild;

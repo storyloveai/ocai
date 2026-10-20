@@ -1,3 +1,4 @@
+import {returnFromAnnouncement} from './back-navigation.js';
 import {historyIds} from './history.js';
 import {showCreator} from './social.js';
 import {normalizeDraft} from './builder.js';
@@ -18,7 +19,7 @@ export function show(path,h){
   const badge=item=>`<span class="announcement-badge announcement-${safe(item.type.toLowerCase())}">${safe(item.type)}</span>`;
   const content=path==='/announcement'?announcements.items.map(item=>`<a class="announcement-row" href="${safe(item.href)}">${badge(item)}<p>${safe(item.title)}</p><time>${safe(item.date)}</time></a>`).join(''):item?`<article class="announcement-detail">${badge(item)}<h2>${safe(item.title)}</h2><time>${safe(item.date)}</time>${item.href.endsWith('6aa3e1000f846b46b74fe504')?'<p>An issue affecting title publication has been resolved. Affected titles can be set to public again.</p>':`<p><a href="https://ooc.ai${safe(item.href)}" target="_blank" rel="noopener noreferrer">Read the original announcement</a></p>`}</article>`:'<p class="shell-empty">Announcement unavailable.</p>';
   const root=mountShell(`<header class="shell-page-header"><button aria-label="Back" data-announcement-back>${icon('arrow',16)}</button><h1>Notice</h1></header><div class="announcement-page">${content}</div>`,h,'announcement');
-  root.querySelector('[data-announcement-back]').onclick=()=>h.navigate(path==='/announcement'?'/profile':'/announcement');
+  root.querySelector('[data-announcement-back]').onclick=()=>returnFromAnnouncement(path,h);
  }else if(path==='/profile'){
   const root=mountShell(`${header('MY',true)}<div class="profile-content"><section class="profile-card"><a href="/profile/setting/personalization" class="profile-identity"><span class="shell-avatar">✱</span><div><strong>${safe(name)}</strong><small>Profile and preferences</small></div>${icon('arrow',14)}</a><div class="profile-credit">${icon('credit')}<span data-profile-balance>—</span><a href="/credit">Recharge</a></div></section><section class="profile-menu"><h2>Content Settings</h2>${row('Session Settings','/profile/setting/chat','chat')}${row('Personalization','/profile/setting/personalization','person')}${row('Favorites','/liked','heart')}${row('Manage Blocked Content','/profile/setting/block-management','shield')}</section><section class="profile-menu"><h2>Benefits</h2>${row('Claim Free Credits','/credit?creditTab=free','star')}${row('Credit History','/credit','credit')}</section><section class="profile-menu"><h2>Creator</h2>${row('My Titles','/my-title','book')}</section><section class="profile-menu"><h2>Inquiries and Notice</h2>${row('Notice','/announcement','bell')}${row('Customer Support','/profile/setting/customer-support','chat')}</section></div>${footer()}`,h,'profile');
   if(h.account?.user)h.account.api('wallet').then(wallet=>{const node=root.querySelector('[data-profile-balance]');if(node&&location.pathname==='/profile')node.textContent=Number(wallet.balance).toLocaleString();}).catch(()=>{});
@@ -53,6 +54,6 @@ export function show(path,h){
   root.querySelector('[aria-label="Sort titles"]').onchange=e=>{sort=e.target.value;draw();};const visibilitySelect=root.querySelector('[aria-label="Title visibility"]');if(visibilitySelect)visibilitySelect.onchange=e=>{visibility=e.target.value;draw();};draw();
   const create=root.querySelector('[data-community-create]');if(create)create.onclick=()=>h.navigate('/builder');
  }
- document.title=(path==='/profile'?'MY':path==='/my-title'?'My Titles':path==='/history'?'History':path==='/liked'?'Favorites':'Settings')+' · Storylove';
+ document.title=(path.startsWith('/announcement')?'Notice':path==='/profile'?'MY':path==='/my-title'?'My Titles':path==='/history'?'History':path==='/liked'?'Favorites':'Settings')+' · Storylove';
  return true;
 }

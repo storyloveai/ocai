@@ -1,5 +1,7 @@
 # OOC interface replica
 
+Latest brand/layout pass (2026-10-20): [book badges, notification navigation, smooth hero shelf and 80 original catalogue drafts](docs/verification/2026-10-20-brand-layout-catalog.md). [Batch content and image-job instructions](content/original-catalog/README.md). Cover generation and live catalogue replacement are pending the user’s image API.
+
 Three Kingdoms update (2026-10-20): [team branch comparison and v2.0 campaign integration](sanguo/SOURCE.md). The default play route now follows Ziheng across eight chapters; the classic three chapters and their saves remain available. Website build and 94 regression checks pass; upstream static checks and 5,000 random runs pass.
 
 Latest maintenance: [dialogs, AI authoring and creator interactions](docs/verification/2026-10-20-dialogs-authoring-community.md).
