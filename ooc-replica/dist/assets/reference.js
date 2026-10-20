@@ -1,3 +1,4 @@
+import {updateShelf} from './hero-shelf.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
 import {bindCarousels} from './carousels.js';
@@ -9,13 +10,15 @@ import {openTitlePreview,closeTitlePreview} from './title-preview.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
+const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
+const layoutReady=new Promise((resolve,reject)=>{layoutStyle.onload=resolve;layoutStyle.onerror=()=>reject(new Error('Brand stylesheet could not load'));});
 const stylesheetReady=new Promise((resolve,reject)=>{style.onload=resolve;style.onerror=()=>reject(new Error('Reference stylesheet could not load'));});
-document.head.append(style);
+document.head.append(style,layoutStyle);
 const [evidence, coreAssets, titlePreviews] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
   fetch('/assets/core-assets-index.json').then(r => r.json()),
   fetch('/assets/title-previews.json').then(r=>r.ok?r.json():{titles:{}}).catch(()=>({titles:{}})),
-  stylesheetReady
+  stylesheetReady,layoutReady
 ]);
 const assets={...coreAssets};
 const host = document.createElement('div');
@@ -64,6 +67,7 @@ const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.author,d.description,d
 for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 
 function hydrate() {
+  paintBrand(host);
   all('img[data-asset]').forEach(img => {
     const local = assets[img.dataset.asset];
     if(local) img.src = local;
@@ -104,11 +108,8 @@ function updateHero(step) {
   desktop.querySelector('h1').textContent=f.title;
   desktop.querySelector('h1 + p').textContent=f.description;
   desktop.querySelector('a').href=f.href;
-  const imgs=[...desktop.querySelectorAll('img')];
-  imgs.forEach((img,i)=>{
-    const d=activeFeatures[(current+i+activeFeatures.length-1)%activeFeatures.length];img.src=source(d);img.alt=d.title;
-  });
-  const active=imgs[1]?.parentElement.querySelector('a');if(active)active.href=f.href;
+  updateShelf(desktop,activeFeatures,current,source,updateHero);
+  if(step&&!matchMedia('(prefers-reduced-motion: reduce)').matches){for(const el of desktop.querySelectorAll('h1,h1 + p'))el.animate?.([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:480,easing:'cubic-bezier(.2,.7,.2,1)'});}
   if(palettes[f.title])all('[style*="radial-gradient"]').forEach((e,i)=>e.style.color=palettes[f.title][i]);
   const mobile=q('[data-mobile-track]');
   if(mobile)mobile.style.transform=`translate3d(${-current*100}%,0,0)`;
@@ -154,7 +155,7 @@ function bindHome(page) {
   if(activeFeatures.length){
     updateHero(0);
     if(!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
-      if(!document.hidden&&!document.querySelector('#modal').open)updateHero(1);
+      if(!document.hidden&&!document.querySelector('#modal').open&&!q('[data-hero-desktop]')?.matches(':hover,:focus-within'))updateHero(1);
     },6500);
   }
   // The captured mobile carousel retains its six original slides.
@@ -162,7 +163,7 @@ function bindHome(page) {
   const mobileTrack=mobileHeading?.parentElement?.parentElement?.parentElement;
   if(mobileTrack&&mobileTrack.children.length===activeFeatures.length){
     mobileTrack.dataset.mobileTrack='';
-    mobileTrack.style.transition='transform 500ms ease';
+    mobileTrack.style.transition='transform 650ms cubic-bezier(.22,.68,.15,1)';mobileTrack.style.transform=`translate3d(${-current*100}%,0,0)`;
     let start;
     mobileTrack.addEventListener('touchstart',e=>start=e.touches[0].clientX,{passive:true});
     mobileTrack.addEventListener('touchend',e=>{if(start!==undefined&&Math.abs(e.changedTouches[0].clientX-start)>35)updateHero(e.changedTouches[0].clientX<start?1:-1);},{passive:true});

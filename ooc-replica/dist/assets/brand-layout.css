@@ -1,0 +1,18 @@
+/* StoryDate brand details and persistent hero shelf. */
+.storydate-original-badge{width:auto;height:14px;object-fit:contain}
+[data-shell-notifications] span{font-size:14px!important;line-height:21px!important;font-weight:400!important}
+[data-shell-notifications]{cursor:pointer}
+[data-announcement-back]{width:44px;min-width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center}
+[data-announcement-back] svg{width:22px;height:22px;transform:rotate(180deg)}
+.storydate-shelf{isolation:isolate;touch-action:pan-y;perspective:900px}
+.storydate-shelf-card{position:absolute;left:0;top:0;display:block;width:160px;height:240px;border-radius:8px;overflow:hidden;box-shadow:0 12px 28px #0005;transform-origin:center;transition:transform 650ms cubic-bezier(.22,.68,.15,1),opacity 650ms ease,filter 650ms ease;will-change:transform,opacity;transform:translateX(calc(var(--shelf-x,25px) + var(--shelf-drag,0px))) scale(var(--shelf-scale,1));opacity:var(--shelf-opacity,1);z-index:var(--shelf-z,1);filter:brightness(var(--shelf-light,1));user-select:none;-webkit-user-drag:none}
+.storydate-shelf-card img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.storydate-shelf-card:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,#0003);pointer-events:none}
+.storydate-shelf-card[data-shelf-position="0"]{--shelf-x:25px;--shelf-scale:1;--shelf-opacity:1;--shelf-z:4;--shelf-light:1}
+.storydate-shelf-card[data-shelf-position="-1"]{--shelf-x:0px;--shelf-scale:.9;--shelf-opacity:.35;--shelf-z:2;--shelf-light:.7;pointer-events:none}
+.storydate-shelf-card[data-shelf-position="1"]{--shelf-x:66px;--shelf-scale:.9;--shelf-opacity:.35;--shelf-z:2;--shelf-light:.7;pointer-events:none}
+.storydate-shelf-card[data-shelf-position="-2"],.storydate-shelf-card[data-shelf-position="-3"]{--shelf-x:-50px;--shelf-scale:.8;--shelf-opacity:0;--shelf-z:0;pointer-events:none}
+.storydate-shelf-card[data-shelf-position="2"],.storydate-shelf-card[data-shelf-position="3"]{--shelf-x:112px;--shelf-scale:.8;--shelf-opacity:0;--shelf-z:0;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.storydate-shelf-card,[data-mobile-track]{transition:none!important}}
+
+.storydate-shelf.is-dragging .storydate-shelf-card{transition:none}
