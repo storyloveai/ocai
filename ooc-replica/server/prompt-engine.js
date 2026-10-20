@@ -1,10 +1,12 @@
 import {authorPrompt} from './author-prompt.js';
+import {suggestionPrompt} from './suggestion-prompt.js';
 import {CORE,CHARACTER_STYLE,STORY_STYLE,LENGTHS,PROMPT_VERSION} from './prompts.js';
 import {roleFor} from './roles.js';
 export {PROMPT_VERSION};
 const text=(value,max)=>typeof value==='string'?value.slice(0,max):'';
 export function buildPrompt(body){
  if(body?.task==='author')return authorPrompt(body);
+ if(body?.task==='suggestions')return suggestionPrompt(body);
  if(!body||typeof body!=='object'||Array.isArray(body))throw new Error('Invalid request');
  const role=roleFor(text(body.titleId,64));
  if(!Array.isArray(body.messages)||body.messages.length===0||body.messages.length>80)throw new Error('Invalid conversation');
