@@ -1,7 +1,12 @@
 # 三国·谋士 · 卷一 · 许都至赤壁
 nodes 41, chapters 8, echoes 31, debts 4
 
-## static: 0 errors, 0 warnings
+## static: 0 errors, 5 warnings
+  warn  art scene citywall: no replacement prompt
+  warn  art scene temple: no replacement prompt
+  warn  art scene bigriver: no replacement prompt
+  warn  art scene mourning: no replacement prompt
+  warn  art scene ravine: no replacement prompt
 
 ## simulate: 5000 random players
 avg scenes per run 14.6, distinct ending combinations 1701

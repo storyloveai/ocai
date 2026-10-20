@@ -9,7 +9,8 @@ const v = CC.validate(camp);
 const ART = require("../engine/art.js");
 for (const n of Object.values(camp.nodes)) if (n.art && !ART.scenes.includes(n.art.scene)) v.errors.push(`${n.id}: unknown art scene ${n.art.scene}`);
 for (const sc of ART.scenes) if (!(camp.art_prompts || {})[sc]) v.warnings.push(`art scene ${sc}: no replacement prompt`);
-for (const n of Object.values(camp.nodes)) { if (n.place && !ART.places.includes(n.place)) v.errors.push(`${n.id}: unknown place ${n.place}`); n.choices.forEach(c => { if (c.place && !ART.places.includes(c.place)) v.errors.push(`${n.id}.${c.id}: unknown place ${c.place}`); }); }
+const PLACES = camp.places ? Object.keys(camp.places) : ART.places;
+for (const n of Object.values(camp.nodes)) { if (n.place && !PLACES.includes(n.place)) v.errors.push(`${n.id}: unknown place ${n.place}`); n.choices.forEach(c => { if (c.place && !PLACES.includes(c.place)) v.errors.push(`${n.id}.${c.id}: unknown place ${c.place}`); }); }
 const PORTRAIT = require("../engine/portraits.js");
 for (const n of Object.values(camp.nodes)) (n.cast || []).forEach(c => { if (!PORTRAIT.ids.includes(c.id)) v.errors.push(`${n.id}: cast has no portrait for ${c.id}`); });
 for (const n of Object.values(camp.nodes)) if (n.talk) n.talk.topics.forEach(t => { if (t.mood && !PORTRAIT.moods.includes(t.mood)) v.errors.push(`${n.id}.${t.id}: unknown mood ${t.mood}`); });
@@ -34,7 +35,10 @@ for (const id of Object.keys(camp.echoes)) console.log(`  ${id}: ${S.echoReg[id]
 console.log("\ndebts:", JSON.stringify(S.debtModes));
 console.log("\nside offers (times offered):", JSON.stringify(S.offered));
 // archetype players: does each kind of player reach the ending they are playing for?
-const GOALS = {
+const GOALS = camp.id === "sanguo_strategist_v2" ? {
+  romance: [["g_wenzhi", ["child", "west", "jingzhou"]]], loyal: [["g_lord", ["high", "mid"]], ["g_name", ["loyal"]]],
+  schemer: [["g_name", ["cunning"]]], seer: [["g_name", ["uncanny"]]], provoker: [["g_name", ["rash"]]],
+} : {
   romance: [["g_wenzhi", ["married", "with_you", "together", "cao_saved"]], ["g_wenzhi", ["married", "with_you", "together", "cao_saved", "safe"]]],
   loyal: [["g_lord", ["liu_high"]], ["g_name", ["loyal"]]],
   schemer: [["g_side", ["cao"]], ["g_lord", ["cao_high"]], ["g_name", ["cunning"]]],

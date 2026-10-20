@@ -49,14 +49,32 @@
   function rng(seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s >>>= 0; s ^= s >> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; }
   CC.rng = rng;
 
-  CC.newGame = function (camp) {
+  /* A volume can start from where the previous one ended (carry = that volume's final state), or from a preset
+   * (carry = { v: {...} } describing a typical earlier playthrough). Variables with the same name carry over,
+   * except per-scene ones (heat.*) and narrative debts, which belong to their own volume. People also remember
+   * what was said (mem) and promises still open stay open. */
+  CC.carryable = (camp, name) => !!camp.vars[name] && camp.vars[name].carry !== false && !name.startsWith("heat.") && !name.startsWith("debt.") && name !== "ended_early";
+  CC.newGame = function (camp, carry) {
     const v = {};
     for (const [k, d] of Object.entries(camp.vars)) v[k] = d.init;
     for (const id of Object.keys(camp.debts)) v["debt." + id] = "none";
-    const st = { v, ch: -1, phase: "start", cur: null, offer: [], lastOrder: -1, ledger: [], log: [], echoes: {}, seq: 0, done: [] };
+    const st = { v, vol: camp.id, ch: -1, phase: "start", cur: null, offer: [], lastOrder: -1, ledger: [], log: [], echoes: {}, seq: 0, done: [] };
+    if (carry && carry.v) {
+      const e = ledgerPush(st, { kind: "carry", node: null, choice: null, from: carry.vol || null, preset: carry.preset || null, changes: [], debts: [], echo: [] });
+      for (const [k, val] of Object.entries(carry.v)) {
+        if (!CC.carryable(camp, k) || val === undefined || val === v[k]) continue;
+        e.changes.push({ var: k, from: v[k], to: val }); v[k] = val;
+      }
+      if (carry.mem) st.mem = JSON.parse(JSON.stringify(carry.mem));
+      if (carry.commits) st.commits = carry.commits.filter(k => k.status === "open").map(k => Object.assign({}, k, { prev: true }));
+      if (carry.said) st.said = carry.said.slice();
+      st.log.push({ k: "carry", from: carry.vol || null, preset: carry.preset || null, seq: e.seq });
+    }
     enterChapter(camp, st, 0);
     return st;
   };
+  // what a finished volume hands to the next one
+  CC.carryOut = st => ({ vol: st.vol, v: Object.assign({}, st.v, st.v.ended_early ? { "prev.ended_early": true } : {}), ended_early: !!st.v.ended_early, mem: st.mem || {}, commits: st.commits || [], said: st.said || [] });
   CC.clone = st => JSON.parse(JSON.stringify(st));
 
   function chapterOf(camp, st) { return camp.chapters[st.ch]; }
@@ -566,6 +584,7 @@
     }
     for (const ch of camp.chapters) if (!nodesIn(camp, ch.id, "main").length) E(`chapter ${ch.id}: no main node`);
     Object.keys(camp.vars).filter(v => v.startsWith("imp.") || v.startsWith("heat.") || v === "renown.rash").forEach(v => writes.add(v)); // written by free speech (CC.speak)
+    if (camp.prev) Object.keys(camp.vars).filter(v => camp.vars[v].carry !== false && !v.startsWith("heat.")).forEach(v => writes.add(v)); // may arrive from the previous volume
     for (const [cid, ch] of Object.entries(camp.chars)) if (ch.heat) { if (!camp.vars["heat." + cid]) E(`char ${cid}: heat table but no heat.${cid} var`); else if (ch.heat.line) reads.add("heat." + cid); }
     (camp.flash || []).forEach((f, i) => { const fn = camp.nodes[f.node]; if (!fn || fn.kind !== "flash") E(`flash[${i}]: node ${f.node} missing or not a flash node`); if (!camp.chars[f.char] || !(camp.chars[f.char].heat || {}).line) E(`flash[${i}]: ${f.char} has no heat line`); (f.nodes || []).concat(f.except || []).forEach(x => { if (!camp.nodes[x]) E(`flash[${i}]: unknown node ${x}`); }); });
     (camp.witness || []).forEach((w, i) => { if (!camp.chars[w.who] || !camp.chars[w.to]) E(`witness[${i}]: unknown character`); w.effects.forEach(ef => { const v = ef.set || ef.add; if (!varOk(v)) E(`witness[${i}]: unknown var ${v}`); writes.add(v); }); });
@@ -638,7 +657,8 @@
     return ["choose", scored.sort((a, b) => b[1] - a[1])[0][0]];
   }
   CC.playPolicy = function (camp, r, w) {
-    const st = CC.newGame(camp); let guard = 0;
+    const presets = camp.presets || [], pol = Object.keys(CC.policies).find(k => CC.policies[k] === w), pr = presets.find(p => p.id === pol) || (presets.length ? presets[Math.floor(r() * presets.length)] : null);
+    const st = CC.newGame(camp, pr ? Object.assign({}, pr.carry, { preset: pr.id }) : null); let guard = 0;
     while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
     return st;
   };
@@ -646,8 +666,11 @@
     const r = rng(seed); const w = policy && CC.policies[policy];
     const S = { runs, policy: policy || "random", topics: {}, speech: {}, answers: {}, flares: {}, provokedReward: {}, early: {}, nodes: {}, choiceSeen: {}, choiceOpen: {}, choicePick: {}, frags: {}, combos: new Set(), echoReg: {}, echoPaid: {}, debtsLeft: {}, debtModes: {}, track: {}, deviation: {}, uncanny: {}, length: 0, offered: {} };
     const inc = (o, k, n = 1) => { o[k] = (o[k] || 0) + n; };
+    const presets = camp.presets || [];
     for (let i = 0; i < runs; i++) {
-      const st = CC.newGame(camp);
+      // a later volume is played from earlier endings: most simulated runs start from a preset backstory
+      const pr = presets.length && r() < .85 ? (presets.find(p => p.id === policy) || presets[Math.floor(r() * presets.length)]) : null;
+      const st = CC.newGame(camp, pr ? Object.assign({}, pr.carry, { preset: pr.id }) : null);
       let guard = 0;
       let lastNode = null;
       while (st.phase !== "end" && guard++ < 800) {

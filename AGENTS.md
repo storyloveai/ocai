@@ -5,7 +5,7 @@
 | 区域 | 内容 | 负责人（GitHub） | 先读 |
 |---|---|---|---|
 | 网站 | `src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/` | 兰馨（@allliiita / @Lindsey-cyber） | `README.md`、`docs/STORYLOVE-SETUP.md`、`docs/HANDOFF.md` |
-| 互动小说玩法 | `game/`（目前只有 `game/sanguo/`：三国·谋士 卷一） | zhouzeya（@zhouzeya） | `game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
+| 互动小说玩法 | `game/`（目前只有 `game/sanguo/`：三国·谋士，卷一、卷二已完成） | zhouzeya（@zhouzeya） | `game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
 
 ## 协作流程
 
@@ -19,11 +19,12 @@
 ```
 cd game/sanguo
 python3 content/campaign.py              # 内容 → content/campaign.json
-python3 tools/build.py                   # → web/index.html（独立页面）
-node tools/check.js content/campaign.json 5000   # 静态校验 + 模拟玩家，必须 PASS
+python3 tools/build.py                   # 生成各卷内容和卷二的“前情”，并打包成 web/index.html（整本书一个页面）
+node tools/check.js content/campaign.json 5000         # 卷一：静态校验 + 模拟玩家，必须 PASS
+node tools/check.js content/v2/campaign_v2.json 5000   # 卷二，同上
 ```
 
-- 改了内容或引擎，要把重新生成的 `content/campaign.json` 和 `web/index.html` 一起提交。网站构建不需要 Python。
+- 改了内容或引擎，要把重新生成的 `content/campaign.json`、`content/v2/campaign_v2.json`、`content/v2/presets.json` 和 `web/index.html` 一起提交。网站构建不需要 Python。
 - PR 改到 `game/**` 时，GitHub Actions（`.github/workflows/game-check.yml`）会自动跑上面这三步，并检查提交的生成文件是不是最新的。
 - 内容规矩以 `game/sanguo/README.md` 的“写内容的规矩”为准。最重要的几条：
   - 中英双语都要写；

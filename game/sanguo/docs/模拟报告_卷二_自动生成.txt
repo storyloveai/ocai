@@ -1,0 +1,69 @@
+# 三国·谋士 · 卷二 · 荆州与西川
+nodes 27, chapters 8, echoes 22, debts 3
+
+## static: 0 errors, 0 warnings
+
+## simulate: 5000 random players
+avg scenes per run 12.9, distinct ending combinations 3296
+track: liu 95.5%, cao 4.5%
+deviation: 0:20.3% 1:37.0% 2:20.9% 3:12.8% 4:6.5% 5:2.0% 6:0.2% 7:0.2%
+uncanny: 0:13.5% 1:13.4% 2:16.1% 3:11.6% 4:19.2% 5:6.1% 6:2.2% 7:2.0% 8:3.0% 9:8.6% 10:4.4%
+
+ending fragments:
+  去处: hermit 8.9% · north 4.5% · exposed 8.1% · left 6.3% · jingzhou 23.0% · chengdu 24.5% · none 24.7%
+  主公: high 57.0% · mid 12.0% · low 3.2% · cao_high 4.5% · cao 0.0%
+  周瑜: lives 0.8% · esteem 16.9% · rival 26.1% · plain 30.9%
+  庞统: alive 22.2% · words 26.1% · dead 25.3%
+  孙夫人: parted 2.0% · letter 17.0% · cold 31.9% · plain 21.7%
+  温芷: child 5.5% · west 5.8% · jingzhou 5.1% · north 0.0% · together 0.0% · used 0.0% · far 83.7%
+  因你而不同的人: weiyan 24.6% · zhaoyun 22.7% · zhangsong 36.1% · tongguan 4.7% · defected 4.9% · owes 32.6% · lusu 22.7% · guan 33.0%
+  名声: uncanny 45.5% · rash 8.2% · loyal 23.1% · cunning 20.5% · none 2.8%
+  天下: far 2.4% · near 97.6%
+
+echoes (registered → paid):
+  e_nanjun: 1321 → 1269
+  e_yield: 1224 → 1138
+  e_warned_zy: 1265 → 1162
+  e_wz_zhou: 264 → 264
+  e_lusu: 1135 → 1075
+  e_weiyan: 2408 → 2378
+  e_zy: 1819 → 1803
+  e_ganlu: 1207 → 1207
+  e_rear: 1226 → 1226
+  e_left_sun: 1177 → 1176
+  e_pt: 1777 → 1777
+  e_pt_vouch: 1775 → 1775
+  e_zs: 1789 → 1789
+  e_adou: 1863 → 1824
+  e_wz_road: 816 → 816
+  e_luofeng: 2413 → 2343
+  e_liuqi: 1127 → 1057
+  e_tongque: 472 → 472
+  e_zy_lives: 41 → 41
+  e_cloak: 234 → 234
+  e_defect: 245 → 245
+  e_cao_stay: 472 → 472
+
+debts: {"d_base:reroute":1138,"d_phoenix:reroute":1045,"d_phoenix:open":65,"d_base:open":86,"d_zhouyu:transform":41}
+
+side offers (times offered): {"c1_lusu":3810,"c2_guiyang":3600,"c4_leiyang":3569,"c1_wound":816,"c6_wenzhi":816}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:child|west|jingzhou 86% · early end 0% · scenes 16.9
+  loyal    g_lord:high|mid 100% · g_name:loyal 100% · early end 0% · scenes 16.0
+  schemer  g_name:cunning 100% · early end 0% · scenes 11.8
+  seer     g_name:uncanny 100% · early end 0% · scenes 17.0
+  provoker g_name:rash 46% · early end 0% · scenes 19.5
+    on-the-spot breaks (scene:kind:who): {"c5_zhangsong:walkout:zhangsong":1000,"c6_river:walkout:sunfuren":1000,"c6_pangtong:walkout:pangtong":1000,"c7_guanyu:walkout:guanyu":1000,"c1_nanjun:flash:zhouyu":929,"c2_zhaoyun:walkout:zhaoyun":929,"c3_flight:walkout:sunfuren":929,"c4_death:flash:zhouyu":929,"x_north:walkout:caocao":155,"c1_cao:walkout:caocao":71,"c4_tongque:walkout:caocao":71,"c5_tongguan:walkout:caocao":71}
+
+talk topics taken (random): {"c2_zhaoyun.east":1572,"c2_zhaoyun.changban":1580,"c7_guanyu.wu":1625,"c7_guanyu.huarong":1644,"c6_pangtong.road":1598,"c6_pangtong.kongming":1635,"c6_pangtong.face":1684,"c7_guanyu.brother":1650,"c2_zhaoyun.lord":1538}
+early endings (random): {"x_return":447,"x_uncanny":404,"x_cold":313,"c5_zhangsong":227}
+
+## findings (5)
+  WARN choice c4_mourn.old never available
+  WARN ending g_lord.cao never reached
+  WARN ending g_wenzhi.north never reached
+  WARN ending g_wenzhi.together never reached
+  WARN ending g_wenzhi.used never reached
+
+PASS: no blocking issues

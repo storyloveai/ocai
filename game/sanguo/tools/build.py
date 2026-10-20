@@ -3,14 +3,19 @@
 import json, pathlib, subprocess, sys
 R = pathlib.Path(__file__).resolve().parents[1]
 subprocess.run([sys.executable, str(R / "content/campaign.py")], check=True, stdout=subprocess.DEVNULL)
-camp = json.loads((R / "content/campaign.json").read_text())
+if (R / "content/v2/campaign_v2.py").exists():
+    subprocess.run(["node", str(R / "tools/presets.js"), str(R / "content/campaign.json"), str(R / "content/v2/presets.json")], check=True, stdout=subprocess.DEVNULL)
+    subprocess.run([sys.executable, str(R / "content/v2/campaign_v2.py")], check=True, stdout=subprocess.DEVNULL)
+sys.path.insert(0, str(R / "content"))
+import book
+camp = book.load()
 engine = (R / "engine/campaign_core.js").read_text()
 art = (R / "engine/art.js").read_text() + "\n" + (R / "engine/portraits.js").read_text()
 assert "</script" not in art
 src = (R / "app/play.src.html").read_text()
 assert "</script" not in engine
 data = json.dumps(camp, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-out = src.replace("/*__CAMP__*/null", data).replace("/*__ENGINE__*/", engine).replace("/*__ART__*/", art)
+out = src.replace("/*__BOOK__*/null", data).replace("/*__ENGINE__*/", engine).replace("/*__ART__*/", art)
 (R / "dist").mkdir(exist_ok=True)
 (R / "dist/index.html").write_text(out)
 # a full document for standalone hosting (the artifact host adds its own skeleton)
