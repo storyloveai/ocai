@@ -15,10 +15,12 @@ function replyValid(value,lang){
  if(lang==='zh'?(text.length>140||!/[\u4e00-\u9fff]/.test(text)):(text.split(/\s+/).length>80||/[\u4e00-\u9fff]/.test(text)))return null;
  return CC.futureTerms(CAMP,G.ch).some(x=>text.includes(x.zh)||text.toLowerCase().includes(x.en.toLowerCase()))?null:text;
 }
+const nearBottom=()=>document.documentElement.scrollHeight-(window.scrollY+window.innerHeight)<180;
 function siteLive(){
+ const follow=nearBottom();
  let live=$('#site-live');if(live)return live;
  live=h('section',{id:'site-live',class:'site-live','aria-label':settings.lang==='zh'?'正在回复':'Reply in progress'},h('small',{},settings.lang==='zh'?'正在理解你的话……':'Reading your words…'),h('p',{}),h('button',{type:'button','data-site-stop':'',onclick:()=>{if(siteTurn){siteTurn.cancelled=true;siteTurn.controller.abort();}}},settings.lang==='zh'?'停止':'Stop'));
- const act=$('#act');if(act)act.after(live);else $('#story').append(live);return live;
+ const act=$('#act');if(act)act.after(live);else $('#story').append(live);if(follow)live.scrollIntoView({block:'nearest'});return live;
 }
 async function siteSample(task,text,n,target,lang){
  const turn=siteTurn,signal=turn?.controller.signal;
@@ -34,7 +36,7 @@ async function siteSample(task,text,n,target,lang){
    try{while(true){const part=await reader.read();if(part.done)break;buffer+=decoder.decode(part.value,{stream:true});let nl;while((nl=buffer.indexOf('\n'))>=0){const raw=buffer.slice(0,nl);buffer=buffer.slice(nl+1);if(raw.trim()){const delta=event(JSON.parse(raw));if(delta)yield delta;}}}buffer+=decoder.decode();if(buffer.trim()){const delta=event(JSON.parse(buffer));if(delta)yield delta;}if(!final)throw Error('Incomplete stream');}
    finally{await reader.cancel().catch(()=>{});reader.releaseLock();}
   }
-  if(sitePacer&&!reduced())await sitePacer(chunks(),{signal,onState:state=>{if(state==='streaming')live.querySelector('small').textContent=lang==='zh'?'正在回复……':'Replying…';},onText:value=>{line.textContent=value;}});
+  if(sitePacer&&!reduced())await sitePacer(chunks(),{signal,onState:state=>{if(state==='streaming')live.querySelector('small').textContent=lang==='zh'?'正在回复……':'Replying…';},onText:value=>{const follow=nearBottom();line.textContent=value;if(follow)live.scrollIntoView({block:'end'});}});
   else for await(const chunk of chunks())line.textContent+=chunk;
   if(signal?.aborted)throw new DOMException('Stopped','AbortError');
   if(final?.reply&&!replyValid(final.reply,lang))throw Error('Invalid narrative');

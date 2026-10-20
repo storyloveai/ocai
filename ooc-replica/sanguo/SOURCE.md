@@ -2,7 +2,7 @@
 
 Upstream: `storyloveai/ocai`, `game/sanguo-v2.0` at `1b3ba1bc6cc0b84324b03db675862b6826af119d` (2026-10-20 integration).
 
-`game/sanguo/` is imported verbatim from that commit. Its content, engine, art and published page remain owned by the gameplay team. Website builds consume only the contract's published `web/index.html`, `content/campaign.json` and `engine/campaign_core.js`.
+`game/sanguo/` is imported verbatim from that commit. Its content, engine, art and published page remain owned by the gameplay team. The contract’s three files are packaged verbatim in `sanguo/upstream/`, with identical Git blob SHAs, because Vercel isolates the `ooc-replica/` root. Website builds consume only the contract's published `web/index.html`, `content/campaign.json` and `engine/campaign_core.js`.
 
 ## Branch comparison
 
@@ -21,6 +21,6 @@ Upstream: `storyloveai/ocai`, `game/sanguo-v2.0` at `1b3ba1bc6cc0b84324b03db6758
 
 ## Update and verification
 
-After updating the untouched upstream folder, run `npm run build && npm run check` in `ooc-replica/` and `node tools/check.js content/campaign.json 5000` in `game/sanguo/`. No Python runs in the website build. API-generated companion data/core files are build outputs; never edit them manually. No credentials are added or changed by this integration.
+After updating the untouched upstream folder, copy its three contract files into `sanguo/upstream/` and verify their blob SHAs, then run `npm run build && npm run check` in `ooc-replica/` and `node tools/check.js content/campaign.json 5000` in `game/sanguo/`. No Python runs in the website build. API-generated companion data/core files are build outputs; never edit them manually. No credentials are added or changed by this integration.
 
 Gameplay review: zhouzeya. Website review: allliiita / Lindsey-cyber. Integration changes stay in `ooc-replica/`; no upstream gameplay interface change is required.

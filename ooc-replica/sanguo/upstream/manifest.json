@@ -1,0 +1,8 @@
+{
+  "commit": "1b3ba1bc6cc0b84324b03db675862b6826af119d",
+  "blobs": {
+    "index.html": "9fcf1004e2173152b49d96e1eb579b45a8467b84",
+    "campaign.json": "9bb32b30264b212fb7e2ae01b562d3effc6b066e",
+    "campaign_core.js": "8a6970d6ffd46a1409034001a1f80e2e8c12763c"
+  }
+}
