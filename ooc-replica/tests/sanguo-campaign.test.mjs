@@ -29,7 +29,7 @@ test('embedded v2 waits for a trusted snapshot, starts, saves, keeps sidebar tab
  const p=await page();assert.equal(p.sent[0].type,'sg2-ready');assert.equal(p.document.querySelector('.hero'),null);p.init('https://evil.example');assert.equal(p.document.querySelector('.hero'),null);p.init();await tick();
  assert.ok(p.document.querySelector('.hero'));assert.ok(!p.document.querySelector('button[aria-pressed="true"]')?.textContent.includes('创作者'));
  p.click(p.document.querySelector('.hero .btn'));p.click(p.document.querySelector('.offer button'));p.click(p.document.querySelector('.choice:not([disabled])'));await tick();assert.ok(p.sent.some(m=>m.key==='campaign.save'));assert.ok(p.document.querySelector('#act input'));
- const story=p.document.querySelector('#story').innerHTML;p.click([...p.document.querySelectorAll('[role=tab]')].find(e=>e.textContent==='舆图'));assert.equal(p.document.querySelector('#story').innerHTML,story);assert.ok(p.document.querySelector('#panel svg'));
+ let restoredScroll=null;p.window.scrollY=250;p.window.scrollTo=pos=>{restoredScroll=pos.top;};const story=p.document.querySelector('#story').innerHTML;p.click([...p.document.querySelectorAll('[role=tab]')].find(e=>e.textContent==='舆图'));assert.equal(p.document.querySelector('#story').innerHTML,story);assert.ok(p.document.querySelector('#panel svg'));assert.equal(restoredScroll,250);
  const state=p.sent.findLast(m=>m.key==='campaign.save').value;
  const r=await page({snapshot:{'campaign.save':state}});r.init();await tick();assert.ok(!r.document.querySelector('.hero'));assert.ok(r.document.querySelector('#story').textContent.includes('许都'));
 });
