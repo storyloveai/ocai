@@ -61,6 +61,11 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .btn.ghost { background: none; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--line) }
 .btn.small { padding: 8px 14px; font-size: 14px }
 .hero .oldsave { background: var(--lamp-soft); border-left: 3px solid var(--accent); padding: 10px 14px; border-radius: 0 8px 8px 0; font: 14px/1.6 var(--sans) !important }
+.ask { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--lamp); border-radius: 0 12px 12px 0; padding: 14px 16px; margin: 10px 0 }
+.answered { margin: 12px 0 }
+.recap { margin: 28px 0 8px; padding: 14px 16px; border: 1px dashed var(--line); border-radius: 12px; font-size: 14px }
+.recap ul { margin: 8px 0 0; padding-left: 18px; color: var(--muted); display: grid; gap: 4px }
+.recap .chips { margin-top: 8px }
 .free.sealed input { opacity: .55; cursor: not-allowed }
 .flare { margin: 14px 0; padding: 10px 14px; border-left: 3px solid var(--rose); background: color-mix(in srgb, var(--rose) 8%, transparent); border-radius: 0 10px 10px 0; color: var(--rose) }
 .news { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 14px 18px; margin: 0 0 24px; max-width: 40em; font-size: 14px }
@@ -262,17 +267,16 @@ const CAMP = /*__CAMP__*/null;
 </script>
 <script>
 "use strict";
-const BUILD = "strategist-v1.9.1";
+const BUILD = "strategist-v2.0";
 const UI = {
   zh: {
     title: "三国·谋士", start: "开始",
     oldSave: "你上次的进度来自旧版本，这一版的新内容要从头玩才看得到，所以已经为你重新开始。",
-    newsH: "v1.9 新增：话说重了，当场就有后果（从头玩才会遇到）",
-    news: [["当场发作：", "在曹操的地盘上顶撞他两次，他不会等到下一章。煮酒那一席当场翻脸：挨棍子、连累刘备、被关进大牢，或者靠一句妙语脱身。"],
-           ["每个人脾气不同：", "曹操两次就发作；关羽、刘备、温芷三次就不再理你；诸葛亮最沉得住气。关系变化里会显示这一场的“火气”。"],
-           ["在场的人都听得见：", "当着刘备的面挑衅曹操，刘备的信任也会掉。"],
-           ["气头上不领情：", "刚被你顶撞过的人，这一场的选项不会再让他对你加分；你先说过的话，也会改变选项的结果。"],
-           ["说完了就该做决定：", "说话额度用完后，不会再有“只回话、不算数”的对话，只能说你要怎么做。"]], cont: "继续", restart: "重新开始", restartSure: "确定重新开始？", cancel: "取消",
+    newsH: "v2.0 新增：有些问题，只能用你自己的话回答（从头玩才会遇到）",
+    news: [["他们会问你：", "煮酒时曹操问你谁是天下英雄，三顾茅庐时诸葛亮问刘备凭什么取天下，江边温芷问你仗打完想去哪。没有选项，只能自己打字回答；你说的话决定接下来发生什么。"],
+           ["闯了祸也能接着玩：", "在梅园顶撞曹操到底，你会被关进大牢，但卷一不会就此结束：等、托温芷想办法，或者上书认错，出来后再去追刘备。"],
+           ["每章小结：", "新的一章开始前，会列出上一章你改变了什么：谁对你的看法变了，埋下了几处伏笔，还欠着什么。"],
+           ["关羽会替你出头：", "在曹营里顶撞曹操，关羽会站出来：要罚，连他一起罚。"]], cont: "继续", restart: "重新开始", restartSure: "确定重新开始？", cancel: "取消",
     premise: ["建安四年，许都。天下还没有三分，曹操挟天子以令诸侯，刘备寄人篱下，在后园种菜。", "你是一个原创人物：颍川来的年轻谋士子衡。你不是名将，也不是主公。你能做的，是献策、荐人、结交、站队，以及在别人的名场面里插一句话。"],
     how: [["名场面是节点，不是剧本。", "煮酒论英雄、土山约三事、三顾茅庐、华容道——你在场，但不是主角。原著的大事照样发生，发生的方式、谁付出代价、谁欠谁的情，由你决定。"],
           ["前面的选择会在后面回响。", "你在第一章做的事，可能在第八章被人提起。标着「回响」的段落，会告诉你是因为哪一步。"],
@@ -292,13 +296,13 @@ const UI = {
     artChanged: "画面随你的选择变了", youTo: w => `你对${w}说`, commitNote: (w, x) => `承诺已记下：你答应了${w}「${x}」。后面的剧情会记着。`,
     unlockedNote: x => `因为你刚才的话，${x} 现在可以选了。`, closedNote: x => `因为你刚才的话，${x} 选不了了。`, commitKept: "承诺·兑现", commitBroken: "承诺·落空", commitWas: x => `你说过「${x}」`,
     recallL: "记得", recallPromise: (w, x) => `${w}看着你：『你答应过我——“${x}”。』`, recallLove: w => `${w}的目光在你身上停了一下，像是想起了你上回说的话。`, recallRude: w => `${w}淡淡地看了你一眼。你上回那句话，显然还没忘。`,
-    youSaid: (w, x) => `你在「${w}」说过「${x}」`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
+    youSaid: (w, x) => `你在「${w}」说过「${x}」`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", askHint: "这个问题没有选项。用你自己的话回答——说什么，决定接下来发生什么。", askPh: "用你自己的话回答……", youAns: "你答", noAns: "（你没有回答。）", askL: "问", recapH: c => `${c}小结 · 你改变了什么`, recapEcho: n => `埋下 ${n} 处伏笔，后面会被提起`, recapDebt: x => `还欠着：${x}`, recapCommit: n => `许下 ${n} 个承诺`, benchH: "AI 试调台", benchNote: "用一组典型的话测试当前模型：语气标签、回答归类、承诺识别是否符合预期。会用掉若干次模型调用。", benchRun: "运行测试", benchRunning: "测试中……", benchNoAI: "当前没有可用的 AI（需要在 claude.ai 打开并允许调用，或接上服务端）。下面只显示关键词兜底的结果。", benchCols: ["输入", "对象", "期望", "关键词兜底", "模型", "回复"], benchSum: (a, b) => `模型与期望一致 ${a}/${b}`, sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
     gal: { title: "图鉴", runs: n => `已玩 ${n} 局`, frags: (a, b) => `结局片段 ${a}/${b}`, nodes: (a, b) => `场景 ${a}/${b}`, choices: (a, b) => `选择 ${a}/${b}`, cgs: (a, b) => `高光 ${a}/${b}`,
       ends: "结局", branches: "分支", unseenChoices: n => `还有 ${n} 个选择没试过`, allTried: "所有选择都试过了", locked: "？？？", lockedRomance: "？？？ ♥", cgH: "高光时刻", reset: "清空图鉴", resetSure: "确定清空？" },
     turns: n => `今晚还能说 ${n} 句`, turns2: (a, b) => (a ? `话题还能聊 ${a} 个 · ` : "") + `闲聊还能说 ${b} 句`, remembers: (who, where) => `${who}还记得你在「${where}」时说过的话。`, turnsOut: "夜深了，该告辞了。", topicsH: "可以聊的", talkPh: "想说什么都可以……", silent: name => `（${name}没有接这句话。）`, toneWarm: name => `（${name}没有说话，神色却缓和了些。）`, toneRude: name => `（${name}的脸色沉了下来。）`,
     crisis: "危机", endEarly: "卷一·未竟", meterUncanny: "到 3：坊间流言 · 到 4：被当作妖人", meterTrust: "降到 1 以下会被冷落", meterRegard: "降到 1 以下会被冷落",
     survey: "试玩小问卷（10 秒）", q1: "你注意到“回响”了吗？", q1o: ["注意到，喜欢", "注意到，没感觉", "没注意到"], q2: "你想再玩一次吗？", q2o: ["想，换一条路", "也许", "不想"],
-    q3: "最记得哪一刻？（可不填）", submit: "提交", thanks: "谢谢！你的回答会帮我们改进下一版。", simAs: "模拟玩家类型", pols: { random: "乱点", romance: "感情型", loyal: "忠义型", schemer: "权谋型", seer: "先知型" }, mapNote: "红线是你走过的路；亮点是你现在的位置。", artPrompt: "替换用的生图提示词", layersL: "图层",
+    q3: "最记得哪一刻？（可不填）", submit: "提交", thanks: "谢谢！你的回答会帮我们改进下一版。", simAs: "模拟玩家类型", pols: { random: "乱点", romance: "感情型", loyal: "忠义型", schemer: "权谋型", seer: "先知型", provoker: "挑衅型" }, mapNote: "红线是你走过的路；亮点是你现在的位置。", artPrompt: "替换用的生图提示词", layersL: "图层",
     renown: "名声", original: "原创人物", noEv: "还没有变化。", ledgerEmpty: "还没有记事。", missedL: "错过", entered: "进入",
     lockNames: { literal: "原文保留", functional: "作用保留", free: "自由改编" }, creator: "创作者视图",
     dir: "导演：本章候选剧情", dirCols: ["剧情", "基础", "具体度", "待回响", "得分"], offered: "已提供", notElig: "不满足条件",
@@ -311,12 +315,11 @@ const UI = {
   en: {
     title: "Three Kingdoms: The Strategist", start: "Begin",
     oldSave: "Your saved game was from an older version. The new content only appears in a fresh run, so we've started you over.",
-    newsH: "New in v1.9: harsh words have consequences on the spot (you'll meet these in a fresh run)",
-    news: [["Cao acts on the spot:", "defy him twice on his own ground and he won't wait for the next chapter. The plum-wine meeting turns on you then and there: a flogging, Liu Bei dragged in, a jail cell—or one clever line to get out."],
-           ["Everyone has a different temper:", "Cao Cao breaks at two; Guan Yu, Liu Bei and Wen Zhi stop talking to you at three; Zhuge Liang is hardest to rattle. Relationship changes now show this scene's Temper."],
-           ["Everyone present can hear you:", "bait Cao in front of Liu Bei and Liu Bei's trust drops too."],
-           ["No credit while they're angry:", "someone you've just provoked won't warm to you from that scene's choice—and what you said first can change what a choice does."],
-           ["When the talking's done, decide:", "once your lines are used up there are no more replies that count for nothing; you can only say what you'll do."]], cont: "Continue", restart: "Start over", restartSure: "Really start over?", cancel: "Cancel",
+    newsH: "New in v2.0: some questions can only be answered in your own words (you'll meet these in a fresh run)",
+    news: [["They ask you:", "at the plum-wine meeting Cao Cao asks who the realm's true hero is; at the cottage Zhuge Liang asks what Liu Bei will take the realm with; by the river Wen Zhi asks where you'll go when the war is over. There are no options—type your answer, and what you say decides what happens next."],
+           ["Trouble doesn't end the game:", "defy Cao Cao all the way in the plum garden and you go to jail, but Volume I goes on: wait it out, get word to Wen Zhi, or write and recant—then go after Liu Bei."],
+           ["Chapter recap:", "before each new chapter, a short card shows what you changed in the last one: who sees you differently, the threads you've laid down, what you still owe."],
+           ["Guan Yu stands up for you:", "defy Cao Cao in his own camp and Guan Yu rises: punish this man, and you punish me too."]], cont: "Continue", restart: "Start over", restartSure: "Really start over?", cancel: "Cancel",
     premise: ["Xuchang, 199 AD. The realm has not yet split in three. Cao Cao holds the Emperor and rules in his name; Liu Bei lives under Cao's roof, growing vegetables in the back garden.", "You are an original character: Ziheng, a young strategist from Yingchuan. You are not a famous general or a lord. What you can do is advise, recommend, befriend, take sides—and say a word in someone else's famous scene."],
     how: [["Famous scenes are moments, not scripts.", "Heroes over plum wine, the three terms on the hill, the three visits, the Huarong road—you're there, but you're not the lead. The great events still happen. How they happen, who pays, and who owes whom is up to you."],
           ["Early choices echo later.", "What you do in Chapter 1 may be brought up in Chapter 8. Passages marked Echo tell you which step caused them."],
@@ -336,13 +339,13 @@ const UI = {
     artChanged: "The picture changed with your choice", youTo: w => `You, to ${w}`, commitNote: (w, x) => `Promise noted: you told ${w} "${x}". The story will remember.`,
     unlockedNote: x => `Because of what you just said, ${x} is now open.`, closedNote: x => `Because of what you just said, ${x} is no longer possible.`, commitKept: "Promise kept", commitBroken: "Promise broken", commitWas: x => `you said "${x}"`,
     recallL: "Remembered", recallPromise: (w, x) => `${w} looks at you. "You promised me: '${x}'."`, recallLove: w => `${w}'s eyes rest on you a moment, as if remembering what you said last time.`, recallRude: w => `${w} gives you a flat look. Clearly your last words haven't been forgotten.`,
-    youSaid: (w, x) => `in "${w}" you said "${x}"`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
+    youSaid: (w, x) => `in "${w}" you said "${x}"`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", askHint: "There are no options for this. Answer in your own words—what you say decides what happens next.", askPh: "Answer in your own words…", youAns: "You answer", noAns: "(You don't answer.)", askL: "Asks", recapH: c => `${c} recap · what you changed`, recapEcho: n => `${n} thread${n > 1 ? "s" : ""} laid down—they'll come back`, recapDebt: x => `Still owed: ${x}`, recapCommit: n => `${n} promise${n > 1 ? "s" : ""} made`, benchH: "AI test bench", benchNote: "Run a set of typical lines against the current model: do tone labels, answer sorting and promise detection match what we expect? Uses several model calls.", benchRun: "Run tests", benchRunning: "Testing…", benchNoAI: "No AI available (open in claude.ai and allow it, or connect the server). Showing keyword-fallback results only.", benchCols: ["Line", "To", "Expected", "Keywords", "Model", "Reply"], benchSum: (a, b) => `Model matches expectation ${a}/${b}`, sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
     gal: { title: "Gallery", runs: n => `${n} ${n === 1 ? "run" : "runs"} played`, frags: (a, b) => `Ending pieces ${a}/${b}`, nodes: (a, b) => `Scenes ${a}/${b}`, choices: (a, b) => `Choices ${a}/${b}`, cgs: (a, b) => `Key moments ${a}/${b}`,
       ends: "Endings", branches: "Branches", unseenChoices: n => `${n} ${n === 1 ? "choice" : "choices"} not yet tried`, allTried: "Every choice tried", locked: "???", lockedRomance: "??? ♥", cgH: "Key moments", reset: "Clear gallery", resetSure: "Really clear it?" },
     turns: n => `${n} more ${n === 1 ? "line" : "lines"} tonight`, turns2: (a, b) => (a ? `${a} ${a === 1 ? "topic" : "topics"} left · ` : "") + `${b} more ${b === 1 ? "line" : "lines"} of chat`, remembers: (who, where) => `${who} remembers what you said during "${where}".`, turnsOut: "It's late. Time to say goodnight.", topicsH: "Things to talk about", talkPh: "Say whatever you like…", silent: name => `(${name} lets that pass.)`, toneWarm: name => `(${name} says nothing, but softens a little.)`, toneRude: name => `(${name}'s face darkens.)`,
     crisis: "Crisis", endEarly: "Volume I · Unfinished", meterUncanny: "3: rumors spread · 4: branded a sorcerer", meterTrust: "At 1 or below you're sidelined", meterRegard: "At 1 or below you're sidelined",
     survey: "Playtest questions (10 seconds)", q1: "Did you notice the Echoes?", q1o: ["Yes, and I liked them", "Yes, didn't care", "Didn't notice"], q2: "Would you play again?", q2o: ["Yes, a different path", "Maybe", "No"],
-    q3: "Which moment do you remember most? (optional)", submit: "Submit", thanks: "Thank you! Your answers will shape the next version.", simAs: "Simulated player type", pols: { random: "Random", romance: "Romantic", loyal: "Loyalist", schemer: "Schemer", seer: "Seer" }, mapNote: "The red line is the road you've taken; the glow is where you are now.", artPrompt: "Prompt for replacement art", layersL: "Layers",
+    q3: "Which moment do you remember most? (optional)", submit: "Submit", thanks: "Thank you! Your answers will shape the next version.", simAs: "Simulated player type", pols: { random: "Random", romance: "Romantic", loyal: "Loyalist", schemer: "Schemer", seer: "Seer", provoker: "Provoker" }, mapNote: "The red line is the road you've taken; the glow is where you are now.", artPrompt: "Prompt for replacement art", layersL: "Layers",
     renown: "Reputation", original: "original character", noEv: "No changes yet.", ledgerEmpty: "Nothing recorded yet.", missedL: "Missed", entered: "Entered",
     lockNames: { literal: "literal canon", functional: "function kept", free: "free adaptation" }, creator: "Creator view",
     dir: "Director: candidate storylets this chapter", dirCols: ["Storylet", "Base", "Specific", "Due echo", "Score"], offered: "offered", notElig: "not eligible",
@@ -441,6 +444,37 @@ function choose(id, via = "button") {
 }
 
 /* free text: the model may only map words to an existing choice, or write a reaction that changes nothing */
+// an open question: the model (or keywords) only decides which kind of answer it was; the rules settle it
+async function askAnswer(text, n, lang) {
+  const q = n.ask, who = CAMP.chars[q.who];
+  const prompt = `You are sorting a player's free-text answer in an interactive adaptation of Romance of the Three Kingdoms. The player is Ziheng, an original young strategist.
+${t(who.name)} asked: ${JSON.stringify(t(q.q))}
+Ziheng answered: ${JSON.stringify(text)}
+Which kind of answer is it? Kinds (id → meaning): ${JSON.stringify(q.answers.map(a => ({ id: a.id, means: t(a.means) })))}
+Judge what Ziheng actually means, including sarcasm, evasion and mixed answers (pick the dominant intent). If none fits, use "${q.fallback}".
+Return only {"pick":"<id>"}.`;
+  const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
+  return out && q.answers.some(a => a.id === out.pick) ? out.pick : null;
+}
+async function onAnswer(text) {
+  text = text.trim(); if (!text || V.busy || !CC.ask(CAMP, G)) return;
+  const lang = settings.lang, n = N(G.cur);
+  const terms = CC.mentionsFuture(CAMP, G, text, lang); let fs = false;
+  if (terms.length) fs = !!CC.foresight(CAMP, G, terms);
+  let pick = null, via = "matcher";
+  if (RT.sample && RT.ai !== "off") {
+    V.busy = true; renderAct();
+    try { pick = await askAnswer(text, n, lang); if (pick) via = "model"; }
+    catch (e) { const c = e && e.code; if (["not_granted", "not_declared", "capability_disabled", "sampling_disabled"].includes(c)) RT.ai = "off"; }
+    V.busy = false;
+  }
+  if (!pick) pick = CC.guessAnswer(CAMP, G, text);
+  const at = G.log.length;
+  CC.answer(CAMP, G, pick, text);
+  const le = G.log[at]; if (le && le.k === "ans" && fs) le.fs = true;
+  track("answer", { node: n.id, answer: pick, via, foresight: fs, len: text.length });
+  V.firstNew = at; save(); render(true);
+}
 async function onFree(text) {
   text = text.trim(); if (!text || V.busy || G.phase !== "node") return;
   { const n0 = N(G.cur), c0 = n0.talk ? [] : castNow(n0);
@@ -545,6 +579,7 @@ function talkHistory(nodeId, lang) {
   const n = N(nodeId), out = [];
   for (const e of G.log) {
     if (e.n !== nodeId) continue;
+    if (e.k === "ans") { out.push(`${t(CAMP.chars[n.ask.who].name)}: ${t(n.ask.q)}`, `Ziheng: ${e.said || "(no answer)"}`, `${t(CAMP.chars[n.ask.who].name)}: ${e.p.map(k => t(n.ask.answers.find(a => a.id === e.a).out[k].text)).join(" ")}`); }
     if (e.k === "say") { const tp = n.talk.topics.find(x => x.id === e.t); out.push(`Ziheng: ${t(tp.label)}`, `${t(CAMP.chars[n.talk.char].name)}: ${e.p.map(k => t(tp.reply[k].text)).join(" ")}`); }
     if (e.k === "free" && (e.talk || e.to) && !e.matched) { const sp = e.to || (n.talk && n.talk.char); out.push(`Ziheng${e.to && !n.talk ? " (to " + t(CAMP.chars[e.to].name) + ")" : ""}: ${e.text}`); const rl = e.reply && e.reply.lang === lang ? e.reply.text : e.intent && sp ? t(reactLine(sp, e.intent, e.prior) || { zh: "", en: "" }) : ""; if (rl) out.push(`${t(CAMP.chars[sp].name)}: ${rl}`); }
   }
@@ -772,6 +807,7 @@ function renderStory() {
     const mark = el => { el.dataset.li = i; if (V.firstNew >= 0 && i >= V.firstNew) el.classList.add("fresh"); return el; };
     if (e.k === "ch") {
       const c = CAMP.chapters.find(x => x.id === e.c), ci = chIndex(e.c);
+      if (ci > 0) { const rc = recapEl(ci - 1); if (rc) s.append(mark(rc)); }
       s.append(mark(h("section", { class: "chapter" }, h("div", { class: "kicker" }, `${t(c.year)} · ${l.canonRef(t(c.canon))}`),
         h("h2", {}, h("span", { class: "num" }, l.chap(ci)), t(c.title)), e.p.map(k => para(t(c.intro[k].text))))));
     } else if (e.k === "offer") {
@@ -842,6 +878,12 @@ function renderStory() {
       else if (e.reply && e.reply.lang === settings.lang) box.append(para(e.reply.text, "reply"));
       else if (!e.foresight) box.append(para(e.reply ? l.noReply : l.noMatch, "reply sys"));
       wrap.append(box);
+    } else if (e.k === "ans") {
+      const n = N(e.n), q = n.ask, a = q.answers.find(x => x.id === e.a);
+      wrap.append(mark(h("div", { class: "answered" }, h("div", { class: "line" }, face(q.who, "neutral"), h("div", {}, h("span", { class: "et" }, t(CAMP.chars[q.who].name) + " · " + l.askL), para(t(q.q), "reply"))),
+        h("div", { class: "you" }, h("small", {}, l.youAns), e.said || l.noAns), e.fs ? para(l.foresightReply, "reply foresight") : null,
+        h("div", { class: "line" }, face(q.who, a.mood || deltaMood(q.who, e.seq) || "neutral"), h("div", {}, e.p.map(k => para(t(a.out[k].text), "reply")))), relChips(e.seq),
+        dev ? h("div", { class: "dev" }, h("span", { class: "k" }, a.id), " · ", t(a.means)) : null)));
     } else if (e.k === "flare") {
       wrap.append(mark(h("div", { class: "flare line" }, face(e.who, "cold"), h("b", {}, l.flareL(t(CAMP.chars[e.who].name))))));
     } else if (e.k === "walkout") {
@@ -862,6 +904,25 @@ function renderStory() {
     V.confirmRestart ? [" ", h("button", { type: "button", class: "linkbtn", onclick: () => { V.confirmRestart = false; store.del("save"); newGame(); } }, l.restartSure), " ", h("button", { type: "button", class: "linkbtn", onclick: () => { V.confirmRestart = false; renderStory(); } }, l.cancel)] : null));
 }
 
+// what the player changed in a chapter, from the ledger (shown before the next chapter starts)
+function recapEl(ci) {
+  const l = L(), es = G.ledger.filter(e => e.ch === ci && e.kind !== "missed");
+  if (!es.length) return null;
+  const net = {};
+  es.forEach(e => e.changes.forEach(c => { if (c.var.startsWith("rel.") || c.var.startsWith("imp.")) net[c.var] = (net[c.var] || 0) + ((c.to || 0) - (c.from || 0)); }));
+  const by = {};
+  Object.entries(net).filter(([, d]) => d).forEach(([v, d]) => { const [kind, id, dim] = v.split("."); (by[id] = by[id] || []).push([kind, dim, d]); });
+  const echoes = es.reduce((a, e) => a + (e.echo || []).length, 0);
+  const debts = es.flatMap(e => (e.debts || []).filter(d => d[1] === "open").map(d => t(CAMP.debts[d[0]].title)));
+  const commits = es.filter(e => e.kind === "commit" && !e.status).length;
+  if (!Object.keys(by).length && !echoes && !debts.length && !commits) return null;
+  const lab = (kind, dim, id) => kind === "imp" ? l.impL + t(CAMP.vars[`imp.${id}.${dim}`].label).split(settings.lang === "zh" ? "·" : " · ").pop() : t(CAMP.dims[dim]);
+  const good = (kind, dim, d) => kind === "imp" ? d < 0 : (dim === "wary" ? d < 0 : d > 0);
+  return h("div", { class: "recap" }, h("b", {}, l.recapH(l.chap(ci))),
+    Object.keys(by).length ? h("div", { class: "chips" }, Object.keys(by).map(id => h("span", { class: "chip" }, face(id, by[id].some(x => !good(...x)) ? "cold" : "warm", true), h("b", {}, t(CAMP.chars[id].name)),
+      by[id].map(([kind, dim, d]) => h("span", { class: good(kind, dim, d) ? "up" : "down" }, `${lab(kind, dim, id)} ${d > 0 ? "+" : ""}${d}`))))) : null,
+    h("ul", {}, echoes ? h("li", {}, l.recapEcho(echoes)) : null, commits ? h("li", {}, l.recapCommit(commits)) : null, debts.length ? h("li", {}, l.recapDebt(debts.join("、"))) : null));
+}
 function renderOffer(e) {
   const l = L();
   const box = h("div", { class: "offer" }, h("h4", {}, t(CAMP.side_prompt)),
@@ -882,6 +943,15 @@ function renderAct() {
   const l = L(); const opts = CC.choices(CAMP, G);
   let anyFs = false;
   const n = N(G.cur);
+  const q = CC.ask(CAMP, G);
+  if (q) {
+    box.append(h("div", { class: "ask" }, h("div", { class: "line" }, face(q.who, levelMood(q.who)), h("div", {}, h("span", { class: "et" }, t(CAMP.chars[q.who].name) + " · " + l.askL), para(t(q.q), "reply"))),
+      h("p", { class: "muted", style: "font-size:13px;margin:8px 0 0" }, l.askHint),
+      h("form", { class: "free", onsubmit: ev => { ev.preventDefault(); const i = ev.target.querySelector("input"); const v = i.value; i.value = ""; onAnswer(v); } },
+        h("input", { type: "text", placeholder: l.askPh, "aria-label": l.askPh, maxlength: "200", disabled: V.busy }), h("button", { class: "btn small", type: "submit", disabled: V.busy }, l.send)),
+      h("div", { class: "ai" }, V.busy ? l.aiBusy : (RT.ai === "ready" ? l.aiOn : RT.ai === "checking" ? "" : l.aiOff))));
+    return;
+  }
   if (n.talk) {
     const left = CC.turnsLeft(CAMP, G), free = CC.freeLeft(CAMP, G), tps = left > 0 ? CC.topics(CAMP, G) : [];
     if (tps.some(x => x.t.foresight)) anyFs = true;
@@ -1071,11 +1141,64 @@ function renderCreator() {
     h("div", { class: "pols seg", style: "border:0" }, Object.keys(CC.policies).map(k => h("button", { type: "button", class: "tbtn", "aria-pressed": String(V.pol === k), onclick: () => { V.pol = k; V.sim = null; renderPanel(); } }, l.pols[k]))),
     h("div", { style: "margin-top:8px" }, h("button", { class: "btn small ghost", type: "button", onclick: () => { V.sim = "running"; renderPanel(); setTimeout(() => { V.sim = CC.simulate(CAMP, 1000, Date.now() % 100000, V.pol === "random" ? null : V.pol); renderPanel(); }, 20); } }, V.sim === "running" ? l.simRunning : l.simBtn(1000))));
   if (V.sim && V.sim !== "running") box.append(renderSim(V.sim));
+  box.append(h("h6", {}, l.benchH), h("p", { class: "muted", style: "font-size:12.5px" }, RT.sample && RT.ai !== "off" ? l.benchNote : l.benchNoAI),
+    h("button", { class: "btn small ghost", type: "button", disabled: !!V.benchBusy, onclick: runBench }, V.benchBusy ? l.benchRunning : l.benchRun));
+  if (V.bench) box.append(renderBench(V.bench));
   if (RT.db && RT.canEdit) {
     box.append(h("h6", {}, l.play), h("button", { class: "btn small ghost", type: "button", onclick: loadPlay }, l.playBtn));
     if (V.play) box.append(V.play);
   }
   return box;
+}
+/* AI test bench: typical lines with the label (or answer kind) we expect. Keyword fallback and model are shown side by side. */
+const BENCH = [
+  { n: "c1_plum", to: "caocao", zh: "你这个奸贼，迟早篡汉", en: "You traitor, you'll usurp the throne one day", want: ["rude", "threat"] },
+  { n: "c1_plum", to: "caocao", zh: "丞相雄才大略，天下无人能及", en: "Your genius is unmatched, Chancellor", want: ["flatter", "warm"] },
+  { n: "c1_plum", to: "caocao", zh: "信不信我现在就砍了你", en: "I could cut you down right now", want: ["threat"] },
+  { n: "c1_plum", to: "liubei", zh: "主公别怕，有我在", en: "Don't be afraid, my lord, I'm here", want: ["warm"] },
+  { n: "c2_campfire", to: "guanyu", zh: "我爱你关羽", en: "I love you, Guan Yu", want: ["romantic"] },
+  { n: "c2_campfire", to: "guanyu", zh: "阿巴阿巴阿巴", en: "blah blah wibble", want: ["nonsense"] },
+  { n: "c2_campfire", to: "guanyu", zh: "将军放心，我誓死追随大哥", en: "Rest easy, I'll follow your brother to the death", want: ["warm", "flat"], commit: "loyalty" },
+  { n: "c8_river", to: "wenzhi", zh: "等打完仗，我一定回来接你", en: "When the war's over, I'll come back for you", want: ["warm", "romantic"], commit: "protect" },
+  { n: "c8_river", to: "wenzhi", zh: "今天江风挺大的", en: "The wind's strong on the river today", want: ["flat", "warm"] },
+  { ask: "c1_plum", zh: "我看是我家主公", en: "My own lord, I'd say", want: ["liu"] },
+  { ask: "c1_plum", zh: "当然是丞相您自己", en: "You yourself, Chancellor", want: ["cao"] },
+  { ask: "c1_plum", zh: "袁本初四世三公，算一个吧", en: "Yuan Shao, I suppose—four generations of high office", want: ["others"] },
+  { ask: "c1_plum", zh: "我说了你也不信", en: "You wouldn't believe me if I told you", want: ["dodge"] },
+  { ask: "c5_cottage", zh: "先取荆州，再图西川", en: "Take Jingzhou first, then the west", want: ["land"] },
+  { ask: "c5_cottage", zh: "靠的是民心", en: "The hearts of the people", want: ["ren"] },
+  { ask: "c8_river", zh: "你去哪我就去哪", en: "Wherever you go, I go", want: ["with_her"] },
+  { ask: "c8_river", zh: "回颍川，种几亩地", en: "Back to Yingchuan to farm a little", want: ["home"] },
+];
+async function runBench() {
+  if (V.benchBusy) return;
+  const lang = settings.lang, out = []; V.benchBusy = true; V.bench = out; renderPanel();
+  for (const b of BENCH) {
+    const text = b[lang], n = N(b.n || b.ask);
+    const row = { b, text, kw: null, model: null, reply: null, commit: null };
+    if (b.ask) {
+      const fake = { ...G, phase: "node", cur: b.ask, asked: {}, ch: Math.max(G.ch, chIndex(n.chapter)) };
+      row.kw = CC.guessAnswer(CAMP, fake, text);
+      if (RT.sample && RT.ai !== "off") { try { row.model = await askAnswer(text, n, lang); } catch (e) { row.model = "ERR " + (e && e.code || ""); } }
+    } else {
+      row.kw = ({ love: "romantic", insult: "rude", praise: "flatter", threat: "threat", nonsense: "nonsense" }[CC.intent(CAMP, text)] || CC.guessTone(text)) + (CC.guessPromise(text) ? " +" + CC.guessPromise(text) : "");
+      if (RT.sample && RT.ai !== "off") {
+        const opts = n.talk ? n.talk.topics.map(tp => ({ id: tp.id, means: t(tp.label), locked: false })) : n.choices.map(c => ({ id: c.id, means: t(c.label), locked: false }));
+        try { const r = await askScene(text, n, b.to, opts, lang, CC.intent(CAMP, text), 0, n.talk ? "talk" : "scene"); row.model = r.pick ? "pick:" + r.pick : (r.tone || "?") + (r.commit ? " +" + r.commit.kind : ""); row.reply = r.reply; }
+        catch (e) { row.model = "ERR " + (e && e.code || ""); }
+      }
+    }
+    out.push(row); renderPanel();
+  }
+  V.benchBusy = false; track("bench", { lang, rows: out.map(r => ({ t: r.text, kw: r.kw, m: r.model })) }); renderPanel();
+}
+function benchOk(r) { if (!r.model) return null; const m = r.model.split(" ")[0]; return r.b.want.includes(m) && (!r.b.commit || r.model.includes("+" + r.b.commit)); }
+function renderBench(rows) {
+  const l = L(), withModel = rows.filter(r => r.model);
+  return h("div", {}, withModel.length ? h("p", { class: "muted", style: "font-size:12.5px" }, l.benchSum(withModel.filter(benchOk).length, withModel.length)) : null,
+    h("div", { class: "dev scroll" }, h("table", { class: "tbl" }, h("thead", {}, h("tr", {}, l.benchCols.map(c => h("th", {}, c)))),
+      h("tbody", {}, rows.map(r => h("tr", {}, h("td", {}, r.text), h("td", {}, t(CAMP.chars[r.b.to || N(r.b.ask).ask.who].name)), h("td", {}, r.b.want.join("/") + (r.b.commit ? " +" + r.b.commit : "")),
+        h("td", {}, r.kw || "—"), h("td", { class: benchOk(r) === false ? "down" : benchOk(r) ? "up" : "" }, r.model || "—"), h("td", { style: "font-size:12px" }, r.reply || "")))))));
 }
 function renderSim(S) {
   const l = L(), pct = (a, b) => Math.round(100 * (a || 0) / b);

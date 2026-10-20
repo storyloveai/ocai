@@ -39,7 +39,7 @@ const GOALS = {
   loyal: [["g_lord", ["liu_high"]], ["g_name", ["loyal"]]],
   schemer: [["g_side", ["cao"]], ["g_lord", ["cao_high"]], ["g_name", ["cunning"]]],
   seer: [["g_name", ["uncanny"]], ["g_side", ["exposed"]]],
-  provoker: [["g_lives", ["flogged"]], ["g_side", ["jailed", "miheng"]], ["g_name", ["rash"]]],
+  provoker: [["g_lives", ["flogged"]], ["g_lives", ["jail"]], ["g_side", ["miheng"]], ["g_name", ["rash"]]],
 };
 const arche = {};
 console.log("\n## archetype players (1000 runs each)");

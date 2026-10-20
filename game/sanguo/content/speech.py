@@ -102,7 +102,7 @@ EXTRA_REACT = {
 }
 EXTRA_PATTERNS = {
   "threat": r"杀了你|宰了你|砍了你|要你的命|让你死|弄死你|kill you|i'll kill|slit your|you'll die|end you",
-  "nonsense": r"^(哈+|啊+|嘿+|呵+|嘻+|嗯+|哦+|lol|ha(ha)+|asdf\w*|[a-z]{1,2})[!！。.]*$|胡说八道|瞎扯|乱说|blah",
+  "nonsense": r"^(阿巴)+$|^(哈+|啊+|嘿+|呵+|嘻+|嗯+|哦+|lol|ha(ha)+|asdf\w*|[a-z]{1,2})[!！。.]*$|胡说八道|瞎扯|乱说|blah",
 }
 
 # ---------- promises made in free speech, and when the story judges them kept or broken ----------

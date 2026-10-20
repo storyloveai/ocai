@@ -28,6 +28,9 @@ async function run(lang, strategy, w, hgt, tag) {
       await p.click(".free button"); await p.waitForTimeout(100);
       continue;
     }
+    if (await p.$(".ask input")) { // open question: answer in words
+      await p.fill(".ask input", lang === "zh" ? (strategy === "first" ? "我看是我家主公" : "不好说") : (strategy === "first" ? "My own lord, I'd say" : "I can't say")); await p.click(".ask button"); await p.waitForTimeout(150); continue;
+    }
     const tps = await p.$$(".topic:not([disabled])");
     if (tps.length && !(await p.$eval(".turns", e => e.textContent)).includes(lang === "zh" ? "夜深" : "late")) {
       if (strategy === "last" && !talked) { talked = true; await p.fill(".free input", lang === "zh" ? "你觉得今晚的风大吗？" : "Do you think the wind is strong tonight?"); await p.click(".free button"); await p.waitForTimeout(100); continue; }

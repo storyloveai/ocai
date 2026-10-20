@@ -191,8 +191,37 @@
     return n.choices.map(c => ({ id: c.id, c, visible: evalCond(st, c.when), locked: !!c.req && !evalCond(st, c.req) })).filter(x => x.visible);
   };
 
+  /* ---------------- open questions ----------------
+   * A scene can open with someone asking you something there is no button for. You answer in your own words;
+   * the model (or keywords) only sorts the answer into one of the authored kinds, and the rules settle it. */
+  CC.ask = function (camp, st) {
+    const n = st.phase === "node" && camp.nodes[st.cur];
+    if (!n || !n.ask || (st.asked && st.asked[n.id]) || !evalCond(st, n.ask.when)) return null;
+    if (!CC.castNow(camp, st).includes(n.ask.who)) return null;
+    return n.ask;
+  };
+  CC.guessAnswer = function (camp, st, text) {
+    const a = CC.ask(camp, st); if (!a) return null;
+    const hit = a.answers.find(x => x.match && new RegExp(x.match, "i").test(text || ""));
+    return hit ? hit.id : a.fallback;
+  };
+  CC.answer = function (camp, st, aid, said) {
+    const n = camp.nodes[st.cur], a = CC.ask(camp, st);
+    if (!a) throw new Error("nothing asked");
+    const ans = a.answers.find(x => x.id === aid) || a.answers.find(x => x.id === a.fallback);
+    st.asked = st.asked || {}; st.asked[n.id] = ans.id;
+    const e = ledgerPush(st, { kind: "answer", node: n.id, choice: null, answer: ans.id, to: a.who, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
+    applyEffects(camp, st, ans.effects, e);
+    (ans.echo || []).forEach(id => { if (!st.echoes[id]) { st.echoes[id] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(id); } });
+    st.log.push({ k: "ans", n: n.id, a: ans.id, said: (said || "").slice(0, 120), p: idxWhere(st, ans.out), seq: e.seq });
+    const fl = flare(camp, st, a.who); if (fl) e.flare = fl;
+    return e;
+  };
+
   CC.choose = function (camp, st, cid) {
     if (st.phase !== "node") throw new Error("no node");
+    if (CC.ask(camp, st)) CC.answer(camp, st, CC.ask(camp, st).fallback, ""); // a choice without answering counts as the non-answer
+    if (st.phase !== "node") throw new Error("scene ended");
     const n = camp.nodes[st.cur];
     const opt = CC.choices(camp, st).find(x => x.id === cid);
     if (!opt || opt.locked) throw new Error("choice unavailable: " + cid);
@@ -491,6 +520,17 @@
       (n.on_enter || []).forEach(o => { checkCond(o.when, at); (o.effects || []).forEach(ef => writes.add(ef.set || ef.add)); (o.resolve || []).forEach(([d]) => (debtRes[d] = debtRes[d] || []).push(chIdx(n.chapter))); });
       (n.callbacks || []).forEach(cbk => { checkCond(cbk.when, at); if (!camp.echoes[cbk.pays]) E(`${at}: callback pays unknown echo ${cbk.pays}`); (echoPay[cbk.pays] = echoPay[cbk.pays] || []).push(chIdx(n.chapter)); });
       if (!n.choices.length) E(`${at}: no choices`);
+      if (n.ask) {
+        const a = n.ask, ids = a.answers.map(x => x.id);
+        if (!camp.chars[a.who]) E(`${at}.ask: unknown character ${a.who}`);
+        if (!(n.cast || []).some(c => c.id === a.who) && !(n.talk && n.talk.char === a.who)) E(`${at}.ask: ${a.who} is not in the scene`);
+        if (!ids.includes(a.fallback)) E(`${at}.ask: fallback ${a.fallback} is not an answer`);
+        if (new Set(ids).size !== ids.length) E(`${at}.ask: duplicate answer id`);
+        checkCond(a.when, at + ".ask");
+        a.answers.forEach(x => { (x.out || []).forEach(p => checkCond(p.when, at + ".ask." + x.id)); (x.effects || []).forEach(ef => { const v = ef.set || ef.add; if (!varOk(v)) E(`${at}.ask.${x.id}: unknown var ${v}`); writes.add(v); });
+          (x.echo || []).forEach(id => { if (!camp.echoes[id]) E(`${at}.ask.${x.id}: unknown echo ${id}`); (echoReg[id] = echoReg[id] || []).push(chIdx(n.chapter)); });
+          if (x.match) { try { new RegExp(x.match); } catch { E(`${at}.ask.${x.id}: bad match pattern`); } } });
+      }
       if (!n.art) W(`${at}: no art`); else (n.art.layers || []).forEach(l => { checkCond(l.when, at + ".art"); if (l.choice && !n.choices.some(c => c.id === l.choice)) E(`${at}: art layer ${l.id} waits for unknown choice ${l.choice}`); });
       if (!n.place && n.kind !== "interrupt" && n.kind !== "flash") W(`${at}: no place on the map`);
       const ids = new Set();
@@ -545,6 +585,7 @@
     let guard = 0;
     while (st.phase !== "end" && guard++ < 500) {
       if (st.phase === "side") CC.pickSide(camp, st, st.offer[Math.floor(r() * st.offer.length)]);
+      else if (CC.ask(camp, st)) { const q = CC.ask(camp, st); CC.answer(camp, st, q.answers[Math.floor(r() * q.answers.length)].id, ""); }
       else { const os = CC.choices(camp, st).filter(o => !o.locked); CC.choose(camp, st, os[Math.floor(r() * os.length)].id); }
     }
     return st;
@@ -570,6 +611,11 @@
       return ["side", st.offer.slice().sort((a, b) => sc(b) - sc(a) || r() - .5)[0]];
     }
     const n = camp.nodes[st.cur];
+    const q = CC.ask(camp, st);
+    if (q) {
+      if (!w || w.provoke) return ["answer", w && w.provoke ? (q.answers.find(a => (a.effects || []).some(ef => (ef.add || "").startsWith("heat."))) || q.answers[0]).id : q.answers[Math.floor(r() * q.answers.length)].id];
+      return ["answer", q.answers.map(a => [a.id, utility(camp, st, a.effects, w) + r() * .3]).sort((a, b) => b[1] - a[1])[0][0]];
+    }
     // random players also chat freely now and then, so speech consequences get exercised
     const cast = CC.castNow(camp, st);
     if (w && w.provoke && cast.length && CC.freeLeft(camp, st) > 0) return ["speak", "rude", cast.includes("caocao") ? "caocao" : cast[0]];
@@ -593,12 +639,12 @@
   }
   CC.playPolicy = function (camp, r, w) {
     const st = CC.newGame(camp); let guard = 0;
-    while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else CC.choose(camp, st, id); }
+    while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
     return st;
   };
   CC.simulate = function (camp, runs = 2000, seed = 7, policy = null) {
     const r = rng(seed); const w = policy && CC.policies[policy];
-    const S = { runs, policy: policy || "random", topics: {}, speech: {}, flares: {}, provokedReward: {}, early: {}, nodes: {}, choiceSeen: {}, choiceOpen: {}, choicePick: {}, frags: {}, combos: new Set(), echoReg: {}, echoPaid: {}, debtsLeft: {}, debtModes: {}, track: {}, deviation: {}, uncanny: {}, length: 0, offered: {} };
+    const S = { runs, policy: policy || "random", topics: {}, speech: {}, answers: {}, flares: {}, provokedReward: {}, early: {}, nodes: {}, choiceSeen: {}, choiceOpen: {}, choicePick: {}, frags: {}, combos: new Set(), echoReg: {}, echoPaid: {}, debtsLeft: {}, debtModes: {}, track: {}, deviation: {}, uncanny: {}, length: 0, offered: {} };
     const inc = (o, k, n = 1) => { o[k] = (o[k] || 0) + n; };
     for (let i = 0; i < runs; i++) {
       const st = CC.newGame(camp);
@@ -609,6 +655,7 @@
         const nid = st.cur; if (nid !== lastNode) { inc(S.nodes, nid); lastNode = nid; }
         const [k, id, who] = decide(camp, st, r, w);
         if (k === "say") { inc(S.topics, nid + "." + id); CC.say(camp, st, id); continue; }
+        if (k === "answer") { inc(S.answers, nid + "." + id); CC.answer(camp, st, id, ""); continue; }
         if (k === "speak") { inc(S.speech, id); CC.chat(camp, st); const se = CC.speak(camp, st, id, "", who); if (se && se.flare) inc(S.flares, nid + ":" + se.flare + ":" + who); continue; }
         CC.choices(camp, st).forEach(o => { inc(S.choiceSeen, nid + "." + o.id); if (!o.locked) inc(S.choiceOpen, nid + "." + o.id); });
         inc(S.choicePick, nid + "." + id);

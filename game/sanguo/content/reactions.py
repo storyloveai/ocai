@@ -73,7 +73,7 @@ REACT = {
 
 PATTERNS = {
   "love": r"爱你|喜欢你|爱上|嫁给我|娶你|心悦|想你|在一起|做我的|亲你|抱你|love you|i love|marry me|kiss you|be mine|in love|hold you",
-  "insult": r"蠢|笨|废物|滚|闭嘴|可笑|懦夫|活该|无能|伪君子|stupid|idiot|fool|shut up|coward|pathetic|useless|get lost|hypocrite",
-  "praise": r"佩服|厉害|了不起|仰慕|英雄|敬佩|admire|amazing|impressive|great man|hero|brilliant",
+  "insult": r"奸贼|国贼|老贼|篡|蠢|笨|废物|滚|闭嘴|可笑|懦夫|活该|无能|伪君子|stupid|idiot|fool|shut up|coward|pathetic|useless|get lost|hypocrite",
+  "praise": r"佩服|厉害|雄才|无人能及|天下无双|英明|了不起|仰慕|英雄|敬佩|admire|amazing|impressive|great man|hero|brilliant",
   "ask": r"[?？]|吗$|呢$|什么|为什么|怎么|如何|\bhow\b|\bwhy\b|\bwhat\b|\bwho\b",
 }

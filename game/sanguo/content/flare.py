@@ -29,7 +29,9 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
                              "label": T(CHARS[c]["name"]["zh"] + "·火气", CHARS[c]["name"]["en"] + " · Temper")}
     VARS["flag.flogged"] = {"type": "flag", "init": False, "label": T("梅园挨了二十棍", "Flogged after the plum-wine meeting")}
     VARS["flag.cao_wary"] = {"type": "flag", "init": False, "label": T("曹操起了疑心", "Cao Cao grew suspicious")}
-    VARS["flag.jailed"] = {"type": "flag", "init": False, "label": T("被关进许都大牢", "Thrown into the Xuchang jail")}
+    VARS["flag.jailed"] = {"type": "flag", "init": False, "label": T("身在许都大牢", "In the Xuchang jail")}
+    VARS["flag.was_jailed"] = {"type": "flag", "init": False, "label": T("坐过曹操的牢", "Did time in Cao Cao's jail")}
+    VARS["flag.left_behind"] = {"type": "flag", "init": False, "label": T("刘备出城时你还在牢里", "Still in jail when Liu Bei left")}
     byid = {n["id"]: n for n in N}
 
     # ---------- the plum-wine meeting: Cao acts on the spot ----------
@@ -53,10 +55,33 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
                 [setv("flag.cao_wary"), rel("caocao", "regard", 1), rel("liubei", "trust", -1), add("renown.cunning")],
                 req=V("renown.cunning", ">=", 1), hint=T("需要“权谋”名声 ≥ 1：你得是个出了名会说话的人，曹操才肯接这个台阶", "Needs a name for cunning ≥ 1: Cao only takes the way out from a man known for his tongue")),
          choice("defy", "dilemma", T("梗着脖子，把话说完。", "Lift your chin and finish what you were saying."),
-                T("曹操笑了：『好。孤成全你。』你被押进了许都大牢。刘备出城那天，你在牢里听见城外的马蹄声。没有人来接你。",
-                  "Cao smiles. 'Very well. You shall have what you want.' You are taken to the Xuchang jail. On the day Liu Bei rides out of the city, you hear the hooves from your cell. No one comes for you."),
-                [setv("flag.jailed"), setv("flag.exiled"), add("renown.rash", 2)])]))
-    N[-1]["choices"][3]["ends"] = True
+                T("曹操笑了：『好。孤成全你。』你被押进了许都大牢。刘备出城那天，你在牢里听见城外的马蹄声。",
+                  "Cao smiles. 'Very well. You shall have what you want.' You are taken to the Xuchang jail. On the day Liu Bei rides out of the city, you hear the hooves from your cell."),
+                [setv("flag.jailed"), setv("flag.left_behind"), setv("flag.cao_wary"), add("renown.rash", 2)])]))
+
+    # ---------- fail forward: jail is a detour, not the end ----------
+    N.append(node("x_jail", "*", "interrupt", T("许都大牢", "The Xuchang Jail"), "free", T("原创", "original"),
+        T("你在墙上刻到第九十道的时候，外面的消息已经传遍了：刘备请命截击袁术，带着五万兵马出了城。没有人来接你。",
+          "By the time you've scratched the ninetieth mark on the wall, the news is everywhere: Liu Bei volunteered to intercept Yuan Shu and rode out with fifty thousand men. No one came for you."),
+        [choice("wait", "expression", T("等。", "Wait."),
+                T("又过了一个月，狱卒打开门：『丞相说，放了。』没人告诉你为什么。你一路向东，在徐州城外追上了刘备。他看见你，下了马，什么也没说，把自己的斗篷披在你身上。",
+                  "Another month passes. Then the jailer opens the door. 'The Chancellor says let him go.' No one tells you why. You head east and catch up with Liu Bei outside Xuzhou. When he sees you, he dismounts, says nothing, and puts his own cloak around your shoulders."),
+                [setv("flag.jailed", False), setv("flag.was_jailed"), rel("liubei", "trust", 1), add("renown.rash", -1)]),
+         choice("wenzhi", "strategy", T("托人给温芷带个话。", "Get word to Wen Zhi."),
+                T("第七天，温芷提着药箱进了牢房，说是给犯人看病。她走后，你在药包底下摸到一张盖了印的路引。那天夜里，你出了许都。",
+                  "On the seventh day Wen Zhi comes into the jail with her medicine chest, saying she's here to treat the prisoners. After she leaves, you find a stamped travel pass under the herbs. That night you are out of Xuchang."),
+                [setv("flag.jailed", False), setv("flag.was_jailed"), rel("wenzhi", "intimacy", 1), rel("wenzhi", "trust", 1)],
+                req=ANY(F("flag.asked_wenzhi"), R("wenzhi", "intimacy", ">=", 2)), hint=T("需要和温芷走得足够近（亲近 ≥ 2，或托过她打听消息）", "Needs to be close to Wen Zhi (closeness ≥ 2, or have asked her for news)")),
+         choice("recant", "dilemma", T("给曹操上书认错。", "Write to Cao Cao and recant."),
+                T("曹操看完你的信，笑了：『早这样不就好了。』当天就放了你。可这封信后来传到了刘备耳朵里。他没提，你知道他听说了。",
+                  "Cao reads your letter and laughs. 'Why not do this sooner?' You're released that day. But word of the letter reaches Liu Bei. He never mentions it. You know he's heard."),
+                [setv("flag.jailed", False), setv("flag.was_jailed"), rel("caocao", "regard", 1), rel("liubei", "trust", -1)])],
+        when=F("flag.jailed"), order=-1))
+
+    # the departure happens without you
+    for nid in ("c2_note", "c2_pretext", "c2_xuchu"):
+        nd = byid[nid]; nd["when"] = ALL(nd["when"], NF("flag.left_behind")) if nd.get("when") else NF("flag.left_behind")
+    byid["c2_campfire"]["intro"].insert(0, P(T("关羽看见你手腕上的勒痕，没问是怎么来的，只往火边让了让。", "Guan Yu sees the rope marks on your wrists. He doesn't ask; he just makes room for you by the fire."), F("flag.left_behind")))
 
     # ---------- anywhere else Cao holds power over you ----------
     N.append(flash("x_cao_rage", T("曹操发作", "Cao Cao Loses Patience"),
@@ -69,11 +94,13 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
                 T("曹操愣了一下，大笑：『罢了！你这张嘴，迟早害死你。』", "Cao is caught off guard, then roars with laughter. 'Enough! That tongue of yours will be the death of you.'"),
                 [rel("caocao", "regard", -1)], req=R("caocao", "regard", ">=", 5), hint=T("需要曹操的赏识 ≥ 5，他才肯听你圆", "Needs Cao's regard ≥ 5 for him to let you talk your way out")),
          choice("defy", "dilemma", T("不跪。", "Refuse to kneel."),
-                [P(T("曹操没有杀你，只是把你关了起来。等你出来，仗已经打完了。", "Cao doesn't kill you. He just locks you up. By the time you're let out, the war is over."), NOT_CAO),
-                 P(T("曹操说：『祢衡走过的路，你也走一遍吧。』第二天，你被送往荆州。", "Cao says, 'Mi Heng's road—you may walk it too.' The next day you are sent to Jingzhou."), V("track", "==", "cao"))],
-                [setv("flag.jailed"), setv("flag.exiled"), add("renown.rash", 2)])]))
-    N[-1]["choices"][2]["ends"] = True
-    N[-1]["choices"][2]["alt"] = [{"when": V("track", "==", "cao"), "effects": [setv("flag.mi_heng"), setv("flag.exiled"), add("renown.rash", 2)]}]
+                T("许褚的手按上你的肩。关羽站了起来：『此人是我兄长的人。要罚，连关某一起罚。』曹操看了关羽很久，挥了挥手。",
+                  "Xu Chu's hand closes on your shoulder. Guan Yu rises. 'This man belongs to my brother. Punish him, and you punish me too.' Cao looks at Guan Yu a long time, then waves his hand."),
+                [rel("caocao", "regard", -2), rel("guanyu", "respect", 1), add("renown.rash"), setv("flag.cao_wary")], when=NOT_CAO),
+         choice("defy_cao", "dilemma", T("不跪。", "Refuse to kneel."),
+                T("曹操说：『祢衡走过的路，你也走一遍吧。』第二天，你被送往荆州。", "Cao says, 'Mi Heng's road—you may walk it too.' The next day you are sent to Jingzhou."),
+                [setv("flag.mi_heng"), setv("flag.exiled"), add("renown.rash", 2)], when=V("track", "==", "cao"))]))
+    N[-1]["choices"][3]["ends"] = True
 
     # ---------- the plum-wine choice remembers what you said first ----------
     sp = next(c for c in byid["c1_plum"]["choices"] if c["id"] == "speak")
@@ -90,9 +117,8 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
     t["req"] = NF("flag.cao_wary")
     t["hint"] = T("许褚认得你——梅园那天之后，丞相府的人都认得你", "Xu Chu knows your face. Since the plum garden, everyone in the Chancellor's household does")
 
-    ENDINGS_ADD.setdefault("g_side", []).insert(0, {"id": "jailed", "when": F("flag.jailed"),
-        "text": T("你在许都的大牢里过完了那几年。出来时，天下已经换了样子。人们说起梅园煮酒，只记得刘备掉了筷子，没人记得席上还有一个狂生。",
-                  "You spend those years in a Xuchang cell. When you come out, the realm has changed. When people talk about the plum-wine meeting, they remember Liu Bei dropping his chopsticks. No one remembers the madman at the table.")})
+    ENDINGS_ADD.setdefault("g_lives", []).append({"id": "jail", "when": F("flag.was_jailed"),
+        "text": T("你在许都的大牢里待过三个月。后来有人问起，你只说：那里很安静，适合想事情。", "You spent three months in the Xuchang jail. When people ask about it later, you say only: it was quiet, good for thinking.")})
     ENDINGS_ADD.setdefault("g_lives", []).append({"id": "flogged", "when": F("flag.flogged"),
         "text": T("梅园那二十棍，在你背上留了疤。刘备每次看见，都不说话。", "The twenty strokes from the plum garden left scars on your back. Whenever Liu Bei sees them, he says nothing.")})
 

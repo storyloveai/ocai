@@ -126,7 +126,8 @@ CHAPTERS = [
                    "Xuchang, Jian'an 4 (199). Liu Bei lives under Cao Cao's eye and spends his days growing vegetables in the back garden. You are a young scholar from Yingchuan, styled Ziheng. Mi Zhu introduced you, and Liu Bei took you in as a retainer. The household says you talk little and forget nothing."))]},
     {"id": "c2", "title": T("出许都", "Leaving Xuchang"), "year": T("建安四年（199）", "Jian'an 4 (199)"), "canon": T("第21回", "Ch. 21"), "offer": 2,
      "intro": [P(T("煮酒之后，刘备坐立不安。消息传来：袁术要北上投奔袁绍，必经徐州。",
-                   "After the plum-wine meeting Liu Bei cannot sit still. News arrives: Yuan Shu means to go north to join Yuan Shao, and his road runs through Xuzhou."))]},
+                   "After the plum-wine meeting Liu Bei cannot sit still. News arrives: Yuan Shu means to go north to join Yuan Shao, and his road runs through Xuzhou."), NF("flag.left_behind")),
+               P(T("煮酒那一席之后，你在许都的大牢里数日子。", "After the plum-wine meeting, you count the days in the Xuchang jail."), F("flag.left_behind"))]},
     {"id": "c3", "title": T("下邳", "Xiapi"), "year": T("建安五年（200）", "Jian'an 5 (200)"), "canon": T("第24–25回", "Ch. 24–25"), "offer": 2,
      "intro": [P(T("建安五年正月，衣带诏事泄，董承等五家满门被杀。曹操亲率大军东征徐州。刘备兵败，单骑北投袁绍；张飞不知去向。关羽护着两位嫂嫂，被困在下邳城外的土山上。你也在山上。",
                    "First month of Jian'an 5 (200). The belt edict is discovered, and Dong Cheng and four other families are put to death. Cao Cao marches on Xuzhou himself. Liu Bei is routed and flees north alone to Yuan Shao; no one knows where Zhang Fei is. Guan Yu, guarding Liu Bei's two wives, is cut off on a hill outside Xiapi. You are on the hill with him."))]},
@@ -678,6 +679,8 @@ speech.extend(N, VARS, CHARS, SPEECH_ENDINGS)
 for _c, _o in speech.OPENERS.items(): CHARS[_c]["openers"] = _o
 import flare
 flare.extend(N, VARS, CHARS, SPEECH_ENDINGS)
+import asks
+asks.extend(N)
 
 # ------------------------------------------------------------------ endings (each group shows its first matching fragment; "all" groups show every match)
 def frag(id, text, when=None, mood=None):
@@ -760,7 +763,7 @@ ART = {
     "c8_huarong": ("huarong", [lay("blocker"), lay("medic", F("flag.wenzhi_safe")), lay("medic", choice="warn_wenzhi")], "huarong"),
     "c2_campfire": ("campfire", [], "xiapi"), "c4_gucheng": ("campfire", [lay("wall")], "gucheng"), "c5_lamp": ("lamp", [], "xinye"),
     "c5_feast": ("hall", [], "xuchang"), "c8_river": ("riverbank", [lay("two")], "chibi"), "c8_vigil": ("campfire", [lay("blade")], "chibi"),
-    "c8_north": ("road", [], "huarong"), "x_miheng": ("letter", [], None), "x_plum_rage": ("garden", [lay("storm")], None), "x_cao_rage": ("hall", [], None), "x_loose": ("lamp", [], None), "x_exposed": ("lamp", [], None), "x_cold_liu": ("hall", [], None), "x_cold_cao": ("hall", [], None),
+    "c8_north": ("road", [], "huarong"), "x_miheng": ("letter", [], None), "x_plum_rage": ("garden", [lay("storm")], None), "x_cao_rage": ("hall", [], None), "x_jail": ("lamp", [], None), "x_loose": ("lamp", [], None), "x_exposed": ("lamp", [], None), "x_cold_liu": ("hall", [], None), "x_cold_cao": ("hall", [], None),
     "c8_cao": ("huarong", [lay("blocker"), lay("medic", ANY(F("flag.wenzhi_warned"), F("flag.wenzhi_together")))], "huarong"),
 }
 PLACE_AFTER = {("c4_seal", "follow"): "gucheng", ("c4_seal", "pass"): "gucheng", ("c4_yuan", "*"): "gucheng", ("c7_fire", "*"): "chibi"}
