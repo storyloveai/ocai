@@ -1,3 +1,5 @@
+import {historyIds} from './history.js';
+import {showCreator} from './social.js';
 import {normalizeDraft} from './builder.js';
 import announcements from './announcements.js';
 import {mountShell} from './reference.js';
@@ -8,6 +10,7 @@ const header=(name,settings=false)=>`<header class="shell-page-header"><h1>${saf
 const row=(label,href,symbol)=>`<a href="${href}">${icon(symbol)}<span>${safe(label)}</span>${icon('arrow',14)}</a>`;
 function itemsMarkup(items,resume=false){return items.map(d=>`<article><a href="/${resume?'play':d.type==='character'?'character':'story'}/${safe(d.id)}"><img src="${safe(d.image.startsWith('assets/')?'/'+d.image:d.image)}" alt="${safe(d.title)}"><h2>${safe(d.title)}</h2><p>${safe(d.plays||'')} ${d.author?'· '+safe(d.author):''}</p></a></article>`).join('');}
 export function show(path,h){
+ if(/^\/profile\/[^/]+$/.test(path)&&!path.startsWith('/profile/setting'))return showCreator(path,h,mountShell);
  if(!path.startsWith('/announcement')&&!['/my-title','/history','/liked','/profile','/profile/setting','/profile/setting/chat','/profile/setting/personalization','/profile/setting/block-management','/profile/setting/customer-support'].includes(path))return false;
  const profile=h.read('ooc-profile',{}),name=profile.name||h.account?.user?.displayName||'Your profile';
  if(path==='/announcement'||path.startsWith('/announcement/')){
@@ -35,7 +38,7 @@ export function show(path,h){
  }else{
   const isCreated=path==='/my-title',isHistory=path==='/history',title=isCreated?'My Titles':isHistory?'History':'Favorites';
   let tab='All',sort='Latest',visibility='All';
-  const ids=isCreated?[]:isHistory?[...new Set([...h.read('ooc-history',[]),...h.data.filter(d=>h.read('ooc-session-v2-'+d.id,[]).length).map(d=>d.id)])]:h.read('ooc-favorites',[]);
+  const ids=isCreated?[]:isHistory?historyIds(h.read,h.data):h.read('ooc-favorites',[]);
   const root=mountShell(`<div class="library-content"><header class="library-header"><h1>${title}</h1>${isCreated?'<button class="shell-white-button" data-community-create>Create Title</button>':''}</header><div class="library-tabs" role="tablist" aria-label="Title type">${['All','Story','Character',...(isCreated?['Unregistered']:[])].map(t=>`<button role="tab" data-library-type="${t}" aria-selected="${t==='All'}">${t}</button>`).join('')}</div><div class="library-controls"><span data-library-count>All 0</span>${isCreated?'<select aria-label="Title visibility"><option>All</option><option>Public</option><option>Private</option><option>Link Only</option></select>':''}<select aria-label="Sort titles"><option>Latest</option><option>Title A–Z</option></select></div><div class="library-items"></div></div>${footer()}`,h,'library');
   function draw(){
    let entries=isCreated?h.read('ooc-custom',[]).map((d,i)=>({...normalizeDraft(d,i),draft:true})):ids.map(id=>h.data.find(d=>d.id===id)).filter(Boolean);

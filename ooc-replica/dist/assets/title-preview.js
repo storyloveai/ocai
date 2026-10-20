@@ -33,7 +33,7 @@ export function openTitlePreview(record,id,{navigate,read,save,assets={}}){
   if(button.hasAttribute('data-preview-expand'))toggleDisclosure(button);
   if(button.hasAttribute('data-preview-avatar'))choose(button,'Avatar settings',[{label:profile.name||'Default avatar'}]);
   if(button.hasAttribute('data-preview-scenario'))choose(button,'Starting scenario',[{label:button.querySelector('span').textContent.trim()}]);
-  if(button.hasAttribute('data-preview-more'))choose(button,'Story options',[{label:'Open full information',run:()=>{dismiss();navigate('/story/'+id);}}]);
+  if(button.hasAttribute('data-preview-more'))choose(button,'Story options',[{label:'Open full information',run:()=>{dismiss();navigate(record.type==='character'?'/character/'+id:'/story/'+id);}}]);
  });
  dialog.addEventListener('keydown',event=>{if(event.key==='Escape'&&menu){event.preventDefault();event.stopPropagation();closeMenu(true);}else if(menu&&['ArrowDown','ArrowUp','Home','End'].includes(event.key)){event.preventDefault();menu.querySelector('button')?.focus();}});
  // Native close events are queued: release state now, before a replacement dialog or route mounts.

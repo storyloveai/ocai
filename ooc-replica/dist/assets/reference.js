@@ -1,3 +1,4 @@
+import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
 import {bindCarousels} from './carousels.js';
 import {paintBrand} from './brand.js';
@@ -42,6 +43,7 @@ const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'
 const catalog = [threeKingdoms,...evidence.catalog,...(evidence.characters||[])];
 evidence.features[0]={...threeKingdoms};
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
+initSocial(catalog,evidence,titlePreviews);
 const cardMarkup = new Map();
 const templateDocument = new DOMParser().parseFromString(evidence.pages.home,'text/html');
 templateDocument.querySelectorAll('a[href^="/story/"]').forEach(a => {
@@ -119,8 +121,25 @@ function bindHome(page) {
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
     b.onclick=()=>{
       const label=text(b);
-      if(label==='Main')context.navigate(page==='character'?'/character':'/');
-      else context.navigate('/collection?name='+encodeURIComponent(label)+(page==='character'?'&type=character':''));
+      const buttons=all('button').filter(button=>context.categories.includes(text(button)));
+      const carouselRegion=b.closest('[role="region"]')||b.parentElement.parentElement;
+      const region=carouselRegion.parentElement?.classList.contains('sticky')?carouselRegion.parentElement.parentElement:carouselRegion;
+      let panel=q('[data-category-panel]');
+      if(!panel){panel=document.createElement('section');panel.dataset.categoryPanel='';panel.className='inline-category-panel';region.after(panel);}
+      // Keep the hero, navigation and tab strip mounted; only their content panel changes.
+      const container=region.parentElement;
+      let after=false;
+      for(const child of container.children){if(child===region){after=true;continue;}if(after&&child!==panel){if(!child.hasAttribute('data-category-original-hidden'))child.dataset.categoryOriginalHidden=String(child.hidden);child.hidden=label==='Main'?child.dataset.categoryOriginalHidden==='true':true;}}
+      panel.hidden=label==='Main';
+      buttons.forEach(button=>{const selected=text(button)===label;button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
+      if(label!=='Main'){
+        const available=catalog.filter(d=>page==='character'?d.type==='character':d.type!=='character');
+        const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>(context.data.find(x=>x.id===d.id)?.genre||d.genre)===label);
+        panel.innerHTML=`<div class="collection-heading"><h2>${safe(label)}</h2><label>Sort by <select aria-label="Sort category"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><div data-category-grid>${items.length?grid(items,label==='Rankings'):'<p>No titles in this category yet.</p>'}</div>`;
+        panel.querySelector('select').onchange=event=>{panel.querySelector('[data-category-grid]').innerHTML=grid(event.target.value==='featured'?items:sortStories(items,event.target.value),label==='Rankings');hydrate();};hydrate();
+      }
+      // Disabling scroll anchoring avoids a jump when the content below shrinks.
+      host.style.overflowAnchor='none';
     };
   });
   all('button').filter(b=>text(b).startsWith('#')).forEach(b=>b.onclick=()=>context.navigate('/search?q='+encodeURIComponent(text(b).slice(1))));
@@ -231,6 +250,7 @@ function bindSearch() {
 }
 
 export function show(path, helpers) {
+  if(path==='/search'){show('/',helpers);openSearch(helpers,new URLSearchParams(location.search).get('q')||'');return true;}
   closeTitlePreview();
   clearInterval(carousel);context=helpers;
   const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':path.startsWith('/story/')?'story-detail':null;
@@ -283,7 +303,7 @@ export function show(path, helpers) {
   hydrate();
   if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);bindCarousels(host,updateHero);}
   bindDisclosures(host);
-  if(page==='detail'||page==='captured-detail')bindDetail();
+  if(page==='detail'||page==='captured-detail'){bindDetail();const panel=q('[role=tabpanel]');if(panel){for(const child of [...panel.children])if(child.querySelector('article'))child.remove();bindSocial(panel,path.split('/')[2],helpers);}}
   if(page==='search')bindSearch();
   // Read-only captured consent state for screenshot comparison; no acceptance action.
   if(page==='home'&&new URLSearchParams(location.search).get('inspection')==='reference-terms'){
@@ -298,7 +318,43 @@ export function show(path, helpers) {
 // Authenticated layouts use the same captured stylesheet and asset map.
 export function mountInteraction(html,helpers){closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;paintBrand(host);all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
 
-export function preview(path,helpers){const match=/^\/story\/([a-f0-9]{24})$/.exec(path);if(!match||!['home','character','collection','search'].includes(host.dataset.page))return false;const record=titlePreviews.titles[match[1]];if(!record)return false;openTitlePreview(record,match[1],{...helpers,assets});return true;}
+export function preview(path,helpers){
+ const match=/^\/(story|character)\/([^/?]+)$/.exec(path);if(!match)return false;
+ const id=match[2],d=catalog.find(d=>d.id===id);if(!d)return false;
+ const record=titlePreviews.titles[id]||capturedPreview(d)||fallbackPreview(d);
+ const dialog=openTitlePreview(record,id,{...helpers,assets});
+ dialog.setAttribute('aria-label',match[1]==='character'?'Character Information':'Story Information');
+ dialog.querySelector('h1')?.closest('a')?.setAttribute('data-full-info','');
+ bindSocial(dialog,id,helpers);return true;
+}
+function capturedPreview(d){
+ const html=evidence.pages[`/${d.type==='character'?'character':'story'}/${d.id}`];if(!html)return null;
+ const doc=new DOMParser().parseFromString(html,'text/html'),panel=doc.querySelector('[role="tabpanel"]');if(!panel)return null;
+ // Keep public information and intro, and let the local community layer own comments.
+ for(const child of [...panel.children])if(child.querySelector('article'))child.remove();
+ panel.removeAttribute('id');panel.removeAttribute('role');panel.className='captured-dialog-body';
+ panel.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+ panel.querySelectorAll('button').forEach(b=>{if(b.textContent.trim()==='New Play'){b.dataset.previewPlay=d.id;}else if(b.closest('[class~="group/collapse"]')){b.dataset.previewExpand='';}else if(b.getAttribute('role')==='combobox'){b.outerHTML='<button data-preview-avatar><span>Default avatar</span>⌄</button>';}});
+ const template=document.createElement('div');template.innerHTML=Object.values(titlePreviews.titles)[0].html;
+ const header=template.firstElementChild,footer=template.lastElementChild;
+ header.querySelector('h2').textContent=d.type==='character'?'Character Information':'Story Information';
+ footer.querySelectorAll('[data-preview-play]').forEach(b=>b.dataset.previewPlay=d.id);
+ panel.querySelector('h1')?.closest('a')?.setAttribute('data-full-info','');
+ return {type:d.type,html:header.outerHTML+panel.outerHTML+footer.outerHTML};
+}
+function fallbackPreview(d){
+ const kind=d.type==='character'?'Character':'Story';
+ const description=d.description||'The full description for this title has not been captured yet.';
+ return {type:d.type,html:`<header><h2>${kind} Information</h2><button data-preview-close aria-label="Close information">×</button></header><div class="public-detail"><div class="public-detail-top"><img src="${safe(source(d))}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1>${creatorLink(d.author)}<p>${safe(d.plays||'')}</p><p>${safe(description)}</p><button data-preview-bookmark="${safe(d.id)}" aria-label="Bookmark ${kind.toLowerCase()}">♡ Bookmark</button></div></div><section><h2>${kind} Description</h2><p>${safe(description)}</p></section>${d.id==='three-kingdoms'?'<section><h2>Chapters</h2><p>煮酒论英雄 · 草船借箭 · 华容道</p><p>规则决定结果，AI 生成情景与对白。三个章节分别存档。</p></section>':''}<section><h2>Settings</h2><p>Avatar Settings</p><button data-preview-avatar><span>Default avatar</span>⌄</button><p>Starting Scenarios</p><button data-preview-scenario><span>Default</span>⌄</button></section></div><footer><button data-preview-play="${safe(d.id)}" class="shell-white-button">New Play</button></footer>`};
+}
+export function openSearch(helpers,initial=''){
+ const dialog=openTitlePreview({html:`<header><button data-preview-close aria-label="Back to stories" class="dialog-back">‹</button><h2>Search</h2></header><div class="search-dialog-content"><label class="search-dialog-input"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search stories, characters and creators" placeholder="Search stories, characters, creators" maxlength="100"></label><div class="search-kind-tabs" role="tablist" aria-label="Search type">${['All','Story','Character','Creator'].map((label,i)=>`<button role="tab" data-search-kind="${label}" aria-selected="${i===0}">${label}</button>`).join('')}</div><div data-search-results aria-live="polite"></div></div><footer><small>Explore stories, characters and creators</small></footer>`},'search',{...helpers,assets});
+ dialog.classList.add('search-dialog');dialog.setAttribute('aria-label','Search');
+ const input=dialog.querySelector('input'),output=dialog.querySelector('[data-search-results]');let kind='All';
+ const draw=()=>{const query=input.value.trim().toLowerCase();const found=catalog.filter(d=>[d.title,d.author,d.description].join(' ').toLowerCase().includes(query)).filter(d=>kind==='Character'?d.type==='character':kind==='Story'?d.type!=='character':true);output.innerHTML=kind==='Creator'?`<h3>Creators</h3><div class="creator-search">${[...new Set(catalog.map(d=>d.author).filter(Boolean))].filter(name=>name.toLowerCase().includes(query)).map(name=>creatorLink(name)).join('')||'<p>No matching creators.</p>'}</div>`:`<h3>${query?found.length+' results':'Popular titles'}</h3>${grid(query?found:found.slice(0,12))}`;};
+ input.value=initial;input.oninput=draw;dialog.querySelectorAll('[data-search-kind]').forEach(b=>b.onclick=()=>{kind=b.dataset.searchKind;dialog.querySelectorAll('[data-search-kind]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));draw();});draw();input.focus({preventScroll:true});return dialog;
+}
+
 
 export function mountShell(html,helpers,page='account'){
  closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page=page;host.innerHTML=evidence.pages.home;paintBrand(host);
