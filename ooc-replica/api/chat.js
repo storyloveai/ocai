@@ -25,6 +25,11 @@ export default async function handler(req,res){
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [key,v]of windows)if(v.until<now)windows.delete(key);
  const window=windows.get(ip)||{until:now+60000,count:0};if(window.count>=8||active>=4||windows.size>=5000)return res.status(429).json({error:'Please wait before trying again'});window.count++;windows.set(ip,window);
  let packet;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>48000)throw new Error('Request too large');packet=buildPrompt(body);}catch{return res.status(400).json({error:'Invalid title or conversation'});}
+ // Catalogue authoring uses the user's requested DeepSeek model only. Normal chat retains fallback.
+ if(packet.mode==='author-catalog'){
+  config=providerConfig({...process.env,AI_PROVIDER:'deepseek',DEEPSEEK_MODEL:'deepseek-flash'});
+  if(!config)return res.status(503).json({error:'DeepSeek configuration is incomplete'});
+ }
  const requestId=randomUUID(),started=Date.now();let timedOut=false,finishReason,reasoningTokens=0,reasoningChunks=0,upstreamStatus=null,upstreamHeadersMs=null,firstTextMs=null,phase='connecting',hasText=false;
  const framed=String(req.headers.accept||'').includes('application/x-ndjson');
  const abort=new AbortController();const disconnect=()=>{if(!res.writableFinished)abort.abort();};res.on('close',disconnect);const timeout=setTimeout(()=>{timedOut=true;abort.abort();},165000);active++;
@@ -34,7 +39,7 @@ export default async function handler(req,res){
  let heartbeat;
  try{
   if(framed){headers();await status();heartbeat=setInterval(()=>status().catch(()=>{}),10000);}
-  const candidates=[config,fallbackConfig(config)].filter(Boolean);
+  const candidates=(packet.mode==='author-catalog'?[config]:[config,fallbackConfig(config)]).filter(Boolean);
   for(let attempt=0;attempt<candidates.length;attempt++){
   config=candidates[attempt];
   const attemptAbort=new AbortController(),attemptTimer=attempt<candidates.length-1?setTimeout(()=>attemptAbort.abort(),20000):null;
@@ -57,7 +62,7 @@ export default async function handler(req,res){
    phase='connecting';finishReason=undefined;reasoningTokens=0;
   }finally{clearTimeout(attemptTimer);}
   }
-  await emit({type:'done',requestId,finishReason});res.end();
+  await emit({type:'done',requestId,finishReason,...(packet.mode==='author-catalog'?{model:config.model,provider:config.name}: {})});res.end();
   console.info(JSON.stringify({event:'ai_response_complete',requestId,model:config.model,promptVersion:packet.promptVersion,firstTextMs,durationMs:Date.now()-started,finishReason,reasoningTokens}));
  }catch(error){if(abort.signal.aborted&&!timedOut)return;const failure=classifyError(error,{timedOut,finishReason,reasoningTokens});console.error(JSON.stringify({event:'ai_response_failed',requestId,code:failure.code,upstreamStatus,upstreamHeadersMs,phase,reasoningChunks,finishReason,reasoningTokens,outputTokenLimit:packet.maxOutputTokens,durationMs:Date.now()-started,model:config.model,promptVersion:packet.promptVersion}));if(framed&&!res.destroyed){await emit({type:'error',...failure,requestId});res.end();}else if(!res.headersSent&&!res.destroyed)res.status(failure.status).json({...failure,requestId});else if(!res.writableEnded)res.destroy();}
  finally{clearTimeout(timeout);clearInterval(heartbeat);res.off('close',disconnect);abort.abort();active--;}
