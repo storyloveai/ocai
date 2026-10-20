@@ -59,7 +59,9 @@ for(const [kind,doc]of [['story',templateDocument],['character',characterDocumen
   if(ids.length)collections.set(kind+':'+text(heading),[...new Set(ids)]);
  }
 }
-export const extraStories = catalog.map(d => ({...d, image:source(d),genre:'Others'}));
+export const extraStories = catalog.map(d => ({...d, image:source(d),genre:d.genre||'Others'}));
+const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.author,d.description,d.genre].filter(Boolean).join(' ').toLowerCase()]));
+for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 
 function hydrate() {
   all('img[data-asset]').forEach(img => {
@@ -119,7 +121,10 @@ function bindHome(page) {
     b.setAttribute('aria-label',text(b));b.dataset.refStep=text(b)==='Previous slide'?'-1':'1';b.onclick=()=>updateHero(Number(b.dataset.refStep));
   });
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
+    let pointerOrigin;
+    b.onpointerdown=()=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};};
     b.onclick=()=>{
+      const scroll=pointerOrigin||{x:window.scrollX||0,y:window.scrollY||0};pointerOrigin=null;host.style.overflowAnchor='none';
       const label=text(b);
       const buttons=all('button').filter(button=>context.categories.includes(text(button)));
       const carouselRegion=b.closest('[role="region"]')||b.parentElement.parentElement;
@@ -131,7 +136,7 @@ function bindHome(page) {
       let after=false;
       for(const child of container.children){if(child===region){after=true;continue;}if(after&&child!==panel){if(!child.hasAttribute('data-category-original-hidden'))child.dataset.categoryOriginalHidden=String(child.hidden);child.hidden=label==='Main'?child.dataset.categoryOriginalHidden==='true':true;}}
       panel.hidden=label==='Main';
-      buttons.forEach(button=>{const selected=text(button)===label;button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
+      buttons.forEach(button=>{const selected=text(button)===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
       if(label!=='Main'){
         const available=catalog.filter(d=>page==='character'?d.type==='character':d.type!=='character');
         const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>(context.data.find(x=>x.id===d.id)?.genre||d.genre)===label);
@@ -140,6 +145,7 @@ function bindHome(page) {
       }
       // Disabling scroll anchoring avoids a jump when the content below shrinks.
       host.style.overflowAnchor='none';
+      const restore=()=>window.scrollTo?.({left:scroll.x,top:scroll.y,behavior:'instant'});restore();window.requestAnimationFrame?.(restore);
     };
   });
   all('button').filter(b=>text(b).startsWith('#')).forEach(b=>b.onclick=()=>context.navigate('/search?q='+encodeURIComponent(text(b).slice(1))));
@@ -351,7 +357,7 @@ export function openSearch(helpers,initial=''){
  const dialog=openTitlePreview({html:`<header><button data-preview-close aria-label="Back to stories" class="dialog-back">‹</button><h2>Search</h2></header><div class="search-dialog-content"><label class="search-dialog-input"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search stories, characters and creators" placeholder="Search stories, characters, creators" maxlength="100"></label><div class="search-kind-tabs" role="tablist" aria-label="Search type">${['All','Story','Character','Creator'].map((label,i)=>`<button role="tab" data-search-kind="${label}" aria-selected="${i===0}">${label}</button>`).join('')}</div><div data-search-results aria-live="polite"></div></div><footer><small>Explore stories, characters and creators</small></footer>`},'search',{...helpers,assets});
  dialog.classList.add('search-dialog');dialog.setAttribute('aria-label','Search');
  const input=dialog.querySelector('input'),output=dialog.querySelector('[data-search-results]');let kind='All';
- const draw=()=>{const query=input.value.trim().toLowerCase();const found=catalog.filter(d=>[d.title,d.author,d.description].join(' ').toLowerCase().includes(query)).filter(d=>kind==='Character'?d.type==='character':kind==='Story'?d.type!=='character':true);output.innerHTML=kind==='Creator'?`<h3>Creators</h3><div class="creator-search">${[...new Set(catalog.map(d=>d.author).filter(Boolean))].filter(name=>name.toLowerCase().includes(query)).map(name=>creatorLink(name)).join('')||'<p>No matching creators.</p>'}</div>`:`<h3>${query?found.length+' results':'Popular titles'}</h3>${grid(query?found:found.slice(0,12))}`;};
+ const draw=()=>{const query=input.value.trim().replace(/^#+/,'').toLowerCase();const found=catalog.filter(d=>(searchIndex.get(d.id)||'').includes(query)).filter(d=>kind==='Character'?d.type==='character':kind==='Story'?d.type!=='character':true);output.innerHTML=kind==='Creator'?`<h3>Creators</h3><div class="creator-search">${[...new Set(catalog.map(d=>d.author).filter(Boolean))].filter(name=>name.toLowerCase().includes(query)).map(name=>creatorLink(name)).join('')||'<p>No matching creators.</p>'}</div>`:`<h3>${query?found.length+' results':'Popular titles'}</h3>${grid(query?found:found.slice(0,12))}`;};
  input.value=initial;input.oninput=draw;dialog.querySelectorAll('[data-search-kind]').forEach(b=>b.onclick=()=>{kind=b.dataset.searchKind;dialog.querySelectorAll('[data-search-kind]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));draw();});draw();input.focus({preventScroll:true});return dialog;
 }
 
