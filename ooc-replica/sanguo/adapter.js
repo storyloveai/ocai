@@ -70,6 +70,9 @@ function wrapTurn(fn){return async text=>{
 onFree=wrapTurn(onFree);onAnswer=wrapTurn(onAnswer);
 document.addEventListener('input',event=>{if(event.target.matches('#act input'))siteDraft=event.target.value;});
 document.addEventListener('click',event=>{if(siteTurn&&event.target.closest('.choice,.topic,.btn,.offer button,.seg button')){event.preventDefault();event.stopImmediatePropagation();}},true);
+const explicitActions={choose,pickSide,sayTopic,newGame};
+function clearDraft(fn){return(...args)=>{if(!siteTurn){siteDraft='';siteNotice='';}return fn(...args);};}
+choose=clearDraft(explicitActions.choose);pickSide=clearDraft(explicitActions.pickSide);sayTopic=clearDraft(explicitActions.sayTopic);newGame=clearDraft(explicitActions.newGame);
 const originalPanel=renderPanel;
-renderPanel=function(){originalPanel();const panel=$('#panel');if(V.panelOpen){panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-label',L().fab);}else{panel.removeAttribute('role');panel.removeAttribute('aria-modal');}};
+renderPanel=function(){const y=window.scrollY||0,x=window.scrollX||0;originalPanel();const panel=$('#panel');if(V.panelOpen){panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-label',L().fab);}else{panel.removeAttribute('role');panel.removeAttribute('aria-modal');}if(!V.panelOpen)window.scrollTo?.({top:y,left:x,behavior:'instant'});};
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&V.panelOpen){V.panelOpen=false;renderPanel();$('#fab')?.focus();}});
