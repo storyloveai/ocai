@@ -1,0 +1,13 @@
+{
+  "name": "sanguo-strategist-prototype",
+  "version": "1.9.1",
+  "private": true,
+  "description": "三国·谋士 卷一：长线剧情单元 + 事件账本 + 回响 + 叙事债务 + 模拟玩家（零依赖）",
+  "scripts": {
+    "start": "node server/server.js",
+    "build": "python3 tools/build.py",
+    "check": "node tools/check.js content/campaign.json 5000",
+    "e2e": "node tools/e2e.mjs /tmp"
+  },
+  "engines": { "node": ">=18" }
+}

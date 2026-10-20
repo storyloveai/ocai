@@ -1,0 +1,32 @@
+name: game-check
+
+on:
+  pull_request:
+    paths: ["game/**", ".github/workflows/game-check.yml"]
+  push:
+    branches: [main]
+    paths: ["game/**"]
+
+jobs:
+  sanguo:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: game/sanguo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build content and page
+        run: |
+          python3 content/campaign.py
+          python3 tools/build.py
+      - name: Committed build outputs are up to date
+        run: |
+          git diff --exit-code -- content/campaign.json web/index.html || (echo "::error::Run 'python3 content/campaign.py && python3 tools/build.py' in game/sanguo and commit the results." && exit 1)
+      - name: Static checks and simulated players
+        run: node tools/check.js content/campaign.json 3000
