@@ -1,0 +1,13 @@
+# 改到对方负责的部分时，GitHub 会自动请对方 review。分工说明见 AGENTS.md。
+# 后面的规则覆盖前面的规则。
+
+# 默认：网站工程（兰馨）
+*                @allliiita @Lindsey-cyber
+
+# 互动小说玩法（zhouzeya）
+/game/           @zhouzeya
+
+# 两边共同的约定，改动要双方都看
+/AGENTS.md       @zhouzeya @allliiita @Lindsey-cyber
+/CLAUDE.md       @zhouzeya @allliiita @Lindsey-cyber
+/.github/        @zhouzeya @allliiita @Lindsey-cyber

@@ -2,15 +2,15 @@
 
 这个仓库有两块，分开负责，通过固定接口对接。动手之前先确认你改的是哪一块。
 
-| 区域 | 内容 | 主要负责 | 先读 |
+| 区域 | 内容 | 负责人（GitHub） | 先读 |
 |---|---|---|---|
-| 网站 | `src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/` | 网站工程 | `README.md`、`docs/STORYLOVE-SETUP.md`、`docs/HANDOFF.md` |
-| 互动小说玩法 | `game/`（目前只有 `game/sanguo/`：三国·谋士 卷一） | 玩法设计 | `game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
+| 网站 | `src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/` | 兰馨（@allliiita / @Lindsey-cyber） | `README.md`、`docs/STORYLOVE-SETUP.md`、`docs/HANDOFF.md` |
+| 互动小说玩法 | `game/`（目前只有 `game/sanguo/`：三国·谋士 卷一） | zhouzeya（@zhouzeya） | `game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
 
 ## 协作流程
 
 - 不直接推 `main`。一项改动一个分支、一个 PR，PR 说明写清楚：改了什么、对方那边要不要跟着动。
-- 跨区域改动，比如为了接入游戏改网站的构建或 API，在 PR 里点名对方 review。
+- 跨区域改动，比如为了接入游戏改网站的构建或 API，在 PR 里点名对方 review。`.github/CODEOWNERS` 会自动请对方 review。
 - 网站接入游戏，只通过 `game/sanguo/docs/接入约定.md` 里列出的文件和接口。需要游戏那边改接口时，提 issue 或 PR，不要直接改 `game/` 里的引擎或内容。
 - 游戏那边不改网站的页面、路由、账户、支付和部署配置。
 
