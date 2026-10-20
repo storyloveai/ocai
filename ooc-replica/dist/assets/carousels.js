@@ -21,7 +21,7 @@ export function bindCarousels(root,moveHero){
    event.preventDefault();const now=Date.now();if(now<locked)return;
    if(now-last>180||Math.sign(distance)!==Math.sign(event.deltaX))distance=0;
    last=now;distance+=event.deltaX*(event.deltaMode===1?16:1);
-   if(Math.abs(distance)>=55){moveHero(distance>0?1:-1);distance=0;locked=now+500;}
+   if(Math.abs(distance)>=45){moveHero(distance>0?1:-1);distance=0;locked=now+260;}
   },{passive:false});
  }
 }

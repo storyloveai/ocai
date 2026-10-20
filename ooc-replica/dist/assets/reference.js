@@ -30,6 +30,7 @@ const legacy = document.querySelector('link[href="/style.css"]');
 let context, carousel, current = 1, activeFeatures=evidence.features;
 const featureIds = ['6ab3b736e2e641b7fbeb6312','6ab70e13499de207c7ca13c4','6aaad8746c080a5d3ff0402a','6ac749a7ab586f53935a023d','6ac749fc973e4d7b825f7520','6ab2217bfa760164cd6c2f12'];
 const palettes={
+  '三国演义 · 谋士':['rgb(169, 137, 95)','rgb(116, 128, 128)','rgb(43, 38, 24)'],
   'Sovereign SA':['rgb(165, 146, 126)','rgb(144, 137, 187)','rgb(0, 39, 28)'],
   'Dating the Strongest Hero':['rgb(65, 50, 75)','rgb(135, 103, 98)','rgb(209, 186, 224)'],
   'APEX Heroes Academy':['rgb(140, 160, 213)','rgb(186, 163, 143)','rgb(27, 36, 57)'],
@@ -109,8 +110,8 @@ function updateHero(step) {
   desktop.querySelector('h1 + p').textContent=f.description;
   desktop.querySelector('a').href=f.href;
   updateShelf(desktop,activeFeatures,current,source,updateHero);
-  if(step&&!matchMedia('(prefers-reduced-motion: reduce)').matches){for(const el of desktop.querySelectorAll('h1,h1 + p'))el.animate?.([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:480,easing:'cubic-bezier(.2,.7,.2,1)'});}
-  if(palettes[f.title])all('[style*="radial-gradient"]').forEach((e,i)=>e.style.color=palettes[f.title][i]);
+  if(step&&!matchMedia('(prefers-reduced-motion: reduce)').matches){for(const el of desktop.querySelectorAll('h1,h1 + p')){el.getAnimations?.().forEach(a=>a.cancel());el.animate?.([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'translateY(0)'}],{duration:200,easing:'ease-out'});}}
+  if(palettes[f.title])all('[style*="radial-gradient"]').forEach((e,i)=>{e.dataset.shelfGradient='';e.style.color=palettes[f.title][i];});
   const mobile=q('[data-mobile-track]');
   if(mobile)mobile.style.transform=`translate3d(${-current*100}%,0,0)`;
   all('[data-ref-dot]').forEach((b,i)=>b.setAttribute('aria-current',String(i===current)));
@@ -163,7 +164,7 @@ function bindHome(page) {
   const mobileTrack=mobileHeading?.parentElement?.parentElement?.parentElement;
   if(mobileTrack&&mobileTrack.children.length===activeFeatures.length){
     mobileTrack.dataset.mobileTrack='';
-    mobileTrack.style.transition='transform 650ms cubic-bezier(.22,.68,.15,1)';mobileTrack.style.transform=`translate3d(${-current*100}%,0,0)`;
+    mobileTrack.style.transition='transform 320ms cubic-bezier(.16,1,.3,1)';mobileTrack.style.transform=`translate3d(${-current*100}%,0,0)`;
     let start;
     mobileTrack.addEventListener('touchstart',e=>start=e.touches[0].clientX,{passive:true});
     mobileTrack.addEventListener('touchend',e=>{if(start!==undefined&&Math.abs(e.changedTouches[0].clientX-start)>35)updateHero(e.changedTouches[0].clientX<start?1:-1);},{passive:true});
