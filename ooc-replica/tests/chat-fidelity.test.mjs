@@ -45,6 +45,30 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.equal(document.querySelectorAll('.session-history-item').length,2);
   const sidebar=document.querySelector('[data-shrink]');[...sidebar.querySelectorAll('button')].find(button=>button.textContent.trim()==='Character').click();assert.ok(document.querySelector('.session-history-empty'));
   [...sidebar.querySelectorAll('button')].find(button=>button.textContent.trim()==='Search').click();assert.deepEqual(routes,['/search']);
+  // A mode switch stays on this URL, so it must remount without a no-op navigation.
+  values.set('ooc-response-mode','demo');show('/play/'+id,helpers);
+  assert.ok(document.querySelector('[data-mode]'));
+  document.querySelector('[data-mode]').click();
+  const mode=document.querySelector('[aria-label="Response mode"]');
+  mode.querySelector('[value=demo]').removeAttribute('selected');mode.querySelector('[value=ai]').setAttribute('selected','');
+  document.querySelector('.interaction-modal .save').click();
+  assert.equal(values.get('ooc-response-mode'),'ai');
+  assert.equal(document.querySelector('[data-mode]'),null);
+  assert.match(document.querySelector('[data-control=model]').textContent,/Gemini test Flash/);
+  assert.match(document.querySelector('#session-messages').textContent,/A reply/);
+  assert.deepEqual(routes,['/search'],'same-page mode switches do not rely on navigation');
+  // Profiles written through settings or migrated from older versions omit genres.
+  for(const genres of [undefined,null,'Fantasy']){
+   values.set('ooc-profile',{name:'Existing player',audience:'Female',...(genres===undefined?{}:{genres})});
+   assert.doesNotThrow(()=>show('/onboarding/3',helpers));
+   const fantasy=[...document.querySelectorAll('button')].find(button=>button.textContent.trim()==='Fantasy');
+   assert.equal(fantasy.getAttribute('aria-pressed'),'true');fantasy.click();
+   assert.ok(Array.isArray(values.get('ooc-profile').genres));
+   assert.equal(values.get('ooc-profile').genres.includes('Fantasy'),false);
+   assert.equal(values.get('ooc-profile').name,'Existing player');
+  }
+  values.set('ooc-profile',{name:'Existing player',genres:[]});show('/onboarding/3',helpers);
+  assert.equal([...document.querySelectorAll('button')].find(button=>button.textContent.trim()==='Fantasy').getAttribute('aria-pressed'),'false','an intentionally empty selection remains empty');
   show('/',helpers);
  }finally{
   for(const key of ['document','fetch','matchMedia'])if(original[key]===undefined)delete globalThis[key];else globalThis[key]=original[key];

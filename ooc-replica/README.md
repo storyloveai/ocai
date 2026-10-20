@@ -1,5 +1,7 @@
 # OOC interface replica
 
+Current maintenance status (2026-10-20): [fidelity pass and verified limitations](docs/verification/2026-10-20-fidelity-pass.md). This pass adds a typed private-draft editor and fixes ranking, onboarding and session-mode navigation. GitHub organization access has now been restored; see the linked report for release and browser acceptance status. Historical model/configuration notes below are not the source of truth for current production; use server configuration and `/api/config`.
+
 A standalone, interactive reproduction of the publicly observed OOC interface. The precision pass on 2026-10-14 uses complete read-only browser DOM captures, original CSS, 12 local font faces and 299 downloaded image variants. Run `npm ci && npm run build` to bundle the Firebase SDK.
 
 ## Run and deploy

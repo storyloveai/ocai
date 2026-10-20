@@ -1,3 +1,4 @@
+import {normalizeDraft} from './builder.js';
 import announcements from './announcements.js';
 import {mountShell} from './reference.js';
 import {symbol as icon} from './site-shell.js';
@@ -33,23 +34,22 @@ export function show(path,h){
   const suggest=root.querySelector('[data-suggestion-preference]');if(suggest)suggest.onchange=()=>{h.save('ooc-suggestions-visible',suggest.checked);status();};
  }else{
   const isCreated=path==='/my-title',isHistory=path==='/history',title=isCreated?'My Titles':isHistory?'History':'Favorites';
-  let tab='All',sort='Latest';
+  let tab='All',sort='Latest',visibility='All';
   const ids=isCreated?[]:isHistory?[...new Set([...h.read('ooc-history',[]),...h.data.filter(d=>h.read('ooc-session-v2-'+d.id,[]).length).map(d=>d.id)])]:h.read('ooc-favorites',[]);
-  const root=mountShell(`<div class="library-content"><header class="library-header"><h1>${title}</h1>${isCreated?'<button class="shell-white-button" data-community-create>Create Title</button>':''}</header><div class="library-tabs" role="tablist" aria-label="Title type">${['All','Story','Character',...(isCreated?['Unregistered']:[])].map(t=>`<button role="tab" data-library-type="${t}" aria-selected="${t==='All'}">${t}</button>`).join('')}</div><div class="library-controls"><span data-library-count>All 0</span><select aria-label="Sort titles"><option>Latest</option><option>Title A–Z</option></select></div><div class="library-items"></div></div>${footer()}`,h,'library');
+  const root=mountShell(`<div class="library-content"><header class="library-header"><h1>${title}</h1>${isCreated?'<button class="shell-white-button" data-community-create>Create Title</button>':''}</header><div class="library-tabs" role="tablist" aria-label="Title type">${['All','Story','Character',...(isCreated?['Unregistered']:[])].map(t=>`<button role="tab" data-library-type="${t}" aria-selected="${t==='All'}">${t}</button>`).join('')}</div><div class="library-controls"><span data-library-count>All 0</span>${isCreated?'<select aria-label="Title visibility"><option>All</option><option>Public</option><option>Private</option><option>Link Only</option></select>':''}<select aria-label="Sort titles"><option>Latest</option><option>Title A–Z</option></select></div><div class="library-items"></div></div>${footer()}`,h,'library');
   function draw(){
-   let entries=isCreated?h.read('ooc-custom',[]).map((d,i)=>({...d,id:String(i),draft:true})):ids.map(id=>h.data.find(d=>d.id===id)).filter(Boolean);
+   let entries=isCreated?h.read('ooc-custom',[]).map((d,i)=>({...normalizeDraft(d,i),draft:true})):ids.map(id=>h.data.find(d=>d.id===id)).filter(Boolean);
    entries=entries.filter(d=>tab==='All'||tab==='Unregistered'&&d.draft||tab==='Character'&&d.type==='character'||tab==='Story'&&d.type!=='character');
+   if(isCreated&&['Public','Link Only'].includes(visibility))entries=[];
+   if(isCreated&&sort==='Latest')entries.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
    if(sort==='Title A–Z')entries.sort((a,b)=>a.title.localeCompare(b.title));
    root.querySelector('[data-library-count]').textContent=`${tab} ${entries.length}`;
-   root.querySelector('.library-items').innerHTML=entries.length?(isCreated?entries.map(d=>`<article class="library-draft"><h2>${safe(d.title)}</h2><p>${safe(d.description)}</p><small>Unregistered draft</small></article>`).join(''):itemsMarkup(entries,isHistory)):`<div class="shell-empty">${icon(isHistory?'chat':isCreated?'book':'heart',40)}${isCreated?'There are no titles.':isHistory?'No recent conversations.':'No favorites yet.'}<br><a href="/">Explore stories</a></div>`;
+   root.querySelector('.library-items').innerHTML=entries.length?(isCreated?entries.map(d=>`<article class="library-draft"><a href="/builder/${d.type}/${encodeURIComponent(d.id)}" aria-label="Edit ${safe(d.title||'Untitled')}">${d.image?`<img src="${safe(d.image)}" alt="">`:''}<h2>${safe(d.title||'Untitled')}</h2><p>${safe(d.description)}</p><small>${d.type==='character'?'Character':'Story'} · Unregistered draft · Edit</small></a></article>`).join(''):itemsMarkup(entries,isHistory)):`<div class="shell-empty">${icon(isHistory?'chat':isCreated?'book':'heart',40)}${isCreated?'There are no titles yet. Create your first title!':isHistory?'No recent conversations.':'No favorites yet.'}<br>${isCreated?'<a href="/builder">Create Title</a>':'<a href="/">Explore stories</a>'}</div>`;
   }
-  root.querySelectorAll('[data-library-type]').forEach(b=>b.onclick=()=>{tab=b.dataset.libraryType;root.querySelectorAll('[data-library-type]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));draw();});
-  root.querySelector('select').onchange=e=>{sort=e.target.value;draw();};draw();
-  const create=root.querySelector('[data-community-create]');if(create)create.onclick=()=>{
-   h.show('<h2>Create Title</h2><form data-community-draft><label for="draft-title">Title</label><input id="draft-title" name="title" placeholder="Title" required maxlength="120"><label for="draft-description">Description</label><textarea id="draft-description" name="description" placeholder="Introduce your story" rows="5" maxlength="2000" required></textarea><button class="shell-white-button" type="submit">Save draft</button><p>This draft is private to your account.</p></form>');
-   const form=document.querySelector('[data-community-draft]');form.onsubmit=e=>{e.preventDefault();const title=form.elements.title.value.trim(),description=form.elements.description.value.trim();if(!title||!description)return;h.save('ooc-custom',[...h.read('ooc-custom',[]),{title,description}]);form.closest('dialog').close();draw();};
-  };
+  const tabs=[...root.querySelectorAll('[data-library-type]')];tabs.forEach((b,i)=>{b.tabIndex=i===0?0:-1;b.onclick=()=>{tab=b.dataset.libraryType;tabs.forEach(x=>{x.setAttribute('aria-selected',String(x===b));x.tabIndex=x===b?0:-1;});draw();};b.onkeydown=e=>{const next=e.key==='ArrowRight'?(i+1)%tabs.length:e.key==='ArrowLeft'?(i+tabs.length-1)%tabs.length:e.key==='Home'?0:e.key==='End'?tabs.length-1:null;if(next!==null){e.preventDefault();tabs[next].click();tabs[next].focus();}};});
+  root.querySelector('[aria-label="Sort titles"]').onchange=e=>{sort=e.target.value;draw();};const visibilitySelect=root.querySelector('[aria-label="Title visibility"]');if(visibilitySelect)visibilitySelect.onchange=e=>{visibility=e.target.value;draw();};draw();
+  const create=root.querySelector('[data-community-create]');if(create)create.onclick=()=>h.navigate('/builder');
  }
- document.title=(path==='/profile'?'MY':path==='/my-title'?'My Titles':path==='/history'?'History':path==='/liked'?'Favorites':'Settings')+' · OOC';
+ document.title=(path==='/profile'?'MY':path==='/my-title'?'My Titles':path==='/history'?'History':path==='/liked'?'Favorites':'Settings')+' · Storylove';
  return true;
 }

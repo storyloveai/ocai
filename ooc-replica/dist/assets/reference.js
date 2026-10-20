@@ -272,7 +272,7 @@ export function show(path, helpers) {
       const kind=new URLSearchParams(location.search).get('type')==='character'?'character':'story';
       const available=catalog.filter(d=>kind==='character'?d.type==='character':d.type!=='character');
       const ids=collections.get(kind+':'+name);
-      let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):available.filter(d=>context.data.find(v=>v.id===d.id)?.genre===name);
+      let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):['New Ranking','Rankings','Today'].includes(name)?sortStories(available,name==='New Ranking'?'newest':'played'):available.filter(d=>context.data.find(v=>v.id===d.id)?.genre===name);
       if(!items.length&&!context.categories.includes(name))items=available;
       if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,...items.filter(d=>d.id!==threeKingdoms.id)];
       content.innerHTML=`<div class="precision-collection"><a href="${kind==='character'?'/character':'/'}">‹ Back</a><div class="collection-heading"><h1>${safe(name)}</h1><label>Sort by <select aria-label="Sort collection"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><p class="collection-count">${items.length} ${kind==='character'?'characters':'stories'}</p><div data-collection-grid>${items.length?grid(items,name==='Top Ranked'):'<p>No titles in this category yet.</p>'}</div></div>`;
