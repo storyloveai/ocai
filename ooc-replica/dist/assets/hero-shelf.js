@@ -14,7 +14,7 @@ export function updateShelf(hero,features,index,source,move){
   stage.addEventListener('pointerup',end);stage.addEventListener('pointercancel',()=>{start=null;dragged=false;stage.classList.remove('is-dragging');stage.style.removeProperty('--shelf-drag');});
   stage.addEventListener('click',e=>{if(dragged){e.preventDefault();e.stopPropagation();dragged=false;}},true);
   stage.addEventListener('dragstart',e=>e.preventDefault());
-  stage.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();move(e.key==='ArrowRight'?1:-1);}});
+  stage.addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();move(e.key==='ArrowRight'?1:-1);stage.querySelector('[aria-current="true"]')?.focus({preventScroll:true});}});
  }
  shelf.cards.forEach((card,i)=>{
   let offset=(i-index+features.length)%features.length;if(offset>features.length/2)offset-=features.length;

@@ -19,7 +19,7 @@ test('notification sidebar copies the Credits typography rather than inheriting 
 test('announcement back returns to its owned source entry and direct visits have safe fallbacks',()=>{
  let back=0;const destinations=[],h={navigate:path=>destinations.push(path)};
  returnFromAnnouncement('/announcement/id',h,{length:4,state:{storydateNavigation:true,from:'/character?genre=Fantasy'},back(){back++;}});assert.equal(back,1);assert.deepEqual(destinations,[]);
- returnFromAnnouncement('/announcement/id',h,{length:4,state:null});returnFromAnnouncement('/announcement',h,{length:1,state:null});returnFromAnnouncement('/announcement/id',h,{length:4,state:{storydateNavigation:true,from:'//elsewhere.example'}});assert.deepEqual(destinations,['/announcement','/','/announcement']);
+ returnFromAnnouncement('/announcement/id',h,{length:4,state:null});returnFromAnnouncement('/announcement',h,{length:1,state:null});returnFromAnnouncement('/announcement/id',h,{length:4,state:{storydateNavigation:true,from:'//elsewhere.example'}});returnFromAnnouncement('/announcement',h,{length:4,state:{storydateNavigation:true,from:'/announcement/direct-entry'}});assert.deepEqual(destinations,['/announcement','/','/announcement','/']);
 });
 test('shelf keeps cover nodes while crossing slides and wrapping; a drag triggers exactly one move',()=>{
  const {document,window}=parseHTML('<section><div data-hero-desktop><div><div><img src="old.webp"></div></div></div></section>');globalThis.document=document;

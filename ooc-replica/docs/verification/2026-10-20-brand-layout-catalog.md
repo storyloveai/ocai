@@ -22,3 +22,9 @@ The original home loaded in the supported cloud browser. Its current Terms dialo
 Local validation: `npm run build`, `npm run check` — 99 tests pass. Added checks cover book badge persistence, Notification typography inheritance, owned navigation/direct-entry fallbacks, persistent cover nodes across wraparound and drag suppression, and completeness/uniqueness/pending status of all 80 draft/image jobs. Production browser acceptance is reported after deployment. Mobile viewport/physical handset and fresh signed-in account UI are not certified by these node fixtures.
 
 Existing Firebase, Stripe, DeepSeek/Gemini and Three Kingdoms configuration/content remain unchanged. No keys are read, edited or committed; no real payment is made.
+
+## Production acceptance
+
+Production `fc27b3a` reached READY with `project-zhmv2.vercel.app` attached (88s build). Browser verified six persistent hero cover nodes, 650ms cover transitions, matching active cover/Explore href, book badge SVG URLs, home announcement → Back → home, and direct announcement → list. Follow-up hardens direct-entry list Back so it cannot cycle to the detail, and keeps keyboard focus on the newly active cover. The signed-in cloned sidebar typography is verified by DOM fixtures; mobile/physical handset remains unverified. Original catalogue content remains unchanged pending image production.
+
+Session-sidebar production check: Notifications and Credits both measure 14px with 21px line-height. Opened Notifications, switched to Comment, closed the dialog; the play-session URL was unchanged. No model generation or charge was initiated.
