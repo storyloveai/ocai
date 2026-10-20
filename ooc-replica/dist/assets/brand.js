@@ -4,6 +4,6 @@ export function paintBrand(root=document){
   image.src=compact?'/assets/storydate-mark.svg':'/assets/storydate-logo.svg';image.alt='StoryDate';
   image.width=compact?32:164;image.height=compact?32:40;
   image.classList.add('storydate-brand');image.classList.toggle('storydate-brand-compact',compact);
-  image.style.objectFit='contain';image.style.maxWidth='100%';
+  image.style.objectFit='contain';image.style.maxWidth='100%';image.style.height=(compact?32:40)+'px';
  }
 }
