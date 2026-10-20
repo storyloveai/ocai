@@ -1,6 +1,6 @@
 import {randomUUID} from 'node:crypto';
 import {once} from 'node:events';
-import {streamText} from 'ai';
+import {streamText,Output} from 'ai';
 import {buildPrompt} from '../server/prompt-engine.js';
 import {providerConfig,fallbackConfig,createModel,generationOptions} from '../server/provider.js';
 
@@ -44,7 +44,7 @@ export default async function handler(req,res){
   config=candidates[attempt];
   const attemptAbort=new AbortController(),attemptTimer=attempt<candidates.length-1?setTimeout(()=>attemptAbort.abort(),20000):null;
   try{
-  const result=streamText({model:createModel(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...generationOptions(config),maxRetries:0,abortSignal:AbortSignal.any([abort.signal,attemptAbort.signal]),onError:()=>{}});
+  const result=streamText({model:createModel(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...(packet.mode==='author-catalog'?{output:Output.json()}:{}),...generationOptions(config),maxRetries:0,abortSignal:AbortSignal.any([abort.signal,attemptAbort.signal]),onError:()=>{}});
   for await(const part of result.stream){
    if(abort.signal.aborted)break;
    if(part.type==='error')throw part.error;
