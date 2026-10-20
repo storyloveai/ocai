@@ -20,8 +20,8 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  }});
  await import('../dist/app.js');
  assert.ok(document.querySelector('#precision-view a[href^="/story/"]'));
- assert.equal(document.querySelector('[data-hero-desktop] h1').textContent,'三国演义 · 命运由你');
- assert.equal(document.querySelector('section a [data-name]')?.textContent,'三国演义 · 命运由你');
+ assert.equal(document.querySelector('[data-hero-desktop] h1').textContent,'三国演义 · 谋士');
+ assert.equal(document.querySelector('section a [data-name]')?.textContent,'三国演义 · 谋士');
  assert.equal(document.querySelector('section a [data-name]').closest('[aria-roledescription="slide"]').querySelectorAll('a[data-unused],a [data-name]').length,1);
  for(const img of document.querySelector('section a [data-name]').closest('a').querySelectorAll('img'))if(img.alt!=='ORIGINAL')assert.equal(img.getAttribute('src'),'/assets/three-kingdoms-cover.svg');
  assert.equal(document.body.hasAttribute('data-booting'),false);

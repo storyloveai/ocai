@@ -1,0 +1,27 @@
+import {readFile,writeFile} from 'node:fs/promises';
+const here=new URL('./',import.meta.url);
+export async function buildSanguo(){
+ const game=new URL('../../game/sanguo/',here);
+ let html=await readFile(new URL('web/index.html',game),'utf8');
+ const adapter=await readFile(new URL('adapter.js',here),'utf8');
+ const css=await readFile(new URL('theme.css',here),'utf8');
+ function patch(from,to){if(!html.includes(from))throw Error('Sanguo upstream integration marker missing: '+from.slice(0,70));html=html.replace(from,to);}
+ // Only adapt the published standalone document; canonical content and engine are untouched.
+ patch('const store = {', 'const upstreamStore = {');
+ patch('const settings = Object.assign', `const store = siteStore;\nconst settings = Object.assign`);
+ patch('lang: /^zh/i.test(navigator.language || "") ? "zh" : "en"','lang: "zh"');
+ patch('const creatorAllowed = () => RT.canEdit || location.hash === "#creator";', 'const creatorAllowed = () => false;');
+ patch('/* ---------------- boot ---------------- */',adapter+'\n/* ---------------- boot ---------------- */');
+ // Start only after the account-scoped parent has supplied its snapshot.
+ patch('const BUILD = "strategist-v2.0";',`function startCampaign(siteStore) {\nconst BUILD = "strategist-v2.0";`);
+ const end=html.lastIndexOf('</script>');
+ html=html.slice(0,end)+'}\n'+await readFile(new URL('bridge.js',here),'utf8')+'\n'+html.slice(end);
+ html=html.replace('</head>','<link rel="icon" href="/assets/storydate-mark.svg"></head>');
+ html=html.replace('</style>','</style><style>'+css+'</style>');
+ // The local prototype footer promises telemetry which this public integration does not collect.
+ html=html.replace('这是内部试玩原型：选择会被匿名记录，用来改进内容。','进度与图鉴使用 StoryDate 账号存档；剧情结果由规则决定。');
+ html=html.replace('This is an internal playtest prototype: choices are logged anonymously to improve the content.','Progress and the gallery use your StoryDate save. Rules decide story outcomes.');
+ await writeFile(new URL('../dist/assets/sanguo-campaign.html',here),html);
+ await writeFile(new URL('../server/sanguo-campaign.json',here),await readFile(new URL('content/campaign.json',game)));
+ await writeFile(new URL('../server/sanguo-core.cjs',here),await readFile(new URL('engine/campaign_core.js',game)));
+}

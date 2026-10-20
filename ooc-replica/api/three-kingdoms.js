@@ -20,12 +20,12 @@ export function buildStage(body){
  if(body.phase==='express'&&body.lang==='en')system=system.replace('1 to 4 blocks. 120 words or fewer in total.','4 to 7 blocks. 220 to 350 words. Add concrete scene atmosphere and observable gestures without inventing facts or player decisions.');
  return {system,prompt:JSON.stringify(context)};
 }
-export function createHandler({config=providerConfig,model=createModel,generate=generateText,stream=streamText}={}){return async(req,res)=>{
+export function createHandler({config=providerConfig,model=createModel,generate=generateText,stream=streamText,stage=buildStage,outputSchema=null,validateOutput=null,hasVisible=out=>out?.blocks?.some(b=>b?.text)}={}){return async(req,res)=>{
  res.setHeader('Cache-Control','no-store');
  if(req.method!=='POST')return res.status(405).json({code:'method_not_allowed'});
  if(req.headers.origin!==`https://${req.headers.host}`)return res.status(403).json({code:'same_origin_required'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({code:'json_required'});
- let packet,body;try{if(Buffer.byteLength(JSON.stringify(req.body)||'')>48000)throw Error();body=typeof req.body==='string'?JSON.parse(req.body):req.body;packet=buildStage(body);}catch{return res.status(400).json({code:'invalid_request'});}
+ let packet,body;try{if(Buffer.byteLength(JSON.stringify(req.body)||'')>48000)throw Error();body=typeof req.body==='string'?JSON.parse(req.body):req.body;packet=stage(body);}catch{return res.status(400).json({code:'invalid_request'});}
  const cfg=config();if(!cfg)return res.status(503).json({code:'sampling_disabled'});
  const now=Date.now(),ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0];for(const [key,w]of windows)if(w.until<now)windows.delete(key);
  const window=windows.get(ip)||{count:0,until:now+60000};if(window.count>=30||active>=4||windows.size>5000)return res.status(429).json({code:'rate_limited'});window.count++;windows.set(ip,window);active++;
@@ -40,18 +40,19 @@ export function createHandler({config=providerConfig,model=createModel,generate=
   const params={model:model(current),...packet,...options,maxOutputTokens:body.phase==='express'?2800:1500,maxRetries:0,abortSignal:AbortSignal.any([controller.signal,attemptAbort.signal])};
   if(body.phase==='express'&&String(req.headers.accept||'').includes('application/x-ndjson')){
    res.setHeader('Content-Type','application/x-ndjson; charset=utf-8');res.setHeader('X-Content-Type-Options','nosniff');
-   const schema=jsonSchema({type:'object',properties:{blocks:{type:'array',items:{type:'object',properties:{type:{type:'string',enum:['narration','dialogue']},speaker:{type:['string','null']},text:{type:'string'}},required:['type','speaker','text'],additionalProperties:false}}},required:['blocks'],additionalProperties:false});
+   const schema=outputSchema||jsonSchema({type:'object',properties:{blocks:{type:'array',items:{type:'object',properties:{type:{type:'string',enum:['narration','dialogue']},speaker:{type:['string','null']},text:{type:'string'}},required:['type','speaker','text'],additionalProperties:false}}},required:['blocks'],additionalProperties:false});
    const result=stream({...params,output:Output.object({schema}),onError:()=>{}});
    const emit=async value=>{if(res.destroyed)return; if(!res.write(JSON.stringify(value)+'\n'))await once(res,'drain',{signal:controller.signal});res.flush?.();};
    await emit({type:'status'});
-   for await(const partial of result.partialOutputStream){if(controller.signal.aborted)break;if(partial?.blocks?.some(b=>b?.text)){visible=true;clearTimeout(attemptTimer);}await emit({type:'partial',output:partial});}
+   for await(const partial of result.partialOutputStream){if(controller.signal.aborted)break;if(hasVisible(partial)){visible=true;clearTimeout(attemptTimer);}await emit({type:'partial',output:partial});}
    if(controller.signal.aborted)throw Error('Stopped');
-   await emit({type:'done',output:await result.output});res.end();return;
+   const output=await result.output;if(validateOutput)validateOutput(output,body);await emit({type:'done',output});res.end();return;
   }
   const result=await generate(params);
   const output=parseModelJSON(result.text);
-  if(body.phase==='understand'&&!['talk','action','accuse','clarify','unsupported','contradiction','unclear','meta'].includes(output?.kind))throw Error('Invalid intent');
-  if(body.phase==='express'&&!Array.isArray(output?.blocks))throw Error('Invalid blocks');
+  if(validateOutput)validateOutput(output,body);
+  if(!validateOutput&&body.phase==='understand'&&!['talk','action','accuse','clarify','unsupported','contradiction','unclear','meta'].includes(output?.kind))throw Error('Invalid intent');
+  if(!validateOutput&&body.phase==='express'&&!Array.isArray(output?.blocks))throw Error('Invalid blocks');
   return res.status(200).json({output});
   }catch(error){if(visible||controller.signal.aborted||attempt===candidates.length-1)throw error;console.warn(JSON.stringify({event:'three_kingdoms_provider_fallback',from:current.name,to:candidates[attempt+1].name}));}finally{clearTimeout(attemptTimer);}
   }
