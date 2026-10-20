@@ -14,3 +14,7 @@ dist/assets/core-assets-index.json
 dist/assets/catalog-assets-index.json
 
 dist/assets/three-kingdoms.html
+
+dist/assets/sanguo-campaign.html
+server/sanguo-campaign.json
+server/sanguo-core.cjs

@@ -1,7 +1,9 @@
+import {buildSanguo} from '../sanguo/build.mjs';
 import {readFile,writeFile} from 'node:fs/promises';
 import prompts from './prompts.js';
 const root=new URL('./',import.meta.url);
 export async function buildThreeKingdoms(){
+ await buildSanguo();
  const [src,packs,engine]=await Promise.all(['app.html','packs.json','engine.cjs'].map(p=>readFile(new URL(p,root),'utf8')));
  const safe=x=>JSON.stringify(x).replace(/<\//g,'<\\/');
  const body=src.replace('/*__PACKS__*/',safe(JSON.parse(packs))).replace('/*__PROMPTS__*/',safe(prompts)).replace('/*__ENGINE__*/',engine);
