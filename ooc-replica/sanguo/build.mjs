@@ -1,8 +1,11 @@
+import {createHash} from 'node:crypto';
 import {readFile,writeFile} from 'node:fs/promises';
 const here=new URL('./',import.meta.url);
 export async function buildSanguo(){
- const game=new URL('../../game/sanguo/',here);
- let html=await readFile(new URL('web/index.html',game),'utf8');
+ const game=new URL('upstream/',here);
+ const manifest=JSON.parse(await readFile(new URL('manifest.json',game),'utf8'));
+ for(const [path,sha]of Object.entries(manifest.blobs)){const file=await readFile(new URL(path,game));const actual=createHash('sha1').update('blob '+file.length+'\0').update(file).digest('hex');if(actual!==sha)throw Error('Upstream campaign checksum mismatch: '+path);}
+ let html=await readFile(new URL('index.html',game),'utf8');
  const adapter=await readFile(new URL('adapter.js',here),'utf8');
  const css=await readFile(new URL('theme.css',here),'utf8');
  function patch(from,to){if(!html.includes(from))throw Error('Sanguo upstream integration marker missing: '+from.slice(0,70));html=html.replace(from,to);}
@@ -22,6 +25,6 @@ export async function buildSanguo(){
  html=html.replace('这是内部试玩原型：选择会被匿名记录，用来改进内容。','进度与图鉴使用 StoryDate 账号存档；剧情结果由规则决定。');
  html=html.replace('This is an internal playtest prototype: choices are logged anonymously to improve the content.','Progress and the gallery use your StoryDate save. Rules decide story outcomes.');
  await writeFile(new URL('../dist/assets/sanguo-campaign.html',here),html);
- await writeFile(new URL('../server/sanguo-campaign.json',here),await readFile(new URL('content/campaign.json',game)));
- await writeFile(new URL('../server/sanguo-core.cjs',here),await readFile(new URL('engine/campaign_core.js',game)));
+ await writeFile(new URL('../server/sanguo-campaign.json',here),await readFile(new URL('campaign.json',game)));
+ await writeFile(new URL('../server/sanguo-core.cjs',here),await readFile(new URL('campaign_core.js',game)));
 }
