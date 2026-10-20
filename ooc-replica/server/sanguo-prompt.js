@@ -18,7 +18,8 @@ export function buildCampaignStage(body){
  const target=task==='answer'?n.ask?.who:c.target||cast[0];
  if(target&&!cast.includes(target))throw Error('Character absent');
  if(task==='answer'&&!n.ask)throw Error('No question');
- const options=task==='answer'?n.ask.answers.map(a=>({id:a.id,meaning:t(a.means)})):(n.talk?CC.topics(campaign,state).map(x=>({id:x.id,meaning:t(x.t.label),locked:x.locked})):CC.choices(campaign,state).map(x=>({id:x.id,meaning:t(x.c.label),locked:x.locked})));
+ if(n.talk)state.used={[n.id]:(Array.isArray(c.used)?c.used:[]).filter(id=>n.talk.topics.some(t=>t.id===id))};
+ const options=task==='answer'?n.ask.answers.map(a=>({id:a.id,meaning:t(a.means)})):(n.talk?(c.turns>0?CC.topics(campaign,state):[]).map(x=>({id:x.id,meaning:t(x.t.label),locked:x.locked})):CC.choices(campaign,state).map(x=>({id:x.id,meaning:t(x.c.label),locked:x.locked})));
  const char=campaign.chars[target];
  const memories=(Array.isArray(c.memories)?c.memories:[]).slice(-3).map(x=>({scene:campaign.nodes[x.node]?t(campaign.nodes[x.node].title):'',words:str(x.text,60)}));
  const promises=(Array.isArray(c.promises)?c.promises:[]).slice(-4).map(x=>({kind:['protect','loyalty','other'].includes(x.kind)?x.kind:'other',words:str(x.text,40)}));
