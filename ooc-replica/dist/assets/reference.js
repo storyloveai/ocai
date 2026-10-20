@@ -343,9 +343,12 @@ function capturedPreview(d){
  panel.querySelectorAll('button').forEach(b=>{if(b.textContent.trim()==='New Play'){b.dataset.previewPlay=d.id;}else if(b.closest('[class~="group/collapse"]')){b.dataset.previewExpand='';}else if(b.getAttribute('role')==='combobox'){b.outerHTML='<button data-preview-avatar><span>Default avatar</span>⌄</button>';}});
  const template=document.createElement('div');template.innerHTML=Object.values(titlePreviews.titles)[0].html;
  const header=template.firstElementChild,footer=template.lastElementChild;
- header.querySelector('h2').textContent=d.type==='character'?'Character Information':'Story Information';
+ header.querySelector('h2').textContent=d.type==='character'?'Character Information':'Story Information';header.querySelector('[data-preview-close]')?.setAttribute('aria-label',d.type==='character'?'Close Character Information':'Close Story Information');
  footer.querySelectorAll('[data-preview-play]').forEach(b=>b.dataset.previewPlay=d.id);
  panel.querySelector('h1')?.closest('a')?.setAttribute('data-full-info','');
+ for(const a of panel.querySelectorAll('a'))if(a.textContent.trim().startsWith('#'))a.href='/search?q='+encodeURIComponent(a.textContent.trim().slice(1));
+ const actions=[...panel.querySelectorAll('button')].filter(b=>!b.textContent.trim()&&b.querySelector('svg'));
+ actions.forEach((b,i)=>{if(i===0){b.dataset.previewBookmark=d.id;b.setAttribute('aria-label','Bookmark character');}else{b.dataset.previewMore='';b.setAttribute('aria-label','Character options');}});
  return {type:d.type,html:header.outerHTML+panel.outerHTML+footer.outerHTML};
 }
 function fallbackPreview(d){
