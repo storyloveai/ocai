@@ -5,7 +5,7 @@
 | 区域 | 内容 | 负责人（GitHub） | 先读 |
 |---|---|---|---|
 | 网站 | `src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/` | 兰馨（@allliiita / @Lindsey-cyber） | `README.md`、`docs/STORYLOVE-SETUP.md`、`docs/HANDOFF.md` |
-| 互动小说玩法 | `game/`（目前只有 `game/sanguo/`：三国·谋士 卷一） | zhouzeya（@zhouzeya） | `game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
+| 互动小说玩法 | `game/`（目前只有 `game/sanguo/`：三国·谋士 卷一） | zhouzeya（@666ZHOUZEYA） | `game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
 
 ## 协作流程
 
