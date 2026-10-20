@@ -53,7 +53,7 @@ renderStory=function(){
  const key=el=>el.dataset.li+'|'+el.tagName+'|'+el.className.replace(' fresh','');
  const previous=new Map([...document.querySelectorAll('#story [data-li]')].map(el=>[key(el),el]));
  originalStory();
- for(const el of document.querySelectorAll('#story [data-li]')){const old=previous.get(key(el));if(old&&old.textContent===el.textContent)el.replaceWith(old);}
+ for(const el of document.querySelectorAll('#story [data-li]')){if(!el.isConnected)continue;const old=previous.get(key(el));if(old&&old.textContent===el.textContent)el.replaceWith(old);}
  const pending=[];
  document.querySelectorAll('#story .fresh .prose,#story .fresh .reply').forEach(el=>{const text=el.textContent,k=(G?.run||'')+'|'+el.closest('[data-li]')?.dataset.li+'|'+settings.lang+'|'+text;if(seen.has(k))return;seen.add(k);if(!text||siteTurn?.streamedReply===text||!sitePacer||reduced())return;el.dataset.siteFull=text;el.textContent='';pending.push([el,text]);});
  if(pending.length){const controller=new AbortController();siteTyping=controller;const stop=h('button',{type:'button',class:'tbtn','data-site-finish':'',onclick:finishTyping},settings.lang==='zh'?'显示全部':'Show all');$('#story').append(stop);

@@ -1,5 +1,7 @@
 # OOC interface replica
 
+Three Kingdoms update (2026-10-20): [team branch comparison and v2.0 campaign integration](sanguo/SOURCE.md). The default play route now follows Ziheng across eight chapters; the classic three chapters and their saves remain available. Website build and 94 regression checks pass; upstream static checks and 5,000 random runs pass.
+
 Latest maintenance: [dialogs, AI authoring and creator interactions](docs/verification/2026-10-20-dialogs-authoring-community.md).
 
 Current maintenance status (2026-10-20): [fidelity pass and verified limitations](docs/verification/2026-10-20-fidelity-pass.md). This pass adds a typed private-draft editor and fixes ranking, onboarding and session-mode navigation. GitHub organization access is restored. Code commit `d89fbe2` is deployed to production; the linked report records desktop browser acceptance and remaining mobile/full-site gaps. Historical model/configuration notes below are not the source of truth for current production; use server configuration and `/api/config`.
