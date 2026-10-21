@@ -45,7 +45,7 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
     # ---------- a gate: Guan Yu won't accept the vouch of someone who insulted him ----------
     v = next(c for c in byid["c8_huarong"]["choices"] if c["id"] == "vouch")
     v["req"] = ALL(v["req"], I("guanyu", "offended", "<", 2))
-    v["hint"] = T("需要关羽的敬重 ≥ 3 或刘备的信任 ≥ 6，且关羽没有被你冒犯过两次以上", "Needs Guan Yu's respect ≥ 3 or Liu Bei's trust ≥ 6, and not to have offended Guan Yu twice")
+    v["hint"] = T("需要关羽的敬重在「器重」以上，或刘备的信任在「倚重」以上，且关羽没有被你冒犯过两次以上", "Needs Guan Yu's respect at Valued or above, or Liu Bei's trust at Relied on or above, and not to have offended Guan Yu twice")
 
     # ---------- crises ----------
     def crisis(id, title, intro, choices, when, order):
@@ -58,7 +58,7 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
                 [setv("flag.exiled"), setv("flag.mi_heng")]),
          choice("kneel", "strategy", T("跪在丞相府门前请罪。", "Kneel at the Chancellor's gate and beg forgiveness."),
                 T("你跪了一整天。傍晚，曹操让人传话：『起来吧。孤要的是会说话的人，不是不会说话的人。』", "You kneel all day. At dusk Cao sends word: 'Get up. I want men who know how to speak—not men who don't know when to stop.'"),
-                [rel("caocao", "esteem", -2), add("renown.rash", -2)], req=R("caocao", "esteem", ">=", 5), hint=T("需要曹操的赏识 ≥ 5，他才肯给你台阶", "Needs Cao's regard ≥ 5 for him to give you a way back")),
+                [rel("caocao", "esteem", -2), add("renown.rash", -2)], req=AT("caocao", "esteem", 3), hint=T("需要曹操的赏识在「推崇」以上，他才肯给你台阶", "Needs Cao's regard at Admired or above for him to give you a way back")),
          choice("again", "dilemma", T("当着来使的面，再骂一次。", "Curse him again, in front of his messenger."),
                 T("来使面色惨白地回去复命。曹操只笑了一声：『送他去荆州。』你学祢衡学到了底。", "The messenger goes back ashen-faced. Cao only laughs once. 'Send him to Jingzhou.' You have followed Mi Heng all the way."),
                 [setv("flag.exiled"), setv("flag.mi_heng"), add("renown.rash", 2)])],
@@ -74,7 +74,7 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
                 [add("renown.rash", -2), rel("liubei", "trust", -1), rel("caocao", "esteem", -1)]),
          choice("defend", "dilemma", T("辩解：都是真心话，句句有所指。", "Defend yourself: you meant every word, and each had a point."),
                 T("你一句一句解释。主公听完，沉默了很久：『有些真话，要挑时候说。』这件事就这样过去了。", "You explain each line. Your lord listens and is silent for a long time. 'Some truths need the right moment.' And there it ends."),
-                [add("renown.rash", -1)], req=ANY(R("liubei", "trust", ">=", 6), R("caocao", "esteem", ">=", 6)), hint=T("需要主公足够信你（刘备信任或曹操赏识 ≥ 6）", "Needs your lord's confidence (Liu Bei's trust or Cao's regard ≥ 6)")),
+                [add("renown.rash", -1)], req=ANY(AT("liubei", "trust", 3), AT("caocao", "esteem", 3)), hint=T("需要主公足够信你：刘备的信任在「倚重」以上，或曹操的赏识在「推崇」以上", "Needs your lord's confidence: Liu Bei's trust at Relied on or above, or Cao's regard at Admired or above")),
          choice("leave", "dilemma", T("请辞。", "Resign."),
                 T("没有人挽留你。你走的那天，连送行的人都没有。", "No one asks you to stay. On the day you leave, no one even sees you off."), [setv("flag.exiled")])],
         V("renown.rash", ">=", 4), 4))

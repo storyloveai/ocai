@@ -69,7 +69,7 @@ def extend(N, VARS, ECHOES, CHARS):
                   [rel("guanyu", "esteem", 1)]),
             topic("fear", T("问他：将军也有怕的事吗？", "Ask him: is there anything you're afraid of?"),
                   T("火噼啪响了一声。『怕负了大哥。』他把刀收进鞘里，『别的，不怕。』", "The fire cracks. 'Failing my brother.' He sheathes the blade. 'Nothing else.'"),
-                  [setv("flag.guan_fear"), rel("guanyu", "esteem", 1)], req=R("guanyu", "esteem", ">=", 2), hint=T("需要关羽的敬重 ≥ 2", "Needs Guan Yu's respect ≥ 2"), echo=["e_guan_fear"]),
+                  [setv("flag.guan_fear"), rel("guanyu", "esteem", 1)], req=AT("guanyu", "esteem", 1), hint=T("需要关羽的敬重在「寻常」以上", "Needs Guan Yu's respect at Ordinary or above"), echo=["e_guan_fear"]),
             topic("warn", T("低声说：将来有一天，曹操会待你极厚，到时要记得今晚。", "Say quietly: one day Cao Cao will treat you very well. Remember tonight when he does."),
                   T("关羽皱眉看了你很久：『你这话，像是看见了什么。』他没有再问。", "Guan Yu frowns at you for a long time. 'You talk as if you've seen something.' He doesn't ask further."),
                   [add("uncanny"), rel("guanyu", "esteem", 1), setv("flag.warned_guan")], foresight=True, echo=["e_warn_gifts"]),
@@ -100,7 +100,7 @@ def extend(N, VARS, ECHOES, CHARS):
                   [add("uncanny"), rel("zhuge", "trust", -2), rel("zhuge", "esteem", 1), setv("flag.zhuge_tested")], foresight=True, echo=["e_zhuge_test"]),
             topic("share", T("把你看到的主公说给他听：仁厚，信人，唯独对自己太苛。", "Tell him the lord you know: kind, trusting of others, too hard on himself."),
                   T("他认真记下：『多谢。往后，我们是同僚了。』", "He takes it to heart. 'Thank you. From now on, we are colleagues.'"),
-                  [rel("zhuge", "esteem", 1), rel("zhuge", "trust", 1)], req=R("zhuge", "esteem", ">=", 2), hint=T("需要诸葛亮的敬重 ≥ 2", "Needs Zhuge Liang's respect ≥ 2")),
+                  [rel("zhuge", "esteem", 1), rel("zhuge", "trust", 1)], req=AT("zhuge", "esteem", 1), hint=T("需要诸葛亮的敬重在「寻常」以上", "Needs Zhuge Liang's respect at Ordinary or above")),
             topic("rival", T("直说：你来之前，我是他最信的人。", "Say it plainly: before you came, I was the one he trusted most."),
                   T("『现在也是。』诸葛亮把灯留给了你，『我只是来帮他打仗的。』", "'You still are.' Zhuge Liang leaves the lamp with you. 'I'm only here to help him fight.'"),
                   [rel("zhuge", "trust", 1)], when=F("flag.aside_zhuge")),
@@ -134,7 +134,7 @@ def extend(N, VARS, ECHOES, CHARS):
                   T("『开一间药铺。不问来的人是哪一边的。』", "'Open an apothecary. And never ask which side the patients are on.'"), [rel("wenzhi", "trust", 1)]),
             topic("confess", T("把一直没说出口的话说出来。", "Say what you've never said."),
                   T("她终于回过头。江上还漂着烧黑的木头。『说了，就收不回去了。』『不收。』", "She finally turns. Charred timbers still drift on the river. 'Once you say it, you can't take it back.' 'I won't.'"),
-                  [rel("wenzhi", "intimacy", 2), setv("flag.confessed"), setv("flag.wenzhi_together")], req=R("wenzhi", "intimacy", ">=", 4), hint=T("需要与温芷的亲近 ≥ 4", "Needs closeness with Wen Zhi ≥ 4"), when=NF("flag.wenzhi_together")),
+                  [rel("wenzhi", "intimacy", 2), setv("flag.confessed"), setv("flag.wenzhi_together")], req=AT("wenzhi", "intimacy", 2), hint=T("需要与温芷的亲近在「心动」以上", "Needs closeness with Wen Zhi at Drawn or above"), when=NF("flag.wenzhi_together")),
         ], T("她把药杵擦干，收进药箱。『回去吧，江边冷。』", "She dries the pestle and puts it away. 'Go back. It's cold by the river.'"),
         when=ANY(F("flag.wenzhi_with_you"), ALL(CAO, ANY(F("flag.wenzhi_warned"), F("flag.wenzhi_together")))), mood="romance"))
 
@@ -159,7 +159,7 @@ def extend(N, VARS, ECHOES, CHARS):
                   T("『常事？』他冷笑，『八十万人，是常事？』可他的背挺直了些。", "'Daily bread?' He laughs coldly. 'Eight hundred thousand men?' But he sits a little straighter."), [rel("caocao", "esteem", 1)]),
             topic("pride", T("直说：这一仗，输在太骄。", "Say it straight: this battle was lost to pride."),
                   T("曹操盯着你：『你敢说，我就敢听。』他没有再哭。", "Cao stares at you. 'If you dare say it, I dare hear it.' He doesn't weep again."),
-                  [rel("caocao", "esteem", 2)], req=R("caocao", "esteem", ">=", 3), hint=T("需要曹操的赏识 ≥ 3", "Needs Cao's regard ≥ 3")),
+                  [rel("caocao", "esteem", 2)], req=AT("caocao", "esteem", 2), hint=T("需要曹操的赏识在「器重」以上", "Needs Cao's regard at Valued or above")),
             topic("water", T("默默递上水囊。", "Hand him your water flask without a word."),
                   T("他喝了一口，没有说话。", "He drinks and says nothing."), [rel("caocao", "esteem", 1)]),
         ], T("前面就是南郡了。", "Nanjun lies ahead."), when=ALL(CAO, NF("flag.wenzhi_warned"), NF("flag.wenzhi_together"))))
@@ -171,7 +171,7 @@ def extend(N, VARS, ECHOES, CHARS):
     N.append(crisis("x_exposed", T("妖言", "Whispers"), [
         P(T("军中开始传：刘备帐下有个书生能未卜先知，是妖人。张飞拍着桌子要把你绑来问个清楚。刘备把你叫进内帐，诸葛亮也在。",
             "Word spreads through the camp: a scholar in Liu Bei's household can see the future—a sorcerer. Zhang Fei pounds the table and wants you tied up and questioned. Liu Bei calls you into his tent."), LIU),
-        P(T("诸葛亮也在帐中。", "Zhuge Liang is there too."), ALL(LIU, R("zhuge", "esteem", ">=", 1))),
+        P(T("诸葛亮也在帐中。", "Zhuge Liang is there too."), ALL(LIU, AT("zhuge", "esteem", 1))),
         P(T("许都开始传：丞相府有个能知未来的人。曹操最恨术士。他把你叫去，程昱也在。",
             "Word spreads through Xuchang: someone in the Chancellor's office can see the future. Cao Cao hates soothsayers. He summons you; Cheng Yu is there too."), CAO)],
         [choice("dream", "dilemma", T("说实话：你梦见过这一切。", "Tell the truth: you have dreamed all of this."),
@@ -180,10 +180,10 @@ def extend(N, VARS, ECHOES, CHARS):
                 [setv("flag.exiled"), setv("flag.exposed")]),
          choice("reason_liu", "strategy", T("说是推算：天时、地利、人事，算得出来。", "Say it's calculation: weather, terrain and people—it can be reckoned."),
                 T("诸葛亮替你圆了这个说法：『子衡兄的算法，亮也会。』流言慢慢散了。他私下对你说：『下次，先告诉我。』", "Zhuge Liang backs your story. 'I can reckon the same way.' The rumors die down. In private he tells you, 'Next time, tell me first.'"),
-                [add("uncanny", -2), rel("zhuge", "trust", -2)], when=LIU, req=R("zhuge", "esteem", ">=", 3), hint=T("需要诸葛亮的敬重 ≥ 3，他才会替你说话", "Needs Zhuge Liang's respect ≥ 3 for him to speak for you")),
+                [add("uncanny", -2), rel("zhuge", "trust", -2)], when=LIU, req=AT("zhuge", "esteem", 2), hint=T("需要诸葛亮的敬重在「器重」以上，他才会替你说话", "Needs Zhuge Liang's respect at Valued or above for him to speak for you")),
          choice("reason_cao", "strategy", T("请丞相当场出一道题，推算给他看。", "Ask the Chancellor to set you a problem on the spot, and reckon it for him."),
                 T("你算对了。曹操没有再追问，只是从此每次议事都让你坐得离他近一些——好看着你。", "You get it right. Cao asks no more—but from then on, at every council, he seats you closer to him. The better to watch you."),
-                [add("uncanny", -2), rel("caocao", "esteem", -1)], when=CAO, req=R("caocao", "esteem", ">=", 6), hint=T("需要曹操的赏识 ≥ 6", "Needs Cao's regard ≥ 6")),
+                [add("uncanny", -2), rel("caocao", "esteem", -1)], when=CAO, req=AT("caocao", "esteem", 3), hint=T("需要曹操的赏识在「推崇」以上", "Needs Cao's regard at Admired or above")),
          choice("deny", "dilemma", T("矢口否认，从此闭口不言。", "Deny everything, and keep your mouth shut from now on."),
                 T("流言没有散，只是换了说法：那书生怕了。主公看你的眼神，多了一层东西。", "The rumors don't go away; they just change: the scholar got scared. Your lord looks at you differently now."),
                 [add("uncanny", -1), rel("liubei", "trust", -2), rel("caocao", "esteem", -2)])],
@@ -198,7 +198,7 @@ def extend(N, VARS, ECHOES, CHARS):
          choice("prove", "dilemma", T("请命去做一件没人愿意做的事。", "Volunteer for the job nobody wants."),
                 T("你在泥地里走了三个月，替刘备把各郡的粮册重新理了一遍。回来那天，他亲自出城接你。", "You spend three months tramping through mud, putting the grain registers of every district in order. The day you return, Liu Bei rides out of the city to meet you himself."),
                 [rel("liubei", "trust", 3), add("renown.loyal")], req=V("renown.loyal", ">=", 1), hint=T("需要一点忠义之名，主公才肯给你机会", "Needs some name for loyalty before he'll give you the chance"))],
-        ALL(LIU, R("liubei", "trust", "<=", 1)), 2))
+        ALL(LIU, UPTO("liubei", "trust", 0)), 2))
     N[-1]["choices"][0]["ends"] = True
 
     N.append(crisis("x_cold_cao", T("闲职", "A Quiet Post"),
@@ -208,7 +208,7 @@ def extend(N, VARS, ECHOES, CHARS):
          choice("plan", "dilemma", T("连夜写一份平定荆州的方略，放到他案头。", "Write a plan for taking Jingzhou overnight and leave it on his desk."),
                 T("第二天一早，曹操派人来叫你。方略上全是朱笔批注。", "Early next morning Cao sends for you. Your plan is covered in his red-ink notes."),
                 [rel("caocao", "esteem", 3), add("renown.cunning")], req=V("renown.cunning", ">=", 2), hint=T("需要权谋之名 ≥ 2", "Needs name for cunning ≥ 2"))],
-        ALL(CAO, R("caocao", "esteem", "<=", 1)), 3))
+        ALL(CAO, UPTO("caocao", "esteem", 0)), 3))
     N[-1]["choices"][0]["ends"] = True
 
     # ---------------- extra foresight options & relationship gates ----------------
@@ -226,9 +226,9 @@ def extend(N, VARS, ECHOES, CHARS):
         T("刘备依了你。乱军中家眷还是被冲散了，赵云单骑杀回去，把阿斗抱了出来；糜夫人离得近，被你扶上了马。", "Liu Bei takes your advice. The family is still scattered in the rout; Zhao Yun rides back alone and carries Adou out; Lady Mi was close by, and you get her onto your horse."),
         [setv("flag.mi_saved"), add("uncanny"), add("deviation"), rel("liubei", "trust", 1)], foresight=True, echo=["e_mi"], debt=["d_mi"], resolve=[("d_mi", "transform")]))
     for nid, cid, req, hint in [
-        ("c6_slope", "search", R("liubei", "trust", ">=", 4), T("需要刘备的信任 ≥ 4，他才会把家眷托给你", "Needs Liu Bei's trust ≥ 4 to entrust his family to you")),
-        ("c7_fire", "ambush", R("zhuge", "esteem", ">=", 1), T("需要诸葛亮的敬重 ≥ 1", "Needs Zhuge Liang's respect ≥ 1")),
-        ("c8_huarong", "vouch", ANY(R("guanyu", "esteem", ">=", 3), R("liubei", "trust", ">=", 6)), T("需要关羽的敬重 ≥ 3，或刘备的信任 ≥ 6，你的担保才有分量", "Needs Guan Yu's respect ≥ 3 or Liu Bei's trust ≥ 6 for your word to carry weight")),
+        ("c6_slope", "search", AT("liubei", "trust", 2), T("需要刘备的信任在「可托」以上，他才会把家眷托给你", "Needs Liu Bei's trust at Reliable or above to entrust his family to you")),
+        ("c7_fire", "ambush", AT("zhuge", "esteem", 1), T("需要诸葛亮的敬重在「寻常」以上", "Needs Zhuge Liang's respect at Ordinary or above")),
+        ("c8_huarong", "vouch", ANY(AT("guanyu", "esteem", 2), AT("liubei", "trust", 3)), T("需要关羽的敬重在「器重」以上，或刘备的信任在「倚重」以上，你的担保才有分量", "Needs Guan Yu's respect at Valued or above or Liu Bei's trust at Relied on or above for your word to carry weight")),
     ]:
         c = next(c for c in byid[nid]["choices"] if c["id"] == cid); c["req"] = req; c["hint"] = hint
 

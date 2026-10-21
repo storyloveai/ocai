@@ -257,7 +257,7 @@ N.append(node("c1_nanjun", "c1", "main", T("一气周瑜", "The First Vexation")
      P(T("鲁肃把你送回来才半个月。帐里的人看你，像看一个从坟里走出来的人。", "Lu Su brought you back barely a fortnight ago. People in the tent look at you as if you'd walked out of a grave."), F("flag.came_back"))],
     [choice("take", "strategy", T("劝主公趁虚而入：拿兵符赚开南郡，再取荆州、襄阳。", "Urge your lord to slip in: use the tally to open Nanjun, then take Jingzhou and Xiangyang."),
             T("一夜之间，三座城都插上了刘字旗。周瑜赶到城下，赵云在城楼上拱手。周瑜大叫一声，箭疮迸裂，坠下马去。", "In one night three cities fly Liu banners. Zhou Yu arrives under the walls to find Zhao Yun bowing from the gatehouse. He cries out, his wound bursts open, and he falls from his horse."),
-            [setv("flag.took_nanjun"), rel("liubei", "trust", 1), rel("zhuge", "esteem", 1), rel("zhouyu", "esteem", -1), rel("zhouyu", "trust", -2), add("renown.cunning")], echo=["e_nanjun"]),
+            [setv("flag.took_nanjun"), rel("liubei", "esteem", 1), rel("zhuge", "esteem", 1), rel("zhouyu", "esteem", -1), rel("zhouyu", "trust", -2), add("renown.cunning")], echo=["e_nanjun"]),
      choice("yield", "dilemma", T("劝主公按兵不动：南郡让周瑜去取，盟约要紧。", "Urge your lord to hold back: let Zhou Yu take Nanjun. The alliance matters more."),
             T("刘备犹豫再三，听了你的。周瑜拿下了南郡，派人送来一坛酒。诸葛亮望着那坛酒，说：『主公现在连一座自己的城都没有了。』", "Liu Bei hesitates, then listens to you. Zhou Yu takes Nanjun and sends over a jar of wine. Zhuge Liang looks at the jar and says, 'Now my lord doesn't have a single city of his own.'"),
             [setv("flag.yielded_nanjun"), rel("zhouyu", "trust", 2), rel("lusu", "trust", 1), rel("zhuge", "esteem", -1), add("renown.loyal"), add("deviation")], echo=["e_yield"], debt=["d_base"]),
@@ -324,10 +324,10 @@ N.append(node("c3_ganlu", "c3", "main", T("甘露寺", "Ganlu Temple"), "functio
       "Nanxu. Lady Wu, the Marquis's mother, receives her prospective son-in-law at Ganlu Temple, and takes to Liu Bei at once. But in the corridors you see it: behind the curtains on both sides are men with axes. Zhao Yun, hand on his sword, looks at you."),
     [choice("kneel", "strategy", T("让主公当着国太的面哭诉：要杀就在这里杀。", "Have your lord kneel before Lady Wu and weep: if they mean to kill him, let them do it here."),
             T("刘备跪在国太面前流泪。国太大怒，把孙权、吕范骂得抬不起头，当场认下了这个女婿。", "Liu Bei kneels and weeps before her. Lady Wu is furious; she berates Sun Quan and Lü Fan until they can't raise their heads, and accepts the son-in-law on the spot."),
-            [rel("liubei", "trust", 1), add("renown.cunning")]),
+            [rel("liubei", "trust", 0), add("renown.cunning")]),
      choice("expose", "dilemma", T("你自己走出去，一把扯开帐幕。", "Walk out yourself and pull the curtain aside."),
             T("帐幕后面的刀斧手面面相觑。国太的脸色铁青。婚事成了，可孙权从此记住了你的名字，周瑜也是。", "The axemen behind it stare at one another. Lady Wu's face goes iron-grey. The marriage goes ahead—but from that day Sun Quan knows your name, and so does Zhou Yu."),
-            [setv("flag.ganlu_exposed"), rel("liubei", "trust", 2), rel("zhaoyun", "trust", 1), rel("zhouyu", "esteem", 1), rel("zhouyu", "trust", -1), add("renown.rash")], echo=["e_ganlu"]),
+            [setv("flag.ganlu_exposed"), rel("liubei", "esteem", 1), rel("zhaoyun", "trust", 1), rel("zhouyu", "esteem", 1), rel("zhouyu", "trust", -1), add("renown.rash")], echo=["e_ganlu"]),
      choice("stone", "expression", T("什么也不做，陪主公去看那块石头。", "Do nothing; go with your lord to see the stone."),
             T("刘备拔剑向天祝祷，一剑把石头劈成两半。孙权也劈了一剑。两道剑痕交成一个十字。你知道，两人许的愿不一样。", "Liu Bei draws his sword, prays, and splits a rock in two. Sun Quan strikes it too. The two cuts cross. You know the two men wished for different things."))],
     callbacks=[cb("e_liuqi", T("鲁肃也在席上。他这回没带笑：刘琦公子已经不在了，荆州的事，该议了。", "Lu Su is at the feast too, and not smiling this time: the young lord Liu Qi is gone, so it is time to settle Jingzhou."), F("flag.liuqi_pretext"))],
@@ -338,7 +338,7 @@ N.append(node("c3_flight", "c3", "main", T("赔了夫人", "Losing the Bride"), 
       "Liu Bei is so comfortable in Wu he forgets to go home. Zhao Yun opens the second brocade bag and reports, falsely, that Cao Cao is attacking Jingzhou. Lady Sun flees with Liu Bei that night, and Wu's riders chase them to the river."),
     [choice("lady", "strategy", T("请孙夫人出面，喝退追兵。", "Ask Lady Sun to face the pursuers and order them back."),
             T("孙夫人掀开车帘，把追来的将领骂得下马请罪。没人敢拦吴侯的妹妹。船到了，诸葛亮的人在岸上齐声大喊，周瑜气得箭疮又裂了。", "Lady Sun throws back the curtain and berates the pursuing generals until they dismount and beg her pardon. No one dares stop the Marquis's sister. The boats arrive, Zhuge Liang's men shout from the bank, and Zhou Yu's wound tears open again."),
-            [rel("sunfuren", "trust", 1), rel("sunfuren", "warmth", 1), rel("liubei", "trust", 1)]),
+            [rel("sunfuren", "trust", 1), rel("sunfuren", "warmth", 1), rel("liubei", "trust", 0)]),
      choice("rear", "dilemma", T("你带几个人留在江边断后。", "Stay at the riverbank with a few men to hold the rear."),
             T("你在江边拖了一个时辰，背上挨了一刀。上船时，孙夫人亲手给你裹了伤：『荆州人，原来也有不怕死的。』", "You hold them for an hour and take a cut across the back. When you board, Lady Sun binds the wound herself. 'So some Jingzhou men aren't afraid to die.'"),
             [setv("flag.rearguard"), rel("sunfuren", "warmth", 2), rel("sunfuren", "trust", 1), rel("zhaoyun", "warmth", 1), rel("liubei", "trust", 1)], echo=["e_rear"]),
@@ -361,7 +361,7 @@ N.append(node("c4_tongque", "c4", "main", T("铜雀台", "The Bronze Bird Terrac
     when=V("track", "==", "cao"), order=10))
 
 N.append(node("c4_death", "c4", "main", T("三气周瑜", "The Third Vexation"), "functional", T("第56–57回", "Ch. 56–57"),
-    [P(T("周瑜让人传话：想见你一面。", "Zhou Yu sends word: he would like to see you."), R("zhouyu", "trust", ">=", 3)),
+    [P(T("周瑜让人传话：想见你一面。", "Zhou Yu sends word: he would like to see you."), AT("zhouyu", "trust", 2)),
      P(T("周瑜的人说起你，脸色都不好看。", "Zhou Yu's men don't look pleased when your name comes up."), I("zhouyu", "offended", ">=", 1)),
      P(T("周瑜借道取川的计被诸葛亮一眼看穿。大军到了荆州城下，城上遍插旗帜，四面都有伏兵。周瑜在马上大叫一声，箭疮复裂。", "Zhuge Liang sees through Zhou Yu's 'borrowed road' at a glance. When Zhou Yu's army reaches Jingzhou, the walls are thick with banners and ambushes wait on every side. Zhou Yu cries out in the saddle; his wound tears open again.")),
      P(T("他被抬回巴丘，一直没有起来。", "He is carried back to Baqiu and never rises again."))],
@@ -411,7 +411,7 @@ N.append(node("c4_leiyang", "c4", "side", T("耒阳县令", "The Magistrate of L
       "Pang Tong comes to Liu Bei and is given only the county of Leiyang. In a hundred days there he has done nothing but drink. Zhang Fei is sent to inspect, and you go along."),
     [choice("vouch", "strategy", T("请张飞先别发火，让他当面理事。", "Ask Zhang Fei to hold his temper and let the man work in front of him."),
             T("庞统把一百多天的公文抱上堂来，不到半日，全部断完，掷笔于地。张飞看傻了。回去之后，你和张飞一起替他作保。", "Pang Tong has a hundred days of papers carried in, and in less than half a day he has decided every case and thrown down his brush. Zhang Fei gapes. Back at headquarters, you and Zhang Fei vouch for him together."),
-            [setv("flag.vouched_pangtong"), rel("pangtong", "esteem", 2), rel("pangtong", "warmth", 1), rel("liubei", "trust", 1)], echo=["e_pt_vouch"]),
+            [setv("flag.vouched_pangtong"), rel("pangtong", "esteem", 2), rel("pangtong", "warmth", 1), rel("liubei", "esteem", 1)], echo=["e_pt_vouch"]),
      choice("report", "expression", T("照实回报：这人整天喝酒。", "Report what you saw: the man drinks all day."),
             T("后来诸葛亮回来，说了一句：『庞士元非百里之才。』刘备才把他请了回来。庞统见了你，只笑了笑。", "Later Zhuge Liang returns and says, 'Pang Shiyuan is not a man to be wasted on a hundred-li county.' Only then does Liu Bei call him back. When Pang Tong sees you, he just smiles."),
             [rel("pangtong", "esteem", -1)])],
@@ -438,7 +438,7 @@ N.append(node("c5_zhangsong", "c5", "main", T("张松献图", "Zhang Song's Map"
             [setv("flag.honored_zs"), rel("zhangsong", "esteem", 2), rel("liubei", "trust", 1)], echo=["e_zs"], when=NOT_CAO),
      choice("ask", "dilemma", T("开门见山：先生此来，是为西川找一个新主人吧？", "Get straight to it: you've come to find the west a new master, haven't you?"),
             T("张松的脸色变了变，随即大笑：『痛快！』图还是献了，可他跟刘备说话时，再也没看过你。", "Zhang Song's face flickers, then he roars with laughter. 'Refreshing!' He still offers the map—but when he talks to Liu Bei, he never looks at you again."),
-            [rel("zhangsong", "esteem", -1), rel("liubei", "trust", 1), add("renown.cunning")], when=NOT_CAO),
+            [rel("zhangsong", "esteem", -1), rel("liubei", "trust", 0), add("renown.cunning")], when=NOT_CAO),
      choice("follow", "dilemma", T("跟张松一起走。去荆州。", "Leave with Zhang Song. Go to Jingzhou."),
             T("你在城外追上了张松。他打量着你：『你是刘备的人，还是曹操的人？』『今天起，是刘备的。』到了荆州，刘备拉着你的手，半晌没说话。", "You catch Zhang Song outside the walls. He looks you over. 'Are you Liu Bei's man, or Cao Cao's?' 'From today, Liu Bei's.' In Jingzhou, Liu Bei takes your hands and can't speak for a while."),
             [setv("flag.defected"), setv("track", "liu"), rel("caocao", "esteem", -4), rel("zhangsong", "esteem", 2), rel("liubei", "trust", 1)], when=V("track", "==", "cao"), echo=["e_defect"]),
@@ -455,7 +455,7 @@ N[-1]["choices"][3]["ends"] = True
 # ---------- c6 截江 ----------
 N.append(node("c6_river", "c6", "main", T("截江夺阿斗", "On the River"), "literal", T("第61回", "Ch. 61"),
     [P(T("东吴来信，说国太病重，要孙夫人带阿斗回去见一面。夫人带着阿斗上了船。赵云得了信，沿江追来。你在他的小船上。", "A letter comes from Wu: Lady Wu is gravely ill and wants to see her daughter—and the boy, A Dou. Lady Sun takes A Dou aboard a ship. Zhao Yun hears of it and races down the river. You are in his little boat.")),
-     P(T("鲁肃事先派人悄悄告诉了你：那封信是假的。", "Lu Su had already sent someone to tell you quietly: the letter is a fake."), R("lusu", "trust", ">=", 5)),
+     P(T("鲁肃事先派人悄悄告诉了你：那封信是假的。", "Lu Su had already sent someone to tell you quietly: the letter is a fake."), AT("lusu", "trust", 3)),
      P(T("孙夫人看见你，脸色变了：江边那一夜，你撇下过她。", "Lady Sun sees you and her face hardens: that night on the riverbank, you left her behind."), F("flag.left_sun")),
      P(T("她也没忘你说过的那些话。", "Nor has she forgotten the things you said to her."), I("sunfuren", "offended", ">=", 1)),
      P(T("孙夫人看见你，神色一松：江边那一刀，是你替她挨的。", "Lady Sun sees you and something in her eases: that cut on the riverbank, you took for her."), F("flag.rearguard"))],
@@ -465,7 +465,7 @@ N.append(node("c6_river", "c6", "main", T("截江夺阿斗", "On the River"), "l
      choice("talk", "dilemma", T("先上船，单独和夫人说几句。", "Board first and speak to the lady alone."),
             T("你在船舱里跟她说了很久。最后她亲手把阿斗交给你：『告诉玄德，我不是来偷他儿子的。我只是想回家看我娘。』她走得很体面，东吴那边也挑不出理来。", "You speak with her a long while in the cabin. In the end she hands A Dou to you herself. 'Tell Xuande I didn't come to steal his son. I only wanted to go home and see my mother.' She leaves with dignity, and Wu can find no grievance in it."),
             [setv("flag.sun_parted"), setv("flag.adou_kept"), rel("sunfuren", "trust", 2), rel("liubei", "trust", 1), add("deviation")], echo=["e_adou"],
-            req=R("sunfuren", "warmth", ">=", 3), hint=T("需要孙夫人对你有足够的交情（≥ 3）", "Needs enough friendship with Lady Sun (≥ 3)")),
+            req=AT("sunfuren", "warmth", 2), hint=T("需要孙夫人和你的交情在「相熟」以上", "Needs Lady Sun's friendship at Familiar or above")),
      choice("let", "expression", T("让她走。", "Let her go."),
             T("赵云不肯。他一个人跳上了大船。后来的事，和原著写的一样。", "Zhao Yun won't hear of it. He leaps aboard alone. What follows happens just as the novel tells it."),
             [rel("zhaoyun", "trust", -1)])],
@@ -478,7 +478,7 @@ N.append(node("c6_river", "c6", "main", T("截江夺阿斗", "On the River"), "l
     order=10, when=NOT_CAO))
 
 N.append(node("c6_wenzhi", "c6", "side", T("去留", "Going or Staying"), "free", T("原创人物", "original character"),
-    [P(T("温芷这些日子话很少。", "Wen Zhi has said very little these days."), R("wenzhi", "trust", "<=", 1)),
+    [P(T("温芷这些日子话很少。", "Wen Zhi has said very little these days."), UPTO("wenzhi", "trust", 0)),
      P(T("大军要西去了。温芷在收拾药箱，收了一半，停下来问你：『你要我跟着去西川，还是留在荆州？』", "The army is going west. Wen Zhi is packing her medicine chest; halfway through she stops. 'Do you want me to come west, or stay in Jingzhou?'")),
      P(T("她顿了一下，又说：『要是……以后有了孩子，我想他在一个不打仗的地方长大。』", "She pauses. 'If… one day there's a child, I'd like him to grow up somewhere without a war.'"), F("flag.confessed"))],
     [choice("west", "dilemma", T("跟我去西川。", "Come west with me."),
@@ -490,7 +490,7 @@ N.append(node("c6_wenzhi", "c6", "side", T("去留", "Going or Staying"), "free"
      choice("child", "expression", T("说：等打下西川，我们就有一个不打仗的地方了。", "Say: once the west is taken, we'll have a place without a war."),
             T("温芷笑了，把头靠在你肩上，没有说话。窗外，江上起了雾。", "Wen Zhi smiles and leans her head on your shoulder, saying nothing. Outside, mist is rising on the river."),
             [setv("flag.wz_child"), setv("flag.wz_west"), rel("wenzhi", "intimacy", 2)], when=F("flag.confessed"), echo=["e_wz_road"],
-            req=R("wenzhi", "intimacy", ">=", 3), hint=T("需要和温芷足够亲近（≥ 3）", "Needs enough closeness with Wen Zhi (≥ 3)"))],
+            req=AT("wenzhi", "intimacy", 2), hint=T("需要和温芷的亲近在「心动」以上", "Needs closeness with Wen Zhi at Drawn or above"))],
     when=ALL(NOT_CAO, F("flag.wenzhi_with_you")), salience=4, order=1))
 
 N.append(talk_node("c6_pangtong", "c6", T("夜谈·庞统", "Night Talk: Pang Tong"),
@@ -520,7 +520,7 @@ N.append(node("c7_luofeng", "c7", "main", T("落凤坡", "Fallen Phoenix Slope")
             T("庞统盯着你看了很久，最后骂了一句，调转马头。那天，小路上的伏兵等了一整天，射死了一匹探路的白马。雒城晚破了三个月，庞统活了下来。他再也没问过你为什么。",
               "Pang Tong stares at you a long time, then swears and turns his horse. That day the ambush on the narrow road waits from dawn to dusk and kills one white horse sent ahead to scout. Luocheng falls three months later than it would have. Pang Tong lives. He never asks you why."),
             [setv("flag.pt_alive"), add("uncanny", 2), add("deviation", 2), rel("pangtong", "warmth", 2), rel("pangtong", "esteem", -1), rel("zhuge", "trust", -1)], debt=["d_phoenix"], echo=["e_luofeng"],
-            foresight=True, req=ANY(R("pangtong", "warmth", ">=", 3), R("pangtong", "esteem", ">=", 3)), hint=T("需要庞统肯听你的（交情或看重 ≥ 3）", "Needs Pang Tong to listen to you (friendship or esteem ≥ 3)")),
+            foresight=True, req=ANY(AT("pangtong", "warmth", 2), AT("pangtong", "esteem", 2)), hint=T("需要庞统肯听你的：交情在「相熟」以上，或看重在「器重」以上", "Needs Pang Tong to listen to you: friendship at Familiar or above, or esteem at Valued or above")),
      choice("ride", "dilemma", T("陪他走小路。", "Ride the narrow road with him."),
             T("走到半路，庞统勒住马问：『此处是何地名？』降兵说：『此处地名落凤坡。』庞统惊道：『吾道号凤雏，此处名落凤坡，不利于吾。』话音未落，山坡上一声炮响，箭如飞蝗，只朝骑白马的人射来。你扑过去时，已经晚了。他倒下前，抓住你的袖子说了一句话。",
               "Halfway along Pang Tong reins in. 'What is this place called?' A surrendered soldier answers, 'This is Fallen Phoenix Slope.' Pang Tong starts. 'They call me the Young Phoenix, and this is called Fallen Phoenix Slope. This bodes ill for me.' Before the words are out a cannon booms on the hillside and arrows fly like locusts, all aimed at the man on the white horse. You throw yourself toward him, too late. Before he falls, he grips your sleeve and says one thing."),
@@ -554,7 +554,7 @@ N.append(talk_node("c7_guanyu", "c7", T("夜谈·关羽", "Night Talk: Guan Yu")
 N[-1]["callbacks"] = [
                       cb("e_wz_road", T("关羽说：『温大夫的事，你放心。』", "Guan Yu says, 'Don't worry about Physician Wen.'"), F("flag.wz_jingzhou")),
                       cb("e_wz_road", T("关羽说：『听说温大夫也要西去。蜀道难，让她多带些药。』", "Guan Yu says, 'I hear Physician Wen is going west too. The Shu roads are hard; tell her to take plenty of medicine.'"), F("flag.wz_west"))]
-N[-1]["intro"].append(P(T("关羽给你留了座位，酒已经温好了。", "Guan Yu has kept a seat for you, and the wine is already warm."), R("guanyu", "esteem", ">=", 6)))
+N[-1]["intro"].append(P(T("关羽给你留了座位，酒已经温好了。", "Guan Yu has kept a seat for you, and the wine is already warm."), AT("guanyu", "esteem", 3)))
 N[-1]["intro"].append(P(T("关羽看了你一眼，又低下头去擦刀。你们之间，还隔着以前那些话。", "Guan Yu glances at you, then goes back to his blade. What you said to him before still stands between you."), I("guanyu", "offended", ">=", 1)))
 
 # ---------- c8 益州 ----------
@@ -562,17 +562,17 @@ N.append(node("c8_chengdu", "c8", "main", T("益州牧", "Governor of Yi"), "fun
     [P(T("刘璋开城出降。刘备入成都，自领益州牧，大封文武。轮到你的时候，他没有念名单，而是放下了竹简。", "Liu Zhang opens the gates and surrenders. Liu Bei enters Chengdu, makes himself Governor of Yi, and hands out rewards to all his officers. When he comes to you he doesn't read from the list; he puts down the slips.")),
      P(T("庞统坐在诸葛亮旁边，冲你挤了挤眼。", "Pang Tong, seated beside Zhuge Liang, winks at you."), F("flag.pt_alive")),
      P(T("诸葛亮旁边的那个位子空着。那是留给庞统的。", "The seat beside Zhuge Liang is empty. It was meant for Pang Tong."), NF("flag.pt_alive")),
-     P(T("诸葛亮看你的时候，总像在算什么。", "When Zhuge Liang looks at you, he always seems to be calculating something."), R("zhuge", "trust", "<=", 2)),
+     P(T("诸葛亮看你的时候，总像在算什么。", "When Zhuge Liang looks at you, he always seems to be calculating something."), UPTO("zhuge", "trust", 1)),
      P(T("刘备看你的眼神，比在许都时冷了一些。你说过的那些话，他没忘。", "Liu Bei's eyes are a little cooler than they were in Xuchang. He hasn't forgotten the things you said."), I("liubei", "offended", ">=", 2))],
     [choice("stay", "dilemma", T("留在成都，帮主公治理益州。", "Stay in Chengdu and help govern Yi."),
             T("刘备点头：『有子衡在，我放心。』你领了一个治中从事的职位，住进了城西的一座小院。", "Liu Bei nods. 'With you here, I can rest easy.' You take a post as administrator and move into a small house on the west side of the city."),
-            [setv("flag.post_chengdu"), rel("liubei", "trust", 1), rel("zhuge", "esteem", 1)]),
+            [setv("flag.post_chengdu"), rel("liubei", "trust", 0), rel("zhuge", "esteem", 1)]),
      choice("jingzhou", "dilemma", T("请命回荆州，去关将军身边。", "Ask to go back to Jingzhou, to General Guan's side."),
             T("刘备沉默了一会儿：『二弟性子刚，有你在旁边，我也放心。』诸葛亮看着你，扇子停了很久。", "Liu Bei is quiet a moment. 'My brother is hard-tempered. With you beside him, I can rest easy.' Zhuge Liang looks at you, his fan still for a long time."),
-            [setv("flag.post_jingzhou"), rel("guanyu", "esteem", 1), rel("liubei", "trust", 1)]),
+            [setv("flag.post_jingzhou"), rel("guanyu", "esteem", 1), rel("liubei", "trust", 0)]),
      choice("none", "expression", T("什么都不要。", "Ask for nothing."),
             T("刘备看了你很久，笑了：『子衡还是子衡。』那天散席后，他一个人来你的住处坐了很久。", "Liu Bei looks at you a long time, then smiles. 'Ziheng is still Ziheng.' After the feast he comes to your lodging alone and sits a long while."),
-            [setv("flag.post_none"), rel("liubei", "trust", 2), add("renown.loyal")])],
+            [setv("flag.post_none"), rel("liubei", "trust", 1), add("renown.loyal")])],
     on_enter=[{"when": DEBT("d_phoenix"), "effects": [], "resolve": [("d_phoenix", "reroute")],
                "text": T("诸葛亮终究还是入了川——不是因为庞统死了，是因为雒城久攻不下。荆州，还是只剩关羽一个人。", "Zhuge Liang came west after all—not because Pang Tong died, but because Luocheng would not fall. Jingzhou is still left to Guan Yu alone.")}],
     callbacks=[cb("e_adou", T("阿斗在席间跑来跑去，跑到你跟前停了一下。赵云说：『那天在船上，抱他的是先生。』", "A Dou runs about the hall and stops in front of you. Zhao Yun says, 'That day on the ship, it was you who held him, sir.'"), F("flag.adou_kept")),
@@ -586,17 +586,17 @@ N.append(crisis("x_cold", T("冷落", "Sidelined"),
     T("议事时，刘备已经很久没有问过你了。诸葛亮私下对你说：『子衡兄，主公心里有个结。』", "It's been a long time since Liu Bei asked your opinion at council. Zhuge Liang tells you privately, 'Ziheng, our lord has a knot in his heart.'"),
     [choice("mend", "strategy", T("去找主公，把话说开。", "Go to your lord and talk it through."),
             T("你们谈了一夜。天亮时，刘备说：『是我多心了。』", "You talk all night. At dawn Liu Bei says, 'I've been too suspicious.'"), [rel("liubei", "trust", 2), add("renown.loyal")],
-            req=ANY(R("zhuge", "esteem", ">=", 3), R("zhaoyun", "trust", ">=", 4)), hint=T("需要诸葛亮敬重你（≥ 3）或赵云信任你（≥ 4），替你说一句话", "Needs Zhuge Liang's respect (≥ 3) or Zhao Yun's trust (≥ 4) to put in a word for you")),
+            req=ANY(AT("zhuge", "esteem", 2), AT("zhaoyun", "trust", 2)), hint=T("需要诸葛亮的敬重在「器重」以上，或赵云的信任在「可托」以上，才有人替你说一句话", "Needs Zhuge Liang's respect at Valued or above, or Zhao Yun's trust at Reliable or above, for someone to put in a word for you")),
      choice("wait", "expression", T("等。做好手上的事。", "Wait. Do the work in front of you."), T("日子过得很慢。议事时，你的位子挪到了后排。", "The days pass slowly. At council your seat has moved to the back row."), [rel("liubei", "trust", 1), setv("flag.sidelined")]),
      choice("go", "dilemma", T("告辞。", "Take your leave."), T("刘备没有留你。", "Liu Bei doesn't ask you to stay."), [setv("flag.v2_left")])],
-    ALL(NOT_CAO, R("liubei", "trust", "<=", 1)), 3))
+    ALL(NOT_CAO, UPTO("liubei", "trust", 0)), 3))
 N[-1]["callbacks"] = [cb("e_defect", T("有人在背后说：曹营来的人，靠不住。", "Behind your back people say: a man from Cao's camp can't be trusted."), F("flag.defected"))]
 N[-1]["choices"][2]["ends"] = True
 N.append(crisis("x_uncanny", T("妖人", "Sorcerer"),
     T("你说中的事情太多了。蜀中有人传，刘备帐下有一个能知未来的妖人。诸葛亮来找你：『子衡兄，亮不问你从哪里知道的。可别人会问。』", "You've been right about too many things. In Shu people whisper that Liu Bei has a sorcerer who knows the future. Zhuge Liang comes to you. 'I won't ask how you know, Ziheng. But others will.'"),
     [choice("hide", "strategy", T("从此闭口：只说眼前的事。", "Hold your tongue from now on: speak only of what's in front of you."), T("你很久没有再说过一句准话。人们慢慢忘了。", "For a long time you say nothing that comes true. People slowly forget."), [add("uncanny", -2), rel("zhuge", "trust", 1)]),
      choice("trust", "dilemma", T("把实话告诉诸葛亮一个人。", "Tell Zhuge Liang alone the truth."), T("诸葛亮听完，摇着扇子笑了很久：『原来如此。那亮以后，要多问问子衡兄了。』", "Zhuge Liang hears you out and laughs a long while behind his fan. 'So that's it. Then I shall have to ask you more often.'"),
-            [rel("zhuge", "esteem", 2), rel("zhuge", "trust", -2), add("uncanny", -1)], req=R("zhuge", "esteem", ">=", 4), hint=T("需要诸葛亮足够敬重你（≥ 4）", "Needs Zhuge Liang's respect (≥ 4)")),
+            [rel("zhuge", "esteem", 2), rel("zhuge", "trust", -2), add("uncanny", -1)], req=AT("zhuge", "esteem", 2), hint=T("需要诸葛亮足够敬重你（≥ 4）", "Needs Zhuge Liang's respect (≥ 4)")),
      choice("leave", "dilemma", T("离开，免得连累主公。", "Leave, so your lord isn't tainted by you."), T("你在一个雨夜出了成都。", "You leave Chengdu one rainy night."), [setv("flag.v2_exposed")])],
     V("uncanny", ">=", 6), 2))
 N[-1]["choices"][2]["ends"] = True
@@ -759,14 +759,14 @@ ENDINGS = [
         frag("none", T("你什么都没要。刘备记得这件事，记了很多年。", "You asked for nothing. Liu Bei remembered that for many years."), F("flag.post_none")),
         ]},
     {"id": "g_lord", "title": T("主公", "Your Lord"), "fragments": [
-        frag("high", T("刘备入成都那天，第一个叫的名字是诸葛亮，第二个是你。", "The day Liu Bei entered Chengdu, the first name he called was Zhuge Liang's. The second was yours."), ALL(LIU, R("liubei", "trust", ">=", 10))),
-        frag("mid", T("刘备遇事会问你。你说的，他大多会听。", "Liu Bei asks your opinion, and mostly takes it."), ALL(LIU, R("liubei", "trust", ">=", 6))),
+        frag("high", T("刘备入成都那天，第一个叫的名字是诸葛亮，第二个是你。", "The day Liu Bei entered Chengdu, the first name he called was Zhuge Liang's. The second was yours."), ALL(LIU, AT("liubei", "trust", 4))),
+        frag("mid", T("刘备遇事会问你。你说的，他大多会听。", "Liu Bei asks your opinion, and mostly takes it."), ALL(LIU, AT("liubei", "trust", 3))),
         frag("low", T("刘备待你客气。你知道，客气就是隔着一层。", "Liu Bei is courteous to you. You know courtesy is a kind of distance."), LIU),
-        frag("cao_high", T("曹操说：天下能让孤脱袍相赠的，只有一个人。", "Cao Cao says there is only one man in the realm he would give the robe off his back."), ALL(V("track", "==", "cao"), R("caocao", "esteem", ">=", 8))),
+        frag("cao_high", T("曹操说：天下能让孤脱袍相赠的，只有一个人。", "Cao Cao says there is only one man in the realm he would give the robe off his back."), ALL(V("track", "==", "cao"), AT("caocao", "esteem", 4))),
         frag("cao", T("曹操用你，也防你。", "Cao Cao uses you, and watches you."), V("track", "==", "cao"))]},
     {"id": "g_zhouyu", "title": T("周瑜", "Zhou Yu"), "fragments": [
         frag("lives", T("周瑜在柴桑养病，每逢江上起风，就让人抬他到城头去看。他对鲁肃说：『替我谢谢那个大夫，和那个守门的。』", "Zhou Yu convalesces at Chaisang; whenever the wind rises on the river he has himself carried up to the walls to watch. He tells Lu Su, 'Thank that physician for me—and the one who guarded my door.'"), F("flag.zhouyu_lives")),
-        frag("esteem", T("周瑜临死前问过鲁肃：『刘备那边那个子衡，还在吗？』", "Before he died, Zhou Yu asked Lu Su, 'That Ziheng in Liu Bei's camp—is he still there?'"), R("zhouyu", "esteem", ">=", 5)),
+        frag("esteem", T("周瑜临死前问过鲁肃：『刘备那边那个子衡，还在吗？』", "Before he died, Zhou Yu asked Lu Su, 'That Ziheng in Liu Bei's camp—is he still there?'"), AT("zhouyu", "esteem", 3)),
         frag("rival", T("东吴的人提起你，总说：周郎的死，也有他一份。", "When people in Wu speak of you, they say: he had a hand in Zhou Yu's death too."), ALL(F("flag.took_nanjun"), NF("flag.zhouyu_lives"))),
         frag("plain", T("周瑜死在巴丘，三十六岁。你想起他按着琴弦的手。", "Zhou Yu died at Baqiu at thirty-six. You remember his hand on the zither strings."), ALL(LIU, NF("flag.zhouyu_lives")))]},
     {"id": "g_pangtong", "title": T("庞统", "Pang Tong"), "fragments": [
@@ -775,8 +775,8 @@ ENDINGS = [
         frag("dead", T("庞统死在落凤坡，三十六岁。", "Pang Tong died at Fallen Phoenix Slope at thirty-six."), LIU)]},
     {"id": "g_sun", "title": T("孙夫人", "Lady Sun"), "fragments": [
         frag("parted", T("孙夫人回了东吴。临走前她托人带给你一张弓：『荆州人里，就你一个说话算话。』", "Lady Sun went back to Wu. Before she left she sent you a bow: 'Of all the Jingzhou men, you're the only one who kept his word.'"), F("flag.sun_parted")),
-        frag("letter", T("孙夫人回东吴后给你写过一封信，只问了一句：荆州的弓，还好用吗？", "After she went back to Wu, Lady Sun wrote you a single letter. It asked only: are the Jingzhou bows any good?"), R("sunfuren", "trust", ">=", 4)),
-        frag("cold", T("孙夫人走的那天，没有回头看一眼。", "The day Lady Sun left, she never looked back."), ALL(LIU, R("sunfuren", "warmth", "<=", 0))),
+        frag("letter", T("孙夫人回东吴后给你写过一封信，只问了一句：荆州的弓，还好用吗？", "After she went back to Wu, Lady Sun wrote you a single letter. It asked only: are the Jingzhou bows any good?"), AT("sunfuren", "trust", 2)),
+        frag("cold", T("孙夫人走的那天，没有回头看一眼。", "The day Lady Sun left, she never looked back."), ALL(LIU, UPTO("sunfuren", "warmth", 0))),
         frag("plain", T("孙夫人回了东吴，再也没有回来。", "Lady Sun went back to Wu and never came back."), LIU)]},
     {"id": "g_wenzhi", "title": T("温芷", "Wen Zhi"), "fragments": [
         frag("child", T("成都城西的小院里，温芷种的当归开了花。她说，等孩子会走路了，就教他认药。", "In the little yard on the west side of Chengdu, Wen Zhi's angelica has flowered. She says that once the child can walk, she'll teach him the herbs."), F("flag.wz_child"), "romance"),
@@ -788,11 +788,11 @@ ENDINGS = [
         frag("far", T("你很久没有温芷的消息了。", "You haven't heard from Wen Zhi in a long time."))]},
     {"id": "g_lives", "title": T("因你而不同的人", "Lives You Changed"), "mode": "all", "fragments": [
         frag("weiyan", T("魏延记得长沙城里是谁替他说的话。这件事，以后还会有人提起。", "Wei Yan remembers who spoke for him at Changsha. Someone will bring it up again one day."), F("flag.pleaded_weiyan")),
-        frag("zhaoyun", T("赵云后来娶了妻，喜酒请你坐了上席。", "Zhao Yun married in the end, and gave you the seat of honor at the wedding."), ALL(F("flag.zy_refused"), R("zhaoyun", "warmth", ">=", 4))),
-        frag("zhangsong", T("张松死后，他的那张地图一直挂在刘备的书房里。", "After Zhang Song died, his map hung in Liu Bei's study for years."), ANY(F("flag.honored_zs"), R("zhangsong", "esteem", ">=", 3))),
+        frag("zhaoyun", T("赵云后来娶了妻，喜酒请你坐了上席。", "Zhao Yun married in the end, and gave you the seat of honor at the wedding."), ALL(F("flag.zy_refused"), AT("zhaoyun", "warmth", 2))),
+        frag("zhangsong", T("张松死后，他的那张地图一直挂在刘备的书房里。", "After Zhang Song died, his map hung in Liu Bei's study for years."), ANY(F("flag.honored_zs"), AT("zhangsong", "esteem", 2))),
         frag("tongguan", T("曹操一直记得潼关那件外袍。", "Cao Cao never forgot the cloak at Tongguan."), F("flag.saved_cao")),
         frag("defected", T("你是随张松一起离开曹营的。许都那边，再没人提你的名字。", "You left Cao's camp with Zhang Song. In Xuchang, no one speaks your name again."), F("flag.defected")),
-        frag("owes", T("关羽说，欠你的，他记在心里。", "Guan Yu says what he owes you, he keeps in his heart."), ALL(ANY(F("flag.vouched_guan"), F("flag.pleaded_guan")), R("guanyu", "warmth", ">=", 4))),
+        frag("owes", T("关羽说，欠你的，他记在心里。", "Guan Yu says what he owes you, he keeps in his heart."), ALL(ANY(F("flag.vouched_guan"), F("flag.pleaded_guan")), AT("guanyu", "warmth", 2))),
         frag("lusu", T("鲁肃一直留着那张约。每次来荆州，都要拿出来看一看。", "Lu Su kept that agreement. Every time he came to Jingzhou he took it out and looked at it."), F("flag.promised_return")),
         frag("guan", T("关羽那句『我不能丢』，你后来想起过很多次。", "You thought often, later, about Guan Yu saying: that's why I can't lose it."), F("flag.guan_charge"))]},
     {"id": "g_name", "title": T("名声", "Your Name"), "fragments": [
@@ -856,6 +856,8 @@ PRESETS = json.loads((HERE / "presets.json").read_text()) if (HERE / "presets.js
 
 CAMPAIGN = {
     "spec": "storydate.campaign/0.3",
+    "tiers": TIERS(),
+    "carry_compress": {"pivot": 4, "k": 0.5},
     "id": "sanguo_strategist_v2",
     "prev": "sanguo_strategist_v1",
     "title": T("三国·谋士", "Three Kingdoms: The Strategist"),

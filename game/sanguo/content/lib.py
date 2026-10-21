@@ -59,3 +59,18 @@ def node(id, chapter, kind, title, lock, canon, intro, choices, when=None, salie
 def dump(obj, path):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=1)
+
+# ---- relationship tiers (v2.3): every condition on a relationship axis is written as a tier, never a raw number ----
+TIER_START = [0, 2, 4, 6, 8]          # tier k covers TIER_START[k] .. TIER_START[k+1]-1 (the last tier is 8–10)
+TIER_END = [1, 3, 5, 7, 10]
+TIER_NAMES = {
+    "trust":    [T("戒备", "Guarded"), T("观望", "Watching"), T("可托", "Reliable"), T("倚重", "Relied on"), T("心腹", "Confidant")],
+    "esteem":   [T("轻视", "Dismissive"), T("寻常", "Ordinary"), T("器重", "Valued"), T("推崇", "Admired"), T("折服", "In awe")],
+    "warmth":   [T("冷淡", "Cold"), T("相识", "Acquainted"), T("相熟", "Familiar"), T("交好", "Friends"), T("知己", "Kindred")],
+    "intimacy": [T("生疏", "Distant"), T("在意", "Caring"), T("心动", "Drawn"), T("两情相悦", "In love"), T("相许", "Promised")],
+}
+def AT(c, axis, k):        # at tier k or above
+    return V(f"rel.{c}.{axis}", ">=", TIER_START[k])
+def UPTO(c, axis, k):      # at tier k or below
+    return V(f"rel.{c}.{axis}", "<=", TIER_END[k])
+def TIERS(): return {"start": TIER_START, "end": TIER_END, "names": TIER_NAMES}

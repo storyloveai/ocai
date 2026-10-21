@@ -244,7 +244,7 @@ N.append(node("c2_note", "c2", "side", T("药包里的纸条", "A Note in the Me
      choice("protect", "dilemma", T("烧掉纸条，托人带话：别再为我冒险。", "Burn the note and send word: don't take risks for me again."),
             T("回话只有两个字：『知道。』你不确定她是生气还是放心。", "The reply is two words: 'I know.' You can't tell whether she's angry or relieved."),
             [rel("wenzhi", "intimacy", 1)])],
-    when=ANY(F("flag.asked_wenzhi"), R("wenzhi", "intimacy", ">=", 2)), salience=3,
+    when=ANY(F("flag.asked_wenzhi"), AT("wenzhi", "intimacy", 1)), salience=3,
     callbacks=[cb("e_wenzhi_spy", T("她说过『只听，不偷』。这张纸条，已经是在偷了。", "She said she would listen, not steal. This note is stealing."), F("flag.asked_wenzhi"))], order=1))
 
 N.append(node("c2_pretext", "c2", "side", T("出城的理由", "A Reason to Leave"), "functional", T("第21回", "Ch. 21"),
@@ -322,7 +322,7 @@ N.append(node("c4_garden", "c4", "side", T("药圃", "The Herb Garden"), "free",
      choice("ask_come", "dilemma", T("请她和你们一起走。", "Ask her to come with you."),
             T("她摇头：『府里还有三个病人离不开我。』停了一下，她又说：『你问了，我记着。』", "She shakes her head. 'Three patients there can't do without me.' A pause. 'But you asked. I'll remember that.'"),
             [rel("wenzhi", "intimacy", 1), rel("wenzhi", "trust", 1)])],
-    when=ALL(F("flag.with_guanyu"), R("wenzhi", "intimacy", ">=", 2)), salience=3, order=2,
+    when=ALL(F("flag.with_guanyu"), AT("wenzhi", "intimacy", 1)), salience=3, order=2,
     callbacks=[cb("e_wenzhi_spy", T("『你托我听的那些话，』她说，『我还在听。』", "'The things you asked me to listen for,' she says, 'I'm still listening.'"), F("flag.asked_wenzhi"))]))
 N[-1]["mood"] = ROMANCE
 
@@ -337,13 +337,13 @@ N.append(node("c4_seal", "c4", "main", T("挂印封金", "Seal Hung, Gold Sealed
             T("温芷什么也没问，第二天就把盖了印的文书交给你。东岭关的孔秀验过文书，放你们过去了。到了洛阳，韩福不认这份文书，关羽的刀还是出了鞘。后来你听说，温芷为这件事被叫去问了三天话。",
               "Wen Zhi asks nothing. The next day she hands you a stamped pass. At Dongling, Kong Xiu checks it and lets you through. At Luoyang, Han Fu refuses to honor it, and Guan Yu's blade comes out after all. Later you hear Wen Zhi was questioned for three days over it."),
             [setv("flag.pass_from_wenzhi"), setv("flag.kongxiu_spared"), add("deviation"), rel("wenzhi", "trust", 1), rel("guanyu", "esteem", 1), rel("liubei", "trust", 1)],
-            req=R("wenzhi", "trust", ">=", 2), hint=T("需要温芷的信任 ≥ 2", "Needs Wen Zhi's trust ≥ 2"),
+            req=AT("wenzhi", "trust", 1), hint=T("需要温芷的信任在「观望」以上", "Needs Wen Zhi's trust at Watching or above"),
             echo=["e_pass"], debt=["d_five_passes"], resolve=[("d_five_passes", "transform")]),
      choice("stay", "dilemma", T("留下来，做曹操的谋士。", "Stay, and serve Cao Cao as his adviser."),
             T("关羽在门口站了一会儿：『人各有志。保重。』他上马走了。当晚，曹操亲自给你斟了一杯酒。",
               "Guan Yu stands in the doorway a while. 'Every man chooses his own road. Take care.' He mounts and rides away. That evening Cao Cao pours you a cup of wine himself."),
             [setv("track", "cao"), rel("liubei", "trust", -3), rel("guanyu", "esteem", -1), rel("caocao", "esteem", 2), add("deviation")],
-            req=ANY(R("caocao", "esteem", ">=", 2), F("flag.took_cao_post")), hint=T("需要曹操的赏识 ≥ 2，或已接受曹营官职", "Needs Cao's regard ≥ 2, or a post under Cao"), echo=["e_stay"])],
+            req=ANY(AT("caocao", "esteem", 1), F("flag.took_cao_post")), hint=T("需要曹操的赏识在「寻常」以上，或已接受曹营官职", "Needs Cao's regard at Ordinary or above, or a post under Cao"), echo=["e_stay"])],
     when=F("flag.with_guanyu"),
     callbacks=[cb("e_terms", T("曹操叹道：『土山上那三条，是子衡写的吧？我答应过，便不追了。』", "Cao sighs. 'Those three terms on the hill—Ziheng wrote them, didn't he? I gave my word. I won't pursue.'"), F("flag.drafted_terms")),
                cb("e_spoke", T("曹操把你叫到一边：『青梅亭上那个说话不留情的书生，我一直记得。留下来吧。』", "Cao takes you aside. 'The scholar at the plum pavilion who spared no one—I haven't forgotten. Stay.'"), F("flag.spoke_at_plum")),
@@ -386,7 +386,7 @@ N.append(node("c5_letter", "c5", "side", T("徐母之书", "A Letter from His Mo
             T("刘备想了很久：『母子天伦，我不能拦。』徐庶还是走了，临行前举荐了隆中的诸葛亮。刘备对你说：『你能先来问我，很好。』",
               "Liu Bei thinks a long time. 'A son and his mother—I can't stand in the way.' Xu Shu leaves, recommending Zhuge Liang of Longzhong before he goes. Liu Bei tells you, 'It was right of you to come to me first.'"),
             [rel("liubei", "trust", 2)])],
-    when=ALL(LIU, ANY(R("wenzhi", "trust", ">=", 3), F("flag.pass_from_wenzhi"))), salience=3,
+    when=ALL(LIU, ANY(AT("wenzhi", "trust", 2), F("flag.pass_from_wenzhi"), F("flag.asked_wenzhi"))), salience=3,
     callbacks=[cb("e_pass", T("信末一行小字：『文书一事，问了三日，无妨。』", "A line squeezed in at the bottom: 'About the pass—three days of questions. I'm fine.'"), F("flag.pass_from_wenzhi")),
                cb("e_wenzhi_spy", T("这一回，她不只是在听了。", "This time she's done more than listen."), F("flag.asked_wenzhi"))],
     order=1))
@@ -445,7 +445,7 @@ N.append(node("c5_spring", "c5", "side", T("当归", "Angelica"), "free", T("原
             T("她点点头，像是早就知道你会这么说。", "She nods, as if she knew you'd say that."), [rel("wenzhi", "trust", 1)]),
      choice("chengyu", "strategy", T("问她：丞相府里，谁最不喜欢你？", "Ask her: who in the Chancellor's household likes you least?"),
             T("『程昱，』她说，『他说你骨子里还是刘备的人。』", "'Cheng Yu,' she says. 'He says that deep down you still belong to Liu Bei.'"), [rel("wenzhi", "trust", 1)])],
-    when=ALL(CAO, R("wenzhi", "intimacy", ">=", 2)), salience=2, order=1))
+    when=ALL(CAO, AT("wenzhi", "intimacy", 1)), salience=2, order=1))
 N[-1]["mood"] = ROMANCE
 
 N.append(node("c5_forge", "c5", "main", T("程昱之书", "Cheng Yu's Letter"), "functional", T("第36回", "Ch. 36"),
@@ -533,7 +533,7 @@ N.append(node("c7_letter", "c7", "side", T("江上来信", "A Letter Across the 
             [setv("flag.wenzhi_used"), rel("wenzhi", "trust", -2), rel("liubei", "trust", 1), rel("zhuge", "esteem", 1), add("renown.cunning")], echo=["e_used"]),
      choice("care", "expression", T("只回一句：『你也是。』", "Write back just: 'You too.'"),
             T("信送出去了。你不知道她能不能收到。", "The letter goes out. You don't know if it will reach her."), [rel("wenzhi", "intimacy", 1)])],
-    when=ALL(LIU, ANY(F("flag.promise_wenzhi"), F("flag.pass_from_wenzhi"), R("wenzhi", "intimacy", ">=", 2))), salience=3,
+    when=ALL(LIU, ANY(F("flag.promise_wenzhi"), F("flag.pass_from_wenzhi"), AT("wenzhi", "intimacy", 1))), salience=3,
     callbacks=[cb("e_promise", T("你想起药圃里那包止血散，到现在还没用完。", "You think of the wound powder from the herb garden. You still haven't used it all."), F("flag.promise_wenzhi")),
                cb("e_wenzhi_spy", T("她说过只听不偷。这一封，她什么都没偷，只是在担心你。", "She said she'd listen, not steal. This letter steals nothing. She's just worried about you."), F("flag.asked_wenzhi"))],
     order=2))
@@ -569,7 +569,7 @@ N.append(node("c7_fire", "c7", "main", T("火烧赤壁", "Fire at Red Cliffs"), 
                  "The rear camp is already burning. You shout her name through the smoke until your voice gives out, and finally find her under a wrecked boat on the bank, her hands burned, still clutching her medicine chest."), NF("flag.wenzhi_warned")),
              P(T("回到南岸时，仗已经打完了。刘备问你去了哪里，你没有回答。", "By the time you're back on the south bank, the battle is over. Liu Bei asks where you went. You don't answer."))],
             [setv("flag.wenzhi_with_you"), rel("liubei", "trust", -1), rel("wenzhi", "intimacy", 2), add("deviation")], echo=["e_row"],
-            req=ANY(F("flag.wenzhi_warned"), R("wenzhi", "intimacy", ">=", 3)), hint=T("需要与温芷足够亲近", "Needs to be close enough to Wen Zhi")),
+            req=ANY(F("flag.wenzhi_warned"), AT("wenzhi", "intimacy", 2)), hint=T("需要与温芷足够亲近", "Needs to be close enough to Wen Zhi")),
      choice("ambush", "strategy", T("留在诸葛亮身边，帮他调度追击的伏兵。", "Stay with Zhuge Liang and help him deploy the ambushes."),
             T("诸葛亮一道一道发令：赵云去乌林，张飞去葫芦口……最后才看向关羽。", "Zhuge Liang gives his orders one by one: Zhao Yun to Wulin, Zhang Fei to Hulu Pass… and only at the end does he look at Guan Yu."),
             [rel("zhuge", "esteem", 1)]),
@@ -599,7 +599,7 @@ N.append(node("c7_chain", "c7", "main", T("连环", "The Chain"), "literal", T("
      choice("wenzhi", "dilemma", T("什么也不说，回营让温芷把病兵和药都搬到岸上。", "Say nothing. Go back and tell Wen Zhi to move the sick and the medicine ashore."),
             T("温芷看着你：『你知道什么？』你说：『什么都不知道。搬吧。』", "Wen Zhi looks at you. 'What do you know?' 'Nothing,' you say. 'Just move them.'"),
             [setv("flag.wenzhi_warned"), add("uncanny"), rel("wenzhi", "intimacy", 1)], foresight=True, echo=["e_warned"],
-            req=R("wenzhi", "intimacy", ">=", 2), hint=T("需要与温芷足够亲近", "Needs to be close enough to Wen Zhi"))],
+            req=AT("wenzhi", "intimacy", 1), hint=T("需要与温芷足够亲近", "Needs to be close enough to Wen Zhi"))],
     when=CAO,
     quote=T("程昱曰：「船皆连锁，固是平稳；但彼若用火攻，难以回避。不可不防。」……操曰：「凡用火攻，必藉风力。方今隆冬之际，但有西风北风，安有东风南风耶？」",
             "Cheng Yu said: \"Chained ships are steady, yes—but if they use fire we'll have no escape. We must guard against it.\" … Cao replied: \"Fire depends on the wind. In the depth of winter there is only west wind and north wind. Where would an east or south wind come from?\""),
@@ -624,12 +624,12 @@ N.append(node("c8_huarong", "c8", "main", T("华容道", "The Huarong Road"), "l
              P(T("关羽看了你一眼。你点了点头——或者你只是没有摇头。关羽拨开了马头。", "Guan Yu looks at you. You nod—or perhaps you only fail to shake your head. Guan Yu turns his horse aside.")),
              P(T("回营复命时，诸葛亮只问了一句：『你点头了？』你没有回答。他也没再问。", "When you report back, Zhuge Liang asks only, 'Did you nod?' You don't answer. He doesn't ask again."))],
             [setv("flag.at_huarong"), rel("guanyu", "warmth", 1), rel("zhuge", "trust", -1)],
-            req=R("zhuge", "esteem", ">=", 3), hint=T("需要诸葛亮的敬重 ≥ 3", "Needs Zhuge Liang's respect ≥ 3")),
+            req=AT("zhuge", "esteem", 2), hint=T("需要诸葛亮的敬重在「器重」以上", "Needs Zhuge Liang's respect at Valued or above")),
      choice("warn_wenzhi", "dilemma", T("托一个渔夫给曹营的温芷送一句话：走华容道，别走大路。", "Pay a fisherman to take Wen Zhi a message in Cao's camp: take the Huarong road, not the main road."),
             T("你不知道话有没有送到。很久以后你才听说：曹军残部走华容道时，后队有个背药箱的女子，一路给伤兵包扎。",
               "You never learn whether the message arrived. Much later you hear that when Cao's remnants came through Huarong, a woman with a medicine chest at the rear of the column bandaged the wounded all the way."),
             [setv("flag.wenzhi_safe"), rel("wenzhi", "intimacy", 1)],
-            req=ALL(NF("flag.wenzhi_with_you"), R("wenzhi", "intimacy", ">=", 2)), hint=T("需要与温芷足够亲近，且她仍在曹营", "Needs closeness with Wen Zhi, and for her to still be in Cao's camp")),
+            req=ALL(NF("flag.wenzhi_with_you"), AT("wenzhi", "intimacy", 1)), hint=T("需要与温芷足够亲近，且她仍在曹营", "Needs closeness with Wen Zhi, and for her to still be in Cao's camp")),
      choice("silent", "expression", T("什么也不说。", "Say nothing."),
             T("关羽在华容道放走了曹操。回营后诸葛亮要斩他，刘备求情才免了。一切都和后来说书人讲的一样。",
               "Guan Yu lets Cao go on the Huarong road. Back in camp Zhuge Liang orders his execution, and only Liu Bei's pleading spares him. Everything happens just as the storytellers will tell it."))],
@@ -650,7 +650,7 @@ N.append(node("c8_cao", "c8", "main", T("华容道·曹营", "Huarong, from Cao'
             [P(T("『土山三约，是我写，丞相守。』你说，『将军也守一个吧。』", "'I wrote the three terms on that hill, and the Chancellor kept them,' you say. 'Keep one for us, General.'"), F("flag.drafted_terms")),
              P(T("关羽沉默良久，拨开马头，挥手让部下散开。曹操走过去的时候，关羽没有看他，看的是你。", "Guan Yu is silent a long time, then turns his horse aside and waves his men apart. As Cao passes, Guan Yu doesn't look at him. He looks at you."))],
             [setv("flag.pleaded_guan"), rel("caocao", "esteem", 2)],
-            req=R("guanyu", "esteem", ">=", 3), hint=T("需要关羽的敬重 ≥ 3", "Needs Guan Yu's respect ≥ 3")),
+            req=AT("guanyu", "esteem", 2), hint=T("需要关羽的敬重在「器重」以上", "Needs Guan Yu's respect at Valued or above")),
      choice("cao_pleads", "strategy", T("劝曹操亲自去说，提起当年的恩情。", "Urge Cao to speak to him himself and recall old kindnesses."),
             T("曹操上前，说起当年五关斩将、他没有追究的事。关羽长叹一声，放他们过去了。", "Cao rides forward and reminds Guan Yu how he never punished him for the generals killed at the five passes. Guan Yu sighs heavily and lets them through."),
             [rel("caocao", "esteem", 1)]),
@@ -699,10 +699,10 @@ ENDINGS = [
         frag("liu", T("你仍在刘备帐下，随他南取荆州。", "You remain in Liu Bei's service and follow him south to take Jingzhou."), LIU),
         frag("cao", T("你随曹操北还许都，名字写进了丞相府的名册。", "You return north to Xuchang with Cao Cao, your name entered in the Chancellor's rolls."), CAO)]},
     {"id": "g_lord", "title": T("主公", "Your Lord"), "fragments": [
-        frag("liu_high", T("刘备说：『孔明是我的水，子衡是我的井。』这话传出去被人笑了很久，你却记了一辈子。", "Liu Bei says, 'Kongming is my river; Ziheng is my well.' People laugh at that for years. You remember it all your life."), ALL(LIU, R("liubei", "trust", ">=", 10))),
-        frag("liu_mid", T("刘备敬重你，遇事会问你。但你知道，最后拿主意的人已经是诸葛亮了。", "Liu Bei respects you and asks your opinion. But you know the man who decides is Zhuge Liang now."), ALL(LIU, R("liubei", "trust", ">=", 7))),
+        frag("liu_high", T("刘备说：『孔明是我的水，子衡是我的井。』这话传出去被人笑了很久，你却记了一辈子。", "Liu Bei says, 'Kongming is my river; Ziheng is my well.' People laugh at that for years. You remember it all your life."), ALL(LIU, AT("liubei", "trust", 4))),
+        frag("liu_mid", T("刘备敬重你，遇事会问你。但你知道，最后拿主意的人已经是诸葛亮了。", "Liu Bei respects you and asks your opinion. But you know the man who decides is Zhuge Liang now."), ALL(LIU, AT("liubei", "trust", 3))),
         frag("liu_low", T("刘备待你始终客气。客气，就是隔着一层。", "Liu Bei is always courteous to you. Courtesy is a kind of distance."), LIU),
-        frag("cao_high", T("曹操把你列为心腹谋臣，与程昱、荀攸同席。", "Cao Cao counts you among his closest advisers, seated with Cheng Yu and Xun You."), ALL(CAO, R("caocao", "esteem", ">=", 8))),
+        frag("cao_high", T("曹操把你列为心腹谋臣，与程昱、荀攸同席。", "Cao Cao counts you among his closest advisers, seated with Cheng Yu and Xun You."), ALL(CAO, AT("caocao", "esteem", 4))),
         frag("cao_low", T("曹操用你，也防你。他从没忘记你是从刘备那里来的。", "Cao Cao uses you, and watches you. He never forgets you came from Liu Bei."), CAO)]},
     {"id": "g_name", "title": T("名声", "Your Name"), "fragments": [
         frag("uncanny", T("坊间传说你能知未来。敬你的人叫你『先生』，怕你的人叫你『妖人』。", "People say you can see the future. Those who respect you call you 'Master'; those who fear you call you a sorcerer."), V("uncanny", ">=", 3)),
@@ -713,13 +713,13 @@ ENDINGS = [
         frag("vouched", T("华容道之后，关羽每次喝酒都要先敬你一杯：『那一跪，我记着。』", "After Huarong, whenever Guan Yu drinks, he raises the first cup to you. 'I remember that you knelt.'"), F("flag.vouched_guan")),
         frag("pleaded", T("华容道上关羽让开的那条路，曹操记在了你的名下。", "Cao Cao credits you with the road Guan Yu opened at Huarong."), F("flag.pleaded_guan")),
         frag("owes", T("关羽一直记着欠你的那份情。他不常说，但每逢有人议论你，他就把刀往桌上一放。", "Guan Yu never forgets what he owes you. He rarely mentions it, but whenever someone talks about you behind your back, he sets his blade on the table."), ANY(F("flag.vouched_guan"), F("flag.at_huarong"), F("flag.guan_fear"))),
-        frag("respect", T("关羽敬你。在他那里，这比喜欢难得多。", "Guan Yu respects you. With him, that is much harder to earn than liking."), R("guanyu", "esteem", ">=", 6)),
-        frag("cold", T("关羽说起你，只有两个字：『可惜。』", "When Guan Yu speaks of you, it's one word: 'Pity.'"), R("guanyu", "esteem", "<=", 0)),
+        frag("respect", T("关羽敬你。在他那里，这比喜欢难得多。", "Guan Yu respects you. With him, that is much harder to earn than liking."), AT("guanyu", "esteem", 3)),
+        frag("cold", T("关羽说起你，只有两个字：『可惜。』", "When Guan Yu speaks of you, it's one word: 'Pity.'"), UPTO("guanyu", "esteem", 0)),
         frag("plain", T("你和关羽，始终是点头之交。", "You and Guan Yu remain nodding acquaintances."))]},
     {"id": "g_zhuge", "title": T("诸葛亮", "Zhuge Liang"), "fragments": [
         frag("nod", T("那一句『你点头了？』，诸葛亮到最后也没有再问。", "Zhuge Liang never asks again whether you nodded."), ALL(LIU, F("flag.at_huarong"))),
-        frag("wary", T("诸葛亮对你始终存着一分戒心。你知道得太多，又说不出是从哪里知道的。", "Zhuge Liang never quite lowers his guard with you. You know too much, and can't say how."), ALL(LIU, R("zhuge", "trust", "<=", 3))),
-        frag("respect", T("诸葛亮出兵前，会把方略先给你看一遍。", "Before any campaign, Zhuge Liang shows you his plans first."), ALL(LIU, R("zhuge", "esteem", ">=", 4))),
+        frag("wary", T("诸葛亮对你始终存着一分戒心。你知道得太多，又说不出是从哪里知道的。", "Zhuge Liang never quite lowers his guard with you. You know too much, and can't say how."), ALL(LIU, UPTO("zhuge", "trust", 1))),
+        frag("respect", T("诸葛亮出兵前，会把方略先给你看一遍。", "Before any campaign, Zhuge Liang shows you his plans first."), ALL(LIU, AT("zhuge", "esteem", 2))),
         frag("plain", T("诸葛亮与你相处融洽，却没有深交。", "You and Zhuge Liang get along, but never grow close."), LIU)]},
     {"id": "g_wenzhi", "title": T("温芷", "Wen Zhi"), "fragments": [
         frag("married", T("那一夜江边说出口的话，你们谁都没有收回。后来你们在公安城外成了亲，开了一间药铺，不问来人是哪一边的。", "Neither of you ever took back what was said by the river that night. Later you married outside Gong'an and opened an apothecary that never asked which side its patients were on."), ALL(F("flag.wenzhi_with_you"), F("flag.confessed")), ROMANCE),
@@ -788,7 +788,7 @@ CAST = {
     "c4_horse": cast("caocao", "guanyu"), "c4_garden": cast("wenzhi"), "c4_seal": cast("guanyu", "caocao"), "c4_yuan": cast("liubei"), "c4_gucheng": cast("liubei"),
     "c5_letter": cast("wenzhi"), "c5_mirror": cast("liubei"), "c5_cottage": cast("zhuge", "liubei"), "c5_lamp": cast("zhuge"), "c5_spring": cast("wenzhi"), "c5_forge": cast("caocao"), "c5_feast": cast("caocao"),
     "c6_slope": cast("liubei"), "c6_pursuit": cast("caocao"),
-    "c7_arrows": cast("zhuge"), "c7_letter": cast("wenzhi"), "c7_phoenix": cast("zhuge"), "c7_fire": cast("zhuge") + cast("wenzhi", when=F("flag.wenzhi_with_you")), "c7_chain": cast("caocao") + cast("wenzhi", when=R("wenzhi", "intimacy", ">=", 2)),
+    "c7_arrows": cast("zhuge"), "c7_letter": cast("wenzhi"), "c7_phoenix": cast("zhuge"), "c7_fire": cast("zhuge") + cast("wenzhi", when=F("flag.wenzhi_with_you")), "c7_chain": cast("caocao") + cast("wenzhi", when=AT("wenzhi", "intimacy", 1)),
     "c8_huarong": cast("guanyu", "zhuge"), "c8_cao": cast("guanyu", "caocao"), "c8_river": cast("wenzhi"), "c8_vigil": cast("guanyu"), "c8_north": cast("caocao"),
     "x_exposed": cast("liubei", "zhuge", when=LIU) + cast("caocao", when=CAO), "x_cold_liu": cast("liubei"), "x_cold_cao": cast("caocao"),
 }
@@ -886,6 +886,7 @@ for _nid in ("x_miheng", "x_loose", "x_plum_rage", "x_cao_rage"): next(n for n i
 
 CAMPAIGN = {
     "spec": "storydate.campaign/0.3",
+    "tiers": TIERS(),
     "id": "sanguo_strategist_v1",
     "title": T("三国·谋士", "Three Kingdoms: The Strategist"),
     "volume": T("卷一 · 许都至赤壁", "Volume I · Xuchang to Red Cliffs"),

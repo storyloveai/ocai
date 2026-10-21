@@ -1,5 +1,115 @@
 {
  "spec": "storydate.campaign/0.3",
+ "tiers": {
+  "start": [
+   0,
+   2,
+   4,
+   6,
+   8
+  ],
+  "end": [
+   1,
+   3,
+   5,
+   7,
+   10
+  ],
+  "names": {
+   "trust": [
+    {
+     "zh": "戒备",
+     "en": "Guarded"
+    },
+    {
+     "zh": "观望",
+     "en": "Watching"
+    },
+    {
+     "zh": "可托",
+     "en": "Reliable"
+    },
+    {
+     "zh": "倚重",
+     "en": "Relied on"
+    },
+    {
+     "zh": "心腹",
+     "en": "Confidant"
+    }
+   ],
+   "esteem": [
+    {
+     "zh": "轻视",
+     "en": "Dismissive"
+    },
+    {
+     "zh": "寻常",
+     "en": "Ordinary"
+    },
+    {
+     "zh": "器重",
+     "en": "Valued"
+    },
+    {
+     "zh": "推崇",
+     "en": "Admired"
+    },
+    {
+     "zh": "折服",
+     "en": "In awe"
+    }
+   ],
+   "warmth": [
+    {
+     "zh": "冷淡",
+     "en": "Cold"
+    },
+    {
+     "zh": "相识",
+     "en": "Acquainted"
+    },
+    {
+     "zh": "相熟",
+     "en": "Familiar"
+    },
+    {
+     "zh": "交好",
+     "en": "Friends"
+    },
+    {
+     "zh": "知己",
+     "en": "Kindred"
+    }
+   ],
+   "intimacy": [
+    {
+     "zh": "生疏",
+     "en": "Distant"
+    },
+    {
+     "zh": "在意",
+     "en": "Caring"
+    },
+    {
+     "zh": "心动",
+     "en": "Drawn"
+    },
+    {
+     "zh": "两情相悦",
+     "en": "In love"
+    },
+    {
+     "zh": "相许",
+     "en": "Promised"
+    }
+   ]
+  }
+ },
+ "carry_compress": {
+  "pivot": 4,
+  "k": 0.5
+ },
  "id": "sanguo_strategist_v2",
  "prev": "sanguo_strategist_v1",
  "title": {
@@ -3859,7 +3969,7 @@
        "to": true
       },
       {
-       "add": "rel.liubei.trust",
+       "add": "rel.liubei.esteem",
        "by": 1
       },
       {
@@ -4811,7 +4921,7 @@
      "effects": [
       {
        "add": "rel.liubei.trust",
-       "by": 1
+       "by": 0
       },
       {
        "add": "renown.cunning",
@@ -4843,8 +4953,8 @@
        "to": true
       },
       {
-       "add": "rel.liubei.trust",
-       "by": 2
+       "add": "rel.liubei.esteem",
+       "by": 1
       },
       {
        "add": "rel.zhaoyun.trust",
@@ -4979,7 +5089,7 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 1
+       "by": 0
       }
      ],
      "values": [
@@ -5385,7 +5495,7 @@
      "when": {
       "v": "rel.zhouyu.trust",
       "op": ">=",
-      "val": 3
+      "val": 4
      }
     },
     {
@@ -5919,7 +6029,7 @@
        "by": 1
       },
       {
-       "add": "rel.liubei.trust",
+       "add": "rel.liubei.esteem",
        "by": 1
       }
      ],
@@ -6187,7 +6297,7 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 1
+       "by": 0
       },
       {
        "add": "renown.cunning",
@@ -6506,7 +6616,7 @@
      "when": {
       "v": "rel.lusu.trust",
       "op": ">=",
-      "val": 5
+      "val": 6
      }
     },
     {
@@ -6625,11 +6735,11 @@
      "req": {
       "v": "rel.sunfuren.warmth",
       "op": ">=",
-      "val": 3
+      "val": 4
      },
      "hint": {
-      "zh": "需要孙夫人对你有足够的交情（≥ 3）",
-      "en": "Needs enough friendship with Lady Sun (≥ 3)"
+      "zh": "需要孙夫人和你的交情在「相熟」以上",
+      "en": "Needs Lady Sun's friendship at Familiar or above"
      },
      "echo": [
       "e_adou"
@@ -6882,11 +6992,11 @@
      "req": {
       "v": "rel.wenzhi.intimacy",
       "op": ">=",
-      "val": 3
+      "val": 4
      },
      "hint": {
-      "zh": "需要和温芷足够亲近（≥ 3）",
-      "en": "Needs enough closeness with Wen Zhi (≥ 3)"
+      "zh": "需要和温芷的亲近在「心动」以上",
+      "en": "Needs closeness with Wen Zhi at Drawn or above"
      },
      "echo": [
       "e_wz_road"
@@ -7177,18 +7287,18 @@
        {
         "v": "rel.pangtong.warmth",
         "op": ">=",
-        "val": 3
+        "val": 4
        },
        {
         "v": "rel.pangtong.esteem",
         "op": ">=",
-        "val": 3
+        "val": 4
        }
       ]
      },
      "hint": {
-      "zh": "需要庞统肯听你的（交情或看重 ≥ 3）",
-      "en": "Needs Pang Tong to listen to you (friendship or esteem ≥ 3)"
+      "zh": "需要庞统肯听你的：交情在「相熟」以上，或看重在「器重」以上",
+      "en": "Needs Pang Tong to listen to you: friendship at Familiar or above, or esteem at Valued or above"
      },
      "foresight": true,
      "echo": [
@@ -7763,7 +7873,7 @@
      "when": {
       "v": "rel.zhuge.trust",
       "op": "<=",
-      "val": 2
+      "val": 3
      }
     },
     {
@@ -7801,7 +7911,7 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 1
+       "by": 0
       },
       {
        "add": "rel.zhuge.esteem",
@@ -7838,7 +7948,7 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 1
+       "by": 0
       }
      ],
      "values": [
@@ -7868,7 +7978,7 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 2
+       "by": 1
       },
       {
        "add": "renown.loyal",
@@ -8150,7 +8260,7 @@
        {
         "v": "rel.zhuge.esteem",
         "op": ">=",
-        "val": 3
+        "val": 4
        },
        {
         "v": "rel.zhaoyun.trust",
@@ -8160,8 +8270,8 @@
       ]
      },
      "hint": {
-      "zh": "需要诸葛亮敬重你（≥ 3）或赵云信任你（≥ 4），替你说一句话",
-      "en": "Needs Zhuge Liang's respect (≥ 3) or Zhao Yun's trust (≥ 4) to put in a word for you"
+      "zh": "需要诸葛亮的敬重在「器重」以上，或赵云的信任在「可托」以上，才有人替你说一句话",
+      "en": "Needs Zhuge Liang's respect at Valued or above, or Zhao Yun's trust at Reliable or above, for someone to put in a word for you"
      }
     },
     {
@@ -8723,7 +8833,7 @@
        {
         "v": "rel.liubei.trust",
         "op": ">=",
-        "val": 10
+        "val": 8
        }
       ]
      }
@@ -8862,7 +8972,7 @@
      "when": {
       "v": "rel.zhouyu.esteem",
       "op": ">=",
-      "val": 5
+      "val": 6
      }
     },
     {
@@ -9058,7 +9168,7 @@
        {
         "v": "rel.sunfuren.warmth",
         "op": "<=",
-        "val": 0
+        "val": 1
        }
       ]
      }
@@ -9261,7 +9371,7 @@
        {
         "v": "rel.zhangsong.esteem",
         "op": ">=",
-        "val": 3
+        "val": 4
        }
       ]
      }

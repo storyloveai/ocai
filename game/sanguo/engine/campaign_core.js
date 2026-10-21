@@ -54,6 +54,14 @@
    * except per-scene ones (heat.*) and narrative debts, which belong to their own volume. People also remember
    * what was said (mem) and promises still open stay open. */
   CC.carryable = (camp, name) => !!camp.vars[name] && camp.vars[name].carry !== false && !name.startsWith("heat.") && !name.startsWith("debt.") && name !== "ended_early";
+  /* v2.3: each new volume pulls high relationship values back toward the middle (time passes; people change),
+   * so a player who maxed someone out in an earlier volume still has room to grow. Values at or below the pivot
+   * are kept as they are: a grudge or a cold shoulder carries over in full. */
+  CC.compress = (camp, val) => {
+    const cc = camp.carry_compress; if (!cc || val <= cc.pivot) return val;
+    return Math.round(cc.pivot + (val - cc.pivot) * cc.k);
+  };
+  CC.tierOf = (camp, val) => { const t = camp.tiers; if (!t) return null; let k = 0; t.start.forEach((s, i) => { if (val >= s) k = i; }); return k; };
   CC.newGame = function (camp, carry) {
     const v = {};
     for (const [k, d] of Object.entries(camp.vars)) v[k] = d.init;
@@ -61,8 +69,10 @@
     const st = { v, vol: camp.id, ch: -1, phase: "start", cur: null, offer: [], lastOrder: -1, ledger: [], log: [], echoes: {}, seq: 0, done: [] };
     if (carry && carry.v) {
       const e = ledgerPush(st, { kind: "carry", node: null, choice: null, from: carry.vol || null, preset: carry.preset || null, changes: [], debts: [], echo: [] });
-      for (const [k, val] of Object.entries(carry.v)) {
-        if (!CC.carryable(camp, k) || val === undefined || val === v[k]) continue;
+      for (let [k, val] of Object.entries(carry.v)) {
+        if (!CC.carryable(camp, k) || val === undefined) continue;
+        if (k.startsWith("rel.") && typeof val === "number") { const c = CC.compress(camp, val); if (c !== val) (e.compressed = e.compressed || []).push({ var: k, was: val, now: c }); val = c; }
+        if (val === v[k]) continue;
         e.changes.push({ var: k, from: v[k], to: val }); v[k] = val;
       }
       if (carry.mem) st.mem = JSON.parse(JSON.stringify(carry.mem));
@@ -535,6 +545,19 @@
 
     const varOk = v => v in camp.vars || (v.startsWith("debt.") && v.slice(5) in camp.debts);
     const reads = new Set(), writes = new Set();
+    // v2.3: relationship thresholds must sit on a tier boundary, so "trusted" means the same number everywhere
+    const tierOk = a => {
+      if (!camp.tiers || !/^rel\./.test(a.v) || typeof a.val !== "number") return true;
+      if (a.op === ">=") return camp.tiers.start.includes(a.val);
+      if (a.op === "<=") return camp.tiers.end.includes(a.val);
+      return false;
+    };
+    (function scan(o, path) {   // catch rel thresholds anywhere, not only in the places checkCond visits
+      if (!o || typeof o !== "object") return;
+      if (Array.isArray(o)) { o.forEach((x, i) => scan(x, path + "[" + i + "]")); return; }
+      if (typeof o.v === "string" && typeof o.op === "string" && "val" in o && !tierOk(o)) E(`${path}: ${o.v} ${o.op} ${o.val} is not on a tier boundary (use AT/UPTO)`);
+      for (const k of Object.keys(o)) if (k !== "tiers") scan(o[k], path + "." + k);
+    })(camp, "camp");
     const checkCond = (c, where) => { atoms(c).forEach(a => { if (!varOk(a.v)) E(`${where}: unknown var ${a.v}`); }); condVars(c).forEach(v => reads.add(v)); };
     const chIdx = id => camp.chapters.findIndex(c => c.id === id);
     const reqReads = new Set();
@@ -693,15 +716,17 @@
     while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
     return st;
   };
-  CC.simulate = function (camp, runs = 2000, seed = 7, policy = null) {
+  CC.simulate = function (camp, runs = 2000, seed = 7, policy = null, opts = {}) {
     const r = rng(seed); const w = policy && CC.policies[policy];
-    const S = { runs, policy: policy || "random", topics: {}, speech: {}, answers: {}, flares: {}, provokedReward: {}, early: {}, nodes: {}, choiceSeen: {}, choiceOpen: {}, choicePick: {}, frags: {}, combos: new Set(), echoReg: {}, echoPaid: {}, debtsLeft: {}, debtModes: {}, track: {}, deviation: {}, uncanny: {}, length: 0, offered: {} };
+    const S = { runs, policy: policy || "random", topics: {}, speech: {}, answers: {}, flares: {}, provokedReward: {}, early: {}, nodes: {}, choiceSeen: {}, choiceOpen: {}, choicePick: {}, frags: {}, combos: new Set(), echoReg: {}, echoPaid: {}, debtsLeft: {}, debtModes: {}, track: {}, deviation: {}, uncanny: {}, length: 0, offered: {}, rel: {} };
     const inc = (o, k, n = 1) => { o[k] = (o[k] || 0) + n; };
     const presets = camp.presets || [];
     for (let i = 0; i < runs; i++) {
       // a later volume is played from earlier endings: most simulated runs start from a preset backstory
       const pr = presets.length && r() < .85 ? (presets.find(p => p.id === policy) || presets[Math.floor(r() * presets.length)]) : null;
-      const st = CC.newGame(camp, pr ? Object.assign({}, pr.carry, { preset: pr.id }) : null);
+      // opts.carries: real end states of the previous volume (a chained, book-level run) instead of presets
+      const st = opts.carries ? CC.newGame(camp, opts.carries[i % opts.carries.length]) : CC.newGame(camp, pr ? Object.assign({}, pr.carry, { preset: pr.id }) : null);
+      const relStart = {}; for (const k of Object.keys(st.v)) if (k.startsWith("rel.")) relStart[k] = st.v[k];
       let guard = 0;
       let lastNode = null;
       while (st.phase !== "end" && guard++ < 800) {
@@ -724,6 +749,12 @@
       S.combos.add(ends.map(e => e.group + "." + e.frag).join("|"));
       for (const [id, e] of Object.entries(st.echoes)) { inc(S.echoReg, id); if (e.paid.length) inc(S.echoPaid, id); }
       for (const id of Object.keys(camp.debts)) { const m = st.v["debt." + id]; if (m === "open" && !st.v.ended_early) inc(S.debtsLeft, id); if (m !== "none") inc(S.debtModes, id + ":" + m); }
+      for (const [k, a] of Object.entries(relStart)) {   // v2.3: where each relationship ends up, by tier
+        const R = S.rel[k] = S.rel[k] || { tiers: [0, 0, 0, 0, 0], moved: 0, max: 0 }, b = st.v[k];
+        const t = CC.tierOf(camp, b); if (t !== null) R.tiers[t]++;
+        if (b !== a) R.moved++; if (b >= 10) R.max++;
+      }
+      if (opts.keep) (S.carries = S.carries || []).push(CC.carryOut(st));
       inc(S.track, st.v.track); inc(S.deviation, st.v.deviation); inc(S.uncanny, st.v.uncanny);
       S.length += st.done.length;
     }
@@ -738,6 +769,13 @@
     for (const g of camp.endings) for (const f of g.fragments) if (!S.frags[g.id + "." + f.id]) F.push({ level: "warn", msg: `ending ${g.id}.${f.id} never reached` });
     for (const [id, n] of Object.entries(S.echoReg)) { const p = (S.echoPaid[id] || 0) / n; if (p < 0.6) F.push({ level: "warn", msg: `echo ${id} paid off in only ${(p * 100).toFixed(0)}% of runs that registered it` }); }
     for (const [k, n] of Object.entries(S.provokedReward)) F.push({ level: "warn", msg: `provoked ${k.split("→")[1]} in this scene, yet choice ${k.split("→")[0]} raised their regard (${n} runs)` });
+    // v2.3 budget check, on each person's main axis: does it pile up at the top, or never move at all?
+    if (!policy && opts.budget !== false) for (const [c, ch] of Object.entries(camp.chars)) {
+      const R = S.rel[`rel.${c}.${ch.main}`]; if (!R) continue;
+      const top = R.tiers[4] / runs, moved = R.moved / runs;
+      if (top >= 0.4) F.push({ level: "warn", msg: `${c}.${ch.main} ends in the top tier in ${(100 * top).toFixed(0)}% of random runs (saturating)` });
+      if (moved < 0.05) F.push({ level: "warn", msg: `${c}.${ch.main} changes in only ${(100 * moved).toFixed(0)}% of random runs (barely moves)` });
+    }
     for (const [id, n] of Object.entries(S.debtsLeft)) F.push({ level: "error", msg: `debt ${id} still open at the end in ${n} runs` });
     S.findings = F;
     return S;

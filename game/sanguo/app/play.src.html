@@ -207,7 +207,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .ch { padding: 10px 0; border-bottom: 1px solid var(--line) }
 .ch h5 { margin: 0 0 8px; font: 600 15px/1.3 var(--display); display: flex; gap: 8px; align-items: center }
 .ch h5 small { font: 11px var(--sans); color: var(--muted); font-weight: 400 }
-.bar { display: grid; grid-template-columns: 6.5em 1fr 1.6em; gap: 8px; align-items: center; font-size: 12.5px; color: var(--muted); background: none; border: 0; padding: 2px 0; width: 100%; text-align: left }
+.bar { display: grid; grid-template-columns: 6.5em 1fr 4.6em; gap: 8px; align-items: center; font-size: 12.5px; color: var(--muted); background: none; border: 0; padding: 2px 0; width: 100%; text-align: left }
 .bar i { display: block; height: 6px; border-radius: 3px; background: var(--surface-2); position: relative; overflow: hidden }
 .bar i::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--w); background: var(--accent); border-radius: 3px }
 .bar.rose i::after { background: var(--rose) }
@@ -282,7 +282,7 @@ function useVol(id) { const v = VOL(id) || BOOK.volumes[0]; CAMP = v.camp; COL =
 </script>
 <script>
 "use strict";
-const BUILD = "strategist-v2.2";
+const BUILD = "strategist-v2.3";
 const UI = {
   zh: {
     title: "三国·谋士", start: "开始",
@@ -296,7 +296,7 @@ const UI = {
     toc: "目录", volTag: i => `卷${"一二三四五六七八九十"[i]}`, startVol: "开始这一卷", soon: "待续", fromRun: "接着哪一局往下玩？", presetsH: "没玩过上一卷？选一段前情开始：", noPrev: "还没有玩完的上一卷。",
     mySaves: "我的存档", runName: n => `第${n}局`, atChapter: (c, x) => `进行到${c}《${x}》`, statusEnd: "已完结", statusEarly: "提前收场", contRun: "继续", viewRun: "回看", delRun: "删除", delSure: "确定删除这一局？", nextVol: v => `接着玩${v}`,
     branchedFrom: (n, c) => `从第${n}局的${c}重新开始`, carriedFrom: n => `接着第${n}局`, presetFrom: x => `前情：${x}`, noSaves: "还没有存档。开始一卷，进度会自动保存。", incompatible: "这一局来自旧版本，内容已经变了，无法继续，只能删除。",
-    replayCh: "从这一章重新玩", replaySure: "另开一局，从这一章重新玩？这一局会原样保留。", replayVol: "重新玩这一卷", yes: "确定", carryH: "前情", carryPreset: x => `你选了这样一段前情：${x}`, carryRun: n => `接着你的第${n}局。上一卷留下的这些，都还在：`, endsWith: "结局：",
+    replayCh: "从这一章重新玩", replaySure: "另开一局，从这一章重新玩？这一局会原样保留。", replayVol: "重新玩这一卷", yes: "确定", carryH: "前情", carryFade: "几年过去，再近的人也会生分一点：最高的那几档关系往回收了些，还要你再去挣。", carryPreset: x => `你选了这样一段前情：${x}`, carryRun: n => `接着你的第${n}局。上一卷留下的这些，都还在：`, endsWith: "结局：",
     chap: i => `第${"一二三四五六七八九十"[i]}章`, canonRef: r => `原著${r}`,
     sidePrompt: null, pickedSide: "你选择了：", missed: "错过：", quiet: "这段日子平平静静地过去了。",
     from: "原著", echo: "回响", because: "因为：", types: { dilemma: "两难", strategy: "策略", expression: "表达" },
@@ -339,7 +339,7 @@ const UI = {
     toc: "Contents", volTag: i => `Volume ${["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][i]}`, startVol: "Start this volume", soon: "Coming later", fromRun: "Carry on from which playthrough?", presetsH: "Haven't played the previous volume? Pick a backstory:", noPrev: "No finished playthrough of the previous volume yet.",
     mySaves: "My saves", runName: n => `Playthrough ${n}`, atChapter: (c, x) => `${c}: ${x}`, statusEnd: "Finished", statusEarly: "Ended early", contRun: "Continue", viewRun: "Look back", delRun: "Delete", delSure: "Delete this playthrough?", nextVol: v => `Go on to ${v}`,
     branchedFrom: (n, c) => `Replayed from ${c} of playthrough ${n}`, carriedFrom: n => `Continues playthrough ${n}`, presetFrom: x => `Backstory: ${x}`, noSaves: "No saves yet. Start a volume and your progress saves itself.", incompatible: "This playthrough is from an older version whose content has changed. It can't be continued, only deleted.",
-    replayCh: "Replay from this chapter", replaySure: "Start a new playthrough from this chapter? This one stays exactly as it is.", replayVol: "Replay this volume", yes: "Yes", carryH: "Backstory", carryPreset: x => `You chose this backstory: ${x}`, carryRun: n => `Continuing your playthrough ${n}. What the last volume left you with:`, endsWith: "Ending: ",
+    replayCh: "Replay from this chapter", replaySure: "Start a new playthrough from this chapter? This one stays exactly as it is.", replayVol: "Replay this volume", yes: "Yes", carryH: "Backstory", carryFade: "Years have passed, and even the closest ties loosen a little: the very highest relationships have slipped back a step, and you'll have to earn them again.", carryPreset: x => `You chose this backstory: ${x}`, carryRun: n => `Continuing your playthrough ${n}. What the last volume left you with:`, endsWith: "Ending: ",
     chap: i => `Chapter ${i + 1}`, canonRef: r => `Novel ${r}`,
     sidePrompt: null, pickedSide: "You chose: ", missed: "Missed: ", quiet: "These days pass quietly.",
     from: "From the novel", echo: "Echo", because: "Because: ", types: { dilemma: "Dilemma", strategy: "Strategy", expression: "Expression" },
@@ -811,13 +811,16 @@ function face(id, mood = "neutral", round = false) {
   e.innerHTML = round ? PCACHE.get(k).replace("<svg ", '<svg preserveAspectRatio="xMidYMin slice" ') : PCACHE.get(k);
   return e;
 }
+// v2.3: every relationship reads in five tiers; the same tier means the same thing for everyone
+function tierOf(x) { const ts = (CAMP.tiers || { start: [0, 2, 4, 6, 8] }).start; let k = 0; ts.forEach((s, i) => { if (x >= s) k = i; }); return k; }
+function tierName(dim, x) { const ns = CAMP.tiers && CAMP.tiers.names[dim]; return ns ? t(ns[tierOf(x)]) : ""; }
 function levelMood(id, v) {
   v = v || G.v;
   const ch = CAMP.chars[id] || {};
-  if ((v[`rel.${id}.trust`] ?? 5) <= 1 && (v[`rel.${id}.warmth`] ?? 5) <= 1) return "cold";
-  const x = v[`rel.${id}.${ch.main || "warmth"}`] || 0;
-  if (x >= 6) return ch.romance ? "shy" : "warm";
-  if (x <= 1 && id !== "zhuge") return "cold";
+  if (tierOf(v[`rel.${id}.trust`] ?? 5) === 0 && tierOf(v[`rel.${id}.warmth`] ?? 5) === 0) return "cold";
+  const k = tierOf(v[`rel.${id}.${ch.main || "warmth"}`] || 0);
+  if (k >= 3) return ch.romance ? "shy" : "warm";
+  if (k === 0 && id !== "zhuge") return "cold";
   return "neutral";
 }
 function deltaMood(id, seq) {
@@ -827,18 +830,18 @@ function deltaMood(id, seq) {
   if (!sc) return null;
   if (sc < 0) return "cold";
   const intim = e.changes.find(c => c.var === "rel.wenzhi.intimacy");
-  return id === "wenzhi" && intim && intim.to >= 4 ? "shy" : "warm";
+  return id === "wenzhi" && intim && tierOf(intim.to) >= 2 ? "shy" : "warm";
 }
 function relChips(seq) {
   const e = G.ledger.find(x => x.seq === seq); if (!e) return null;
   const by = {};
-  e.changes.filter(c => c.var.startsWith("rel.") || c.var.startsWith("imp.") || c.var.startsWith("heat.")).forEach(c => { const [kind, id, dim] = c.var.split("."); (by[id] = by[id] || []).push([kind, dim, c.to - c.from, c.to]); });
+  e.changes.filter(c => c.var.startsWith("rel.") || c.var.startsWith("imp.") || c.var.startsWith("heat.")).forEach(c => { const [kind, id, dim] = c.var.split("."); (by[id] = by[id] || []).push([kind, dim, c.to - c.from, c.to, c.from]); });
   const rash = e.changes.find(c => c.var === "renown.rash");
   const ids = Object.keys(by); if (!ids.length && !rash) return null;
   const lab = (kind, dim, id) => kind === "heat" ? L().heatL : kind === "imp" ? L().impL + t(CAMP.vars[`imp.${id}.${dim}`].label).split(settings.lang === "zh" ? "·" : " · ").pop() : DL(id, dim);
   const good = (kind, dim, d) => kind === "imp" || kind === "heat" ? d < 0 : (dim === "wary" ? d < 0 : d > 0);
   return h("div", { class: "chips" }, ids.map(id => h("span", { class: "chip" }, face(id, deltaMood(id, seq) || (by[id].some(x => x[0] === "imp" && x[2] > 0) ? "cold" : "neutral"), true), h("b", {}, t(CAMP.chars[id].name)),
-    by[id].map(([kind, dim, d, to]) => h("span", { class: good(kind, dim, d) ? "up" : "down" }, kind === "heat" ? `${lab(kind, dim, id)} ${to}/${CAMP.chars[id].heat.line}` : `${lab(kind, dim, id)} ${d > 0 ? "+" : ""}${d}`)))),
+    by[id].map(([kind, dim, d, to, from]) => h("span", { class: good(kind, dim, d) ? "up" : "down" }, kind === "heat" ? `${lab(kind, dim, id)} ${to}/${CAMP.chars[id].heat.line}` : `${lab(kind, dim, id)} ${d > 0 ? "+" : ""}${d}` + (kind === "rel" && CAMP.tiers && tierOf(to) !== tierOf(from) ? ` → ${tierName(dim, to)}` : ""))))),
     rash ? h("span", { class: "chip", style: "padding-left:12px" }, h("span", { class: rash.to > rash.from ? "down" : "up" }, `${t(CAMP.vars["renown.rash"].label)} ${rash.to > rash.from ? "+" : ""}${rash.to - rash.from}`)) : null);
 }
 const SEAL_TEXT = { liubei: "刘", caocao: "曹", guanyu: "关", zhuge: "诸葛", wenzhi: "温" };
@@ -959,7 +962,7 @@ function renderStory() {
     } else if (e.k === "carry") {
       const p = e.preset && (CAMP.presets || []).find(x => x.id === e.preset);
       const from = G.from && runsList().find(m => m.id === G.from);
-      s.append(mark(h("div", { class: "recap carry" }, h("b", {}, l.carryH), h("p", {}, p ? l.carryPreset(t(p.desc)) : l.carryRun(from ? from.n : "?")), relChips(e.seq))));
+      s.append(mark(h("div", { class: "recap carry" }, h("b", {}, l.carryH), h("p", {}, p ? l.carryPreset(t(p.desc)) : l.carryRun(from ? from.n : "?")), relChips(e.seq), (G.ledger.find(x => x.seq === e.seq) || {}).compressed ? h("p", { class: "muted", style: "font-size:12.5px" }, l.carryFade) : null)));
     } else if (e.k === "offer") {
       if (G.phase === "side" && i === G.log.length - 1) s.append(mark(renderOffer(e)));
     } else if (e.k === "pick") {
@@ -1247,7 +1250,7 @@ function evidence(v) {
 function barRow(v, open, cls = "") {
   const d = CAMP.vars[v], x = G.v[v] || 0, w = Math.round(100 * (x - d.min) / (d.max - d.min));
   const lab = d.dim ? DL(d.char, d.dim) : t(d.label);
-  const b = h("button", { type: "button", class: "bar " + cls, style: `--w:${w}%`, "aria-expanded": String(open), onclick: () => { V.open = V.open === v ? null : v; renderPanel(); } }, h("span", {}, lab), h("i", {}), h("em", {}, String(x)));
+  const b = h("button", { type: "button", class: "bar " + cls, style: `--w:${w}%`, "aria-expanded": String(open), onclick: () => { V.open = V.open === v ? null : v; renderPanel(); } }, h("span", {}, lab), h("i", {}), h("em", {}, d.dim && CAMP.tiers ? `${tierName(d.dim, x)} ${x}` : String(x)));
   return [b, open ? evidence(v) : null];
 }
 function renderPeople() {

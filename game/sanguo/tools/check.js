@@ -23,12 +23,30 @@ console.log(`nodes ${Object.keys(camp.nodes).length}, chapters ${camp.chapters.l
 console.log(`\n## static: ${v.errors.length} errors, ${v.warnings.length} warnings`);
 v.errors.forEach(e => console.log("  ERROR " + e));
 v.warnings.forEach(e => console.log("  warn  " + e));
-const S = CC.simulate(camp, runs, 11);
+// a later volume: budget warnings come from chained runs (random players through the previous volume, then this one),
+// because the presets are deliberately "well played" backstories and would overstate saturation
+const PREV = { sanguo_strategist_v1: path.join(__dirname, "../content/campaign.json") };
+const S = CC.simulate(camp, runs, 11, null, { budget: !camp.prev });
+let chained = null;
+if (camp.prev && PREV[camp.prev]) {
+  const P = CC.simulate(JSON.parse(fs.readFileSync(PREV[camp.prev], "utf8")), Math.min(runs, 3000), 5, null, { keep: true, budget: false });
+  chained = CC.simulate(camp, Math.min(runs, 3000), 13, null, { carries: P.carries });
+  chained.findings.filter(f => /saturating|barely moves/.test(f.msg)).forEach(f => S.findings.push(Object.assign({}, f, { msg: f.msg.replace("random runs", "chained runs (random through the previous volume, then this one)") })));
+}
 console.log(`\n## simulate: ${runs} random players`);
 console.log(`avg scenes per run ${S.length.toFixed(1)}, distinct ending combinations ${S.distinctEndings}`);
 console.log("track:", Object.entries(S.track).map(([k, n]) => `${k} ${pct(n, runs)}`).join(", "));
 console.log("deviation:", Object.entries(S.deviation).map(([k, n]) => `${k}:${pct(n, runs)}`).join(" "));
 console.log("uncanny:", Object.entries(S.uncanny).map(([k, n]) => `${k}:${pct(n, runs)}`).join(" "));
+const relTable = (title, X) => {
+  console.log(`\n${title} (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):`);
+  for (const [c, ch] of Object.entries(camp.chars)) for (const ax of Object.keys(ch.dims)) {
+    const R = X.rel[`rel.${c}.${ax}`]; if (!R) continue;
+    console.log(`  ${(c + "." + ax + (ax === ch.main ? "*" : "")).padEnd(20)} ` + R.tiers.map(n => pct(n, X.runs).padStart(6)).join(" ") + `  · moved ${pct(R.moved, X.runs)} · max ${pct(R.max, X.runs)}`);
+  }
+};
+if (camp.tiers) relTable(camp.prev ? "relationships at the end, starting from presets" : "relationships at the end", S);
+if (chained) relTable("relationships at the end, chained from the previous volume", chained);
 console.log("\nending fragments:");
 for (const g of camp.endings) console.log(`  ${g.title.zh}: ` + g.fragments.map(f => `${f.id} ${pct(S.frags[g.id + "." + f.id] || 0, runs)}`).join(" · "));
 console.log("\nechoes (registered → paid):");

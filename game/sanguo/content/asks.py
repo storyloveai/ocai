@@ -78,8 +78,8 @@ ASKS = {
            "Wen Zhi sets her medicine chest at her feet and looks out at the water. 'When this battle's over, where do you want to go?'"),
     "answers": [
       ans("with_her", T("想和她在一起、去她在的地方", "wherever she is"),
-          [P(T("她没有回头，耳朵却红了：『……这算是回答吗？』", "She doesn't turn around, but her ears go red. '…Is that an answer?'"), R("wenzhi", "intimacy", ">=", 2)),
-           P(T("她愣了一下，笑着摇头：『你连我想去哪都不知道。』", "She blinks, then laughs and shakes her head. 'You don't even know where I want to go.'"), R("wenzhi", "intimacy", "<", 2))],
+          [P(T("她没有回头，耳朵却红了：『……这算是回答吗？』", "She doesn't turn around, but her ears go red. '…Is that an answer?'"), AT("wenzhi", "intimacy", 1)),
+           P(T("她愣了一下，笑着摇头：『你连我想去哪都不知道。』", "She blinks, then laughs and shakes her head. 'You don't even know where I want to go.'"), UPTO("wenzhi", "intimacy", 0))],
           [rel("wenzhi", "intimacy", 1)], match=r"和你|陪你|跟你|一起|你在哪|你去哪|有你|with you|wherever you|by your side", mood="shy"),
       ans("home", T("回家乡、归隐、过平常日子、开药铺", "home, a quiet life"),
           T("温芷想了想：『开个药铺也好。晒药的竹匾，你来翻。』她说得像玩笑，又不太像。",
