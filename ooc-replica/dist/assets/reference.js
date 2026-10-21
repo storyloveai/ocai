@@ -322,7 +322,7 @@ export function show(path, helpers) {
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;
-  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);
+  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);host.querySelectorAll('button[aria-label="Dismiss"]').forEach(button=>{const bar=button.closest('section');if(!bar)return;let gone=false;try{gone=localStorage.getItem('ooc-notice-dismissed')==='1';}catch{}if(gone){bar.remove();return;}button.onclick=()=>{host.querySelectorAll('button[aria-label="Dismiss"]').forEach(x=>x.closest('section')?.remove());try{localStorage.setItem('ooc-notice-dismissed','1');}catch{}};});
   if(page==='story-detail'){
     const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=titlePreviews.titles[id];
     const content=q('[data-shrink]')?.nextElementSibling;

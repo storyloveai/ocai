@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "check": "node --check dist/app.js && node --check dist/assets/builder.js && node --check dist/assets/community.js && node --check dist/assets/reference.js && node --check dist/assets/interaction.js && node --check dist/assets/stream.js && node --test tests/*.test.mjs && node --check api/chat.js && node --check api/config.js && node --check dist/assets/account.js && node --check src/firebase-client.js && node --check dist/assets/payments.js && node --check server/payments.js && node --check server/wallet.js && node --check server/payment-handler.js",
+    "check": "node --check dist/app.js && node --check dist/assets/builder.js && node --check dist/assets/community.js && node --check dist/assets/reference.js && node --check dist/assets/interaction.js && node --check dist/assets/stream.js && node --test tests/*.test.mjs && node --check api/chat.js && node --check api/image.js && node --check api/config.js && node --check dist/assets/account.js && node --check src/firebase-client.js && node --check dist/assets/payments.js && node --check server/payments.js && node --check server/wallet.js && node --check server/payment-handler.js",
     "start": "python3 server.py",
     "build": "node scripts/build.mjs",
     "originals:export": "node scripts/export-original-catalog.mjs",

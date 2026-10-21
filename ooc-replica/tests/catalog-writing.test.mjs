@@ -7,7 +7,7 @@ test('catalogue authoring accepts only original seed IDs and preserves existing 
  assert.equal(p.mode,'author-catalog');assert.equal(p.promptVersion,CATALOG_PROMPT_VERSION);assert.match(p.system,/500–800字/);assert.match(p.system,/21 岁以上/);assert.match(p.system,/不替玩家/);assert.match(p.system,/互相牵制/);
  assert.throws(()=>catalogPrompt('unknown'));assert.throws(()=>buildPrompt({task:'author',field:'details',format:'catalog',catalogId:'storydate-story-001',type:'character',idea:'one line'}));
  assert.throws(()=>buildPrompt({task:'author',field:'opening',format:'catalog',catalogId:'storydate-story-001',type:'story',idea:'one line'}));
- const prose=buildPrompt({task:'author',field:'opening',type:'story',idea:'一句话'});assert.equal(prose.mode,'author');assert.match(prose.system,/no preamble, labels, JSON/);
+ const prose=buildPrompt({task:'author',field:'opening',type:'story',idea:'一句话'});assert.equal(prose.mode,'author');assert.match(prose.system,/no preamble, no markdown fences, no JSON/);
 });
 test('editorial normalization reuses generated canon and resolves only unambiguous names',()=>{
  const original={description:'简短介绍',storyBible:{setting:'有明确规则的世界',playerRole:'有自己任务的调查员',coreConflict:'修琴与查证争夺交付期限',relationshipArc:'互相信任但保留界限'},cast:[{name:'卡西安·里德',age:31},{name:'沈知微',age:23}],galleryScenes:[{slot:'1',characters:['卡西安','玩家']},{slot:'2',characters:['沈知微']},{slot:'3',characters:['unknown']}]};

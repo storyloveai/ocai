@@ -15,7 +15,7 @@ test('object-shaped Three Kingdoms progress remains in shared history after open
 });
 test('all eight author fields use server-owned prompts, bounded data and the existing provider stream',()=>{
  for(const field of ['title','description','details','prologue','scenario','opening','guide','suggestions']){
-  const p=buildPrompt({task:'author',type:'story',field,idea:'一个被流放的将军回到故乡',draft:{details:'x'.repeat(9000)}});assert.equal(p.mode,'author');assert.equal(p.promptVersion,'storylove-author-v1');assert.match(p.system,/same language and style/);assert.match(p.messages[0].content,/被流放/);assert.ok(p.messages[0].content.length<7000);assert.ok(!p.system.includes('被流放'));
+  const p=buildPrompt({task:'author',type:'story',field,idea:'一个被流放的将军回到故乡',draft:{details:'x'.repeat(9000)}});assert.equal(p.mode,'author');assert.equal(p.promptVersion,'storylove-author-v2');assert.match(p.system,/same language as the seed/);assert.match(p.messages[0].content,/被流放/);assert.ok(p.messages[0].content.length<7000);assert.ok(!p.system.includes('被流放'));
  }
  assert.throws(()=>buildPrompt({task:'author',type:'story',field:'image',idea:'Cover'}));assert.throws(()=>buildPrompt({task:'author',type:'character',field:'details',idea:''}));assert.equal(cloudKey('ooc-comments-social-follows'),true);
 });

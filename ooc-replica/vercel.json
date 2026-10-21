@@ -10,6 +10,9 @@
   "functions": {
     "api/chat.js": {
       "maxDuration": 180
+    },
+    "api/image.js": {
+      "maxDuration": 120
     }
   },
   "buildCommand": "npm run build && npm run check",
