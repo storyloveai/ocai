@@ -49,6 +49,7 @@ const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'
 // StoryDate originals take over part of the captured catalogue; each one keeps its own id.
 const replaceMap=new Map(storydateOriginals.map(d=>[d.replaces,d]));
 evidence.catalog=evidence.catalog.map(d=>replaceMap.get(d.id)||d);
+const lumencia=evidence.catalog.find(d=>d.id==='69f414d90abbab6f6a2c8131');if(lumencia)lumencia.sortPlays='0';
 function patchOriginals(root){
   root.querySelectorAll('a[href^="/story/"]').forEach(a=>{
     const d=replaceMap.get(a.getAttribute('href').split('/').pop());if(!d)return;
@@ -236,6 +237,7 @@ function pinThreeKingdoms(){
    const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(bookCard);slot.append(wrap);placed.after(slot);}else card.after(bookCard);
    cardMarkup.set(book.id,bookCard.outerHTML);
   }
+  if(slide)slide.parentElement.append(slide); // Lumencia Academy moves to the end of the rail
   const section=first.closest('section');section.querySelectorAll('span.typo-text-base_leading-none_semibold').forEach((rank,i)=>rank.textContent=String(i+1));
   card.querySelectorAll('img').forEach(img=>{if(img.alt==='Lumencia Academy'){img.alt=threeKingdoms.title;img.src=threeKingdoms.image;img.removeAttribute('data-asset');}});
   cardMarkup.set(threeKingdoms.id,card.outerHTML);

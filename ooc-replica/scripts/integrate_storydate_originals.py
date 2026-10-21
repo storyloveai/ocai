@@ -18,6 +18,8 @@ for s in tk: s['genre'] = 'Three Kingdoms'
 items = tk + stories
 SITE_GENRE = {'Academy':'Fantasy','Adventure':'Fantasy','Dark Fantasy':'Horror','Romance':'Romance','Eastern Fantasy':'Oriental Fantasy','Three Kingdoms':'History'}
 ref = json.load(open(root/'dist/assets/reference-pages.json'))
+opening_sug = json.load(open(root/'content/storydate-originals/opening-suggestions.json'))
+old_plays = {d['id']: d.get('plays','') for d in ref['catalog']}
 protect = {'69f414d90abbab6f6a2c8131','6ab3b736e2e641b7fbeb6312','6ab70e13499de207c7ca13c4','6aaad8746c080a5d3ff0402a','6ac749a7ab586f53935a023d','6ac749fc973e4d7b825f7520','6ab2217bfa760164cd6c2f12'}
 protect |= {f['href'].split('/')[-1] for f in ref['features']}
 old = [d['id'] for d in ref['catalog'] if d['id'] not in protect]
@@ -31,13 +33,18 @@ for slot, s in zip(slots, order):
     im.save(out_dir/f"{s['id']}.webp", 'WEBP', quality=82, method=6)
     g = SITE_GENRE[s['genre']]
     entries.append(dict(id=s['id'], title=s['title'], title_zh=s['title_zh'], author='StoryDate Studio', genre=g,
-        type='story', original=True, plays='', tag=g, replaces=slot, image=f"/assets/originals/{s['id']}.webp",
+        type='story', original=True, plays='', sortPlays=old_plays.get(slot,''), tag=g, replaces=slot, image=f"/assets/originals/{s['id']}.webp",
         description=s['summary'], description_zh=s['summary_zh'], character_brief=s['character_brief']))
 (root/'dist/assets/storydate-originals.js').write_text('export const storydateOriginals='+json.dumps(entries, ensure_ascii=False)+';\n')
 sc = json.load(open(root/'dist/assets/scenarios.json'))
+SLOTS = ['morning', 'afternoon', 'evening']
+LEAD = {'morning': 'Morning light settles over the scene.', 'afternoon': 'The afternoon is quiet, and the day is still open.', 'evening': 'Evening falls, and the lamps come on one by one.'}
 for e in entries:
+    o = opening_sug[e['id']]
+    by_time = {k: [o['t'][i], o['b'], o['c']] for i, k in enumerate(SLOTS)}
     sc['stories'][e['id']] = dict(title=e['title'],
         opening=f"> {e['title']}\n\n*{e['description']}*\n\n*{e['character_brief']}.*",
-        suggestions=["I take a careful look around before doing anything.", "I introduce myself and ask what is going on.", "I decide to follow the first lead I find."])
+        openingByTime={k: f"> {e['title']} · {k.capitalize()}\n\n*{LEAD[k]}*\n\n*{e['description']}*\n\n*{e['character_brief']}.*" for k in SLOTS},
+        suggestions=by_time['afternoon'], suggestionsByTime=by_time)
 json.dump(sc, open(root/'dist/assets/scenarios.json','w'), ensure_ascii=False)
 print(len(entries), 'entries; replaced', len(set(slots)), 'old titles')
