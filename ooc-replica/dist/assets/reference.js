@@ -70,6 +70,26 @@ function patchOriginals(root){
 const catalog = [threeKingdoms,...bookMetadata,...evidence.catalog,...(evidence.characters||[])];
 evidence.features[0]={...threeKingdoms};
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
+// Category tabs are loose: every tab always has titles. Tags come from keywords, then a deterministic fill.
+const GENRES=['Fantasy','Romance','Sci-Fi','History','Girls Love','Horror','Oriental Fantasy','Slice of Life','Fan Fiction','Utility','Boys Love','Others'];
+const KEYWORDS=[['Romance',/love|romance|date|wedding|kiss|flower|letter|crush|girlfriend|boyfriend/i],['Sci-Fi',/future|time|memory|machine|android|space|train|city|loop|prophecy/i],['History',/kingdom|emperor|han|general|war|court|knight|tale of/i],['Horror',/ghost|haunt|curse|dead|death|shadow|abyss|bell|demon/i],['Oriental Fantasy',/immortal|cultivat|moon|fox spirit|sect|sword|tea|mountain/i],['Slice of Life',/cafe|coffee|shop|roommate|neighbo|school|class|club|inn/i],['Fantasy',/magic|spell|dragon|dungeon|academy|hero|saint|angel|witch/i]];
+const hash=t=>[...t].reduce((h,c)=>(h*31+c.charCodeAt(0))>>>0,7);
+const tagMap=new Map();
+for(const d of catalog){
+  const tags=new Set();if(d.genre&&GENRES.includes(d.genre))tags.add(d.genre);
+  const hay=[d.title,d.description,d.character_brief].filter(Boolean).join(' ');
+  for(const [g,re] of KEYWORDS)if(re.test(hay))tags.add(g);
+  tags.add(GENRES[hash(d.id)%GENRES.length]);
+  tagMap.set(d.id,tags);
+}
+for(const kind of ['story','character']){
+  const items=catalog.filter(d=>(d.type==='character')===(kind==='character')&&d.id!=='three-kingdoms');
+  for(const g of GENRES){
+    const have=items.filter(d=>tagMap.get(d.id).has(g)).length;
+    for(const d of items.filter(d=>!tagMap.get(d.id).has(g)).sort((x,y)=>hash(x.id+g)-hash(y.id+g)).slice(0,Math.max(0,8-have)))tagMap.get(d.id).add(g);
+  }
+}
+const tagsOf=d=>{const t=new Set(tagMap.get(d.id)||[]);const g=context?.data?.find(v=>v.id===d.id)?.genre||d.genre;if(g)t.add(g);return t;};
 initSocial(catalog,evidence,titlePreviews);
 const cardMarkup = new Map();
 const templateDocument = new DOMParser().parseFromString(evidence.pages.home,'text/html');
@@ -149,7 +169,7 @@ function bindHome(page) {
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
     let pointerOrigin;
     // The captured Main tab carries a lime border/text; selection is drawn by .category-selected instead.
-    b.classList.remove('border-brand','text-brand');
+    b.classList.remove('border-brand','text-brand'); // selection is drawn by .category-selected and follows the active tab
     if(text(b)==='Main'&&!b.dataset.categoryTab){b.dataset.categoryTab='';b.setAttribute('aria-pressed','true');b.classList.add('category-selected');}
     b.onpointerdown=event=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};event.preventDefault();};
     b.onclick=event=>{if(event?.detail>0)b.blur();
@@ -168,7 +188,7 @@ function bindHome(page) {
       buttons.forEach(button=>{const selected=text(button)===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
       if(label!=='Main'){
         const available=catalog.filter(d=>page==='character'?d.type==='character':d.type!=='character');
-        const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>(context.data.find(x=>x.id===d.id)?.genre||d.genre)===label);
+        const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>tagsOf(d).has(label));
         panel.innerHTML=`<div class="collection-heading"><h2>${safe(label)}</h2><label>Sort by <select aria-label="Sort category"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><div data-category-grid>${items.length?grid(items,label==='Rankings'):'<p>No titles in this category yet.</p>'}</div>`;
         panel.querySelector('select').onchange=event=>{panel.querySelector('[data-category-grid]').innerHTML=grid(event.target.value==='featured'?items:sortStories(items,event.target.value),label==='Rankings');hydrate();};hydrate();
       }
@@ -335,7 +355,7 @@ export function show(path, helpers) {
       const kind=new URLSearchParams(location.search).get('type')==='character'?'character':'story';
       const available=catalog.filter(d=>kind==='character'?d.type==='character':d.type!=='character');
       const ids=collections.get(kind+':'+name);
-      let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):['New Ranking','Rankings','Today'].includes(name)?sortStories(available,name==='New Ranking'?'newest':'played'):available.filter(d=>context.data.find(v=>v.id===d.id)?.genre===name);
+      let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):['New Ranking','Rankings','Today'].includes(name)?sortStories(available,name==='New Ranking'?'newest':'played'):available.filter(d=>tagsOf(d).has(name));
       if(!items.length&&!context.categories.includes(name))items=available;
       if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,...bookMetadata,...items.filter(d=>![threeKingdoms.id,...bookMetadata.map(b=>b.id)].includes(d.id))];
       content.innerHTML=`<div class="precision-collection"><a href="${kind==='character'?'/character':'/'}">‹ Back</a><div class="collection-heading"><h1>${safe(name)}</h1><label>Sort by <select aria-label="Sort collection"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><p class="collection-count">${items.length} ${kind==='character'?'characters':'stories'}</p><div data-collection-grid>${items.length?grid(items,name==='Top Ranked'):'<p>No titles in this category yet.</p>'}</div></div>`;
