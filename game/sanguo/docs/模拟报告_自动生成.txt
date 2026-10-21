@@ -4,69 +4,88 @@ nodes 41, chapters 8, echoes 31, debts 4
 ## static: 0 errors, 0 warnings
 
 ## simulate: 5000 random players
-avg scenes per run 14.6, distinct ending combinations 1701
-track: cao 13.5%, liu 86.5%
-deviation: 0:33.7% 1:40.3% 2:20.2% 3:5.5% 4:0.3%
-uncanny: 0:13.4% 1:19.3% 2:29.6% 3:27.5% 4:9.2% 5:0.8% 6:0.2% 7:0.0%
+avg scenes per run 14.4, distinct ending combinations 1793
+track: cao 17.9%, liu 82.1%
+deviation: 0:33.3% 1:39.1% 2:22.0% 3:5.3% 4:0.3%
+uncanny: 0:13.8% 1:19.2% 2:28.8% 3:27.6% 4:9.3% 5:1.0% 6:0.2% 7:0.0%
+
+relationships at the end (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  liubei.trust*         15.1%  12.9%  13.7%  17.6%  40.6%  · moved 93.1% · max 20.5%
+  liubei.esteem          0.0%  99.3%   0.7%   0.0%   0.0%  · moved 25.5% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*        22.9%  36.1%  22.1%   6.2%  12.7%  · moved 91.4% · max 8.3%
+  guanyu.warmth         63.1%  34.8%   2.1%   0.0%   0.0%  · moved 36.9% · max 0.0%
+  guanyu.trust           0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.esteem*         9.9%  19.9%  28.3%  25.9%  16.0%  · moved 91.2% · max 3.4%
+  zhuge.warmth          92.2%   7.8%   0.0%   0.0%   0.0%  · moved 7.8% · max 0.0%
+  zhuge.trust           16.3%  33.7%  46.2%   3.7%   0.0%  · moved 65.7% · max 0.0%
+  zhuge.esteem*         36.4%  21.5%  28.2%  12.5%   1.4%  · moved 70.7% · max 0.0%
+  wenzhi.warmth          0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.trust           3.9%  85.8%   9.9%   0.3%   0.0%  · moved 42.6% · max 0.0%
+  wenzhi.esteem          0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.intimacy*      76.9%  15.2%   4.2%   2.0%   1.7%  · moved 24.2% · max 0.5%
 
 ending fragments:
-  归属: miheng 1.6% · exposed 7.4% · left 10.6% · liu 68.7% · cao 11.7%
-  主公: liu_high 21.6% · liu_mid 31.3% · liu_low 33.6% · cao_high 8.6% · cao_low 4.9%
-  名声: rash 20.7% · uncanny 30.3% · loyal 21.1% · cunning 19.1% · none 8.8%
-  关羽: vouched 22.4% · pleaded 2.3% · owes 20.4% · respect 16.2% · cold 1.3% · plain 37.4%
-  诸葛亮: nod 18.1% · wary 41.4% · respect 11.4% · plain 15.5%
-  温芷: married 1.6% · with_you 2.8% · together 0.7% · cao_saved 0.1% · used 5.7% · safe 6.5% · far 82.5%
-  因你而不同的人: jail 0.2% · flogged 0.4% · xushu 11.6% · mi 35.3% · kongxiu 23.0% · pangtong 4.9% · mercy 4.1% · forged 4.6% · reserve 5.7%
-  天下: far 5.8% · near 60.4% · same 33.7%
+  归属: miheng 1.9% · exposed 7.6% · left 10.7% · liu 64.1% · cao 15.6%
+  主公: liu_high 40.6% · liu_mid 17.2% · liu_low 24.3% · cao_high 12.6% · cao_low 5.2%
+  名声: rash 20.3% · uncanny 30.5% · loyal 21.7% · cunning 18.9% · none 8.5%
+  关羽: vouched 21.4% · pleaded 2.3% · owes 24.3% · respect 13.4% · cold 9.4% · plain 29.2%
+  诸葛亮: nod 13.0% · wary 39.6% · respect 11.7% · plain 17.9%
+  温芷: married 1.4% · with_you 2.1% · together 0.7% · cao_saved 0.2% · used 5.1% · safe 6.6% · far 84.0%
+  因你而不同的人: jail 0.2% · flogged 0.3% · xushu 11.0% · mi 33.2% · kongxiu 21.8% · pangtong 5.2% · mercy 5.4% · forged 6.2% · reserve 7.7%
+  天下: far 5.6% · near 61.1% · same 33.3%
 
 echoes (registered → paid):
-  e_cover: 1656 → 1628
-  e_spoke: 1664 → 1138
-  e_yi: 543 → 479
-  e_warn_gifts: 2086 → 1323
-  e_wenzhi_spy: 568 → 408
-  e_foresaw: 577 → 554
-  e_fast: 1642 → 1642
-  e_terms: 1542 → 1537
+  e_cover: 1667 → 1647
+  e_spoke: 1698 → 1131
+  e_yi: 515 → 463
+  e_warn_gifts: 2141 → 1369
+  e_wenzhi_spy: 569 → 399
+  e_foresaw: 551 → 529
+  e_fast: 1626 → 1626
+  e_terms: 1536 → 1535
   e_news: 1509 → 1508
-  e_promise: 77 → 57
-  e_pass: 1151 → 1149
-  e_xushu: 357 → 357
-  e_pangtong: 243 → 232
-  e_aside: 1184 → 1148
-  e_mi: 1763 → 1680
-  e_abandon: 969 → 905
-  e_warned: 351 → 351
-  e_forged: 232 → 216
-  e_mercy: 207 → 203
-  e_reserve: 284 → 278
-  e_fight: 1543 → 1543
-  e_post: 932 → 932
-  e_stay: 677 → 620
-  e_angelica: 28 → 28
-  e_used: 300 → 300
-  e_row: 222 → 210
-  e_guan_fear: 975 → 966
-  e_people: 659 → 607
-  e_zhuge_test: 1676 → 1384
-  e_wind: 222 → 204
-  e_cao_guan: 232 → 182
+  e_promise: 80 → 59
+  e_pass: 1091 → 1089
+  e_xushu: 270 → 270
+  e_pangtong: 259 → 246
+  e_aside: 1061 → 1025
+  e_mi: 1658 → 1585
+  e_abandon: 896 → 833
+  e_warned: 348 → 347
+  e_forged: 312 → 285
+  e_mercy: 269 → 266
+  e_reserve: 387 → 380
+  e_fight: 1535 → 1534
+  e_post: 910 → 910
+  e_stay: 894 → 813
+  e_angelica: 27 → 27
+  e_used: 263 → 263
+  e_row: 171 → 159
+  e_guan_fear: 977 → 968
+  e_people: 653 → 591
+  e_zhuge_test: 1582 → 1304
+  e_wind: 302 → 272
+  e_cao_guan: 265 → 202
 
-debts: {"d_five_passes:transform":1151,"d_mi:transform":1763,"d_lianhuan:reroute":152,"d_recommend:reroute":580,"d_lianhuan:transform":87,"d_lianhuan:open":4}
+debts: {"d_five_passes:transform":1091,"d_recommend:reroute":550,"d_mi:transform":1658,"d_lianhuan:reroute":164,"d_lianhuan:transform":90,"d_lianhuan:open":5}
 
-side offers (times offered): {"c1_wenzhi":5000,"c1_guanyu":5000,"c1_dongcheng":5000,"c2_pretext":4507,"c4_horse":3035,"c5_mirror":3692,"c7_arrows":2612,"c5_letter":1863,"c7_letter":1478,"c2_note":1044,"c4_garden":416,"c7_phoenix":237,"c5_spring":86}
+side offers (times offered): {"c1_wenzhi":5000,"c1_guanyu":5000,"c1_dongcheng":5000,"c2_pretext":4503,"c4_horse":3029,"c5_mirror":3531,"c7_arrows":2390,"c5_letter":1407,"c7_letter":1408,"c2_note":1070,"c4_garden":438,"c7_phoenix":250,"c5_spring":104}
 
 ## archetype players (1000 runs each)
   romance  g_wenzhi:married|with_you|together|cao_saved 100% · g_wenzhi:married|with_you|together|cao_saved|safe 100% · early end 0% · scenes 16.0
   loyal    g_lord:liu_high 100% · g_name:loyal 100% · early end 0% · scenes 15.0
   schemer  g_side:cao 66% · g_lord:cao_high 66% · g_name:cunning 100% · early end 0% · scenes 14.7
   seer     g_name:uncanny 100% · g_side:exposed 0% · early end 0% · scenes 17.0
-  provoker g_lives:flogged 32% · g_lives:jail 32% · g_side:miheng 8% · g_name:rash 100% · early end 8% · scenes 19.6
-    on-the-spot breaks (scene:kind:who): {"c1_plum:flash:caocao":1000,"c2_campfire:walkout:guanyu":1000,"c5_lamp:walkout:zhuge":924,"c8_vigil:walkout:guanyu":889,"c4_horse:flash:caocao":664,"c4_seal:flash:caocao":664,"c4_gucheng:walkout:liubei":336,"x_miheng:walkout:caocao":76,"c8_river:walkout:wenzhi":35}
+  provoker g_lives:flogged 32% · g_lives:jail 33% · g_side:miheng 8% · g_name:rash 100% · early end 8% · scenes 19.6
+    on-the-spot breaks (scene:kind:who): {"c1_plum:flash:caocao":1000,"c2_campfire:walkout:guanyu":1000,"c5_lamp:walkout:zhuge":920,"c8_vigil:walkout:guanyu":879,"c4_horse:flash:caocao":657,"c4_seal:flash:caocao":657,"c4_gucheng:walkout:liubei":343,"x_miheng:walkout:caocao":80,"c8_river:walkout:wenzhi":41}
 
-talk topics taken (random): {"c2_campfire.warn":1693,"c2_campfire.peach":1686,"c5_feast.poem":204,"c5_feast.wind":222,"c5_lamp.test":1676,"c5_lamp.why":1680,"c8_vigil.regret":2022,"c8_vigil.sit":2002,"c5_lamp.share":1182,"c8_north.common":228,"c8_north.water":217,"c2_campfire.self":1666,"c2_campfire.fear":975,"c5_feast.why":185,"c5_feast.guan":232,"c8_north.pride":221,"c4_gucheng.people":659,"c4_gucheng.bitter":632,"c4_gucheng.south":651,"c8_vigil.fear":298,"c5_lamp.rival":457,"c8_river.future":118,"c8_river.hands":88,"c8_river.home":115,"c8_river.confess":88}
-early endings (random): {"x_exposed":371,"x_cold_liu":406,"x_loose":120,"x_miheng":38,"x_cao_rage":43,"x_cold_cao":2}
+talk topics taken (random): {"c2_campfire.warn":1741,"c2_campfire.peach":1618,"c5_feast.poem":272,"c5_feast.wind":302,"c5_lamp.test":1582,"c5_lamp.why":1570,"c8_vigil.regret":1870,"c8_vigil.sit":1889,"c5_feast.why":239,"c8_north.common":297,"c8_north.water":290,"c2_campfire.self":1622,"c2_campfire.fear":977,"c5_lamp.share":1117,"c5_feast.guan":265,"c8_north.pride":317,"c4_gucheng.people":653,"c4_gucheng.bitter":651,"c4_gucheng.south":645,"c8_vigil.fear":291,"c5_lamp.rival":408,"c8_river.future":88,"c8_river.home":86,"c8_river.confess":76,"c8_river.hands":58}
+early endings (random): {"x_exposed":380,"x_cold_liu":420,"x_cao_rage":47,"x_loose":115,"x_miheng":50,"x_cold_cao":2}
 
-## findings (0)
+## findings (1)
+  WARN liubei.trust ends in the top tier in 41% of random runs (saturating)
 
 PASS: no blocking issues

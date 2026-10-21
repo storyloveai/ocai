@@ -1,0 +1,150 @@
+{
+ "start": [
+  0,
+  2,
+  4,
+  6,
+  8
+ ],
+ "end": [
+  1,
+  3,
+  5,
+  7,
+  10
+ ],
+ "names": {
+  "trust": [
+   {
+    "zh": "戒备",
+    "en": "Guarded"
+   },
+   {
+    "zh": "观望",
+    "en": "Watching"
+   },
+   {
+    "zh": "可托",
+    "en": "Reliable"
+   },
+   {
+    "zh": "倚重",
+    "en": "Relied on"
+   },
+   {
+    "zh": "心腹",
+    "en": "Confidant"
+   }
+  ],
+  "esteem": [
+   {
+    "zh": "轻视",
+    "en": "Dismissive"
+   },
+   {
+    "zh": "寻常",
+    "en": "Ordinary"
+   },
+   {
+    "zh": "器重",
+    "en": "Valued"
+   },
+   {
+    "zh": "推崇",
+    "en": "Admired"
+   },
+   {
+    "zh": "折服",
+    "en": "In awe"
+   }
+  ],
+  "warmth": [
+   {
+    "zh": "冷淡",
+    "en": "Cold"
+   },
+   {
+    "zh": "相识",
+    "en": "Acquainted"
+   },
+   {
+    "zh": "相熟",
+    "en": "Familiar"
+   },
+   {
+    "zh": "交好",
+    "en": "Friends"
+   },
+   {
+    "zh": "知己",
+    "en": "Kindred"
+   }
+  ],
+  "intimacy": [
+   {
+    "zh": "生疏",
+    "en": "Distant"
+   },
+   {
+    "zh": "在意",
+    "en": "Caring"
+   },
+   {
+    "zh": "心动",
+    "en": "Drawn"
+   },
+   {
+    "zh": "两情相悦",
+    "en": "In love"
+   },
+   {
+    "zh": "相许",
+    "en": "Promised"
+   }
+  ]
+ },
+ "axes": [
+  "warmth",
+  "trust",
+  "esteem"
+ ],
+ "romance_axis": "intimacy",
+ "min": 0,
+ "max": 10,
+ "axis_names": {
+  "warmth": {
+   "zh": "交情",
+   "en": "friendship"
+  },
+  "trust": {
+   "zh": "信任",
+   "en": "trust"
+  },
+  "esteem": {
+   "zh": "看重",
+   "en": "esteem"
+  },
+  "intimacy": {
+   "zh": "亲近",
+   "en": "closeness"
+  }
+ },
+ "axis_meaning": {
+  "warmth": {
+   "zh": "喜不喜欢你",
+   "en": "do they like you"
+  },
+  "trust": {
+   "zh": "敢不敢把事交给你",
+   "en": "would they put things in your hands"
+  },
+  "esteem": {
+   "zh": "认不认你的本事",
+   "en": "do they rate your ability"
+  },
+  "intimacy": {
+   "zh": "恋爱的进展，只有产品允许的人物才有",
+   "en": "romance; only characters the product allows"
+  }
+ }
+}
