@@ -336,6 +336,56 @@
     L.has("plum") ? plum(r, -10, 40, .6, 120, 12) : "",
     L.has("sail") ? boat(980, 360, .5, { sail: true, op: .7 }) : ""].join("");
 
+
+  /* ---------- volume II ---------- */
+  // 城下（南郡 / 雒城 / 成都）
+  S.citywall = (p, r, L) => [paper(p, L.has("dusk")), L.has("dusk") ? `<rect width="1200" height="480" fill="#E8A76A" opacity=".18"/>` : clouds(r, p, 70, 6, .35),
+    mountains(p, r, { base: 230, height: 120, opacity: .28, blur: 12, peaks: 2 }), mist(200, 60),
+    `<g filter="url(#${p}brush)"><rect x="300" y="190" width="600" height="150" fill="${INK}" opacity=".78"/>${Array.from({ length: 16 }, (_, i) => `<rect x="${300 + i * 38}" y="176" width="22" height="18" fill="${INK}" opacity=".78"/>`).join("")}
+      <path d="M540 340 V262 Q600 222 660 262 V340Z" fill="${L.has("open") ? "#E9DFC9" : "#2a241e"}"/><path d="M520 190 L600 132 L680 190Z" fill="${INK}" opacity=".85"/><rect x="540" y="150" width="120" height="40" fill="${INK}" opacity=".7"/></g>`,
+    banners(r, 320, 880, 176, 7, { h: 60, color: L.has("flag_liu") ? "#4f7a58" : L.has("flag_wu") ? "#b0503a" : "#4f6688" }),
+    `<path d="M0 380 Q600 340 1200 380 L1200 480 L0 480Z" fill="${INK}" opacity=".1"/>`,
+    L.has("siege") ? spears(r, 80, 1120, 440, 70, 70, .75) + [0, 1, 2].map(i => `<path d="M${380 + i * 200} 440 L${420 + i * 200} 200" stroke="#5a3d26" stroke-width="6"/>`).join("") : "",
+    L.has("rider") ? horse(600, 420, .9, { rider: true, spear: true, face: 1, riderColor: "#F4EEDC" }) : figure(600, 430, .9, { kind: "man" }),
+    L.has("crowd") ? Array.from({ length: 14 }, (_, i) => figure(240 + i * 55 + (r() - .5) * 20, 455 + r() * 14, .55, { kind: r() < .3 ? "woman" : "man", op: .7 })).join("") : ""].join("");
+  // 甘露寺
+  S.temple = (p, r, L) => [paper(p, false), clouds(r, p, 60, 5, .3), mountains(p, r, { base: 260, height: 170, opacity: .3, blur: 10, peaks: 2 }), mist(230, 70),
+    `<path d="M0 480 L0 330 Q300 260 620 300 Q900 330 1200 300 L1200 480Z" fill="${INK}" opacity=".16" filter="url(#${p}rough)"/>`,
+    pavilion(720, 300, 1.5), `<g opacity=".8">${pavilion(950, 280, .9, .8)}</g>`,
+    ...[90, 190, 1110].map(x => `<g filter="url(#${p}brush)"><path d="M${x} 480 L${x + 6} 200" stroke="${INK}" stroke-width="10"/>${[0, 1, 2, 3].map(i => `<ellipse cx="${x + (i % 2 ? 40 : -30)}" cy="${220 + i * 50}" rx="70" ry="22" fill="${INK}" opacity=".55"/>`).join("")}</g>`),
+    figure(680, 300, .8, { kind: "woman", face: 1 }), figure(760, 300, .85, { kind: "man", face: -1 }), figure(820, 302, .78, { kind: "man", face: -1, op: .85 }),
+    L.has("ambush") ? spears(r, 840, 1060, 300, 22, 50, .9) + `<g opacity=".7">${[0, 1, 2, 3].map(i => figure(880 + i * 40, 302, .6, { kind: "man", face: -1, color: "#2a241e" })).join("")}</g>` : "",
+    L.has("rock") ? `<g filter="url(#${p}rough)"><path d="M360 430 Q400 370 470 380 Q520 400 500 440Z" fill="#6a6258"/><path d="M432 376 L440 440" stroke="${PAPER}" stroke-width="5"/></g>` + figure(320, 440, .7, { kind: "man" }) : ""].join("");
+  // 大江上的船（截江）
+  S.bigriver = (p, r, L) => [paper(p, false), clouds(r, p, 50, 6, .35), mountains(p, r, { base: 200, height: 90, opacity: .28, blur: 12, peaks: 3 }), mist(180, 60),
+    water(r, 220, 480, { n: 90, op: .35 }),
+    `<g filter="url(#${p}brush)"><path d="M380 330 L860 330 L820 380 L420 380Z" fill="${INK}" opacity=".85"/><path d="M620 330 V140" stroke="${INK}" stroke-width="8"/><path d="M626 150 Q760 200 626 300Z" fill="#E9DFC9" stroke="${INK}" stroke-width="3"/>${[0, 1, 2, 3, 4].map(i => `<path d="M${440 + i * 80} 380 l-30 50" stroke="${INK}" stroke-width="4"/>`).join("")}</g>`,
+    figure(700, 330, .8, { kind: "woman", face: -1 }), figure(560, 330, .7, { kind: "man", face: 1, op: .8 }),
+    L.has("child") ? `<ellipse cx="690" cy="300" rx="8" ry="10" fill="#F4EEDC" stroke="${INK}" stroke-width="2"/>` : "",
+    L.has("zhaoyun") ? boat(280, 400, .8, { sail: false, people: 1 }) + figure(420, 330, .78, { kind: "man", face: 1, color: "#3a4656" }) : "",
+    L.has("blockade") ? [0, 1, 2].map(i => boat(960 + i * 70, 360 + i * 30, .7, { sail: true, op: .9 })).join("") + banners(r, 940, 1140, 330, 4, { h: 50, color: "#4f7a58" }) : "",
+    L.has("wu_ships") ? [0, 1].map(i => boat(120 + i * 110, 320 + i * 20, .6, { sail: true, op: .8 })).join("") + banners(r, 100, 260, 300, 3, { h: 40, color: "#b0503a" }) : ""].join("");
+  // 灵堂（吊丧）
+  S.mourning = (p, r, L) => [paper(p, true), `<rect width="1200" height="480" fill="#1a1724" opacity=".28"/>`,
+    `<g filter="url(#${p}brush)"><rect x="140" y="40" width="20" height="400" fill="${INK}" opacity=".85"/><rect x="1040" y="40" width="20" height="400" fill="${INK}" opacity=".85"/><rect x="120" y="40" width="960" height="26" fill="${INK}" opacity=".85"/></g>`,
+    ...[260, 420, 780, 940].map((x, i) => `<path d="M${x} 66 C${x - 16} 160 ${x + 16} 240 ${x} ${330 + (i % 2) * 20}" stroke="#F4EEDC" stroke-width="34" fill="none" opacity=".85"/>`),
+    `<rect x="470" y="300" width="260" height="70" rx="8" fill="#2a241e"/><rect x="560" y="200" width="80" height="100" fill="#F4EEDC" stroke="${INK}" stroke-width="3"/>`,
+    ...[540, 660].map(x => `<circle cx="${x}" cy="230" r="26" fill="${LAMP}" opacity=".5" filter="url(#${p}wash)"/><rect x="${x - 3}" y="232" width="6" height="40" fill="#EDE3CC"/>`),
+    figure(600, 440, 1.0, { kind: "seated" }),
+    L.has("crowd") ? Array.from({ length: 8 }, (_, i) => figure(200 + i * 30, 444, .7, { kind: "man", op: .6 })).join("") + Array.from({ length: 8 }, (_, i) => figure(790 + i * 30, 444, .7, { kind: "man", face: -1, op: .6 })).join("") : "",
+    L.has("phoenix") ? figure(1100, 446, .85, { kind: "man", face: -1, color: "#3a3020" }) : ""].join("");
+  // 落凤坡
+  S.ravine = (p, r, L) => [paper(p, false), `<rect width="1200" height="480" fill="#4a5a3a" opacity=".08"/>`,
+    `<path d="M0 0 L0 480 L420 480 C380 380 360 240 420 120 C440 60 420 20 400 0Z" fill="url(#${p}inkfade)" opacity=".95" filter="url(#${p}rough)"/>`,
+    `<path d="M1200 0 L1200 480 L780 480 C820 360 840 240 780 120 C760 60 800 20 820 0Z" fill="url(#${p}inkfade)" opacity=".95" filter="url(#${p}rough)"/>`,
+    ...Array.from({ length: 14 }, (_, i) => bamboo(r, (i < 7 ? 40 + i * 50 : 800 + (i - 7) * 52), 300 - (i % 3) * 20, 200, 6, .7)),
+    mist(200, 90, .5),
+    `<path d="M520 480 C560 400 600 320 640 220" stroke="#8a7a5a" stroke-width="80" opacity=".3" fill="none" filter="url(#${p}wash)"/>`,
+    horse(L.has("turnback") ? 600 : 610, L.has("turnback") ? 380 : 340, .7, { rider: true, face: L.has("turnback") ? -1 : 1, color: "#F4EEDC", riderColor: "#2a241e" }),
+    ...Array.from({ length: 6 }, (_, i) => figure(560 + i * 10, 440 + i * 6, .45, { kind: "man", op: .6 })),
+    L.has("arrows") ? Array.from({ length: 40 }, () => { const x = 360 + r() * 500, y = 80 + r() * 260; return `<path d="M${f1(x)} ${f1(y)} l${f1(30 + r() * 20)} ${f1(12 + r() * 10)}" stroke="${INK}" stroke-width="2"/>`; }).join("") : "",
+    L.has("you") ? figure(520, 460, .55, { kind: "man", face: 1, color: "#3a2e1e" }) : ""].join("");
+
   /* ---------- key-moment CGs (1200×720, close framing) ---------- */
   const CG = {};
   // 煮酒·惊雷：匙箸落地
@@ -398,8 +448,8 @@
     return `<svg viewBox="0 0 1200 720" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${label.replace(/"/g, "&quot;")}" preserveAspectRatio="xMidYMid slice">${defs(p, 1)}${body}${fin}</svg>`;
   }
 
-  const SEALS = { garden: "许都", lamp: "夜读", herbs: "药圃", road: "出许", letter: "家书", hill: "土山", hall: "封金", camp: "冀州", mirror: "水镜", snow: "隆中", bridge: "长坂", slope: "长坂", fog: "大江", fire: "赤壁", huarong: "华容", ending: "子衡", campfire: "夜话", riverbank: "江畔" };
-  const NIGHT = { lamp: 1, letter: 1, fog: 1, campfire: 1, riverbank: 1 };
+  const SEALS = { garden: "许都", lamp: "夜读", herbs: "药圃", road: "出许", letter: "家书", hill: "土山", hall: "封金", camp: "冀州", mirror: "水镜", snow: "隆中", bridge: "长坂", slope: "长坂", fog: "大江", fire: "赤壁", huarong: "华容", ending: "子衡", campfire: "夜话", riverbank: "江畔", citywall: "城下", temple: "甘露", bigriver: "截江", mourning: "吊丧", ravine: "落凤" };
+  const NIGHT = { lamp: 1, letter: 1, fog: 1, campfire: 1, riverbank: 1, mourning: 1 };
 
   function scene(id, layers = [], { label = "", seal = true } = {}) {
     const fn = S[id]; if (!fn) return "";
@@ -424,12 +474,16 @@
   }
 
   /* ---------- journey map ---------- */
-  const PLACES = {
+  const PLACES_V1 = {
     xuchang: { x: 520, y: 210, zh: "许都", en: "Xuchang" }, xiapi: { x: 820, y: 200, zh: "下邳", en: "Xiapi" }, jizhou: { x: 560, y: 60, zh: "冀州", en: "Jizhou" },
     gucheng: { x: 470, y: 270, zh: "古城", en: "Gucheng" }, xinye: { x: 400, y: 330, zh: "新野", en: "Xinye" }, changban: { x: 430, y: 410, zh: "长坂", en: "Changban" },
     chibi: { x: 610, y: 470, zh: "赤壁", en: "Red Cliffs" }, huarong: { x: 520, y: 450, zh: "华容", en: "Huarong" }, xiakou: { x: 660, y: 430, zh: "夏口", en: "Xiakou" },
   };
-  function journeyMap(stops, { lang = "zh", current } = {}) {
+  const RIVERS_V1 = [{ d: "M80 150 C250 120 400 170 560 140 C700 115 820 150 980 120", w: 10, label: [860, 108, { zh: "黄河", en: "Yellow River" }] },
+    { d: "M60 440 C200 400 330 470 470 470 C600 470 700 430 820 450 C900 465 960 440 1000 430", w: 14, label: [860, 490, { zh: "长江", en: "Yangtze" }] },
+    { d: "M380 260 C400 300 420 360 440 420", w: 6, op: .35 }];
+  function journeyMap(stops, { lang = "zh", current, places: PLACES_ = null, rivers = null } = {}) {
+    const PLACES = PLACES_ || PLACES_V1;
     const p = "m" + (++uid) + "_";
     const r = rng(7);
     const seen = new Set(stops);
@@ -439,9 +493,7 @@
       return `<g opacity="${on ? 1 : .45}">${cur ? `<circle cx="${v.x}" cy="${v.y}" r="22" fill="${LAMP}" opacity=".45" filter="url(#${p}wash)"/>` : ""}<circle cx="${v.x}" cy="${v.y}" r="${on ? 7 : 5}" fill="${on ? VERM : INK}"/><text x="${v.x + 12}" y="${v.y + 6}" font-size="${lang === "zh" ? 20 : 17}" fill="${INK}" font-family="'Noto Serif SC','Fraunces',serif">${v[lang]}</text></g>`; }).join("");
     return `<svg viewBox="0 0 1000 540" role="img" aria-label="${lang === "zh" ? "舆图：你走过的路" : "Map of your journey"}">${defs(p, 0)}<rect width="1000" height="540" fill="url(#${p}paper)"/>
 ${mountains(p, r, { base: 140, height: 90, opacity: .18, blur: 8, peaks: 3 }).replace(/url\(#__/g, `url(#${p}`)}
-<path d="M80 150 C250 120 400 170 560 140 C700 115 820 150 980 120" stroke="#6d86a0" stroke-width="10" fill="none" opacity=".45" filter="url(#${p}soft)"/><text x="860" y="108" font-size="15" fill="#4a6178" opacity=".8" font-family="'Noto Serif SC',serif">${lang === "zh" ? "黄河" : "Yellow River"}</text>
-<path d="M60 440 C200 400 330 470 470 470 C600 470 700 430 820 450 C900 465 960 440 1000 430" stroke="#6d86a0" stroke-width="14" fill="none" opacity=".45" filter="url(#${p}soft)"/><text x="860" y="490" font-size="15" fill="#4a6178" opacity=".8" font-family="'Noto Serif SC',serif">${lang === "zh" ? "长江" : "Yangtze"}</text>
-<path d="M380 260 C400 300 420 360 440 420" stroke="#6d86a0" stroke-width="6" fill="none" opacity=".35"/>
+${(rivers || RIVERS_V1).map(v => `<path d="${v.d}" stroke="#6d86a0" stroke-width="${v.w}" fill="none" opacity="${v.op || .45}" filter="url(#${p}soft)"/>` + (v.label ? `<text x="${v.label[0]}" y="${v.label[1]}" font-size="15" fill="#4a6178" opacity=".8" font-family="'Noto Serif SC',serif">${v.label[2][lang] || v.label[2].zh}</text>` : "")).join("")}
 ${path ? `<path d="${path}" stroke="${VERM}" stroke-width="4" fill="none" stroke-dasharray="10 7" stroke-linecap="round" opacity=".9"/>` : ""}
 ${places}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8"/></svg>`;
   }
@@ -463,7 +515,7 @@ ${places}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8"/>
     jiao: [[360, 640], [430, 580], [520, 620], [620, 600], [660, 620], [760, 650], [700, 690], [420, 695]],
   };
   const PROV_CENTER = { liang: [200, 230], bing: [470, 160], you: [740, 100], ji: [650, 230], qing: [840, 245], sili: [430, 300], yan: [690, 335], yu: [578, 448], xu: [800, 400], jing: [520, 500], yang: [770, 545], yi: [280, 480], jiao: [560, 655] };
-  const REALM_PLACES = { xuchang: [612, 392], xiapi: [800, 372], jizhou: [650, 250], gucheng: [640, 430], xinye: [545, 428], changban: [528, 488], chibi: [612, 540], xiakou: [640, 515], huarong: [570, 532] };
+  const REALM_PLACES_V1 = { xuchang: [612, 392], xiapi: [800, 372], jizhou: [650, 250], gucheng: [640, 430], xinye: [545, 428], changban: [528, 488], chibi: [612, 540], xiakou: [640, 515], huarong: [570, 532] };
   function smooth(pts) {
     let d = `M${pts[0][0]} ${pts[0][1]}`;
     for (let i = 0; i < pts.length; i++) {
@@ -474,7 +526,8 @@ ${places}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8"/>
     return d + "Z";
   }
   // control: { provinceId: factionId | [factionId, factionId] (contested) }, factions: { id: { color, name } }
-  function realmMap(stops, { lang = "zh", current, control = {}, factions = {}, provNames = {}, note = "" } = {}) {
+  function realmMap(stops, { lang = "zh", current, control = {}, factions = {}, provNames = {}, note = "", realmPlaces = null, placeNames = null } = {}) {
+    const REALM_PLACES = Object.assign({}, REALM_PLACES_V1, realmPlaces || {});
     const p = "r" + (++uid) + "_";
     const r = rng(11);
     let defs2 = "";
@@ -493,7 +546,7 @@ ${places}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8"/>
     const pts = stops.map(s => REALM_PLACES[s]).filter(Boolean);
     let path = ""; pts.forEach((pt, i) => { if (!i) path = `M${pt[0]} ${pt[1]}`; else { const a = pts[i - 1]; path += ` Q${f1((a[0] + pt[0]) / 2 + (r() - .5) * 30)} ${f1((a[1] + pt[1]) / 2 + (r() - .5) * 20)} ${pt[0]} ${pt[1]}`; } });
     const seen = new Set(stops);
-    const marks = Object.entries(REALM_PLACES).filter(([k]) => seen.has(k)).map(([k, [x, y]]) => `${k === current ? `<circle cx="${x}" cy="${y}" r="20" fill="${LAMP}" opacity=".55" filter="url(#${p}wash)"/>` : ""}<circle cx="${x}" cy="${y}" r="6" fill="${VERM}" stroke="${PAPER}" stroke-width="2"/>${k === current ? `<text x="${x + 10}" y="${y - 10}" font-size="${lang === "zh" ? 26 : 24}" fill="${INK}" font-family="'Noto Serif SC','Fraunces',serif" font-weight="600">${PLACES[k][lang]}</text>` : ""}`).join("");
+    const marks = Object.entries(REALM_PLACES).filter(([k]) => seen.has(k)).map(([k, [x, y]]) => `${k === current ? `<circle cx="${x}" cy="${y}" r="20" fill="${LAMP}" opacity=".55" filter="url(#${p}wash)"/>` : ""}<circle cx="${x}" cy="${y}" r="6" fill="${VERM}" stroke="${PAPER}" stroke-width="2"/>${k === current ? `<text x="${x + 10}" y="${y - 10}" font-size="${lang === "zh" ? 26 : 24}" fill="${INK}" font-family="'Noto Serif SC','Fraunces',serif" font-weight="600">${((placeNames || {})[k] || PLACES_V1[k] || { [lang]: k })[lang]}</text>` : ""}`).join("");
     return `<svg viewBox="0 0 1000 700" role="img" aria-label="${lang === "zh" ? "天下形势图（示意）" : "The realm (schematic)"}">${defs(p, 0).replace("</defs>", defs2 + "</defs>")}<rect width="1000" height="700" fill="url(#${p}paper)"/>
 ${shapes}
 <path d="M120 150 C260 170 380 200 470 250 C560 290 660 300 760 300 C840 300 900 280 960 260" stroke="#6d86a0" stroke-width="7" fill="none" opacity=".55" filter="url(#${p}soft)"/>
@@ -504,6 +557,6 @@ ${note ? `<text x="20" y="684" font-size="20" fill="${INK}" opacity=".55" font-f
 <rect width="1000" height="700" filter="url(#${p}grain)" opacity=".5"/></svg>`;
   }
 
-  const ART = { scene, cg, charSeal, journeyMap, realmMap, provinces: Object.keys(PROV), scenes: Object.keys(S), cgs: Object.keys(CG), places: Object.keys(PLACES) };
+  const ART = { scene, cg, charSeal, journeyMap, realmMap, provinces: Object.keys(PROV), scenes: Object.keys(S), cgs: Object.keys(CG), places: Object.keys(PLACES_V1) };
   if (typeof module === "object" && module.exports) module.exports = ART; else root.ART = ART;
 })(typeof self !== "undefined" ? self : this);

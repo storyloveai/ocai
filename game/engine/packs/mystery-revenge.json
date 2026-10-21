@@ -1,0 +1,90 @@
+{
+ "id": "mystery-revenge",
+ "version": 1,
+ "title": {
+  "zh": "悬疑复仇",
+  "en": "Mystery & revenge"
+ },
+ "premise": {
+  "zh": "真相一点一点拼出来，但每一块证据都可能伤到无辜的人。好玩在“查得清”和“下不下得了手”是两件事。",
+  "en": "The truth comes together piece by piece, and every piece can hurt someone innocent. The fun is that knowing and acting are two different things."
+ },
+ "values": {
+  "zhen": {
+   "zh": "真",
+   "en": "truth"
+  },
+  "ren": {
+   "zh": "忍",
+   "en": "patience"
+  },
+  "li": {
+   "zh": "利",
+   "en": "advantage"
+  },
+  "qing": {
+   "zh": "情",
+   "en": "sentiment"
+  },
+  "yi": {
+   "zh": "义",
+   "en": "justice"
+  },
+  "hen": {
+   "zh": "狠",
+   "en": "ruthlessness"
+  }
+ },
+ "roles": {
+  "proof": {
+   "required": true,
+   "earned": true,
+   "zh": "证据：能核验的才算，同一来源的传言不能算两条。",
+   "en": "Proof: only what can be verified counts; two rumors from one source are one."
+  },
+  "currency": {
+   "required": false,
+   "zh": "经费、人情：查案要花钱，花了就欠了谁。",
+   "en": "Currency: investigating costs money, and money means owing someone."
+  },
+  "time": {
+   "required": false,
+   "zh": "时间、余裕：拖得越久，对方准备得越好。",
+   "en": "Time: the longer it takes, the readier the other side is."
+  },
+  "risk": {
+   "required": true,
+   "zh": "暴露：被对手察觉。到线必须出事。",
+   "en": "Exposure: being noticed by the other side. Cross the line and something must happen."
+  }
+ },
+ "failures": [
+  {
+   "zh": "身份暴露：对手先动手",
+   "en": "Exposed: the other side moves first"
+  },
+  {
+   "zh": "证据链断：关键一环说不出来源",
+   "en": "A broken chain: a key link can't be sourced"
+  },
+  {
+   "zh": "误伤：真相落在无辜的人身上",
+   "en": "Collateral: the truth lands on the innocent"
+  }
+ ],
+ "checklist": [
+  {
+   "zh": "证据程序是剧情规则，不写成现实中的法律或调查教程",
+   "en": "Evidence procedure is a story rule, never a real-world legal or investigation guide"
+  },
+  {
+   "zh": "原著人物保留自己的目标，不围着玩家转",
+   "en": "Characters from the book keep their own goals; they don't orbit the player"
+  }
+ ],
+ "rules": [
+  "alt_path",
+  "earned_victory",
+  "risk_bites"
+ ]
+}

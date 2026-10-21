@@ -3,6 +3,8 @@
  *   刘备  两耳垂肩、面如冠玉      关羽  面如重枣、丹凤眼、卧蚕眉、髯长二尺、绿袍
  *   曹操  细眼长髯               诸葛亮 纶巾、鹤氅、羽扇（第38回）
  *   温芷  original character
+ *   卷二：周瑜（东吴少年都督，衣冠整肃）· 鲁肃（忠厚长者）· 赵云 身长八尺、浓眉大眼、阔面重颐（第7回）
+ *         孙夫人（性刚勇，好武）· 庞统 浓眉掀鼻、黑面短髯、形容古怪（第57回）· 张松 额镢头尖、鼻偃齿露（第60回）
  * PORTRAIT.draw(id, { mood }) → SVG string. Moods: neutral, warm, cold, sad, surprised, shy.
  */
 (function (root) {
@@ -15,6 +17,12 @@
     caocao: { halo: "#7a3a34", robe: "#4a1f1f", robe2: "#2c1212", skin: SKIN, ears: "std", beard: "thin", hat: "tall", eye: "narrow" },
     zhuge: { halo: "#6d86a0", robe: "#E8E3D6", robe2: "#3b4656", skin: SKIN, ears: "std", beard: "none", hat: "guan", eye: "calm", fan: true },
     wenzhi: { halo: "#c4788a", robe: "#9aa7b4", robe2: "#6e7c8a", skin: "#EED8BD", ears: "std", beard: "none", hat: "bun", eye: "soft", female: true },
+    zhouyu: { halo: "#b0503a", robe: "#8a2c22", robe2: "#5a1a14", skin: SKIN, ears: "std", beard: "none", hat: "crown", eye: "phoenix", crown: "#C9A24A" },
+    lusu: { halo: "#a07a5a", robe: "#7a4a32", robe2: "#523020", skin: SKIN, ears: "std", beard: "short", hat: "crown", eye: "kind", crown: "#8c7a5a" },
+    zhaoyun: { halo: "#8aa0b4", robe: "#d8dde2", robe2: "#7f8c99", skin: SKIN, ears: "std", beard: "none", hat: "helmet", eye: "big", brow: "thick", jaw: "wide" },
+    sunfuren: { halo: "#c45a4a", robe: "#a3382e", robe2: "#6e1f18", skin: "#EED8BD", ears: "std", beard: "none", hat: "bun", eye: "phoenix", female: true, pin: "#C9A24A", flower: "#d94a3a" },
+    pangtong: { halo: "#7a6a4a", robe: "#5a4a32", robe2: "#3a2e1e", skin: "#9c7356", ears: "std", beard: "short", hat: "scarf", scarf: "#3a3020", eye: "narrow", brow: "thick", nose: "up" },
+    zhangsong: { halo: "#6a7a5a", robe: "#4f5a3f", robe2: "#33402a", skin: SKIN, ears: "std", beard: "thin", hat: "cap", eye: "narrow", nose: "flat", teeth: true },
   };
 
   function eyes(c, mood) {
@@ -25,7 +33,7 @@
     if (mood === "warm" || mood === "shy") return pair((x, s) => `<path d="M${x - 11} 194 Q${x} 185 ${x + 11} 194" ${st} stroke-width="3"/>`);
     if (mood === "surprised") return pair((x) => `<ellipse cx="${x}" cy="192" rx="7" ry="6.5" ${st} stroke-width="2.4"/>` + pupil(x, 192, 2.6));
     const tilt = c.eye === "phoenix" ? 5 : c.eye === "narrow" ? 2 : 0;
-    const h = mood === "cold" ? 2 : c.eye === "narrow" ? 3 : mood === "sad" ? 3 : 5;
+    const h = mood === "cold" ? 2 : c.eye === "narrow" ? 3 : mood === "sad" ? 3 : c.eye === "big" ? 7 : 5;
     return pair((x, s) => {
       const ox = x - 12 * 1, ix = x + 12; // outer/inner relative per side
       const outer = s < 0 ? x - 13 : x + 13, inner = s < 0 ? x + 11 : x - 11;
@@ -56,6 +64,7 @@
     if (mood === "cold") return `<path d="M140 ${y + 1} L160 ${y - 1}" ${st}/>`;
     if (mood === "sad") return `<path d="M141 ${y + 3} Q150 ${y - 3} 159 ${y + 3}" ${st}/>`;
     if (mood === "surprised") return `<ellipse cx="150" cy="${y + 1}" rx="5" ry="6" fill="#5a2a22"/>`;
+    if (c.teeth) return `<path d="M140 ${y} Q150 ${y + 3} 160 ${y}" ${st}/><rect x="145" y="${y - 1}" width="10" height="5" rx="1" fill="#F4EEDC" stroke="${INK}" stroke-width="1"/>`;
     return `<path d="M141 ${y} Q150 ${y + 2} 159 ${y}" ${st}/>`;
   }
   function beard(c, p) {
@@ -69,11 +78,13 @@
   }
   function hat(c, p) {
     const br = `filter="url(#${p}brush)"`;
-    if (c.hat === "crown") return `<path d="M98 178 C96 130 120 118 150 118 C180 118 204 130 202 178 C196 150 178 140 150 140 C122 140 104 150 98 178Z" fill="${INK}" ${br}/><path d="M132 120 L134 96 L166 96 L168 120Z" fill="#B99A55" stroke="${INK}" stroke-width="2"/><path d="M118 104 L182 104" stroke="#8c6d2c" stroke-width="3"/>`;
-    if (c.hat === "scarf") return `<path d="M96 182 C90 122 120 108 150 108 C180 108 210 122 204 182 C196 148 176 136 150 136 C124 136 104 148 96 182Z" fill="#2f5a3b" ${br}/><path d="M100 160 Q150 140 200 160" stroke="#1f3d28" stroke-width="4" fill="none"/><path d="M196 150 Q226 170 222 214 Q214 190 200 176Z" fill="#2f5a3b" ${br}/>`;
+    if (c.hat === "crown") return `<path d="M98 178 C96 130 120 118 150 118 C180 118 204 130 202 178 C196 150 178 140 150 140 C122 140 104 150 98 178Z" fill="${INK}" ${br}/><path d="M132 120 L134 96 L166 96 L168 120Z" fill="${c.crown || "#B99A55"}" stroke="${INK}" stroke-width="2"/><path d="M118 104 L182 104" stroke="#8c6d2c" stroke-width="3"/>`;
+    if (c.hat === "helmet") return `<path d="M94 186 C88 118 118 96 150 96 C182 96 212 118 206 186 C200 150 178 136 150 136 C122 136 100 150 94 186Z" fill="#b8c0c8" stroke="${INK}" stroke-width="3" ${br}/><path d="M100 160 Q150 142 200 160" stroke="#6c7680" stroke-width="5" fill="none"/><path d="M146 96 L150 62 L154 96Z" fill="#9aa4ae" stroke="${INK}" stroke-width="2"/><path d="M150 64 C130 40 112 44 100 60 C120 54 136 58 150 70Z" fill="#F4EEDC" stroke="#9c9486" stroke-width="1.5"/><path d="M94 186 Q86 230 100 262" stroke="#b8c0c8" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M206 186 Q214 230 200 262" stroke="#b8c0c8" stroke-width="10" fill="none" stroke-linecap="round"/>`;
+    if (c.hat === "cap") return `<path d="M100 172 C98 132 122 112 150 108 C178 112 202 132 200 172 C192 150 172 142 150 142 C128 142 108 150 100 172Z" fill="${INK}" ${br}/><path d="M124 120 L150 66 L176 120Z" fill="#26221e" ${br}/><path d="M118 126 L182 126" stroke="#8c6d2c" stroke-width="3"/>`;
+    if (c.hat === "scarf") { const sc = c.scarf || "#2f5a3b"; return `<path d="M96 182 C90 122 120 108 150 108 C180 108 210 122 204 182 C196 148 176 136 150 136 C124 136 104 148 96 182Z" fill="${sc}" ${br}/><path d="M100 160 Q150 140 200 160" stroke="#1f1a14" stroke-width="4" fill="none" opacity=".6"/><path d="M196 150 Q226 170 222 214 Q214 190 200 176Z" fill="${sc}" ${br}/>`; }
     if (c.hat === "tall") return `<path d="M100 176 C98 140 120 128 150 128 C180 128 202 140 200 176 C192 152 174 146 150 146 C126 146 108 152 100 176Z" fill="${INK}" ${br}/><path d="M112 140 L120 70 L182 70 L190 140Z" fill="#151216" ${br}/><path d="M112 140 L190 140" stroke="#8c6d2c" stroke-width="5"/><path d="M128 84 L174 84" stroke="#3a3430" stroke-width="2"/>`;
     if (c.hat === "guan") return `<path d="M96 180 C90 120 118 98 150 98 C182 98 210 120 204 180 C198 150 178 140 150 140 C122 140 102 150 96 180Z" fill="#4a5a70" ${br}/>` + [0, 1, 2, 3].map(i => `<path d="M${112 + i * 22} 112 Q${118 + i * 22} 130 ${114 + i * 22} 150" stroke="#2f3a4a" stroke-width="2" fill="none"/>`).join("") + `<path d="M200 160 Q232 200 220 260" stroke="#4a5a70" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M100 160 Q72 200 82 254" stroke="#4a5a70" stroke-width="6" fill="none" stroke-linecap="round"/>`;
-    if (c.hat === "bun") return `<path d="M96 200 C88 132 116 112 150 112 C184 112 212 132 204 200 C200 160 182 142 150 142 C118 142 100 160 96 200Z" fill="${INK}" ${br}/><ellipse cx="150" cy="98" rx="30" ry="22" fill="${INK}" ${br}/><path d="M112 96 L196 78" stroke="#B99A55" stroke-width="3" stroke-linecap="round"/><g transform="translate(118 112)">${[0, 72, 144, 216, 288].map(d => `<circle cx="${(Math.cos(d * Math.PI / 180) * 5).toFixed(1)}" cy="${(Math.sin(d * Math.PI / 180) * 5).toFixed(1)}" r="4.4" fill="#F4E4E6"/>`).join("")}<circle r="2.4" fill="#B8321F"/></g><path d="M100 196 Q94 240 104 268" stroke="${INK}" stroke-width="8" fill="none" stroke-linecap="round" opacity=".9"/><path d="M200 196 Q206 240 196 268" stroke="${INK}" stroke-width="8" fill="none" stroke-linecap="round" opacity=".9"/>`;
+    if (c.hat === "bun") return `<path d="M96 200 C88 132 116 112 150 112 C184 112 212 132 204 200 C200 160 182 142 150 142 C118 142 100 160 96 200Z" fill="${INK}" ${br}/><ellipse cx="150" cy="98" rx="30" ry="22" fill="${INK}" ${br}/><path d="M112 96 L196 78" stroke="${c.pin || "#B99A55"}" stroke-width="3" stroke-linecap="round"/><g transform="translate(118 112)">${[0, 72, 144, 216, 288].map(d => `<circle cx="${(Math.cos(d * Math.PI / 180) * 5).toFixed(1)}" cy="${(Math.sin(d * Math.PI / 180) * 5).toFixed(1)}" r="4.4" fill="${c.flower || "#F4E4E6"}"/>`).join("")}<circle r="2.4" fill="${c.flower ? "#F4E4E6" : "#B8321F"}"/></g><path d="M100 196 Q94 240 104 268" stroke="${INK}" stroke-width="8" fill="none" stroke-linecap="round" opacity=".9"/><path d="M200 196 Q206 240 196 268" stroke="${INK}" stroke-width="8" fill="none" stroke-linecap="round" opacity=".9"/>`;
     return "";
   }
   function ears(c) {
@@ -93,11 +104,14 @@
     const c = C[id]; if (!c) return "";
     const p = "pt" + (++uid) + "_";
     const blush = (mood === "shy" || (mood === "warm" && c.female)) ? `<ellipse cx="124" cy="214" rx="12" ry="7" fill="#E07A8C" opacity="${mood === "shy" ? .45 : .25}"/><ellipse cx="176" cy="214" rx="12" ry="7" fill="#E07A8C" opacity="${mood === "shy" ? .45 : .25}"/>` : "";
-    const face = c.female
+    const face = c.jaw === "wide" ? `<path d="M96 184 C96 136 122 124 150 124 C178 124 204 136 204 184 C204 232 186 266 150 270 C114 266 96 232 96 184Z" fill="${c.skin}"/>` : c.female
       ? `<path d="M102 186 C102 140 124 128 150 128 C176 128 198 140 198 186 C198 226 178 258 150 262 C122 258 102 226 102 186Z" fill="${c.skin}"/>`
       : `<path d="M98 184 C98 136 122 124 150 124 C178 124 202 136 202 184 C202 228 182 262 150 266 C118 262 98 228 98 184Z" fill="${c.skin}"/>`;
     const shade = `<path d="M188 160 C200 200 192 240 168 262 C184 236 190 204 188 160Z" fill="${INK}" opacity=".08"/>`;
-    const nose = `<path d="M150 196 Q145 212 151 216 Q156 216 158 213" stroke="${c.skin === SKIN || c.female ? "#a0785a" : "#5a1f18"}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
+    const nc = c.skin === SKIN || c.female ? "#a0785a" : "#4a2a18";
+    const nose = c.nose === "up" ? `<path d="M150 198 Q144 210 147 216 Q152 211 158 216 Q160 208 152 198" stroke="${nc}" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="147" cy="215" r="1.8" fill="${nc}"/><circle cx="156" cy="215" r="1.8" fill="${nc}"/>`
+      : c.nose === "flat" ? `<path d="M144 212 Q150 218 158 212" stroke="${nc}" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M150 200 L149 210" stroke="${nc}" stroke-width="1.6" opacity=".6"/>`
+      : `<path d="M150 196 Q145 212 151 216 Q156 216 158 213" stroke="${nc}" stroke-width="2" fill="none" stroke-linecap="round"/>`;
     const tint = mood === "cold" ? `<rect width="300" height="400" fill="#3b4656" opacity=".10"/>` : mood === "sad" ? `<rect width="300" height="400" fill="#4a5a70" opacity=".08"/>` : (mood === "warm" || mood === "shy") ? `<rect width="300" height="400" fill="#F5B14C" opacity=".07"/>` : "";
     const sz = size ? ` width="${size}" height="${Math.round(size * 4 / 3)}"` : "";
     return `<svg viewBox="45 62 210 280"${sz} xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>

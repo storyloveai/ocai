@@ -2,15 +2,24 @@
 """Inline campaign JSON + engine into one self-contained page. Usage: python3 tools/build.py"""
 import json, pathlib, subprocess, sys
 R = pathlib.Path(__file__).resolve().parents[1]
+# the engine is shared by every book and lives in game/engine/; this book keeps a byte-identical copy
+# (engine/campaign_core.js) so the website can keep taking its files from game/sanguo/ as before
+SHARED = R.parent / "engine/campaign_core.js"
+(R / "engine/campaign_core.js").write_bytes(SHARED.read_bytes())
 subprocess.run([sys.executable, str(R / "content/campaign.py")], check=True, stdout=subprocess.DEVNULL)
-camp = json.loads((R / "content/campaign.json").read_text())
+if (R / "content/v2/campaign_v2.py").exists():
+    subprocess.run(["node", str(R / "tools/presets.js"), str(R / "content/campaign.json"), str(R / "content/v2/presets.json")], check=True, stdout=subprocess.DEVNULL)
+    subprocess.run([sys.executable, str(R / "content/v2/campaign_v2.py")], check=True, stdout=subprocess.DEVNULL)
+sys.path.insert(0, str(R / "content"))
+import book
+camp = book.load()
 engine = (R / "engine/campaign_core.js").read_text()
 art = (R / "engine/art.js").read_text() + "\n" + (R / "engine/portraits.js").read_text()
 assert "</script" not in art
 src = (R / "app/play.src.html").read_text()
 assert "</script" not in engine
 data = json.dumps(camp, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-out = src.replace("/*__CAMP__*/null", data).replace("/*__ENGINE__*/", engine).replace("/*__ART__*/", art)
+out = src.replace("/*__BOOK__*/null", data).replace("/*__ENGINE__*/", engine).replace("/*__ART__*/", art)
 (R / "dist").mkdir(exist_ok=True)
 (R / "dist/index.html").write_text(out)
 # a full document for standalone hosting (the artifact host adds its own skeleton)

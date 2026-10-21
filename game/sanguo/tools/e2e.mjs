@@ -15,7 +15,7 @@ async function run(lang, strategy, w, hgt, tag) {
   p.on("console", m => { if (m.type() === "error" && !/fonts\.g/.test(m.text())) errs.push(tag + " console: " + m.text()); });
   await p.goto(page_url);
   await p.screenshot({ path: `${OUT}/${tag}-start.png` });
-  await p.click(".hero .btn");
+  await p.click(".volcard .btn");
   let steps = 0, typed = false, talked = false, shotTalk = false;
   while (steps++ < 120) {
     if (await p.$(".epi")) break;
@@ -56,7 +56,7 @@ async function run(lang, strategy, w, hgt, tag) {
   const cjk2 = (t2.match(/[一-鿿]/g) || []).length;
   if (lang === "zh" && cjk2 > 0) errs.push(`${tag}: after switching to EN, ${cjk2} Chinese chars remain: ` + (t2.match(/.{0,20}[一-鿿]+.{0,20}/) || [""])[0]);
   // creator view + simulator
-  await p.click(".top .tbtn");
+  await p.click(".top .tbtn >> nth=-1");
   if (w < 900) await p.click("#fab");
   await p.click('.tabs button:nth-child(5)');
   await p.click(".sec .btn"); await p.waitForTimeout(1500);

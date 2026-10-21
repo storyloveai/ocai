@@ -1,5 +1,10 @@
-"""Campaign spec v0.3 helpers. Content files read like the spec, not like brackets."""
-import json
+"""Campaign spec helpers (storydate.campaign/0.4). Content files read like the spec, not like brackets.
+Tiers and genre packs come from the shared engine in game/engine/, so every book uses the same ones."""
+import json, pathlib
+ENGINE = pathlib.Path(__file__).resolve().parents[2] / "engine"
+SPEC = "storydate.campaign/0.4"
+def PACK(pack_id):
+    return json.loads((ENGINE / "packs" / f"{pack_id}.json").read_text(encoding="utf-8"))
 
 def T(zh, en):
     return {"zh": zh, "en": en}
@@ -59,3 +64,14 @@ def node(id, chapter, kind, title, lock, canon, intro, choices, when=None, salie
 def dump(obj, path):
     with open(path, "w", encoding="utf-8") as f:
         json.dump(obj, f, ensure_ascii=False, indent=1)
+
+# ---- relationship tiers (v2.3): every condition on a relationship axis is written as a tier, never a raw number ----
+_TIERS = json.loads((ENGINE / "tiers.json").read_text(encoding="utf-8"))   # shared by every book
+TIER_START = _TIERS["start"]          # tier k covers TIER_START[k] .. TIER_END[k] (the last tier is 8–10)
+TIER_END = _TIERS["end"]
+TIER_NAMES = _TIERS["names"]
+def AT(c, axis, k):        # at tier k or above
+    return V(f"rel.{c}.{axis}", ">=", TIER_START[k])
+def UPTO(c, axis, k):      # at tier k or below
+    return V(f"rel.{c}.{axis}", "<=", TIER_END[k])
+def TIERS(): return {"start": TIER_START, "end": TIER_END, "names": TIER_NAMES}
