@@ -29,3 +29,9 @@ Gameplay review: zhouzeya. Website review: allliiita / Lindsey-cyber. Integratio
 - Upstream files in `upstream/` replaced verbatim (manifest records commit + blobs). New: volume TOC, per-run saves (`campaign.run.*`, `campaign.cur`, `campaign.runs`, checkpoints), vol 2 data (`campaign_v2.json`); vol 3–8 are "待续" upstream.
 - Site adapts only in `build.mjs` (marker patches), `adapter.js`, `bridge.js`, `three-kingdoms.js` (save-key whitelist widened), `server/sanguo-prompt.js` (resolves the node across both volumes).
 - Book campaigns (凡人修仙传 / 基督山伯爵) stay on the frozen v2.0 rules engine in `book-campaigns/engine/`, since the v2.3 validator requires per-character warmth/trust/esteem axes.
+
+## 2026-10-21：改用共用引擎，自动同步
+
+- `game/` 现在和网站在同一个 `main` 上。`npm run game:sync` 把三国的发布页面、两卷数据和共用引擎（`game/engine/campaign_core.js`）复制到 `upstream/`，并重写 `manifest.json`；同时把共用引擎复制给名著（`book-campaigns/engine/`）。
+- CI（`.github/workflows/game-check.yml` 的 site-copies）检查这些副本和 `game/` 一致，不一致就报错。
+- 三国升到引擎 0.4（历史谋略题材包），两部名著从冻结的 v2.0 引擎换到共用引擎。`npm run build` 和 `npm run check`（123 项）都通过。
