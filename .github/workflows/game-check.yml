@@ -8,6 +8,29 @@ on:
     paths: ["game/**"]
 
 jobs:
+  engine:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: game/engine
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Genre packs are generated from make_packs.py
+        run: |
+          python3 packs/make_packs.py
+          git diff --exit-code -- packs/ || (echo "::error::Run 'python3 game/engine/packs/make_packs.py' and commit the results." && exit 1)
+      - name: Engine tests
+        run: node --test test/engine.test.mjs
+      - name: Every book carries an identical copy of the engine
+        run: |
+          for f in ../*/engine/campaign_core.js; do cmp campaign_core.js "$f" || (echo "::error::$f differs from game/engine/campaign_core.js. Edit the shared engine, then rebuild the book." && exit 1); done
+
   sanguo:
     runs-on: ubuntu-latest
     defaults:
@@ -27,7 +50,7 @@ jobs:
           python3 tools/build.py
       - name: Committed build outputs are up to date
         run: |
-          git diff --exit-code -- content/campaign.json content/v2/campaign_v2.json content/v2/presets.json web/index.html || (echo "::error::Run 'python3 content/campaign.py && python3 tools/build.py' in game/sanguo and commit the results." && exit 1)
+          git diff --exit-code -- content/campaign.json content/v2/campaign_v2.json content/v2/presets.json web/index.html engine/campaign_core.js || (echo "::error::Run 'python3 content/campaign.py && python3 tools/build.py' in game/sanguo and commit the results." && exit 1)
       - name: Static checks and simulated players
         run: |
           node tools/check.js content/campaign.json 3000

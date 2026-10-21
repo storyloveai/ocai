@@ -1,0 +1,90 @@
+{
+ "id": "cultivation",
+ "version": 1,
+ "title": {
+  "zh": "修仙成长",
+  "en": "Cultivation"
+ },
+ "premise": {
+  "zh": "资质平常的人一点一点攒出一条路。好玩在“捷径永远在眼前，每一条都要付代价”：借来的灵力要还，用过的同伴会记得。",
+  "en": "An ordinary talent building a path one step at a time. The fun is that a shortcut is always in reach and every one has a price: borrowed power must be repaid, and companions you used remember."
+ },
+ "values": {
+  "wen": {
+   "zh": "稳",
+   "en": "caution"
+  },
+  "tan": {
+   "zh": "贪",
+   "en": "greed"
+  },
+  "yi": {
+   "zh": "义",
+   "en": "loyalty"
+  },
+  "hen": {
+   "zh": "狠",
+   "en": "ruthlessness"
+  },
+  "cheng": {
+   "zh": "诚",
+   "en": "honesty"
+  },
+  "wu": {
+   "zh": "悟",
+   "en": "insight"
+  }
+ },
+ "roles": {
+  "power": {
+   "required": true,
+   "earned": true,
+   "zh": "修为、灵力：往上走的本钱。不能单凭它判定成功。",
+   "en": "Power: the capital for climbing. Never the sole test of success."
+  },
+  "currency": {
+   "required": true,
+   "zh": "灵石、资源：花出去就没了，花在哪里就是选择。",
+   "en": "Currency: once spent it's gone; where you spend it is the choice."
+  },
+  "body": {
+   "required": false,
+   "zh": "经脉、伤势：冒进的代价落在身上。",
+   "en": "Body: the cost of rushing lands on you."
+  },
+  "risk": {
+   "required": true,
+   "zh": "暴露、因果：被人盯上。到线必须出事。",
+   "en": "Risk: being noticed. Cross the line and something must happen."
+  }
+ },
+ "failures": [
+  {
+   "zh": "走火入魔：资源不够还强行冲关",
+   "en": "Qi deviation: forcing a breakthrough without the means"
+  },
+  {
+   "zh": "欠债：借来的灵力、人情到期结算",
+   "en": "Debt: borrowed power and favors come due"
+  },
+  {
+   "zh": "被盯上：暴露太多，有人来收账",
+   "en": "Marked: exposed too much, and someone comes to collect"
+  }
+ ],
+ "checklist": [
+  {
+   "zh": "资源不够时一定有别的路（延期、步行、等候），不能卡死",
+   "en": "When resources fall short there is always another way (wait, walk, defer), never a dead end"
+  },
+  {
+   "zh": "玩家不拿原著主角的机缘和宝物",
+   "en": "The player never takes the original protagonist's fortune or treasures"
+  }
+ ],
+ "rules": [
+  "alt_path",
+  "earned_victory",
+  "risk_bites"
+ ]
+}

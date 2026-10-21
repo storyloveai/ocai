@@ -855,8 +855,10 @@ PORTRAIT_PROMPTS = dict(V1["portrait_prompts"]); PORTRAIT_PROMPTS.update(PP.PORT
 PRESETS = json.loads((HERE / "presets.json").read_text()) if (HERE / "presets.json").exists() else []
 
 CAMPAIGN = {
-    "spec": "storydate.campaign/0.3",
+    "spec": SPEC,
     "tiers": TIERS(),
+    "pack": PACK("history-strategy"),
+    "resources": {"reputation": ["renown.loyal", "renown.cunning"], "risk": ["uncanny", "renown.rash"], "drift": ["deviation"]},
     "carry_compress": {"pivot": 4, "k": 0.5},
     "id": "sanguo_strategist_v2",
     "prev": "sanguo_strategist_v1",

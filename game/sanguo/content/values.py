@@ -5,10 +5,9 @@
 作者在选项里明写了某人的关系变化时，以作者写的为准，这个人不再自动反应。
 每个人对一次选择的反应，每根轴最多 ±1；刚被你惹急的人（火气 ≥ 2）不会因此加分。
 """
-from lib import T
+from lib import PACK
 
-TAGS = {"yi": T("义", "loyalty"), "zhi": T("智", "cleverness"), "ren": T("仁", "kindness"),
-        "yong": T("勇", "nerve"), "cheng": T("诚", "honesty"), "li": T("利", "self-interest")}
+TAGS = PACK("history-strategy")["values"]   # the value tags come from the genre pack (game/engine/packs)
 
 # 人物 → {标签: [轴, 方向]}
 VALUES = {

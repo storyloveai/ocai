@@ -2,6 +2,10 @@
 """Inline campaign JSON + engine into one self-contained page. Usage: python3 tools/build.py"""
 import json, pathlib, subprocess, sys
 R = pathlib.Path(__file__).resolve().parents[1]
+# the engine is shared by every book and lives in game/engine/; this book keeps a byte-identical copy
+# (engine/campaign_core.js) so the website can keep taking its files from game/sanguo/ as before
+SHARED = R.parent / "engine/campaign_core.js"
+(R / "engine/campaign_core.js").write_bytes(SHARED.read_bytes())
 subprocess.run([sys.executable, str(R / "content/campaign.py")], check=True, stdout=subprocess.DEVNULL)
 if (R / "content/v2/campaign_v2.py").exists():
     subprocess.run(["node", str(R / "tools/presets.js"), str(R / "content/campaign.json"), str(R / "content/v2/presets.json")], check=True, stdout=subprocess.DEVNULL)

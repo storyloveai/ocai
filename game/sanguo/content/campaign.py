@@ -885,8 +885,10 @@ CAST["x_plum_rage"] = cast("caocao", "liubei"); CAST["x_cao_rage"] = cast("caoca
 for _nid in ("x_miheng", "x_loose", "x_plum_rage", "x_cao_rage"): next(n for n in N if n["id"] == _nid)["cast"] = CAST[_nid]
 
 CAMPAIGN = {
-    "spec": "storydate.campaign/0.3",
+    "spec": SPEC,
     "tiers": TIERS(),
+    "pack": PACK("history-strategy"),
+    "resources": {"reputation": ["renown.loyal", "renown.cunning"], "risk": ["uncanny", "renown.rash"], "drift": ["deviation"]},
     "id": "sanguo_strategist_v1",
     "title": T("三国·谋士", "Three Kingdoms: The Strategist"),
     "volume": T("卷一 · 许都至赤壁", "Volume I · Xuchang to Red Cliffs"),

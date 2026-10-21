@@ -4,8 +4,10 @@
 
 | 区域 | 内容 | 负责人（GitHub） | 先读 |
 |---|---|---|---|
-| 网站 | `src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/` | 兰馨（@allliiita / @Lindsey-cyber） | `README.md`、`docs/STORYLOVE-SETUP.md`、`docs/HANDOFF.md` |
-| 互动小说玩法 | `game/`（目前只有 `game/sanguo/`：三国·谋士，卷一、卷二已完成） | zhouzeya（@666ZHOUZEYA） | `game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
+| 网站 | `src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/` `ooc-replica/` | 兰馨（@allliiita / @Lindsey-cyber） | `README.md`、`docs/STORYLOVE-SETUP.md`、`docs/HANDOFF.md` |
+| 互动小说玩法 | `game/engine/`：所有书共用的引擎、五档、题材包、检查和升级工具；`game/sanguo/`：三国·谋士，卷一、卷二已完成 | zhouzeya（@666ZHOUZEYA） | `game/engine/README.md`、`game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
+
+**写新书**（不管在网站目录还是 `game/` 下）：按 `game/engine/README.md` 选题材包、用规格 0.4、过 `game/engine/tools/check.mjs`。引擎只从 `game/engine/campaign_core.js` 取，不在副本上改；需要引擎加功能时提 issue 或 PR。
 
 ## 协作流程
 
@@ -17,6 +19,8 @@
 ## 改 `game/` 时必须做的
 
 ```
+python3 game/engine/packs/make_packs.py  # 改了题材包时
+node --test game/engine/test/engine.test.mjs           # 改了引擎时
 cd game/sanguo
 python3 content/campaign.py              # 内容 → content/campaign.json
 python3 tools/build.py                   # 生成各卷内容和卷二的“前情”，并打包成 web/index.html（整本书一个页面）

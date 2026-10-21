@@ -1,0 +1,14 @@
+{
+  "name": "storydate-engine",
+  "version": "0.4.0",
+  "private": true,
+  "type": "commonjs",
+  "description": "StoryDate 互动小说引擎：所有书共用的规则、五档、题材包、检查与升级工具（零依赖）",
+  "main": "campaign_core.js",
+  "scripts": {
+    "test": "node --test test/engine.test.mjs",
+    "packs": "python3 packs/make_packs.py",
+    "check": "node tools/check.mjs"
+  },
+  "engines": { "node": ">=18" }
+}
