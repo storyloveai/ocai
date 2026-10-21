@@ -1,5 +1,5 @@
 import {readFileSync} from 'node:fs';
-import CC from './sanguo-core.cjs';
+import CC from './book-core.cjs';
 import {RELEASED_CHAPTERS} from '../book-campaigns/preview.mjs';
 import {campaigns} from '../book-campaigns/catalog.mjs';
 const str=(v,n=200)=>typeof v==='string'?v.slice(0,n):'';

@@ -1,10 +1,13 @@
 import {readFileSync} from 'node:fs';
 import CC from './sanguo-core.cjs';
-export const campaign=JSON.parse(readFileSync(new URL('./sanguo-campaign.json',import.meta.url),'utf8'));
+const load=name=>JSON.parse(readFileSync(new URL(name,import.meta.url),'utf8'));
+export const campaign=load('./sanguo-campaign.json');
+// The book has several volumes; a request is served by the volume that owns the node.
+const volumes=[campaign,load('./sanguo-campaign-v2.json')];
 const str=(v,n=200)=>typeof v==='string'?v.slice(0,n):'';
 export function buildCampaignStage(body){
  if(body?.phase!=='express'||!['scene','answer','action'].includes(body.task)||!['zh','en'].includes(body.lang)||!body.context||typeof body.context!=='object')throw Error('Invalid task');
- const {context:c,lang,task}=body,n=campaign.nodes[c.node];
+ const {context:c,lang,task}=body,campaign=volumes.find(v=>v.nodes[c.node])||volumes[0],n=campaign.nodes[c.node];
  if(!n||!str(c.text).trim()||typeof c.text!=='string'||c.text.length>200)throw Error('Invalid scene');
  const t=x=>typeof x==='string'?x:x?.[lang]||x?.zh||'';
  const state=CC.newGame(campaign);state.cur=n.id;state.phase='node';state.ch=campaign.chapters.findIndex(x=>x.id===n.chapter);

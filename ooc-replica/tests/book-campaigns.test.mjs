@@ -3,7 +3,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {parseHTML} from 'linkedom';
-import CC from '../server/sanguo-core.cjs';
+import CC from '../server/book-core.cjs';
 import {campaigns} from '../book-campaigns/catalog.mjs';
 import {buildBookStage,validateBookOutput} from '../server/book-prompt.js';
 import {createBookHandler} from '../api/book-campaign.js';

@@ -15,8 +15,11 @@ export async function buildSanguo(){
  patch('lang: /^zh/i.test(navigator.language || "") ? "zh" : "en"','lang: "zh"');
  patch('const creatorAllowed = () => RT.canEdit || location.hash === "#creator";', 'const creatorAllowed = () => false;');
  patch('/* ---------------- boot ---------------- */',adapter+'\n/* ---------------- boot ---------------- */');
+ // The volume switcher is defined before the wrapped region but needs the wrapped collection state.
+ patch('let COL = loadCOL(BOOK.volumes[0].id);','let COL = loadCOL(BOOK.volumes[0].id);\nuseVol = function(id) { const v = VOL(id) || BOOK.volumes[0]; CAMP = v.camp; COL = loadCOL(v.id); };');
  // Start only after the account-scoped parent has supplied its snapshot.
- patch('const BUILD = "strategist-v2.0";',`function startCampaign(siteStore) {\nconst BUILD = "strategist-v2.0";`);
+ const build=/const BUILD = "[^"]+";/.exec(html);if(!build)throw Error('Sanguo upstream integration marker missing: BUILD');
+ patch(build[0],`function startCampaign(siteStore) {\n${build[0]}`);
  const end=html.lastIndexOf('</script>');
  html=html.slice(0,end)+'}\n'+await readFile(new URL('bridge.js',here),'utf8')+'\n'+html.slice(end);
  html=html.replace('</head>','<link rel="icon" href="/assets/storydate-mark.svg"></head>');
@@ -26,5 +29,8 @@ export async function buildSanguo(){
  html=html.replace('This is an internal playtest prototype: choices are logged anonymously to improve the content.','Progress and the gallery use your StoryDate save. Rules decide story outcomes.');
  await writeFile(new URL('../dist/assets/sanguo-campaign.html',here),html);
  await writeFile(new URL('../server/sanguo-campaign.json',here),await readFile(new URL('campaign.json',game)));
+ await writeFile(new URL('../server/sanguo-campaign-v2.json',here),await readFile(new URL('campaign_v2.json',game)));
  await writeFile(new URL('../server/sanguo-core.cjs',here),await readFile(new URL('campaign_core.js',game)));
+ // Books stay on the frozen v2.0 engine copy; see book-campaigns/engine/README.md.
+ await writeFile(new URL('../server/book-core.cjs',here),await readFile(new URL('../book-campaigns/engine/campaign_core.js',here)));
 }

@@ -25,3 +25,5 @@ dist/assets/book-campaigns/
 dist/assets/book-catalog.js
 dist/assets/mortal-path-cover.svg
 dist/assets/monte-cristo-cover.svg
+server/sanguo-campaign-v2.json
+server/book-core.cjs

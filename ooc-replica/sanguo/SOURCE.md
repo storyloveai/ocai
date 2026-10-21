@@ -24,3 +24,8 @@ Upstream: `storyloveai/ocai`, `game/sanguo-v2.0` at `1b3ba1bc6cc0b84324b03db6758
 After updating the untouched upstream folder, copy its three contract files into `sanguo/upstream/` and verify their blob SHAs, then run `npm run build && npm run check` in `ooc-replica/` and `node tools/check.js content/campaign.json 5000` in `game/sanguo/`. No Python runs in the website build. API-generated companion data/core files are build outputs; never edit them manually. No credentials are added or changed by this integration.
 
 Gameplay review: zhouzeya. Website review: allliiita / Lindsey-cyber. Integration changes stay in `ooc-replica/`; no upstream gameplay interface change is required.
+
+## Refresh: game/sanguo-book e542a67 (strategist v2.3)
+- Upstream files in `upstream/` replaced verbatim (manifest records commit + blobs). New: volume TOC, per-run saves (`campaign.run.*`, `campaign.cur`, `campaign.runs`, checkpoints), vol 2 data (`campaign_v2.json`); vol 3–8 are "待续" upstream.
+- Site adapts only in `build.mjs` (marker patches), `adapter.js`, `bridge.js`, `three-kingdoms.js` (save-key whitelist widened), `server/sanguo-prompt.js` (resolves the node across both volumes).
+- Book campaigns (凡人修仙传 / 基督山伯爵) stay on the frozen v2.0 rules engine in `book-campaigns/engine/`, since the v2.3 validator requires per-character warmth/trust/esteem axes.

@@ -13,7 +13,7 @@ export function mountThreeKingdoms(path,{reference,account,helpers}){
   if(event.data?.type==='tk3-ready')frame.contentWindow.postMessage({type:'tk3-init',snapshot},location.origin);
   if(['tk3-save','sg2-save'].includes(event.data?.type)){
    const {key,value}=event.data;
-   if(typeof key!=='string'||!/^(campaign\.(?:save|settings|collection|anon)|settings|anon|game\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road)|endings\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road))$/.test(key)||JSON.stringify(value)?.length>(key.startsWith('campaign.')?500000:160000))return;
+   if(typeof key!=='string'||!/^(campaign\.(?:save|settings|anon|cur|runs|runN|collection(?:\.[\w-]{1,60})?|run\.[\w.-]{1,60}|ckpt\.[\w.-]{1,60})|settings|anon|game\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road)|endings\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road))$/.test(key)||JSON.stringify(value)?.length>(key.startsWith('campaign.')?500000:160000))return;
    if(value===null)delete snapshot[key];else snapshot[key]=value;
    helpers.save('ooc-session-v2-three-kingdoms',snapshot);
    if((key.startsWith('game.')||key==='campaign.save')&&helpers.read('ooc-history',[])[0]!==threeKingdoms.id)helpers.save('ooc-history',[threeKingdoms.id,...helpers.read('ooc-history',[]).filter(id=>id!==threeKingdoms.id)]);
