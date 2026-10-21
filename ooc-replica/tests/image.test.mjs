@@ -19,3 +19,10 @@ test('image endpoint is same-origin only and reports missing configuration',asyn
  res=reply();await handler({method:'POST',headers:{host:'a.com',origin:'https://a.com','content-type':'application/json'},body:{type:'story',prompt:'x'}},res);assert.equal(res.code,503);
  Object.assign(process.env,saved);
 });
+test('published creator titles build a bounded custom role and never reach built-in lookup',async()=>{
+ const {buildPrompt}=await import('../server/prompt-engine.js');
+ const p=buildPrompt({titleId:'u-abcd-1234',custom:{type:'character',title:'雾城',details:'钟楼里的城'.repeat(2000)},messages:[{role:'user',content:'你好'}]});
+ assert.equal(p.mode,'character');assert.ok(p.system.includes('CREATOR-WRITTEN TITLE'));assert.ok(p.system.length<30000);
+ assert.throws(()=>buildPrompt({titleId:'u-abcd-1234',messages:[{role:'user',content:'hi'}]}));
+ assert.throws(()=>buildPrompt({titleId:'u-../x',custom:{title:'t'},messages:[{role:'user',content:'hi'}]}));
+});

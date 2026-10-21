@@ -1,8 +1,8 @@
-import {roleFor} from './roles.js';
+import {roleFor,customRole,isCustomId} from './roles.js';
 
 export function suggestionPrompt(body){
  if(typeof body.titleId!=='string'||body.titleId.length>64||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>80)throw Error('Invalid suggestions request');
- const role=roleFor(body.titleId);
+ const role=isCustomId(body.titleId)?customRole(body.custom):roleFor(body.titleId);
  const history=body.messages.map(m=>{
   if(!m||!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim()||m.content.length>4000)throw Error('Invalid suggestion history');
   return {role:m.role,content:m.content};

@@ -24,7 +24,7 @@ export default async function handler(req,res){
  let config=providerConfig();if(!config)return res.status(503).json({error:'AI configuration is incomplete'});
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [key,v]of windows)if(v.until<now)windows.delete(key);
  const window=windows.get(ip)||{until:now+60000,count:0};if(window.count>=8||active>=4||windows.size>=5000)return res.status(429).json({error:'Please wait before trying again'});window.count++;windows.set(ip,window);
- let packet;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>48000)throw new Error('Request too large');packet=buildPrompt(body);}catch{return res.status(400).json({error:'Invalid title or conversation'});}
+ let packet;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>110000)throw new Error('Request too large');packet=buildPrompt(body);}catch{return res.status(400).json({error:'Invalid title or conversation'});}
  // Catalogue authoring uses the user's requested DeepSeek model only. Normal chat retains fallback.
  if(packet.mode==='author-catalog'){
   config=providerConfig({...process.env,AI_PROVIDER:'deepseek',DEEPSEEK_MODEL:'deepseek-flash'});
