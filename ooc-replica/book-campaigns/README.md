@@ -46,3 +46,5 @@
 - 书封为新写SVG排版，不调用作图API；场景插图待后续接入。当前开放卷一。
 
 运行 `npm run build && npm run check`。规则模拟覆盖每卷1000条路径；UI与接口测试覆盖独立存档、恢复、侧栏不重排正文、流式中断/重试和来源保护。线上浏览器结果另记验收文件。
+
+完整剧透阅读稿：[谷外微尘](READING-mortal-path.md)、[余烬与潮汐](READING-monte-cristo.md)。运行 `npm run books:export` 可从规则源重建。每卷当前99个编排行动，4个开放问题另有各自答案分型。
