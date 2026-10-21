@@ -10,7 +10,24 @@ const footer=()=>`<footer class="shell-footer"><div><strong>Explore</strong><a h
 const header=(name,settings=false)=>`<header class="shell-page-header"><h1>${safe(name)}</h1>${settings?`<a href="/profile/setting" aria-label="Account settings">${icon('gear',24)}</a>`:''}</header>`;
 const row=(label,href,symbol)=>`<a href="${href}">${icon(symbol)}<span>${safe(label)}</span>${icon('arrow',14)}</a>`;
 function itemsMarkup(items,resume=false){return items.map(d=>`<article><a href="/${resume?'play':d.type==='character'?'character':'story'}/${safe(d.id)}"><img src="${safe(d.image.startsWith('assets/')?'/'+d.image:d.image)}" alt="${safe(d.title)}"><h2>${safe(d.title)}</h2><p>${safe(d.plays||'')} ${d.author?'· '+safe(d.author):''}</p></a></article>`).join('');}
+function showCommunity(h){
+ document.title='Community · Storylove';
+ let type='All';
+ const root=mountShell(`<div class="library-content"><header class="library-header"><h1>Community</h1><button class="shell-white-button" data-community-create>Create Title</button></header><div class="library-tabs" role="tablist" aria-label="Title type">${['All','Story','Character'].map(t=>`<button role="tab" data-community-type="${t}" aria-selected="${t==='All'}">${t}</button>`).join('')}</div><p class="community-note">Titles written and published by Storylove creators.</p><div class="library-items" aria-live="polite"></div></div>${footer()}`,h,'library');
+ const list=root.querySelector('.library-items');let token=0;
+ async function load(){
+  const mine=++token;list.innerHTML='<div class="shell-empty">Loading titles…</div>';
+  try{
+   const response=await fetch('/api/titles'+(type==='All'?'':`?type=${type.toLowerCase()}`)),data=await response.json().catch(()=>({}));
+   if(mine!==token)return;if(!response.ok)throw Error(data.error||'Community titles are unavailable right now.');
+   list.innerHTML=data.titles.length?data.titles.map(d=>`<article class="library-draft community-card"><a href="/play/${encodeURIComponent(d.id)}" aria-label="Play ${safe(d.title)}">${d.image?`<img src="${safe(d.image)}" alt="">`:`<div class="community-noimg">${icon(d.type==='character'?'person':'book',32)}</div>`}<h2>${safe(d.title)}</h2><p>${safe(d.description)}</p><small>${d.type==='character'?'Character':'Story'} · by ${safe(d.ownerName)}</small></a></article>`).join(''):`<div class="shell-empty">${icon('book',40)}No community titles yet. Be the first to publish one!<br><a href="/builder">Create Title</a></div>`;
+  }catch(error){if(mine===token)list.innerHTML=`<div class="shell-empty">${safe(error.message)}</div>`;}
+ }
+ root.querySelectorAll('[data-community-type]').forEach(b=>b.onclick=()=>{type=b.dataset.communityType;root.querySelectorAll('[data-community-type]').forEach(x=>x.setAttribute('aria-selected',String(x===b)));load();});
+ root.querySelector('[data-community-create]').onclick=()=>h.navigate('/builder');load();
+}
 export function show(path,h){
+ if(path==='/community'){showCommunity(h);return true;}
  if(/^\/profile\/[^/]+$/.test(path)&&!path.startsWith('/profile/setting'))return showCreator(path,h,mountShell);
  if(!path.startsWith('/announcement')&&!['/my-title','/history','/liked','/profile','/profile/setting','/profile/setting/chat','/profile/setting/personalization','/profile/setting/block-management','/profile/setting/customer-support'].includes(path))return false;
  const profile=h.read('ooc-profile',{}),name=profile.name||h.account?.user?.displayName||'Your profile';
@@ -48,7 +65,7 @@ export function show(path,h){
    if(isCreated&&sort==='Latest')entries.sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
    if(sort==='Title A–Z')entries.sort((a,b)=>a.title.localeCompare(b.title));
    root.querySelector('[data-library-count]').textContent=`${tab} ${entries.length}`;
-   root.querySelector('.library-items').innerHTML=entries.length?(isCreated?entries.map(d=>`<article class="library-draft"><a href="/builder/${d.type}/${encodeURIComponent(d.id)}" aria-label="Edit ${safe(d.title||'Untitled')}">${d.image?`<img src="${safe(d.image)}" alt="">`:''}<h2>${safe(d.title||'Untitled')}</h2><p>${safe(d.description)}</p><small>${d.type==='character'?'Character':'Story'} · ${d.status==='published'?'Published':'Draft'} · Edit</small></a>${d.status==='published'?`<a class="library-play" href="/play/${encodeURIComponent(d.publishedId)}">Play</a>`:''}</article>`).join(''):itemsMarkup(entries,isHistory)):`<div class="shell-empty">${icon(isHistory?'chat':isCreated?'book':'heart',40)}${isCreated?'There are no titles yet. Create your first title!':isHistory?'No recent conversations.':'No favorites yet.'}<br>${isCreated?'<a href="/builder">Create Title</a>':'<a href="/">Explore stories</a>'}</div>`;
+   root.querySelector('.library-items').innerHTML=entries.length?(isCreated?entries.map(d=>`<article class="library-draft"><a href="/builder/${d.type}/${encodeURIComponent(d.id)}" aria-label="Edit ${safe(d.title||'Untitled')}">${d.image?`<img src="${safe(d.image)}" alt="">`:''}<h2>${safe(d.title||'Untitled')}</h2><p>${safe(d.description)}</p><small>${d.type==='character'?'Character':'Story'} · ${d.status==='published'?`Published · ${{public:'Public',link:'Link only',private:'Private'}[d.visibility]||'Private'}`:'Draft'} · Edit</small></a>${d.status==='published'?`<a class="library-play" href="/play/${encodeURIComponent(d.publishedId)}">Play</a>`:''}</article>`).join(''):itemsMarkup(entries,isHistory)):`<div class="shell-empty">${icon(isHistory?'chat':isCreated?'book':'heart',40)}${isCreated?'There are no titles yet. Create your first title!':isHistory?'No recent conversations.':'No favorites yet.'}<br>${isCreated?'<a href="/builder">Create Title</a>':'<a href="/">Explore stories</a>'}</div>`;
   }
   const tabs=[...root.querySelectorAll('[data-library-type]')];tabs.forEach((b,i)=>{b.tabIndex=i===0?0:-1;b.onclick=()=>{tab=b.dataset.libraryType;tabs.forEach(x=>{x.setAttribute('aria-selected',String(x===b));x.tabIndex=x===b?0:-1;});draw();};b.onkeydown=e=>{const next=e.key==='ArrowRight'?(i+1)%tabs.length:e.key==='ArrowLeft'?(i+tabs.length-1)%tabs.length:e.key==='Home'?0:e.key==='End'?tabs.length-1:null;if(next!==null){e.preventDefault();tabs[next].click();tabs[next].focus();}};});
   root.querySelector('[aria-label="Sort titles"]').onchange=e=>{sort=e.target.value;draw();};const visibilitySelect=root.querySelector('[aria-label="Title visibility"]');if(visibilitySelect)visibilitySelect.onchange=e=>{visibility=e.target.value;draw();};draw();

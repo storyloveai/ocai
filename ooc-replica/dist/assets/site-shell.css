@@ -33,3 +33,4 @@ html:has(#precision-view[data-page=home]),html:has(#precision-view[data-page=cha
 
 /* The supplied StoryDate artwork is designed for light surfaces. */
 img.storydate-brand{box-sizing:border-box;padding:6px 8px;border-radius:6px;background:#fffbf3;object-fit:contain;flex-shrink:0}img.storydate-brand.storydate-brand-compact{padding:4px;border-radius:7px}
+.community-note{color:#888;font-size:13px;margin:0 0 16px}.community-card a{display:block}.community-card img,.community-noimg{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:10px;margin-bottom:12px;background:#1a1813}.community-noimg{display:grid;place-items:center;color:#7a6a45}

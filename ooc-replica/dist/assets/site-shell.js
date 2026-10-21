@@ -13,6 +13,7 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
   if(credit){const notification=credit.cloneNode(true);notification.removeAttribute('href');notification.tagName==='A'&&notification.setAttribute('role','button');notification.tabIndex=0;notification.dataset.shellNotifications='';notification.innerHTML=`${symbol('bell')}<span class="${credit.querySelector('span')?.className||''}">Notifications</span>`;notification.onclick=()=>showNotifications(show);notification.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();notification.click();}};credit.before(notification);}
  }
  if(!user)group?.querySelector('[data-shell-notifications]')?.remove();
+ if(group&&!group.querySelector('[data-shell-community]')){const credit=group.querySelector('a[href="/credit"]');if(credit){const link=credit.cloneNode(true);link.setAttribute('href','/community');link.dataset.shellCommunity='';link.removeAttribute('aria-current');link.innerHTML=`${symbol('person')}<span class="${credit.querySelector('span')?.className||''}">Community</span>`;credit.before(link);}}
  const historySlot=desktop.children[1]?.lastElementChild;
  if(historySlot){
   if(!user){historySlot.innerHTML='';}else{

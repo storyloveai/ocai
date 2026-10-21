@@ -26,7 +26,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
     read: (key, fallback) => cache.read(key, fallback),
     scope() {
       const version = generation;
-      return { read: (key, fallback) => version === generation ? a.read(key, fallback) : fallback, save: (key, value) => { if (version === generation) a.save(key, value); } };
+      return { account: a, read: (key, fallback) => version === generation ? a.read(key, fallback) : fallback, save: (key, value) => { if (version === generation) a.save(key, value); } };
     },
     save(key, value) {
       cache.save(key, value);
