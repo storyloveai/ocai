@@ -6,6 +6,7 @@ import {bindCarousels} from './carousels.js';
 import {paintBrand} from './brand.js';
 import {sortStories} from './catalog-sort.js';
 import {threeKingdoms} from './three-kingdoms.js';
+import {storydateOriginals} from './storydate-originals.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
@@ -45,12 +46,25 @@ const q = s => host.querySelector(s);
 const all = s => [...host.querySelectorAll(s)];
 const text = e => e.textContent.trim();
 const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+// StoryDate originals take over part of the captured catalogue; each one keeps its own id.
+const replaceMap=new Map(storydateOriginals.map(d=>[d.replaces,d]));
+evidence.catalog=evidence.catalog.map(d=>replaceMap.get(d.id)||d);
+function patchOriginals(root){
+  root.querySelectorAll('a[href^="/story/"]').forEach(a=>{
+    const d=replaceMap.get(a.getAttribute('href').split('/').pop());if(!d)return;
+    a.setAttribute('href','/story/'+d.id);
+    const name=a.querySelector('[data-name]');if(name)name.textContent=d.title;
+    a.querySelectorAll('img').forEach(img=>{if(img.alt==='ORIGINAL')return;img.src=d.image;img.alt=d.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');img.removeAttribute('sizes');});
+    const meta=a.querySelector('p:not([data-name])');if(meta)meta.textContent=d.tag;
+  });
+}
 const catalog = [threeKingdoms,...bookMetadata,...evidence.catalog,...(evidence.characters||[])];
 evidence.features[0]={...threeKingdoms};
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
 initSocial(catalog,evidence,titlePreviews);
 const cardMarkup = new Map();
 const templateDocument = new DOMParser().parseFromString(evidence.pages.home,'text/html');
+patchOriginals(templateDocument);
 templateDocument.querySelectorAll('a[href^="/story/"]').forEach(a => {
   if (a.querySelector('[data-name]')) cardMarkup.set(a.getAttribute('href').split('/').pop(),a.outerHTML);
 });
@@ -65,7 +79,7 @@ for(const [kind,doc]of [['story',templateDocument],['character',characterDocumen
  }
 }
 export const extraStories = catalog.map(d => ({...d, image:source(d),genre:d.genre||'Others'}));
-const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.author,d.description,d.genre].filter(Boolean).join(' ').toLowerCase()]));
+const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.title_zh,d.author,d.description,d.description_zh,d.genre].filter(Boolean).join(' ').toLowerCase()]));
 for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 
 function hydrate() {
@@ -275,7 +289,7 @@ export function show(path, helpers) {
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;
-  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];paintBrand(host);
+  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);
   if(page==='story-detail'){
     const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=titlePreviews.titles[id];
     const content=q('[data-shrink]')?.nextElementSibling;
@@ -291,7 +305,7 @@ export function show(path, helpers) {
       content.querySelectorAll('[data-preview-more]').forEach(b=>b.onclick=()=>context.show('<h2>Story Information</h2><p>Public story information and the default starting scenario are available.</p>'));
       content.querySelectorAll('[data-preview-expand]').forEach(b=>{let parent=b.parentElement;parent.querySelectorAll('[class*="max-h-"]').forEach(el=>el.style.maxHeight='none');});
     }else if(content&&d){
-      content.innerHTML=`<header class="shell-page-header"><a href="/">‹ Story Information</a></header><article class="replica-story-detail"><div class="replica-story-top"><img src="${source(d)}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1><p>${safe(d.author||'')}</p><p>${safe(d.genre||'Story')}</p><p>${safe(d.plays||'')} plays</p><button class="shell-white-button" data-favorite="${id}">Bookmark</button></div></div><h2>Story Description</h2><p class="story-description">${safe(d.description||d.title)}</p><h2>Settings</h2><div class="story-settings"><span>Avatar Settings</span><span>${safe(context.read('ooc-profile',{}).name||'Default avatar')}</span></div><div class="story-play-bar"><button class="shell-white-button" data-play="${id}">New Play</button></div></article>`;
+      content.innerHTML=`<header class="shell-page-header"><a href="/">‹ Story Information</a></header><article class="replica-story-detail"><div class="replica-story-top"><img src="${source(d)}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1><p>${safe(d.author||'')}</p><p>${safe(d.genre||'Story')}</p>${d.plays?`<p>${safe(d.plays)} plays</p>`:''}<button class="shell-white-button" data-favorite="${id}">Bookmark</button></div></div><h2>Story Description</h2><p class="story-description">${safe(d.description||d.title)}</p><h2>Settings</h2><div class="story-settings"><span>Avatar Settings</span><span>${safe(context.read('ooc-profile',{}).name||'Default avatar')}</span></div><div class="story-play-bar"><button class="shell-white-button" data-play="${id}">New Play</button></div></article>`;
     }else if(content)content.innerHTML='<div class="shell-empty">Story unavailable.<br><a href="/">Back to stories</a></div>';
   }
   if(page==='character-detail'){
