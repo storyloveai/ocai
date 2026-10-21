@@ -1,3 +1,4 @@
+import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
@@ -44,7 +45,7 @@ const q = s => host.querySelector(s);
 const all = s => [...host.querySelectorAll(s)];
 const text = e => e.textContent.trim();
 const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const catalog = [threeKingdoms,...evidence.catalog,...(evidence.characters||[])];
+const catalog = [threeKingdoms,...bookMetadata,...evidence.catalog,...(evidence.characters||[])];
 evidence.features[0]={...threeKingdoms};
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
 initSocial(catalog,evidence,titlePreviews);
@@ -214,6 +215,13 @@ function pinThreeKingdoms(){
   const meta=card.querySelector('p:not([data-name])');if(meta)meta.textContent=threeKingdoms.plays;
   const slide=first.closest('[aria-roledescription="slide"]');
   if(slide){const slot=slide.cloneNode(false);const wrap=document.createElement("div");wrap.className="w-full";wrap.append(card);slot.append(wrap);slide.parentElement.prepend(slot);}else first.parentElement.before(card);
+  for(const book of [...bookMetadata].reverse()){
+   const bookCard=card.cloneNode(true);bookCard.href=book.href;bookCard.querySelector('[data-name]').textContent=book.title;
+   const img=bookCard.querySelector('img');img.src=book.image;img.alt=book.title;
+   const note=bookCard.querySelector('p:not([data-name])');if(note)note.textContent=book.plays;
+   const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(bookCard);slot.append(wrap);placed.after(slot);}else card.after(bookCard);
+   cardMarkup.set(book.id,bookCard.outerHTML);
+  }
   const section=first.closest('section');section.querySelectorAll('span.typo-text-base_leading-none_semibold').forEach((rank,i)=>rank.textContent=String(i+1));
   card.querySelectorAll('img').forEach(img=>{if(img.alt==='Lumencia Academy'){img.alt=threeKingdoms.title;img.src=threeKingdoms.image;img.removeAttribute('data-asset');}});
   cardMarkup.set(threeKingdoms.id,card.outerHTML);
@@ -302,7 +310,7 @@ export function show(path, helpers) {
       const ids=collections.get(kind+':'+name);
       let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):['New Ranking','Rankings','Today'].includes(name)?sortStories(available,name==='New Ranking'?'newest':'played'):available.filter(d=>context.data.find(v=>v.id===d.id)?.genre===name);
       if(!items.length&&!context.categories.includes(name))items=available;
-      if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,...items.filter(d=>d.id!==threeKingdoms.id)];
+      if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,...bookMetadata,...items.filter(d=>![threeKingdoms.id,...bookMetadata.map(b=>b.id)].includes(d.id))];
       content.innerHTML=`<div class="precision-collection"><a href="${kind==='character'?'/character':'/'}">‹ Back</a><div class="collection-heading"><h1>${safe(name)}</h1><label>Sort by <select aria-label="Sort collection"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><p class="collection-count">${items.length} ${kind==='character'?'characters':'stories'}</p><div data-collection-grid>${items.length?grid(items,name==='Top Ranked'):'<p>No titles in this category yet.</p>'}</div></div>`;
       const sort=content.querySelector('select');sort.onchange=()=>{content.querySelector('[data-collection-grid]').innerHTML=grid(sort.value==='featured'?items:sortStories(items,sort.value),name==='Top Ranked');hydrate();};
     }
@@ -356,7 +364,7 @@ function capturedPreview(d){
 function fallbackPreview(d){
  const kind=d.type==='character'?'Character':'Story';
  const description=d.description||'The full description for this title has not been captured yet.';
- return {type:d.type,html:`<header><h2>${kind} Information</h2><button data-preview-close aria-label="Close information">×</button></header><div class="public-detail"><div class="public-detail-top"><img src="${safe(source(d))}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1>${creatorLink(d.author)}<p>${safe(d.plays||'')}</p><p>${safe(description)}</p><button data-preview-bookmark="${safe(d.id)}" aria-label="Bookmark ${kind.toLowerCase()}">♡ Bookmark</button></div></div><section><h2>${kind} Description</h2><p>${safe(description)}</p></section>${d.id==='three-kingdoms'?'<section><h2>Chapters</h2><p>许都 · 出许都 · 下邳 · 千里 · 新野 · 长坂 · 赤壁 · 华容</p><p>化身原创谋士子衡。人物关系、承诺、记事与回响贯穿八章；规则决定结果，AI 理解话意并生成对白。经典三章仍可从游戏页进入。</p></section>':''}<section><h2>Settings</h2><p>Avatar Settings</p><button data-preview-avatar><span>Default avatar</span>⌄</button><p>Starting Scenarios</p><button data-preview-scenario><span>Default</span>⌄</button></section></div><footer><button data-preview-play="${safe(d.id)}" class="shell-white-button">New Play</button></footer>`};
+ return {type:d.type,html:`<header><h2>${kind} Information</h2><button data-preview-close aria-label="Close information">×</button></header><div class="public-detail"><div class="public-detail-top"><img src="${safe(source(d))}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1>${creatorLink(d.author)}<p>${safe(d.plays||'')}</p><p>${safe(description)}</p><button data-preview-bookmark="${safe(d.id)}" aria-label="Bookmark ${kind.toLowerCase()}">♡ Bookmark</button></div></div><section><h2>${kind} Description</h2><p>${safe(description)}</p></section>${bookMetadata.some(b=>b.id===d.id)?'<section><h2>八章连续战役</h2><p>原创玩家视角 · 规则判定 · 人物关系 · 承诺与回响 · 独立账号存档。每个场景有不同的行动，AI 沿当前情景生成对白。</p><p>当前开放卷一。书封为原创排版设计，插图待接入作图接口。</p></section>':''}${d.id==='three-kingdoms'?'<section><h2>Chapters</h2><p>许都 · 出许都 · 下邳 · 千里 · 新野 · 长坂 · 赤壁 · 华容</p><p>化身原创谋士子衡。人物关系、承诺、记事与回响贯穿八章；规则决定结果，AI 理解话意并生成对白。经典三章仍可从游戏页进入。</p></section>':''}<section><h2>Settings</h2><p>Avatar Settings</p><button data-preview-avatar><span>Default avatar</span>⌄</button><p>Starting Scenarios</p><button data-preview-scenario><span>Default</span>⌄</button></section></div><footer><button data-preview-play="${safe(d.id)}" class="shell-white-button">New Play</button></footer>`};
 }
 export function openSearch(helpers,initial=''){
  const dialog=openTitlePreview({html:`<header><button data-preview-close aria-label="Back to stories" class="dialog-back">‹</button><h2>Search</h2></header><div class="search-dialog-content"><label class="search-dialog-input"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search stories, characters and creators" placeholder="Search stories, characters, creators" maxlength="100"></label><div class="search-kind-tabs" role="tablist" aria-label="Search type">${['All','Story','Character','Creator'].map((label,i)=>`<button role="tab" data-search-kind="${label}" aria-selected="${i===0}">${label}</button>`).join('')}</div><div data-search-results aria-live="polite"></div></div><footer><small>Explore stories, characters and creators</small></footer>`},'search',{...helpers,assets});

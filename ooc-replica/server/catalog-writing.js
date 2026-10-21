@@ -25,14 +25,62 @@ export function validateCatalog(out,seed){
  const lengths={shortDescription:[20,100],description:[700,6500],prologue:[250,2300],startingScenario:[1,40],opening:[400,2800],playGuide:[120,1500],narratorPrompt:[350,3500],coverPrompt:[200,2200]};
  for(const [field,[min,max]]of Object.entries(lengths))if(typeof out[field]!=='string'||out[field].length<min||out[field].length>max)throw Error('Invalid field: '+field);
  if(out.title!==seed.title||out.titleZh!==seed.titleZh)throw Error('Title changed');
- if(!Array.isArray(out.openingSuggestions)||out.openingSuggestions.length!==3||out.openingSuggestions.some(s=>typeof s!=='string'||s.length<8||s.length>180)||new Set(out.openingSuggestions).size!==3)throw Error('Invalid opening suggestions');
+ if(!Array.isArray(out.openingSuggestions)||out.openingSuggestions.length!==3||out.openingSuggestions.some(s=>typeof s!=='string'||s.length<4||s.length>180)||new Set(out.openingSuggestions).size!==3)throw Error('Invalid opening suggestions');
  const bible=out.storyBible;
  for(const key of ['setting','playerRole','coreConflict','relationshipArc','styleNotes'])if(typeof bible?.[key]!=='string'||!bible[key].trim())throw Error('Missing story bible: '+key);
  for(const key of ['secrets','continuityRules'])if(!Array.isArray(bible?.[key])||bible[key].length<(key==='secrets'?3:5)||bible[key].some(s=>typeof s!=='string'||!s.trim()))throw Error('Missing story bible list');
  if(!Array.isArray(out.cast)||out.cast.length<2||out.cast.length>4||out.cast.some(c=>!Number.isInteger(c.age)||c.age<21||['name','role','appearance','voice','goal','contradiction','relationshipWithPlayer'].some(k=>typeof c[k]!=='string'||!c[k].trim())))throw Error('Invalid adult cast');
  if(seed.character&&!out.cast.some(c=>c.age===seed.character.age))throw Error('Seed character age changed');
- if(!Array.isArray(out.galleryScenes)||out.galleryScenes.length!==3||new Set(out.galleryScenes.map(s=>s.slot)).size!==3||out.galleryScenes.some(s=>![1,2,3].includes(s.slot)||['title','caption','prompt'].some(k=>typeof s[k]!=='string'||!s[k].trim())||!Array.isArray(s.characters)||s.characters.some(n=>!out.cast.some(c=>c.name===n))))throw Error('Invalid gallery scenes');
+ if(!Array.isArray(out.galleryScenes)||out.galleryScenes.length!==3||new Set(out.galleryScenes.map(s=>s.slot)).size!==3||out.galleryScenes.some(s=>![1,2,3].includes(s.slot)||['title','caption','prompt'].some(k=>typeof s[k]!=='string'||!s[k].trim())||!Array.isArray(s.characters)||s.characters.some(n=>typeof n!=='string'||!n.trim())))throw Error('Invalid gallery scenes');
  const safe=Object.fromEntries(['title','titleZh',...Object.keys(lengths),'openingSuggestions','storyBible','cast','galleryScenes'].map(k=>[k,out[k]]));
  if(/<\/?(?:script|iframe|img|style)\b/i.test(JSON.stringify(safe)))throw Error('Unexpected markup');
  return safe;
+}
+
+// Mechanical editorial assembly only: reuse generated canon, never invent missing fiction.
+export function normalizeCatalog(source){
+ const draft=structuredClone(source),adjustments=[];
+ for(const field of ['opening','prologue']){
+  if(typeof draft[field]!=='string')continue;
+  const originalValue=draft[field];
+  draft[field]=draft[field]
+   .replace(/(?:“[^”\n]{1,500}”|「[^」\n]{1,500}」)\s*你(?:轻声|低声|小声|平静地|忍不住|又)?(?:问|说|答|开口|回应)(?:道|着|了)?[，。！!？?：:]/gu,'')
+   .replace(/(^|[。！？\n])你(?:轻声|低声|小声)?(?:问道|说道|回答道?|开口道?)[：:]\s*(?:“[^”\n]{1,500}”|「[^」\n]{1,500}」)[。！？]?/gu,'$1')
+   .split(/(“[^”]*”|「[^」]*」)/g).map(part=>/^[“「]/.test(part)?part:part.replace(/(^|[。！？\n])你(?:说|问|回答|答道|表示)[^。！？\n]{0,180}[。！？]/gu,'$1')).join('')
+   .replace(/\n{3,}/g,'\n\n').trim();
+  if(draft[field]!==originalValue)adjustments.push({field,reason:'Remove utterances assigned to the player; leave their response open',originalValue});
+ }
+ if(typeof draft.narratorPrompt==='string'&&draft.narratorPrompt.length<500&&Array.isArray(draft.storyBible?.continuityRules)){
+  const originalValue=draft.narratorPrompt;
+  draft.narratorPrompt+='\n\n固定事实与连续性：\n'+draft.storyBible.continuityRules.map(s=>'- '+s).join('\n');
+  if(typeof draft.storyBible.styleNotes==='string')draft.narratorPrompt+='\n\n场景文风：'+draft.storyBible.styleNotes;
+  adjustments.push({field:'narratorPrompt',reason:'Include the model-generated continuity and style contract in the narrator instructions',originalValue});
+ }
+ if(typeof draft.description==='string'&&draft.description.length<900&&draft.storyBible){
+  const originalValue=draft.description;
+  for(const [key,label]of [['setting','世界规则'],['playerRole','你的身份'],['coreConflict','主要冲突'],['relationshipArc','关系发展']]){
+   const value=draft.storyBible[key];if(typeof value==='string'&&!draft.description.includes(value))draft.description+='\n\n'+label+'\n'+value;
+   if(draft.description.length>=1000)break;
+  }
+  if(draft.description!==originalValue)adjustments.push({field:'description',reason:'Append model-generated canon to make the public introduction complete',originalValue});
+ }
+ if(Array.isArray(draft.galleryScenes)&&Array.isArray(draft.cast)){
+  const originalValue=structuredClone(draft.galleryScenes);
+  draft.galleryScenes.forEach((scene,index)=>{
+   scene.slot=index+1;
+   if(typeof scene.characters==='string')scene.characters=/^(?:无|无人|无人物|none|no (?:people|characters))$/i.test(scene.characters.trim())?[]:scene.characters.split(/[、,，]/).map(s=>s.trim()).filter(Boolean);
+   if(Array.isArray(scene.characters))scene.characters=scene.characters.filter(name=>!(typeof name==='string'&&/^(?:无|无人|无人物|none|no (?:people|characters))$/i.test(name.trim()))).map(name=>{
+    if(typeof name!=='string')return name;
+    if(/^(?:玩家|你|用户|主角|player|protagonist)(?:[（(].*|的(?:手|背影|身影|侧影|剪影)|['’]s (?:hands|silhouette))?$/i.test(name))return '玩家（21岁以上，外观由用户设定）';
+    if(draft.cast.some(c=>c.name===name))return name;
+    const role=String(draft.storyBible?.playerRole||'').replaceAll('的','');
+    const label=name.replaceAll('的','');
+    if(label.length>=2&&['你是','玩家是','你扮演','玩家扮演'].some(prefix=>role.includes(prefix+label)))return '玩家（21岁以上，外观由用户设定）';
+    const candidates=draft.cast.filter(c=>typeof c.name==='string'&&name.length>=2&&(c.name.includes(name)||name.includes(c.name)));
+    return candidates.length===1?candidates[0].name:name;
+   });
+  });
+  if(JSON.stringify(originalValue)!==JSON.stringify(draft.galleryScenes))adjustments.push({field:'galleryScenes',reason:'Normalize numbered slots and unambiguous cast aliases; mark player appearance as user-defined',originalValue});
+ }
+ return {draft,adjustments};
 }

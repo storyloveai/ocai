@@ -1,0 +1,269 @@
+{
+  "status": "structurally_complete_pending_editorial_review",
+  "promptVersion": "storydate-immersive-catalog/1",
+  "total": 80,
+  "stories": 40,
+  "characters": 40,
+  "provider": "deepseek",
+  "model": "deepseek-flash",
+  "minimumCastAge": 22,
+  "castCount": 232,
+  "initialActionCount": 240,
+  "galleryTextPlans": 240,
+  "imageCalls": 0,
+  "publishedItems": 0,
+  "missing": [],
+  "errors": [],
+  "duplicateOpenings": [],
+  "imageReferenceReview": [
+    {
+      "id": "storydate-story-035",
+      "slot": 3,
+      "unresolved": [
+        "陈守义"
+      ]
+    }
+  ],
+  "playerAgencyReviewFlags": [
+    {
+      "id": "storydate-story-001",
+      "field": "prologue",
+      "excerpt": "”\n\n你还没来得及问哪一半，柜台的墨迹又往前爬了半"
+    },
+    {
+      "id": "storydate-story-006",
+      "field": "opening",
+      "excerpt": "”\n\n你还没来得及回答，402的门开了一条缝，阿禾探"
+    },
+    {
+      "id": "storydate-story-011",
+      "field": "prologue",
+      "excerpt": "你决定，听谁的"
+    },
+    {
+      "id": "storydate-story-012",
+      "field": "prologue",
+      "excerpt": "”\n\n你还没回答，内线电话切进来，费涟语速很快"
+    },
+    {
+      "id": "storydate-story-017",
+      "field": "prologue",
+      "excerpt": "」\n\n你没问出口，他已经说了：「两把都能开这个匣子"
+    },
+    {
+      "id": "storydate-story-019",
+      "field": "prologue",
+      "excerpt": "”\n\n你想说周六晚上你根本没出门，但外套的"
+    },
+    {
+      "id": "storydate-story-020",
+      "field": "prologue",
+      "excerpt": "」你没来得及问「他」是谁，她已经上楼了"
+    },
+    {
+      "id": "storydate-story-022",
+      "field": "opening",
+      "excerpt": "”\n\n你正要开口，手机在桌上震了"
+    },
+    {
+      "id": "storydate-story-022",
+      "field": "opening",
+      "excerpt": "”\n\n你还没答，林秀的电话打进来了"
+    },
+    {
+      "id": "storydate-story-023",
+      "field": "prologue",
+      "excerpt": "”\n\n你还没答，小范从楼梯拐角探出头，卷着三"
+    },
+    {
+      "id": "storydate-story-034",
+      "field": "opening",
+      "excerpt": "你决定今晚放什么"
+    },
+    {
+      "id": "storydate-story-035",
+      "field": "opening",
+      "excerpt": "”\n\n你还没答，南城代表阿卜杜勒从餐厅方向走"
+    },
+    {
+      "id": "storydate-story-035",
+      "field": "prologue",
+      "excerpt": "”\n\n你还没答，南城代表阿卜杜勒从餐厅方向走"
+    },
+    {
+      "id": "storydate-story-039",
+      "field": "opening",
+      "excerpt": "”\n\n你还没开口，通讯频道里传来马库斯的声音，"
+    },
+    {
+      "id": "storydate-character-007",
+      "field": "prologue",
+      "excerpt": "”\n\n你还没来得及回答，设备间的门开了"
+    },
+    {
+      "id": "storydate-character-008",
+      "field": "opening",
+      "excerpt": "你决定要不要留下"
+    },
+    {
+      "id": "storydate-character-015",
+      "field": "prologue",
+      "excerpt": "你同意我再动"
+    },
+    {
+      "id": "storydate-character-017",
+      "field": "prologue",
+      "excerpt": "”\n\n你还没答，她已拉开椅子坐下，从抽屉里取"
+    },
+    {
+      "id": "storydate-character-039",
+      "field": "opening",
+      "excerpt": "”\n\n你还没来得及答，她先摇头：“别急着说会或不会"
+    }
+  ],
+  "repeatedCastNames": [
+    {
+      "name": "周姐",
+      "ids": [
+        "storydate-story-008",
+        "storydate-story-025"
+      ]
+    },
+    {
+      "name": "阿凯",
+      "ids": [
+        "storydate-story-008",
+        "storydate-story-025"
+      ]
+    },
+    {
+      "name": "陈叔",
+      "ids": [
+        "storydate-story-009",
+        "storydate-character-003"
+      ]
+    },
+    {
+      "name": "林晓",
+      "ids": [
+        "storydate-story-009",
+        "storydate-story-024"
+      ]
+    },
+    {
+      "name": "老赵",
+      "ids": [
+        "storydate-story-010",
+        "storydate-character-037"
+      ]
+    },
+    {
+      "name": "林昭",
+      "ids": [
+        "storydate-story-011",
+        "storydate-story-013"
+      ]
+    },
+    {
+      "name": "老周",
+      "ids": [
+        "storydate-story-014",
+        "storydate-story-023",
+        "storydate-story-035",
+        "storydate-story-038",
+        "storydate-character-002",
+        "storydate-character-012",
+        "storydate-character-038"
+      ]
+    },
+    {
+      "name": "阿珍",
+      "ids": [
+        "storydate-story-020",
+        "storydate-story-034"
+      ]
+    },
+    {
+      "name": "老陈",
+      "ids": [
+        "storydate-story-020",
+        "storydate-character-001",
+        "storydate-character-011"
+      ]
+    },
+    {
+      "name": "周敏",
+      "ids": [
+        "storydate-story-022",
+        "storydate-character-024",
+        "storydate-character-037"
+      ]
+    },
+    {
+      "name": "老葛",
+      "ids": [
+        "storydate-story-024",
+        "storydate-character-021"
+      ]
+    },
+    {
+      "name": "阿沅",
+      "ids": [
+        "storydate-story-028",
+        "storydate-character-005"
+      ]
+    }
+  ],
+  "openingSimilarityTopFive": [
+    {
+      "a": "storydate-character-030",
+      "b": "storydate-character-035",
+      "jaccard": 0.0109
+    },
+    {
+      "a": "storydate-story-010",
+      "b": "storydate-character-024",
+      "jaccard": 0.0104
+    },
+    {
+      "a": "storydate-story-008",
+      "b": "storydate-story-025",
+      "jaccard": 0.0102
+    },
+    {
+      "a": "storydate-story-010",
+      "b": "storydate-character-027",
+      "jaccard": 0.0099
+    },
+    {
+      "a": "storydate-story-033",
+      "b": "storydate-character-014",
+      "jaccard": 0.0099
+    }
+  ],
+  "chineseCharacters": {
+    "description": {
+      "min": 664,
+      "max": 1056,
+      "mean": 904
+    },
+    "prologue": {
+      "min": 203,
+      "max": 710,
+      "mean": 386
+    },
+    "opening": {
+      "min": 346,
+      "max": 716,
+      "mean": 502
+    },
+    "narratorPrompt": {
+      "min": 419,
+      "max": 828,
+      "mean": 595
+    }
+  },
+  "totalChineseCharacters": 346882,
+  "totalContentCharacters": 604767,
+  "reviewScope": "All records structurally checked. Automated similarity flags support editorial review; they do not certify literary quality. Human-readable volumes preserve model text. Representative manual review is documented separately."
+}
