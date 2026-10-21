@@ -20,7 +20,7 @@ function shell(meta,player,cast,resources,notes){
  const vars={...resources,'flag.sidelined':flag('暂被排除'),'flag.safe':flag('保住同伴'),'flag.used':flag('利用同伴'),'flag.released':flag('主动放下'),'flag.proof':flag('交叉核验完成'),'flag.route':flag('替代路径可用'),'flag.milestone':flag('完成本卷关键程序'),uncanny:num('越界预言',0,10)};
  const chars={};
  for(const [id,name,age,persona,romance=false]of cast){
-  chars[id]={name,age,persona,romance,main:'trust',dims:{trust:{label:'信任',min:0,max:8}},heat:{line:4,rude:[1,2],threat:[2,3]},react:{small:['话可以慢慢说，眼前的事却有期限。'],ask:['先核对我们已经知道的，再谈下一步。'],love:[romance?'这句话，我要看你以后怎么做。':'先把眼前的事情办妥。']}};
+  chars[id]={name,age,persona,gender:['lu','qiao','leona','mercedes'].includes(id)?'female':'male',romance,main:'trust',dims:{trust:{label:'信任',min:0,max:8}},heat:{line:4,rude:[1,2],threat:[2,3]},react:{small:['话可以慢慢说，眼前的事却有期限。'],ask:['先核对我们已经知道的，再谈下一步。'],love:[romance?'这句话，我要看你以后怎么做。':'先把眼前的事情办妥。']}};
   vars['rel.'+id+'.trust']=num(name+' · 信任',0,8);vars['heat.'+id]=num(name+' · 场面紧张',0,8);vars['heat.'+id].show=false;
  }
  return {spec:'storydate.campaign/0.3',id:meta.id,build:'books-v1',title:meta.title,volume:meta.subtitle,player:{name:player,age:27},description:meta.description,adaptation:notes,rights:{quotes:'零原文摘录；全部场景、对白与玩家身份由项目新写',original_characters:cast.filter(c=>!['han','dantes','mercedes','villefort','danglars'].includes(c[0])).map(c=>c[1])},side_prompt:'这一段路上，只够认真做一件事。其余机会会错过。',vars,chars,dims:{trust:{label:'信任'}},echoes:{},debts:{advance:{title:'预支的代价',lock:'functional',function:'捷径必须在第六章结算，不能靠换章节消失。'}},chapters:[],nodes:{},endings:[],future_terms:[],commit_rules:[],flash:[],witness:[],sources:[]};
@@ -307,8 +307,9 @@ function questionsAndConsequences(c){
   ['c5_m1','leona','三个人转述同一个传言，算几条证据？','仍是同一个来源，需要独立核实。','一个|同源|一条|独立|核实','c7_m1'],
   ['c7_m2','dantes','若无辜的人挡在复仇路上，你会怎么办？','先移开无辜者，再谈责任。','无辜|先移|保护|不牵连|停','c8_m2']
  ];
+ const acknowledgements=mortal?['叶行舟用笔尾点住担保栏：“不牵连旁人，就得把自己的还法写清。你还有时间再看一遍。”','陆晞将空碗放在水槽旁：“说得清就按说得清的来，药苗的损耗也要记上。”','陆晞把手从门沿放下：“那就先别替我排好去处。我会把自己的安排告诉你。”','韩立将蒲团让开半步：“能停下来，也是一种准备。先把今天能做的周天走稳。”']:['伯爵收起准备好的支票：“那么，写下你能确认的，也写下你不能确认的。我会读完。”','莉奥娜在邀请函上补上核验员身份：“这样我可以自己提问，也可以自己离开。”','莉奥娜把摘录叠回一处：“我们先追到原话从哪里来，再谈能证明什么。”','伯爵停在名单前：“你说得容易，做起来却要拆掉很多既定安排。把该移开的人写清。”'];
  questions.forEach(([id,who,q,reply,match,later],i)=>{
-  const eid='answer'+i;c.echoes[eid]='先前的问题留有回响。';c.nodes[id].ask={who,q,fallback:'uncertain',answers:[{id:'bounded',means:'明确边界，承担自己能确认的责任',match,out:p('对方听完，确认你把边界说清了。接下来的安排仍要由具体行动兑现。'),effects:[rel(who)],echo:[eid]},{id:'force',means:'不计代价、强迫他人或放弃核验',match:'不管|必须听我|牺牲|随便编|不核实|不重要',out:p('对方没有立即同意，先把这句话记了下来。'),effects:[rel(who,-1),add('exposure',1)]},{id:'uncertain',means:'犹豫、转移话题、未知或未作答',out:p('对方留出时间，没有把沉默当作答应。'),effects:[]}]};
+  const eid='answer'+i;c.echoes[eid]='先前的问题留有回响。';c.nodes[id].ask={who,q,fallback:'uncertain',answers:[{id:'bounded',means:'明确边界，承担自己能确认的责任',match,out:p(acknowledgements[i]),effects:[rel(who)],echo:[eid]},{id:'force',means:'不计代价、强迫他人或放弃核验',match:'不管|必须听我|牺牲|随便编|不核实|不重要',out:p('对方没有立即同意，先把这句话记了下来。'),effects:[rel(who,-1),add('exposure',1)]},{id:'uncertain',means:'犹豫、转移话题、未知或未作答',out:p('对方留出时间，没有把沉默当作答应。'),effects:[]}]};
   c.nodes[later].callbacks=[...(c.nodes[later].callbacks||[]),{pays:eid,text:mortal?'你先前说过要把代价算清。这一次，对方等着看具体的安排。':'对方还记得你先前对核验与边界的回答，眼前这份材料正好需要兑现。'}];
  });
  c.nodes.x_exposure={id:'x_exposure',chapter:'c4',kind:'interrupt',lock:'functional',order:0,title:mortal?'追查来到住处':'调查者也被调查',place:mortal?'临时落脚处':'巴黎临时住处',cast:[{id:partner}],intro:p(mortal?'跟踪的痕迹已无法忽略。陆晞提醒你，继续用原来的落脚处，会把同行者也带进行踪记录。':'有人开始向旅馆询问你的出入。莉奥娜把副本封起，要求先改变联络方式。'),when:ge('exposure',7),free_scene:2,art:{scene:'pending',layers:[]},choices:[{id:'move',type:'strategy',...option(mortal?'支付两枚灵石换落脚处':'支付两份经费换安全住处','位置更换，旧的行踪链暂时断开；已经被人知道的事不会因此抹去。',[add(money,-2),add('exposure',-5)],{req:ge(money,2),hint:'需要两份可用资金。'})},{id:'walk',type:'strategy',...option(mortal?'放弃近路，徒步转移':'暂停一轮查阅，自己安排转移','你付出时间与体力，总算没有让同伴替你承担暴露的后果。',[add(cost,-1),add('exposure',-3),rel(partner)])}]};

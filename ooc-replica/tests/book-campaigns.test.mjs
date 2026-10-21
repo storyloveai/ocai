@@ -1,3 +1,4 @@
+import {previewCampaign} from '../book-campaigns/preview.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
@@ -51,7 +52,7 @@ test('AI cannot turn an invented wage, evidence date or locked action into appro
  const monte={...body,book:'monte-cristo',context:{node:'c1_m1',target:'leona',text:'哪里不匹配？'}};assert.throws(()=>validateBookOutput({...out,reply:'信件邮戳是1841年。'},monte));
  assert.throws(()=>validateBookOutput({...out,pick:'invented',reply:null},body));
  const tentative={pick:'a1',reply:'我把工役簿找来，先看明白再决定。'};validateBookOutput(tentative,body);assert.equal(tentative.pick,null);
- const due=buildBookStage({...body,context:{node:'c6_m1',target:'ye',text:'我选择监督追溯。',vars:{'debt.advance':'open'}}});assert.ok(!JSON.parse(due.prompt).options.some(o=>o.id==='clear'));assert.equal(JSON.parse(due.prompt).options.length,3);
+ assert.throws(()=>buildBookStage({...body,context:{node:'c3_m1',target:'lu',text:'继续第三章。'}}));
 });
 const tick=()=>new Promise(r=>setTimeout(r,20));
 async function page(id,{snapshot={},api,configured=false}={}){
@@ -77,6 +78,14 @@ test('each book starts, saves separately, resumes and keeps local journal tabs f
   }finally{p.restore();}
  }
 });
+test('restarting preserves a user-restorable previous run',async()=>{
+ const p=await page('mortal-path');try{
+  p.click(p.document.querySelector('[data-book-start]'));p.click(p.document.querySelector('[data-book-side]'));p.click(p.document.querySelector('[data-book-choice]'));
+  const key='ooc-session-v2-mortal-path',original=structuredClone(p.saved.get(key)['campaign.save']);
+  p.click(p.document.querySelector('[data-book-reset]'));p.click(p.document.querySelector('[data-book-confirm]'));assert.equal(p.saved.get(key)['campaign.save'].phase,'side');
+  p.click(p.document.querySelector('[data-book-restore]'));assert.deepEqual(p.saved.get(key)['campaign.save'].log,original.log);assert.equal(p.saved.get(key+'-previous')['campaign.save'].phase,'side');
+ }finally{p.restore();}
+});
 test('streamed dialogue is visible before completion; cancellation leaves state and input intact, retry commits once',async()=>{
  const id='mortal-path',state=CC.newGame(campaigns[id]);CC.pickSide(campaigns[id],state,'c1_s1');state.build=campaigns[id].build;
  const snapshot={['ooc-session-v2-'+id]:{book:id,'campaign.save':state}};let release;
@@ -93,4 +102,12 @@ test('book API streams the chosen book and retains the existing origin protectio
  const req={method:'POST',headers:{origin:'https://test.example',host:'test.example','content-type':'application/json',accept:'application/x-ndjson','x-forwarded-for':'book-test'},body:{book:'monte-cristo',phase:'express',task:'scene',lang:'zh',context:{node:'c1_m1',target:'leona',text:'这封信的来源可靠吗？'}}};
  const res={chunks:[],setHeader(){},status(c){this.code=c;return this;},json(v){this.value=v;},write(v){this.chunks.push(v);return true;},end(v){if(v)this.chunks.push(v);this.writableFinished=true;}};
  await handler(req,res);assert.ok(seen.system.includes(campaigns['monte-cristo'].title));assert.ok(res.chunks.join('').includes('"type":"done"'));await handler({...req,headers:{...req.headers,origin:'https://evil.example'}},res);assert.equal(res.code,403);
+});
+
+test('two-chapter release pauses without paying future debts or exposing later scene payloads',()=>{
+ for(const source of Object.values(campaigns)){
+  const camp=previewCampaign(source),state=CC.newGame(camp);assert.ok(!camp.nodes.c3_m1);assert.equal(camp.releasedChapters,2);
+  let guard=0;while(state.cur!=='preview_boundary'&&guard++<30){if(state.phase==='side')CC.pickSide(camp,state,state.offer[0]);else CC.choose(camp,state,CC.choices(camp,state).find(o=>!o.locked).id);}
+  assert.equal(state.cur,'preview_boundary');assert.equal(state.ch,2);assert.equal(state.phase,'node');assert.equal(state.v['debt.advance'],'open');assert.equal(state.v['flag.milestone'],false);
+ }
 });

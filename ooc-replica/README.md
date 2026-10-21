@@ -66,6 +66,6 @@ See [Firebase setup](docs/FIREBASE-SETUP.md) for deployment variables, Google an
 
 ## 名著互动与原创文字内容
 
-[两部名著战役](book-campaigns/README.md)开放《凡人修仙传·谷外微尘》《基督山伯爵·余烬与潮汐》卷一，复用三国CC规则核心，各8章41场景，账号独立存档与AI流式对白。访问 `/play/mortal-path` 与 `/play/monte-cristo`。
+[两部名著战役](book-campaigns/README.md)开放《凡人修仙传·谷外微尘》《基督山伯爵·余烬与潮汐》卷一，复用三国CC规则核心，当前各开放前两章试玩，后续结构保留为草稿；账号独立存档与AI流式对白。访问 `/play/mortal-path` 与 `/play/monte-cristo`。
 
 [DeepSeek完整文字批次](content/original-catalog/generated-text/INDEX.md)包含40个故事、40个角色，仍为待编辑、待图片的草稿，不自动替换现有目录。
