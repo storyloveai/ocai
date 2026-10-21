@@ -1,0 +1,380 @@
+{
+ "plan_version": "0.1",
+ "source": {
+  "title": "Romance of the Three Kingdoms (San kuo yan yi)",
+  "author": "Attributed to Luo Guanzhong (14th century); English translation by C. H. Brewitt-Taylor",
+  "original_language": "Classical/vernacular Chinese",
+  "first_published": "Chinese original 14th century (1522 edition); Brewitt-Taylor translation Kelly & Walsh, Shanghai, 1925",
+  "edition_used": "Project Gutenberg eBook #77416, 'San kuo; or, Romance of the Three Kingdoms, volume 1 of 2' (chapters 1–60), released 7 Dec 2025. Player-facing text paraphrases the translation; names are given in pinyin instead of the translation's Wade-Giles. All Project Gutenberg references must be removed before release.",
+  "rights_status": "public_domain_confirmed_by_human",
+  "rights_note": "Chinese original: public domain everywhere. Translation published 1925: public domain in the US (Gutenberg marks it so); the translator died in 1938, so it is also out of copyright in life+70 countries. The product lead chose this book for an internal prototype on 2026-10-16; formal sign-off still goes through the review checklist before any public release. Only volume 1 (ch1–60) was located; volume 2 must be checked separately before using later chapters. Avoid the look of any TV series, film, comic or video game adaptation (e.g. the 1994 CCTV series, Red Cliff (2008), Koei's Dynasty Warriors / Romance of the Three Kingdoms games). Pack text has not yet been checked line by line against the Brewitt-Taylor chapters (the full text could not be loaded in this environment)."
+ },
+ "book_bible": {
+  "setting": "China at the end of the Han dynasty, about 184–220 AD: a puppet emperor, warlords carving up the empire, and three states (Wei, Shu, Wu) rising out of the wars. Palaces in the capital Xuchang, river camps on the Yangtze, mountain roads in winter.",
+  "tone": "Epic, political and personal at once: oaths, debts of honour, stratagems and bluffs. Battles are told briskly and without gore; the drama is in who outwits, persuades or spares whom.",
+  "main_characters": [
+   {
+    "name": "Liu Bei (Xuande)",
+    "role": "Distant kinsman of the Han emperor; founder of Shu",
+    "age_note": "Adult; historical birth year 161 (not stated in the novel)",
+    "is_minor": false
+   },
+   {
+    "name": "Guan Yu (Yunchang)",
+    "role": "Liu Bei's sworn brother; a general famous for loyalty",
+    "age_note": "Adult (novel: sworn brother at the Peach Garden oath)",
+    "is_minor": false
+   },
+   {
+    "name": "Zhang Fei (Yide)",
+    "role": "Liu Bei's sworn brother; fierce and impulsive",
+    "age_note": "Adult (novel)",
+    "is_minor": false
+   },
+   {
+    "name": "Cao Cao (Mengde)",
+    "role": "Prime Minister who controls the emperor; founder of Wei",
+    "age_note": "Adult; historical birth year 155",
+    "is_minor": false
+   },
+   {
+    "name": "Zhuge Liang (Kongming)",
+    "role": "Liu Bei's strategist, the 'Sleeping Dragon'",
+    "age_note": "Adult, 27 in 208 AD (historical; the novel calls him young but grown)",
+    "is_minor": false
+   },
+   {
+    "name": "Zhou Yu (Gongjin)",
+    "role": "Commander-in-chief of Wu at Red Cliffs",
+    "age_note": "Adult; historical birth year 175",
+    "is_minor": false
+   },
+   {
+    "name": "Lu Su (Zijing)",
+    "role": "Wu adviser; honest go-between for Wu and Liu Bei",
+    "age_note": "Adult; historical birth year 172",
+    "is_minor": false
+   },
+   {
+    "name": "Zhang Liao (Wenyuan)",
+    "role": "Cao Cao's general; old friend of Guan Yu",
+    "age_note": "Adult (novel)",
+    "is_minor": false
+   },
+   {
+    "name": "Liu Shan (A Dou)",
+    "role": "Liu Bei's infant son, rescued at Changban",
+    "age_note": "Infant (novel)",
+    "is_minor": true
+   }
+  ]
+ },
+ "segments": [
+  {
+   "segment_id": "sg01_peach_garden",
+   "title": "Oath in the Peach Garden",
+   "source_range": "Chapter 1",
+   "summary": "Liu Bei meets Zhang Fei and Guan Yu at a recruiting notice and the three swear brotherhood in a peach garden.",
+   "template": "relationship",
+   "intensity": "light",
+   "priority": "bridge",
+   "player_role": "Liu Bei",
+   "core_question": "Will these two strangers trust you enough to swear brotherhood?",
+   "why_this_template": "A short conversation: the player learns who the two men are and what they want before proposing the oath.",
+   "interactive_hook": "Choosing what to say about yourself to two hot-tempered strangers.",
+   "key_choices": [
+    "Admit your poverty or boast of your royal blood",
+    "Propose the oath"
+   ],
+   "characters": [
+    "Liu Bei",
+    "Zhang Fei",
+    "Guan Yu"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [],
+   "canon_anchor": "The oath always happens; only the tone of the first meeting differs.",
+   "recommend_produce": false
+  },
+  {
+   "segment_id": "sg02_seven_jewelled_sword",
+   "title": "The Seven-Jewelled Sword",
+   "source_range": "Chapter 4",
+   "summary": "Cao Cao takes a jewelled dagger into Dong Zhuo's chamber to kill the tyrant, is nearly caught, and turns it into a gift.",
+   "template": "quest",
+   "intensity": "medium",
+   "priority": "standard",
+   "player_role": "Cao Cao",
+   "core_question": "Can you get out of Dong Zhuo's chamber alive with the dagger in your hand?",
+   "why_this_template": "Timing and bluffing with objects: the mirror, the dagger, the horse.",
+   "interactive_hook": "The player discovers the famous bluff ('a gift for you') themselves.",
+   "key_choices": [
+    "Strike now or wait",
+    "Explain the drawn dagger",
+    "Ask to test the horse"
+   ],
+   "characters": [
+    "Cao Cao",
+    "Dong Zhuo",
+    "Lü Bu"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [
+    "attempted assassination (non-graphic)"
+   ],
+   "canon_anchor": "Any ending leads to Cao Cao fleeing the capital, as in the novel.",
+   "recommend_produce": false
+  },
+  {
+   "segment_id": "sg03_heroes_over_plums",
+   "title": "Heroes Over Green Plums",
+   "source_range": "Chapter 21",
+   "summary": "Cao Cao invites Liu Bei, who has secretly joined a plot against him, to drink warm wine over green plums and asks who the true heroes of the age are.",
+   "template": "relationship",
+   "intensity": "heavy",
+   "priority": "signature",
+   "player_role": "Liu Bei",
+   "core_question": "Can you hide your ambition from the most suspicious man in the empire, and get out of his capital?",
+   "why_this_template": "This is a social survival scene: the player manages one powerful man's suspicion through what they say and how they react, and the 'relationship' is measured as suspicion rather than warmth.",
+   "interactive_hook": "Every answer is a bluff. The famous moment, dropped chopsticks covered by a crack of thunder, becomes the player's own split-second save.",
+   "key_choices": [
+    "Name other lords as heroes",
+    "Explain the dropped chopsticks",
+    "Cover for your sworn brothers' drawn swords",
+    "Ask for an army to leave the capital"
+   ],
+   "characters": [
+    "Liu Bei",
+    "Cao Cao",
+    "Guan Yu",
+    "Zhang Fei"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [
+    "political intrigue",
+    "implied threat of death (non-graphic)"
+   ],
+   "canon_anchor": "If Cao Cao keeps Liu Bei close, the next segment still opens with Liu Bei leaving the capital on campaign; the 'if' ending only colours how he left.",
+   "recommend_produce": true
+  },
+  {
+   "segment_id": "sg04_guan_yu_three_terms",
+   "title": "Three Conditions",
+   "source_range": "Chapters 25–27",
+   "summary": "Cut off from Liu Bei, Guan Yu agrees to stay with Cao Cao on three conditions, refuses every gift, and finally rides away to find his brother.",
+   "template": "relationship",
+   "intensity": "medium",
+   "priority": "standard",
+   "player_role": "Guan Yu",
+   "core_question": "How do you accept Cao Cao's hospitality without being bought?",
+   "why_this_template": "Repeated offers from Cao Cao that the player must accept or refuse; each changes what Guan Yu owes him.",
+   "interactive_hook": "Sets up the debt that the Huarong Road segment calls in.",
+   "key_choices": [
+    "Set your three conditions",
+    "Accept or refuse the red horse",
+    "Leave openly or slip away"
+   ],
+   "characters": [
+    "Guan Yu",
+    "Cao Cao",
+    "Zhang Liao"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [
+    "battle mentioned (non-graphic)"
+   ],
+   "canon_anchor": "Guan Yu always leaves to find Liu Bei.",
+   "recommend_produce": false
+  },
+  {
+   "segment_id": "sg05_three_visits",
+   "title": "Three Visits to the Thatched Cottage",
+   "source_range": "Chapters 37–38",
+   "summary": "Liu Bei visits the hermit Zhuge Liang three times in winter before he is received, and Zhuge Liang lays out his plan for dividing the empire.",
+   "template": "relationship",
+   "intensity": "heavy",
+   "priority": "signature",
+   "player_role": "Liu Bei",
+   "core_question": "Will the Sleeping Dragon agree to serve you?",
+   "why_this_template": "Patience and sincerity with a man who is not even home at first; the player's behaviour on each visit decides how the final meeting goes.",
+   "interactive_hook": "The player feels the cost of waiting, and hears the Longzhong plan as a reward they earned.",
+   "key_choices": [
+    "Wait in the snow or leave a letter",
+    "Stop Zhang Fei from burning the cottage",
+    "Ask for his plan"
+   ],
+   "characters": [
+    "Liu Bei",
+    "Zhuge Liang",
+    "Guan Yu",
+    "Zhang Fei",
+    "Zhuge Jun"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [],
+   "canon_anchor": "Zhuge Liang joins Liu Bei in every ending; what differs is how far he trusts him.",
+   "recommend_produce": false
+  },
+  {
+   "segment_id": "sg06_changban",
+   "title": "The Ford at Changban",
+   "source_range": "Chapters 41–42",
+   "summary": "Zhao Yun rides back through Cao Cao's army to find Liu Bei's infant son, while Zhang Fei holds a bridge alone.",
+   "template": "quest",
+   "intensity": "medium",
+   "priority": "standard",
+   "player_role": "Zhao Yun",
+   "core_question": "Can you find the child and bring him out?",
+   "why_this_template": "Moving through a battlefield and choosing whom to ask and where to search.",
+   "interactive_hook": "A rescue told through choices, without combat detail.",
+   "key_choices": [
+    "Search the village or the road",
+    "Take the sword Qinggang",
+    "Ride for Zhang Fei's bridge"
+   ],
+   "characters": [
+    "Zhao Yun",
+    "Lady Mi",
+    "Liu Shan (infant)",
+    "Zhang Fei"
+   ],
+   "minors_present": true,
+   "romance_with_minor": false,
+   "content_flags": [
+    "war (non-graphic)",
+    "a mother's death (non-graphic)",
+    "infant in danger"
+   ],
+   "canon_anchor": "The child is always saved, as in the novel.",
+   "recommend_produce": false
+  },
+  {
+   "segment_id": "sg07_jiang_gan_letter",
+   "title": "The Stolen Letter",
+   "source_range": "Chapter 45",
+   "summary": "Cao Cao's envoy Jiang Gan visits his old friend Zhou Yu, steals a forged letter and carries it home, where it costs Cao Cao his two best admirals.",
+   "template": "investigation",
+   "intensity": "medium",
+   "priority": "standard",
+   "player_role": "Jiang Gan",
+   "core_question": "What is Zhou Yu hiding, and should you trust what you find?",
+   "why_this_template": "The player investigates a camp at night and must judge whether evidence is planted.",
+   "interactive_hook": "A detective scene where the twist is that the player is the one being played.",
+   "key_choices": [
+    "Search the tent",
+    "Take the letter",
+    "Question the guard"
+   ],
+   "characters": [
+    "Jiang Gan",
+    "Zhou Yu"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [
+    "deception",
+    "execution mentioned (non-graphic)"
+   ],
+   "canon_anchor": "Whatever the player decides, Cao Cao's admirals are lost before Red Cliffs.",
+   "recommend_produce": false
+  },
+  {
+   "segment_id": "sg08_arrows_from_fog",
+   "title": "Arrows from the Fog",
+   "source_range": "Chapter 46",
+   "summary": "Ordered by Zhou Yu to deliver a hundred thousand arrows, Zhuge Liang promises them in three days, borrows boats from Lu Su and 'borrows' the arrows from Cao Cao in a fog.",
+   "template": "quest",
+   "intensity": "heavy",
+   "priority": "signature",
+   "player_role": "Zhuge Liang",
+   "core_question": "How do you get a hundred thousand arrows in three days without making any?",
+   "why_this_template": "The player gathers what they need, chooses when to sail, and runs the night raid step by step, with items and timing.",
+   "interactive_hook": "The joy of the stratagem: the player has to work out the fog, the straw and the drums, and the result is visible as a growing arrow count.",
+   "key_choices": [
+    "Persuade Lu Su to keep your secret",
+    "Rig the boats",
+    "Choose the night to sail",
+    "Turn the boats about"
+   ],
+   "characters": [
+    "Zhuge Liang",
+    "Lu Su",
+    "Zhou Yu (mentioned)",
+    "Cao Cao (off-stage)"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [
+    "war (non-graphic)",
+    "threat of execution (mentioned)"
+   ],
+   "canon_anchor": "If the raid fails, the next segment opens with Zhuge Liang having found the arrows another way; Red Cliffs goes ahead.",
+   "recommend_produce": true
+  },
+  {
+   "segment_id": "sg09_huarong_road",
+   "title": "The Huarong Road",
+   "source_range": "Chapter 50",
+   "summary": "After Red Cliffs, the beaten Cao Cao reaches the narrow Huarong Road and finds Guan Yu waiting for him, sworn on his life to take him.",
+   "template": "dilemma",
+   "intensity": "heavy",
+   "priority": "signature",
+   "player_role": "Guan Yu",
+   "core_question": "Do you keep your pledge or repay your debt?",
+   "why_this_template": "Two duties that cannot both be kept. The player hears out Cao Cao, looks at the men behind him, and decides.",
+   "interactive_hook": "A moral choice with real weight: the novel's own answer is one of several, and each ending says what it costs.",
+   "key_choices": [
+    "Hear Cao Cao out",
+    "Look at his soldiers",
+    "Remember your pledge",
+    "Let them pass or take him"
+   ],
+   "characters": [
+    "Guan Yu",
+    "Cao Cao",
+    "Zhang Liao",
+    "Zhou Cang"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [
+    "aftermath of battle (non-graphic)",
+    "threat of execution (mentioned)"
+   ],
+   "canon_anchor": "If Guan Yu takes Cao Cao, the next segment returns to the novel by having Cao Cao ransomed or escaping on the way to Liu Bei.",
+   "recommend_produce": true
+  },
+  {
+   "segment_id": "sg10_lend_jingzhou",
+   "title": "The Borrowed Province",
+   "source_range": "Chapters 52–54",
+   "summary": "Lu Su comes again and again to ask for Jingzhou back, and Zhuge Liang finds a new reason to keep it each time.",
+   "template": "relationship",
+   "intensity": "light",
+   "priority": "bridge",
+   "player_role": "Lu Su",
+   "core_question": "Can you get a straight answer out of Zhuge Liang?",
+   "why_this_template": "Bounded conversation with clever evasions.",
+   "interactive_hook": "Comic relief after Red Cliffs.",
+   "key_choices": [
+    "Demand a date",
+    "Accept the written promise"
+   ],
+   "characters": [
+    "Lu Su",
+    "Zhuge Liang",
+    "Liu Bei"
+   ],
+   "minors_present": false,
+   "romance_with_minor": false,
+   "content_flags": [],
+   "canon_anchor": "Jingzhou stays with Liu Bei.",
+   "recommend_produce": false
+  }
+ ]
+}

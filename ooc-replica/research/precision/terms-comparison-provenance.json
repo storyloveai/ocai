@@ -1,0 +1,28 @@
+[
+  {
+    "supplied_path": "/workspace/scratch/1be106cd5efa/ooc-reference-terms.png",
+    "supplied_encoding": "JPEG",
+    "supplied_sha256": "30a6a87a33b52e26c4083cf1c45cef054db60fd1b0c73ccdb7f930c00e4b3bd4",
+    "normalized_path": "/workspace/scratch/1be106cd5efa/rea-diagnostics/ooc-reference-terms.normalized.png",
+    "normalized_encoding": "PNG RGB non-interlaced",
+    "normalized_sha256": "7b04721161f2543d31d94d3894803a55832185f197650f356b109842d513453a",
+    "dimensions": [
+      1363,
+      936
+    ],
+    "transform": "JPEG decode to RGB, lossless PNG encode; no crop, no scale, no retouch"
+  },
+  {
+    "supplied_path": "/workspace/scratch/1be106cd5efa/ooc-replica-terms.png",
+    "supplied_encoding": "JPEG",
+    "supplied_sha256": "97a11c4c4379b02e036a695ef1d947a78b0e577ab670df7911d52d770a117d10",
+    "normalized_path": "/workspace/scratch/1be106cd5efa/rea-diagnostics/ooc-replica-terms.normalized.png",
+    "normalized_encoding": "PNG RGB non-interlaced",
+    "normalized_sha256": "bf32a24f1ca70ef67097c15ac0177cac9417e7090927851b923079ebbd07695a",
+    "dimensions": [
+      1363,
+      936
+    ],
+    "transform": "JPEG decode to RGB, lossless PNG encode; no crop, no scale, no retouch"
+  }
+]

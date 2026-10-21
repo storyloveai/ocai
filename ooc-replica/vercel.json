@@ -1,0 +1,30 @@
+{
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/((?!api/|assets/|app\\.js|style\\.css|data\\.json).*)",
+      "destination": "/index.html"
+    }
+  ],
+  "fluid": true,
+  "functions": {
+    "api/chat.js": {
+      "maxDuration": 180
+    },
+    "api/image.js": {
+      "maxDuration": 120
+    }
+  },
+  "buildCommand": "npm run build && npm run check",
+  "headers": [
+    {
+      "source": "/assets/media/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ]
+}

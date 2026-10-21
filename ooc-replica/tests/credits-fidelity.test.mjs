@@ -1,0 +1,40 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {parseHTML} from 'linkedom';
+import {renderCredits} from '../dist/assets/credits-view.js';
+import {createPayments} from '../dist/assets/payments.js';
+const config={walletMode:'live',walletConfigured:true,payments:true,embeddedPayments:true,auth:{config:{projectId:'fixture'}},creditPacks:[{credits:200,amount:199},{credits:2500,amount:1999},{credits:5000,amount:2999}]};
+test('credit view keeps real prices and unavailable balance instead of original account data',()=>{
+ const {document}=parseHTML(renderCredits({config,selected:2500,error:'Permission <denied>'}));
+ assert.equal(document.querySelectorAll('[name=credits-pack]').length,3);
+ assert.equal(document.querySelector('[name=credits-pack][checked]').value,'2500');
+ assert.deepEqual([...document.querySelectorAll('.credits-price')].map(e=>e.textContent),['$1.99','$19.99','$29.99']);
+ assert.match(document.querySelector('.credits-balance').textContent,/—/);
+ assert.equal(document.querySelector('[role=alert]').textContent,'Permission <denied>');
+ assert.equal(document.querySelector('[role=alert] denied'),null);
+ assert.equal(document.querySelectorAll('[role=tab]').length,3);
+});
+test('free and automatic reload screens describe only supported wallet capabilities',()=>{
+ const free=renderCredits({config,user:{uid:'fixture'},wallet:{balance:100,checked:true},tab:'free'});
+ assert.match(free,/Check in daily for 100 Credits/);assert.match(free,/data-checkin disabled/);
+ const auto=renderCredits({config,tab:'auto'});
+ assert.match(auto,/not enabled/);assert.doesNotMatch(auto,/data-buy-selected|data-checkin|data-pack=/);
+ const unavailable=renderCredits({config:{...config,payments:false},selected:200});
+ assert.match(unavailable,/data-buy-selected disabled/);
+});
+test('radio selection reaches existing checkout API with selected real pack and idempotency key',async()=>{
+ const {window,document}=parseHTML('<html><head></head><body><main></main><dialog></dialog></body></html>');
+ globalThis.document=document;globalThis.location={href:'https://fixture.example/credit'};globalThis.history={replaceState(_s,_t,url){location.href=String(url);}};
+ window.HTMLElement.prototype.focus=function(){};
+ const data=new Map(),calls=[],modal=document.querySelector('dialog');
+ modal.close=()=>{};
+ const account={paymentConfig:config,user:{uid:'fixture'},api:async(path,body)=>{calls.push([path,body]);if(path==='wallet')return {balance:123,checked:false,ledger:[]};throw Error('Stopped before Stripe form');}};
+ const payments=createPayments({account,modal,show:html=>{modal.innerHTML=html;modal.open=true;},notify:()=>{},storage:{getItem:key=>data.get(key),setItem:(key,value)=>data.set(key,value),removeItem:key=>data.delete(key)}});
+ payments.sync();payments.mount(document.querySelector('main'));await new Promise(resolve=>setImmediate(resolve));
+ assert.match(document.querySelector('.credits-balance').textContent,/123/);
+ const input=document.querySelector('[name=credits-pack][value="5000"]');input.dispatchEvent(new window.Event('change'));
+ document.querySelector('[data-buy-selected]').click();await new Promise(resolve=>setImmediate(resolve));
+ const checkout=calls.find(([path])=>path==='checkout');assert.equal(checkout[1].pack,5000);assert.equal(checkout[1].ui_mode,'hosted');assert.match(checkout[1].request_id,/^[a-f0-9-]{36}$/);
+ document.querySelector('[data-credit-tab="free"]').click();assert.match(location.href,/creditTab=free/);assert.equal(document.querySelector('[role=tabpanel]').getAttribute('aria-labelledby'),'credits-tab-free');
+ assert.match(document.querySelector('[role=alert]').textContent,/Stopped before Stripe form/);
+});

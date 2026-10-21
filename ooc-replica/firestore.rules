@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Private application state only. No wallet, entitlement or payment writes.
+    match /users/{uid}/state/{key} {
+      function owner() { return request.auth != null && request.auth.uid == uid; }
+      function validKey() { return key.matches('ooc-(profile|onboarding-complete|favorites|history|custom|preference|avatar|chat-.+|session-v2-.+|comments-.+|User Note-.+|Memories-.+|output-length|model-tier|response-mode)'); }
+      allow read, delete: if owner();
+      allow create, update: if owner() && validKey()
+        && request.resource.data.keys().hasOnly(['json', 'updatedAt'])
+        && request.resource.data.json is string
+        && request.resource.data.json.size() <= 750000
+        && request.resource.data.updatedAt == request.time;
+    }
+  }
+}
