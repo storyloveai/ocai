@@ -1,5 +1,5 @@
 {
- "spec": "storydate.campaign/0.3",
+ "spec": "storydate.campaign/0.4",
  "tiers": {
   "start": [
    0,
@@ -105,6 +105,103 @@
     }
    ]
   }
+ },
+ "pack": {
+  "id": "history-strategy",
+  "version": 1,
+  "title": {
+   "zh": "历史谋略",
+   "en": "History & strategy"
+  },
+  "premise": {
+   "zh": "原著大事照样发生，玩家是身边的谋士：怎么发生、谁付代价、谁欠谁的情，由玩家决定。好玩在“改得动历史的边，改不动历史的骨”。",
+   "en": "The great events still happen; the player is the adviser at someone's elbow and decides how they happen, who pays, and who owes whom. The fun is bending the edges of history without breaking its spine."
+  },
+  "values": {
+   "yi": {
+    "zh": "义",
+    "en": "loyalty"
+   },
+   "zhi": {
+    "zh": "智",
+    "en": "cleverness"
+   },
+   "ren": {
+    "zh": "仁",
+    "en": "kindness"
+   },
+   "yong": {
+    "zh": "勇",
+    "en": "nerve"
+   },
+   "cheng": {
+    "zh": "诚",
+    "en": "honesty"
+   },
+   "li": {
+    "zh": "利",
+    "en": "self-interest"
+   }
+  },
+  "roles": {
+   "reputation": {
+    "required": true,
+    "zh": "名声：别人怎么称呼你（忠义、权谋……），决定谁肯用你、结局怎么写你。",
+    "en": "Reputation: what people call you; decides who will use you and how the ending remembers you."
+   },
+   "risk": {
+    "required": true,
+    "zh": "风险：越界的代价（异名、失言）。到线必须触发危机，不能只是一个数字。",
+    "en": "Risk: the cost of overstepping. Crossing the line must trigger a crisis, not just change a number."
+   },
+   "drift": {
+    "required": false,
+    "zh": "偏离原著的程度。改得越多，后面要还的叙事债务越多。",
+    "en": "How far the story has drifted from the book; more drift means more narrative debts to settle."
+   }
+  },
+  "failures": [
+   {
+    "zh": "失宠：主公冷落你，把你调去闲职",
+    "en": "Falling from favor: your lord sidelines you"
+   },
+   {
+    "zh": "被当成妖人：知道得太多，又说不出来源",
+    "en": "Branded a sorcerer: you know too much and can't say how"
+   },
+   {
+    "zh": "失言：话说过头，被人报上去",
+    "en": "A loose tongue: someone reports what you said"
+   }
+  ],
+  "checklist": [
+   {
+    "zh": "每章一场原著名场面，原文保留或作用保留",
+    "en": "One set piece from the book per chapter, kept literally or by function"
+   },
+   {
+    "zh": "玩家拿掉原著某段情节的前因时，开一笔叙事债务，后面必须补上",
+    "en": "When the player removes a cause from the book, open a narrative debt and settle it later"
+   }
+  ],
+  "rules": [
+   "alt_path",
+   "earned_victory",
+   "risk_bites"
+  ]
+ },
+ "resources": {
+  "reputation": [
+   "renown.loyal",
+   "renown.cunning"
+  ],
+  "risk": [
+   "uncanny",
+   "renown.rash"
+  ],
+  "drift": [
+   "deviation"
+  ]
  },
  "id": "sanguo_strategist_v1",
  "title": {

@@ -1,4 +1,7 @@
-/* StoryDate campaign engine — spec storydate.campaign/0.3
+/* StoryDate campaign engine — shared by every book. Canonical copy: game/engine/campaign_core.js
+ * (books keep a byte-identical copy; CI checks it). Engine version CC.VERSION; reads campaigns of spec
+ * storydate.campaign/0.3 (legacy: relationship model not enforced) and /0.4 (unified relationships,
+ * tiers and a genre pack). See game/engine/README.md.
  * Pure functions, no DOM. Works in the browser (window.CC) and in Node (require).
  *
  * Layers (see 研究文档 §6–§7):
@@ -12,6 +15,10 @@
 (function (root) {
   "use strict";
   const CC = {};
+  CC.VERSION = "0.4.0";
+  CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
+  // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
+  CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
 
   /* ---------------- conditions ---------------- */
   function getVar(st, name) { return st.v[name]; }
@@ -543,6 +550,14 @@
       }
     })(camp, "camp");
 
+    // spec level: 0.4 enforces the unified relationship model, tiers and a genre pack; 0.3 only warns about them
+    const lvl = CC.specLevel(camp), strict = lvl >= 4;
+    if (!lvl || lvl > 4) E(`spec ${camp.spec}: this engine (${CC.VERSION}) reads ${CC.SPECS.join(" and ")}`);
+    const RM = strict ? E : (m => W(`${m} [required from spec 0.4]`));
+    if (strict && !camp.tiers) E("spec 0.4: tiers missing (copy game/engine/tiers.json into camp.tiers)");
+    if (strict && !camp.pack) E("spec 0.4: genre pack missing (camp.pack, from game/engine/packs/)");
+    const VT = (camp.pack && camp.pack.values) || camp.value_tags || {};
+
     const varOk = v => v in camp.vars || (v.startsWith("debt.") && v.slice(5) in camp.debts);
     const reads = new Set(), writes = new Set();
     // v2.3: relationship thresholds must sit on a tier boundary, so "trusted" means the same number everywhere
@@ -632,12 +647,36 @@
     if (camp.prev) Object.keys(camp.vars).filter(v => camp.vars[v].carry !== false && !v.startsWith("heat.")).forEach(v => writes.add(v)); // may arrive from the previous volume
     for (const [cid, ch] of Object.entries(camp.chars)) {
       const ds = Object.keys(ch.dims || {});
-      CC.AXES.forEach(a => { if (!ds.includes(a)) E(`char ${cid}: missing the ${a} axis (every character has warmth, trust and esteem)`); });
-      ds.forEach(d => { if (!CC.AXES.includes(d) && !(d === "intimacy" && ch.romance)) E(`char ${cid}: dimension ${d} is not part of the relationship model`); });
+      CC.AXES.forEach(a => { if (!ds.includes(a)) RM(`char ${cid}: missing the ${a} axis (every character has warmth, trust and esteem)`); });
+      ds.forEach(d => { if (!CC.AXES.includes(d) && !(d === "intimacy" && ch.romance)) RM(`char ${cid}: dimension ${d} is not part of the relationship model`); });
       if (ch.main && !ds.includes(ch.main)) E(`char ${cid}: main axis ${ch.main} missing`);
-      Object.entries(ch.values || {}).forEach(([tag, r]) => { if (!(camp.value_tags || {})[tag]) E(`char ${cid}: unknown value ${tag}`); if (!ds.includes(r[0])) E(`char ${cid}: value ${tag} moves unknown axis ${r[0]}`); });
+      if (strict && !ch.main) E(`char ${cid}: no main axis (which axis does the story read for this person?)`);
+      ds.forEach(d => { const rv = camp.vars[`rel.${cid}.${d}`]; if (rv && (rv.min !== 0 || rv.max !== 10)) RM(`var rel.${cid}.${d}: range ${rv.min}–${rv.max}, the relationship scale is 0–10`); });
+      Object.entries(ch.values || {}).forEach(([tag, r]) => { if (!VT[tag]) E(`char ${cid}: unknown value ${tag}`); if (!ds.includes(r[0])) E(`char ${cid}: value ${tag} moves unknown axis ${r[0]}`); });
     }
-    for (const n of Object.values(camp.nodes)) for (const c of n.choices) (c.values || []).forEach(tag => { if (!(camp.value_tags || {})[tag]) E(`${n.id}.${c.id}: unknown value ${tag}`); });
+    for (const n of Object.values(camp.nodes)) for (const c of n.choices) (c.values || []).forEach(tag => { if (!VT[tag]) E(`${n.id}.${c.id}: unknown value ${tag}`); });
+    if (strict && !Object.values(camp.chars).some(ch => ch.values && Object.keys(ch.values).length)) W("no character has values: choices will never draw automatic reactions");
+
+    // genre pack (题材包): every resource role the pack requires is mapped to the book's own variables, and the pack's rules hold
+    if (camp.pack) {
+      const P = camp.pack, roles = P.roles || {}, res = camp.resources || {};
+      for (const [r, d] of Object.entries(roles)) if (d.required && !(res[r] || []).length) E(`pack ${P.id}: resource role ${r} is not mapped (camp.resources.${r})`);
+      for (const [r, vs] of Object.entries(res)) { if (!roles[r]) E(`resources.${r}: pack ${P.id} has no such role`); vs.forEach(v => { if (!camp.vars[v]) E(`resources.${r}: unknown var ${v}`); }); }
+      const resVars = new Set(Object.values(res).flat()), earned = new Set(Object.entries(res).filter(([r]) => (roles[r] || {}).earned).flatMap(([, vs]) => vs));
+      const rules = new Set(P.rules || []);
+      if (rules.has("alt_path")) for (const n of Object.values(camp.nodes)) {
+        // a choice gated on a resource needs a sibling that is never locked: running short slows you down, it doesn't stop the story
+        const gated = n.choices.filter(c => condVars(c.req).some(v => resVars.has(v)));
+        if (gated.length && !n.choices.some(c => !c.req)) E(`${n.id}: every choice is locked behind something and ${gated.map(c => c.id).join(", ")} needs resources — add a way through that costs nothing (rule alt_path)`);
+      }
+      if (rules.has("earned_victory")) for (const g of camp.endings) for (const f of g.fragments) {
+        const vs = condVars(f.when);
+        if (vs.some(v => earned.has(v)) && !vs.some(v => !resVars.has(v) && !v.startsWith("rel."))) E(`ending ${g.id}.${f.id}: success decided by resources alone — also require something the player did (a flag) (rule earned_victory)`);
+      }
+      if (rules.has("risk_bites")) (res.risk || []).forEach(v => {
+        if (!Object.values(camp.nodes).some(n => condVars(n.when).includes(v))) E(`risk ${v}: no scene is triggered by it — crossing the line must make something happen (rule risk_bites)`);
+      });
+    }
     for (const [cid, ch] of Object.entries(camp.chars)) if (ch.heat) { if (!camp.vars["heat." + cid]) E(`char ${cid}: heat table but no heat.${cid} var`); else if (ch.heat.line) reads.add("heat." + cid); }
     (camp.flash || []).forEach((f, i) => { const fn = camp.nodes[f.node]; if (!fn || fn.kind !== "flash") E(`flash[${i}]: node ${f.node} missing or not a flash node`); if (!camp.chars[f.char] || !(camp.chars[f.char].heat || {}).line) E(`flash[${i}]: ${f.char} has no heat line`); (f.nodes || []).concat(f.except || []).forEach(x => { if (!camp.nodes[x]) E(`flash[${i}]: unknown node ${x}`); }); });
     (camp.witness || []).forEach((w, i) => { if (!camp.chars[w.who] || !camp.chars[w.to]) E(`witness[${i}]: unknown character`); w.effects.forEach(ef => { const v = ef.set || ef.add; if (!varOk(v)) E(`witness[${i}]: unknown var ${v}`); writes.add(v); }); });

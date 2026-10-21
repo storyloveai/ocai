@@ -31,6 +31,6 @@ export async function buildSanguo(){
  await writeFile(new URL('../server/sanguo-campaign.json',here),await readFile(new URL('campaign.json',game)));
  await writeFile(new URL('../server/sanguo-campaign-v2.json',here),await readFile(new URL('campaign_v2.json',game)));
  await writeFile(new URL('../server/sanguo-core.cjs',here),await readFile(new URL('campaign_core.js',game)));
- // Books stay on the frozen v2.0 engine copy; see book-campaigns/engine/README.md.
+ // Books use the shared engine copy (game/engine via scripts/sync-game.mjs); see book-campaigns/engine/README.md.
  await writeFile(new URL('../server/book-core.cjs',here),await readFile(new URL('../book-campaigns/engine/campaign_core.js',here)));
 }
