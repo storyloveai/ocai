@@ -52,7 +52,7 @@ test('AI cannot turn an invented wage, evidence date or locked action into appro
  const monte={...body,book:'monte-cristo',context:{node:'c1_m1',target:'leona',text:'哪里不匹配？'}};assert.throws(()=>validateBookOutput({...out,reply:'信件邮戳是1841年。'},monte));
  assert.throws(()=>validateBookOutput({...out,pick:'invented',reply:null},body));
  const tentative={pick:'a1',reply:'我把工役簿找来，先看明白再决定。'};validateBookOutput(tentative,body);assert.equal(tentative.pick,null);
- assert.throws(()=>buildBookStage({...body,context:{node:'c3_m1',target:'lu',text:'继续第三章。'}}));
+ assert.doesNotThrow(()=>buildBookStage({...body,context:{node:'c3_m1',target:'lu',text:'继续第三章。'}}));assert.throws(()=>buildBookStage({...body,context:{node:'c9_m9',target:'lu',text:'未知章节。'}}));
 });
 const tick=()=>new Promise(r=>setTimeout(r,20));
 async function page(id,{snapshot={},api,configured=false}={}){
@@ -104,10 +104,10 @@ test('book API streams the chosen book and retains the existing origin protectio
  await handler(req,res);assert.ok(seen.system.includes(campaigns['monte-cristo'].title));assert.ok(res.chunks.join('').includes('"type":"done"'));await handler({...req,headers:{...req.headers,origin:'https://evil.example'}},res);assert.equal(res.code,403);
 });
 
-test('two-chapter release pauses without paying future debts or exposing later scene payloads',()=>{
+test('all eight chapters are released and a straightforward run reaches an ending',()=>{
  for(const source of Object.values(campaigns)){
-  const camp=previewCampaign(source),state=CC.newGame(camp);assert.ok(!camp.nodes.c3_m1);assert.equal(camp.releasedChapters,2);
-  let guard=0;while(state.cur!=='preview_boundary'&&guard++<30){if(state.phase==='side')CC.pickSide(camp,state,state.offer[0]);else CC.choose(camp,state,CC.choices(camp,state).find(o=>!o.locked).id);}
-  assert.equal(state.cur,'preview_boundary');assert.equal(state.ch,2);assert.equal(state.phase,'node');assert.equal(state.v['debt.advance'],'open');assert.equal(state.v['flag.milestone'],false);
+  const camp=previewCampaign(source),state=CC.newGame(camp);assert.ok(camp.nodes.c3_m1);assert.equal(camp.releasedChapters,8);assert.equal(camp.preview,false);assert.ok(camp.endings.length>0);
+  let guard=0;while(state.phase!=='end'&&guard++<400){if(state.phase==='side')CC.pickSide(camp,state,state.offer[0]);else CC.choose(camp,state,CC.choices(camp,state).find(o=>!o.locked).id);}
+  assert.equal(state.phase,'end');assert.ok(CC.endings(camp,state).length>0);
  }
 });

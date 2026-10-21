@@ -1,5 +1,7 @@
-export const RELEASED_CHAPTERS=2;
+export const RELEASED_CHAPTERS=8;
 export function previewCampaign(source){
+ // All chapters are open. Lowering RELEASED_CHAPTERS brings back the paused preview below.
+ if(RELEASED_CHAPTERS>=source.chapters.length){const full=structuredClone(source);full.releasedChapters=full.chapters.length;full.preview=false;return full;}
  const c=structuredClone(source),ids=new Set(c.chapters.slice(0,RELEASED_CHAPTERS).map(ch=>ch.id));
  c.releasedChapters=RELEASED_CHAPTERS;c.preview=true;
  c.chapters=c.chapters.slice(0,RELEASED_CHAPTERS);
