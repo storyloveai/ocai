@@ -58,7 +58,7 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
                 [setv("flag.exiled"), setv("flag.mi_heng")]),
          choice("kneel", "strategy", T("跪在丞相府门前请罪。", "Kneel at the Chancellor's gate and beg forgiveness."),
                 T("你跪了一整天。傍晚，曹操让人传话：『起来吧。孤要的是会说话的人，不是不会说话的人。』", "You kneel all day. At dusk Cao sends word: 'Get up. I want men who know how to speak—not men who don't know when to stop.'"),
-                [rel("caocao", "regard", -2), add("renown.rash", -2)], req=R("caocao", "regard", ">=", 5), hint=T("需要曹操的赏识 ≥ 5，他才肯给你台阶", "Needs Cao's regard ≥ 5 for him to give you a way back")),
+                [rel("caocao", "esteem", -2), add("renown.rash", -2)], req=R("caocao", "esteem", ">=", 5), hint=T("需要曹操的赏识 ≥ 5，他才肯给你台阶", "Needs Cao's regard ≥ 5 for him to give you a way back")),
          choice("again", "dilemma", T("当着来使的面，再骂一次。", "Curse him again, in front of his messenger."),
                 T("来使面色惨白地回去复命。曹操只笑了一声：『送他去荆州。』你学祢衡学到了底。", "The messenger goes back ashen-faced. Cao only laughs once. 'Send him to Jingzhou.' You have followed Mi Heng all the way."),
                 [setv("flag.exiled"), setv("flag.mi_heng"), add("renown.rash", 2)])],
@@ -71,10 +71,10 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
         P(T("程昱把一张纸放在曹操案头，上面抄着你这些日子说过的话。曹操看完，叫你过去。", "Cheng Yu lays a sheet on Cao Cao's desk: a copy of everything you've said lately. Cao reads it and sends for you."), CAO)],
         [choice("apologize", "strategy", T("认错：话说过了头，愿受责罚。", "Admit it: you spoke out of turn, and will accept the consequences."),
                 T("主公没有罚你，只说：『先生是聪明人，聪明人最该管住嘴。』", "Your lord doesn't punish you. He only says, 'You're a clever man. Clever men most of all should mind their tongues.'"),
-                [add("renown.rash", -2), rel("liubei", "trust", -1), rel("caocao", "regard", -1)]),
+                [add("renown.rash", -2), rel("liubei", "trust", -1), rel("caocao", "esteem", -1)]),
          choice("defend", "dilemma", T("辩解：都是真心话，句句有所指。", "Defend yourself: you meant every word, and each had a point."),
                 T("你一句一句解释。主公听完，沉默了很久：『有些真话，要挑时候说。』这件事就这样过去了。", "You explain each line. Your lord listens and is silent for a long time. 'Some truths need the right moment.' And there it ends."),
-                [add("renown.rash", -1)], req=ANY(R("liubei", "trust", ">=", 6), R("caocao", "regard", ">=", 6)), hint=T("需要主公足够信你（刘备信任或曹操赏识 ≥ 6）", "Needs your lord's confidence (Liu Bei's trust or Cao's regard ≥ 6)")),
+                [add("renown.rash", -1)], req=ANY(R("liubei", "trust", ">=", 6), R("caocao", "esteem", ">=", 6)), hint=T("需要主公足够信你（刘备信任或曹操赏识 ≥ 6）", "Needs your lord's confidence (Liu Bei's trust or Cao's regard ≥ 6)")),
          choice("leave", "dilemma", T("请辞。", "Resign."),
                 T("没有人挽留你。你走的那天，连送行的人都没有。", "No one asks you to stay. On the day you leave, no one even sees you off."), [setv("flag.exiled")])],
         V("renown.rash", ">=", 4), 4))
@@ -120,11 +120,11 @@ def commit_rules():
                   "kept_text": T("你对刘备说过不离不弃。一卷走完，你还在他身边。", "You told Liu Bei you'd never leave him. At the end of the volume, you're still at his side."),
                   "broken_text": T("你对刘备说过不离不弃。后来古城的消息传来，说他听说你留在了曹营，只说了一句：『人各有志。』", "You told Liu Bei you'd never leave him. Word reaches you that when he heard you'd stayed with Cao, he said only: 'Every man chooses his own road.'")})
     rules.append({"char": "guanyu", "kind": "loyalty", "broken": CAO_, "kept": LIU_, "at_end": True,
-                  "kept_effects": [rel("guanyu", "respect", 1)], "broken_effects": [rel("guanyu", "respect", -2)],
+                  "kept_effects": [rel("guanyu", "esteem", 1)], "broken_effects": [rel("guanyu", "esteem", -2)],
                   "kept_text": T("你对关羽许过的话，你守住了。在他那里，这比什么都重。", "You kept the word you gave Guan Yu. To him, nothing weighs more."),
                   "broken_text": T("你对关羽许过的话，没有守住。他再也不跟你喝酒了。", "You broke the word you gave Guan Yu. He never drinks with you again.")})
     rules.append({"char": "caocao", "kind": "loyalty", "broken": F("flag.secret_mercy"), "kept": CAO_, "at_end": True,
-                  "kept_effects": [rel("caocao", "regard", 1)], "broken_effects": [],
+                  "kept_effects": [rel("caocao", "esteem", 1)], "broken_effects": [],
                   "kept_text": T("你对曹操说过要尽忠。至少到这一卷为止，你做到了。", "You told Cao Cao you'd serve him faithfully. For this volume at least, you did."),
                   "broken_text": T("你对曹操说过要尽忠，却在长坂坡放走了刘备的家眷。他不知道。你知道。", "You swore loyalty to Cao Cao, then let Liu Bei's people go at Changban. He doesn't know. You do.")})
     return rules

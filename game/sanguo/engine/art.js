@@ -526,7 +526,7 @@ ${places}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8"/>
     return d + "Z";
   }
   // control: { provinceId: factionId | [factionId, factionId] (contested) }, factions: { id: { color, name } }
-  function realmMap(stops, { lang = "zh", current, control = {}, factions = {}, provNames = {}, note = "", realmPlaces = null } = {}) {
+  function realmMap(stops, { lang = "zh", current, control = {}, factions = {}, provNames = {}, note = "", realmPlaces = null, placeNames = null } = {}) {
     const REALM_PLACES = Object.assign({}, REALM_PLACES_V1, realmPlaces || {});
     const p = "r" + (++uid) + "_";
     const r = rng(11);
@@ -546,7 +546,7 @@ ${places}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8"/>
     const pts = stops.map(s => REALM_PLACES[s]).filter(Boolean);
     let path = ""; pts.forEach((pt, i) => { if (!i) path = `M${pt[0]} ${pt[1]}`; else { const a = pts[i - 1]; path += ` Q${f1((a[0] + pt[0]) / 2 + (r() - .5) * 30)} ${f1((a[1] + pt[1]) / 2 + (r() - .5) * 20)} ${pt[0]} ${pt[1]}`; } });
     const seen = new Set(stops);
-    const marks = Object.entries(REALM_PLACES).filter(([k]) => seen.has(k)).map(([k, [x, y]]) => `${k === current ? `<circle cx="${x}" cy="${y}" r="20" fill="${LAMP}" opacity=".55" filter="url(#${p}wash)"/>` : ""}<circle cx="${x}" cy="${y}" r="6" fill="${VERM}" stroke="${PAPER}" stroke-width="2"/>${k === current ? `<text x="${x + 10}" y="${y - 10}" font-size="${lang === "zh" ? 26 : 24}" fill="${INK}" font-family="'Noto Serif SC','Fraunces',serif" font-weight="600">${PLACES[k][lang]}</text>` : ""}`).join("");
+    const marks = Object.entries(REALM_PLACES).filter(([k]) => seen.has(k)).map(([k, [x, y]]) => `${k === current ? `<circle cx="${x}" cy="${y}" r="20" fill="${LAMP}" opacity=".55" filter="url(#${p}wash)"/>` : ""}<circle cx="${x}" cy="${y}" r="6" fill="${VERM}" stroke="${PAPER}" stroke-width="2"/>${k === current ? `<text x="${x + 10}" y="${y - 10}" font-size="${lang === "zh" ? 26 : 24}" fill="${INK}" font-family="'Noto Serif SC','Fraunces',serif" font-weight="600">${((placeNames || {})[k] || PLACES_V1[k] || { [lang]: k })[lang]}</text>` : ""}`).join("");
     return `<svg viewBox="0 0 1000 700" role="img" aria-label="${lang === "zh" ? "天下形势图（示意）" : "The realm (schematic)"}">${defs(p, 0).replace("</defs>", defs2 + "</defs>")}<rect width="1000" height="700" fill="url(#${p}paper)"/>
 ${shapes}
 <path d="M120 150 C260 170 380 200 470 250 C560 290 660 300 760 300 C840 300 900 280 960 260" stroke="#6d86a0" stroke-width="7" fill="none" opacity=".55" filter="url(#${p}soft)"/>

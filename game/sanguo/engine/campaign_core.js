@@ -255,7 +255,9 @@
       const ch = camp.chars[m[1]]; if (!ch || (ch.main || Object.keys(ch.dims)[0]) !== m[2] || (st.v["heat." + m[1]] || 0) < 2) return true;
       cooled.push(m[1]); return false; });
     if (cooled.length) e.cooled = cooled;
+    const present = CC.castNow(camp, st);
     applyEffects(camp, st, effs, e);
+    react(camp, st, c, effs, present, e);
     (c.debt || []).forEach(d => openDebt(st, d, e));
     (c.resolve || []).forEach(([d, m]) => resolveDebt(st, d, m, e));
     (c.echo || []).forEach(id => { if (!st.echoes[id]) { st.echoes[id] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(id); } });
@@ -272,6 +274,26 @@
     else nextMain(camp, st);
     return e;
   };
+
+  /* everyone present reacts to what a choice stands for, by their own values (unless the author already wrote their reaction) */
+  CC.AXES = ["warmth", "trust", "esteem"];
+  function react(camp, st, c, effs, present, e) {
+    if (!(c.values || []).length) return;
+    const out = [];
+    for (const cid of present) {
+      const ch = camp.chars[cid]; if (!ch || !ch.values) continue;
+      if (effs.some(ef => (ef.add || ef.set || "").startsWith(`rel.${cid}.`))) continue;
+      const sum = {};
+      c.values.forEach(tag => { const r = ch.values[tag]; if (r) sum[r[0]] = (sum[r[0]] || 0) + r[1]; });
+      for (const [axis, by] of Object.entries(sum)) {
+        const d = Math.max(-1, Math.min(1, by)), v = `rel.${cid}.${axis}`;
+        if (!d || !camp.vars[v]) continue;
+        if (d > 0 && (st.v["heat." + cid] || 0) >= 2) continue;
+        out.push({ add: v, by: d });
+      }
+    }
+    if (out.length) { e.reacted = out.map(x => x.add.split(".")[1]); applyEffects(camp, st, out, e); }
+  }
 
   /* ---------------- night talks ---------------- */
   // A talk node has a turn budget. Topics are rule-backed (fixed reply + effects, once each);
@@ -585,6 +607,14 @@
     for (const ch of camp.chapters) if (!nodesIn(camp, ch.id, "main").length) E(`chapter ${ch.id}: no main node`);
     Object.keys(camp.vars).filter(v => v.startsWith("imp.") || v.startsWith("heat.") || v === "renown.rash").forEach(v => writes.add(v)); // written by free speech (CC.speak)
     if (camp.prev) Object.keys(camp.vars).filter(v => camp.vars[v].carry !== false && !v.startsWith("heat.")).forEach(v => writes.add(v)); // may arrive from the previous volume
+    for (const [cid, ch] of Object.entries(camp.chars)) {
+      const ds = Object.keys(ch.dims || {});
+      CC.AXES.forEach(a => { if (!ds.includes(a)) E(`char ${cid}: missing the ${a} axis (every character has warmth, trust and esteem)`); });
+      ds.forEach(d => { if (!CC.AXES.includes(d) && !(d === "intimacy" && ch.romance)) E(`char ${cid}: dimension ${d} is not part of the relationship model`); });
+      if (ch.main && !ds.includes(ch.main)) E(`char ${cid}: main axis ${ch.main} missing`);
+      Object.entries(ch.values || {}).forEach(([tag, r]) => { if (!(camp.value_tags || {})[tag]) E(`char ${cid}: unknown value ${tag}`); if (!ds.includes(r[0])) E(`char ${cid}: value ${tag} moves unknown axis ${r[0]}`); });
+    }
+    for (const n of Object.values(camp.nodes)) for (const c of n.choices) (c.values || []).forEach(tag => { if (!(camp.value_tags || {})[tag]) E(`${n.id}.${c.id}: unknown value ${tag}`); });
     for (const [cid, ch] of Object.entries(camp.chars)) if (ch.heat) { if (!camp.vars["heat." + cid]) E(`char ${cid}: heat table but no heat.${cid} var`); else if (ch.heat.line) reads.add("heat." + cid); }
     (camp.flash || []).forEach((f, i) => { const fn = camp.nodes[f.node]; if (!fn || fn.kind !== "flash") E(`flash[${i}]: node ${f.node} missing or not a flash node`); if (!camp.chars[f.char] || !(camp.chars[f.char].heat || {}).line) E(`flash[${i}]: ${f.char} has no heat line`); (f.nodes || []).concat(f.except || []).forEach(x => { if (!camp.nodes[x]) E(`flash[${i}]: unknown node ${x}`); }); });
     (camp.witness || []).forEach((w, i) => { if (!camp.chars[w.who] || !camp.chars[w.to]) E(`witness[${i}]: unknown character`); w.effects.forEach(ef => { const v = ef.set || ef.add; if (!varOk(v)) E(`witness[${i}]: unknown var ${v}`); writes.add(v); }); });
@@ -593,7 +623,8 @@
       if (f.when && !condVars(f.when).some(v => writes.has(v))) E(`ending ${g.id}.${f.id}: depends on nothing a choice can change (untraceable)`);
     }
     ["flag.sidelined"].forEach(v => reads.add(v)); // read by the director in code
-    for (const v of writes) if (!reads.has(v) && !v.startsWith("debt.")) W(`var ${v}: written but never read (drop it, or make it matter)`);
+    // relationship axes are always on screen and carry into later volumes, so an axis no condition reads still matters
+    for (const v of writes) if (!reads.has(v) && !v.startsWith("debt.") && !(v.startsWith("rel.") && CC.AXES.concat("intimacy").includes(v.split(".")[2]))) W(`var ${v}: written but never read (drop it, or make it matter)`);
     for (const v of reads) if (!writes.has(v) && !v.startsWith("debt.")) W(`var ${v}: read but never written`);
     return { errors, warnings };
   };
@@ -618,8 +649,8 @@
   CC.policies = {
     random: null,
     romance: { "rel.wenzhi.intimacy": 3, "rel.wenzhi.trust": 2, "flag.wenzhi_with_you": 8, "flag.wenzhi_together": 8, "flag.promise_wenzhi": 5, "flag.wenzhi_warned": 3, "flag.wenzhi_safe": 3, "flag.wenzhi_used": -8, "flag.asked_wenzhi": 1, "uncanny": -.6, track: 1, trackPref: "liu", "rel.liubei.trust": .4 },
-    loyal: { "rel.liubei.trust": 2, "renown.loyal": 2, "rel.guanyu.respect": 1, "rel.guanyu.owes": 1, "uncanny": -1, track: 6, trackPref: "liu" },
-    schemer: { "renown.cunning": 2, "rel.caocao.regard": 2, "rel.zhuge.respect": .5, "uncanny": -.5, track: 6, trackPref: "cao" },
+    loyal: { "rel.liubei.trust": 2, "renown.loyal": 2, "rel.guanyu.esteem": 1, "rel.guanyu.warmth": 1, "uncanny": -1, track: 6, trackPref: "liu" },
+    schemer: { "renown.cunning": 2, "rel.caocao.esteem": 2, "rel.zhuge.esteem": .5, "uncanny": -.5, track: 6, trackPref: "cao" },
     seer: { "uncanny": 2, "rel.liubei.trust": .5, foresight: 3, track: 1, trackPref: "liu" },
     provoker: { provoke: true },
   };

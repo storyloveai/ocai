@@ -4,14 +4,13 @@
 from lib import T
 
 NEW_CHARS = {
-    "zhouyu": {"name": T("周瑜", "Zhou Yu"), "dims": {"esteem": [2, 0, 10], "trust": [1, 0, 10]}, "main": "esteem"},
-    "lusu": {"name": T("鲁肃", "Lu Su"), "dims": {"trust": [3, 0, 10]}, "main": "trust"},
-    "zhaoyun": {"name": T("赵云", "Zhao Yun"), "dims": {"trust": [3, 0, 10], "warmth": [2, 0, 10]}, "main": "trust"},
-    "sunfuren": {"name": T("孙夫人", "Lady Sun"), "dims": {"warmth": [0, 0, 10], "trust": [1, 0, 10]}, "main": "warmth", "from_chapter": "c3"},
-    "pangtong": {"name": T("庞统", "Pang Tong"), "dims": {"warmth": [1, 0, 10], "esteem": [1, 0, 10]}, "main": "esteem"},
-    "zhangsong": {"name": T("张松", "Zhang Song"), "dims": {"esteem": [0, 0, 10]}, "main": "esteem", "from_chapter": "c5"},
+    "zhouyu": {"name": T("周瑜", "Zhou Yu"), "dims": {"warmth": [1, 0, 10], "trust": [1, 0, 10], "esteem": [2, 0, 10]}, "main": "esteem"},
+    "lusu": {"name": T("鲁肃", "Lu Su"), "dims": {"warmth": [2, 0, 10], "trust": [3, 0, 10], "esteem": [1, 0, 10]}, "main": "trust"},
+    "zhaoyun": {"name": T("赵云", "Zhao Yun"), "dims": {"warmth": [2, 0, 10], "trust": [3, 0, 10], "esteem": [1, 0, 10]}, "main": "trust"},
+    "sunfuren": {"name": T("孙夫人", "Lady Sun"), "dims": {"warmth": [0, 0, 10], "trust": [1, 0, 10], "esteem": [0, 0, 10]}, "main": "warmth", "from_chapter": "c3"},
+    "pangtong": {"name": T("庞统", "Pang Tong"), "dims": {"warmth": [1, 0, 10], "trust": [1, 0, 10], "esteem": [1, 0, 10]}, "main": "esteem"},
+    "zhangsong": {"name": T("张松", "Zhang Song"), "dims": {"warmth": [0, 0, 10], "trust": [0, 0, 10], "esteem": [0, 0, 10]}, "main": "esteem", "from_chapter": "c5"},
 }
-NEW_DIMS = {"esteem": T("看重", "Esteem"), "warmth": T("交情", "Friendship")}
 
 PERSONA = {
     "zhouyu": T("周瑜：东吴大都督，三十出头，赤壁的主帅；风流倜傥、精通音律，自负而好胜，最在意的是被诸葛亮压过一头。称玩家“子衡”。",

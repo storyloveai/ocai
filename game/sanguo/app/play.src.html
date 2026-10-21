@@ -68,6 +68,8 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .recap .chips { margin-top: 8px }
 .free.sealed input { opacity: .55; cursor: not-allowed }
 .flare { margin: 14px 0; padding: 10px 14px; border-left: 3px solid var(--rose); background: color-mix(in srgb, var(--rose) 8%, transparent); border-radius: 0 10px 10px 0; color: var(--rose) }
+.resume { display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin: 26px 0 0; padding: 14px 18px; border-radius: 14px; border: 1px solid var(--lamp); background: var(--surface) } .resume > div { min-width: 0 }
+.savedot { font-size: 12px; color: var(--muted); white-space: nowrap }
 .home-sec { margin: 40px 0 0 } .home-sec h2 { font-size: 22px; margin: 0 0 14px }
 .vols, .saves { display: grid; gap: 14px }
 .volcard { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; background: var(--surface) } .volcard h3 { margin: 4px 0 6px; font-size: 20px } .volcard p { margin: 0 0 12px; color: var(--muted) }
@@ -280,7 +282,7 @@ function useVol(id) { const v = VOL(id) || BOOK.volumes[0]; CAMP = v.camp; COL =
 </script>
 <script>
 "use strict";
-const BUILD = "strategist-v2.1";
+const BUILD = "strategist-v2.2";
 const UI = {
   zh: {
     title: "三国·谋士", start: "开始",
@@ -290,6 +292,7 @@ const UI = {
           ["前面的选择会在后面回响。", "你在第一章做的事，可能在第八章被人提起。标着「回响」的段落，会告诉你是因为哪一步。"],
           ["你知道结局，但说出来有代价。", "标着「先见」的选项用到了你对原著的了解。用得多了，身边的人会觉得你异样。"]],
     rightsNote: "原著《三国演义》为公版作品，引文取自原文；子衡、温芷为原创人物。", trackNote: "为了把故事做得更好，我们会匿名记录游玩中的选择。",
+    autoSaved: "已自动保存", noSave: "这个浏览器不允许保存进度（可能是无痕模式或关闭了网站数据），关掉页面后进度会丢失。", noSaveShort: "不能保存", resumeH: "继续上次", savesNote: "每走一步都会自动保存在这台设备的浏览器里，不用手动存。每章开头还会留一个存档点，可以从任何一章重新玩。",
     toc: "目录", volTag: i => `卷${"一二三四五六七八九十"[i]}`, startVol: "开始这一卷", soon: "待续", fromRun: "接着哪一局往下玩？", presetsH: "没玩过上一卷？选一段前情开始：", noPrev: "还没有玩完的上一卷。",
     mySaves: "我的存档", runName: n => `第${n}局`, atChapter: (c, x) => `进行到${c}《${x}》`, statusEnd: "已完结", statusEarly: "提前收场", contRun: "继续", viewRun: "回看", delRun: "删除", delSure: "确定删除这一局？", nextVol: v => `接着玩${v}`,
     branchedFrom: (n, c) => `从第${n}局的${c}重新开始`, carriedFrom: n => `接着第${n}局`, presetFrom: x => `前情：${x}`, noSaves: "还没有存档。开始一卷，进度会自动保存。", incompatible: "这一局来自旧版本，内容已经变了，无法继续，只能删除。",
@@ -332,6 +335,7 @@ const UI = {
           ["Early choices echo later.", "What you do in Chapter 1 may be brought up in Chapter 8. Passages marked Echo tell you which step caused them."],
           ["You know the ending. Saying so has a price.", "Choices marked Foresight use what you know from the novel. Use it too often and people start to find you strange."]],
     rightsNote: "Romance of the Three Kingdoms is in the public domain; Chinese quotations are from the original, English renderings are our own. Ziheng and Wen Zhi are original characters.", trackNote: "To make the story better, we anonymously record the choices made in play.",
+    autoSaved: "Saved", noSave: "This browser won't let the page save (private mode, or site data is blocked). Your progress will be lost when you close it.", noSaveShort: "Not saving", resumeH: "Pick up where you left off", savesNote: "Every step saves itself in this browser on this device—no need to save by hand. Each chapter also leaves a checkpoint you can replay from.",
     toc: "Contents", volTag: i => `Volume ${["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][i]}`, startVol: "Start this volume", soon: "Coming later", fromRun: "Carry on from which playthrough?", presetsH: "Haven't played the previous volume? Pick a backstory:", noPrev: "No finished playthrough of the previous volume yet.",
     mySaves: "My saves", runName: n => `Playthrough ${n}`, atChapter: (c, x) => `${c}: ${x}`, statusEnd: "Finished", statusEarly: "Ended early", contRun: "Continue", viewRun: "Look back", delRun: "Delete", delSure: "Delete this playthrough?", nextVol: v => `Go on to ${v}`,
     branchedFrom: (n, c) => `Replayed from ${c} of playthrough ${n}`, carriedFrom: n => `Continues playthrough ${n}`, presetFrom: x => `Backstory: ${x}`, noSaves: "No saves yet. Start a volume and your progress saves itself.", incompatible: "This playthrough is from an older version whose content has changed. It can't be continued, only deleted.",
@@ -372,10 +376,13 @@ const UI = {
 const $ = (s, r = document) => r.querySelector(s);
 const h = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs || {})) { if (k === "class") e.className = v; else if (k === "style") e.style.cssText = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else if (v !== null && v !== undefined && v !== false) e.setAttribute(k, v === true ? "" : v); } kids.flat(Infinity).forEach(k => { if (k !== null && k !== undefined && k !== false) e.append(k.nodeType ? k : String(k)); }); return e; };
 const store = { get(k, d) { try { const v = localStorage.getItem("sd.sg2." + k); return v ? JSON.parse(v) : d; } catch { return d; } }, set(k, v) { try { localStorage.setItem("sd.sg2." + k, JSON.stringify(v)); } catch {} }, del(k) { try { localStorage.removeItem("sd.sg2." + k); } catch {} } };
+const CAN_SAVE = (() => { try { localStorage.setItem("sd.sg2.__t", "1"); const ok = localStorage.getItem("sd.sg2.__t") === "1"; localStorage.removeItem("sd.sg2.__t"); return ok; } catch { return false; } })();
 const settings = Object.assign({ lang: /^zh/i.test(navigator.language || "") ? "zh" : "en", creator: false }, store.get("settings", {}));
 const L = () => UI[settings.lang];
 const t = x => x == null ? "" : (typeof x === "string" ? x : (x[settings.lang] ?? x.zh));
 const N = id => CAMP.nodes[id];
+// a character's name for an axis: the same three axes for everyone, each called in that person's own terms (Cao Cao's esteem reads "regard")
+const DL = (id, d) => t(((CAMP.chars[id] || {}).lens || {})[d] || CAMP.dims[d]);
 const chIndex = id => CAMP.chapters.findIndex(c => c.id === id);
 const varLabel = v => v.startsWith("debt.") ? t(CAMP.debts[v.slice(5)].title) : (CAMP.vars[v] ? t(CAMP.vars[v].label) : v);
 const fmtVal = (v, x) => { if (v.startsWith("debt.")) return L().debtState[x] || x; if (x === true) return "✓"; if (x === false || x === undefined) return "—"; if (v === "track") return t(CAMP.chars[x === "cao" ? "caocao" : "liubei"].name); return String(x); };
@@ -409,7 +416,20 @@ function putMeta(g) {
     frags: g.phase === "end" ? CC.endings(c, g).map(e => e.group + "." + e.frag) : null };
   const xs = runsList().filter(x => x.id !== m.id); xs.unshift(m); store.set("runs", xs);
 }
-function loadRun(id) { const g = store.get("run." + id, null); if (!g) return null; g.vol = g.vol || BOOK.volumes[0].id; return g; }
+/* v2.2 unified the relationship model: every character has warmth, trust and esteem. Older saves are converted on load. */
+const OLD_AXES = { "rel.caocao.regard": "rel.caocao.esteem", "rel.guanyu.respect": "rel.guanyu.esteem", "rel.zhuge.respect": "rel.zhuge.esteem", "rel.zhuge.wary": "rel.zhuge.trust", "rel.guanyu.owes": null };
+const oldVal = (k, x) => k === "rel.zhuge.wary" && typeof x === "number" ? Math.max(0, Math.min(10, 5 - x)) : x;
+function migrateState(g) {
+  if (!g || !g.v) return g;
+  const c = (VOL(g.vol || BOOK.volumes[0].id) || BOOK.volumes[0]).camp;
+  const fix = o => { if (!o) return o; for (const [k, nk] of Object.entries(OLD_AXES)) if (k in o) { const x = oldVal(k, o[k]); delete o[k]; if (nk) o[nk] = x; } return o; };
+  fix(g.v);
+  for (const [k, d] of Object.entries(c.vars)) if (k.startsWith("rel.") && !(k in g.v)) g.v[k] = d.init;
+  for (const e of g.ledger || []) if (e.changes) e.changes = e.changes.filter(ch => OLD_AXES[ch.var] !== null || !(ch.var in OLD_AXES)).map(ch => ch.var in OLD_AXES ? { var: OLD_AXES[ch.var], from: oldVal(ch.var, ch.from), to: oldVal(ch.var, ch.to) } : ch);
+  for (const e of g.log || []) if (e.rel) fix(e.rel);
+  return g;
+}
+function loadRun(id) { const g = store.get("run." + id, null); if (!g) return null; g.vol = g.vol || BOOK.volumes[0].id; return migrateState(g); }
 function delRun(id) { store.del("run." + id); store.del("ckpt." + id); store.set("runs", runsList().filter(x => x.id !== id)); if (store.get("cur", null) === id) store.del("cur"); }
 function checkpoint() {
   if (!G || G.ch < 0 || G.phase === "end") return;
@@ -427,7 +447,7 @@ function checkpoint() {
   store.set("run." + old.run, old); putMeta(old); store.set("cur", old.run);
 })();
 let G = null;
-{ const id = store.get("cur", null), g = id && loadRun(id); if (g && runCompatible(g)) { G = g; useVolLater = g.vol; } }
+const LAST = (() => { const id = store.get("cur", null), g = id && loadRun(id); return g && runCompatible(g) ? id : null; })();
 const V = { tab: "people", panelOpen: false, busy: false, confirmRestart: false, sim: null, play: null, firstNew: -1, home: null };
 
 /* ---------------- runtime capabilities ---------------- */
@@ -491,9 +511,9 @@ function newGame(volId = BOOK.volumes[0].id, carry = null, meta = {}) {
 function branchFrom(run, ch) {
   const base = G && run === G.run ? G : loadRun(run), ck = store.get("ckpt." + run, []).find(x => x.ch === ch);
   if (!base || !ck) return;
-  const g = JSON.parse(JSON.stringify(ck.snap));
+  const g = JSON.parse(JSON.stringify(ck.snap)); g.vol = g.vol || base.vol;
   g.log = JSON.parse(JSON.stringify(base.log.slice(0, ck.logLen))); g.ledger = JSON.parse(JSON.stringify(base.ledger.slice(0, ck.ledgerLen)));
-  Object.assign(g, { run: rid(), n: nextRunN(), created: Date.now(), branch: { run, n: base.n, ch }, build: BUILD });
+  Object.assign(g, { run: rid(), n: nextRunN(), created: Date.now(), branch: { run, n: base.n, ch }, build: BUILD }); migrateState(g);
   useVol(g.vol); G = g; V.home = null; V.branchAsk = null;
   V.firstNew = Math.max(0, g.log.map(e => e.k).lastIndexOf("ch")); save(); track("run_branch", { from: run, chapter: ch }); render(true);
 }
@@ -664,7 +684,7 @@ function matchTopic(text, tps) {
 }
 async function askScene(text, n, cid, options, lang, intent, prior, mode) {
   const c = CAMP.chars[cid];
-  const rel = Object.keys(c.dims).map(d => `${t(CAMP.dims[d])} ${G.v["rel." + cid + "." + d]}/10`).join(", ");
+  const rel = Object.keys(c.dims).map(d => `${DL(cid, d)} ${G.v["rel." + cid + "." + d]}/10`).join(", ");
   const imp = Object.keys(CAMP.vars).filter(k => k.startsWith("imp." + cid + ".") && G.v[k] > 0).map(k => `${CAMP.vars[k].imp} ${G.v[k]}/5`);
   const forbid = CC.futureTerms(CAMP, G.ch).map(x => x[lang]);
   const hist = talkHistory(n.id, lang);
@@ -740,7 +760,7 @@ function attachExtras(from) {
         .sort((a, b) => (b[0].intent === "promise") - (a[0].intent === "promise") || b[1] - a[1])[0];
       if (idx) { e.recall = { c, i: idx[1] }; G.recalled.push(c + ":" + idx[1]); if (RT.sample && RT.ai !== "off") askRecall(e); break; }
     }
-    if (n.talk) { const c = n.talk.char, off = Object.keys(CAMP.vars).some(k => k.startsWith(`imp.${c}.offended`) && G.v[k] > 0); const x = G.v[`rel.${c}.${MAIN_DIM[c]}`] || 0; e.opener = off || x <= 0 ? "cold" : x >= 5 ? "warm" : "neutral"; }
+    if (n.talk) { const c = n.talk.char, off = Object.keys(CAMP.vars).some(k => k.startsWith(`imp.${c}.offended`) && G.v[k] > 0); const x = G.v[`rel.${c}.${CAMP.chars[c].main}`] || 0; e.opener = off || x <= 0 ? "cold" : x >= 5 ? "warm" : "neutral"; }
   }
 }
 async function askModel(text, opts, lang) {
@@ -791,12 +811,12 @@ function face(id, mood = "neutral", round = false) {
   e.innerHTML = round ? PCACHE.get(k).replace("<svg ", '<svg preserveAspectRatio="xMidYMin slice" ') : PCACHE.get(k);
   return e;
 }
-const MAIN_DIM = { liubei: "trust", caocao: "regard", guanyu: "respect", zhuge: "respect", wenzhi: "intimacy" };
 function levelMood(id, v) {
   v = v || G.v;
-  if (id === "zhuge" && (v["rel.zhuge.wary"] || 0) >= 3) return "cold";
-  const x = v[`rel.${id}.${MAIN_DIM[id]}`] || 0;
-  if (x >= 6) return id === "wenzhi" ? "shy" : "warm";
+  const ch = CAMP.chars[id] || {};
+  if ((v[`rel.${id}.trust`] ?? 5) <= 1 && (v[`rel.${id}.warmth`] ?? 5) <= 1) return "cold";
+  const x = v[`rel.${id}.${ch.main || "warmth"}`] || 0;
+  if (x >= 6) return ch.romance ? "shy" : "warm";
   if (x <= 1 && id !== "zhuge") return "cold";
   return "neutral";
 }
@@ -815,7 +835,7 @@ function relChips(seq) {
   e.changes.filter(c => c.var.startsWith("rel.") || c.var.startsWith("imp.") || c.var.startsWith("heat.")).forEach(c => { const [kind, id, dim] = c.var.split("."); (by[id] = by[id] || []).push([kind, dim, c.to - c.from, c.to]); });
   const rash = e.changes.find(c => c.var === "renown.rash");
   const ids = Object.keys(by); if (!ids.length && !rash) return null;
-  const lab = (kind, dim, id) => kind === "heat" ? L().heatL : kind === "imp" ? L().impL + t(CAMP.vars[`imp.${id}.${dim}`].label).split(settings.lang === "zh" ? "·" : " · ").pop() : t(CAMP.dims[dim]);
+  const lab = (kind, dim, id) => kind === "heat" ? L().heatL : kind === "imp" ? L().impL + t(CAMP.vars[`imp.${id}.${dim}`].label).split(settings.lang === "zh" ? "·" : " · ").pop() : DL(id, dim);
   const good = (kind, dim, d) => kind === "imp" || kind === "heat" ? d < 0 : (dim === "wary" ? d < 0 : d > 0);
   return h("div", { class: "chips" }, ids.map(id => h("span", { class: "chip" }, face(id, deltaMood(id, seq) || (by[id].some(x => x[0] === "imp" && x[2] > 0) ? "cold" : "neutral"), true), h("b", {}, t(CAMP.chars[id].name)),
     by[id].map(([kind, dim, d, to]) => h("span", { class: good(kind, dim, d) ? "up" : "down" }, kind === "heat" ? `${lab(kind, dim, id)} ${to}/${CAMP.chars[id].heat.line}` : `${lab(kind, dim, id)} ${d > 0 ? "+" : ""}${d}`)))),
@@ -838,7 +858,8 @@ function render(scrollNew) {
 function renderTop() {
   const top = $("#top"); top.replaceChildren();
   top.append(h("div", { class: "brand" }, MARK(), h("span", { class: "wm" }, h("b", {}, "Story"), "Date")),
-    h("span", { class: "top-title" }, G ? `${t(CAMP.title)} · ${t(CAMP.volume)}` : ""),
+    h("span", { class: "top-title" }, G ? `${t(CAMP.volume)} · ${L().runName(G.n)}` : ""),
+    G ? h("span", { class: "savedot", title: CAN_SAVE ? L().autoSaved : L().noSave }, CAN_SAVE ? "✓ " + L().autoSaved : L().noSaveShort) : "",
     h("span", { class: "top-sp" }),
     G ? h("button", { type: "button", class: "tbtn", onclick: goHome }, L().toc) : "",
     h("span", { class: "seg", role: "group", "aria-label": "Language" }, ["zh", "en"].map(l => h("button", { type: "button", "aria-pressed": String(settings.lang === l), onclick: () => setLang(l) }, l === "zh" ? "中" : "EN"))),
@@ -895,12 +916,15 @@ function renderHome() {
         h("button", { class: "linkbtn", type: "button", onclick: () => { if (!asking) { H.del = m.id; return renderStory(); } H.del = null; delRun(m.id); renderStory(); } }, asking ? l.delSure : l.delRun),
         asking ? h("button", { class: "linkbtn", type: "button", onclick: () => { H.del = null; renderStory(); } }, l.cancel) : null));
   };
+  const last = LAST && runs.find(m => m.id === LAST);
   s.append(h("section", { class: "hero" },
     painting("garden", ["storm"], t(BOOK.title)),
     h("h1", {}, t(BOOK.title)),
     l.premise.map(p => h("p", {}, p)),
     runs.length ? null : h("ol", { class: "how" }, l.how.map((x, i) => h("li", {}, h("span", { class: "n" }, String(i + 1)), h("span", {}, h("b", {}, x[0]), " ", x[1]))))),
-    runs.length ? h("section", { class: "home-sec" }, h("h2", {}, l.mySaves), h("div", { class: "saves" }, runs.map(runRow))) : null,
+    CAN_SAVE ? "" : h("p", { class: "oldsave" }, l.noSave),
+    last ? h("div", { class: "resume" }, h("div", {}, h("b", {}, l.resumeH), h("div", { class: "muted" }, runLabel(last))), h("button", { class: "btn", type: "button", onclick: () => openRun(last.id) }, last.status === "end" ? l.viewRun : l.contRun)) : "",
+    runs.length ? h("section", { class: "home-sec" }, h("h2", {}, l.mySaves), h("p", { class: "muted", style: "margin:-6px 0 10px;font-size:13.5px" }, l.savesNote), h("div", { class: "saves" }, runs.map(runRow))) : "",
     h("section", { class: "home-sec" }, h("h2", {}, l.toc), h("div", { class: "vols" }, BOOK.volumes.map(volCard))),
     h("p", { class: "note" }, l.rightsNote, RT.db ? " " + l.trackNote : ""));
 }
@@ -953,7 +977,7 @@ function renderStory() {
         dev && n.art ? h("div", { class: "dev" }, h("span", { class: "k" }, n.art.scene), ` · ${l.layersL}: ${al.join(", ") || "—"}`, h("div", {}, h("span", { class: "k" }, l.artPrompt + "："), t(CAMP.art_prompts[n.art.scene]))) : null,
         h("h3", {}, t(n.title), dev ? [h("span", { class: "badge " + n.lock }, l.lockNames[n.lock]), h("span", { class: "badge" }, t(n.canon))] : null),
         n.talk ? h("div", { class: "talkhead" }, face(n.talk.char, levelMood(n.talk.char, e.rel)), h("div", {}, h("b", {}, t(CAMP.chars[n.talk.char].name)),
-          h("span", { class: "muted", style: "font-size:13px" }, Object.keys(CAMP.chars[n.talk.char].dims).map(d => `${t(CAMP.dims[d])} ${(e.rel || G.v)["rel." + n.talk.char + "." + d]}`).join(" · "))))
+          h("span", { class: "muted", style: "font-size:13px" }, Object.keys(CAMP.chars[n.talk.char].dims).map(d => `${DL(n.talk.char, d)} ${(e.rel || G.v)["rel." + n.talk.char + "." + d]}`).join(" · "))))
           : (n.cast && n.cast.length ? h("div", { class: "cast" }, n.cast.filter(c => CC.evalCond(G, c.when) && !(CAMP.chars[c.id].from_chapter && G.ch < chIndex(CAMP.chars[c.id].from_chapter) && !e.rel)).map(c => {
               const ch = after ? n.choices.find(x => x.id === after.c) : null;
               const m = (after && deltaMood(c.id, after.seq)) || (ch && ch.foresight ? "surprised" : null) || levelMood(c.id, e.rel);
@@ -1041,7 +1065,7 @@ function recapEl(ci) {
   const debts = es.flatMap(e => (e.debts || []).filter(d => d[1] === "open").map(d => t(CAMP.debts[d[0]].title)));
   const commits = es.filter(e => e.kind === "commit" && !e.status).length;
   if (!Object.keys(by).length && !echoes && !debts.length && !commits) return null;
-  const lab = (kind, dim, id) => kind === "imp" ? l.impL + t(CAMP.vars[`imp.${id}.${dim}`].label).split(settings.lang === "zh" ? "·" : " · ").pop() : t(CAMP.dims[dim]);
+  const lab = (kind, dim, id) => kind === "imp" ? l.impL + t(CAMP.vars[`imp.${id}.${dim}`].label).split(settings.lang === "zh" ? "·" : " · ").pop() : DL(id, dim);
   const good = (kind, dim, d) => kind === "imp" ? d < 0 : (dim === "wary" ? d < 0 : d > 0);
   return h("div", { class: "recap" }, h("b", {}, l.recapH(l.chap(ci))),
     Object.keys(by).length ? h("div", { class: "chips" }, Object.keys(by).map(id => h("span", { class: "chip" }, face(id, by[id].some(x => !good(...x)) ? "cold" : "warm", true), h("b", {}, t(CAMP.chars[id].name)),
@@ -1202,7 +1226,7 @@ function mapEl(where = "panel") {
   const d = h("div", { class: "map" });
   if (view === "realm") {
     const control = R.control[chId] || {};
-    d.innerHTML = ART.realmMap(stops, { lang: settings.lang, current: cur, control, realmPlaces: CAMP.places ? Object.fromEntries(Object.entries(CAMP.places).map(([k, v]) => [k, [v.rx, v.ry]])) : null, factions: Object.fromEntries(Object.entries(R.factions).map(([k, f]) => [k, { color: f.color }])),
+    d.innerHTML = ART.realmMap(stops, { lang: settings.lang, current: cur, control, realmPlaces: CAMP.places ? Object.fromEntries(Object.entries(CAMP.places).map(([k, v]) => [k, [v.rx, v.ry]])) : null, placeNames: CAMP.places || null, factions: Object.fromEntries(Object.entries(R.factions).map(([k, f]) => [k, { color: f.color }])),
       provNames: Object.fromEntries(Object.entries(R.provinces).map(([k, v]) => [k, t(v)])), note: t(R.note) });
     const used = [...new Set(Object.values(control).flat())];
     wrap.append(d, h("p", { class: "muted", style: "font-size:13px;margin:8px 0 4px" }, t(R.captions[chId])),
@@ -1222,7 +1246,7 @@ function evidence(v) {
 }
 function barRow(v, open, cls = "") {
   const d = CAMP.vars[v], x = G.v[v] || 0, w = Math.round(100 * (x - d.min) / (d.max - d.min));
-  const lab = d.dim ? t(CAMP.dims[d.dim]) : t(d.label);
+  const lab = d.dim ? DL(d.char, d.dim) : t(d.label);
   const b = h("button", { type: "button", class: "bar " + cls, style: `--w:${w}%`, "aria-expanded": String(open), onclick: () => { V.open = V.open === v ? null : v; renderPanel(); } }, h("span", {}, lab), h("i", {}), h("em", {}, String(x)));
   return [b, open ? evidence(v) : null];
 }
@@ -1233,7 +1257,7 @@ function renderPeople() {
     const sealEl = face(cid, levelMood(cid), true); sealEl.style.width = "40px";
     box.append(h("div", { class: "ch" }, h("h5", {}, sealEl, t(c.name), c.original ? h("small", {}, l.original) : null),
       Object.keys(c.dims).map(dim => { const v = `rel.${cid}.${dim}`; return [barRow(v, V.open === v, dim === "intimacy" ? "rose" : (dim === "wary" ? "neg" : "")),
-        (v === "rel.liubei.trust" && G.v.track === "liu") ? h("div", { class: "hintline" }, l.meterTrust) : (v === "rel.caocao.regard" && G.v.track === "cao") ? h("div", { class: "hintline" }, l.meterRegard) : null]; }),
+        (v === "rel.liubei.trust" && G.v.track === "liu") ? h("div", { class: "hintline" }, l.meterTrust) : (v === "rel.caocao.esteem" && G.v.track === "cao") ? h("div", { class: "hintline" }, l.meterRegard) : null]; }),
       (() => { const im = Object.keys(CAMP.vars).filter(k => k.startsWith(`imp.${cid}.`) && G.v[k] > 0); return im.length ? h("div", { class: "pills" }, im.map(k => h("span", { class: "pill no", style: "color:var(--rose);border-color:var(--rose)" }, `${t(CAMP.vars[k].label).split(settings.lang === "zh" ? "·" : " · ").pop()} ${G.v[k]}`))) : null; })()));
   }
   box.append(h("div", { class: "ch" }, h("h5", {}, l.renown), ["renown.loyal", "renown.cunning", "uncanny"].map(v => barRow(v, V.open === v, v === "uncanny" ? "neg" : "")), h("div", { class: "hintline" }, CAMP.meters ? t(CAMP.meters.uncanny) : l.meterUncanny),

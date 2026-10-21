@@ -351,6 +351,18 @@
     "en": "Pleaded with Guan Yu at Huarong"
    }
   },
+  "rel.liubei.warmth": {
+   "type": "num",
+   "init": 3,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "刘备·交情",
+    "en": "Liu Bei · Friendship"
+   },
+   "char": "liubei",
+   "dim": "warmth"
+  },
   "rel.liubei.trust": {
    "type": "num",
    "init": 3,
@@ -363,7 +375,43 @@
    "char": "liubei",
    "dim": "trust"
   },
-  "rel.caocao.regard": {
+  "rel.liubei.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "刘备·看重",
+    "en": "Liu Bei · Esteem"
+   },
+   "char": "liubei",
+   "dim": "esteem"
+  },
+  "rel.caocao.warmth": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "曹操·交情",
+    "en": "Cao Cao · Friendship"
+   },
+   "char": "caocao",
+   "dim": "warmth"
+  },
+  "rel.caocao.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "曹操·信任",
+    "en": "Cao Cao · Trust"
+   },
+   "char": "caocao",
+   "dim": "trust"
+  },
+  "rel.caocao.esteem": {
    "type": "num",
    "init": 0,
    "min": 0,
@@ -373,9 +421,33 @@
     "en": "Cao Cao · Regard"
    },
    "char": "caocao",
-   "dim": "regard"
+   "dim": "esteem"
   },
-  "rel.guanyu.respect": {
+  "rel.guanyu.warmth": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·交情",
+    "en": "Guan Yu · Friendship"
+   },
+   "char": "guanyu",
+   "dim": "warmth"
+  },
+  "rel.guanyu.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·信任",
+    "en": "Guan Yu · Trust"
+   },
+   "char": "guanyu",
+   "dim": "trust"
+  },
+  "rel.guanyu.esteem": {
    "type": "num",
    "init": 1,
    "min": 0,
@@ -385,21 +457,33 @@
     "en": "Guan Yu · Respect"
    },
    "char": "guanyu",
-   "dim": "respect"
+   "dim": "esteem"
   },
-  "rel.guanyu.owes": {
+  "rel.zhuge.warmth": {
    "type": "num",
-   "init": 0,
+   "init": 1,
    "min": 0,
    "max": 10,
    "label": {
-    "zh": "关羽·人情（他欠你）",
-    "en": "Guan Yu · Owes you"
+    "zh": "诸葛亮·交情",
+    "en": "Zhuge Liang · Friendship"
    },
-   "char": "guanyu",
-   "dim": "owes"
+   "char": "zhuge",
+   "dim": "warmth"
   },
-  "rel.zhuge.respect": {
+  "rel.zhuge.trust": {
+   "type": "num",
+   "init": 5,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "诸葛亮·信任",
+    "en": "Zhuge Liang · Trust"
+   },
+   "char": "zhuge",
+   "dim": "trust"
+  },
+  "rel.zhuge.esteem": {
    "type": "num",
    "init": 0,
    "min": 0,
@@ -409,19 +493,19 @@
     "en": "Zhuge Liang · Respect"
    },
    "char": "zhuge",
-   "dim": "respect"
+   "dim": "esteem"
   },
-  "rel.zhuge.wary": {
+  "rel.wenzhi.warmth": {
    "type": "num",
-   "init": 0,
+   "init": 3,
    "min": 0,
    "max": 10,
    "label": {
-    "zh": "诸葛亮·戒心",
-    "en": "Zhuge Liang · Wariness"
+    "zh": "温芷·交情",
+    "en": "Wen Zhi · Friendship"
    },
-   "char": "zhuge",
-   "dim": "wary"
+   "char": "wenzhi",
+   "dim": "warmth"
   },
   "rel.wenzhi.trust": {
    "type": "num",
@@ -434,6 +518,18 @@
    },
    "char": "wenzhi",
    "dim": "trust"
+  },
+  "rel.wenzhi.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "温芷·看重",
+    "en": "Wen Zhi · Esteem"
+   },
+   "char": "wenzhi",
+   "dim": "esteem"
   },
   "rel.wenzhi.intimacy": {
    "type": "num",
@@ -803,8 +899,18 @@
     "en": "Liu Bei"
    },
    "dims": {
+    "warmth": [
+     3,
+     0,
+     10
+    ],
     "trust": [
      3,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
      0,
      10
     ]
@@ -922,6 +1028,24 @@
      1
     ],
     "line": 3
+   },
+   "values": {
+    "ren": [
+     "trust",
+     1
+    ],
+    "yi": [
+     "trust",
+     1
+    ],
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "li": [
+     "warmth",
+     -1
+    ]
    }
   },
   "caocao": {
@@ -930,13 +1054,29 @@
     "en": "Cao Cao"
    },
    "dims": {
-    "regard": [
+    "warmth": [
+     0,
+     0,
+     10
+    ],
+    "trust": [
+     1,
+     0,
+     10
+    ],
+    "esteem": [
      0,
      0,
      10
     ]
    },
-   "main": "regard",
+   "main": "esteem",
+   "lens": {
+    "esteem": {
+     "zh": "赏识",
+     "en": "Regard"
+    }
+   },
    "persona": {
     "zh": "曹操：丞相，雄才大略，多疑而爱才，好诗酒；说话直接、带笑、时而锋利，会反问。称玩家“子衡”。",
     "en": "Cao Cao: the Chancellor, brilliant, suspicious yet fond of talent, loves poetry and wine; direct, amused, sometimes cutting, likes to answer with questions. Calls the player Ziheng."
@@ -1052,6 +1192,24 @@
      1
     ],
     "line": 2
+   },
+   "values": {
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ],
+    "yi": [
+     "esteem",
+     1
+    ],
+    "ren": [
+     "esteem",
+     -1
+    ]
    }
   },
   "guanyu": {
@@ -1060,18 +1218,29 @@
     "en": "Guan Yu"
    },
    "dims": {
-    "respect": [
+    "warmth": [
      1,
      0,
      10
     ],
-    "owes": [
+    "trust": [
+     2,
      0,
+     10
+    ],
+    "esteem": [
+     1,
      0,
      10
     ]
    },
-   "main": "respect",
+   "main": "esteem",
+   "lens": {
+    "esteem": {
+     "zh": "敬重",
+     "en": "Respect"
+    }
+   },
    "persona": {
     "zh": "关羽：寡言、重义、读《春秋》，对刘备忠诚到底，对外人戒备；句子短，语气庄重，不说笑。称玩家“子衡”。",
     "en": "Guan Yu: taciturn, honor-bound, reads the Spring and Autumn Annals, utterly loyal to Liu Bei and guarded with others; short sentences, grave tone, no jokes. Calls the player Ziheng."
@@ -1187,6 +1356,24 @@
      1
     ],
     "line": 3
+   },
+   "values": {
+    "yi": [
+     "esteem",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ],
+    "li": [
+     "esteem",
+     -1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ]
    }
   },
   "zhuge": {
@@ -1195,19 +1382,30 @@
     "en": "Zhuge Liang"
    },
    "dims": {
-    "respect": [
-     0,
+    "warmth": [
+     1,
      0,
      10
     ],
-    "wary": [
+    "trust": [
+     5,
+     0,
+     10
+    ],
+    "esteem": [
      0,
      0,
      10
     ]
    },
    "from_chapter": "c5",
-   "main": "respect",
+   "main": "esteem",
+   "lens": {
+    "esteem": {
+     "zh": "敬重",
+     "en": "Respect"
+    }
+   },
    "persona": {
     "zh": "诸葛亮：二十七岁，刚出山，从容、机敏、谦和而难以看透；喜欢用反问试探人。称玩家“子衡兄”。",
     "en": "Zhuge Liang: twenty-seven, newly joined; composed, quick, courteous and hard to read; tests people with questions. Calls the player Ziheng."
@@ -1320,6 +1518,24 @@
      1
     ],
     "line": 4
+   },
+   "values": {
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ],
+    "ren": [
+     "warmth",
+     1
+    ],
+    "li": [
+     "trust",
+     -1
+    ]
    }
   },
   "wenzhi": {
@@ -1328,7 +1544,17 @@
     "en": "Wen Zhi"
    },
    "dims": {
+    "warmth": [
+     3,
+     0,
+     10
+    ],
     "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
      2,
      0,
      10
@@ -1448,29 +1674,35 @@
      2
     ],
     "line": 3
+   },
+   "values": {
+    "ren": [
+     "warmth",
+     1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ],
+    "li": [
+     "trust",
+     -1
+    ]
    }
   }
  },
  "dims": {
+  "warmth": {
+   "zh": "交情",
+   "en": "Friendship"
+  },
   "trust": {
    "zh": "信任",
    "en": "Trust"
   },
-  "regard": {
-   "zh": "赏识",
-   "en": "Regard"
-  },
-  "respect": {
-   "zh": "敬重",
-   "en": "Respect"
-  },
-  "owes": {
-   "zh": "人情（他欠你）",
-   "en": "Owes you"
-  },
-  "wary": {
-   "zh": "戒心",
-   "en": "Wariness"
+  "esteem": {
+   "zh": "看重",
+   "en": "Esteem"
   },
   "intimacy": {
    "zh": "亲近",
@@ -1999,7 +2231,7 @@
      ],
      "effects": [
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
@@ -2028,7 +2260,7 @@
      ],
      "effects": [
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
@@ -2349,7 +2581,7 @@
        "by": 2
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       },
       {
@@ -2359,6 +2591,10 @@
      ],
      "echo": [
       "e_cover"
+     ],
+     "values": [
+      "yi",
+      "zhi"
      ],
      "cg": "thunder"
     },
@@ -2413,7 +2649,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 2
       },
       {
@@ -2458,6 +2694,10 @@
         }
        ]
       }
+     ],
+     "values": [
+      "yong",
+      "zhi"
      ],
      "cg": "thunder"
     }
@@ -2523,7 +2763,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        },
        {
@@ -2554,7 +2794,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        }
       ],
@@ -2613,7 +2853,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        },
        {
@@ -2992,7 +3232,10 @@
       "v": "flag.fast_departure",
       "op": "!=",
       "val": true
-     }
+     },
+     "values": [
+      "yi"
+     ]
     },
     {
      "id": "talk",
@@ -3015,7 +3258,7 @@
        "by": 1
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
      ],
@@ -3032,7 +3275,10 @@
      "hint": {
       "zh": "许褚认得你——梅园那天之后，丞相府的人都认得你",
       "en": "Xu Chu knows your face. Since the plum garden, everyone in the Chancellor's household does"
-     }
+     },
+     "values": [
+      "zhi"
+     ]
     },
     {
      "id": "onward",
@@ -3190,7 +3436,7 @@
      ],
      "effects": [
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 2
       },
       {
@@ -3257,7 +3503,7 @@
        "by": 1
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
@@ -3369,7 +3615,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 2
       },
       {
@@ -3377,7 +3623,7 @@
        "to": true
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": -1
       },
       {
@@ -3387,6 +3633,9 @@
      ],
      "echo": [
       "e_post"
+     ],
+     "values": [
+      "li"
      ]
     },
     {
@@ -3406,13 +3655,16 @@
      ],
      "effects": [
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
        "add": "renown.loyal",
        "by": 1
       }
+     ],
+     "values": [
+      "yi"
      ]
     },
     {
@@ -3430,7 +3682,10 @@
        }
       }
      ],
-     "effects": []
+     "effects": [],
+     "values": [
+      "zhi"
+     ]
     }
    ],
    "salience": 2,
@@ -3675,7 +3930,7 @@
      ],
      "effects": [
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
@@ -3686,6 +3941,10 @@
        "add": "rel.liubei.trust",
        "by": 1
       }
+     ],
+     "values": [
+      "yi",
+      "yong"
      ],
      "place": "gucheng"
     },
@@ -3722,7 +3981,7 @@
        "by": 1
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
@@ -3751,6 +4010,9 @@
        "transform"
       ]
      ],
+     "values": [
+      "zhi"
+     ],
      "place": "gucheng"
     },
     {
@@ -3778,11 +4040,11 @@
        "by": -3
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": -1
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 2
       },
       {
@@ -3793,7 +4055,7 @@
      "req": {
       "any": [
        {
-        "v": "rel.caocao.regard",
+        "v": "rel.caocao.esteem",
         "op": ">=",
         "val": 2
        },
@@ -3810,6 +4072,9 @@
      },
      "echo": [
       "e_stay"
+     ],
+     "values": [
+      "li"
      ]
     }
    ],
@@ -3967,7 +4232,7 @@
        "by": 1
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       }
      ],
@@ -4451,7 +4716,7 @@
      ],
      "effects": [
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 2
       },
       {
@@ -4463,7 +4728,11 @@
       "v": "flag.xushu_stayed",
       "op": "!=",
       "val": true
-     }
+     },
+     "values": [
+      "ren",
+      "cheng"
+     ]
     },
     {
      "id": "co_rec",
@@ -4482,7 +4751,7 @@
      ],
      "effects": [
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 2
       },
       {
@@ -4500,6 +4769,9 @@
        "d_recommend",
        "reroute"
       ]
+     ],
+     "values": [
+      "yi"
      ]
     },
     {
@@ -4527,7 +4799,7 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       },
       {
@@ -4555,6 +4827,9 @@
        "d_recommend",
        "reroute"
       ]
+     ],
+     "values": [
+      "zhi"
      ]
     },
     {
@@ -4585,8 +4860,8 @@
      ],
      "effects": [
       {
-       "add": "rel.zhuge.wary",
-       "by": 2
+       "add": "rel.zhuge.trust",
+       "by": -2
       },
       {
        "add": "rel.liubei.trust",
@@ -4609,6 +4884,9 @@
        "d_recommend",
        "reroute"
       ]
+     ],
+     "values": [
+      "li"
      ]
     },
     {
@@ -4632,11 +4910,11 @@
        "by": 2
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 2
+       "add": "rel.zhuge.trust",
+       "by": -2
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       },
       {
@@ -4650,6 +4928,9 @@
        "d_recommend",
        "reroute"
       ]
+     ],
+     "values": [
+      "zhi"
      ]
     }
    ],
@@ -4738,12 +5019,12 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": 2
        },
        {
-        "add": "rel.zhuge.wary",
-        "by": 1
+        "add": "rel.zhuge.trust",
+        "by": -1
        },
        {
         "add": "uncanny",
@@ -4769,7 +5050,7 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": 1
        },
        {
@@ -4796,7 +5077,7 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": -1
        }
       ],
@@ -4819,7 +5100,7 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": 1
        },
        {
@@ -4846,7 +5127,7 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": 1
        }
       ],
@@ -5072,7 +5353,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 2
       },
       {
@@ -5105,7 +5386,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -1
       },
       {
@@ -5284,6 +5565,9 @@
      ],
      "echo": [
       "e_abandon"
+     ],
+     "values": [
+      "li"
      ]
     },
     {
@@ -5343,7 +5627,11 @@
      "hint": {
       "zh": "需要刘备的信任 ≥ 4，他才会把家眷托给你",
       "en": "Needs Liu Bei's trust ≥ 4 to entrust his family to you"
-     }
+     },
+     "values": [
+      "ren",
+      "yong"
+     ]
     },
     {
      "id": "dust",
@@ -5511,7 +5799,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
      ]
@@ -5533,7 +5821,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -1
       },
       {
@@ -5668,7 +5956,7 @@
      ],
      "effects": [
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       }
      ]
@@ -5694,8 +5982,8 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       }
      ],
      "foresight": true
@@ -5828,7 +6116,7 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       },
       {
@@ -6006,8 +6294,8 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       }
      ],
      "foresight": true,
@@ -6039,7 +6327,7 @@
        "by": 2
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
      ],
@@ -6199,6 +6487,10 @@
      "echo": [
       "e_row"
      ],
+     "values": [
+      "ren",
+      "yong"
+     ],
      "cg": "fireboat"
     },
     {
@@ -6218,19 +6510,22 @@
      ],
      "effects": [
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       }
      ],
      "req": {
-      "v": "rel.zhuge.respect",
+      "v": "rel.zhuge.esteem",
       "op": ">=",
       "val": 1
      },
      "hint": {
       "zh": "需要诸葛亮的敬重 ≥ 1",
       "en": "Needs Zhuge Liang's respect ≥ 1"
-     }
+     },
+     "values": [
+      "zhi"
+     ]
     },
     {
      "id": "watch",
@@ -6511,6 +6806,10 @@
      "foresight": true,
      "echo": [
       "e_reserve"
+     ],
+     "values": [
+      "zhi",
+      "cheng"
      ]
     },
     {
@@ -6530,9 +6829,12 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
+     ],
+     "values": [
+      "li"
      ]
     },
     {
@@ -6576,6 +6878,9 @@
      "foresight": true,
      "echo": [
       "e_warned"
+     ],
+     "values": [
+      "ren"
      ]
     }
    ],
@@ -6738,12 +7043,12 @@
        "to": true
       },
       {
-       "add": "rel.guanyu.owes",
-       "by": 2
+       "add": "rel.guanyu.esteem",
+       "by": 1
       },
       {
-       "add": "rel.guanyu.respect",
-       "by": 1
+       "add": "rel.guanyu.warmth",
+       "by": 2
       },
       {
        "add": "renown.loyal",
@@ -6755,7 +7060,7 @@
        {
         "any": [
          {
-          "v": "rel.guanyu.respect",
+          "v": "rel.guanyu.esteem",
           "op": ">=",
           "val": 3
          },
@@ -6777,6 +7082,10 @@
       "zh": "需要关羽的敬重 ≥ 3 或刘备的信任 ≥ 6，且关羽没有被你冒犯过两次以上",
       "en": "Needs Guan Yu's respect ≥ 3 or Liu Bei's trust ≥ 6, and not to have offended Guan Yu twice"
      },
+     "values": [
+      "yi",
+      "yong"
+     ],
      "cg": "turn"
     },
     {
@@ -6834,16 +7143,16 @@
        "to": true
       },
       {
-       "add": "rel.guanyu.owes",
+       "add": "rel.guanyu.warmth",
        "by": 1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       }
      ],
      "req": {
-      "v": "rel.zhuge.respect",
+      "v": "rel.zhuge.esteem",
       "op": ">=",
       "val": 3
      },
@@ -6851,6 +7160,9 @@
       "zh": "需要诸葛亮的敬重 ≥ 3",
       "en": "Needs Zhuge Liang's respect ≥ 3"
      },
+     "values": [
+      "yi"
+     ],
      "cg": "turn"
     },
     {
@@ -6895,7 +7207,10 @@
      "hint": {
       "zh": "需要与温芷足够亲近，且她仍在曹营",
       "en": "Needs closeness with Wen Zhi, and for her to still be in Cao's camp"
-     }
+     },
+     "values": [
+      "ren"
+     ]
     },
     {
      "id": "silent",
@@ -7106,12 +7421,12 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 2
       }
      ],
      "req": {
-      "v": "rel.guanyu.respect",
+      "v": "rel.guanyu.esteem",
       "op": ">=",
       "val": 3
      },
@@ -7119,6 +7434,10 @@
       "zh": "需要关羽的敬重 ≥ 3",
       "en": "Needs Guan Yu's respect ≥ 3"
      },
+     "values": [
+      "ren",
+      "yi"
+     ],
      "cg": "turn"
     },
     {
@@ -7138,9 +7457,12 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
+     ],
+     "values": [
+      "zhi"
      ],
      "cg": "turn"
     },
@@ -7161,13 +7483,17 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       },
       {
        "add": "renown.loyal",
        "by": 1
       }
+     ],
+     "values": [
+      "yong",
+      "yi"
      ],
      "cg": "turn"
     }
@@ -7382,7 +7708,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ],
@@ -7404,7 +7730,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ]
@@ -7429,12 +7755,12 @@
         "to": true
        },
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ],
       "req": {
-       "v": "rel.guanyu.respect",
+       "v": "rel.guanyu.esteem",
        "op": ">=",
        "val": 2
       },
@@ -7467,7 +7793,7 @@
         "by": 1
        },
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        },
        {
@@ -7715,7 +8041,7 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": 1
        }
       ]
@@ -7740,11 +8066,11 @@
         "by": 1
        },
        {
-        "add": "rel.zhuge.wary",
-        "by": 2
+        "add": "rel.zhuge.trust",
+        "by": -2
        },
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": 1
        },
        {
@@ -7774,16 +8100,16 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.respect",
+        "add": "rel.zhuge.esteem",
         "by": 1
        },
        {
-        "add": "rel.zhuge.wary",
-        "by": -1
+        "add": "rel.zhuge.trust",
+        "by": 1
        }
       ],
       "req": {
-       "v": "rel.zhuge.respect",
+       "v": "rel.zhuge.esteem",
        "op": ">=",
        "val": 2
       },
@@ -7808,8 +8134,8 @@
       ],
       "effects": [
        {
-        "add": "rel.zhuge.wary",
-        "by": -1
+        "add": "rel.zhuge.trust",
+        "by": 1
        }
       ],
       "when": {
@@ -7899,7 +8225,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        }
       ]
@@ -7920,7 +8246,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        },
        {
@@ -7949,7 +8275,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        }
       ]
@@ -7974,7 +8300,7 @@
         "by": 1
        },
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": -1
        },
        {
@@ -8454,7 +8780,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ],
@@ -8476,11 +8802,11 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.owes",
+        "add": "rel.guanyu.warmth",
         "by": 1
        },
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ],
@@ -8507,7 +8833,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ]
@@ -8610,7 +8936,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        }
       ],
@@ -8632,12 +8958,12 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 2
        }
       ],
       "req": {
-       "v": "rel.caocao.regard",
+       "v": "rel.caocao.esteem",
        "op": ">=",
        "val": 3
       },
@@ -8663,7 +8989,7 @@
       ],
       "effects": [
        {
-        "add": "rel.caocao.regard",
+        "add": "rel.caocao.esteem",
         "by": 1
        }
       ]
@@ -8719,7 +9045,7 @@
         "val": "liu"
        },
        {
-        "v": "rel.zhuge.respect",
+        "v": "rel.zhuge.esteem",
         "op": ">=",
         "val": 1
        }
@@ -8780,7 +9106,10 @@
        "to": true
       }
      ],
-     "ends": true
+     "ends": true,
+     "values": [
+      "cheng"
+     ]
     },
     {
      "id": "reason_liu",
@@ -8803,8 +9132,8 @@
        "by": -2
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 2
+       "add": "rel.zhuge.trust",
+       "by": -2
       }
      ],
      "when": {
@@ -8813,14 +9142,17 @@
       "val": "liu"
      },
      "req": {
-      "v": "rel.zhuge.respect",
+      "v": "rel.zhuge.esteem",
       "op": ">=",
       "val": 3
      },
      "hint": {
       "zh": "需要诸葛亮的敬重 ≥ 3，他才会替你说话",
       "en": "Needs Zhuge Liang's respect ≥ 3 for him to speak for you"
-     }
+     },
+     "values": [
+      "zhi"
+     ]
     },
     {
      "id": "reason_cao",
@@ -8843,7 +9175,7 @@
        "by": -2
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -1
       }
      ],
@@ -8853,14 +9185,17 @@
       "val": "cao"
      },
      "req": {
-      "v": "rel.caocao.regard",
+      "v": "rel.caocao.esteem",
       "op": ">=",
       "val": 6
      },
      "hint": {
       "zh": "需要曹操的赏识 ≥ 6",
       "en": "Needs Cao's regard ≥ 6"
-     }
+     },
+     "values": [
+      "zhi"
+     ]
     },
     {
      "id": "deny",
@@ -8887,7 +9222,7 @@
        "by": -2
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -2
       }
      ]
@@ -9132,7 +9467,7 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
      ]
@@ -9154,7 +9489,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 3
       },
       {
@@ -9183,7 +9518,7 @@
       "val": "cao"
      },
      {
-      "v": "rel.caocao.regard",
+      "v": "rel.caocao.esteem",
       "op": "<=",
       "val": 1
      }
@@ -9266,7 +9601,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -2
       },
       {
@@ -9275,7 +9610,7 @@
       }
      ],
      "req": {
-      "v": "rel.caocao.regard",
+      "v": "rel.caocao.esteem",
       "op": ">=",
       "val": 5
      },
@@ -9406,9 +9741,12 @@
        "by": -1
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -1
       }
+     ],
+     "values": [
+      "cheng"
      ]
     },
     {
@@ -9440,7 +9778,7 @@
         "val": 6
        },
        {
-        "v": "rel.caocao.regard",
+        "v": "rel.caocao.esteem",
         "op": ">=",
         "val": 6
        }
@@ -9449,7 +9787,11 @@
      "hint": {
       "zh": "需要主公足够信你（刘备信任或曹操赏识 ≥ 6）",
       "en": "Needs your lord's confidence (Liu Bei's trust or Cao's regard ≥ 6)"
-     }
+     },
+     "values": [
+      "cheng",
+      "yong"
+     ]
     },
     {
      "id": "leave",
@@ -9557,13 +9899,17 @@
        "by": 1
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -2
       },
       {
        "add": "renown.rash",
        "by": 1
       }
+     ],
+     "values": [
+      "yi",
+      "yong"
      ]
     },
     {
@@ -9591,7 +9937,7 @@
        "by": -2
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -1
       }
      ]
@@ -9617,7 +9963,7 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       },
       {
@@ -9637,7 +9983,10 @@
      "hint": {
       "zh": "需要“权谋”名声 ≥ 1：你得是个出了名会说话的人，曹操才肯接这个台阶",
       "en": "Needs a name for cunning ≥ 1: Cao only takes the way out from a man known for his tongue"
-     }
+     },
+     "values": [
+      "zhi"
+     ]
     },
     {
      "id": "defy",
@@ -9671,6 +10020,9 @@
        "add": "renown.rash",
        "by": 2
       }
+     ],
+     "values": [
+      "yong"
      ]
     }
    ],
@@ -9827,7 +10179,7 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       },
       {
@@ -9905,7 +10257,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -2
       },
       {
@@ -9931,12 +10283,12 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -1
       }
      ],
      "req": {
-      "v": "rel.caocao.regard",
+      "v": "rel.caocao.esteem",
       "op": ">=",
       "val": 5
      },
@@ -9962,11 +10314,11 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -2
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
@@ -9982,7 +10334,10 @@
       "v": "track",
       "op": "!=",
       "val": "cao"
-     }
+     },
+     "values": [
+      "yong"
+     ]
     },
     {
      "id": "defy_cao",
@@ -10189,7 +10544,7 @@
         "val": "cao"
        },
        {
-        "v": "rel.caocao.regard",
+        "v": "rel.caocao.esteem",
         "op": ">=",
         "val": 8
        }
@@ -10312,9 +10667,23 @@
       "en": "Guan Yu never forgets what he owes you. He rarely mentions it, but whenever someone talks about you behind your back, he sets his blade on the table."
      },
      "when": {
-      "v": "rel.guanyu.owes",
-      "op": ">=",
-      "val": 1
+      "any": [
+       {
+        "v": "flag.vouched_guan",
+        "op": "==",
+        "val": true
+       },
+       {
+        "v": "flag.at_huarong",
+        "op": "==",
+        "val": true
+       },
+       {
+        "v": "flag.guan_fear",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -10324,7 +10693,7 @@
       "en": "Guan Yu respects you. With him, that is much harder to earn than liking."
      },
      "when": {
-      "v": "rel.guanyu.respect",
+      "v": "rel.guanyu.esteem",
       "op": ">=",
       "val": 6
      }
@@ -10336,7 +10705,7 @@
       "en": "When Guan Yu speaks of you, it's one word: 'Pity.'"
      },
      "when": {
-      "v": "rel.guanyu.respect",
+      "v": "rel.guanyu.esteem",
       "op": "<=",
       "val": 0
      }
@@ -10392,9 +10761,9 @@
         "val": "liu"
        },
        {
-        "v": "rel.zhuge.wary",
-        "op": ">=",
-        "val": 2
+        "v": "rel.zhuge.trust",
+        "op": "<=",
+        "val": 3
        }
       ]
      }
@@ -10413,7 +10782,7 @@
         "val": "liu"
        },
        {
-        "v": "rel.zhuge.respect",
+        "v": "rel.zhuge.esteem",
         "op": ">=",
         "val": 4
        }
@@ -11641,13 +12010,13 @@
    "at_end": true,
    "kept_effects": [
     {
-     "add": "rel.guanyu.respect",
+     "add": "rel.guanyu.esteem",
      "by": 1
     }
    ],
    "broken_effects": [
     {
-     "add": "rel.guanyu.respect",
+     "add": "rel.guanyu.esteem",
      "by": -2
     }
    ],
@@ -11676,7 +12045,7 @@
    "at_end": true,
    "kept_effects": [
     {
-     "add": "rel.caocao.regard",
+     "add": "rel.caocao.esteem",
      "by": 1
     }
    ],
@@ -11710,6 +12079,32 @@
    "resume": true
   }
  ],
+ "value_tags": {
+  "yi": {
+   "zh": "义",
+   "en": "loyalty"
+  },
+  "zhi": {
+   "zh": "智",
+   "en": "cleverness"
+  },
+  "ren": {
+   "zh": "仁",
+   "en": "kindness"
+  },
+  "yong": {
+   "zh": "勇",
+   "en": "nerve"
+  },
+  "cheng": {
+   "zh": "诚",
+   "en": "honesty"
+  },
+  "li": {
+   "zh": "利",
+   "en": "self-interest"
+  }
+ },
  "witness": [
   {
    "who": "liubei",
@@ -11735,7 +12130,7 @@
    ],
    "effects": [
     {
-     "add": "rel.zhuge.respect",
+     "add": "rel.zhuge.esteem",
      "by": -1
     }
    ]

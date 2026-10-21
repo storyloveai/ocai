@@ -1,6 +1,6 @@
 {
   "name": "sanguo-strategist-prototype",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "private": true,
   "description": "三国·谋士 卷一：长线剧情单元 + 事件账本 + 回响 + 叙事债务 + 模拟玩家（零依赖）",
   "scripts": {

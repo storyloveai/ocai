@@ -44,15 +44,15 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
         [choice("take", "dilemma", T("一个人担下来：『狂言是我一人的，与刘使君无关。』", "Take it all on yourself: 'The wild talk was mine alone. Lord Liu had nothing to do with it.'"),
                 T("曹操盯着你看了很久：『好，有担当。拖下去，打二十棍，扔出府门。』棍子落下来的时候，你听见刘备在席上替你求情。那天夜里，他亲自来给你上药，一句责备的话也没说。",
                   "Cao studies you for a long time. 'Good. A man who answers for himself. Take him out, twenty strokes, and throw him into the street.' As the rod comes down you hear Liu Bei pleading for you inside. That night he comes himself to dress your back, and says not one word of reproach."),
-                [setv("flag.flogged"), setv("flag.cao_wary"), rel("liubei", "trust", 1), rel("caocao", "regard", -2), add("renown.rash")]),
+                [setv("flag.flogged"), setv("flag.cao_wary"), rel("liubei", "trust", 1), rel("caocao", "esteem", -2), add("renown.rash")]),
          choice("beg", "expression", T("跟着主公一起伏地请罪。", "Go down beside your lord and beg forgiveness."),
                 T("刘备替你磕了三个头。曹操这才笑了：『醉话而已，玄德何必当真。』酒宴照旧。回去的路上，刘备说：『今天差一点，就是你我两条命。』",
                   "Liu Bei touches his head to the floor three times for you. Only then does Cao laugh. 'Drunken talk. Why take it so seriously, Xuande?' The feast goes on. On the way home Liu Bei says, 'Today it nearly cost us both our lives.'"),
-                [setv("flag.cao_wary"), rel("liubei", "trust", -2), rel("caocao", "regard", -1)]),
+                [setv("flag.cao_wary"), rel("liubei", "trust", -2), rel("caocao", "esteem", -1)]),
          choice("turn", "strategy", T("举杯转圜：把刚才的狂话，说成是替丞相不平——天下英雄，没人配与丞相对饮。", "Raise your cup and turn it: your wild words were outrage on the Chancellor's behalf—no one in the realm is fit to drink with him."),
                 T("曹操盯着你，忽然大笑：『好一张嘴！』他亲自给你斟了一杯。酒宴照旧。只是从那天起，许都多了几双盯着刘备的眼睛。",
                   "Cao stares at you, then bursts out laughing. 'What a tongue!' He pours your cup himself. The feast goes on. But from that day, more eyes in Xuchang are watching Liu Bei."),
-                [setv("flag.cao_wary"), rel("caocao", "regard", 1), rel("liubei", "trust", -1), add("renown.cunning")],
+                [setv("flag.cao_wary"), rel("caocao", "esteem", 1), rel("liubei", "trust", -1), add("renown.cunning")],
                 req=V("renown.cunning", ">=", 1), hint=T("需要“权谋”名声 ≥ 1：你得是个出了名会说话的人，曹操才肯接这个台阶", "Needs a name for cunning ≥ 1: Cao only takes the way out from a man known for his tongue")),
          choice("defy", "dilemma", T("梗着脖子，把话说完。", "Lift your chin and finish what you were saying."),
                 T("曹操笑了：『好。孤成全你。』你被押进了许都大牢。刘备出城那天，你在牢里听见城外的马蹄声。",
@@ -75,7 +75,7 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
          choice("recant", "dilemma", T("给曹操上书认错。", "Write to Cao Cao and recant."),
                 T("曹操看完你的信，笑了：『早这样不就好了。』当天就放了你。可这封信后来传到了刘备耳朵里。他没提，你知道他听说了。",
                   "Cao reads your letter and laughs. 'Why not do this sooner?' You're released that day. But word of the letter reaches Liu Bei. He never mentions it. You know he's heard."),
-                [setv("flag.jailed", False), setv("flag.was_jailed"), rel("caocao", "regard", 1), rel("liubei", "trust", -1)])],
+                [setv("flag.jailed", False), setv("flag.was_jailed"), rel("caocao", "esteem", 1), rel("liubei", "trust", -1)])],
         when=F("flag.jailed"), order=-1))
 
     # the departure happens without you
@@ -89,14 +89,14 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
          P(T("曹操把手里的竹简往案上一摔：『孤给你脸，你偏不要。』许褚已经走到了你身后。", "Cao slams his bamboo slips onto the desk. 'I give you face, and you throw it back at me.' Xu Chu is already standing behind you."), V("track", "==", "cao"))],
         [choice("kneel", "expression", T("叩头请罪。", "Bow to the floor and beg his pardon."),
                 T("曹操让你在地上跪了一个时辰，才挥了挥手：『滚。』", "Cao leaves you kneeling for an hour before he waves a hand. 'Get out.'"),
-                [rel("caocao", "regard", -2), add("renown.rash")]),
+                [rel("caocao", "esteem", -2), add("renown.rash")]),
          choice("turn", "strategy", T("用一句妙语把话圆回来。", "Turn it with a well-placed line."),
                 T("曹操愣了一下，大笑：『罢了！你这张嘴，迟早害死你。』", "Cao is caught off guard, then roars with laughter. 'Enough! That tongue of yours will be the death of you.'"),
-                [rel("caocao", "regard", -1)], req=R("caocao", "regard", ">=", 5), hint=T("需要曹操的赏识 ≥ 5，他才肯听你圆", "Needs Cao's regard ≥ 5 for him to let you talk your way out")),
+                [rel("caocao", "esteem", -1)], req=R("caocao", "esteem", ">=", 5), hint=T("需要曹操的赏识 ≥ 5，他才肯听你圆", "Needs Cao's regard ≥ 5 for him to let you talk your way out")),
          choice("defy", "dilemma", T("不跪。", "Refuse to kneel."),
                 T("许褚的手按上你的肩。关羽站了起来：『此人是我兄长的人。要罚，连关某一起罚。』曹操看了关羽很久，挥了挥手。",
                   "Xu Chu's hand closes on your shoulder. Guan Yu rises. 'This man belongs to my brother. Punish him, and you punish me too.' Cao looks at Guan Yu a long time, then waves his hand."),
-                [rel("caocao", "regard", -2), rel("guanyu", "respect", 1), add("renown.rash"), setv("flag.cao_wary")], when=NOT_CAO),
+                [rel("caocao", "esteem", -2), rel("guanyu", "esteem", 1), add("renown.rash"), setv("flag.cao_wary")], when=NOT_CAO),
          choice("defy_cao", "dilemma", T("不跪。", "Refuse to kneel."),
                 T("曹操说：『祢衡走过的路，你也走一遍吧。』第二天，你被送往荆州。", "Cao says, 'Mi Heng's road—you may walk it too.' The next day you are sent to Jingzhou."),
                 [setv("flag.mi_heng"), setv("flag.exiled"), add("renown.rash", 2)], when=V("track", "==", "cao"))]))
@@ -125,7 +125,7 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
 # the others present hear it too (once per scene each)
 WITNESS = [
     {"who": "liubei", "to": "caocao", "labels": ["rude", "threat", "nonsense"], "effects": [rel("liubei", "trust", -1)]},
-    {"who": "zhuge", "to": "liubei", "labels": ["rude", "threat"], "effects": [rel("zhuge", "respect", -1)]},
+    {"who": "zhuge", "to": "liubei", "labels": ["rude", "threat"], "effects": [rel("zhuge", "esteem", -1)]},
     {"who": "liubei", "to": "zhuge", "labels": ["rude", "threat"], "effects": [rel("liubei", "trust", -1)]},
 ]
 FLASH = [

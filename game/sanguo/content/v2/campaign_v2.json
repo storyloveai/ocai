@@ -192,6 +192,18 @@
     "en": "Went the way of Mi Heng"
    }
   },
+  "rel.liubei.warmth": {
+   "type": "num",
+   "init": 3,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "刘备·交情",
+    "en": "Liu Bei · Friendship"
+   },
+   "char": "liubei",
+   "dim": "warmth"
+  },
   "rel.liubei.trust": {
    "type": "num",
    "init": 3,
@@ -204,7 +216,43 @@
    "char": "liubei",
    "dim": "trust"
   },
-  "rel.caocao.regard": {
+  "rel.liubei.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "刘备·看重",
+    "en": "Liu Bei · Esteem"
+   },
+   "char": "liubei",
+   "dim": "esteem"
+  },
+  "rel.caocao.warmth": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "曹操·交情",
+    "en": "Cao Cao · Friendship"
+   },
+   "char": "caocao",
+   "dim": "warmth"
+  },
+  "rel.caocao.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "曹操·信任",
+    "en": "Cao Cao · Trust"
+   },
+   "char": "caocao",
+   "dim": "trust"
+  },
+  "rel.caocao.esteem": {
    "type": "num",
    "init": 0,
    "min": 0,
@@ -214,9 +262,33 @@
     "en": "Cao Cao · Regard"
    },
    "char": "caocao",
-   "dim": "regard"
+   "dim": "esteem"
   },
-  "rel.guanyu.respect": {
+  "rel.guanyu.warmth": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·交情",
+    "en": "Guan Yu · Friendship"
+   },
+   "char": "guanyu",
+   "dim": "warmth"
+  },
+  "rel.guanyu.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·信任",
+    "en": "Guan Yu · Trust"
+   },
+   "char": "guanyu",
+   "dim": "trust"
+  },
+  "rel.guanyu.esteem": {
    "type": "num",
    "init": 1,
    "min": 0,
@@ -226,21 +298,33 @@
     "en": "Guan Yu · Respect"
    },
    "char": "guanyu",
-   "dim": "respect"
+   "dim": "esteem"
   },
-  "rel.guanyu.owes": {
+  "rel.zhuge.warmth": {
    "type": "num",
-   "init": 0,
+   "init": 1,
    "min": 0,
    "max": 10,
    "label": {
-    "zh": "关羽·人情（他欠你）",
-    "en": "Guan Yu · Owes you"
+    "zh": "诸葛亮·交情",
+    "en": "Zhuge Liang · Friendship"
    },
-   "char": "guanyu",
-   "dim": "owes"
+   "char": "zhuge",
+   "dim": "warmth"
   },
-  "rel.zhuge.respect": {
+  "rel.zhuge.trust": {
+   "type": "num",
+   "init": 5,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "诸葛亮·信任",
+    "en": "Zhuge Liang · Trust"
+   },
+   "char": "zhuge",
+   "dim": "trust"
+  },
+  "rel.zhuge.esteem": {
    "type": "num",
    "init": 0,
    "min": 0,
@@ -250,19 +334,19 @@
     "en": "Zhuge Liang · Respect"
    },
    "char": "zhuge",
-   "dim": "respect"
+   "dim": "esteem"
   },
-  "rel.zhuge.wary": {
+  "rel.wenzhi.warmth": {
    "type": "num",
-   "init": 0,
+   "init": 3,
    "min": 0,
    "max": 10,
    "label": {
-    "zh": "诸葛亮·戒心",
-    "en": "Zhuge Liang · Wariness"
+    "zh": "温芷·交情",
+    "en": "Wen Zhi · Friendship"
    },
-   "char": "zhuge",
-   "dim": "wary"
+   "char": "wenzhi",
+   "dim": "warmth"
   },
   "rel.wenzhi.trust": {
    "type": "num",
@@ -276,6 +360,18 @@
    "char": "wenzhi",
    "dim": "trust"
   },
+  "rel.wenzhi.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "温芷·看重",
+    "en": "Wen Zhi · Esteem"
+   },
+   "char": "wenzhi",
+   "dim": "esteem"
+  },
   "rel.wenzhi.intimacy": {
    "type": "num",
    "init": 1,
@@ -288,17 +384,17 @@
    "char": "wenzhi",
    "dim": "intimacy"
   },
-  "rel.zhouyu.esteem": {
+  "rel.zhouyu.warmth": {
    "type": "num",
-   "init": 2,
+   "init": 1,
    "min": 0,
    "max": 10,
    "label": {
-    "zh": "周瑜·看重",
-    "en": "Zhou Yu · Esteem"
+    "zh": "周瑜·交情",
+    "en": "Zhou Yu · Friendship"
    },
    "char": "zhouyu",
-   "dim": "esteem"
+   "dim": "warmth"
   },
   "rel.zhouyu.trust": {
    "type": "num",
@@ -312,6 +408,30 @@
    "char": "zhouyu",
    "dim": "trust"
   },
+  "rel.zhouyu.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "周瑜·看重",
+    "en": "Zhou Yu · Esteem"
+   },
+   "char": "zhouyu",
+   "dim": "esteem"
+  },
+  "rel.lusu.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·交情",
+    "en": "Lu Su · Friendship"
+   },
+   "char": "lusu",
+   "dim": "warmth"
+  },
   "rel.lusu.trust": {
    "type": "num",
    "init": 3,
@@ -323,6 +443,30 @@
    },
    "char": "lusu",
    "dim": "trust"
+  },
+  "rel.lusu.esteem": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·看重",
+    "en": "Lu Su · Esteem"
+   },
+   "char": "lusu",
+   "dim": "esteem"
+  },
+  "rel.zhaoyun.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "赵云·交情",
+    "en": "Zhao Yun · Friendship"
+   },
+   "char": "zhaoyun",
+   "dim": "warmth"
   },
   "rel.zhaoyun.trust": {
    "type": "num",
@@ -336,17 +480,17 @@
    "char": "zhaoyun",
    "dim": "trust"
   },
-  "rel.zhaoyun.warmth": {
+  "rel.zhaoyun.esteem": {
    "type": "num",
-   "init": 2,
+   "init": 1,
    "min": 0,
    "max": 10,
    "label": {
-    "zh": "赵云·交情",
-    "en": "Zhao Yun · Friendship"
+    "zh": "赵云·看重",
+    "en": "Zhao Yun · Esteem"
    },
    "char": "zhaoyun",
-   "dim": "warmth"
+   "dim": "esteem"
   },
   "rel.sunfuren.warmth": {
    "type": "num",
@@ -372,6 +516,18 @@
    "char": "sunfuren",
    "dim": "trust"
   },
+  "rel.sunfuren.esteem": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "孙夫人·看重",
+    "en": "Lady Sun · Esteem"
+   },
+   "char": "sunfuren",
+   "dim": "esteem"
+  },
   "rel.pangtong.warmth": {
    "type": "num",
    "init": 1,
@@ -384,6 +540,18 @@
    "char": "pangtong",
    "dim": "warmth"
   },
+  "rel.pangtong.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "庞统·信任",
+    "en": "Pang Tong · Trust"
+   },
+   "char": "pangtong",
+   "dim": "trust"
+  },
   "rel.pangtong.esteem": {
    "type": "num",
    "init": 1,
@@ -395,6 +563,30 @@
    },
    "char": "pangtong",
    "dim": "esteem"
+  },
+  "rel.zhangsong.warmth": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "张松·交情",
+    "en": "Zhang Song · Friendship"
+   },
+   "char": "zhangsong",
+   "dim": "warmth"
+  },
+  "rel.zhangsong.trust": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "张松·信任",
+    "en": "Zhang Song · Trust"
+   },
+   "char": "zhangsong",
+   "dim": "trust"
   },
   "rel.zhangsong.esteem": {
    "type": "num",
@@ -961,8 +1153,18 @@
     "en": "Liu Bei"
    },
    "dims": {
+    "warmth": [
+     3,
+     0,
+     10
+    ],
     "trust": [
      3,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
      0,
      10
     ]
@@ -973,6 +1175,24 @@
     "en": "Liu Bei: a distant imperial kinsman around forty, kind and patient after years of depending on others; speaks gently and modestly, with flashes of frustration. Calls the player Ziheng."
    },
    "romance": false,
+   "values": {
+    "ren": [
+     "trust",
+     1
+    ],
+    "yi": [
+     "trust",
+     1
+    ],
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "li": [
+     "warmth",
+     -1
+    ]
+   },
    "heat": {
     "rude": [
      1
@@ -1088,18 +1308,52 @@
     "en": "Cao Cao"
    },
    "dims": {
-    "regard": [
+    "warmth": [
+     0,
+     0,
+     10
+    ],
+    "trust": [
+     1,
+     0,
+     10
+    ],
+    "esteem": [
      0,
      0,
      10
     ]
    },
-   "main": "regard",
+   "main": "esteem",
+   "lens": {
+    "esteem": {
+     "zh": "赏识",
+     "en": "Regard"
+    }
+   },
    "persona": {
     "zh": "曹操：丞相，雄才大略，多疑而爱才，好诗酒；说话直接、带笑、时而锋利，会反问。称玩家“子衡”。",
     "en": "Cao Cao: the Chancellor, brilliant, suspicious yet fond of talent, loves poetry and wine; direct, amused, sometimes cutting, likes to answer with questions. Calls the player Ziheng."
    },
    "romance": false,
+   "values": {
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ],
+    "yi": [
+     "esteem",
+     1
+    ],
+    "ren": [
+     "esteem",
+     -1
+    ]
+   },
    "heat": {
     "rude": [
      1
@@ -1218,23 +1472,52 @@
     "en": "Guan Yu"
    },
    "dims": {
-    "respect": [
+    "warmth": [
      1,
      0,
      10
     ],
-    "owes": [
+    "trust": [
+     2,
      0,
+     10
+    ],
+    "esteem": [
+     1,
      0,
      10
     ]
    },
-   "main": "respect",
+   "main": "esteem",
+   "lens": {
+    "esteem": {
+     "zh": "敬重",
+     "en": "Respect"
+    }
+   },
    "persona": {
     "zh": "关羽：寡言、重义、读《春秋》，对刘备忠诚到底，对外人戒备；句子短，语气庄重，不说笑。称玩家“子衡”。",
     "en": "Guan Yu: taciturn, honor-bound, reads the Spring and Autumn Annals, utterly loyal to Liu Bei and guarded with others; short sentences, grave tone, no jokes. Calls the player Ziheng."
    },
    "romance": false,
+   "values": {
+    "yi": [
+     "esteem",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ],
+    "li": [
+     "esteem",
+     -1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ]
+   },
    "heat": {
     "rude": [
      1
@@ -1353,23 +1636,52 @@
     "en": "Zhuge Liang"
    },
    "dims": {
-    "respect": [
-     0,
+    "warmth": [
+     1,
      0,
      10
     ],
-    "wary": [
+    "trust": [
+     5,
+     0,
+     10
+    ],
+    "esteem": [
      0,
      0,
      10
     ]
    },
-   "main": "respect",
+   "main": "esteem",
+   "lens": {
+    "esteem": {
+     "zh": "敬重",
+     "en": "Respect"
+    }
+   },
    "persona": {
     "zh": "诸葛亮：二十八九岁，刘备的军师，赤壁之后声望日隆；从容、机敏、谦和而难以看透，喜欢用反问试探人。称玩家“子衡兄”。",
     "en": "Zhuge Liang: late twenties, Liu Bei's strategist, his reputation rising since Red Cliffs; composed, quick, courteous and hard to read; tests people with questions. Calls the player Ziheng."
    },
    "romance": false,
+   "values": {
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ],
+    "ren": [
+     "warmth",
+     1
+    ],
+    "li": [
+     "trust",
+     -1
+    ]
+   },
    "heat": {
     "rude": [
      1
@@ -1485,7 +1797,17 @@
     "en": "Wen Zhi"
    },
    "dims": {
+    "warmth": [
+     3,
+     0,
+     10
+    ],
     "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
      2,
      0,
      10
@@ -1503,6 +1825,20 @@
     "en": "Wen Zhi: an original character, a physician's daughter from the player's hometown, an adult; calm, practical, sharp-tongued and soft-hearted; cares about patients, not sides. Calls the player Ziheng."
    },
    "romance": true,
+   "values": {
+    "ren": [
+     "warmth",
+     1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ],
+    "li": [
+     "trust",
+     -1
+    ]
+   },
    "heat": {
     "rude": [
      1
@@ -1613,13 +1949,18 @@
     "en": "Zhou Yu"
    },
    "dims": {
-    "esteem": [
-     2,
+    "warmth": [
+     1,
      0,
      10
     ],
     "trust": [
      1,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
      0,
      10
     ]
@@ -1722,6 +2063,24 @@
    "persona": {
     "zh": "周瑜：东吴大都督，三十出头，赤壁的主帅；风流倜傥、精通音律，自负而好胜，最在意的是被诸葛亮压过一头。称玩家“子衡”。",
     "en": "Zhou Yu: Grand Commander of Wu, early thirties, victor of Red Cliffs; elegant, musical, proud and competitive, stung above all by being outdone by Zhuge Liang. Calls the player Ziheng."
+   },
+   "values": {
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ],
+    "li": [
+     "trust",
+     -1
+    ]
    }
   },
   "lusu": {
@@ -1730,8 +2089,18 @@
     "en": "Lu Su"
    },
    "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
     "trust": [
      3,
+     0,
+     10
+    ],
+    "esteem": [
+     1,
      0,
      10
     ]
@@ -1826,6 +2195,20 @@
    "persona": {
     "zh": "鲁肃：东吴重臣，忠厚、稳重，一心维系孙刘联盟，常被夹在周瑜和诸葛亮中间；说话诚恳，偶尔叫苦。称玩家“子衡”。",
     "en": "Lu Su: senior minister of Wu, honest and steady, devoted to keeping the Sun–Liu alliance alive, forever caught between Zhou Yu and Zhuge Liang; earnest, sometimes exasperated. Calls the player Ziheng."
+   },
+   "values": {
+    "cheng": [
+     "trust",
+     1
+    ],
+    "yi": [
+     "trust",
+     1
+    ],
+    "li": [
+     "trust",
+     -1
+    ]
    }
   },
   "zhaoyun": {
@@ -1834,13 +2217,18 @@
     "en": "Zhao Yun"
    },
    "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
     "trust": [
      3,
      0,
      10
     ],
-    "warmth": [
-     2,
+    "esteem": [
+     1,
      0,
      10
     ]
@@ -1953,6 +2341,24 @@
      "zh": "赵云点点头，往火堆里添了一根柴。",
      "en": "Zhao Yun nods and adds a stick to the fire."
     }
+   },
+   "values": {
+    "yi": [
+     "trust",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ],
+    "ren": [
+     "warmth",
+     1
+    ],
+    "li": [
+     "esteem",
+     -1
+    ]
    }
   },
   "sunfuren": {
@@ -1968,6 +2374,11 @@
     ],
     "trust": [
      1,
+     0,
+     10
+    ],
+    "esteem": [
+     0,
      0,
      10
     ]
@@ -2070,6 +2481,20 @@
    "persona": {
     "zh": "孙夫人：孙权之妹，嫁给刘备；性情刚烈、好武，房中摆满兵器，侍婢都佩刀；骄傲，最恨被人当作棋子。成年人。称玩家“子衡”。",
     "en": "Lady Sun: Sun Quan's sister, married to Liu Bei; fierce and martial, her rooms full of weapons and her maids armed; proud, and hates being treated as a pawn. An adult. Calls the player Ziheng."
+   },
+   "values": {
+    "yong": [
+     "esteem",
+     1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ],
+    "li": [
+     "warmth",
+     -1
+    ]
    }
   },
   "pangtong": {
@@ -2079,6 +2504,11 @@
    },
    "dims": {
     "warmth": [
+     1,
+     0,
+     10
+    ],
+    "trust": [
      1,
      0,
      10
@@ -2194,6 +2624,16 @@
      "zh": "庞统朝对面的席位努了努嘴。",
      "en": "Pang Tong jerks his chin at the seat opposite."
     }
+   },
+   "values": {
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "yong": [
+     "warmth",
+     1
+    ]
    }
   },
   "zhangsong": {
@@ -2202,6 +2642,16 @@
     "en": "Zhang Song"
    },
    "dims": {
+    "warmth": [
+     0,
+     0,
+     10
+    ],
+    "trust": [
+     0,
+     0,
+     10
+    ],
     "esteem": [
      0,
      0,
@@ -2303,41 +2753,35 @@
    "persona": {
     "zh": "张松：益州别驾，相貌丑陋、身材矮小，却过目不忘、口才极好；自尊心极强，最记恨被人轻视。称玩家“子衡先生”。",
     "en": "Zhang Song: Lieutenant of Yi province; ugly and tiny, with a perfect memory and a quick tongue; fiercely proud, and never forgets a slight. Calls the player Master Ziheng."
+   },
+   "values": {
+    "zhi": [
+     "esteem",
+     1
+    ],
+    "ren": [
+     "warmth",
+     1
+    ]
    }
   }
  },
  "dims": {
+  "warmth": {
+   "zh": "交情",
+   "en": "Friendship"
+  },
   "trust": {
    "zh": "信任",
    "en": "Trust"
-  },
-  "regard": {
-   "zh": "赏识",
-   "en": "Regard"
-  },
-  "respect": {
-   "zh": "敬重",
-   "en": "Respect"
-  },
-  "owes": {
-   "zh": "人情（他欠你）",
-   "en": "Owes you"
-  },
-  "wary": {
-   "zh": "戒心",
-   "en": "Wariness"
-  },
-  "intimacy": {
-   "zh": "亲近",
-   "en": "Closeness"
   },
   "esteem": {
    "zh": "看重",
    "en": "Esteem"
   },
-  "warmth": {
-   "zh": "交情",
-   "en": "Friendship"
+  "intimacy": {
+   "zh": "亲近",
+   "en": "Closeness"
   }
  },
  "echoes": {
@@ -2957,7 +3401,7 @@
        "to": "liu"
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -3
       },
       {
@@ -2965,9 +3409,12 @@
        "by": -1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       }
+     ],
+     "values": [
+      "yi"
      ]
     },
     {
@@ -2991,12 +3438,15 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
      ],
      "echo": [
       "e_cao_stay"
+     ],
+     "values": [
+      "li"
      ]
     }
    ],
@@ -3083,6 +3533,9 @@
      ],
      "echo": [
       "e_wz_zhou"
+     ],
+     "values": [
+      "ren"
      ]
     },
     {
@@ -3120,6 +3573,9 @@
      ],
      "echo": [
       "e_wz_zhou"
+     ],
+     "values": [
+      "li"
      ]
     },
     {
@@ -3222,7 +3678,7 @@
        "to": true
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       },
       {
@@ -3236,6 +3692,9 @@
      ],
      "echo": [
       "e_liuqi"
+     ],
+     "values": [
+      "zhi"
      ]
     },
     {
@@ -3273,6 +3732,10 @@
      ],
      "echo": [
       "e_lusu"
+     ],
+     "values": [
+      "cheng",
+      "yi"
      ]
     },
     {
@@ -3300,11 +3763,14 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       }
      ],
-     "foresight": true
+     "foresight": true,
+     "values": [
+      "cheng"
+     ]
     }
    ],
    "salience": 1,
@@ -3397,7 +3863,7 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       },
       {
@@ -3415,6 +3881,10 @@
      ],
      "echo": [
       "e_nanjun"
+     ],
+     "values": [
+      "zhi",
+      "li"
      ]
     },
     {
@@ -3446,7 +3916,7 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": -1
       },
       {
@@ -3463,6 +3933,10 @@
      ],
      "debt": [
       "d_base"
+     ],
+     "values": [
+      "yi",
+      "cheng"
      ]
     },
     {
@@ -3494,8 +3968,8 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       },
       {
        "add": "uncanny",
@@ -3505,6 +3979,10 @@
      "foresight": true,
      "echo": [
       "e_warned_zy"
+     ],
+     "values": [
+      "cheng",
+      "zhi"
      ]
     }
    ],
@@ -3601,8 +4079,8 @@
         "by": 1
        },
        {
-        "add": "rel.zhuge.wary",
-        "by": 1
+        "add": "rel.zhuge.trust",
+        "by": -1
        }
       ],
       "match": "都督|公瑾|周郎|你更|您更|大都督|zhou yu|gongjin|you are|you're better",
@@ -3719,7 +4197,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 2
       },
       {
@@ -3745,7 +4223,7 @@
      ],
      "effects": [
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -1
       }
      ]
@@ -3826,6 +4304,9 @@
      ],
      "echo": [
       "e_zy"
+     ],
+     "values": [
+      "yi"
      ]
     },
     {
@@ -3856,6 +4337,9 @@
        "add": "renown.cunning",
        "by": 1
       }
+     ],
+     "values": [
+      "li"
      ]
     }
    ],
@@ -3931,7 +4415,7 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": -1
       },
       {
@@ -3941,6 +4425,9 @@
      ],
      "echo": [
       "e_weiyan"
+     ],
+     "values": [
+      "ren"
      ]
     },
     {
@@ -3985,17 +4472,20 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       }
      ],
      "foresight": true,
      "echo": [
       "e_weiyan"
+     ],
+     "values": [
+      "zhi"
      ]
     }
    ],
@@ -4034,7 +4524,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": -1
        }
       ],
@@ -4057,7 +4547,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ],
@@ -4080,7 +4570,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 0
        },
        {
@@ -4327,6 +4817,9 @@
        "add": "renown.cunning",
        "by": 1
       }
+     ],
+     "values": [
+      "zhi"
      ]
     },
     {
@@ -4372,6 +4865,9 @@
      ],
      "echo": [
       "e_ganlu"
+     ],
+     "values": [
+      "yong"
      ]
     },
     {
@@ -4485,6 +4981,9 @@
        "add": "rel.liubei.trust",
        "by": 1
       }
+     ],
+     "values": [
+      "zhi"
      ]
     },
     {
@@ -4526,6 +5025,10 @@
      ],
      "echo": [
       "e_rear"
+     ],
+     "values": [
+      "yong",
+      "yi"
      ]
     },
     {
@@ -4563,6 +5066,9 @@
      ],
      "echo": [
       "e_left_sun"
+     ],
+     "values": [
+      "li"
      ]
     }
    ],
@@ -4797,7 +5303,7 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
      ],
@@ -4826,7 +5332,7 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 2
       },
       {
@@ -4931,6 +5437,9 @@
        "add": "rel.lusu.trust",
        "by": 1
       }
+     ],
+     "values": [
+      "ren"
      ]
     },
     {
@@ -4993,6 +5502,9 @@
      ],
      "debt": [
       "d_zhouyu"
+     ],
+     "values": [
+      "ren"
      ]
     },
     {
@@ -5198,6 +5710,9 @@
      },
      "echo": [
       "e_pt"
+     ],
+     "values": [
+      "zhi"
      ]
     },
     {
@@ -5217,13 +5732,17 @@
      ],
      "effects": [
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 2
       },
       {
        "add": "rel.zhaoyun.trust",
        "by": 1
       }
+     ],
+     "values": [
+      "yi",
+      "yong"
      ]
     },
     {
@@ -5505,7 +6024,7 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 3
       },
       {
@@ -5641,6 +6160,9 @@
      },
      "echo": [
       "e_zs"
+     ],
+     "values": [
+      "ren"
      ]
     },
     {
@@ -5676,7 +6198,11 @@
       "v": "track",
       "op": "!=",
       "val": "cao"
-     }
+     },
+     "values": [
+      "zhi",
+      "cheng"
+     ]
     },
     {
      "id": "follow",
@@ -5703,7 +6229,7 @@
        "to": "liu"
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": -4
       },
       {
@@ -5722,6 +6248,9 @@
      },
      "echo": [
       "e_defect"
+     ],
+     "values": [
+      "yi"
      ]
     },
     {
@@ -5745,7 +6274,7 @@
        "to": true
       },
       {
-       "add": "rel.caocao.regard",
+       "add": "rel.caocao.esteem",
        "by": 1
       }
      ],
@@ -6050,6 +6579,10 @@
      ],
      "echo": [
       "e_adou"
+     ],
+     "values": [
+      "yong",
+      "yi"
      ]
     },
     {
@@ -6100,6 +6633,9 @@
      },
      "echo": [
       "e_adou"
+     ],
+     "values": [
+      "cheng"
      ]
     },
     {
@@ -6301,7 +6837,7 @@
        "by": 1
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       }
      ],
@@ -6632,8 +7168,8 @@
        "by": -1
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 1
+       "add": "rel.zhuge.trust",
+       "by": -1
       }
      ],
      "req": {
@@ -6660,6 +7196,9 @@
      ],
      "debt": [
       "d_phoenix"
+     ],
+     "values": [
+      "yi"
      ],
      "place": "luocheng"
     },
@@ -6698,6 +7237,10 @@
      ],
      "echo": [
       "e_luofeng"
+     ],
+     "values": [
+      "yong",
+      "yi"
      ]
     },
     {
@@ -6963,7 +7506,7 @@
       "en": "Guan Yu has kept a seat for you, and the wine is already warm."
      },
      "when": {
-      "v": "rel.guanyu.respect",
+      "v": "rel.guanyu.esteem",
       "op": ">=",
       "val": 6
      }
@@ -7026,7 +7569,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ]
@@ -7047,7 +7590,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        },
        {
@@ -7108,7 +7651,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.owes",
+        "add": "rel.guanyu.warmth",
         "by": 1
        }
       ],
@@ -7218,9 +7761,9 @@
       "en": "When Zhuge Liang looks at you, he always seems to be calculating something."
      },
      "when": {
-      "v": "rel.zhuge.wary",
-      "op": ">=",
-      "val": 3
+      "v": "rel.zhuge.trust",
+      "op": "<=",
+      "val": 2
      }
     },
     {
@@ -7261,9 +7804,12 @@
        "by": 1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       }
+     ],
+     "values": [
+      "zhi"
      ]
     },
     {
@@ -7287,13 +7833,16 @@
        "to": true
       },
       {
-       "add": "rel.guanyu.respect",
+       "add": "rel.guanyu.esteem",
        "by": 1
       },
       {
        "add": "rel.liubei.trust",
        "by": 1
       }
+     ],
+     "values": [
+      "yi"
      ],
      "place": "jiangling"
     },
@@ -7325,6 +7874,9 @@
        "add": "renown.loyal",
        "by": 1
       }
+     ],
+     "values": [
+      "cheng"
      ]
     }
    ],
@@ -7414,7 +7966,7 @@
       ],
       "effects": [
        {
-        "add": "rel.guanyu.respect",
+        "add": "rel.guanyu.esteem",
         "by": 1
        }
       ],
@@ -7596,7 +8148,7 @@
      "req": {
       "any": [
        {
-        "v": "rel.zhuge.respect",
+        "v": "rel.zhuge.esteem",
         "op": ">=",
         "val": 3
        },
@@ -7748,8 +8300,8 @@
        "by": -2
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": -1
+       "add": "rel.zhuge.trust",
+       "by": 1
       }
      ]
     },
@@ -7770,12 +8322,12 @@
      ],
      "effects": [
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 2
       },
       {
-       "add": "rel.zhuge.wary",
-       "by": 2
+       "add": "rel.zhuge.trust",
+       "by": -2
       },
       {
        "add": "uncanny",
@@ -7783,7 +8335,7 @@
       }
      ],
      "req": {
-      "v": "rel.zhuge.respect",
+      "v": "rel.zhuge.esteem",
       "op": ">=",
       "val": 4
      },
@@ -7906,7 +8458,7 @@
        "by": -1
       },
       {
-       "add": "rel.zhuge.respect",
+       "add": "rel.zhuge.esteem",
        "by": 1
       }
      ]
@@ -8013,6 +8565,9 @@
        "add": "rel.lusu.trust",
        "by": -1
       }
+     ],
+     "values": [
+      "yong"
      ]
     }
    ],
@@ -8258,7 +8813,7 @@
         "val": "cao"
        },
        {
-        "v": "rel.caocao.regard",
+        "v": "rel.caocao.esteem",
         "op": ">=",
         "val": 8
        }
@@ -8742,9 +9297,27 @@
       "en": "Guan Yu says what he owes you, he keeps in his heart."
      },
      "when": {
-      "v": "rel.guanyu.owes",
-      "op": ">=",
-      "val": 2
+      "all": [
+       {
+        "any": [
+         {
+          "v": "flag.vouched_guan",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "flag.pleaded_guan",
+          "op": "==",
+          "val": true
+         }
+        ]
+       },
+       {
+        "v": "rel.guanyu.warmth",
+        "op": ">=",
+        "val": 4
+       }
+      ]
      }
     },
     {
@@ -9594,6 +10167,32 @@
   "threat": "杀了你|宰了你|砍了你|要你的命|让你死|弄死你|kill you|i'll kill|slit your|you'll die|end you",
   "nonsense": "^(阿巴)+$|^(哈+|啊+|嘿+|呵+|嘻+|嗯+|哦+|lol|ha(ha)+|asdf\\w*|[a-z]{1,2})[!！。.]*$|胡说八道|瞎扯|乱说|blah"
  },
+ "value_tags": {
+  "yi": {
+   "zh": "义",
+   "en": "loyalty"
+  },
+  "zhi": {
+   "zh": "智",
+   "en": "cleverness"
+  },
+  "ren": {
+   "zh": "仁",
+   "en": "kindness"
+  },
+  "yong": {
+   "zh": "勇",
+   "en": "nerve"
+  },
+  "cheng": {
+   "zh": "诚",
+   "en": "honesty"
+  },
+  "li": {
+   "zh": "利",
+   "en": "self-interest"
+  }
+ },
  "commit_rules": [
   {
    "char": "wenzhi",
@@ -9760,13 +10359,13 @@
    "at_end": true,
    "kept_effects": [
     {
-     "add": "rel.guanyu.respect",
+     "add": "rel.guanyu.esteem",
      "by": 1
     }
    ],
    "broken_effects": [
     {
-     "add": "rel.guanyu.respect",
+     "add": "rel.guanyu.esteem",
      "by": -2
     }
    ],
@@ -9795,7 +10394,7 @@
    "at_end": true,
    "kept_effects": [
     {
-     "add": "rel.caocao.regard",
+     "add": "rel.caocao.esteem",
      "by": 1
     }
    ],
@@ -10135,13 +10734,21 @@
      "flag.secret_mercy": false,
      "flag.cao_reserve": false,
      "flag.pleaded_guan": false,
+     "rel.liubei.warmth": 3,
      "rel.liubei.trust": 10,
-     "rel.caocao.regard": 2,
-     "rel.guanyu.respect": 6,
-     "rel.guanyu.owes": 2,
-     "rel.zhuge.respect": 4,
-     "rel.zhuge.wary": 1,
+     "rel.liubei.esteem": 2,
+     "rel.caocao.warmth": 0,
+     "rel.caocao.trust": 1,
+     "rel.caocao.esteem": 2,
+     "rel.guanyu.warmth": 3,
+     "rel.guanyu.trust": 2,
+     "rel.guanyu.esteem": 6,
+     "rel.zhuge.warmth": 1,
+     "rel.zhuge.trust": 4,
+     "rel.zhuge.esteem": 4,
+     "rel.wenzhi.warmth": 3,
      "rel.wenzhi.trust": 2,
+     "rel.wenzhi.esteem": 2,
      "rel.wenzhi.intimacy": 1,
      "flag.guan_fear": false,
      "flag.heard_people": true,
@@ -10238,13 +10845,21 @@
      "flag.secret_mercy": false,
      "flag.cao_reserve": false,
      "flag.pleaded_guan": false,
+     "rel.liubei.warmth": 3,
      "rel.liubei.trust": 9,
-     "rel.caocao.regard": 2,
-     "rel.guanyu.respect": 3,
-     "rel.guanyu.owes": 0,
-     "rel.zhuge.respect": 5,
-     "rel.zhuge.wary": 0,
+     "rel.liubei.esteem": 2,
+     "rel.caocao.warmth": 0,
+     "rel.caocao.trust": 1,
+     "rel.caocao.esteem": 2,
+     "rel.guanyu.warmth": 1,
+     "rel.guanyu.trust": 2,
+     "rel.guanyu.esteem": 3,
+     "rel.zhuge.warmth": 2,
+     "rel.zhuge.trust": 6,
+     "rel.zhuge.esteem": 5,
+     "rel.wenzhi.warmth": 3,
      "rel.wenzhi.trust": 3,
+     "rel.wenzhi.esteem": 2,
      "rel.wenzhi.intimacy": 10,
      "flag.guan_fear": false,
      "flag.heard_people": true,
@@ -10341,13 +10956,21 @@
      "flag.secret_mercy": false,
      "flag.cao_reserve": false,
      "flag.pleaded_guan": false,
+     "rel.liubei.warmth": 3,
      "rel.liubei.trust": 0,
-     "rel.caocao.regard": 10,
-     "rel.guanyu.respect": 2,
-     "rel.guanyu.owes": 0,
-     "rel.zhuge.respect": 0,
-     "rel.zhuge.wary": 0,
+     "rel.liubei.esteem": 3,
+     "rel.caocao.warmth": 0,
+     "rel.caocao.trust": 1,
+     "rel.caocao.esteem": 10,
+     "rel.guanyu.warmth": 1,
+     "rel.guanyu.trust": 2,
+     "rel.guanyu.esteem": 2,
+     "rel.zhuge.warmth": 1,
+     "rel.zhuge.trust": 5,
+     "rel.zhuge.esteem": 0,
+     "rel.wenzhi.warmth": 3,
      "rel.wenzhi.trust": 2,
+     "rel.wenzhi.esteem": 2,
      "rel.wenzhi.intimacy": 1,
      "flag.guan_fear": false,
      "flag.heard_people": false,
@@ -10444,13 +11067,21 @@
      "flag.secret_mercy": false,
      "flag.cao_reserve": false,
      "flag.pleaded_guan": false,
+     "rel.liubei.warmth": 3,
      "rel.liubei.trust": 10,
-     "rel.caocao.regard": 0,
-     "rel.guanyu.respect": 6,
-     "rel.guanyu.owes": 2,
-     "rel.zhuge.respect": 6,
-     "rel.zhuge.wary": 6,
+     "rel.liubei.esteem": 2,
+     "rel.caocao.warmth": 0,
+     "rel.caocao.trust": 1,
+     "rel.caocao.esteem": 0,
+     "rel.guanyu.warmth": 3,
+     "rel.guanyu.trust": 2,
+     "rel.guanyu.esteem": 6,
+     "rel.zhuge.warmth": 1,
+     "rel.zhuge.trust": 0,
+     "rel.zhuge.esteem": 6,
+     "rel.wenzhi.warmth": 3,
      "rel.wenzhi.trust": 2,
+     "rel.wenzhi.esteem": 2,
      "rel.wenzhi.intimacy": 1,
      "flag.guan_fear": false,
      "flag.heard_people": false,
@@ -10547,13 +11178,21 @@
      "flag.secret_mercy": false,
      "flag.cao_reserve": false,
      "flag.pleaded_guan": false,
+     "rel.liubei.warmth": 3,
      "rel.liubei.trust": 9,
-     "rel.caocao.regard": 1,
-     "rel.guanyu.respect": 3,
-     "rel.guanyu.owes": 0,
-     "rel.zhuge.respect": 0,
-     "rel.zhuge.wary": 0,
+     "rel.liubei.esteem": 2,
+     "rel.caocao.warmth": 0,
+     "rel.caocao.trust": 1,
+     "rel.caocao.esteem": 2,
+     "rel.guanyu.warmth": 1,
+     "rel.guanyu.trust": 2,
+     "rel.guanyu.esteem": 3,
+     "rel.zhuge.warmth": 1,
+     "rel.zhuge.trust": 6,
+     "rel.zhuge.esteem": 0,
+     "rel.wenzhi.warmth": 3,
      "rel.wenzhi.trust": 2,
+     "rel.wenzhi.esteem": 2,
      "rel.wenzhi.intimacy": 1,
      "flag.guan_fear": false,
      "flag.heard_people": true,

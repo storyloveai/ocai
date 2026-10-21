@@ -8,7 +8,8 @@ const camp = JSON.parse(fs.readFileSync(file, "utf8"));
 const v = CC.validate(camp);
 const ART = require("../engine/art.js");
 for (const n of Object.values(camp.nodes)) if (n.art && !ART.scenes.includes(n.art.scene)) v.errors.push(`${n.id}: unknown art scene ${n.art.scene}`);
-for (const sc of ART.scenes) if (!(camp.art_prompts || {})[sc]) v.warnings.push(`art scene ${sc}: no replacement prompt`);
+const usedScenes = new Set(Object.values(camp.nodes).filter(n => n.art).map(n => n.art.scene));
+for (const sc of usedScenes) if (!(camp.art_prompts || {})[sc]) v.warnings.push(`art scene ${sc}: no replacement prompt`);
 const PLACES = camp.places ? Object.keys(camp.places) : ART.places;
 for (const n of Object.values(camp.nodes)) { if (n.place && !PLACES.includes(n.place)) v.errors.push(`${n.id}: unknown place ${n.place}`); n.choices.forEach(c => { if (c.place && !PLACES.includes(c.place)) v.errors.push(`${n.id}.${c.id}: unknown place ${c.place}`); }); }
 const PORTRAIT = require("../engine/portraits.js");

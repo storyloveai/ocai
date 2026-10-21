@@ -1,65 +1,60 @@
 # 三国·谋士 · 卷一 · 许都至赤壁
 nodes 41, chapters 8, echoes 31, debts 4
 
-## static: 0 errors, 5 warnings
-  warn  art scene citywall: no replacement prompt
-  warn  art scene temple: no replacement prompt
-  warn  art scene bigriver: no replacement prompt
-  warn  art scene mourning: no replacement prompt
-  warn  art scene ravine: no replacement prompt
+## static: 0 errors, 0 warnings
 
 ## simulate: 5000 random players
-avg scenes per run 14.6, distinct ending combinations 1701
-track: cao 13.5%, liu 86.5%
-deviation: 0:33.7% 1:40.3% 2:20.2% 3:5.5% 4:0.3%
-uncanny: 0:13.4% 1:19.3% 2:29.6% 3:27.5% 4:9.2% 5:0.8% 6:0.2% 7:0.0%
+avg scenes per run 14.5, distinct ending combinations 1820
+track: cao 17.7%, liu 82.3%
+deviation: 0:32.0% 1:40.5% 2:21.6% 3:5.6% 4:0.3%
+uncanny: 0:13.4% 1:19.3% 2:30.5% 3:27.1% 4:8.4% 5:0.9% 6:0.2% 7:0.1%
 
 ending fragments:
-  归属: miheng 1.6% · exposed 7.4% · left 10.6% · liu 68.7% · cao 11.7%
-  主公: liu_high 21.6% · liu_mid 31.3% · liu_low 33.6% · cao_high 8.6% · cao_low 4.9%
-  名声: rash 20.7% · uncanny 30.3% · loyal 21.1% · cunning 19.1% · none 8.8%
-  关羽: vouched 22.4% · pleaded 2.3% · owes 20.4% · respect 16.2% · cold 1.3% · plain 37.4%
-  诸葛亮: nod 18.1% · wary 41.4% · respect 11.4% · plain 15.5%
-  温芷: married 1.6% · with_you 2.8% · together 0.7% · cao_saved 0.1% · used 5.7% · safe 6.5% · far 82.5%
-  因你而不同的人: jail 0.2% · flogged 0.4% · xushu 11.6% · mi 35.3% · kongxiu 23.0% · pangtong 4.9% · mercy 4.1% · forged 4.6% · reserve 5.7%
-  天下: far 5.8% · near 60.4% · same 33.7%
+  归属: miheng 2.0% · exposed 7.2% · left 10.5% · liu 64.8% · cao 15.4%
+  主公: liu_high 20.8% · liu_mid 30.0% · liu_low 31.5% · cao_high 12.5% · cao_low 5.2%
+  名声: rash 21.0% · uncanny 29.3% · loyal 21.5% · cunning 19.1% · none 9.1%
+  关羽: vouched 21.2% · pleaded 3.7% · owes 27.0% · respect 12.6% · cold 0.9% · plain 34.6%
+  诸葛亮: nod 16.7% · wary 38.0% · respect 11.7% · plain 15.9%
+  温芷: married 1.6% · with_you 2.6% · together 0.7% · cao_saved 0.2% · used 5.2% · safe 6.8% · far 83.0%
+  因你而不同的人: jail 0.2% · flogged 0.4% · xushu 12.5% · mi 33.2% · kongxiu 21.9% · pangtong 4.8% · mercy 5.5% · forged 6.0% · reserve 7.3%
+  天下: far 5.9% · near 62.1% · same 32.0%
 
 echoes (registered → paid):
-  e_cover: 1656 → 1628
-  e_spoke: 1664 → 1138
-  e_yi: 543 → 479
-  e_warn_gifts: 2086 → 1323
-  e_wenzhi_spy: 568 → 408
-  e_foresaw: 577 → 554
-  e_fast: 1642 → 1642
-  e_terms: 1542 → 1537
-  e_news: 1509 → 1508
+  e_cover: 1698 → 1673
+  e_spoke: 1653 → 1123
+  e_yi: 521 → 464
+  e_warn_gifts: 2109 → 1356
+  e_wenzhi_spy: 593 → 416
+  e_foresaw: 585 → 564
+  e_fast: 1622 → 1622
+  e_terms: 1532 → 1527
+  e_news: 1496 → 1494
   e_promise: 77 → 57
-  e_pass: 1151 → 1149
-  e_xushu: 357 → 357
-  e_pangtong: 243 → 232
-  e_aside: 1184 → 1148
-  e_mi: 1763 → 1680
-  e_abandon: 969 → 905
-  e_warned: 351 → 351
-  e_forged: 232 → 216
-  e_mercy: 207 → 203
-  e_reserve: 284 → 278
-  e_fight: 1543 → 1543
-  e_post: 932 → 932
-  e_stay: 677 → 620
-  e_angelica: 28 → 28
-  e_used: 300 → 300
-  e_row: 222 → 210
-  e_guan_fear: 975 → 966
-  e_people: 659 → 607
-  e_zhuge_test: 1676 → 1384
-  e_wind: 222 → 204
-  e_cao_guan: 232 → 182
+  e_pass: 1096 → 1094
+  e_xushu: 342 → 342
+  e_pangtong: 242 → 230
+  e_aside: 1111 → 1077
+  e_mi: 1662 → 1591
+  e_abandon: 922 → 866
+  e_warned: 360 → 360
+  e_forged: 301 → 275
+  e_mercy: 273 → 269
+  e_reserve: 367 → 362
+  e_fight: 1568 → 1567
+  e_post: 915 → 915
+  e_stay: 885 → 803
+  e_angelica: 24 → 23
+  e_used: 275 → 275
+  e_row: 209 → 196
+  e_guan_fear: 956 → 946
+  e_people: 643 → 582
+  e_zhuge_test: 1599 → 1314
+  e_wind: 291 → 268
+  e_cao_guan: 271 → 205
 
-debts: {"d_five_passes:transform":1151,"d_mi:transform":1763,"d_lianhuan:reroute":152,"d_recommend:reroute":580,"d_lianhuan:transform":87,"d_lianhuan:open":4}
+debts: {"d_five_passes:transform":1096,"d_recommend:reroute":624,"d_mi:transform":1662,"d_lianhuan:reroute":150,"d_lianhuan:transform":87,"d_lianhuan:open":5}
 
-side offers (times offered): {"c1_wenzhi":5000,"c1_guanyu":5000,"c1_dongcheng":5000,"c2_pretext":4507,"c4_horse":3035,"c5_mirror":3692,"c7_arrows":2612,"c5_letter":1863,"c7_letter":1478,"c2_note":1044,"c4_garden":416,"c7_phoenix":237,"c5_spring":86}
+side offers (times offered): {"c1_wenzhi":5000,"c1_guanyu":5000,"c1_dongcheng":5000,"c2_pretext":4509,"c4_horse":3054,"c5_mirror":3505,"c7_arrows":2407,"c5_letter":1777,"c7_letter":1424,"c2_note":1058,"c4_garden":419,"c7_phoenix":235,"c5_spring":102}
 
 ## archetype players (1000 runs each)
   romance  g_wenzhi:married|with_you|together|cao_saved 100% · g_wenzhi:married|with_you|together|cao_saved|safe 100% · early end 0% · scenes 16.0
@@ -69,8 +64,8 @@ side offers (times offered): {"c1_wenzhi":5000,"c1_guanyu":5000,"c1_dongcheng":5
   provoker g_lives:flogged 32% · g_lives:jail 32% · g_side:miheng 8% · g_name:rash 100% · early end 8% · scenes 19.6
     on-the-spot breaks (scene:kind:who): {"c1_plum:flash:caocao":1000,"c2_campfire:walkout:guanyu":1000,"c5_lamp:walkout:zhuge":924,"c8_vigil:walkout:guanyu":889,"c4_horse:flash:caocao":664,"c4_seal:flash:caocao":664,"c4_gucheng:walkout:liubei":336,"x_miheng:walkout:caocao":76,"c8_river:walkout:wenzhi":35}
 
-talk topics taken (random): {"c2_campfire.warn":1693,"c2_campfire.peach":1686,"c5_feast.poem":204,"c5_feast.wind":222,"c5_lamp.test":1676,"c5_lamp.why":1680,"c8_vigil.regret":2022,"c8_vigil.sit":2002,"c5_lamp.share":1182,"c8_north.common":228,"c8_north.water":217,"c2_campfire.self":1666,"c2_campfire.fear":975,"c5_feast.why":185,"c5_feast.guan":232,"c8_north.pride":221,"c4_gucheng.people":659,"c4_gucheng.bitter":632,"c4_gucheng.south":651,"c8_vigil.fear":298,"c5_lamp.rival":457,"c8_river.future":118,"c8_river.hands":88,"c8_river.home":115,"c8_river.confess":88}
-early endings (random): {"x_exposed":371,"x_cold_liu":406,"x_loose":120,"x_miheng":38,"x_cao_rage":43,"x_cold_cao":2}
+talk topics taken (random): {"c2_campfire.warn":1736,"c2_campfire.peach":1667,"c5_feast.poem":272,"c5_feast.wind":291,"c5_lamp.test":1599,"c5_lamp.why":1554,"c8_vigil.regret":1901,"c8_vigil.sit":1891,"c5_feast.why":246,"c8_north.common":288,"c8_north.water":285,"c2_campfire.self":1644,"c2_campfire.fear":956,"c5_lamp.share":1131,"c5_feast.guan":271,"c8_north.pride":311,"c4_gucheng.people":643,"c4_gucheng.bitter":627,"c4_gucheng.south":653,"c8_vigil.fear":294,"c5_lamp.rival":415,"c8_river.future":105,"c8_river.home":106,"c8_river.confess":91,"c8_river.hands":73}
+early endings (random): {"x_exposed":361,"x_cold_liu":406,"x_cao_rage":51,"x_loose":120,"x_miheng":51,"x_cold_cao":1}
 
 ## findings (0)
 
