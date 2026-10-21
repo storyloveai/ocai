@@ -308,10 +308,12 @@ function questionsAndConsequences(c){
   ['c7_m2','dantes','若无辜的人挡在复仇路上，你会怎么办？','先移开无辜者，再谈责任。','无辜|先移|保护|不牵连|停','c8_m2']
  ];
  questions.forEach(([id,who,q,reply,match,later],i)=>{
-  const eid='answer'+i;c.echoes[eid]='先前的问题留有回响。';c.nodes[id].ask={who,q,fallback:'uncertain',answers:[{id:'bounded',means:'明确边界，承担自己能确认的责任',match,out:p(reply),effects:[rel(who)],echo:[eid]},{id:'force',means:'不计代价、强迫他人或放弃核验',match:'不管|必须听我|牺牲|随便编|不核实|不重要',out:p('对方没有立即同意，先把这句话记了下来。'),effects:[rel(who,-1),add('exposure',1)]},{id:'uncertain',means:'犹豫、转移话题、未知或未作答',out:p('对方留出时间，没有把沉默当作答应。'),effects:[]}]};
+  const eid='answer'+i;c.echoes[eid]='先前的问题留有回响。';c.nodes[id].ask={who,q,fallback:'uncertain',answers:[{id:'bounded',means:'明确边界，承担自己能确认的责任',match,out:p('对方听完，确认你把边界说清了。接下来的安排仍要由具体行动兑现。'),effects:[rel(who)],echo:[eid]},{id:'force',means:'不计代价、强迫他人或放弃核验',match:'不管|必须听我|牺牲|随便编|不核实|不重要',out:p('对方没有立即同意，先把这句话记了下来。'),effects:[rel(who,-1),add('exposure',1)]},{id:'uncertain',means:'犹豫、转移话题、未知或未作答',out:p('对方留出时间，没有把沉默当作答应。'),effects:[]}]};
   c.nodes[later].callbacks=[...(c.nodes[later].callbacks||[]),{pays:eid,text:mortal?'你先前说过要把代价算清。这一次，对方等着看具体的安排。':'对方还记得你先前对核验与边界的回答，眼前这份材料正好需要兑现。'}];
  });
  c.nodes.x_exposure={id:'x_exposure',chapter:'c4',kind:'interrupt',lock:'functional',order:0,title:mortal?'追查来到住处':'调查者也被调查',place:mortal?'临时落脚处':'巴黎临时住处',cast:[{id:partner}],intro:p(mortal?'跟踪的痕迹已无法忽略。陆晞提醒你，继续用原来的落脚处，会把同行者也带进行踪记录。':'有人开始向旅馆询问你的出入。莉奥娜把副本封起，要求先改变联络方式。'),when:ge('exposure',7),free_scene:2,art:{scene:'pending',layers:[]},choices:[{id:'move',type:'strategy',...option(mortal?'支付两枚灵石换落脚处':'支付两份经费换安全住处','位置更换，旧的行踪链暂时断开；已经被人知道的事不会因此抹去。',[add(money,-2),add('exposure',-5)],{req:ge(money,2),hint:'需要两份可用资金。'})},{id:'walk',type:'strategy',...option(mortal?'放弃近路，徒步转移':'暂停一轮查阅，自己安排转移','你付出时间与体力，总算没有让同伴替你承担暴露的后果。',[add(cost,-1),add('exposure',-3),rel(partner)])}]};
+ c.nodes.c1_m1.facts=mortal?['两项工役的选择结果已明确；药田工役灵力+1，夜巡灵石+2并增加行踪暴露。','具体月例、扣薪、伤药补偿的数额和支付时点尚未核定；陶岑只能提出核对工役簿，不可自行编造。']:['信件与入藏单目前只确认不匹配；具体日期和缺口成因尚未核实。','莉奥娜可提出核查原件、纸张与交接记录，不得将推测写成已确认的真相。'];
+ c.nodes.c1_m1.unverifiedTopics=mortal?['月例','扣薪','伤药','工伤','押牌','工钱']:[];
  const settle=c.nodes.c6_m1;
  settle.choices.forEach(x=>{x.when={v:'debt.advance',op:'==',val:'open'};});
  settle.choices.push({id:'clear',type:'strategy',label:'核对从未预支的记录，正常交割',out:p('没有借过的那笔款项不会凭空出现。你只为自己确实接手的事项签名。'),effects:[set('flag.proof')],when:{v:'debt.advance',op:'==',val:'none'}});

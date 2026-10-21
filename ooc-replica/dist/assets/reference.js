@@ -217,7 +217,7 @@ function pinThreeKingdoms(){
   if(slide){const slot=slide.cloneNode(false);const wrap=document.createElement("div");wrap.className="w-full";wrap.append(card);slot.append(wrap);slide.parentElement.prepend(slot);}else first.parentElement.before(card);
   for(const book of [...bookMetadata].reverse()){
    const bookCard=card.cloneNode(true);bookCard.href=book.href;bookCard.querySelector('[data-name]').textContent=book.title;
-   const img=bookCard.querySelector('img');img.src=book.image;img.alt=book.title;
+   bookCard.querySelectorAll('img').forEach(img=>{if(img.alt==='ORIGINAL'){img.parentElement.remove();return;}img.src=book.image;img.alt=book.title;img.removeAttribute('data-asset');});
    const note=bookCard.querySelector('p:not([data-name])');if(note)note.textContent=book.plays;
    const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(bookCard);slot.append(wrap);placed.after(slot);}else card.after(bookCard);
    cardMarkup.set(book.id,bookCard.outerHTML);
@@ -361,7 +361,15 @@ function capturedPreview(d){
  actions.forEach((b,i)=>{if(i===0){b.dataset.previewBookmark=d.id;b.setAttribute('aria-label','Bookmark character');}else{b.dataset.previewMore='';b.setAttribute('aria-label','Character options');}});
  return {type:d.type,html:header.outerHTML+panel.outerHTML+footer.outerHTML};
 }
+function bookPreview(d){
+ const mortal=d.id==='mortal-path';
+ const chapters=mortal?['山门与薄册','坊市的两种价','药田无雨','试炼里的回声','来收账的人','撤离名册','能不能再走一步','各自的长路']:['一封迟到的信','石墙里的缺页','意大利的化名','巴黎的门槛','三条证据链','谁会一起倒下','让证据说话','等待与希望'];
+ const setting=mortal?'你是二十七岁的沈微尘，一个刚进黄枫谷的普通修行者。每月的灵石得靠工役挣来，练功与跑腿争着同一段时辰。借息契能让修为先走一步，契主却要你在到期时交出一份不该外流的名单。':'你是二十七岁的档案修复员诺埃尔·瓦莱特。一封入藏记录对不上的旧信，让你与伯爵、核验员莉奥娜以及那些被旧案改变命运的人相遇。付款人有自己的目标，证人也有不愿交出的生活。';
+ const guide=mortal?'每章从三段支线中选一件事，之后进入主线。灵力、灵石和经脉共同限制修行；资源不足可以延期、换路或照应同行者。承诺会在后续行动中受检验，先前借来的修为须明确结算。':'每章选一条调查或人物支线，再推进旧案。信件、账目与口述须核验来源；经费、时间和身份暴露会限制做法。可以公开证据、先存档补缺，或拒绝让无辜者成为施压工具。';
+ return {type:'story',html:`<header><h2>Story Information</h2><button data-preview-close aria-label="Close information">×</button></header><div class="public-detail"><div class="public-detail-top"><img src="${safe(d.image)}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1>${creatorLink(d.author)}<p>${safe(d.subtitle)}</p><p>${safe(d.description)}</p><button data-preview-bookmark="${safe(d.id)}" aria-label="Bookmark story">♡ Bookmark</button></div></div><section><h2>故事设定</h2><p>${safe(setting)}</p><p>${mortal?'本卷为原著世界中的原创随行支线。韩立保有自己的目标与秘密，你从普通人的处境开始，不会直接获得他的机缘。':'本卷采用1842年的改编时间线，以原创见证人视角进入伯爵的复仇计划。你能影响证据如何被使用，不能替其他人物决定全部命运。'}</p></section><section><h2>怎样游玩</h2><p>${safe(guide)}</p><p>可以点击行动，也可以用自己的话回答人物。情景对白随当前处境展开，结果由已知条件判定。进度与关系按当前账号自动保存。</p></section><section><h2>卷一 · 八章目录</h2><ol>${chapters.map(t=>`<li>${safe(t)}</li>`).join('')}</ol></section></div><footer><button data-preview-play="${safe(d.id)}" class="shell-white-button">New Play</button></footer>`};
+}
 function fallbackPreview(d){
+ const book=bookMetadata.find(b=>b.id===d.id);if(book)return bookPreview(book);
  const kind=d.type==='character'?'Character':'Story';
  const description=d.description||'The full description for this title has not been captured yet.';
  return {type:d.type,html:`<header><h2>${kind} Information</h2><button data-preview-close aria-label="Close information">×</button></header><div class="public-detail"><div class="public-detail-top"><img src="${safe(source(d))}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1>${creatorLink(d.author)}<p>${safe(d.plays||'')}</p><p>${safe(description)}</p><button data-preview-bookmark="${safe(d.id)}" aria-label="Bookmark ${kind.toLowerCase()}">♡ Bookmark</button></div></div><section><h2>${kind} Description</h2><p>${safe(description)}</p></section>${bookMetadata.some(b=>b.id===d.id)?'<section><h2>八章连续战役</h2><p>原创玩家视角 · 规则判定 · 人物关系 · 承诺与回响 · 独立账号存档。每个场景有不同的行动，AI 沿当前情景生成对白。</p><p>当前开放卷一。书封为原创排版设计，插图待接入作图接口。</p></section>':''}${d.id==='three-kingdoms'?'<section><h2>Chapters</h2><p>许都 · 出许都 · 下邳 · 千里 · 新野 · 长坂 · 赤壁 · 华容</p><p>化身原创谋士子衡。人物关系、承诺、记事与回响贯穿八章；规则决定结果，AI 理解话意并生成对白。经典三章仍可从游戏页进入。</p></section>':''}<section><h2>Settings</h2><p>Avatar Settings</p><button data-preview-avatar><span>Default avatar</span>⌄</button><p>Starting Scenarios</p><button data-preview-scenario><span>Default</span>⌄</button></section></div><footer><button data-preview-play="${safe(d.id)}" class="shell-white-button">New Play</button></footer>`};

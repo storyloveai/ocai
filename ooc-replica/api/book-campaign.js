@@ -1,7 +1,7 @@
 import {jsonSchema} from 'ai';
 import {createHandler} from './three-kingdoms.js';
-import {buildBookStage} from '../server/book-prompt.js';
+import {buildBookStage,validateBookOutput} from '../server/book-prompt.js';
 const nullableString={type:['string','null']};
 const schema=jsonSchema({type:'object',properties:{pick:nullableString,reply:nullableString,tone:{type:['string','null'],enum:['warm','rude','romantic','flatter','nonsense','threat','flat',null]},mood:{type:['string','null'],enum:['neutral','warm','cold','sad','surprised','shy',null]},commit:{anyOf:[{type:'null'},{type:'object',properties:{kind:{type:'string',enum:['protect','loyalty','other']},text:{type:'string'}},required:['kind','text'],additionalProperties:false}]}},required:['pick','reply','tone','mood','commit'],additionalProperties:false});
-export const createBookHandler=deps=>createHandler({...deps,stage:buildBookStage,outputSchema:schema,validateOutput:out=>{if(!out||typeof out!=='object')throw Error('Invalid output');},hasVisible:out=>Boolean(out?.reply)});
+export const createBookHandler=deps=>createHandler({...deps,stage:buildBookStage,outputSchema:schema,validateOutput:validateBookOutput,hasVisible:out=>Boolean(out?.reply)});
 export default createBookHandler();

@@ -9,7 +9,8 @@
     "build": "node scripts/build.mjs",
     "originals:export": "node scripts/export-original-catalog.mjs",
     "originals:generate:text": "node scripts/generate-catalog-text.mjs",
-    "originals:review:text": "node scripts/review-catalog-text.mjs"
+    "originals:review:text": "node scripts/review-catalog-text.mjs",
+    "books:export": "node scripts/export-book-campaigns.mjs"
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.96",

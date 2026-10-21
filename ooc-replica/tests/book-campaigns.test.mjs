@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {parseHTML} from 'linkedom';
 import CC from '../server/sanguo-core.cjs';
 import {campaigns} from '../book-campaigns/catalog.mjs';
-import {buildBookStage} from '../server/book-prompt.js';
+import {buildBookStage,validateBookOutput} from '../server/book-prompt.js';
 import {createBookHandler} from '../api/book-campaign.js';
 import {mountBook,stopBook} from '../dist/assets/book-player.js';
 import {hasSession,lastSessionText,historyIds} from '../dist/assets/history.js';
@@ -43,6 +43,15 @@ test('campaign prompts bind the requested book, reject unknown nodes/NPCs and ne
   const out=buildBookStage(body);assert.ok(out.system.includes(camp.title));assert.ok(out.system.includes('untrusted'));assert.ok(!out.prompt.includes('attacker'));assert.equal(JSON.parse(out.prompt).options.length,3);
   assert.throws(()=>buildBookStage({...body,book:'sanguo'}));assert.throws(()=>buildBookStage({...body,context:{...body.context,node:'unknown'}}));assert.throws(()=>buildBookStage({...body,context:{...body.context,target:'absent'}}));
  }
+});
+test('AI cannot turn an invented wage, evidence date or locked action into approved output',()=>{
+ const body={book:'mortal-path',phase:'express',task:'scene',lang:'zh',context:{node:'c1_m1',target:'tao',text:'月例是多少？'}};
+ const out={pick:null,reply:'月例按旬发，先扣两枚灵石。'};
+ assert.throws(()=>validateBookOutput(out,body));assert.doesNotThrow(()=>validateBookOutput({...out,reply:'具体月例还得翻工役簿。我先把记录找来，你看清后再选。'},body));
+ const monte={...body,book:'monte-cristo',context:{node:'c1_m1',target:'leona',text:'哪里不匹配？'}};assert.throws(()=>validateBookOutput({...out,reply:'信件邮戳是1841年。'},monte));
+ assert.throws(()=>validateBookOutput({...out,pick:'invented',reply:null},body));
+ const tentative={pick:'a1',reply:'我把工役簿找来，先看明白再决定。'};validateBookOutput(tentative,body);assert.equal(tentative.pick,null);
+ const due=buildBookStage({...body,context:{node:'c6_m1',target:'ye',text:'我选择监督追溯。',vars:{'debt.advance':'open'}}});assert.ok(!JSON.parse(due.prompt).options.some(o=>o.id==='clear'));assert.equal(JSON.parse(due.prompt).options.length,3);
 });
 const tick=()=>new Promise(r=>setTimeout(r,20));
 async function page(id,{snapshot={},api,configured=false}={}){

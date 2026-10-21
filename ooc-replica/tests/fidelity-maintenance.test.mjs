@@ -26,6 +26,10 @@ test('all title kinds float, search preserves background, tabs update only conte
  Object.assign(globalThis,{document,window,DOMParser,location:{pathname:'/',search:'',origin:'https://example.test'},matchMedia:()=>({matches:true}),fetch:async path=>new Response(await readFile(join(dist,path)),{headers:{'Content-Type':'application/json'}})});
  const values=new Map(),routes=[];const h={read:(k,f)=>values.get(k)??f,save:(k,v)=>values.set(k,structuredClone(v)),navigate:p=>routes.push(p),show:html=>{document.querySelector('#modal').innerHTML=html;},categories:['Main','New Ranking','Rankings','Today'],data:[]};
  const reference=await import('../dist/assets/reference.js');h.data=reference.extraStories;reference.show('/',h);
+ for(const id of ['mortal-path','monte-cristo']){
+  const card=document.querySelector('a[href="/story/'+id+'"]');assert.ok(card);assert.ok(!card.querySelector('img[alt="ORIGINAL"]'));
+  for(const img of card.querySelectorAll('img'))assert.equal(img.getAttribute('src'),'/assets/'+id+'-cover.svg');
+ }
  const hero=document.querySelector('[data-hero-desktop]');
  const ranking=[...document.querySelectorAll('button')].find(b=>b.textContent==='Rankings');ranking.click();assert.equal(document.querySelector('[data-hero-desktop]'),hero);assert.equal(routes.length,0);assert.ok(document.querySelector('[data-category-panel] [data-category-grid] a'));assert.ok(!document.querySelector('[data-category-panel]').closest('.sticky'));
  const main=[...document.querySelectorAll('button')].find(b=>b.textContent==='Main');main.click();assert.equal(document.querySelector('[data-category-panel]').hidden,true);assert.equal(document.querySelector('[data-hero-desktop]'),hero);

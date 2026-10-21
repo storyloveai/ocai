@@ -13,7 +13,7 @@ export async function mountBook(path,{reference,helpers}){
  document.title=meta.title;
  const storeKey='ooc-session-v2-'+meta.id;
  try{
-  const [module,response,cfg]=await Promise.all([import('./book-campaign-core.js'),fetch('/assets/book-campaigns/'+meta.id+'.json',{signal:life.signal}),fetch('/api/config',{signal:life.signal}).then(r=>r.json()).catch(()=>({configured:false}))]);
+  const [,response,cfg]=await Promise.all([import('./book-campaign-core.js'),fetch('/assets/book-campaigns/'+meta.id+'.json',{signal:life.signal}),fetch('/api/config',{signal:life.signal}).then(r=>r.json()).catch(()=>({configured:false}))]);
   if(!response.ok)throw Error('Book unavailable');camp=await response.json();C=window.CC;if(!C||!alive())return false;
   mode=cfg.configured?'ai':'authored';
   const saved=helpers.read(storeKey,{}),state=saved?.['campaign.save'];
@@ -51,7 +51,7 @@ export async function mountBook(path,{reference,helpers}){
   const seen=new Set();
   function render(animate=false){
    if(!alive())return;typing?.abort();
-   const y=window.scrollY;root.innerHTML=`<header class="book-header"><a href="/">‹ 返回书架</a><h1>${esc(meta.title)}</h1><button data-book-reset>重新开始</button></header>${!started?`<section class="book-intro"><img src="${esc(meta.image)}" alt="${esc(meta.title)}"><div><small>${esc(meta.subtitle)}</small><h2>${esc(meta.title)}</h2><p>${esc(meta.description)}</p><p>${esc(camp.adaptation)}</p><p>八章连续故事 · 原创玩家视角 · 规则决定结果<br>进度使用当前账号的独立存档。封面为排版书封，插图待接入作图 API。</p><button data-book-start class="book-primary">展开第一章</button></div></section>`:`<div class="book-meters">${Object.entries(camp.vars).filter(([k,v])=>v.show&&!k.startsWith('rel.')).map(([k,v])=>`<span>${esc(text(v.label))}<b>${esc(G.v[k])}</b></span>`).join('')}</div><div class="book-columns"><div><div id="book-story">${story()}</div><section id="book-actions">${controls()}</section><p class="book-notice" role="status">${esc(notice)}</p><label class="book-mode">对白模式 <select id="book-mode"><option value="ai" ${mode==='ai'?'selected':''}>AI 流式对白</option><option value="authored" ${mode==='authored'?'selected':''}>编排文本</option></select></label><div id="book-live" hidden><small>正在理解并回复……</small><p></p><button data-book-stop>停止</button></div></div><aside><nav aria-label="战役侧栏">${[['journey','章节'],['relations','人物'],['journal','记事']].map(([id,label])=>`<button data-book-panel="${id}" aria-pressed="${panel===id}">${label}</button>`).join('')}</nav><div id="book-journal">${journal()}</div></aside></div>`}`;
+   const y=window.scrollY;root.innerHTML=`<header class="book-header"><a href="/">‹ 返回书架</a><h1>${esc(meta.title)}</h1><button data-book-reset>重新开始</button></header>${!started?`<section class="book-intro"><img src="${esc(meta.image)}" alt="${esc(meta.title)}"><div><small>${esc(meta.subtitle)}</small><h2>${esc(meta.title)}</h2><p>${esc(meta.description)}</p><p>${esc(camp.adaptation)}</p><p>八章连续故事 · 原创玩家视角 · 规则决定结果<br>进度按当前账号独立保存。人物会记得你先前的回答，也会看你如何行动。</p><button data-book-start class="book-primary">展开第一章</button></div></section>`:`<div class="book-meters">${Object.entries(camp.vars).filter(([k,v])=>v.show&&!k.startsWith('rel.')).map(([k,v])=>`<span>${esc(text(v.label))}<b>${esc(G.v[k])}</b></span>`).join('')}</div><div class="book-columns"><div><div id="book-story">${story()}</div><section id="book-actions">${controls()}</section><p class="book-notice" role="status">${esc(notice)}</p><label class="book-mode">对白模式 <select id="book-mode"><option value="ai" ${mode==='ai'?'selected':''}>AI 流式对白</option><option value="authored" ${mode==='authored'?'selected':''}>编排文本</option></select></label><div id="book-live" hidden><small>正在理解并回复……</small><p></p><button data-book-stop>停止</button></div></div><aside><nav aria-label="战役侧栏">${[['journey','章节'],['relations','人物'],['journal','记事']].map(([id,label])=>`<button data-book-panel="${id}" aria-pressed="${panel===id}">${label}</button>`).join('')}</nav><div id="book-journal">${journal()}</div></aside></div>`}`;
    if(!animate)return;const fresh=[...root.querySelectorAll('[data-book-beat] p:not(.book-you):not(.book-decision)')].filter(el=>{const key=el.closest('[data-book-beat]').dataset.bookBeat+'|'+el.textContent;if(seen.has(key))return false;seen.add(key);return true;});
    if(!fresh.length||window.matchMedia?.('(prefers-reduced-motion: reduce)').matches)return;
    const controller=new AbortController();typing=controller;
@@ -62,7 +62,7 @@ export async function mountBook(path,{reference,helpers}){
   }
   async function speak(words,target){
    if(busy||!words.trim()||!alive())return;draft=words;typing?.abort();busy=true;notice='';turn=new AbortController();const signal=AbortSignal.any([life.signal,turn.signal]);
-   const original=C.clone(G),n=camp.nodes[G.cur],ask=C.ask(camp,G);let output,finalReply='';
+   const original=C.clone(G),n=camp.nodes[G.cur],ask=C.ask(camp,G);let output;
    const live=root.querySelector('#book-live');live.hidden=false;root.querySelector('#book-actions').setAttribute('inert','');
    try{
     if(mode==='authored')output={pick:ask?C.guessAnswer(camp,G,words):null,reply:ask?null:'对方听完，将目光移回眼前的事情，等你作出具体安排。',tone:C.guessTone(words),commit:null};
@@ -85,13 +85,13 @@ export async function mountBook(path,{reference,helpers}){
       const kind=C.guessPromise(words);if(['protect','loyalty'].includes(kind)&&camp.commit_rules.some(r=>r.char===target&&r.kind===kind)&&!G.commits?.some(k=>k.status==='open'&&k.char===target&&k.kind===kind))C.commit(camp,G,{char:target,kind,text:words.slice(0,40)});
      }
     }
-    finalReply=output.reply||'';draft='';notice=mode==='authored'?'使用编排文本；没有调用 AI。':'剧情变化已按规则记录。';save();
+    draft='';notice=mode==='authored'?'使用编排文本；没有调用 AI。':'剧情变化已按规则记录。';save();
    }catch(e){G=original;notice=signal.aborted?'已停止，本次输入没有改变进度。':'AI 回复未完成；进度未变，输入已保留。可重试或切换编排文本。';}
    finally{busy=false;turn=null;if(alive())render(false);}
   }
   root.addEventListener('submit',event=>{if(event.target.id!=='book-talk')return;event.preventDefault();void speak(event.target.elements.words.value.trim(),event.target.elements.target.value);});
   root.addEventListener('input',event=>{if(event.target.name==='words')draft=event.target.value;});
-  root.addEventListener('change',event=>{if(event.target.id==='book-mode')mode=event.target.value;});
+  root.addEventListener('change',event=>{if(event.target.id==='book-mode'&&!busy)mode=event.target.value;});
   root.addEventListener('click',event=>{
    const b=event.target.closest('button');if(!b)return;
    if(b.hasAttribute('data-book-stop')){turn?.abort();return;}if(busy)return;
