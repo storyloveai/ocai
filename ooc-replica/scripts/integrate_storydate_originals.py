@@ -35,7 +35,6 @@ for slot, s in zip(slots, order):
     entries.append(dict(id=s['id'], title=s['title'], title_zh=s['title_zh'], author='StoryDate Studio', genre=g,
         type='story', original=True, plays='', sortPlays=old_plays.get(slot,''), tag=g, replaces=slot, image=f"/assets/originals/{s['id']}.webp",
         description=s['summary'], description_zh=s['summary_zh'], character_brief=s['character_brief']))
-(root/'dist/assets/storydate-originals.js').write_text('export const storydateOriginals='+json.dumps(entries, ensure_ascii=False)+';\n')
 sc = json.load(open(root/'dist/assets/scenarios.json'))
 SLOTS = ['morning', 'afternoon', 'evening']
 LEAD = {'morning': 'Morning light settles over the scene.', 'afternoon': 'The afternoon is quiet, and the day is still open.', 'evening': 'Evening falls, and the lamps come on one by one.'}
@@ -46,5 +45,27 @@ for e in entries:
         opening=f"> {e['title']}\n\n*{e['description']}*\n\n*{e['character_brief']}.*",
         openingByTime={k: f"> {e['title']} · {k.capitalize()}\n\n*{LEAD[k]}*\n\n*{e['description']}*\n\n*{e['character_brief']}.*" for k in SLOTS},
         suggestions=by_time['afternoon'], suggestionsByTime=by_time)
+json.dump(sc, open(root/'dist/assets/scenarios.json','w'), ensure_ascii=False)
+
+# ---- Three Kingdoms characters (copies for the Character page) ----
+openings = json.load(open(root/'content/storydate-originals/character-openings.json'))
+cands = [c['id'] for c in ref['characters'] if c['id'] not in {f['href'].split('/')[-1] for f in ref.get('characterFeatures', [])}]
+cslots = sorted(random.Random(20261021).sample(cands, len(tk)), key=cands.index)
+chars = []
+for slot, s in zip(cslots, tk):
+    cid = 'sgc-' + s['id'][3:]
+    name = s['title'].replace('The Tale of ', '')
+    im = Image.open(src/f"{s['id']}.webp").convert('RGB').crop((0, 90, 1024, 1114)).resize((512, 512), Image.LANCZOS)
+    im.save(out_dir/f"{cid}.webp", 'WEBP', quality=82, method=6)
+    chars.append(dict(id=cid, title=name, title_zh=s['title_zh'].replace('传', ''), author='StoryDate Studio', genre='History', type='character',
+        original=True, plays='', replaces=slot, image=f"/assets/originals/{cid}.webp", story_id=s['id'],
+        description=f"{s['character_brief'].split(',')[0]} of the Three Kingdoms. {s['summary']}", description_zh=s['summary_zh'], character_brief=s['character_brief']))
+    o = opening_sug[s['id']]
+    by_time = {k: [o['t'][i], o['b'], o['c']] for i, k in enumerate(SLOTS)}
+    sc['stories'][cid] = dict(title=name,
+        opening=f"> {name}\n\n*{s['character_brief']}.*\n\n💬{name} | {openings[s['id']]['afternoon']}",
+        openingByTime={k: f"> {name} · {k.capitalize()}\n\n*{LEAD[k]}*\n\n*{s['character_brief']}.*\n\n💬{name} | {openings[s['id']][k]}" for k in SLOTS},
+        suggestions=by_time['afternoon'], suggestionsByTime=by_time)
+(root/'dist/assets/storydate-originals.js').write_text('export const storydateOriginals='+json.dumps(entries, ensure_ascii=False)+';\nexport const storydateCharacters='+json.dumps(chars, ensure_ascii=False)+';\n')
 json.dump(sc, open(root/'dist/assets/scenarios.json','w'), ensure_ascii=False)
 print(len(entries), 'entries; replaced', len(set(slots)), 'old titles')

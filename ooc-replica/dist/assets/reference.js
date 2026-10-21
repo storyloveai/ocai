@@ -6,7 +6,7 @@ import {bindCarousels} from './carousels.js';
 import {paintBrand} from './brand.js';
 import {sortStories} from './catalog-sort.js';
 import {threeKingdoms} from './three-kingdoms.js';
-import {storydateOriginals} from './storydate-originals.js';
+import {storydateOriginals,storydateCharacters} from './storydate-originals.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
@@ -49,8 +49,16 @@ const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'
 // StoryDate originals take over part of the captured catalogue; each one keeps its own id.
 const replaceMap=new Map(storydateOriginals.map(d=>[d.replaces,d]));
 evidence.catalog=evidence.catalog.map(d=>replaceMap.get(d.id)||d);
+const characterMap=new Map(storydateCharacters.map(d=>[d.replaces,d]));
+evidence.characters=(evidence.characters||[]).map(d=>characterMap.get(d.id)||d);
 const lumencia=evidence.catalog.find(d=>d.id==='69f414d90abbab6f6a2c8131');if(lumencia)lumencia.sortPlays='0';
 function patchOriginals(root){
+  root.querySelectorAll('a[href^="/character/"]').forEach(a=>{
+    const d=characterMap.get(a.getAttribute('href').split('/').pop());if(!d)return;
+    a.setAttribute('href','/character/'+d.id);
+    a.querySelectorAll('img').forEach(img=>{if(!img.classList.contains('object-cover'))return;img.src=d.image;img.alt=d.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');});
+    const ps=a.querySelectorAll('p');if(ps[0])ps[0].textContent=d.title;if(ps[1])ps[1].textContent=d.description;if(ps[2])ps[2].textContent=d.author;
+  });
   root.querySelectorAll('a[href^="/story/"]').forEach(a=>{
     const d=replaceMap.get(a.getAttribute('href').split('/').pop());if(!d)return;
     a.setAttribute('href','/story/'+d.id);
@@ -140,8 +148,11 @@ function bindHome(page) {
   });
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
     let pointerOrigin;
-    b.onpointerdown=event=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};event.preventDefault();b.focus({preventScroll:true});};
-    b.onclick=()=>{
+    // The captured Main tab carries a lime border/text; selection is drawn by .category-selected instead.
+    b.classList.remove('border-brand','text-brand');
+    if(text(b)==='Main'&&!b.dataset.categoryTab){b.dataset.categoryTab='';b.setAttribute('aria-pressed','true');b.classList.add('category-selected');}
+    b.onpointerdown=event=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};event.preventDefault();};
+    b.onclick=event=>{if(event?.detail>0)b.blur();
       const scroll=pointerOrigin||{x:window.scrollX||0,y:window.scrollY||0};pointerOrigin=null;host.style.overflowAnchor='none';
       const label=text(b);
       const buttons=all('button').filter(button=>context.categories.includes(text(button)));

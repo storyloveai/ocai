@@ -32,4 +32,4 @@ body[data-reference=true] #account-status{display:none}#precision-view [data-shr
 html:has(#precision-view[data-page=home]),html:has(#precision-view[data-page=character]){overflow-anchor:none}
 
 /* The supplied StoryDate artwork is designed for light surfaces. */
-img.storydate-brand{box-sizing:border-box;padding:6px 8px;border-radius:6px;background:#fffbf3;object-fit:contain;flex-shrink:0}img.storydate-brand.storydate-brand-compact{padding:4px;border-radius:7px}
+img.storydate-brand{box-sizing:border-box;padding:4px 0;background:transparent;object-fit:contain;flex-shrink:0}img.storydate-brand.storydate-brand-compact{padding:2px}
