@@ -18,3 +18,10 @@ dist/assets/three-kingdoms.html
 dist/assets/sanguo-campaign.html
 server/sanguo-campaign.json
 server/sanguo-core.cjs
+
+# Generated book campaign payloads and editorial covers
+dist/assets/book-campaign-core.js
+dist/assets/book-campaigns/
+dist/assets/book-catalog.js
+dist/assets/mortal-path-cover.svg
+dist/assets/monte-cristo-cover.svg

@@ -1,3 +1,4 @@
+import {buildBooks} from '../book-campaigns/build.mjs';
 import {buildThreeKingdoms} from '../three-kingdoms/build.mjs';
 import { build } from 'esbuild';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -26,3 +27,5 @@ await build({ entryPoints: ['src/firebase-client.js'], bundle: true, format: 'es
 await build({ entryPoints: ['src/checkout.js'], bundle: true, format: 'esm', platform: 'browser', target: 'es2022', minify: true, outfile: 'dist/assets/checkout.js' });
 
 await buildThreeKingdoms();
+
+await buildBooks();

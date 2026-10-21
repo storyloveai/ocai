@@ -19,3 +19,7 @@
 当前包明确标记 `prepared_not_published` / `draft_pending_cover_review`。本轮不替换线上目录，不把待生成图标成完成，不制造播放量、评论或真人作者身份。
 
 这些条目已写好世界/人物前提和开场，**尚未拆成《三国·谋士》同等深度的规则剧情**。后续拆书与规则引擎建设是另一项工作。
+
+## 完整 DeepSeek 文字批次
+
+已完成40个故事、40个角色的文字扩写。阅读 [完整目录](generated-text/INDEX.md)，机器统计见 [QUALITY.json](generated-text/QUALITY.json)，人工抽查与待审图事项见 [EDITORIAL-REVIEW.md](generated-text/EDITORIAL-REVIEW.md)。共320个图片任务仍为pending。生成方式与续跑见 [TEXT-GENERATION.md](TEXT-GENERATION.md)。

@@ -26,7 +26,7 @@
 | opening、openingSuggestions | 首次进入时的场景和三个不同的初始行动 |
 | reviewStatus、assetStatus | 草稿审核和图片完成状态；两者通过后才可发布 |
 
-现有 80 条草稿已覆盖标题、题材、简介、开场和封面任务；完整人物设定、长篇详情、多张场景图任务仍需扩展。`catalog-drafts.json` 与 `cover-jobs.jsonl` 是当前可用文件，并非全部字段都已生成。普通互动故事也不等于三国那样的规则战役，拆书需另设章节、变量、分支和结局。
+80 条已通过 DeepSeek 生成完整文字包，包含长篇详情、序章、人物设定、世界观、玩法、三个开场行动和三张场景图计划。入口见 `generated-text/INDEX.md`，审阅边界见 `generated-text/EDITORIAL-REVIEW.md`。图片任务仍待生成，完整批次使用 `generated-text/image-jobs.jsonl`。`catalog-drafts.json` 与 `cover-jobs.jsonl` 是当前可用文件，并非全部字段都已生成。普通互动故事也不等于三国那样的规则战役，拆书需另设章节、变量、分支和结局。
 
 ## 批量生产流程（待图像 API 接入后实施）
 
