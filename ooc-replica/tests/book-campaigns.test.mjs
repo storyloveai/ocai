@@ -55,6 +55,8 @@ test('AI cannot turn an invented wage, evidence date or locked action into appro
  assert.doesNotThrow(()=>buildBookStage({...body,context:{node:'c3_m1',target:'lu',text:'继续第三章。'}}));assert.throws(()=>buildBookStage({...body,context:{node:'c9_m9',target:'lu',text:'未知章节。'}}));
 });
 const tick=()=>new Promise(r=>setTimeout(r,20));
+// Wait for a condition instead of a fixed delay: the typewriter is slower on small build machines (Vercel: 2 cores).
+const until=async(fn,ms=3000)=>{const end=Date.now()+ms;while(Date.now()<end){if(fn())return true;await new Promise(r=>setTimeout(r,20));}return !!fn();};
 async function page(id,{snapshot={},api,configured=false}={}){
  const {document,window}=parseHTML('<html><body></body></html>');window.CC=CC;window.matchMedia=()=>({matches:true});window.scrollY=0;
  window.HTMLElement.prototype.scrollIntoView=()=>{};
@@ -92,7 +94,7 @@ test('streamed dialogue is visible before completion; cancellation leaves state 
  const output={pick:null,reply:'陆晞把药包移开一点：“这份要交给病棚。你若留下，先说能帮到几时。”',tone:'warm',mood:'warm',commit:null};
  const api=async opts=>new Response(new ReadableStream({async start(controller){controller.enqueue(new TextEncoder().encode(JSON.stringify({type:'partial',output:{reply:'陆晞把药包移开一点'}})+'\n'));await new Promise(r=>release=r);if(!opts.signal.aborted)controller.enqueue(new TextEncoder().encode(JSON.stringify({type:'done',output})+'\n'));controller.close();}}),{headers:{'Content-Type':'application/x-ndjson'}});
  const p=await page(id,{snapshot,api,configured:true});try{
-  p.submit('你辛苦了，我能帮一会儿。');await new Promise(r=>setTimeout(r,110));assert.ok(p.document.querySelector('#book-live p').textContent.includes('陆晞'));assert.equal(p.writes.length,0);
+  p.submit('你辛苦了，我能帮一会儿。');assert.ok(await until(()=>p.document.querySelector('#book-live p')?.textContent.includes('陆晞')),'partial reply visible');assert.equal(p.writes.length,0);
   p.click(p.document.querySelector('[data-book-stop]'));release();await tick();assert.equal(p.writes.length,0);assert.equal(p.document.querySelector('textarea').value,'你辛苦了，我能帮一会儿。');
   p.submit('你辛苦了，我能帮一会儿。');await tick();release();await new Promise(r=>setTimeout(r,500));assert.equal(p.writes.filter(([k])=>k==='ooc-session-v2-'+id).length,1);const result=p.saved.get('ooc-session-v2-'+id)['campaign.save'];assert.equal(result.log.filter(e=>e.k==='book_chat').length,1);assert.equal(result.free.c1_s1,2);assert.equal(result.v['rel.lu.trust'],1);
  }finally{p.restore();}
