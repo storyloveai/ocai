@@ -59,13 +59,8 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.equal(document.querySelector('.suggestion-content').textContent,'Read the letter on the desk.');
   assert.equal(values.get('ooc-session-v2-'+id).at(-1).suggestions[0],'Read the letter on the desk.');
   // A mode switch stays on this URL, so it must remount without a no-op navigation.
+  // With a configured server a stale saved Demo preference is ignored: replies always come from the AI.
   values.set('ooc-response-mode','demo');show('/play/'+id,helpers);
-  assert.ok(document.querySelector('[data-mode]'));
-  document.querySelector('[data-mode]').click();
-  const mode=document.querySelector('[aria-label="Response mode"]');
-  mode.querySelector('[value=demo]').removeAttribute('selected');mode.querySelector('[value=ai]').setAttribute('selected','');
-  document.querySelector('.interaction-modal .save').click();
-  assert.equal(values.get('ooc-response-mode'),'ai');
   assert.equal(document.querySelector('[data-mode]'),null);
   assert.match(document.querySelector('[data-control=model]').textContent,/Gemini test Flash/);
   assert.match(document.querySelector('#session-messages').textContent,/A reply/);
