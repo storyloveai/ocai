@@ -15,6 +15,10 @@ import book
 camp = book.load()
 engine = (R / "engine/campaign_core.js").read_text()
 art = (R / "engine/art.js").read_text() + "\n" + (R / "engine/portraits.js").read_text()
+# illustrated portraits (art/portraits/<character id>.webp), embedded so the page stays a single file
+import base64
+imgs = {f.stem: "data:image/webp;base64," + base64.b64encode(f.read_bytes()).decode() for f in sorted((R / "art/portraits").glob("*.webp"))}
+art = "var PORTRAIT_IMG = " + json.dumps(imgs) + ";\n" + art
 assert "</script" not in art
 src = (R / "app/play.src.html").read_text()
 assert "</script" not in engine
