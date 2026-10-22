@@ -5,14 +5,22 @@ name: Generate portraits
 on:
   workflow_dispatch:
     inputs:
+      jobs:
+        description: "Job file under game/sanguo (art/portrait-jobs.jsonl or art/edition-jobs.jsonl)"
+        required: false
+        default: "art/portrait-jobs.jsonl"
       ids:
-        description: "Character ids, comma separated (empty = every character without a portrait)"
+        description: "Job ids, comma separated (empty = every job without output yet)"
         required: false
         default: ""
       quality:
         description: "Image quality: low, medium or high"
         required: false
-        default: "medium"
+        default: "high"
+      model:
+        description: "OpenAI image model"
+        required: false
+        default: "gpt-image-2"
 permissions:
   contents: write
   pull-requests: write
@@ -30,7 +38,9 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           IDS: ${{ inputs.ids }}
           QUALITY: ${{ inputs.quality }}
-        run: python3 game/sanguo/tools/gen_portraits.py --ids "$IDS" --quality "$QUALITY"
+          MODEL: ${{ inputs.model }}
+          JOBS: ${{ inputs.jobs }}
+        run: python3 game/sanguo/tools/gen_portraits.py --jobs "$JOBS" --ids "$IDS" --quality "$QUALITY" --model "$MODEL"
       - name: Rebuild the book and the website copy
         run: |
           cd game/sanguo
@@ -43,14 +53,14 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          branch="art/portraits-${{ github.run_number }}"
+          branch="art/gen-${{ github.run_number }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"
           git add game/sanguo/art game/sanguo/web/index.html ooc-replica/sanguo/upstream
-          git commit -m "新生成的三国人物插画（${{ inputs.ids || '全部缺图角色' }}）"
+          git commit -m "新生成的三国插画（run ${{ github.run_number }}）"
           git push origin "$branch"
           gh pr create --base "${{ github.ref_name }}" --head "$branch" \
-            --title "三国人物插画：${{ inputs.ids || '缺图角色' }}" \
+            --title "三国插画（run ${{ github.run_number }}）" \
             --body "由 Generate portraits 任务生成，审图后再合并。原图在 game/sanguo/art/source/，游戏用的裁剪图在 game/sanguo/art/portraits/。" \
             || echo "Branch $branch pushed; open the PR by hand if Actions may not create PRs in this repo."

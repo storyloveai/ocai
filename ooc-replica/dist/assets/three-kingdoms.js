@@ -1,10 +1,22 @@
-export const threeKingdoms={id:'three-kingdoms',title:'三国演义 · 谋士',author:'StoryDate · 三国互动',genre:'History',type:'story',original:true,plays:'八章连续旅程 · 选择留下回响',image:'/assets/three-kingdoms-cover.svg',description:'化身颍川谋士子衡，从许都走到华容。结交刘备、曹操、关羽、诸葛亮与温芷，让你的话成为承诺，让早先的选择在八章旅程中回响。',href:'/story/three-kingdoms'};
+// Two editions of 三国·谋士 share one story, one rule set and one save: the illustrated edition (art in
+// /assets/sanguo-art/, the default) and the ink edition (pictures drawn in code). ?edition=classic keeps the older
+// three-chapter version. ?lang=zh|en opens the game in that language (the home banner passes it).
+export const threeKingdoms={id:'three-kingdoms',title:'三国演义 · 谋士',author:'StoryDate · 三国互动',genre:'History',type:'story',original:true,plays:'八章连续旅程 · 插画版',image:'/assets/sanguo-art/cover.webp',description:'化身颍川谋士子衡，从许都走到华容。结交刘备、曹操、关羽、诸葛亮与温芷，让你的话成为承诺，让早先的选择在八章旅程中回响。',href:'/story/three-kingdoms'};
+export const threeKingdomsInk={...threeKingdoms,id:'three-kingdoms-ink',title:'三国演义 · 谋士（水墨版）',plays:'八章连续旅程 · 水墨版',image:'/assets/three-kingdoms-cover.svg',description:'同一个故事的水墨版：画面全部是水墨淡彩。进度与插画版共用。',href:'/story/three-kingdoms-ink'};
+const EDITION_PATHS=['/story/three-kingdoms','/play/three-kingdoms','/story/three-kingdoms-ink','/play/three-kingdoms-ink'];
+export const isThreeKingdomsPath=path=>EDITION_PATHS.includes(path);
 export function mountThreeKingdoms(path,{reference,account,helpers}){
- if(!['/story/three-kingdoms','/play/three-kingdoms'].includes(path))return false;
- const classic=new URLSearchParams(location.search||'').get('edition')==='classic';
+ if(!isThreeKingdomsPath(path))return false;
+ const params=new URLSearchParams(location.search||''),classic=params.get('edition')==='classic',ink=!classic&&path.endsWith('-ink');
  const snapshot=helpers.read('ooc-session-v2-three-kingdoms',{});
+ let siteLang=null;try{siteLang=localStorage.getItem('sd.lang');}catch{}
+ const lang=params.get('lang')||siteLang||(/^zh/i.test(globalThis.navigator?.language||'')?'zh':'en');
+ // the game starts in the site language; the setting is saved the next time the game itself saves its settings
+ if(['zh','en'].includes(lang))snapshot['campaign.settings']={...(snapshot['campaign.settings']||{}),lang};
+ const page=classic?'three-kingdoms':ink?'sanguo-campaign':'sanguo-campaign-illus';
+ const switcher=classic?`<a style="font-size:12px" href="/play/three-kingdoms">谋士八章</a>`:`<a style="font-size:12px" href="/play/three-kingdoms${ink?'':'-ink'}">${ink?'插画版':'水墨版'}</a><a style="font-size:12px" href="/play/three-kingdoms?edition=classic">经典三章</a>`;
  if(path.startsWith('/play/'))helpers.save('ooc-history',[threeKingdoms.id,...helpers.read('ooc-history',[]).filter(id=>id!==threeKingdoms.id)]);
- const root=reference.mountShell(`<header class="shell-page-header" style="gap:12px;min-height:56px"><a href="/">‹ 返回</a><h1 style="font-size:16px">三国演义</h1><a style="font-size:12px" href="/play/three-kingdoms${classic?'':'?edition=classic'}">${classic?'谋士八章':'经典三章'}</a><span style="margin-left:auto;font-size:12px;color:#aaa">进度自动保存</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/${classic?'three-kingdoms':'sanguo-campaign'}.html" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>`,helpers,'three-kingdoms');
+ const root=reference.mountShell(`<header class="shell-page-header" style="gap:12px;min-height:56px"><a href="/">‹ 返回</a><h1 style="font-size:16px">三国演义</h1>${switcher}<span style="margin-left:auto;font-size:12px;color:#aaa">进度自动保存</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/${page}.html" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>`,helpers,'three-kingdoms');
  const frame=root.querySelector('#three-kingdoms-frame');
  const receive=event=>{
   if(!frame.isConnected){window.removeEventListener('message',receive);return;}

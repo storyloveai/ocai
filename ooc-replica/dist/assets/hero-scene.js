@@ -34,7 +34,7 @@ export const SCENES = {
     }
   },
   character: {
-    image: '/assets/originals/sg-007.webp', side: 'left', focus: 'center 10%', href: '/character/sgc-007',
+    image: '/assets/originals/sg-007.webp', side: 'left', focus: 'center 10%', href: '/character/sgc-007', chat: '/play/sgc-007',
     en: {
       name: 'Diaochan', role: 'Three Kingdoms', tags: ['History', 'Palace intrigue'],
       quote: '“Walk slowly. In this corridor even the silence has listeners. What do you wish to ask me?”',
@@ -59,14 +59,6 @@ export function heroLang(win = globalThis) {
   try { const v = win.localStorage?.getItem('sd.lang'); if (LANGS.includes(v)) return v; } catch {}
   return /^zh/i.test(win.navigator?.language || '') ? 'zh' : 'en';
 }
-// The Three Kingdoms game keeps its own language setting on the same origin; carry the banner's pick into it.
-function carryLang(win, lang) {
-  try {
-    const k = 'sd.sg2.settings', cur = JSON.parse(win.localStorage?.getItem(k) || '{}') || {};
-    win.localStorage?.setItem(k, JSON.stringify({ ...cur, lang }));
-  } catch {}
-}
-
 export function heroSceneEnabled(win = globalThis) {
   try { if (new URLSearchParams(win.location?.search || '').get('hero') === 'classic') return false; } catch {}
   try { if (win.localStorage?.getItem('sd.hero') === 'classic') return false; } catch {}
@@ -80,8 +72,7 @@ export function heroSceneMarkup(page, lang = 'en') {
   const head = page === 'character'
     ? `<div class="sd-hero-meta"><span class="sd-hero-name">${esc(x.name)}</span><span>${esc(x.role)}</span></div><div class="sd-hero-tags">${x.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div><p class="sd-hero-bubble">${esc(x.quote)}</p>`
     : `<div class="sd-hero-meta"><span class="sd-hero-badge">${esc(x.badge)}</span>${x.eyebrow.map(esc).join('<span aria-hidden="true">·</span>')}</div><p class="sd-hero-lead">${esc(x.lead)}</p><p class="sd-hero-quote">${esc(x.quote)}</p><p class="sd-hero-ask">${esc(x.ask)}</p>`;
-  const toggle = `<div class="sd-hero-lang" role="group" aria-label="${ui.lang}">${LANGS.map(l => `<button type="button" data-hero-lang="${l}" aria-pressed="${l === lang}">${l === 'zh' ? '中' : 'EN'}</button>`).join('')}</div>`;
-  return `<div class="sd-hero-art sd-hero-${s.side}" aria-hidden="true"><img class="sd-hero-blur" src="${s.image}" alt="" decoding="async"><img class="sd-hero-figure" src="${s.image}" alt="" style="object-position:${s.focus}" decoding="async"><span class="sd-hero-fade"></span></div>${toggle}
+  return `<div class="sd-hero-art sd-hero-${s.side}" aria-hidden="true"><img class="sd-hero-blur" src="${s.image}" alt="" decoding="async"><img class="sd-hero-figure" src="${s.image}" alt="" style="object-position:${s.focus}" decoding="async"><span class="sd-hero-fade"></span></div>
 <div class="sd-hero-copy sd-hero-copy-${s.side === 'right' ? 'left' : 'right'}"><h1 class="sd-visually-hidden">${esc(page === 'character' ? x.name : x.eyebrow[0])}</h1>${head}
 <div class="sd-hero-choices${page === 'character' ? ' is-chips' : ''}" role="group" aria-label="${ui.group}">${chips}</div>
 <form class="sd-hero-form" data-hero-form><label class="sd-visually-hidden" for="sd-hero-input-${page}">${ui.reply}</label><input id="sd-hero-input-${page}" name="reply" maxlength="300" autocomplete="off" placeholder="${esc(x.placeholder)}"><button type="submit">${esc(x.cta)}</button></form>
@@ -93,16 +84,19 @@ const CSS = `
 @media (min-width:1024px){
  .sd-hero-on [data-hero-desktop]{display:none!important}
  .sd-hero-on{min-height:0!important}
- .sd-hero{display:block;position:relative;height:500px;overflow:hidden;background:#121212;color:#fafafa;font-family:Inter,"PingFang SC","Noto Sans SC",system-ui,sans-serif}
+ [data-sd-hero=character]{--sd-hero-h:470px}
+ .sd-hero-gap{display:none!important}
+ .sd-hero-next{padding-top:0!important;margin-top:-56px;position:relative;z-index:1}
+ .sd-hero{display:block;position:relative;height:var(--sd-hero-h,540px);overflow:hidden;background:#121212;color:#fafafa;font-family:Inter,"PingFang SC","Noto Sans SC",system-ui,sans-serif}
  .sd-hero-art{position:absolute;inset:0}
  .sd-hero-blur{position:absolute;left:-60px;top:-60px;width:calc(100% + 120px);height:620px;object-fit:cover;filter:blur(48px) brightness(.32) saturate(1.2);max-width:none}
- .sd-hero-figure{position:absolute;top:0;height:500px;width:46%;max-width:560px;object-fit:cover}
+ .sd-hero-figure{position:absolute;top:0;height:100%;width:46%;max-width:560px;object-fit:cover}
  .sd-hero-right .sd-hero-figure{right:40px}.sd-hero-left .sd-hero-figure{left:40px}
  .sd-hero-fade{position:absolute;inset:0;pointer-events:none}
- .sd-hero-fade{background:linear-gradient(0deg,#121212 0%,rgba(18,18,18,0) 26%)}
+ .sd-hero-fade{background:linear-gradient(0deg,#121212 0%,#121212 12%,rgba(18,18,18,0) 40%)}
  .sd-hero-right .sd-hero-figure{-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 42%,#000 90%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,#000 42%,#000 90%,transparent 100%)}
  .sd-hero-left .sd-hero-figure{-webkit-mask-image:linear-gradient(270deg,transparent 0%,#000 42%,#000 90%,transparent 100%);mask-image:linear-gradient(270deg,transparent 0%,#000 42%,#000 90%,transparent 100%)}
- .sd-hero-copy{position:absolute;top:56px;width:min(600px,48%);display:flex;flex-direction:column;gap:16px}
+ .sd-hero-copy{position:absolute;top:48px;width:min(600px,48%);display:flex;flex-direction:column;gap:16px}
  .sd-hero-copy-left{left:80px}.sd-hero-copy-right{right:64px;width:min(520px,44%)}
  .sd-hero-meta{display:flex;align-items:center;gap:10px;font-size:14px;color:#a1a1a1;flex-wrap:wrap}
  .sd-hero-badge{padding:3px 8px;border-radius:6px;background:rgba(250,250,250,.12);color:#fafafa;font-size:12px;font-weight:600;letter-spacing:.4px}
@@ -116,7 +110,7 @@ const CSS = `
  .sd-hero-choices.is-chips{display:flex;flex-wrap:wrap;gap:8px}
  .sd-hero-choice{text-align:left;padding:11px 14px;border-radius:8px;border:1px solid #3a3a3a;background:rgba(31,31,31,.85);color:#fafafa;font:inherit;cursor:pointer;transition:background .15s,border-color .15s}
  .is-chips .sd-hero-choice{height:36px;padding:0 14px;border-radius:999px;background:transparent;font-size:14px}
- .sd-hero-choice:hover{border-color:#6a6a6a}
+ .sd-hero-choice:hover{border-color:#fafafa;background:rgba(250,250,250,.08)}
  .sd-hero-choice[aria-pressed=true]{background:#fafafa;color:#1a1a1a;border-color:#fafafa}
  .sd-hero-choice-label{display:block;font-size:15px;font-weight:500}
  .sd-hero-choice-hint{display:block;margin-top:3px;font-size:12px;color:#a1a1a1}
@@ -127,11 +121,15 @@ const CSS = `
  .sd-hero-form button{height:44px;padding:0 20px;border-radius:8px;border:0;background:#fafafa;color:#1a1a1a;font-size:14px;font-weight:500;font-family:inherit;cursor:pointer;white-space:nowrap}
  .sd-hero-form button:hover{background:#e5e5e5}
  .sd-hero-note{margin:0;font-size:13px;color:#8a8a8a}
- .sd-hero-lang{position:absolute;top:20px;right:24px;z-index:2;display:inline-flex;border:1px solid #3a3a3a;border-radius:999px;overflow:hidden;background:rgba(18,18,18,.6)}
- .sd-hero-lang button{border:0;background:none;color:#a1a1a1;font:500 12px/1 inherit;font-family:inherit;padding:7px 12px;cursor:pointer}
- .sd-hero-lang button[aria-pressed=true]{background:#fafafa;color:#1a1a1a}
  .sd-visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 }`;
+
+// Where a click leads: the Three Kingdoms game in the banner's language, or Diaochan's chat opened with the reply.
+export function heroHref(page, lang, reply = '') {
+  if (page === 'home') return `${SCENES.home.href}?lang=${lang}`;
+  const say = reply.trim().slice(0, 300);
+  return say ? `${SCENES.character.chat}?say=${encodeURIComponent(say)}` : SCENES.character.chat;
+}
 
 export function mountHeroScene(root, page, { navigate, win = globalThis, lang } = {}) {
   const desktop = root.querySelector('[data-hero-desktop]');
@@ -140,31 +138,31 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
   if (!doc.getElementById('sd-hero-style')) { const st = doc.createElement('style'); st.id = 'sd-hero-style'; st.textContent = CSS; doc.head.append(st); }
   let hero = desktop.parentElement.querySelector(':scope > [data-sd-hero]');
   if (!hero) { hero = doc.createElement('section'); hero.className = 'sd-hero'; hero.dataset.sdHero = page; desktop.before(hero); }
-  (desktop.closest('section') || desktop.parentElement).classList.add('sd-hero-on');
+  const section = desktop.closest('section') || desktop.parentElement;
+  section.classList.add('sd-hero-on');
+  // Close the empty bands the captured layout leaves around the old carousel, so the banner runs straight into
+  // the category tabs below it (desktop only; the classes are styled inside the desktop media query).
+  const before = section.previousElementSibling;
+  if (before && !before.textContent.trim() && !before.querySelector('img,a,button')) before.classList.add('sd-hero-gap');
+  for (let el = section.nextElementSibling; el; el = el.nextElementSibling) {
+    if (/(^|\s)tl:hidden(\s|$)/.test(el.className)) continue; // phone-only block, already hidden on desktop
+    if (!el.textContent.trim() && !el.querySelector('img,a,button')) { el.classList.add('sd-hero-gap'); continue; }
+    el.classList.add('sd-hero-next'); break;
+  }
   const s = SCENES[page];
+  const go = href => navigate ? navigate(href) : (win.location.href = href);
   const paint = l => {
-    const x = s[l], ui = UI[l];
+    const ui = UI[l];
     hero.lang = l === 'zh' ? 'zh-CN' : 'en'; hero.setAttribute('aria-label', ui[page === 'character' ? 'character' : 'story']);
     hero.innerHTML = heroSceneMarkup(page, l);
-    const input = hero.querySelector('input'), buttons = [...hero.querySelectorAll('[data-hero-choice]')];
-    buttons.forEach(b => b.setAttribute('aria-pressed', 'false'));
-    buttons.forEach(b => b.onclick = () => {
-      buttons.forEach(y => y.setAttribute('aria-pressed', String(y === b)));
-      input.value = x.choices[Number(b.dataset.heroChoice)].label; input.focus();
-    });
-    input.oninput = () => buttons.forEach(y => y.setAttribute('aria-pressed', String(y.querySelector('.sd-hero-choice-label').textContent === input.value)));
-    hero.querySelectorAll('[data-hero-lang]').forEach(b => b.onclick = () => {
-      const next = b.dataset.heroLang; if (next === l) return;
-      try { win.localStorage?.setItem('sd.lang', next); } catch {}
-      paint(next); hero.querySelector(`[data-hero-lang="${next}"]`)?.focus();
-    });
-    // The story and chat screens do not read the banner reply yet; the banner opens them at their start,
-    // in the language the visitor is reading the banner in.
-    hero.querySelector('[data-hero-form]').onsubmit = e => {
-      e.preventDefault(); if (page === 'home') carryLang(win, l);
-      navigate ? navigate(s.href) : (win.location.href = s.href);
-    };
+    const input = hero.querySelector('input');
+    // A choice is an answer: it goes straight in. Typing is for anything else.
+    hero.querySelectorAll('[data-hero-choice]').forEach(b => b.onclick = () => go(heroHref(page, l, s[l].choices[Number(b.dataset.heroChoice)].label)));
+    hero.querySelector('[data-hero-form]').onsubmit = e => { e.preventDefault(); go(heroHref(page, l, input.value)); };
   };
   paint(LANGS.includes(lang) ? lang : heroLang(win));
+  // The site-wide language switch repaints whichever banner is on screen.
+  win.__sdHeroRepaint = l => { if (hero.isConnected && LANGS.includes(l)) paint(l); };
+  if (!win.__sdHeroLangBound) { win.__sdHeroLangBound = true; win.addEventListener?.('sd-lang', e => win.__sdHeroRepaint?.(e.detail)); }
   return hero;
 }

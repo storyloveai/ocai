@@ -15,19 +15,26 @@ import book
 camp = book.load()
 engine = (R / "engine/campaign_core.js").read_text()
 art = (R / "engine/art.js").read_text() + "\n" + (R / "engine/portraits.js").read_text()
-# illustrated portraits (art/portraits/<character id>.webp), embedded so the page stays a single file
-import base64
-imgs = {f.stem: "data:image/webp;base64," + base64.b64encode(f.read_bytes()).decode() for f in sorted((R / "art/portraits").glob("*.webp"))}
-art = "var PORTRAIT_IMG = " + json.dumps(imgs) + ";\n" + art
 assert "</script" not in art
 src = (R / "app/play.src.html").read_text()
 assert "</script" not in engine
 data = json.dumps(camp, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-out = src.replace("/*__BOOK__*/null", data).replace("/*__ENGINE__*/", engine).replace("/*__ART__*/", art)
+base = src.replace("/*__BOOK__*/null", data).replace("/*__ENGINE__*/", engine).replace("/*__ART__*/", art)
+# Two editions of the same book: "ink" (pictures drawn in code) and "illus" (the illustrations in art/).
+# The illustrated page links to the image files instead of embedding them; web/illus.html finds them at ../art/,
+# and the website rewrites ART_BASE to where it serves them.
+ART_DIRS = ("portraits", "scenes", "cg", "ending")
+files = sorted(f"{d}/{f.name}" for d in ART_DIRS for f in (R / "art" / d).glob("*.webp")) if (R / "art").exists() else []
+def edition(name, art_base=""):
+    return base.replace('"__EDITION__"', json.dumps(name)).replace('"__ART_BASE__"', json.dumps(art_base)).replace("/*__ART_FILES__*/[]", json.dumps(files if name == "illus" else []))
+out = edition("ink")
 (R / "dist").mkdir(exist_ok=True)
 (R / "dist/index.html").write_text(out)
 # a full document for standalone hosting (the artifact host adds its own skeleton)
-doc = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body style="margin:0">' + out + "</body></html>"
+head = '<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body style="margin:0">'
+doc = head + out + "</body></html>"
 (R / "web").mkdir(exist_ok=True)
 (R / "web/index.html").write_text(doc)
+(R / "web/illus.html").write_text(head + edition("illus", "../art/") + "</body></html>")
+print("illus.html links", len(files), "illustrations")
 print("dist/index.html", len(out), "bytes; web/index.html", len(doc))

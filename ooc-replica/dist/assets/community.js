@@ -34,7 +34,7 @@ export function show(path,h){
  if(path==='/announcement'||path.startsWith('/announcement/')){
   const item=announcements.items.find(item=>item.href===path);
   const badge=item=>`<span class="announcement-badge announcement-${safe(item.type.toLowerCase())}">${safe(item.type)}</span>`;
-  const content=path==='/announcement'?announcements.items.map(item=>`<a class="announcement-row" href="${safe(item.href)}">${badge(item)}<p>${safe(item.title)}</p><time>${safe(item.date)}</time></a>`).join(''):item?`<article class="announcement-detail">${badge(item)}<h2>${safe(item.title)}</h2><time>${safe(item.date)}</time>${item.href.endsWith('6aa3e1000f846b46b74fe504')?'<p>An issue affecting title publication has been resolved. Affected titles can be set to public again.</p>':`<p><a href="https://ooc.ai${safe(item.href)}" target="_blank" rel="noopener noreferrer">Read the original announcement</a></p>`}</article>`:'<p class="shell-empty">Announcement unavailable.</p>';
+  const content=path==='/announcement'?announcements.items.map(item=>`<a class="announcement-row" href="${safe(item.href)}">${badge(item)}<p>${safe(item.title)}</p><time>${safe(item.date)}</time></a>`).join(''):item?`<article class="announcement-detail">${badge(item)}<h2>${safe(item.title)}</h2><time>${safe(item.date)}</time><p>${safe(item.body||'')}</p></article>`:'<p class="shell-empty">Announcement unavailable.</p>';
   const root=mountShell(`<header class="shell-page-header"><button aria-label="Back" data-announcement-back>${icon('arrow',16)}</button><h1>Notice</h1></header><div class="announcement-page">${content}</div>`,h,'announcement');
   root.querySelector('[data-announcement-back]').onclick=()=>returnFromAnnouncement(path,h);
  }else if(path==='/profile'){

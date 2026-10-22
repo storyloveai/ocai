@@ -1,12 +1,13 @@
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
+import announcements from './announcements.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
 import {bindCarousels} from './carousels.js';
 import {paintBrand} from './brand.js';
 import {sortStories} from './catalog-sort.js';
-import {threeKingdoms} from './three-kingdoms.js';
+import {threeKingdoms,threeKingdomsInk} from './three-kingdoms.js';
 import {storydateOriginals,storydateCharacters} from './storydate-originals.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
@@ -68,7 +69,7 @@ function patchOriginals(root){
     const meta=a.querySelector('p:not([data-name])');if(meta)meta.textContent=d.tag;
   });
 }
-const catalog = [threeKingdoms,...bookMetadata,...evidence.catalog,...(evidence.characters||[])];
+const catalog = [threeKingdoms,threeKingdomsInk,...bookMetadata,...evidence.catalog,...(evidence.characters||[])];
 evidence.features[0]={...threeKingdoms};
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
 // Category tabs are loose: every tab always has titles. Tags come from keywords, then a deterministic fill.
@@ -84,7 +85,7 @@ for(const d of catalog){
   tagMap.set(d.id,tags);
 }
 for(const kind of ['story','character']){
-  const items=catalog.filter(d=>(d.type==='character')===(kind==='character')&&d.id!=='three-kingdoms');
+  const items=catalog.filter(d=>(d.type==='character')===(kind==='character')&&d.id!=='three-kingdoms'&&d.id!=='three-kingdoms-ink');
   for(const g of GENRES){
     const have=items.filter(d=>tagMap.get(d.id).has(g)).length;
     for(const d of items.filter(d=>!tagMap.get(d.id).has(g)).sort((x,y)=>hash(x.id+g)-hash(y.id+g)).slice(0,Math.max(0,8-have)))tagMap.get(d.id).add(g);
@@ -112,8 +113,18 @@ export const extraStories = catalog.map(d => ({...d, image:source(d),genre:d.gen
 const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.title_zh,d.author,d.description,d.description_zh,d.genre].filter(Boolean).join(' ').toLowerCase()]));
 for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 
+function paintNotice(){
+  const latest=announcements.items[0];
+  for(const link of all('a[href^="/announcement/"]')){
+    const bar=link.closest('section');if(!bar||!/Notifications|通知/.test(bar.textContent))continue;
+    link.setAttribute('href',latest.href);link.querySelectorAll('span').forEach(s=>s.textContent=latest.title);
+    const ghost=link.previousElementSibling;if(ghost?.tagName==='SPAN')ghost.textContent=latest.title;
+    const slot=bar.parentElement;
+    bar.querySelectorAll('button').forEach(b=>{if(!b.dataset.noticeClose){b.dataset.noticeClose='';b.addEventListener('click',()=>{slot.hidden=true;slot.style.display='none';});}});
+  }
+}
 function hydrate() {
-  paintBrand(host);
+  paintBrand(host);paintNotice();
   all('img[data-asset]').forEach(img => {
     const local = assets[img.dataset.asset];
     if(local) img.src = local;
@@ -263,7 +274,7 @@ function pinThreeKingdoms(){
   const meta=card.querySelector('p:not([data-name])');if(meta)meta.textContent=threeKingdoms.plays;
   const slide=first.closest('[aria-roledescription="slide"]');
   if(slide){const slot=slide.cloneNode(false);const wrap=document.createElement("div");wrap.className="w-full";wrap.append(card);slot.append(wrap);slide.parentElement.prepend(slot);}else first.parentElement.before(card);
-  for(const book of [...bookMetadata].reverse()){
+  for(const book of [threeKingdomsInk,...bookMetadata].reverse()){
    const bookCard=card.cloneNode(true);bookCard.href=book.href;bookCard.querySelector('[data-name]').textContent=book.title;
    bookCard.querySelectorAll('img').forEach(img=>{if(img.alt==='ORIGINAL'){img.parentElement.remove();return;}img.src=book.image;img.alt=book.title;img.removeAttribute('data-asset');});
    const note=bookCard.querySelector('p:not([data-name])');if(note)note.textContent=book.plays;
@@ -359,7 +370,7 @@ export function show(path, helpers) {
       const ids=collections.get(kind+':'+name);
       let items=ids?ids.map(id=>available.find(d=>d.id===id)).filter(Boolean):name==='OOC Originals'?available.filter(d=>d.original):['New Ranking','Rankings','Today'].includes(name)?sortStories(available,name==='New Ranking'?'newest':'played'):available.filter(d=>tagsOf(d).has(name));
       if(!items.length&&!context.categories.includes(name))items=available;
-      if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,...bookMetadata,...items.filter(d=>![threeKingdoms.id,...bookMetadata.map(b=>b.id)].includes(d.id))];
+      if(name==='Top Ranked'&&kind==='story')items=[threeKingdoms,threeKingdomsInk,...bookMetadata,...items.filter(d=>![threeKingdoms.id,threeKingdomsInk.id,...bookMetadata.map(b=>b.id)].includes(d.id))];
       content.innerHTML=`<div class="precision-collection"><a href="${kind==='character'?'/character':'/'}">‹ Back</a><div class="collection-heading"><h1>${safe(name)}</h1><label>Sort by <select aria-label="Sort collection"><option value="featured">Featured</option><option value="played">Most Played</option><option value="newest">Newest</option><option value="title">Title A–Z</option></select></label></div><p class="collection-count">${items.length} ${kind==='character'?'characters':'stories'}</p><div data-collection-grid>${items.length?grid(items,name==='Top Ranked'):'<p>No titles in this category yet.</p>'}</div></div>`;
       const sort=content.querySelector('select');sort.onchange=()=>{content.querySelector('[data-collection-grid]').innerHTML=grid(sort.value==='featured'?items:sortStories(items,sort.value),name==='Top Ranked');hydrate();};
     }
