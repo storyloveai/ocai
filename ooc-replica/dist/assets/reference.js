@@ -50,11 +50,32 @@ const text = e => e.textContent.trim();
 const safe = s => String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // StoryDate originals take over part of the captured catalogue; each one keeps its own id.
 const replaceMap=new Map(storydateOriginals.map(d=>[d.replaces,d]));
-evidence.catalog=evidence.catalog.map(d=>replaceMap.get(d.id)||d);
 const characterMap=new Map(storydateCharacters.map(d=>[d.replaces,d]));
-evidence.characters=(evidence.characters||[]).map(d=>characterMap.get(d.id)||d);
+// Only StoryDate's own titles are listed. Captured OOC titles and characters that no original replaces are dropped,
+// along with their cards, banners and detail pages (2026-10-22).
+evidence.catalog=evidence.catalog.filter(d=>replaceMap.has(d.id)).map(d=>replaceMap.get(d.id));
+evidence.characters=(evidence.characters||[]).filter(d=>characterMap.has(d.id)).map(d=>characterMap.get(d.id));
+const OURS=new Set([threeKingdoms.id,threeKingdomsInk.id,...bookMetadata.map(d=>d.id),...storydateOriginals.map(d=>d.id),...storydateCharacters.map(d=>d.id)]);
+// drop a card for a captured title that is not ours, with any wrapper that held only that card; empty rows go too
+// clear image sources before removing, or the browser still fetches pictures from the original site
+const drop=el=>{el.querySelectorAll('img,source').forEach(i=>{i.removeAttribute('srcset');i.removeAttribute('src');});el.querySelectorAll('[style*="url("]').forEach(e=>e.style.backgroundImage='');el.remove();};
+function pruneForeign(root,keep=[]){
+  const rows=new Set();
+  root.querySelectorAll('a[href^="/story/"],a[href^="/character/"]').forEach(a=>{
+    const id=a.getAttribute('href').split('/')[2];if(!id||OURS.has(id)||keep.includes(id)||a.closest('[data-hero-desktop]')||a.querySelector('h2.text-white'))return;
+    let el=a;while(el.parentElement&&el.parentElement.children.length===1&&el.parentElement.tagName!=='SECTION')el=el.parentElement;
+    const row=el.closest('section');if(row)rows.add(row);drop(el);
+  });
+  for(const row of rows)if(!row.querySelector('a[href^="/story/"],a[href^="/character/"]'))drop(row);
+  root.querySelectorAll('a[href^="/arpg/"]').forEach(drop);
+  // nothing may load from the original site: use the local copy of a captured picture, or leave it blank
+  root.querySelectorAll('img,source').forEach(i=>{
+    if(!/ooc\.ai/.test((i.getAttribute('src')||'')+(i.getAttribute('srcset')||'')))return;
+    const local=i.dataset?.asset&&assets[i.dataset.asset];i.removeAttribute('srcset');if(local)i.setAttribute('src',local);else{i.removeAttribute('src');i.style.visibility='hidden';}
+  });
+}
 const lumencia=evidence.catalog.find(d=>d.id==='69f414d90abbab6f6a2c8131');if(lumencia)lumencia.sortPlays='0';
-function patchOriginals(root){
+function patchOriginals(root,keep){
   root.querySelectorAll('a[href^="/character/"]').forEach(a=>{
     const d=characterMap.get(a.getAttribute('href').split('/').pop());if(!d)return;
     a.setAttribute('href','/character/'+d.id);
@@ -67,10 +88,13 @@ function patchOriginals(root){
     const name=a.querySelector('[data-name]');if(name)name.textContent=d.title;
     a.querySelectorAll('img').forEach(img=>{if(img.alt==='ORIGINAL')return;img.src=d.image;img.alt=d.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');img.removeAttribute('sizes');});
     const meta=a.querySelector('p:not([data-name])');if(meta)meta.textContent=d.tag;
+    a.querySelectorAll('span[class*="before:content"]').forEach(t=>t.remove()); // the original title's hashtags
   });
+  pruneForeign(root,keep);
 }
 const catalog = [threeKingdoms,threeKingdomsInk,...bookMetadata,...evidence.catalog,...(evidence.characters||[])];
-evidence.features[0]={...threeKingdoms};
+evidence.features=[{...threeKingdoms},...storydateOriginals.slice(0,5).map(d=>({...d,href:'/story/'+d.id}))];
+evidence.characterFeatures=storydateCharacters.slice(0,3).map(d=>({...d,href:'/character/'+d.id}));
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
 // Category tabs are loose: every tab always has titles. Tags come from keywords, then a deterministic fill.
 const GENRES=['Fantasy','Romance','Sci-Fi','History','Girls Love','Horror','Oriental Fantasy','Slice of Life','Fan Fiction','Utility','Boys Love','Others'];
@@ -127,7 +151,7 @@ function hydrate() {
   paintBrand(host);paintNotice();
   all('img[data-asset]').forEach(img => {
     const local = assets[img.dataset.asset];
-    if(local) img.src = local;
+    if(local){img.src=local;img.style.visibility='';}
     img.decoding='async';
     if(!img.closest('[data-hero-desktop],[data-mobile-track]'))img.loading='lazy';
   });
@@ -143,8 +167,12 @@ function hydrate() {
     let parent=a.parentElement;
     while(parent&&parent!==host){const heading=parent.querySelector('h2');if(heading){a.href='/collection?name='+encodeURIComponent(text(heading))+(host.dataset.page==='character'?'&type=character':'');break;}parent=parent.parentElement;}
   });
-  all('a[href^="/policy/"]').forEach(a=>{a.href='https://ooc.ai'+a.getAttribute('href');a.target='_blank';a.rel='noopener noreferrer';});
-  all('a[href^="/arpg/"]').forEach(a=>a.onclick=e=>{e.preventDefault();e.stopPropagation();context.show('<h2>Dice of Fate</h2><p>This public banner is reproduced visually. AIRPG backend services are not connected to this replica.</p>');});
+  // the captured footer points at OOC's policies, help centre and communities; ours replace them
+  all('a[href^="/policy/"],a[href*="ooc.ai"],a[href*="OOC_official"],a[href*="discord.gg/gzrF8UxYmJ"]').forEach(a=>{
+    const href=a.getAttribute('href'),to=/service/.test(href)?'/terms':/privacy/.test(href)?'/privacy':/help\./.test(href)?'/support':null;
+    if(!to){a.remove();return;}a.setAttribute('href',to);a.removeAttribute('target');a.removeAttribute('rel');
+  });
+  all('a[href^="/arpg/"]').forEach(a=>a.remove());
   const sidebar=q('[data-shrink]');
   if(sidebar){
     const toggle=sidebar.querySelector('button');
@@ -175,6 +203,7 @@ function updateHero(step) {
 
 function bindHome(page) {
   activeFeatures=page==='character'?(evidence.characterFeatures||[]):evidence.features;
+  if(activeFeatures.length)paintMobileSlides(activeFeatures);
   all('button').filter(b=>text(b)==='Previous slide'||text(b)==='Next slide').forEach(b=>{
     b.setAttribute('aria-label',text(b));b.dataset.refStep=text(b)==='Previous slide'?'-1':'1';b.onclick=()=>updateHero(Number(b.dataset.refStep));
   });
@@ -265,6 +294,14 @@ function bindDetail() {
   });
 }
 
+function paintMobileSlides(features){
+ // the phone carousel: every captured slide shows one of our features (Three Kingdoms first)
+ all('h2').filter(h=>h.classList.contains('text-white')).map(h=>h.closest('a')).filter(Boolean).forEach((slide,i)=>{
+  const f=features[i%features.length];slide.href=f.href;slide.querySelector('h2').textContent=f.title;
+  const desc=slide.querySelector('h2')?.nextElementSibling;if(desc)desc.textContent=f.description||'';
+  slide.querySelectorAll('img').forEach(img=>{img.src=source(f);img.alt=f.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');img.style.visibility='';});
+ });
+}
 function pinThreeKingdoms(){
  const first=all('h2').find(h=>text(h)==='Top Ranked')?.closest('section')?.querySelector('a [data-name]')?.closest('a');
  if(first){
@@ -281,13 +318,11 @@ function pinThreeKingdoms(){
    const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(bookCard);slot.append(wrap);placed.after(slot);}else card.after(bookCard);
    cardMarkup.set(book.id,bookCard.outerHTML);
   }
-  if(slide)slide.parentElement.append(slide); // Lumencia Academy moves to the end of the rail
   const section=first.closest('section');section.querySelectorAll('span.typo-text-base_leading-none_semibold').forEach((rank,i)=>rank.textContent=String(i+1));
-  card.querySelectorAll('img').forEach(img=>{if(img.alt==='Lumencia Academy'){img.alt=threeKingdoms.title;img.src=threeKingdoms.image;img.removeAttribute('data-asset');}});
+  card.querySelectorAll('img').forEach(img=>{if(img.alt!=='ORIGINAL'){img.alt=threeKingdoms.title;img.src=threeKingdoms.image;img.removeAttribute('data-asset');img.removeAttribute('srcset');}});
   cardMarkup.set(threeKingdoms.id,card.outerHTML);
  }
  const mobile=all('h2').find(h=>h.classList.contains('text-white'))?.closest('a');
- if(mobile){mobile.href=threeKingdoms.href;mobile.querySelector('h2').textContent=threeKingdoms.title;const desc=mobile.querySelector('h2')?.nextElementSibling;if(desc)desc.textContent=threeKingdoms.description;mobile.querySelectorAll('img').forEach(img=>{img.src=threeKingdoms.image;img.alt=threeKingdoms.title;img.removeAttribute('data-asset');});}
 }
 
 function bindExploreSort(page){
@@ -329,7 +364,7 @@ export function show(path, helpers) {
   if(path==='/search'){show('/',helpers);openSearch(helpers,new URLSearchParams(location.search).get('q')||'');return true;}
   closeTitlePreview();
   clearInterval(carousel);context=helpers;
-  const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':path==='/story/69f414d90abbab6f6a2c8131'?'detail':evidence.pages[path]?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':path.startsWith('/story/')?'story-detail':null;
+  const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':evidence.pages[path]&&OURS.has(path.split('/')[2])?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':path.startsWith('/story/')?'story-detail':null;
   host.hidden=!page;style.media=page?'all':'not all';legacy.disabled=Boolean(page);
   host.dataset.page=page||'';
   document.body.dataset.reference=String(Boolean(page));
@@ -337,7 +372,7 @@ export function show(path, helpers) {
   if(!page)return false;
   host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);host.querySelectorAll('button[aria-label="Dismiss"]').forEach(button=>{const bar=button.closest('section');if(!bar)return;let gone=false;try{gone=localStorage.getItem('ooc-notice-dismissed')==='1';}catch{}if(gone){bar.remove();return;}button.onclick=()=>{host.querySelectorAll('button[aria-label="Dismiss"]').forEach(x=>x.closest('section')?.remove());try{localStorage.setItem('ooc-notice-dismissed','1');}catch{}};});
   if(page==='story-detail'){
-    const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=titlePreviews.titles[id];
+    const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=OURS.has(id)?titlePreviews.titles[id]:null;
     const content=q('[data-shrink]')?.nextElementSibling;
     if(content&&record){
       const wrapper=document.createElement('div');wrapper.innerHTML=record.html;
@@ -392,7 +427,7 @@ export function show(path, helpers) {
 }
 
 // Authenticated layouts use the same captured stylesheet and asset map.
-export function mountInteraction(html,helpers){closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;paintBrand(host);all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
+export function mountInteraction(html,helpers){closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;patchOriginals(host,['69f414d90abbab6f6a2c8131','6a808dbe8cc39ab3d8abaf5e']);paintBrand(host);all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
 
 export function preview(path,helpers){
  const match=/^\/(story|character)\/([^/?]+)$/.exec(path);if(!match)return false;
@@ -400,6 +435,7 @@ export function preview(path,helpers){
  const record=titlePreviews.titles[id]||capturedPreview(d)||fallbackPreview(d);
  const dialog=openTitlePreview(record,id,{...helpers,assets});
  dialog.setAttribute('aria-label',match[1]==='character'?'Character Information':'Story Information');
+ dialog.querySelector('[data-preview-close]')?.setAttribute('aria-label',match[1]==='character'?'Close Character Information':'Close Story Information');
  dialog.querySelector('h1')?.closest('a')?.setAttribute('data-full-info','');
  bindSocial(dialog,id,helpers);return true;
 }
@@ -432,7 +468,7 @@ function fallbackPreview(d){
  const book=bookMetadata.find(b=>b.id===d.id);if(book)return bookPreview(book);
  const kind=d.type==='character'?'Character':'Story';
  const description=d.description||'The full description for this title has not been captured yet.';
- return {type:d.type,html:`<header><h2>${kind} Information</h2><button data-preview-close aria-label="Close information">×</button></header><div class="public-detail"><div class="public-detail-top"><img src="${safe(source(d))}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1>${creatorLink(d.author)}<p>${safe(d.plays||'')}</p><p>${safe(description)}</p><button data-preview-bookmark="${safe(d.id)}" aria-label="Bookmark ${kind.toLowerCase()}">♡ Bookmark</button></div></div><section><h2>${kind} Description</h2><p>${safe(description)}</p></section>${bookMetadata.some(b=>b.id===d.id)?'<section><h2>八章连续战役</h2><p>原创玩家视角 · 规则判定 · 人物关系 · 承诺与回响 · 独立账号存档。每个场景有不同的行动，AI 沿当前情景生成对白。</p><p>当前开放卷一。书封为原创排版设计，插图待接入作图接口。</p></section>':''}${d.id==='three-kingdoms'?'<section><h2>Chapters</h2><p>许都 · 出许都 · 下邳 · 千里 · 新野 · 长坂 · 赤壁 · 华容</p><p>化身原创谋士子衡。人物关系、承诺、记事与回响贯穿八章；规则决定结果，AI 理解话意并生成对白。经典三章仍可从游戏页进入。</p></section>':''}<section><h2>Settings</h2><p>Avatar Settings</p><button data-preview-avatar><span>Default avatar</span>⌄</button><p>Starting Scenarios</p><button data-preview-scenario><span>Default</span>⌄</button></section></div><footer><button data-preview-play="${safe(d.id)}" class="shell-white-button">New Play</button></footer>`};
+ return {type:d.type,html:`<header><h2>${kind} Information</h2><button data-preview-close aria-label="Close information">×</button></header><div class="public-detail"><div class="public-detail-top"><img src="${safe(source(d))}" alt="${safe(d.title)}"><div><h1>${safe(d.title)}</h1>${creatorLink(d.author)}<p>${safe(d.plays||'')}</p><p>${safe(description)}</p><p class="public-tags">${[...tagsOf(d)].slice(0,4).map(t=>`<a href="/search?q=${encodeURIComponent(t)}">#${safe(t)}</a>`).join(' ')}</p><button data-preview-bookmark="${safe(d.id)}" aria-label="Bookmark ${kind.toLowerCase()}">♡ Bookmark</button></div></div><section><h2>${kind} Description</h2><p>${safe(description)}</p></section>${bookMetadata.some(b=>b.id===d.id)?'<section><h2>八章连续战役</h2><p>原创玩家视角 · 规则判定 · 人物关系 · 承诺与回响 · 独立账号存档。每个场景有不同的行动，AI 沿当前情景生成对白。</p><p>当前开放卷一。书封为原创排版设计，插图待接入作图接口。</p></section>':''}${d.id==='three-kingdoms'?'<section><h2>Chapters</h2><p>许都 · 出许都 · 下邳 · 千里 · 新野 · 长坂 · 赤壁 · 华容</p><p>化身原创谋士子衡。人物关系、承诺、记事与回响贯穿八章；规则决定结果，AI 理解话意并生成对白。经典三章仍可从游戏页进入。</p></section>':''}<section><h2>Settings</h2><p>Avatar Settings</p><button data-preview-avatar><span>Default avatar</span>⌄</button><p>Starting Scenarios</p><button data-preview-scenario><span>Default</span>⌄</button></section></div><footer><button data-preview-play="${safe(d.id)}" class="shell-white-button">New Play</button></footer>`};
 }
 export function openSearch(helpers,initial=''){
  const dialog=openTitlePreview({html:`<header><button data-preview-close aria-label="Back to stories" class="dialog-back">‹</button><h2>Search</h2></header><div class="search-dialog-content"><label class="search-dialog-input"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search stories, characters and creators" placeholder="Search stories, characters, creators" maxlength="100"></label><div class="search-kind-tabs" role="tablist" aria-label="Search type">${['All','Story','Character','Creator'].map((label,i)=>`<button role="tab" data-search-kind="${label}" aria-selected="${i===0}">${label}</button>`).join('')}</div><div data-search-results aria-live="polite"></div></div><footer><small>Explore stories, characters and creators</small></footer>`},'search',{...helpers,assets});
@@ -444,7 +480,7 @@ export function openSearch(helpers,initial=''){
 
 
 export function mountShell(html,helpers,page='account'){
- closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page=page;host.innerHTML=evidence.pages.home;paintBrand(host);
+ closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page=page;host.innerHTML=evidence.pages.home;pruneForeign(host);paintBrand(host);
  const content=q('[data-shrink]')?.nextElementSibling;
  if(content){content.innerHTML=html;content.classList.add('shell-content');}
  hydrate();return host;

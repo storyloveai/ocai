@@ -4,9 +4,10 @@ import {showCreator} from './social.js';
 import {normalizeDraft} from './builder.js';
 import announcements from './announcements.js';
 import {mountShell} from './reference.js';
+import {show as showLegal} from './legal.js';
 import {symbol as icon} from './site-shell.js';
 import {escapeHTML as safe} from './stream.js';
-const footer=()=>`<footer class="shell-footer"><div><strong>Explore</strong><a href="/">Story</a><a href="/character">Character</a><a href="/credit">Credits</a><a href="/my-title">My titles</a><a href="/profile">Profile</a></div><div><strong>Support</strong><a href="https://help.ooc.ai/" target="_blank" rel="noopener noreferrer">Original site support</a><a href="https://ooc.ai/policy/service" target="_blank" rel="noopener noreferrer">Original Terms of Service</a><a href="https://ooc.ai/policy/privacy" target="_blank" rel="noopener noreferrer">Original Privacy Policy</a></div><p>Independent OOC interface reproduction. Your account, purchases and conversations belong to this site.</p></footer>`;
+const footer=()=>`<footer class="shell-footer"><div><strong>Explore</strong><a href="/">Story</a><a href="/character">Character</a><a href="/credit">Credits</a><a href="/my-title">My titles</a><a href="/profile">Profile</a></div><div><strong>Support</strong><a href="/support">Contact &amp; Support</a><a href="/terms">Terms of Service</a><a href="/privacy">Privacy Policy</a></div><p>© 2026 StoryDate</p></footer>`;
 const header=(name,settings=false)=>`<header class="shell-page-header"><h1>${safe(name)}</h1>${settings?`<a href="/profile/setting" aria-label="Account settings">${icon('gear',24)}</a>`:''}</header>`;
 const row=(label,href,symbol)=>`<a href="${href}">${icon(symbol)}<span>${safe(label)}</span>${icon('arrow',14)}</a>`;
 function itemsMarkup(items,resume=false){return items.map(d=>`<article><a href="/${resume?'play':d.type==='character'?'character':'story'}/${safe(d.id)}"><img src="${safe(d.image.startsWith('assets/')?'/'+d.image:d.image)}" alt="${safe(d.title)}"><h2>${safe(d.title)}</h2><p>${safe(d.plays||'')} ${d.author?'· '+safe(d.author):''}</p></a></article>`).join('');}
@@ -27,6 +28,7 @@ function showCommunity(h){
  root.querySelector('[data-community-create]').onclick=()=>h.navigate('/builder');load();
 }
 export function show(path,h){
+ if(showLegal(path,h,mountShell))return true;
  if(path==='/community'){showCommunity(h);return true;}
  if(/^\/profile\/[^/]+$/.test(path)&&!path.startsWith('/profile/setting'))return showCreator(path,h,mountShell);
  if(!path.startsWith('/announcement')&&!['/my-title','/history','/liked','/profile','/profile/setting','/profile/setting/chat','/profile/setting/personalization','/profile/setting/block-management','/profile/setting/customer-support'].includes(path))return false;
@@ -46,7 +48,7 @@ export function show(path,h){
   if(personal)body=`<form data-profile-form><label for="profile-name">Name</label><input id="profile-name" name="name" value="${safe(name)}" maxlength="24" required><label for="profile-gender">Content preference</label><select id="profile-gender" name="audience">${['Male','Female','All'].map(v=>`<option ${v===profile.audience?'selected':''}>${v}</option>`).join('')}</select><label for="profile-bio">About your character</label><textarea id="profile-bio" name="bio" rows="4" maxlength="2000">${safe(profile.bio||'')}</textarea><button class="shell-white-button" type="submit">Save changes</button><p data-save-status role="status"></p></form>`;
   else if(chat)body=`<div class="settings-row"><span>Output Length</span><select data-output-length aria-label="Output Length">${['short','standard','long'].map(v=>`<option value="${v}" ${v===String(h.read('ooc-output-length','standard'))?'selected':''}>${v[0].toUpperCase()+v.slice(1)}</option>`).join('')}</select></div><label class="settings-row"><span>Suggested responses</span><input type="checkbox" data-suggestion-preference ${h.read('ooc-suggestions-visible',true)?'checked':''}></label><p data-save-status role="status"></p>`;
   else if(blocked)body=`<div class="shell-empty">${icon('shield',36)}No blocked content.</div>`;
-  else if(support)body=`<h2>Customer Support</h2><p>For account, payment or conversation issues, contact the owner of this site. Include the page and the time of the issue.</p><a href="/credit" class="shell-white-button">View Credits</a>`;
+  else if(support)body=`<h2>Customer Support</h2><p>For account, payment or conversation issues, see <a href="/support">Contact &amp; Support</a>. Include the page and the time of the issue.</p><p><a href="/terms">Terms of Service</a> · <a href="/privacy">Privacy Policy</a></p><a href="/credit" class="shell-white-button">View Credits</a>`;
   else body=`<section class="profile-menu">${row('Personalization','/profile/setting/personalization','person')}${row('Session Settings','/profile/setting/chat','chat')}${row('Favorites','/liked','heart')}<button data-action="logout">${icon('person')}<span>Sign out</span>${icon('arrow',14)}</button></section>`;
   const root=mountShell(`${header(title)}<div class="profile-settings"><a class="shell-back" href="/profile">‹ Back to MY</a>${body}</div>`,h,'settings');
   const status=()=>{root.querySelector('[data-save-status]').textContent='Saved.';};
