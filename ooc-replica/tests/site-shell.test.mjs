@@ -24,7 +24,9 @@ test('account routes use the captured shell, keep real private history isolated,
  community.show('/profile/setting/chat',h);const output=document.querySelector('[data-output-length]');output.querySelectorAll('option').forEach(o=>o.removeAttribute('selected'));output.querySelector('[value=long]').setAttribute('selected','');output.onchange();assert.equal(values.get('ooc-output-length'),'long');
  community.show('/my-title',h);assert.match(document.querySelector('.library-items').textContent,/There are no titles/);assert.equal(document.querySelectorAll('.library-draft').length,0);
  location.pathname='/story/6ac749a7ab586f53935a023d';
- reference.show(location.pathname,h);assert.ok(document.querySelector('.story-public-body'));assert.match(document.querySelector('.replica-story-detail').textContent,/Failed Knight/);assert.equal(document.querySelector('[data-play]').dataset.play,'6ac749a7ab586f53935a023d');
+ reference.show(location.pathname,h);assert.doesNotMatch(document.body.textContent,/Failed Knight/); // captured OOC titles are not shown
+ location.pathname='/story/story-005';
+ reference.show(location.pathname,h);assert.match(document.querySelector('.replica-story-detail').textContent,/Saintess/);assert.equal(document.querySelector('[data-play]').dataset.play,'story-005');
  community.show('/profile',h);reference.syncAccount(account);account.user=null;values.clear();reference.syncAccount(account);
  assert.doesNotMatch(document.querySelector('[data-shrink]').textContent,/Current owner|Private local response|Saved story/);assert.ok(document.querySelector('[data-shrink] [data-action=login]'));
 });

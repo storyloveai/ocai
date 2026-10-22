@@ -16,6 +16,9 @@ export function initSocial(catalog,evidence,previews){
  }
  for(const record of Object.values(previews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');for(const a of doc.querySelectorAll('a[href^="/profile/"]'))register(a.getAttribute('href').split('/')[2],a.textContent.trim());}
  for(const d of catalog)if(d.author&&!names.has(d.author))register(slug(d.author),d.author);
+ // only creators of titles that are listed here keep a profile (the captured OOC creators are dropped)
+ const keep=new Set(catalog.map(d=>d.author).filter(Boolean));
+ for(const [id,u]of users)if(!keep.has(u.name)){users.delete(id);if(names.get(u.name)===id)names.delete(u.name);}
 }
 export function creatorLink(name){const id=names.get(name)||slug(name||'Storylove');return `<a class="creator-link" href="/profile/${safe(id)}">${safe(name||'Storylove')}</a>`;}
 function saveState(h,key,value,status){try{h.save(key,value);return true;}catch{if(status)status.textContent='Unable to save. Please try again.';return false;}}
