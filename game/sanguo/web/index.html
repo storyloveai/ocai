@@ -2365,7 +2365,7 @@ const ART_BASE = "";
 const ART_FILES = new Set([]);
 const artUrl = p => EDITION === "illus" && ART_FILES.has(p) ? ART_BASE + p : null;
 // where the face sits in each illustration (object-position), so round avatars stay centred on it
-const PORTRAIT_FOCUS = { liubei: "50% 34%", caocao: "50% 48%", guanyu: "50% 45%", zhuge: "50% 34%", zhouyu: "50% 25%", zhaoyun: "50% 20%", wenzhi: "50% 30%", lusu: "50% 28%", sunfuren: "50% 28%", pangtong: "50% 30%", zhangsong: "50% 30%" };
+const PORTRAIT_FOCUS = { liubei: "50% 34%", caocao: "50% 48%", guanyu: "50% 45%", zhuge: "50% 34%", zhouyu: "50% 25%", zhaoyun: "50% 20%", wenzhi: "50% 30%", lusu: "50% 28%", sunfuren: "50% 28%", pangtong: "50% 30%", zhangsong: "50% 30%", fazheng: "50% 34%", huangzhong: "50% 30%" };
 const ENDING_VARIANTS = ["two_boat", "home", "city", "lone"];
 function imgFigure(cls, label, src) { return h("figure", { class: cls + " illus", role: "img", "aria-label": label }, h("img", { src, alt: "", loading: "lazy", decoding: "async", draggable: "false" })); }
 function face(id, mood = "neutral", round = false) {
