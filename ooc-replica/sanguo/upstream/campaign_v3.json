@@ -4342,7 +4342,8 @@
      {
       "id": "window"
      }
-    ]
+    ],
+    "illus": "v3_letter"
    },
    "place": "jiangling",
    "cast": [
@@ -4837,7 +4838,8 @@
    },
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "v3_fazheng_night"
    },
    "place": "chengdu",
    "cast": [
@@ -5135,7 +5137,8 @@
      {
       "id": "window"
      }
-    ]
+    ],
+    "illus": "v3_letter"
    },
    "cast": [
     {
@@ -5485,7 +5488,8 @@
    ],
    "art": {
     "scene": "hall",
-    "layers": []
+    "layers": [],
+    "illus": "v3_report"
    },
    "place": "jiangling",
    "cast": [
@@ -5704,7 +5708,8 @@
    },
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "v3_guanping"
    },
    "place": "jiangling",
    "cast": [
@@ -6587,7 +6592,8 @@
      {
       "id": "two"
      }
-    ]
+    ],
+    "illus": "g_wounded"
    },
    "cast": [
     {
@@ -7586,7 +7592,8 @@
    },
    "art": {
     "scene": "letter",
-    "layers": []
+    "layers": [],
+    "illus": "v2_zhaoyun_night"
    },
    "place": "hanzhong",
    "cast": [
@@ -8262,7 +8269,8 @@
    },
    "art": {
     "scene": "road",
-    "layers": []
+    "layers": [],
+    "illus": "v3_wz_road"
    },
    "place": "jiangling",
    "cast": [
@@ -8413,7 +8421,8 @@
      {
       "id": "dusk"
      }
-    ]
+    ],
+    "illus": "v3_wz_jing"
    },
    "cast": [
     {
@@ -9423,7 +9432,8 @@
    },
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "g_cold"
    },
    "cast": [
     {
@@ -9573,7 +9583,8 @@
    },
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "v3_guanping"
    },
    "cast": [
     {
@@ -9710,7 +9721,8 @@
    },
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "g_uncanny"
    },
    "cast": [
     {
@@ -9815,7 +9827,8 @@
    },
    "art": {
     "scene": "letter",
-    "layers": []
+    "layers": [],
+    "illus": "g_cold"
    },
    "cast": [
     {

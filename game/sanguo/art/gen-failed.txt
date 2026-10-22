@@ -1,0 +1,10 @@
+scene-v2_wenzhi: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v2_pangtong_night: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v2_chengdu: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v3_letter: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v3_dandao: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v3_clinic: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v3_xiang: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v3_wakou: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v3_dingjun: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
+scene-v3_laozu: failed (429 credit_balance_exhausted) You have no credits remaining. Add credits to continue using the API at https://platform.openai.com/settings/organization/billing/.
