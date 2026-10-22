@@ -711,9 +711,18 @@ ART = {
     "c7_luofeng": ("ravine", [lay("arrows", choice="ride"), lay("arrows", choice="main"), lay("you", choice="ride"), lay("turnback", choice="stop")], "luofeng"), "c7_guanyu": ("campfire", [lay("blade")], "jiangling"),
     "c8_chengdu": ("citywall", [lay("open"), lay("crowd"), lay("flag_liu")], "chengdu"),
 }
+# 插画版每个场景用的插画（art/scenes/<名>.webp）；小场景共用 g_ 开头的几张
+ILLUS = {
+    "x_return": "v2_return", "x_north": "v2_cao_feast", "x_cold": "g_cold", "x_uncanny": "g_uncanny", "x_loose": "g_cold", "x_zhouyu_rage": "v2_zhouyu_rage",
+    "c1_wound": "v2_wound", "c1_lusu": "v2_lusu", "c1_nanjun": "v2_nanjun", "c1_cao": "v2_cao_feast",
+    "c2_guiyang": "v2_guiyang", "c2_changsha": "v2_changsha", "c2_zhaoyun": "v2_zhaoyun_night",
+    "c3_ganlu": "v2_ganlu", "c3_flight": "v2_flight", "c4_tongque": "v2_tongque", "c4_death": "v2_death", "c4_mourn": "v2_mourn", "c4_leiyang": "v2_leiyang",
+    "c5_tongguan": "v2_tongguan", "c5_zhangsong": "v2_zhangsong", "c6_river": "v2_river", "c6_wenzhi": "v2_wenzhi", "c6_pangtong": "v2_pangtong_night",
+    "c7_luofeng": "v2_luofeng", "c7_guanyu": "v3_guanyu_night", "c8_chengdu": "v2_chengdu",
+}
 for n in N:
     sc, ls, place = ART[n["id"]]
-    n["art"] = {"scene": sc, "layers": ls}
+    n["art"] = {"scene": sc, "layers": ls, "illus": ILLUS[n["id"]]}
     if place: n["place"] = place
     if n["id"] in CAST: n["cast"] = CAST[n["id"]]
 PLACE_AFTER = {("c3_ganlu", "*"): "jingkou", ("c5_zhangsong", "follow"): "jiangling", ("c7_luofeng", "stop"): "luocheng", ("c8_chengdu", "jingzhou"): "jiangling"}

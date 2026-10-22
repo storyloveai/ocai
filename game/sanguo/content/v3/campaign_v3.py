@@ -871,20 +871,20 @@ def lay(id, when=None, choice=None):
     return d
 # (ink scene, ink layers, map place, illustration for the illustrated edition)
 ART = {
-    "x_return3": ("letter", [], None, "v3_letter"), "x_cold3": ("lamp", [], None, None), "x_guan_cold": ("lamp", [], None, None), "x_uncanny3": ("lamp", [], None, None),
-    "x_loose3": ("letter", [], None, None), "x_guan_rage": ("hall", [], None, "v3_guan_hall"),
+    "x_return3": ("letter", [], None, "v3_letter"), "x_cold3": ("lamp", [], None, "g_cold"), "x_guan_cold": ("lamp", [], None, "v3_guanping"), "x_uncanny3": ("lamp", [], None, "g_uncanny"),
+    "x_loose3": ("letter", [], None, "g_cold"), "x_guan_rage": ("hall", [], None, "v3_guan_hall"),
     "c1_jin": ("hall", [], "chengdu", "v3_jin"), "c1_dandao": ("bigriver", [lay("wu_ships")], "lukou", "v3_dandao"), "c1_clinic": ("herbs", [lay("two")], None, "v3_clinic"),
-    "c1_lusu_letter": ("letter", [lay("window")], "jiangling", None),
-    "c2_hanzhong": ("hall", [], "chengdu", "v3_council"), "c2_xiang": ("letter", [lay("seal")], "jiangling", "v3_xiang"), "c2_fazheng": ("lamp", [], "chengdu", None),
-    "c2_wz_letter": ("letter", [lay("window")], None, None),
-    "c3_wakou": ("ravine", [], "wakou", "v3_wakou"), "c3_report": ("hall", [], "jiangling", None), "c3_goad": ("camp", [], "jiameng", "v3_goad"), "c3_guanping": ("lamp", [], "jiangling", None),
+    "c1_lusu_letter": ("letter", [lay("window")], "jiangling", "v3_letter"),
+    "c2_hanzhong": ("hall", [], "chengdu", "v3_council"), "c2_xiang": ("letter", [lay("seal")], "jiangling", "v3_xiang"), "c2_fazheng": ("lamp", [], "chengdu", "v3_fazheng_night"),
+    "c2_wz_letter": ("letter", [lay("window")], None, "v3_letter"),
+    "c3_wakou": ("ravine", [], "wakou", "v3_wakou"), "c3_report": ("hall", [], "jiangling", "v3_report"), "c3_goad": ("camp", [], "jiameng", "v3_goad"), "c3_guanping": ("lamp", [], "jiangling", "v3_guanping"),
     "c4_dingjun": ("hill", [], "dingjun", "v3_dingjun"), "c4_laozu": ("hall", [], "jiangling", "v3_laozu"), "c4_fazheng": ("campfire", [], "dingjun", "v3_fazheng_night"),
-    "c4_wz_wounded": ("herbs", [lay("two")], None, None),
+    "c4_wz_wounded": ("herbs", [lay("two")], None, "g_wounded"),
     "c5_hanshui": ("citywall", [lay("open"), lay("rider")], "hanshui", "v3_hanshui"), "c5_huangzhong": ("campfire", [lay("blade")], "hanshui", "v3_huangzhong_night"),
     "c5_guanyu": ("campfire", [lay("wall"), lay("blade")], "jiangling", "v3_guanyu_night"),
-    "c6_jilei": ("camp", [], "hanzhong", "v3_jilei"), "c6_mifang": ("lamp", [], "jiangling", "v3_mifang"), "c6_zhaoyun": ("letter", [], "hanzhong", None),
+    "c6_jilei": ("camp", [], "hanzhong", "v3_jilei"), "c6_mifang": ("lamp", [], "jiangling", "v3_mifang"), "c6_zhaoyun": ("letter", [], "hanzhong", "v2_zhaoyun_night"),
     "c7_wang": ("citywall", [lay("crowd"), lay("flag_liu")], "mianyang", "v3_wang"), "c7_feishi": ("hall", [], "jiangling", "v3_feishi"),
-    "c8_wz_road": ("road", [], "jiangling", None), "c7_wz_jing": ("citywall", [lay("dusk")], None, None),
+    "c8_wz_road": ("road", [], "jiangling", "v3_wz_road"), "c7_wz_jing": ("citywall", [lay("dusk")], None, "v3_wz_jing"),
     "c8_huniu": ("hall", [], "jiangling", "v3_huniu"), "c8_fire": ("fire", [lay("burning")], "jiangling", "v3_fire"), "c8_far": ("letter", [lay("window")], "chengdu", "v3_far"),
 }
 for n in N:
