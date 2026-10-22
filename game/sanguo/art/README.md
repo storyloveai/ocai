@@ -17,6 +17,12 @@
 
 ## 补图
 
+**自动生成（推荐）**：仓库 Secrets 里放好 `OPENAI_API_KEY` 后，到 GitHub → Actions → Generate portraits → Run workflow。
+可以填要生成的角色 id（逗号分隔，留空 = 所有缺图角色）和质量。任务会把封面 sg-004、sg-007 作为画风参考发给模型，
+生成后自动重建页面、同步网站，并开一个 PR 供审图。每跑一次都会在 OpenAI 账户上产生费用。
+本地也能跑：`OPENAI_API_KEY=... python3 tools/gen_portraits.py --ids wenzhi`（需要 `pip install requests pillow`）。
+
+**手动**：
 1. 用出封面的同一个工具，逐行跑 `portrait-jobs.jsonl`（提示词、负面提示词、尺寸都在里面）。
 2. 审图：人物、年龄、外貌符合原著描写，不像任何影视剧或游戏形象。
 3. 按 `output_filename` 存进 `portraits/`，裁到 3:4、压到 40 KB 以内。
