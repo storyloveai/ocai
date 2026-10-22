@@ -14,6 +14,7 @@ const FILES = [
   ['game/sanguo/web/illus.html', 'sanguo/upstream/illus.html'],
   ['game/sanguo/content/campaign.json', 'sanguo/upstream/campaign.json'],
   ['game/sanguo/content/v2/campaign_v2.json', 'sanguo/upstream/campaign_v2.json'],
+  ['game/sanguo/content/v3/campaign_v3.json', 'sanguo/upstream/campaign_v3.json'],
   ['game/engine/campaign_core.js', 'sanguo/upstream/campaign_core.js'],
   ['game/engine/campaign_core.js', 'book-campaigns/engine/campaign_core.js'],
 ];
