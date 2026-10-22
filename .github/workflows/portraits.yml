@@ -12,7 +12,11 @@ on:
       quality:
         description: "Image quality: low, medium or high"
         required: false
-        default: "medium"
+        default: "high"
+      model:
+        description: "OpenAI image model"
+        required: false
+        default: "gpt-image-2"
 permissions:
   contents: write
   pull-requests: write
@@ -30,7 +34,8 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           IDS: ${{ inputs.ids }}
           QUALITY: ${{ inputs.quality }}
-        run: python3 game/sanguo/tools/gen_portraits.py --ids "$IDS" --quality "$QUALITY"
+          MODEL: ${{ inputs.model }}
+        run: python3 game/sanguo/tools/gen_portraits.py --ids "$IDS" --quality "$QUALITY" --model "$MODEL"
       - name: Rebuild the book and the website copy
         run: |
           cd game/sanguo
@@ -43,7 +48,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          branch="art/portraits-${{ github.run_number }}"
+          branch="art/portraits-${{ github.run_number }}-${{ inputs.ids || 'all' }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$branch"

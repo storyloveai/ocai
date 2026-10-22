@@ -15,9 +15,13 @@ from PIL import Image
 
 R = pathlib.Path(__file__).resolve().parents[1]
 ART = R / "art"
-REFS = [R.parent.parent / "ooc-replica/dist/assets/originals" / f for f in ("sg-004.webp", "sg-007.webp")]
-LEAD = ("Use the attached images only as a reference for art style, rendering, colour and lighting. "
-        "Do not copy their characters, faces, clothing or composition. Draw a new person: ")
+REFS = [R.parent.parent / "ooc-replica/dist/assets/originals" / f for f in ("sg-001.webp", "sg-004.webp", "sg-007.webp", "sg-008.webp")]
+LEAD = ("The attached images are covers from one illustrated series. Match their art style exactly: anime / Chinese "
+        "webtoon illustration, clean line art, cel shading with soft painted highlights, glossy detailed hair, large "
+        "expressive eyes, saturated colour and strong rim light. Do not copy their characters, faces, clothing, text "
+        "or composition. Draw a new person in the same style: ")
+TAIL = (" Clothing is Eastern Han dynasty Chinese hanfu (cross-collar robe, wide sleeves), not Japanese kimono. "
+        "Not photorealistic, not an oil painting, not semi-realistic.")
 
 
 def png(path):
@@ -35,12 +39,13 @@ def save(cid, raw):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--ids", default="")
-    ap.add_argument("--quality", default="medium", choices=["low", "medium", "high"])
+    ap.add_argument("--quality", default="high", choices=["low", "medium", "high"])
+    ap.add_argument("--model", default=os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-2"))
     ap.add_argument("--force", action="store_true", help="redo characters that already have a portrait")
     a = ap.parse_args()
     key = os.environ.get("OPENAI_API_KEY", "").strip()
     if not key: sys.exit("OPENAI_API_KEY is not set")
-    model = os.environ.get("OPENAI_IMAGE_MODEL", "gpt-image-1").strip() or "gpt-image-1"
+    model = a.model.strip() or "gpt-image-2"
     jobs = [json.loads(l) for l in (ART / "portrait-jobs.jsonl").read_text().splitlines() if l.strip()]
     want = {x.strip() for x in a.ids.split(",") if x.strip()}
     if want - {j["character"] for j in jobs}: sys.exit(f"unknown ids: {sorted(want - {j['character'] for j in jobs})}")
@@ -49,7 +54,7 @@ def main():
     refs = [("image[]", (p.stem + ".png", png(p), "image/png")) for p in REFS]
     made = []
     for j in todo:
-        prompt = LEAD + j["prompt"] + " " + j["negative_prompt"]
+        prompt = LEAD + j["prompt"] + TAIL + " " + j["negative_prompt"]
         r = requests.post("https://api.openai.com/v1/images/edits", headers={"Authorization": f"Bearer {key}"},
                           data={"model": model, "prompt": prompt, "size": "1024x1536", "quality": a.quality, "n": "1"},
                           files=refs, timeout=300)
