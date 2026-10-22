@@ -9,12 +9,14 @@ export function mountThreeKingdoms(path,{reference,account,helpers}){
  if(!isThreeKingdomsPath(path))return false;
  const params=new URLSearchParams(location.search||''),classic=params.get('edition')==='classic',ink=!classic&&path.endsWith('-ink');
  const snapshot=helpers.read('ooc-session-v2-three-kingdoms',{});
- const lang=params.get('lang');
- if(['zh','en'].includes(lang)){snapshot['campaign.settings']={...(snapshot['campaign.settings']||{}),lang};helpers.save('ooc-session-v2-three-kingdoms',snapshot);}
+ let siteLang=null;try{siteLang=localStorage.getItem('sd.lang');}catch{}
+ const lang=params.get('lang')||siteLang||(/^zh/i.test(globalThis.navigator?.language||'')?'zh':'en');
+ // the game starts in the site language; the setting is saved the next time the game itself saves its settings
+ if(['zh','en'].includes(lang))snapshot['campaign.settings']={...(snapshot['campaign.settings']||{}),lang};
  const page=classic?'three-kingdoms':ink?'sanguo-campaign':'sanguo-campaign-illus';
  const switcher=classic?`<a style="font-size:12px" href="/play/three-kingdoms">谋士八章</a>`:`<a style="font-size:12px" href="/play/three-kingdoms${ink?'':'-ink'}">${ink?'插画版':'水墨版'}</a><a style="font-size:12px" href="/play/three-kingdoms?edition=classic">经典三章</a>`;
  if(path.startsWith('/play/'))helpers.save('ooc-history',[threeKingdoms.id,...helpers.read('ooc-history',[]).filter(id=>id!==threeKingdoms.id)]);
- const root=reference.mountShell(`<header class="shell-page-header" style="gap:12px;min-height:56px"><a href="/">‹ 返回</a><h1 style="font-size:16px">三国演义${ink?' · 水墨版':''}</h1>${switcher}<span style="margin-left:auto;font-size:12px;color:#aaa">进度自动保存</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/${page}.html" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>`,helpers,'three-kingdoms');
+ const root=reference.mountShell(`<header class="shell-page-header" style="gap:12px;min-height:56px"><a href="/">‹ 返回</a><h1 style="font-size:16px">三国演义</h1>${switcher}<span style="margin-left:auto;font-size:12px;color:#aaa">进度自动保存</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/${page}.html" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>`,helpers,'three-kingdoms');
  const frame=root.querySelector('#three-kingdoms-frame');
  const receive=event=>{
   if(!frame.isConnected){window.removeEventListener('message',receive);return;}

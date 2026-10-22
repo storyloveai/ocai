@@ -125,7 +125,7 @@ test('DeepSeek failure falls back to Gemini before output, never after visible t
 test('both editions mount: illustrated by default, ink on its own path, and ?lang sets the game language',async()=>{
  const {mountThreeKingdoms,isThreeKingdomsPath}=await import('../dist/assets/three-kingdoms.js');
  const {document,window}=parseHTML('<html><body></body></html>');
- const frames=[];const reference={mountShell(html){const root=document.createElement('div');root.innerHTML=html;document.body.append(root);frames.push(root.querySelector('iframe'));return root;}};
+ const frames=[],sent=[];const reference={mountShell(html){const root=document.createElement('div');root.innerHTML=html;document.body.append(root);const f=root.querySelector('iframe');Object.defineProperty(f,'contentWindow',{value:{postMessage:m=>sent.push(m)}});frames.push(f);return root;}};
  const values=new Map();const helpers={read:(k,d)=>values.get(k)??d,save:(k,v)=>values.set(k,structuredClone(v))};
  Object.assign(globalThis,{window,document,location:{origin:'https://test.example',search:''}});
  assert.ok(isThreeKingdomsPath('/play/three-kingdoms-ink'));assert.ok(!isThreeKingdomsPath('/play/other'));
@@ -134,7 +134,8 @@ test('both editions mount: illustrated by default, ink on its own path, and ?lan
  globalThis.location={origin:'https://test.example',search:'?lang=en'};
  mountThreeKingdoms('/play/three-kingdoms',{reference,account:{},helpers});
  assert.match(frames.at(-1).getAttribute('src'),/sanguo-campaign-illus\.html$/);
- assert.equal(values.get('ooc-session-v2-three-kingdoms')['campaign.settings'].lang,'en');
+ const ready=new window.Event('message');Object.assign(ready,{origin:'https://test.example',source:frames.at(-1).contentWindow,data:{type:'sg2-ready'}});window.dispatchEvent(ready);
+ assert.equal(sent.at(-1).snapshot['campaign.settings'].lang,'en');
  globalThis.location={origin:'https://test.example',search:'?edition=classic'};
  mountThreeKingdoms('/play/three-kingdoms',{reference,account:{},helpers});
  assert.match(frames.at(-1).getAttribute('src'),/\/three-kingdoms\.html$/);

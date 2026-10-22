@@ -1,6 +1,7 @@
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
+import announcements from './announcements.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
 import {bindCarousels} from './carousels.js';
@@ -112,8 +113,18 @@ export const extraStories = catalog.map(d => ({...d, image:source(d),genre:d.gen
 const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.title_zh,d.author,d.description,d.description_zh,d.genre].filter(Boolean).join(' ').toLowerCase()]));
 for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 
+function paintNotice(){
+  const latest=announcements.items[0];
+  for(const link of all('a[href^="/announcement/"]')){
+    const bar=link.closest('section');if(!bar||!/Notifications|通知/.test(bar.textContent))continue;
+    link.setAttribute('href',latest.href);link.querySelectorAll('span').forEach(s=>s.textContent=latest.title);
+    const ghost=link.previousElementSibling;if(ghost?.tagName==='SPAN')ghost.textContent=latest.title;
+    const slot=bar.parentElement;
+    bar.querySelectorAll('button').forEach(b=>{if(!b.dataset.noticeClose){b.dataset.noticeClose='';b.addEventListener('click',()=>{slot.hidden=true;slot.style.display='none';});}});
+  }
+}
 function hydrate() {
-  paintBrand(host);
+  paintBrand(host);paintNotice();
   all('img[data-asset]').forEach(img => {
     const local = assets[img.dataset.asset];
     if(local) img.src = local;
