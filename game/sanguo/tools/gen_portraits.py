@@ -77,7 +77,7 @@ def main():
     want = {x.strip() for x in a.ids.split(",") if x.strip()}
     if want - {j["key"] for j in jobs}: sys.exit(f"unknown ids: {sorted(want - {j['key'] for j in jobs})}")
     todo = [j for j in jobs if (j["key"] in want if want else True) and (a.force or want or not target(j)[0].exists())]
-    made = []
+    made, failed = [], []
     for j in todo:
         cast = [p for p in (char_ref(c) for c in j.get("refs", [])) if p]
         files = [("image[]", (p.stem + ".png", png(p), "image/png")) for p in STYLE + cast]
@@ -88,10 +88,13 @@ def main():
                           files=files, timeout=600)
         if not r.ok:
             err = (r.json().get("error") or {}) if r.headers.get("content-type", "").startswith("application/json") else {}
-            print(f"{j['key']}: failed ({r.status_code} {err.get('code') or ''}) {err.get('message') or ''}"[:300]); continue
+            msg = f"{j['key']}: failed ({r.status_code} {err.get('code') or ''}) {err.get('message') or ''}"[:300]
+            print(msg); failed.append(msg); continue
         save(j, base64.b64decode(r.json()["data"][0]["b64_json"]))
         made.append(j["key"]); print(f"{j['key']}: ok", flush=True)
     print("made:", ",".join(made) or "none")
+    # failures also go to a file on the review branch, because Actions logs are not always readable
+    if failed: (ART / "gen-failed.txt").write_text("\n".join(failed) + "\n")
     if todo and not made: sys.exit(1)
 
 
