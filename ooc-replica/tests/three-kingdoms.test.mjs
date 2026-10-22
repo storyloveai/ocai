@@ -56,6 +56,7 @@ test('embedded save bridge checks origin, stores account-scoped progress and add
  send({type:'tk3-save',key:'game.sg03_heroes_over_plums',value:{save:{turn:1}}},'https://evil.example');assert.equal(values.size,0);
  send({type:'tk3-save',key:'game.sg03_heroes_over_plums',value:{save:{turn:1}}});
  assert.equal(values.get('ooc-session-v2-three-kingdoms')['game.sg03_heroes_over_plums'].save.turn,1);
+ assert.match(frame.getAttribute('src'),/sanguo-campaign-illus\.html$/);
  assert.deepEqual(values.get('ooc-history'),['three-kingdoms']);
  send({type:'tk3-save',key:'__proto__',value:{bad:true}});assert.equal(values.get('ooc-session-v2-three-kingdoms').bad,undefined);
 });
@@ -119,4 +120,22 @@ test('DeepSeek failure falls back to Gemini before output, never after visible t
   const res={setHeader(){},status(n){this.code=n;return this;},json(b){this.body=b;},write(s){this.headersSent=true;chunks.push(JSON.parse(s));return true;},end(s){if(s)chunks.push(JSON.parse(s));this.writableFinished=true;}};
   await handler(req,res);assert.deepEqual(calls,visible?['deepseek']:['deepseek','google']);assert.equal(chunks.at(-1).type,visible?'error':'done');assert.ok(!JSON.stringify(chunks).includes('private-upstream-detail'));
  }}finally{if(old===undefined)delete process.env.GEMINI_API_KEY;else process.env.GEMINI_API_KEY=old;}
+});
+
+test('both editions mount: illustrated by default, ink on its own path, and ?lang sets the game language',async()=>{
+ const {mountThreeKingdoms,isThreeKingdomsPath}=await import('../dist/assets/three-kingdoms.js');
+ const {document,window}=parseHTML('<html><body></body></html>');
+ const frames=[];const reference={mountShell(html){const root=document.createElement('div');root.innerHTML=html;document.body.append(root);frames.push(root.querySelector('iframe'));return root;}};
+ const values=new Map();const helpers={read:(k,d)=>values.get(k)??d,save:(k,v)=>values.set(k,structuredClone(v))};
+ Object.assign(globalThis,{window,document,location:{origin:'https://test.example',search:''}});
+ assert.ok(isThreeKingdomsPath('/play/three-kingdoms-ink'));assert.ok(!isThreeKingdomsPath('/play/other'));
+ mountThreeKingdoms('/play/three-kingdoms-ink',{reference,account:{},helpers});
+ assert.match(frames.at(-1).getAttribute('src'),/\/sanguo-campaign\.html$/);
+ globalThis.location={origin:'https://test.example',search:'?lang=en'};
+ mountThreeKingdoms('/play/three-kingdoms',{reference,account:{},helpers});
+ assert.match(frames.at(-1).getAttribute('src'),/sanguo-campaign-illus\.html$/);
+ assert.equal(values.get('ooc-session-v2-three-kingdoms')['campaign.settings'].lang,'en');
+ globalThis.location={origin:'https://test.example',search:'?edition=classic'};
+ mountThreeKingdoms('/play/three-kingdoms',{reference,account:{},helpers});
+ assert.match(frames.at(-1).getAttribute('src'),/\/three-kingdoms\.html$/);
 });

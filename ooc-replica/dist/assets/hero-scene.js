@@ -59,14 +59,6 @@ export function heroLang(win = globalThis) {
   try { const v = win.localStorage?.getItem('sd.lang'); if (LANGS.includes(v)) return v; } catch {}
   return /^zh/i.test(win.navigator?.language || '') ? 'zh' : 'en';
 }
-// The Three Kingdoms game keeps its own language setting on the same origin; carry the banner's pick into it.
-function carryLang(win, lang) {
-  try {
-    const k = 'sd.sg2.settings', cur = JSON.parse(win.localStorage?.getItem(k) || '{}') || {};
-    win.localStorage?.setItem(k, JSON.stringify({ ...cur, lang }));
-  } catch {}
-}
-
 export function heroSceneEnabled(win = globalThis) {
   try { if (new URLSearchParams(win.location?.search || '').get('hero') === 'classic') return false; } catch {}
   try { if (win.localStorage?.getItem('sd.hero') === 'classic') return false; } catch {}
@@ -158,11 +150,12 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
       try { win.localStorage?.setItem('sd.lang', next); } catch {}
       paint(next); hero.querySelector(`[data-hero-lang="${next}"]`)?.focus();
     });
-    // The story and chat screens do not read the banner reply yet; the banner opens them at their start,
-    // in the language the visitor is reading the banner in.
+    // The story and chat screens do not read the banner reply yet; the banner opens them at their start.
+    // The game opens in the language the visitor is reading the banner in (?lang=, read by three-kingdoms.js).
     hero.querySelector('[data-hero-form]').onsubmit = e => {
-      e.preventDefault(); if (page === 'home') carryLang(win, l);
-      navigate ? navigate(s.href) : (win.location.href = s.href);
+      e.preventDefault();
+      const href = page === 'home' ? `${s.href}?lang=${l}` : s.href;
+      navigate ? navigate(href) : (win.location.href = href);
     };
   };
   paint(LANGS.includes(lang) ? lang : heroLang(win));

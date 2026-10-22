@@ -1,6 +1,6 @@
 import {isBookPath,mountBook,stopBook} from './assets/book-player.js';
 import {showBuilder} from './assets/builder.js';
-import {mountThreeKingdoms} from './assets/three-kingdoms.js';
+import {mountThreeKingdoms,isThreeKingdomsPath} from './assets/three-kingdoms.js';
 import {createPayments} from './assets/payments.js';
 import {createAccount} from './assets/account.js';
 const [data,reference,community]=await Promise.all([
@@ -55,7 +55,7 @@ function render(){renderPage();paintAccount();document.body.removeAttribute('dat
 function renderPage(){stopBook();clearInterval(window.carousel);const path=location.pathname,version=++routeVersion;
  if(isBookPath(path)){interaction?.show('/book-campaign',{navigate,show,...account.scope(),categories,data});void mountBook(path,{reference,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(path==='/credit'){interaction?.show(path,{navigate,show,...account.scope(),categories,data});credits();return;}
- if(path==='/story/three-kingdoms'||path==='/play/three-kingdoms'){interaction?.show('/three-kingdoms',{navigate,show,...account.scope(),categories,data});mountThreeKingdoms(path,{reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
+ if(isThreeKingdomsPath(path)){interaction?.show('/three-kingdoms',{navigate,show,...account.scope(),categories,data});mountThreeKingdoms(path,{reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(path.startsWith('/play/')||path.startsWith('/onboarding/')||/^\/(story|character)\/[^/]+\/episode\//.test(path)){
   if(interaction){interaction.show(path,{navigate,show,...account.scope(),categories,data});return;}
   reference.mountShell('<div class="route-loading" role="status">Loading your story…</div>',{navigate,show,...account.scope(),categories,data},'loading');

@@ -25,9 +25,9 @@ test('language follows the visitor pick, then the browser', () => {
   assert.equal(heroLang({localStorage: store({'sd.lang': 'en'}), navigator: {language: 'zh-CN'}}), 'en');
 });
 
-test('banner mounts beside the desktop carousel, switches language, opens the game in that language', () => {
+test('banner mounts beside the desktop carousel, switches language, and opens the game in that language', () => {
   const {document, window} = parseHTML('<html><head></head><body><section><div><div data-hero-desktop><h1>Old</h1></div><div class="tl:hidden"></div></div></section></body></html>');
-  const routes = [], ls = store({'sd.sg2.settings': JSON.stringify({creator: false, lang: 'en'})});
+  const routes = [], ls = store();
   const win = {location: {search: ''}, localStorage: ls, navigator: {language: 'en-US'}};
   const hero = mountHeroScene(document.body, 'home', {navigate: r => routes.push(r), win});
   assert.ok(hero.nextElementSibling.hasAttribute('data-hero-desktop'));
@@ -40,8 +40,7 @@ test('banner mounts beside the desktop carousel, switches language, opens the ga
   assert.equal(hero.querySelector('input').value, SCENES.home.zh.choices[1].label);
   assert.equal(hero.querySelector('[data-hero-choice="1"]').getAttribute('aria-pressed'), 'true');
   hero.querySelector('form').dispatchEvent(new window.Event('submit', {cancelable: true}));
-  assert.deepEqual(routes, ['/play/three-kingdoms']);
-  assert.deepEqual(JSON.parse(ls.getItem('sd.sg2.settings')), {creator: false, lang: 'zh'});
+  assert.deepEqual(routes, ['/play/three-kingdoms?lang=zh']);
   mountHeroScene(document.body, 'home', {navigate: () => {}, win});
   assert.equal(document.querySelectorAll('[data-sd-hero]').length, 1);
   assert.equal(heroSceneEnabled({location: {search: '?hero=classic'}}), false);
