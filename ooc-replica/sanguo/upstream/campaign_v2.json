@@ -3550,7 +3550,8 @@
    },
    "art": {
     "scene": "riverbank",
-    "layers": []
+    "layers": [],
+    "illus": "v2_return"
    },
    "cast": [
     {
@@ -3678,7 +3679,8 @@
    },
    "art": {
     "scene": "letter",
-    "layers": []
+    "layers": [],
+    "illus": "v2_cao_feast"
    },
    "cast": [
     {
@@ -3833,7 +3835,8 @@
      {
       "id": "two"
      }
-    ]
+    ],
+    "illus": "v2_wound"
    },
    "place": "jiangling",
    "cast": [
@@ -3992,7 +3995,8 @@
    },
    "art": {
     "scene": "hall",
-    "layers": []
+    "layers": [],
+    "illus": "v2_lusu"
    },
    "place": "jiangling",
    "cast": [
@@ -4356,7 +4360,8 @@
      {
       "id": "rider"
      }
-    ]
+    ],
+    "illus": "v2_nanjun"
    },
    "place": "jiangling",
    "cast": [
@@ -4448,7 +4453,8 @@
    },
    "art": {
     "scene": "hall",
-    "layers": []
+    "layers": [],
+    "illus": "v2_cao_feast"
    },
    "place": "xuchang",
    "cast": [
@@ -4569,7 +4575,8 @@
      {
       "id": "dusk"
      }
-    ]
+    ],
+    "illus": "v2_guiyang"
    },
    "place": "guiyang",
    "cast": [
@@ -4823,7 +4830,8 @@
      {
       "id": "rider"
      }
-    ]
+    ],
+    "illus": "v2_changsha"
    },
    "place": "changsha",
    "cast": [
@@ -4977,7 +4985,8 @@
      {
       "id": "wall"
      }
-    ]
+    ],
+    "illus": "v2_zhaoyun_night"
    },
    "place": "guiyang"
   },
@@ -5129,7 +5138,8 @@
       "id": "rock",
       "choice": "stone"
      }
-    ]
+    ],
+    "illus": "v2_ganlu"
    },
    "place": "jingkou",
    "cast": [
@@ -5459,7 +5469,8 @@
       "id": "blockade",
       "choice": "lady"
      }
-    ]
+    ],
+    "illus": "v2_flight"
    },
    "place": "gongan",
    "cast": [
@@ -5565,7 +5576,8 @@
    },
    "art": {
     "scene": "hall",
-    "layers": []
+    "layers": [],
+    "illus": "v2_tongque"
    },
    "place": "xuchang",
    "cast": [
@@ -5824,7 +5836,8 @@
    ],
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "v2_death"
    },
    "place": "chaisang",
    "cast": [
@@ -6067,7 +6080,8 @@
        "val": true
       }
      }
-    ]
+    ],
+    "illus": "v2_mourn"
    },
    "place": "chaisang",
    "cast": [
@@ -6183,7 +6197,8 @@
      {
       "id": "seal"
      }
-    ]
+    ],
+    "illus": "v2_leiyang"
    },
    "place": "leiyang",
    "cast": [
@@ -6288,7 +6303,8 @@
    ],
    "art": {
     "scene": "slope",
-    "layers": []
+    "layers": [],
+    "illus": "v2_tongguan"
    },
    "place": "tongguan",
    "cast": [
@@ -6672,7 +6688,8 @@
    },
    "art": {
     "scene": "hall",
-    "layers": []
+    "layers": [],
+    "illus": "v2_zhangsong"
    },
    "place": "jiangling",
    "cast": [
@@ -6934,7 +6951,8 @@
       "id": "blockade",
       "choice": "board"
      }
-    ]
+    ],
+    "illus": "v2_river"
    },
    "place": "gongan",
    "cast": [
@@ -7126,7 +7144,8 @@
      {
       "id": "two"
      }
-    ]
+    ],
+    "illus": "v2_wenzhi"
    },
    "place": "gongan",
    "cast": [
@@ -7294,7 +7313,8 @@
    ],
    "art": {
     "scene": "campfire",
-    "layers": []
+    "layers": [],
+    "illus": "v2_pangtong_night"
    },
    "place": "jiameng"
   },
@@ -7664,7 +7684,8 @@
       "id": "turnback",
       "choice": "stop"
      }
-    ]
+    ],
+    "illus": "v2_luofeng"
    },
    "place": "luofeng",
    "cast": [
@@ -7921,7 +7942,8 @@
      {
       "id": "blade"
      }
-    ]
+    ],
+    "illus": "v3_guanyu_night"
    },
    "place": "jiangling"
   },
@@ -8298,7 +8320,8 @@
      {
       "id": "flag_liu"
      }
-    ]
+    ],
+    "illus": "v2_chengdu"
    },
    "place": "chengdu",
    "cast": [
@@ -8458,7 +8481,8 @@
    ],
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "g_cold"
    },
    "cast": [
     {
@@ -8589,7 +8613,8 @@
    },
    "art": {
     "scene": "lamp",
-    "layers": []
+    "layers": [],
+    "illus": "g_uncanny"
    },
    "cast": [
     {
@@ -8685,7 +8710,8 @@
    },
    "art": {
     "scene": "letter",
-    "layers": []
+    "layers": [],
+    "illus": "g_cold"
    },
    "cast": [
     {
@@ -8787,7 +8813,8 @@
    "order": 0,
    "art": {
     "scene": "hall",
-    "layers": []
+    "layers": [],
+    "illus": "v2_zhouyu_rage"
    },
    "cast": [
     {
