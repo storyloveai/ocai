@@ -12,7 +12,7 @@
 | 文件夹 | 内容 | 尺寸 |
 |---|---|---|
 | `portraits/<角色 id>.webp` | 人物头像，id 与 `content/campaign.json` 的 `chars` 一致 | 300×400 |
-| `scenes/<场景 id>.webp` | 章节场景图，id 与节点 `art.scene` 一致 | 1200×480 |
+| `scenes/<名>.webp` | 章节场景图。卷一按节点的 `art.scene` 取；卷二、卷三按节点的 `art.illus` 取（`v2_`、`v3_` 开头是专属的，`g_` 开头是几个小场景共用的） | 1200×480 |
 | `cg/<高光 id>.webp` | 高光大图，id 与 `cg_captions` 一致 | 1200×720 |
 | `ending/<变体>.webp` | 结局图：two_boat（同舟）、home（江边小屋）、city（城郭）、lone（独立江岸） | 1200×480 |
 | `cover.webp` | 网站卡片封面 | 640×960 |
@@ -23,7 +23,8 @@
 ## 作图清单
 
 - `portrait-jobs.jsonl`：人物头像。
-- `edition-jobs.jsonl`：卷一的场景、结局、高光、封面。每条的 `refs` 列出画面里出现的角色，生成时会把他们的头像一起发给模型，保持脸一致。
+- `edition-jobs.jsonl`：卷一的场景、结局、高光、封面。
+- `edition-jobs-v23.jsonl`：卷二、卷三的场景图（51 张，覆盖两卷所有节点）。每条的 `refs` 列出画面里出现的角色，生成时会把他们的头像一起发给模型，保持脸一致。
 
 ## 生成
 
