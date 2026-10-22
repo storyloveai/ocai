@@ -808,8 +808,11 @@ function lazyFigure(cls, label, key, draw) {
   if (PAINT_IO && !ART_CACHE.has(key)) PAINT_IO.observe(f); else f.innerHTML = f._draw();
   return f;
 }
-function painting(scene, layers, label) {
-  const src = scene === "ending" ? artUrl(`ending/${ENDING_VARIANTS.find(v => layers.includes(v)) || "lone"}.webp`) : artUrl(`scenes/${scene}.webp`);
+// a node may name its own illustration (art.illus); the generic scene pictures were drawn for Volume I's scenes,
+// so later volumes use them only for endings and otherwise fall back to the ink drawing
+function painting(scene, layers, label, illus) {
+  const src = scene === "ending" ? artUrl(`ending/${ENDING_VARIANTS.find(v => layers.includes(v)) || "lone"}.webp`)
+    : illus ? artUrl(`scenes/${illus}.webp`) : CAMP === BOOK.volumes[0].camp ? artUrl(`scenes/${scene}.webp`) : null;
   if (src) return imgFigure("art", label, src);
   return lazyFigure("art", label, scene + "|" + layers.join(","), () => ART.scene(scene, layers, { label }));
 }
@@ -1008,7 +1011,7 @@ function renderStory() {
       const al = after ? after.al || [] : e.al || [];
       const changed = after && (after.al || []).join() !== (e.al || []).join();
       const art = mark(h("article", { class: "scene" + (n.mood === "romance" ? " romance" : "") + (n.kind === "interrupt" || n.kind === "flash" ? " crisis" : ""), "data-tag": n.kind === "flash" ? l.flashTag : l.crisis },
-        n.art ? painting(n.art.scene, al, t(n.title)) : null,
+        n.art ? painting(n.art.scene, al, t(n.title), n.art.illus) : null,
         changed ? h("div", { class: "art-note" }, l.artChanged) : null,
         dev && n.art ? h("div", { class: "dev" }, h("span", { class: "k" }, n.art.scene), ` · ${l.layersL}: ${al.join(", ") || "—"}`, h("div", {}, h("span", { class: "k" }, l.artPrompt + "："), t(CAMP.art_prompts[n.art.scene]))) : null,
         h("h3", {}, t(n.title), dev ? [h("span", { class: "badge " + n.lock }, l.lockNames[n.lock]), h("span", { class: "badge" }, t(n.canon))] : null),
@@ -1112,7 +1115,7 @@ function renderOffer(e) {
   const l = L();
   const box = h("div", { class: "offer" }, h("h4", {}, t(CAMP.side_prompt)),
     h("div", { class: "cards" }, e.ids.map(id => { const n = N(id); const teaser = t(n.intro[0].text);
-      return h("button", { type: "button", class: "card" + (n.mood === "romance" ? " romance" : ""), onclick: () => pickSide(id) }, n.art ? painting(n.art.scene, CC.layers(CAMP, G, n.art.layers, null), t(n.title)) : null, h("b", {}, t(n.title)), h("span", {}, teaser.length > 64 ? teaser.slice(0, settings.lang === "zh" ? 42 : 110) + "…" : teaser)); })));
+      return h("button", { type: "button", class: "card" + (n.mood === "romance" ? " romance" : ""), onclick: () => pickSide(id) }, n.art ? painting(n.art.scene, CC.layers(CAMP, G, n.art.layers, null), t(n.title), n.art.illus) : null, h("b", {}, t(n.title)), h("span", {}, teaser.length > 64 ? teaser.slice(0, settings.lang === "zh" ? 42 : 110) + "…" : teaser)); })));
   if (settings.creator) box.append(directorTable(e.scores, e.ids));
   return box;
 }

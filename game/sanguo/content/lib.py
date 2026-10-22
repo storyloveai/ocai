@@ -25,6 +25,8 @@ CAO = V("track", "==", "cao")
 def setv(name, val=True): return {"set": name, "to": val}
 def add(name, by=1): return {"add": name, "by": by}
 def rel(char, dim, by): return {"add": f"rel.{char}.{dim}", "by": by}
+def KEY(e):               # a key moment: may lift a hard-tier var (camp.hard_tiers) past its cap
+    return {**e, "key": True}
 
 def P(text, when=None):
     """A paragraph that shows only when `when` holds."""

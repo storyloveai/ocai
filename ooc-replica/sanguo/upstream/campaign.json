@@ -106,6 +106,9 @@
    ]
   }
  },
+ "hard_tiers": {
+  "rel.liubei.trust": 3
+ },
  "pack": {
   "id": "history-strategy",
   "version": 1,
@@ -2781,7 +2784,8 @@
      "effects": [
       {
        "add": "rel.liubei.trust",
-       "by": 2
+       "by": 2,
+       "key": true
       },
       {
        "add": "rel.caocao.esteem",
@@ -4486,7 +4490,8 @@
      "effects": [
       {
        "add": "rel.liubei.trust",
-       "by": 2
+       "by": 2,
+       "key": true
       },
       {
        "add": "renown.loyal",
@@ -5808,7 +5813,8 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 2
+       "by": 2,
+       "key": true
       },
       {
        "add": "renown.loyal",

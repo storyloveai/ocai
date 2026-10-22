@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.0";
+  CC.VERSION = "0.4.1";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -101,12 +101,21 @@
 
   function ledgerPush(st, e) { e.seq = ++st.seq; e.ch = st.ch; st.ledger.push(e); return e; }
 
+  /* 0.4.1 hard tiers: camp.hard_tiers = { "rel.liubei.trust": 3 } means that once the value has reached that tier
+   * (e.g. 倚重), ordinary gains no longer raise it; only an effect marked { key: true } (a key moment) can carry
+   * it into the next tier. Losses always apply. The entry records what was held back (entry.held). */
+  CC.heldBack = (camp, name, from, ef) => {
+    const hard = camp.hard_tiers && camp.hard_tiers[name];
+    if (hard === undefined || !ef.add || !(ef.by > 0) || ef.key) return false;
+    const t = CC.tierOf(camp, from || 0); return t !== null && t >= hard;
+  };
   function applyEffects(camp, st, effects, entry) {
     for (const ef of effects || []) {
       const name = ef.set || ef.add;
       const d = camp.vars[name];
       if (!d) throw new Error("unknown var " + name);
       const from = st.v[name];
+      if (CC.heldBack(camp, name, from, ef)) { (entry.held = entry.held || []).push(name); continue; }
       let to = ef.set !== undefined && "to" in ef ? ef.to : (from || 0) + ef.by;
       if (d.type === "num") to = Math.max(d.min, Math.min(d.max, to));
       st.v[name] = to;
@@ -557,6 +566,13 @@
     if (strict && !camp.tiers) E("spec 0.4: tiers missing (copy game/engine/tiers.json into camp.tiers)");
     if (strict && !camp.pack) E("spec 0.4: genre pack missing (camp.pack, from game/engine/packs/)");
     const VT = (camp.pack && camp.pack.values) || camp.value_tags || {};
+    // 0.4.1 hard tiers: the var must be a number with tiers, and at least one key-moment effect must raise it
+    for (const [v, t] of Object.entries(camp.hard_tiers || {})) {
+      if (!camp.vars[v] || camp.vars[v].type !== "num") E(`hard_tiers: ${v} is not a number var`);
+      if (!camp.tiers || !Number.isInteger(t) || t < 1 || t >= camp.tiers.start.length) E(`hard_tiers: ${v} tier ${t} out of range`);
+      const keyed = JSON.stringify(camp.nodes).includes(`"add":"${v}","by":`) && Object.values(camp.nodes).some(n => JSON.stringify(n).match(new RegExp(`\\{[^{}]*"add":"${v.replace(/\./g, "\\.")}"[^{}]*"key":true[^{}]*\\}`)));
+      if (!keyed) W(`hard_tiers: no key-moment effect ({key:true}) raises ${v}; its top tier can only come from carry-over`);
+    }
 
     const varOk = v => v in camp.vars || (v.startsWith("debt.") && v.slice(5) in camp.debts);
     const reads = new Set(), writes = new Set();

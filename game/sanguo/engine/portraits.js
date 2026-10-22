@@ -5,6 +5,7 @@
  *   温芷  original character
  *   卷二：周瑜（东吴少年都督，衣冠整肃）· 鲁肃（忠厚长者）· 赵云 身长八尺、浓眉大眼、阔面重颐（第7回）
  *         孙夫人（性刚勇，好武）· 庞统 浓眉掀鼻、黑面短髯、形容古怪（第57回）· 张松 额镢头尖、鼻偃齿露（第60回）
+ *   卷三：法正（谋士，清瘦）· 黄忠（年近七十的老将，白须）
  * PORTRAIT.draw(id, { mood }) → SVG string. Moods: neutral, warm, cold, sad, surprised, shy.
  */
 (function (root) {
@@ -22,6 +23,8 @@
     zhaoyun: { halo: "#8aa0b4", robe: "#d8dde2", robe2: "#7f8c99", skin: SKIN, ears: "std", beard: "none", hat: "helmet", eye: "big", brow: "thick", jaw: "wide" },
     sunfuren: { halo: "#c45a4a", robe: "#a3382e", robe2: "#6e1f18", skin: "#EED8BD", ears: "std", beard: "none", hat: "bun", eye: "phoenix", female: true, pin: "#C9A24A", flower: "#d94a3a" },
     pangtong: { halo: "#7a6a4a", robe: "#5a4a32", robe2: "#3a2e1e", skin: "#9c7356", ears: "std", beard: "short", hat: "scarf", scarf: "#3a3020", eye: "narrow", brow: "thick", nose: "up" },
+    fazheng: { halo: "#5b6e7a", robe: "#2f4a52", robe2: "#1f3238", skin: SKIN, ears: "std", beard: "short", hat: "guan", eye: "narrow" },
+    huangzhong: { halo: "#c9a24a", robe: "#a88a3a", robe2: "#6e5a22", skin: SKIN_SH, ears: "std", beard: "long", beardInk: "#e8e2d6", hat: "helmet", eye: "big", brow: "thick", jaw: "wide" },
     zhangsong: { halo: "#6a7a5a", robe: "#4f5a3f", robe2: "#33402a", skin: SKIN, ears: "std", beard: "thin", hat: "cap", eye: "narrow", nose: "flat", teeth: true },
   };
 
@@ -68,7 +71,7 @@
     return `<path d="M141 ${y} Q150 ${y + 2} 159 ${y}" ${st}/>`;
   }
   function beard(c, p) {
-    const f = `fill="${INK}" filter="url(#${p}brush)"`;
+    const f = `fill="${c.beardInk || INK}" filter="url(#${p}brush)"`;
     const mus = `<path d="M128 222 Q140 214 150 219 Q160 214 172 222 Q162 220 150 224 Q138 220 128 222Z" ${f}/>`;
     if (c.beard === "long") return mus + `<path d="M118 228 C120 260 128 300 138 360 Q150 392 162 360 C172 300 180 260 182 228 Q170 246 150 248 Q130 246 118 228Z" ${f} opacity=".95"/>` +
       Array.from({ length: 9 }, (_, i) => `<path d="M${132 + i * 4} 250 Q${136 + i * 3} 310 ${142 + i * 2} ${350 + (i % 3) * 8}" stroke="#3a3430" stroke-width="1" fill="none" opacity=".6"/>`).join("");

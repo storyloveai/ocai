@@ -106,6 +106,9 @@
    ]
   }
  },
+ "hard_tiers": {
+  "rel.liubei.trust": 3
+ },
  "pack": {
   "id": "history-strategy",
   "version": 1,
@@ -5227,7 +5230,8 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 1
+       "by": 1,
+       "key": true
       }
      ],
      "echo": [
@@ -7435,7 +7439,8 @@
       },
       {
        "add": "rel.liubei.trust",
-       "by": 1
+       "by": 1,
+       "key": true
       },
       {
        "add": "renown.loyal",
@@ -11275,7 +11280,7 @@
      "flag.cao_reserve": false,
      "flag.pleaded_guan": false,
      "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 10,
+     "rel.liubei.trust": 6,
      "rel.liubei.esteem": 2,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
@@ -11386,7 +11391,7 @@
      "flag.cao_reserve": false,
      "flag.pleaded_guan": false,
      "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 9,
+     "rel.liubei.trust": 6,
      "rel.liubei.esteem": 2,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,

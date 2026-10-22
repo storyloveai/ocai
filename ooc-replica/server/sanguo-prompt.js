@@ -3,7 +3,7 @@ import CC from './sanguo-core.cjs';
 const load=name=>JSON.parse(readFileSync(new URL(name,import.meta.url),'utf8'));
 export const campaign=load('./sanguo-campaign.json');
 // The book has several volumes; a request is served by the volume that owns the node.
-const volumes=[campaign,load('./sanguo-campaign-v2.json')];
+const volumes=[campaign,load('./sanguo-campaign-v2.json'),load('./sanguo-campaign-v3.json')];
 const str=(v,n=200)=>typeof v==='string'?v.slice(0,n):'';
 export function buildCampaignStage(body){
  if(body?.phase!=='express'||!['scene','answer','action'].includes(body.task)||!['zh','en'].includes(body.lang)||!body.context||typeof body.context!=='object')throw Error('Invalid task');

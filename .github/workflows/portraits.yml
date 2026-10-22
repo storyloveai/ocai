@@ -47,6 +47,7 @@ jobs:
           python3 tools/build.py
           node tools/check.js content/campaign.json 2000
           node tools/check.js content/v2/campaign_v2.json 2000
+          node tools/check.js content/v3/campaign_v3.json 2000
           cd ../..
           node ooc-replica/scripts/sync-game.mjs
       - name: Push a review branch and open a PR
