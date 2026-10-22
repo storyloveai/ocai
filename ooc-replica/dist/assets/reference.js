@@ -1,5 +1,6 @@
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
+import {mountHeroScene} from './hero-scene.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
 import {bindCarousels} from './carousels.js';
@@ -200,9 +201,10 @@ function bindHome(page) {
   all('button').filter(b=>text(b).startsWith('#')).forEach(b=>b.onclick=()=>context.navigate('/search?q='+encodeURIComponent(text(b).slice(1))));
   const title=q('[data-hero-desktop] h1');
   current=page==='home'?0:Math.max(0,activeFeatures.findIndex(f=>f.title===title?.textContent));
+  const scene=mountHeroScene(host,page,{navigate:context.navigate});
   if(activeFeatures.length){
     updateHero(0);
-    if(!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
+    if(!scene&&!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
       if(!document.hidden&&!document.querySelector('#modal').open&&!q('[data-hero-desktop]')?.matches(':hover,:focus-within'))updateHero(1);
     },6500);
   }

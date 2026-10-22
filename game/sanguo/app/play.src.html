@@ -35,6 +35,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .top-title { color: var(--muted); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0 }
 .top-sp { flex: 1 }
 @media (max-width: 640px) { .top-title { display: none } }
+@media (max-width: 480px) { .wm { display: none } }
 .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; flex: none }
 .seg button { background: none; border: 0; padding: 4px 10px; font-size: 13px; color: var(--muted) }
 .seg button[aria-pressed="true"] { background: var(--surface-2); color: var(--text) }
@@ -146,6 +147,15 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .pt { display: inline-block; flex: none; border-radius: 10px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); background: #DCCFB5; aspect-ratio: 3 / 4 }
 .pt svg { width: 100%; height: 100%; display: block }
 .pt.round { border-radius: 50%; aspect-ratio: 1 }
+.pt.illus { background: #121212; container-type: inline-size }
+.pt.illus img { width: 100%; height: 100%; object-fit: cover; object-position: center 15%; display: block; transition: filter .3s }
+.pt.illus[data-mood="warm"] img { filter: saturate(1.12) brightness(1.06) }
+.pt.illus[data-mood="shy"] img { filter: saturate(1.1) brightness(1.06) sepia(.08) }
+.pt.illus[data-mood="cold"] img { filter: grayscale(.55) brightness(.82) }
+.pt.illus[data-mood="sad"] img { filter: grayscale(.4) brightness(.88) }
+.pt.illus[data-mood="surprised"] img { filter: contrast(1.08) brightness(1.04) }
+.pt.namecard { display: inline-flex; align-items: center; justify-content: center; background: linear-gradient(160deg, #2E2450, #121212) }
+.pt-name { font: 600 46cqw/1 var(--serif); color: #F6F1E7; opacity: .9 }
 .cast { display: flex; gap: 14px; margin: 2px 0 12px; flex-wrap: wrap }
 .cast figure { margin: 0; display: grid; justify-items: center; gap: 4px; font-size: 12px; color: var(--muted) }
 .cast .pt { width: 60px }
@@ -377,7 +387,7 @@ const $ = (s, r = document) => r.querySelector(s);
 const h = (tag, attrs = {}, ...kids) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs || {})) { if (k === "class") e.className = v; else if (k === "style") e.style.cssText = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else if (v !== null && v !== undefined && v !== false) e.setAttribute(k, v === true ? "" : v); } kids.flat(Infinity).forEach(k => { if (k !== null && k !== undefined && k !== false) e.append(k.nodeType ? k : String(k)); }); return e; };
 const store = { get(k, d) { try { const v = localStorage.getItem("sd.sg2." + k); return v ? JSON.parse(v) : d; } catch { return d; } }, set(k, v) { try { localStorage.setItem("sd.sg2." + k, JSON.stringify(v)); } catch {} }, del(k) { try { localStorage.removeItem("sd.sg2." + k); } catch {} } };
 const CAN_SAVE = (() => { try { localStorage.setItem("sd.sg2.__t", "1"); const ok = localStorage.getItem("sd.sg2.__t") === "1"; localStorage.removeItem("sd.sg2.__t"); return ok; } catch { return false; } })();
-const settings = Object.assign({ lang: /^zh/i.test(navigator.language || "") ? "zh" : "en", creator: false }, store.get("settings", {}));
+const settings = Object.assign({ lang: /^zh/i.test(navigator.language || "") ? "zh" : "en", creator: false, art: "illus" }, store.get("settings", {}));
 const L = () => UI[settings.lang];
 const t = x => x == null ? "" : (typeof x === "string" ? x : (x[settings.lang] ?? x.zh));
 const N = id => CAMP.nodes[id];
@@ -804,7 +814,21 @@ function cgEl(id) {
   return h("div", { class: "cgwrap" }, lazyFigure("cg", cap, "cg|" + id, () => ART.cg(id, { label: cap })), h("div", { class: "cgcap" }, L().cgL + " · " + cap));
 }
 const PCACHE = new Map();
+// Two looks for the cast: "illus" (default) uses the illustrated portraits in art/portraits/, cut from the
+// StoryDate covers, so the game matches the website; "ink" keeps the original ink-wash portraits drawn in code.
+// A character with no illustration yet shows a name card in the illustrated look.
+const ARTS = ["illus", "ink"];
+// where the face sits in each illustration (object-position), so round avatars stay centred on it
+const PORTRAIT_FOCUS = { liubei: "50% 34%", caocao: "50% 48%", guanyu: "50% 45%", zhuge: "50% 34%", zhouyu: "50% 25%", zhaoyun: "50% 20%" };
+function setArt(a) { settings.art = a; store.set("settings", settings); render(); }
 function face(id, mood = "neutral", round = false) {
+  if (settings.art !== "ink") {
+    const name = t((CAMP.chars[id] || {}).name || id), src = typeof PORTRAIT_IMG !== "undefined" && PORTRAIT_IMG[id];
+    const e = h("span", { class: "pt illus" + (round ? " round" : "") + (src ? "" : " namecard"), role: "img", "aria-label": name, "data-mood": mood });
+    if (src) e.append(h("img", { src, alt: "", draggable: "false", decoding: "async", style: PORTRAIT_FOCUS[id] ? `object-position:${PORTRAIT_FOCUS[id]}` : null }));
+    else e.append(h("span", { class: "pt-name", "aria-hidden": "true" }, settings.lang === "zh" ? Array.from(name)[0] : name.charAt(0)));
+    return e;
+  }
   const k = id + "|" + mood;
   if (!PCACHE.has(k)) PCACHE.set(k, PORTRAIT.draw(id, { mood }));
   const e = h("span", { class: "pt" + (round ? " round" : ""), role: "img", "aria-label": t(CAMP.chars[id].name) });
@@ -865,6 +889,7 @@ function renderTop() {
     G ? h("span", { class: "savedot", title: CAN_SAVE ? L().autoSaved : L().noSave }, CAN_SAVE ? "✓ " + L().autoSaved : L().noSaveShort) : "",
     h("span", { class: "top-sp" }),
     G ? h("button", { type: "button", class: "tbtn", onclick: goHome }, L().toc) : "",
+    h("span", { class: "seg", role: "group", "aria-label": settings.lang === "zh" ? "画风" : "Art style" }, ARTS.map(a => h("button", { type: "button", "aria-pressed": String((settings.art || "illus") === a), onclick: () => setArt(a) }, { zh: { illus: "插画", ink: "水墨" }, en: { illus: "Illustrated", ink: "Ink" } }[settings.lang][a]))),
     h("span", { class: "seg", role: "group", "aria-label": "Language" }, ["zh", "en"].map(l => h("button", { type: "button", "aria-pressed": String(settings.lang === l), onclick: () => setLang(l) }, l === "zh" ? "中" : "EN"))),
     creatorAllowed() ? h("button", { type: "button", class: "tbtn", "aria-pressed": String(!!settings.creator), onclick: () => setCreator(!settings.creator) }, L().creator) : "");
   if (settings.creator && !creatorAllowed()) settings.creator = false;

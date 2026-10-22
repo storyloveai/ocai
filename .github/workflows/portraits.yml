@@ -1,0 +1,56 @@
+# Generate illustrated cast portraits for 三国·谋士 and push them to a branch for review.
+# Runs only when started by hand (Actions → "Generate portraits" → Run workflow). Each run costs money on the
+# OpenAI account behind the OPENAI_API_KEY repository secret.
+name: Generate portraits
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "Character ids, comma separated (empty = every character without a portrait)"
+        required: false
+        default: ""
+      quality:
+        description: "Image quality: low, medium or high"
+        required: false
+        default: "medium"
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: pip install requests pillow
+      - name: Generate
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IDS: ${{ inputs.ids }}
+          QUALITY: ${{ inputs.quality }}
+        run: python3 game/sanguo/tools/gen_portraits.py --ids "$IDS" --quality "$QUALITY"
+      - name: Rebuild the book and the website copy
+        run: |
+          cd game/sanguo
+          python3 tools/build.py
+          node tools/check.js content/campaign.json 2000
+          node tools/check.js content/v2/campaign_v2.json 2000
+          cd ../..
+          node ooc-replica/scripts/sync-game.mjs
+      - name: Push a review branch and open a PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch="art/portraits-${{ github.run_number }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add game/sanguo/art game/sanguo/web/index.html ooc-replica/sanguo/upstream
+          git commit -m "新生成的三国人物插画（${{ inputs.ids || '全部缺图角色' }}）"
+          git push origin "$branch"
+          gh pr create --base "${{ github.ref_name }}" --head "$branch" \
+            --title "三国人物插画：${{ inputs.ids || '缺图角色' }}" \
+            --body "由 Generate portraits 任务生成，审图后再合并。原图在 game/sanguo/art/source/，游戏用的裁剪图在 game/sanguo/art/portraits/。" \
+            || echo "Branch $branch pushed; open the PR by hand if Actions may not create PRs in this repo."
