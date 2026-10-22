@@ -92,3 +92,12 @@ test("migrate turns a 0.3 book into a valid 0.4 one and says what it changed", (
   delete camp.nodes.c1_m1.choices[1].req;
   assert.deepEqual(CC.validate(camp).errors, []);
 });
+
+test("hard tiers: once at the tier, only key moments raise the value; losses always apply", () => {
+  const camp = { tiers: { start: [0, 2, 4, 6, 8] }, hard_tiers: { "rel.a.trust": 3 } };
+  assert.equal(CC.heldBack(camp, "rel.a.trust", 5, { add: "rel.a.trust", by: 1 }), false);   // below 倚重: ordinary gains work
+  assert.equal(CC.heldBack(camp, "rel.a.trust", 6, { add: "rel.a.trust", by: 1 }), true);    // at 倚重: held back
+  assert.equal(CC.heldBack(camp, "rel.a.trust", 6, { add: "rel.a.trust", by: 2, key: true }), false);
+  assert.equal(CC.heldBack(camp, "rel.a.trust", 7, { add: "rel.a.trust", by: -1 }), false);
+  assert.equal(CC.heldBack(camp, "rel.b.trust", 9, { add: "rel.b.trust", by: 1 }), false);   // other vars untouched
+});
