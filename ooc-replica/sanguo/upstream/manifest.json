@@ -1,7 +1,7 @@
 {
-  "commit": "863da20fa2aac8117c16a7e3e24ea6048dfd8d55",
+  "commit": "f404345ec737b7bf51a944aa834e650b5b3eff00",
   "blobs": {
-    "index.html": "e9a81006279fec756ce59ab19966a957b58e1b68",
+    "index.html": "fbe8e2268b6e98954bc64c2cfd421f9ff9596abb",
     "campaign.json": "dcf820e5033adcd5892bc49bdd98a9fab58eb0b7",
     "campaign_v2.json": "e2757ed943126d1347b6bb805ba8305e246d4ae4",
     "campaign_core.js": "c25e54bf8e212e330f3706eb5ef21bdc79678b4d"
