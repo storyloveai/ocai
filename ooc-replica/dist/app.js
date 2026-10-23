@@ -1,4 +1,5 @@
 import {startI18n} from './assets/site-i18n.js';
+import {startAnalytics,identify,forget} from './assets/analytics.js';
 import {isBookPath,mountBook,stopBook} from './assets/book-player.js';
 import {showBuilder} from './assets/builder.js';
 import {mountThreeKingdoms,isThreeKingdomsPath} from './assets/three-kingdoms.js';
@@ -17,7 +18,9 @@ let interaction, interactionRequest, routeVersion=0;
 const loadInteraction=()=>interactionRequest||(interactionRequest=import('./assets/interaction.js').then(module=>interaction=module).catch(error=>{interactionRequest=null;throw error;}));
 for(const story of reference.extraStories)if(!data.some(d=>d.id===story.id))data.push(story);
 const $=s=>document.querySelector(s),main=$('#main'),modal=$('#modal');
-const account=createAccount({changed:reset=>{if(reset){favorites=read('ooc-favorites',[]);history=read('ooc-history',[]);custom=read('ooc-custom',[]);if(account.user&&!read('ooc-onboarding-complete',false)&&!location.pathname.startsWith('/onboarding/'))navigate('/onboarding/1');else render();}else paintAccount();},notify:toast});
+startAnalytics();let trackedUid=null;
+const syncAnalytics=()=>{const uid=account?.user?.uid||null;if(uid===trackedUid)return;if(uid)identify(uid);else if(trackedUid)forget();trackedUid=uid;};
+const account=createAccount({changed:reset=>{syncAnalytics();if(reset){favorites=read('ooc-favorites',[]);history=read('ooc-history',[]);custom=read('ooc-custom',[]);if(account.user&&!read('ooc-onboarding-complete',false)&&!location.pathname.startsWith('/onboarding/'))navigate('/onboarding/1');else render();}else paintAccount();},notify:toast});
 const payments=createPayments({account,show,modal,notify:toast});
 const read=(k,f)=>account.read(k,f),save=(k,v)=>account.save(k,v);
 let favorites=read('ooc-favorites',[]),history=read('ooc-history',[]),custom=read('ooc-custom',[]),slide=0,category='Main',timer;
