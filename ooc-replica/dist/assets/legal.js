@@ -4,7 +4,7 @@ import {currentLang} from './site-i18n.js';
 
 export const OPERATOR = {en: 'StoryDate', zh: 'StoryDate'}; // the legal entity that runs the site, once registered
 export const SUPPORT_EMAIL = ''; // e.g. support@…; while empty, the pages point to the in-app Customer Support page
-export const UPDATED = '2026-10-22';
+export const UPDATED = '2026-10-23';
 export const LEGAL_PATHS = ['/terms', '/privacy', '/support'];
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
@@ -45,18 +45,18 @@ const PAGES = {
   '/privacy': {
     title: {en: 'Privacy Policy', zh: '隐私政策'},
     body: lang => lang === 'zh' ? [
-      ['我们收集什么', ['账户信息：你用 Google 登录时，我们获得你的名字、邮箱和头像。', '你创作和对话的内容：故事进度、存档、你和角色的对话、你创作的标题和角色。', '付款信息：付款由 Stripe 处理，我们只保存订单记录和积分余额，看不到你的完整卡号。', '使用情况：浏览器本地存储里的偏好（比如语言），以及为保证服务运行所需的基本日志。']],
+      ['我们收集什么', ['账户信息：你用 Google 登录时，我们获得你的名字、邮箱和头像。', '你创作和对话的内容：故事进度、存档、你和角色的对话、你创作的标题和角色。', '付款信息：付款由 Stripe 处理，我们只保存订单记录和积分余额，看不到你的完整卡号。', '使用情况：浏览器本地存储里的偏好（比如语言）、为保证服务运行所需的基本日志，以及使用统计（打开了哪些页面、点了哪些按钮、故事进行到哪一章）。统计不包含你和角色对话的内容，也不录屏。登录用户只以账户编号关联，不附带邮箱或名字。浏览器开启“请勿追踪”（Do Not Track）时不收集统计。']],
       ['我们怎么用', ['用来提供和改进服务：保存进度、生成角色回复、处理付款、防止滥用、回复你的询问。我们不出售你的个人信息。']],
-      ['谁会处理这些数据', ['为了运行服务，数据会交给以下服务商处理：Google Firebase（登录和数据存储）、Stripe（付款）、Vercel（网站托管）、DeepSeek 和 OpenAI（生成角色回复和图片：你发给角色的话会发送给它们）。这些服务商可能在你所在国家或地区以外处理数据。']],
+      ['谁会处理这些数据', ['为了运行服务，数据会交给以下服务商处理：Google Firebase（登录和数据存储）、Stripe（付款）、Vercel（网站托管）、PostHog（使用统计，数据存放在美国）、DeepSeek 和 OpenAI（生成角色回复和图片：你发给角色的话会发送给它们）。这些服务商可能在你所在国家或地区以外处理数据。']],
       ['保存多久', ['账户存在期间我们保存你的数据。你删除账户后，我们会在合理时间内删除或匿名化相关数据，法律要求保留的除外。']],
       ['你的权利', ['你可以要求查看、更正、导出或删除你的个人信息，也可以随时退出登录、清除浏览器数据。如需行使这些权利，请联系我们。']],
       ['未成年人', ['服务只面向 18 岁以上的成年人，我们不会有意收集未成年人的信息。']],
       ['政策更新', ['我们可能更新本政策，更新后会在本页注明日期；重大变更会在网站上公告。']],
       ['联系我们', ['@contact']],
     ] : [
-      ['What we collect', ['Account details: when you sign in with Google we receive your name, email address and profile picture.', 'What you create and say: story progress and saves, your conversations with characters, and titles and characters you create.', 'Payments: Stripe processes payments; we keep order records and your credit balance, never your full card number.', 'Usage: preferences kept in your browser\'s local storage (such as language) and the basic logs needed to run the Service.']],
+      ['What we collect', ['Account details: when you sign in with Google we receive your name, email address and profile picture.', 'What you create and say: story progress and saves, your conversations with characters, and titles and characters you create.', 'Payments: Stripe processes payments; we keep order records and your credit balance, never your full card number.', 'Usage: preferences kept in your browser\'s local storage (such as language), the basic logs needed to run the Service, and usage analytics (which pages you open, which buttons you press, how far a story has got). Analytics never include what you say to characters, and nothing is screen-recorded. Signed-in users are linked by account ID only, never by email or name. If your browser sends Do Not Track, no analytics are collected.']],
       ['How we use it', ['To run and improve the Service: saving progress, generating character replies, processing payments, preventing abuse and answering you. We do not sell your personal information.']],
-      ['Who processes it', ['To run the Service we use: Google Firebase (sign-in and data storage), Stripe (payments), Vercel (hosting), and DeepSeek and OpenAI (generating character replies and images; what you say to a character is sent to them). These providers may process data outside your country or region.']],
+      ['Who processes it', ['To run the Service we use: Google Firebase (sign-in and data storage), Stripe (payments), Vercel (hosting), PostHog (usage analytics, stored in the US), and DeepSeek and OpenAI (generating character replies and images; what you say to a character is sent to them). These providers may process data outside your country or region.']],
       ['How long we keep it', ['We keep your data while your account exists. After you delete your account we delete or anonymise it within a reasonable time, unless the law requires us to keep it.']],
       ['Your rights', ['You can ask to see, correct, export or delete your personal information, and you can sign out or clear your browser data at any time. Contact us to make a request.']],
       ['Children', ['The Service is for adults aged 18 or over. We do not knowingly collect information from minors.']],

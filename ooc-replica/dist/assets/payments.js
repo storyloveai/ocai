@@ -7,6 +7,7 @@ function paymentError(error){
  return 'Unable to complete this request. Please try again shortly.';
 }
 import { renderCredits } from './credits-view.js';
+import { track } from './analytics.js';
 export function createPayments({ account, show, modal, notify, storage = sessionStorage, redirect = url => location.assign(url) }) {
   const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let tab = ['buy','auto','free'].includes(new URL(location.href).searchParams.get('creditTab')) ? new URL(location.href).searchParams.get('creditTab') : 'buy', selected;
@@ -61,7 +62,7 @@ export function createPayments({ account, show, modal, notify, storage = session
       for (let i = 0; i < 8 && current(version); i++) {
         const status = await account.api('checkout-status?session_id=' + encodeURIComponent(session));
         if (!current(version)) return;
-        if (status.credited) { storage.removeItem(key()); notice = 'Your Credits have been added.'; error = ''; draw();await refresh(true); return; }
+        if (status.credited) { track('purchase_completed'); storage.removeItem(key()); notice = 'Your Credits have been added.'; error = ''; draw();await refresh(true); return; }
         if (status.status === 'expired') { storage.removeItem(key()); notice = 'This checkout expired. No Credits were added.'; draw(); return; }
         notice = status.paid ? 'Payment confirmed. Your Credits are being added.' : 'Payment has not been completed.'; draw();
         if (!status.paid) return;
@@ -71,6 +72,7 @@ export function createPayments({ account, show, modal, notify, storage = session
     finally { if (current(version)) polling = false; }
   }
   async function checkout(pack) {
+    track('checkout_started', { pack });
     if (!account.user) { account.login(); return; }
     if (busy) return;
     const version = generation; const checkoutRoot=root;let redirected=false;const pendingKey = key(); busy = true; error = ''; notice = 'Opening secure Stripe checkout…'; draw();
