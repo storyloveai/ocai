@@ -29,3 +29,9 @@ await build({ entryPoints: ['src/checkout.js'], bundle: true, format: 'esm', pla
 await buildThreeKingdoms();
 
 await buildBooks();
+
+// The review entry is generated only for Vercel Preview deployments, never production.
+const indexPath='dist/index.html';
+const index=(await readFile(indexPath,'utf8')).replace(/<script[^>]*data-logo-lab-entry[^>]*><\/script>/g,'');
+const reviewEntry=process.env.VERCEL_ENV==='preview'?'<script type="module" src="/assets/logo-lab/entry.js" data-logo-lab-entry></script>':'';
+await writeFile(indexPath,index.replace('</body>',reviewEntry+'</body>'));

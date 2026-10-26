@@ -1,5 +1,5 @@
 // Story / Character first-screen banner: one scene, one question, at most three ways in.
-// Replaces the captured desktop carousel on wide screens only; the mobile carousel is untouched.
+// The home scene supports phones and desktop; character scenes replace the desktop carousel.
 // The previous carousel stays available: add ?hero=classic to the URL, or set localStorage sd.hero = "classic".
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -74,13 +74,14 @@ export function heroSceneMarkup(page, lang = 'en') {
     : `<div class="sd-hero-meta"><span class="sd-hero-badge">${esc(x.badge)}</span>${x.eyebrow.map(esc).join('<span aria-hidden="true">·</span>')}</div><p class="sd-hero-lead">${esc(x.lead)}</p><p class="sd-hero-quote">${esc(x.quote)}</p><p class="sd-hero-ask">${esc(x.ask)}</p>`;
   return `<div class="sd-hero-art sd-hero-${s.side}" aria-hidden="true"><img class="sd-hero-blur" src="${s.image}" alt="" decoding="async"><img class="sd-hero-figure" src="${s.image}" alt="" style="object-position:${s.focus}" decoding="async"><span class="sd-hero-fade"></span></div>
 <div class="sd-hero-copy sd-hero-copy-${s.side === 'right' ? 'left' : 'right'}"><h1 class="sd-visually-hidden">${esc(page === 'character' ? x.name : x.eyebrow[0])}</h1>${head}
-<div class="sd-hero-choices${page === 'character' ? ' is-chips' : ''}" role="group" aria-label="${ui.group}">${chips}</div>
+<div class="sd-hero-actions"><div class="sd-hero-choices${page === 'character' ? ' is-chips' : ''}" role="group" aria-label="${ui.group}">${chips}</div>
 <form class="sd-hero-form" data-hero-form><label class="sd-visually-hidden" for="sd-hero-input-${page}">${ui.reply}</label><input id="sd-hero-input-${page}" name="reply" maxlength="300" autocomplete="off" placeholder="${esc(x.placeholder)}"><button type="submit">${esc(x.cta)}</button></form>
-<p class="sd-hero-note">${esc(x.note)}</p></div>`;
+</div><p class="sd-hero-note">${esc(x.note)}</p></div>`;
 }
 
 const CSS = `
 .sd-hero{display:none}
+.sd-hero-actions{display:contents}
 @media (min-width:1024px){
  .sd-hero-on [data-hero-desktop]{display:none!important}
  .sd-hero-on{min-height:0!important}
@@ -140,14 +141,26 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
   if (!hero) { hero = doc.createElement('section'); hero.className = 'sd-hero'; hero.dataset.sdHero = page; desktop.before(hero); }
   const section = desktop.closest('section') || desktop.parentElement;
   section.classList.add('sd-hero-on');
-  // Close the empty bands the captured layout leaves around the old carousel, so the banner runs straight into
-  // the category tabs below it (desktop only; the classes are styled inside the desktop media query).
+  // Identify captured spacers and the browsing region for a continuous, softly faded home layout.
   const before = section.previousElementSibling;
   if (before && !before.textContent.trim() && !before.querySelector('img,a,button')) before.classList.add('sd-hero-gap');
+  let nextContent;
   for (let el = section.nextElementSibling; el; el = el.nextElementSibling) {
     if (/(^|\s)tl:hidden(\s|$)/.test(el.className)) continue; // phone-only block, already hidden on desktop
     if (!el.textContent.trim() && !el.querySelector('img,a,button')) { el.classList.add('sd-hero-gap'); continue; }
-    el.classList.add('sd-hero-next'); break;
+    el.classList.add('sd-hero-next'); nextContent=el; break;
+  }
+  const focusedHome=page==='home'&&new URLSearchParams(win.location?.search||'').get('layout')!=='classic';
+  if(focusedHome){
+    section.classList.add('sd-home-stage');section.parentElement.classList.add('sd-home-layout');
+    for(const child of desktop.parentElement.children)if(child!==hero)child.classList.add('sd-home-old-carousel');
+    for(const child of section.parentElement.children){
+      if(child.classList.contains('pointer-events-none'))child.classList.add('sd-home-ambient');
+      if(child.classList.contains('fixed')&&child.querySelector('a[href="/search"]'))child.classList.add('sd-home-topbar');
+    }
+    if(nextContent){
+      nextContent.classList.add('sd-home-library');nextContent.id='story-library';
+    }
   }
   const s = SCENES[page];
   const go = href => navigate ? navigate(href) : (win.location.href = href);
@@ -159,6 +172,7 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
     // A choice is an answer: it goes straight in. Typing is for anything else.
     hero.querySelectorAll('[data-hero-choice]').forEach(b => b.onclick = () => go(heroHref(page, l, s[l].choices[Number(b.dataset.heroChoice)].label)));
     hero.querySelector('[data-hero-form]').onsubmit = e => { e.preventDefault(); go(heroHref(page, l, input.value)); };
+
   };
   paint(LANGS.includes(lang) ? lang : heroLang(win));
   // The site-wide language switch repaints whichever banner is on screen.

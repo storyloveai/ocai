@@ -31,6 +31,7 @@ body[data-reference=true] #account-status{display:none}#precision-view [data-shr
 #precision-view button[data-category-tab][aria-pressed=false]{background:transparent!important;color:#a3a3a3!important}#precision-view button[data-category-tab][aria-pressed=true]{background:#303033!important;color:#fafafa!important}
 html:has(#precision-view[data-page=home]),html:has(#precision-view[data-page=character]){overflow-anchor:none}
 
-/* The supplied StoryDate artwork is designed for light surfaces. */
-img.storydate-brand{box-sizing:border-box;padding:6px 8px;border-radius:6px;background:#fffbf3;object-fit:contain;flex-shrink:0}img.storydate-brand.storydate-brand-compact{padding:4px;border-radius:7px}
+/* Transparent branding with the original purple and gold artwork. */
+img.storydate-brand{box-sizing:border-box;padding:0;border-radius:0;background:transparent;object-fit:contain;flex-shrink:0}
+img.storydate-brand-halo{background:radial-gradient(ellipse at 50% 48%,#d8c8abee 0%,#c2aa8470 43%,transparent 74%)}
 .community-note{color:#888;font-size:13px;margin:0 0 16px}.community-card a{display:block}.community-card img,.community-noimg{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:10px;margin-bottom:12px;background:#1a1813}.community-noimg{display:grid;place-items:center;color:#7a6a45}

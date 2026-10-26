@@ -19,6 +19,7 @@ const UI = [
   ['Home', '首页'], ['History', '历史'], ['My Titles', '我的作品'], ['My titles', '我的作品'], ['MY', '我的'], ['Search', '搜索'], ['Story', '故事'],
   ['Character', '角色'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
   ['Explore', '探索'], ['Previous slide', '上一张'], ['Next slide', '下一张'], ['Main', '精选'], ['New Ranking', '新作榜'], ['Rankings', '排行榜'], ['Today', '今日'],
+  ['Browse by genre','按题材浏览'],
   ['Fantasy', '奇幻'], ['Romance', '恋爱'], ['Sci-Fi', '科幻'], ['Girls Love', '百合'], ['Horror', '恐怖'], ['Oriental Fantasy', '东方奇幻'], ['Slice of Life', '日常'],
   ['Fan Fiction', '同人'], ['Utility', '工具'], ['Boys Love', '耽美'], ['Others', '其他'], ['Adventure', '冒险'], ['Action', '动作'], ['Comedy', '喜剧'], ['Thriller', '惊悚'],
   ['Top Ranked', '热门榜'], ['View All', '查看全部'], ['StoryDate Originals', 'StoryDate 原创', 'OOC Originals'], ['Trending Now', '当下热门'],
@@ -111,20 +112,38 @@ function toggleMarkup(lang, cls) {
   return `<div class="sd-lang ${cls}" role="group" aria-label="${lang === 'zh' ? '语言' : 'Language'}" data-no-i18n>${LANGS.map(l => `<button type="button" data-sd-lang="${l}" aria-pressed="${l === lang}">${l === 'zh' ? '中文' : 'EN'}</button>`).join('')}</div>`;
 }
 const CSS = `.sd-lang{display:inline-flex;border:1px solid #3a3a3a;border-radius:999px;overflow:hidden;flex:none}
-.sd-lang button{border:0;background:none;color:#a1a1a1;font:500 12px/1 Inter,"PingFang SC",system-ui,sans-serif;padding:7px 12px;cursor:pointer}
-.sd-lang button[aria-pressed=true]{background:#fafafa;color:#1a1a1a}
-.sd-lang-side{margin:12px 12px 0;align-self:flex-start;width:max-content}.sd-lang-top{margin-right:4px}
-[data-shrink=true] .sd-lang-side{display:none}`;
+.sd-lang button{border:0;background:none;color:#8c8c8c;font:500 12px/1 Inter,"PingFang SC",system-ui,sans-serif;padding:8px 10px;min-height:32px;cursor:pointer}
+.sd-lang button[aria-pressed=true]{background:#303030;color:#fafafa}
+.sd-lang button:focus-visible{outline:2px solid #c5a46c;outline-offset:-3px}
+.sd-language-slot{flex-shrink:0;align-self:stretch;padding:8px 16px 16px}
+.sd-language-setting{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%}
+.sd-language-label{display:inline-flex;align-items:center;gap:8px;color:#858585;font:12px/1.4 Inter,"PingFang SC",system-ui,sans-serif}
+.sd-language-label svg{width:16px;height:16px;flex:none}
+.sd-lang-side,.sd-lang-top,.sd-lang-legacy{margin:0;flex:none;width:max-content;border-color:#ffffff1a;border-radius:7px}
+.sd-lang-top{margin-left:0}.sd-lang-top button{padding:8px;min-height:32px}
+.signin .sd-lang-legacy{justify-self:center;margin-bottom:6px}
+[data-shrink=true] .sd-language-slot{padding:8px 5px 16px}
+[data-shrink=true] .sd-language-label{display:none}
+[data-shrink=true] .sd-language-setting{justify-content:center}
+[data-shrink=true] .sd-lang-side{flex-direction:column;width:34px}
+[data-shrink=true] .sd-lang-side button{padding:8px 2px;font-size:10px;min-height:28px}`;
 
-// Place the switch in the desktop sidebar (under the navigation) and in the phone header (beside search).
+// Language is a persistent utility above the account area, and at the far right of the phone header.
 function placeToggles(doc, lang) {
   const side = doc.querySelector('[data-shrink]');
-  const group = side?.children[1]?.children[1]?.children[2];
-  if (group && !side.querySelector('.sd-lang-side')) group.insertAdjacentHTML('afterend', toggleMarkup(lang, 'sd-lang-side'));
+  const desktop=side?.children[1],bottom=desktop?.lastElementChild;
+  if(bottom&&!desktop.querySelector('.sd-language-slot')){
+    const slot=doc.createElement('div');slot.className='sd-language-slot';slot.setAttribute('data-no-i18n','');
+    slot.innerHTML=`<div class="sd-language-setting"><span class="sd-language-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c5 5 5 13 0 18M12 3c-5 5-5 13 0 18"/></svg><span data-language-label></span></span>${toggleMarkup(lang,'sd-lang-side')}</div>`;
+    bottom.before(slot);
+  }
+  const languageLabel=desktop?.querySelector('[data-language-label]'),label=lang==='zh'?'语言':'Language';
+  if(languageLabel&&languageLabel.textContent!==label)languageLabel.textContent=label;
   const search = [...doc.querySelectorAll('a[href="/search"]')].find(a => a.closest('[class*="tl:hidden"]'));
-  if (search && !search.parentElement.querySelector('.sd-lang-top')) search.insertAdjacentHTML('beforebegin', toggleMarkup(lang, 'sd-lang-top'));
+  if (search && !search.parentElement.querySelector('.sd-lang-top')) search.insertAdjacentHTML('afterend', toggleMarkup(lang, 'sd-lang-top'));
   const aside = doc.querySelector('body > aside .signin');
-  if (aside && !aside.querySelector('.sd-lang')) aside.insertAdjacentHTML('afterbegin', toggleMarkup(lang, 'sd-lang-side'));
+  if (aside && !aside.querySelector('.sd-lang')) aside.insertAdjacentHTML('afterbegin', toggleMarkup(lang, 'sd-lang-legacy'));
+  doc.querySelectorAll('.sd-lang').forEach(group=>{if(group.getAttribute('aria-label')!==label)group.setAttribute('aria-label',label);});
   doc.querySelectorAll('[data-sd-lang]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.sdLang === lang)));
 }
 

@@ -24,6 +24,19 @@ test('language follows the visitor pick, then the browser', () => {
   assert.equal(heroLang({localStorage: store({'sd.lang': 'en'}), navigator: {language: 'zh-CN'}}), 'en');
 });
 
+test('home keeps its catalogue transition free of inserted dividers and preserves bilingual story choices',()=>{
+ const {document}=parseHTML('<html><head></head><body><main><div class="pointer-events-none"></div><section><div><div data-hero-desktop></div><div class="tl:hidden">mobile carousel</div></div></section><div class="content"><div>categories</div></div></main></body></html>');
+ const listeners={},routes=[];
+ const win={location:{search:''},localStorage:store(),navigator:{language:'en'},matchMedia:()=>({matches:true}),addEventListener:(name,fn)=>listeners[name]=fn};
+ const hero=mountHeroScene(document.body,'home',{win,navigate:path=>routes.push(path)}),library=document.querySelector('#story-library');
+ assert.ok(hero.closest('.sd-home-stage'));assert.ok(library.classList.contains('sd-home-library'));
+ assert.equal(document.querySelectorAll('.sd-home-old-carousel').length,2);
+ assert.equal(document.querySelector('.sd-hero-footer'),null);assert.equal(document.querySelector('.sd-library-heading'),null);
+ listeners['sd-lang']({detail:'zh'});assert.equal(hero.querySelector('.sd-hero-quote').textContent,SCENES.home.zh.quote);
+ hero.querySelector('[data-hero-choice="0"]').click();assert.deepEqual(routes,['/play/three-kingdoms?lang=zh']);
+ mountHeroScene(document.body,'home',{win,navigate(){}});assert.equal(document.querySelectorAll('[data-sd-hero]').length,1);
+});
+
 test('a choice goes straight in: the game in the banner language, or the chat with that line', () => {
   assert.equal(heroHref('home', 'zh'), '/play/three-kingdoms?lang=zh');
   assert.equal(heroHref('character', 'en', 'Who is listening?'), '/play/sgc-007?say=Who%20is%20listening%3F');

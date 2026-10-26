@@ -1,6 +1,7 @@
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
+import {mountHomeSystem} from './home-system.js';
 import announcements from './announcements.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
@@ -138,13 +139,17 @@ const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.title_zh,d.author,d.de
 for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 
 function paintNotice(){
+  const buttons=all('button[aria-label="Dismiss"]');
+  const slots=[...new Set(buttons.map(button=>button.closest('section')?.parentElement).filter(Boolean))];
+  const collapse=()=>slots.forEach(slot=>slot.remove());
+  let dismissed=false;try{dismissed=localStorage.getItem('ooc-notice-dismissed')==='1';}catch{}
+  if(dismissed){collapse();return;}
+  buttons.forEach(button=>{button.onclick=()=>{collapse();try{localStorage.setItem('ooc-notice-dismissed','1');}catch{}};});
   const latest=announcements.items[0];
   for(const link of all('a[href^="/announcement/"]')){
     const bar=link.closest('section');if(!bar||!/Notifications|通知/.test(bar.textContent))continue;
     link.setAttribute('href',latest.href);link.querySelectorAll('span').forEach(s=>s.textContent=latest.title);
     const ghost=link.previousElementSibling;if(ghost?.tagName==='SPAN')ghost.textContent=latest.title;
-    const slot=bar.parentElement;
-    bar.querySelectorAll('button').forEach(b=>{if(!b.dataset.noticeClose){b.dataset.noticeClose='';b.addEventListener('click',()=>{slot.hidden=true;slot.style.display='none';});}});
   }
 }
 function hydrate() {
@@ -202,12 +207,14 @@ function updateHero(step) {
 }
 
 function bindHome(page) {
+  let homeSystem;
   activeFeatures=page==='character'?(evidence.characterFeatures||[]):evidence.features;
   if(activeFeatures.length)paintMobileSlides(activeFeatures);
   all('button').filter(b=>text(b)==='Previous slide'||text(b)==='Next slide').forEach(b=>{
     b.setAttribute('aria-label',text(b));b.dataset.refStep=text(b)==='Previous slide'?'-1':'1';b.onclick=()=>updateHero(Number(b.dataset.refStep));
   });
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
+    b.dataset.categoryLabel=text(b);
     let pointerOrigin;
     // The captured Main tab carries a lime border/text; selection is drawn by .category-selected instead.
     b.classList.remove('border-brand','text-brand'); // selection is drawn by .category-selected and follows the active tab
@@ -215,8 +222,8 @@ function bindHome(page) {
     b.onpointerdown=event=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};event.preventDefault();};
     b.onclick=event=>{if(event?.detail>0)b.blur();
       const scroll=pointerOrigin||{x:window.scrollX||0,y:window.scrollY||0};pointerOrigin=null;host.style.overflowAnchor='none';
-      const label=text(b);
-      const buttons=all('button').filter(button=>context.categories.includes(text(button)));
+      const label=b.dataset.categoryLabel;
+      const buttons=all('button[data-category-label]');
       const carouselRegion=b.closest('[role="region"]')||b.parentElement.parentElement;
       const region=carouselRegion.parentElement?.classList.contains('sticky')?carouselRegion.parentElement.parentElement:carouselRegion;
       let panel=q('[data-category-panel]');
@@ -226,7 +233,8 @@ function bindHome(page) {
       let after=false;
       for(const child of container.children){if(child===region){after=true;continue;}if(after&&child!==panel){if(!child.hasAttribute('data-category-original-hidden'))child.dataset.categoryOriginalHidden=String(child.hidden);child.hidden=label==='Main'?child.dataset.categoryOriginalHidden==='true':true;}}
       panel.hidden=label==='Main';
-      buttons.forEach(button=>{const selected=text(button)===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
+      buttons.forEach(button=>{const selected=button.dataset.categoryLabel===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
+      homeSystem?.sync();
       if(label!=='Main'){
         const available=catalog.filter(d=>page==='character'?d.type==='character':d.type!=='character');
         const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>tagsOf(d).has(label));
@@ -242,6 +250,7 @@ function bindHome(page) {
   const title=q('[data-hero-desktop] h1');
   current=page==='home'?0:Math.max(0,activeFeatures.findIndex(f=>f.title===title?.textContent));
   const scene=mountHeroScene(host,page,{navigate:context.navigate});
+  if(page==='home'&&scene)homeSystem=mountHomeSystem(host);
   if(activeFeatures.length){
     updateHero(0);
     if(!scene&&!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
@@ -367,10 +376,11 @@ export function show(path, helpers) {
   const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':evidence.pages[path]&&OURS.has(path.split('/')[2])?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':path.startsWith('/story/')?'story-detail':null;
   host.hidden=!page;style.media=page?'all':'not all';legacy.disabled=Boolean(page);
   host.dataset.page=page||'';
+  host.classList.remove('sd-evidence-home');
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;
-  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);host.querySelectorAll('button[aria-label="Dismiss"]').forEach(button=>{const bar=button.closest('section');if(!bar)return;let gone=false;try{gone=localStorage.getItem('ooc-notice-dismissed')==='1';}catch{}if(gone){bar.remove();return;}button.onclick=()=>{host.querySelectorAll('button[aria-label="Dismiss"]').forEach(x=>x.closest('section')?.remove());try{localStorage.setItem('ooc-notice-dismissed','1');}catch{}};});
+  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);
   if(page==='story-detail'){
     const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=OURS.has(id)?titlePreviews.titles[id]:null;
     const content=q('[data-shrink]')?.nextElementSibling;
@@ -422,7 +432,7 @@ export function show(path, helpers) {
     q('#reference-root').firstElementChild.insertAdjacentHTML('beforeend',evidence.overlays||'');
     all('[role="dialog"] button').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();});
   }
-  document.title=(page==='detail'||page==='captured-detail')?(q('h1')?.textContent||'Information')+' · Storylove':'Storylove · Interactive stories';
+  document.title=(page==='detail'||page==='captured-detail')?(q('h1')?.textContent||'Information')+' · StoryDate':'StoryDate · Interactive stories';
   return true;
 }
 
