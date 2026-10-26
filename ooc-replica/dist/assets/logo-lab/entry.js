@@ -1,4 +1,4 @@
-if(window.top===window.self){
+if(window.top===window.self&&new URLSearchParams(location.search).get('review')==='logos'){
  const link=document.createElement('a');
  link.href=new URL('/assets/logo-lab/index.html',location.origin).href;link.textContent='比较 Logo 方案 ↗';
  link.setAttribute('aria-label','打开 Logo 方案对比');

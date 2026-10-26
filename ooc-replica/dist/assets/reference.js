@@ -212,6 +212,7 @@ function bindHome(page) {
     b.setAttribute('aria-label',text(b));b.dataset.refStep=text(b)==='Previous slide'?'-1':'1';b.onclick=()=>updateHero(Number(b.dataset.refStep));
   });
   all('button').filter(b=>context.categories.includes(text(b))).forEach(b=>{
+    b.dataset.categoryLabel=text(b);
     let pointerOrigin;
     // The captured Main tab carries a lime border/text; selection is drawn by .category-selected instead.
     b.classList.remove('border-brand','text-brand'); // selection is drawn by .category-selected and follows the active tab
@@ -219,8 +220,8 @@ function bindHome(page) {
     b.onpointerdown=event=>{pointerOrigin={x:window.scrollX||0,y:window.scrollY||0};event.preventDefault();};
     b.onclick=event=>{if(event?.detail>0)b.blur();
       const scroll=pointerOrigin||{x:window.scrollX||0,y:window.scrollY||0};pointerOrigin=null;host.style.overflowAnchor='none';
-      const label=text(b);
-      const buttons=all('button').filter(button=>context.categories.includes(text(button)));
+      const label=b.dataset.categoryLabel;
+      const buttons=all('button[data-category-label]');
       const carouselRegion=b.closest('[role="region"]')||b.parentElement.parentElement;
       const region=carouselRegion.parentElement?.classList.contains('sticky')?carouselRegion.parentElement.parentElement:carouselRegion;
       let panel=q('[data-category-panel]');
@@ -230,7 +231,7 @@ function bindHome(page) {
       let after=false;
       for(const child of container.children){if(child===region){after=true;continue;}if(after&&child!==panel){if(!child.hasAttribute('data-category-original-hidden'))child.dataset.categoryOriginalHidden=String(child.hidden);child.hidden=label==='Main'?child.dataset.categoryOriginalHidden==='true':true;}}
       panel.hidden=label==='Main';
-      buttons.forEach(button=>{const selected=text(button)===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
+      buttons.forEach(button=>{const selected=button.dataset.categoryLabel===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
       if(label!=='Main'){
         const available=catalog.filter(d=>page==='character'?d.type==='character':d.type!=='character');
         const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>tagsOf(d).has(label));

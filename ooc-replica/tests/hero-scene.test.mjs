@@ -24,6 +24,21 @@ test('language follows the visitor pick, then the browser', () => {
   assert.equal(heroLang({localStorage: store({'sd.lang': 'en'}), navigator: {language: 'zh-CN'}}), 'en');
 });
 
+test('home discovery scrolls to a separate library and follows language changes without duplicating sections',()=>{
+ const {document}=parseHTML('<html><head></head><body><main><div class="pointer-events-none"></div><section><div><div data-hero-desktop></div><div class="tl:hidden">mobile carousel</div></div></section><div class="content"><div>categories</div></div></main></body></html>');
+ const listeners={},scrolls=[],routes=[];
+ const win={location:{search:''},localStorage:store(),navigator:{language:'en'},matchMedia:()=>({matches:true}),addEventListener:(name,fn)=>listeners[name]=fn};
+ const hero=mountHeroScene(document.body,'home',{win,navigate:path=>routes.push(path)}),library=document.querySelector('#story-library');
+ library.scrollIntoView=options=>scrolls.push(options);
+ assert.ok(hero.closest('.sd-home-stage'));assert.ok(library.classList.contains('sd-home-library'));
+ assert.equal(document.querySelectorAll('.sd-home-old-carousel').length,2);
+ hero.querySelector('[data-explore-library]').click();assert.deepEqual(scrolls,[{behavior:'auto',block:'start'}]);
+ listeners['sd-lang']({detail:'zh'});assert.equal(library.querySelector('h2').textContent,'下一段故事，由你选择。');
+ assert.match(hero.querySelector('[data-explore-library]').textContent,/探索更多故事/);
+ hero.querySelector('[data-hero-choice="0"]').click();assert.deepEqual(routes,['/play/three-kingdoms?lang=zh']);
+ mountHeroScene(document.body,'home',{win,navigate(){}});assert.equal(document.querySelectorAll('.sd-library-heading').length,1);
+});
+
 test('a choice goes straight in: the game in the banner language, or the chat with that line', () => {
   assert.equal(heroHref('home', 'zh'), '/play/three-kingdoms?lang=zh');
   assert.equal(heroHref('character', 'en', 'Who is listening?'), '/play/sgc-007?say=Who%20is%20listening%3F');

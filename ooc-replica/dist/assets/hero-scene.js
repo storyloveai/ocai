@@ -1,5 +1,5 @@
 // Story / Character first-screen banner: one scene, one question, at most three ways in.
-// Replaces the captured desktop carousel on wide screens only; the mobile carousel is untouched.
+// The home scene supports phones and desktop; character scenes replace the desktop carousel.
 // The previous carousel stays available: add ?hero=classic to the URL, or set localStorage sd.hero = "classic".
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
@@ -50,8 +50,8 @@ export const SCENES = {
   }
 };
 const UI = {
-  en: { group: 'Choose a reply', reply: 'Your reply', story: 'Featured story', character: 'Featured character', lang: 'Language' },
-  zh: { group: '选一个回答', reply: '你的回答', story: '推荐故事', character: '推荐角色', lang: '语言' }
+  en: { group: 'Choose a reply', reply: 'Your reply', story: 'Featured story', character: 'Featured character', lang: 'Language', explore:'Explore more stories', footer:'STORYDATE · INTERACTIVE FICTION', library:'THE STORY LIBRARY', libraryTitle:'Where will your next story take you?', libraryDescription:'Find a world to step into, from historical intrigue to fantasy.' },
+  zh: { group: '选一个回答', reply: '你的回答', story: '推荐故事', character: '推荐角色', lang: '语言', explore:'探索更多故事', footer:'STORYDATE · 互动小说', library:'故事书库', libraryTitle:'下一段故事，由你选择。', libraryDescription:'从历史权谋到奇幻旅程，找到你想进入的世界。' }
 };
 
 // Language: the visitor's own pick (localStorage sd.lang), otherwise the browser language.
@@ -76,11 +76,12 @@ export function heroSceneMarkup(page, lang = 'en') {
 <div class="sd-hero-copy sd-hero-copy-${s.side === 'right' ? 'left' : 'right'}"><h1 class="sd-visually-hidden">${esc(page === 'character' ? x.name : x.eyebrow[0])}</h1>${head}
 <div class="sd-hero-choices${page === 'character' ? ' is-chips' : ''}" role="group" aria-label="${ui.group}">${chips}</div>
 <form class="sd-hero-form" data-hero-form><label class="sd-visually-hidden" for="sd-hero-input-${page}">${ui.reply}</label><input id="sd-hero-input-${page}" name="reply" maxlength="300" autocomplete="off" placeholder="${esc(x.placeholder)}"><button type="submit">${esc(x.cta)}</button></form>
-<p class="sd-hero-note">${esc(x.note)}</p></div>`;
+<p class="sd-hero-note">${esc(x.note)}</p></div>${page==='home'?`<div class="sd-hero-footer"><span>${esc(ui.footer)}</span><button type="button" data-explore-library>${esc(ui.explore)} <span aria-hidden="true">↓</span></button></div>`:''}`;
 }
 
 const CSS = `
 .sd-hero{display:none}
+.sd-hero-footer{display:none}
 @media (min-width:1024px){
  .sd-hero-on [data-hero-desktop]{display:none!important}
  .sd-hero-on{min-height:0!important}
@@ -140,14 +141,30 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
   if (!hero) { hero = doc.createElement('section'); hero.className = 'sd-hero'; hero.dataset.sdHero = page; desktop.before(hero); }
   const section = desktop.closest('section') || desktop.parentElement;
   section.classList.add('sd-hero-on');
-  // Close the empty bands the captured layout leaves around the old carousel, so the banner runs straight into
-  // the category tabs below it (desktop only; the classes are styled inside the desktop media query).
+  // Identify captured carousel spacers and the browsing region. Focused home styling gives the scene and
+  // library separate surfaces; character/classic layouts keep the compact transition.
   const before = section.previousElementSibling;
   if (before && !before.textContent.trim() && !before.querySelector('img,a,button')) before.classList.add('sd-hero-gap');
+  let nextContent;
   for (let el = section.nextElementSibling; el; el = el.nextElementSibling) {
     if (/(^|\s)tl:hidden(\s|$)/.test(el.className)) continue; // phone-only block, already hidden on desktop
     if (!el.textContent.trim() && !el.querySelector('img,a,button')) { el.classList.add('sd-hero-gap'); continue; }
-    el.classList.add('sd-hero-next'); break;
+    el.classList.add('sd-hero-next'); nextContent=el; break;
+  }
+  let libraryHeading;
+  const focusedHome=page==='home'&&new URLSearchParams(win.location?.search||'').get('layout')!=='classic';
+  if(focusedHome){
+    section.classList.add('sd-home-stage');section.parentElement.classList.add('sd-home-layout');
+    for(const child of desktop.parentElement.children)if(child!==hero)child.classList.add('sd-home-old-carousel');
+    for(const child of section.parentElement.children){
+      if(child.classList.contains('pointer-events-none'))child.classList.add('sd-home-ambient');
+      if(child.classList.contains('fixed')&&child.querySelector('a[href="/search"]'))child.classList.add('sd-home-topbar');
+    }
+    if(nextContent){
+      nextContent.classList.add('sd-home-library');nextContent.id='story-library';
+      libraryHeading=nextContent.querySelector('.sd-library-heading');
+      if(!libraryHeading){libraryHeading=doc.createElement('header');libraryHeading.className='sd-library-heading';libraryHeading.setAttribute('data-no-i18n','');nextContent.prepend(libraryHeading);}
+    }
   }
   const s = SCENES[page];
   const go = href => navigate ? navigate(href) : (win.location.href = href);
@@ -159,6 +176,10 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
     // A choice is an answer: it goes straight in. Typing is for anything else.
     hero.querySelectorAll('[data-hero-choice]').forEach(b => b.onclick = () => go(heroHref(page, l, s[l].choices[Number(b.dataset.heroChoice)].label)));
     hero.querySelector('[data-hero-form]').onsubmit = e => { e.preventDefault(); go(heroHref(page, l, input.value)); };
+    if(libraryHeading){
+      libraryHeading.innerHTML=`<p class="sd-library-kicker">${esc(ui.library)}</p><h2>${esc(ui.libraryTitle)}</h2><p>${esc(ui.libraryDescription)}</p>`;
+      hero.querySelector('[data-explore-library]').onclick=()=>nextContent.scrollIntoView?.({behavior:win.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'auto':'smooth',block:'start'});
+    }
   };
   paint(LANGS.includes(lang) ? lang : heroLang(win));
   // The site-wide language switch repaints whichever banner is on screen.

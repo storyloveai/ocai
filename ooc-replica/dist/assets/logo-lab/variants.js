@@ -5,6 +5,6 @@ export const variants = [
   {id:'antique',letter:'C',name:'古金 · 单色',description:'以一整套温暖古金色呈现书本和字标，强调统一的品牌印记。',detail:'古金单色 · 识别清楚',logo:'/assets/logo-lab/antique-logo.svg',mark:'/assets/logo-lab/antique-mark.svg'},
   {id:'ivory',letter:'D',name:'原金 · 暖白',description:'上一版。Story 保留原金色，书本和 Date 使用暖米白。',detail:'保留对照 · 原金 + 暖米白',logo:'/assets/storydate-logo-dark.svg',mark:'/assets/storydate-mark-dark.svg'},
   {id:'dialogue-original',letter:'02a',name:'对话之书 · 初版',description:'上一版。双色图标搭配双色文字，保留作对照。',detail:'保留对照 · 双色字标',logo:'/assets/logo-lab/dialogue-two-tone-logo.svg',mark:'/assets/logo-lab/dialogue-two-tone-mark.svg'},
-  {id:'dialogue',letter:'02',name:'对话之书 · 融合版',description:'当前预览。图标保留柔和古金与米白，字标统一为柔和米白；图标略缩小并收紧图文间距，融入深色侧栏。',detail:'当前预览 · 单色字标 + 柔和古金',logo:'/assets/storydate-dialogue-logo.svg',mark:'/assets/storydate-dialogue-mark.svg'}
+  {id:'dialogue',letter:'02',name:'对话之书 · 金白',description:'当前预览。恢复初版比例与双色字标，Story 和左书页保留金色，Date 与右书页采用页面文字白色。',detail:'当前预览 · 金色 + 页面白',logo:'/assets/storydate-dialogue-logo.svg',mark:'/assets/storydate-dialogue-mark.svg'}
 ];
 export const getVariant = id => variants.find(variant=>variant.id===id)||variants.find(variant=>variant.id==='dialogue');
