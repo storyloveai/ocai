@@ -9,7 +9,7 @@ import {updateShelf} from '../dist/assets/hero-shelf.js';
 const file=path=>readFile(new URL('../'+path,import.meta.url),'utf8');
 test('all ORIGINAL badge images use our book mark, including repeated hydration',()=>{
  const {document}=parseHTML('<div><img alt="ORIGINAL" data-asset="old-star" src="old.webp"><img alt="OOC" width="120"></div>');paintBrand(document);paintBrand(document);
- assert.equal(document.querySelector('[alt=ORIGINAL]').getAttribute('src'),'/assets/original-badge.svg');assert.equal(document.querySelector('[alt=ORIGINAL]').hasAttribute('data-asset'),false);assert.equal(document.querySelector('[alt=StoryDate]').getAttribute('src'),'/assets/storydate-logo-dark.svg');
+ assert.equal(document.querySelector('[alt=ORIGINAL]').getAttribute('src'),'/assets/original-badge.svg');assert.equal(document.querySelector('[alt=ORIGINAL]').hasAttribute('data-asset'),false);assert.equal(document.querySelector('[alt=StoryDate]').getAttribute('src'),'/assets/storydate-dialogue-logo.svg');
 });
 test('notification sidebar copies the Credits typography rather than inheriting body size',async()=>{
  const {document}=parseHTML(JSON.parse(await file('dist/assets/reference-pages.json')).pages.home);globalThis.location={pathname:'/'};

@@ -1,5 +1,5 @@
 import {getVariant} from './logo-lab/variants.js';
-// D is the selected default; a URL opt-in keeps other comparison options available.
+// Concept 02 is the current preview; a URL opt-in keeps earlier options available.
 const variant=getVariant(new URLSearchParams(globalThis.location?.search||'').get('logo'));
 export function paintBrand(root=document){
  for(const badge of root.querySelectorAll('img[alt="ORIGINAL"]')){badge.src="/assets/original-badge.svg";badge.removeAttribute("data-asset");badge.classList.add("storydate-original-badge");}
