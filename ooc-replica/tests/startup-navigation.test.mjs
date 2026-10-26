@@ -39,10 +39,13 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.equal(document.querySelectorAll('button[aria-label="Dismiss"]').length,0);
  assert.equal(document.querySelector('[class~="tl:min-h-[52px]"]'),null,'returning home must not retain the empty desktop notice spacer');
  assert.ok(document.querySelector('[data-sd-hero=home]'));
- const fantasy=document.querySelector('[data-category-label="Fantasy"]');fantasy.textContent='奇幻';fantasy.click();
+ const fantasy=document.querySelector('[data-category-label="Fantasy"]');fantasy.textContent='奇幻';
+ const genre=document.querySelector('.sd-genre-select');assert.ok(genre);assert.equal(genre.querySelectorAll('option').length,13);
+ assert.equal(document.querySelectorAll('.sd-browse-track>div:not([hidden])').length,4);
+ genre.querySelector('option[value="Fantasy"]').selected=true;genre.dispatchEvent(new window.Event('change',{bubbles:true}));
  assert.equal(fantasy.getAttribute('aria-pressed'),'true');
  assert.ok(document.querySelectorAll('[data-category-panel] a[href^="/story/"]').length>0,'translated category labels still filter canonical genre tags');
- document.querySelector('[data-category-label="Main"]').click();assert.equal(document.querySelector('[data-category-panel]').hidden,true);
+ document.querySelector('[data-category-label="Main"]').click();assert.equal(document.querySelector('[data-category-panel]').hidden,true);assert.equal(genre.value,'');
  const link=document.querySelector('a[href="/credit"]');link.href='/credit?creditTab=free';
  const click=new window.Event('click',{bubbles:true,cancelable:true});click.button=0;link.dispatchEvent(click);
  assert.equal(location.pathname,'/credit');assert.equal(document.querySelector('#credits-tab-free').getAttribute('aria-selected'),'true');

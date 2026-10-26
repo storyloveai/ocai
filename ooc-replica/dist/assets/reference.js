@@ -1,6 +1,7 @@
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
+import {mountHomeSystem} from './home-system.js';
 import announcements from './announcements.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
@@ -206,6 +207,7 @@ function updateHero(step) {
 }
 
 function bindHome(page) {
+  let homeSystem;
   activeFeatures=page==='character'?(evidence.characterFeatures||[]):evidence.features;
   if(activeFeatures.length)paintMobileSlides(activeFeatures);
   all('button').filter(b=>text(b)==='Previous slide'||text(b)==='Next slide').forEach(b=>{
@@ -232,6 +234,7 @@ function bindHome(page) {
       for(const child of container.children){if(child===region){after=true;continue;}if(after&&child!==panel){if(!child.hasAttribute('data-category-original-hidden'))child.dataset.categoryOriginalHidden=String(child.hidden);child.hidden=label==='Main'?child.dataset.categoryOriginalHidden==='true':true;}}
       panel.hidden=label==='Main';
       buttons.forEach(button=>{const selected=button.dataset.categoryLabel===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
+      homeSystem?.sync();
       if(label!=='Main'){
         const available=catalog.filter(d=>page==='character'?d.type==='character':d.type!=='character');
         const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>tagsOf(d).has(label));
@@ -247,6 +250,7 @@ function bindHome(page) {
   const title=q('[data-hero-desktop] h1');
   current=page==='home'?0:Math.max(0,activeFeatures.findIndex(f=>f.title===title?.textContent));
   const scene=mountHeroScene(host,page,{navigate:context.navigate});
+  if(page==='home'&&scene)homeSystem=mountHomeSystem(host);
   if(activeFeatures.length){
     updateHero(0);
     if(!scene&&!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
@@ -372,6 +376,7 @@ export function show(path, helpers) {
   const page=path==='/'?'home':path==='/character'?'character':path==='/search'?'search':evidence.pages[path]&&OURS.has(path.split('/')[2])?'captured-detail':path==='/collection'?'collection':path.startsWith('/character/')?'character-detail':path.startsWith('/story/')?'story-detail':null;
   host.hidden=!page;style.media=page?'all':'not all';legacy.disabled=Boolean(page);
   host.dataset.page=page||'';
+  host.classList.remove('sd-evidence-home');
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;

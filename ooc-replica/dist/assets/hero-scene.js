@@ -74,13 +74,14 @@ export function heroSceneMarkup(page, lang = 'en') {
     : `<div class="sd-hero-meta"><span class="sd-hero-badge">${esc(x.badge)}</span>${x.eyebrow.map(esc).join('<span aria-hidden="true">·</span>')}</div><p class="sd-hero-lead">${esc(x.lead)}</p><p class="sd-hero-quote">${esc(x.quote)}</p><p class="sd-hero-ask">${esc(x.ask)}</p>`;
   return `<div class="sd-hero-art sd-hero-${s.side}" aria-hidden="true"><img class="sd-hero-blur" src="${s.image}" alt="" decoding="async"><img class="sd-hero-figure" src="${s.image}" alt="" style="object-position:${s.focus}" decoding="async"><span class="sd-hero-fade"></span></div>
 <div class="sd-hero-copy sd-hero-copy-${s.side === 'right' ? 'left' : 'right'}"><h1 class="sd-visually-hidden">${esc(page === 'character' ? x.name : x.eyebrow[0])}</h1>${head}
-<div class="sd-hero-choices${page === 'character' ? ' is-chips' : ''}" role="group" aria-label="${ui.group}">${chips}</div>
+<div class="sd-hero-actions"><div class="sd-hero-choices${page === 'character' ? ' is-chips' : ''}" role="group" aria-label="${ui.group}">${chips}</div>
 <form class="sd-hero-form" data-hero-form><label class="sd-visually-hidden" for="sd-hero-input-${page}">${ui.reply}</label><input id="sd-hero-input-${page}" name="reply" maxlength="300" autocomplete="off" placeholder="${esc(x.placeholder)}"><button type="submit">${esc(x.cta)}</button></form>
-<p class="sd-hero-note">${esc(x.note)}</p></div>`;
+</div><p class="sd-hero-note">${esc(x.note)}</p></div>`;
 }
 
 const CSS = `
 .sd-hero{display:none}
+.sd-hero-actions{display:contents}
 @media (min-width:1024px){
  .sd-hero-on [data-hero-desktop]{display:none!important}
  .sd-hero-on{min-height:0!important}
