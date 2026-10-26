@@ -1,6 +1,6 @@
 import {variants,getVariant} from './variants.js';
 const query=new URLSearchParams(location.search);
-let selected=getVariant(query.get('variant')||'outline');
+let selected=getVariant(query.get('variant'));
 let device=query.get('view')==='mobile'?'mobile':'desktop';
 const options=document.querySelector('#options'),frame=document.querySelector('#site-preview'),viewport=document.querySelector('#viewport');
 for(const variant of variants){
