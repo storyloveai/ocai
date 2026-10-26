@@ -12,7 +12,7 @@ const header=(name,settings=false)=>`<header class="shell-page-header"><h1>${saf
 const row=(label,href,symbol)=>`<a href="${href}">${icon(symbol)}<span>${safe(label)}</span>${icon('arrow',14)}</a>`;
 function itemsMarkup(items,resume=false){return items.map(d=>`<article><a href="/${resume?'play':d.type==='character'?'character':'story'}/${safe(d.id)}"><img src="${safe(d.image.startsWith('assets/')?'/'+d.image:d.image)}" alt="${safe(d.title)}"><h2>${safe(d.title)}</h2><p>${safe(d.plays||'')} ${d.author?'· '+safe(d.author):''}</p></a></article>`).join('');}
 function showCommunity(h){
- document.title='Community · Storylove';
+ document.title='Community · StoryDate';
  let type='All';
  const root=mountShell(`<div class="library-content"><header class="library-header"><h1>Community</h1><button class="shell-white-button" data-community-create>Create Title</button></header><div class="library-tabs" role="tablist" aria-label="Title type">${['All','Story','Character'].map(t=>`<button role="tab" data-community-type="${t}" aria-selected="${t==='All'}">${t}</button>`).join('')}</div><p class="community-note">Titles written and published by Storylove creators.</p><div class="library-items" aria-live="polite"></div></div>${footer()}`,h,'library');
  const list=root.querySelector('.library-items');let token=0;
@@ -73,6 +73,6 @@ export function show(path,h){
   root.querySelector('[aria-label="Sort titles"]').onchange=e=>{sort=e.target.value;draw();};const visibilitySelect=root.querySelector('[aria-label="Title visibility"]');if(visibilitySelect)visibilitySelect.onchange=e=>{visibility=e.target.value;draw();};draw();
   const create=root.querySelector('[data-community-create]');if(create)create.onclick=()=>h.navigate('/builder');
  }
- document.title=(path.startsWith('/announcement')?'Notice':path==='/profile'?'MY':path==='/my-title'?'My Titles':path==='/history'?'History':path==='/liked'?'Favorites':'Settings')+' · Storylove';
+ document.title=(path.startsWith('/announcement')?'Notice':path==='/profile'?'MY':path==='/my-title'?'My Titles':path==='/history'?'History':path==='/liked'?'Favorites':'Settings')+' · StoryDate';
  return true;
 }

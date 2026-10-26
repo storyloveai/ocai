@@ -432,7 +432,7 @@ export function show(path, helpers) {
     q('#reference-root').firstElementChild.insertAdjacentHTML('beforeend',evidence.overlays||'');
     all('[role="dialog"] button').forEach(b=>b.onclick=e=>{e.preventDefault();e.stopPropagation();});
   }
-  document.title=(page==='detail'||page==='captured-detail')?(q('h1')?.textContent||'Information')+' · Storylove':'Storylove · Interactive stories';
+  document.title=(page==='detail'||page==='captured-detail')?(q('h1')?.textContent||'Information')+' · StoryDate':'StoryDate · Interactive stories';
   return true;
 }
 

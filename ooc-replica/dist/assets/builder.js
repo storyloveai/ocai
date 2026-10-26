@@ -10,7 +10,7 @@ const field=(label,key,value,max,help='',multiline=false)=>`<div class="builder-
 
 export function showBuilder(path,h){
  if(path!=='/builder'&&!/^\/builder\/(story|character)\/[^/]+$/.test(path))return false;
- document.title='Create a Title · Storylove';
+ document.title='Create a Title · StoryDate';
  if(path==='/builder'){
   const root=mountShell(`<div class="builder-choice-screen"><section class="builder-choice" aria-labelledby="builder-title"><header><h1 id="builder-title">Create a Title</h1><a href="/my-title" aria-label="Close creator">${symbol('close')}</a></header><div>${[['story','Story','Content that immerses you into a universe with various characters and adventures.'],['character','Character','Content that develops a relationship with a single character through short and concise dialogues.']].map(([type,label,description])=>`<button data-create-type="${type}"><i class="builder-art builder-art-${type}" aria-hidden="true">${choiceArt(type)}</i><span><strong>${label}</strong><small>${description}</small></span></button>`).join('')}</div></section></div>`,h,'builder');
   root.querySelectorAll('[data-create-type]').forEach(b=>b.onclick=()=>h.navigate(`/builder/${b.dataset.createType}/new`));
