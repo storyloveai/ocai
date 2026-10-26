@@ -138,13 +138,17 @@ const searchIndex=new Map(catalog.map(d=>[d.id,[d.title,d.title_zh,d.author,d.de
 for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 
 function paintNotice(){
+  const buttons=all('button[aria-label="Dismiss"]');
+  const slots=[...new Set(buttons.map(button=>button.closest('section')?.parentElement).filter(Boolean))];
+  const collapse=()=>slots.forEach(slot=>slot.remove());
+  let dismissed=false;try{dismissed=localStorage.getItem('ooc-notice-dismissed')==='1';}catch{}
+  if(dismissed){collapse();return;}
+  buttons.forEach(button=>{button.onclick=()=>{collapse();try{localStorage.setItem('ooc-notice-dismissed','1');}catch{}};});
   const latest=announcements.items[0];
   for(const link of all('a[href^="/announcement/"]')){
     const bar=link.closest('section');if(!bar||!/Notifications|通知/.test(bar.textContent))continue;
     link.setAttribute('href',latest.href);link.querySelectorAll('span').forEach(s=>s.textContent=latest.title);
     const ghost=link.previousElementSibling;if(ghost?.tagName==='SPAN')ghost.textContent=latest.title;
-    const slot=bar.parentElement;
-    bar.querySelectorAll('button').forEach(b=>{if(!b.dataset.noticeClose){b.dataset.noticeClose='';b.addEventListener('click',()=>{slot.hidden=true;slot.style.display='none';});}});
   }
 }
 function hydrate() {
@@ -370,7 +374,7 @@ export function show(path, helpers) {
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;
-  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);host.querySelectorAll('button[aria-label="Dismiss"]').forEach(button=>{const bar=button.closest('section');if(!bar)return;let gone=false;try{gone=localStorage.getItem('ooc-notice-dismissed')==='1';}catch{}if(gone){bar.remove();return;}button.onclick=()=>{host.querySelectorAll('button[aria-label="Dismiss"]').forEach(x=>x.closest('section')?.remove());try{localStorage.setItem('ooc-notice-dismissed','1');}catch{}};});
+  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);
   if(page==='story-detail'){
     const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=OURS.has(id)?titlePreviews.titles[id]:null;
     const content=q('[data-shrink]')?.nextElementSibling;
