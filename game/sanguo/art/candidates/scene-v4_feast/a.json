@@ -1,0 +1,68 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "刘备在左侧举杯庆贺，白衣诸葛亮在右侧独看战报，宴席群臣围拢。",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A lantern-lit feast hall in Chengdu: Liu Bei, a kindly ruler in his fifties with greying temples, raises a wine cup in celebration among officials; Zhuge Liang in white robes with a feather fan sits apart, not drinking, looking at a dispatch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）\",\n    \"诸葛亮：长发、白衣、白羽扇、清秀无须\"\n  ],\n  \"composition\": \"成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+  "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+  "authored_job": {
+    "id": "scene-v4_feast",
+    "kind": "scene",
+    "name": "v4_feast",
+    "batch": 3,
+    "status": "queued",
+    "refs": [
+      "liubei",
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/liubei.webp",
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/scenes/v3_wang.webp"
+    ],
+    "keep": [
+      "刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）",
+      "诸葛亮：长发、白衣、白羽扇、清秀无须"
+    ],
+    "composition": "成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A lantern-lit feast hall in Chengdu: Liu Bei, a kindly ruler in his fifties with greying temples, raises a wine cup in celebration among officials; Zhuge Liang in white robes with a feather fan sits apart, not drinking, looking at a dispatch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/liubei.webp",
+      "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+    },
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_wang.webp",
+      "sha256": "22b5c84fdeb54a2a650970d45a367d4cc9c41d17b3ccd010cf92914793a12a20"
+    }
+  ],
+  "original_sha256": "0353e5158d690e98f62ce02aca46d6da08c6a5fd5957b34511d138b1783c39dc",
+  "created_at": "2026-10-27T07:15:51.498912+00:00",
+  "review_notes": [
+    "请Claude重点复核刘备五十余岁的年龄感与灰白鬓角。"
+  ]
+}

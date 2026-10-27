@@ -3,8 +3,8 @@
   "branch": "codex/art-candidates",
   "expected_scenes": 31,
   "target_candidates_per_scene": 2,
-  "scenes_with_two_candidates": 17,
-  "actual_candidates": 34,
+  "scenes_with_two_candidates": 26,
+  "actual_candidates": 55,
   "adopted": false,
   "cropped": false,
   "preview": "https://storydate-zhou-git-codex-art-candidates-zhou-zeyas-projects.vercel.app/assets/art-candidates/index.html",
@@ -2634,7 +2634,7 @@
           "tool": "image_gen.imagegen",
           "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
           "seed": null,
-          "description": "A：关羽在堂上读竹简战报，笑意正在收住，手指停在一个名字上；关平站在一旁",
+          "description": "关羽中央读无字竹简、手指停在简上，关平站在左后方，案面不再出现地图字形。",
           "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Guan Yu, red-faced with a long black beard in a green robe, laughs heartily reading a bamboo battle report in his hall, then his laugh is fading as his finger rests on one name; Guan Ping, a young officer, stands beside him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"关羽在堂上读竹简战报，笑意正在收住，手指停在一个名字上；关平站在一旁\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. Keep the original authored action and character staging. In this candidate, show an unlabelled wooden desk, without a map or miniature battlefield. Point at the report with the text-bearing side angled away from the viewer. Only blank bamboo surfaces can be visible, no letters or glyphs anywhere.",
           "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
           "authored_job": {
@@ -2701,7 +2701,7 @@
           "tool": "image_gen.imagegen",
           "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
           "seed": null,
-          "description": "B：独立构图候选；关羽在堂上读竹简战报，笑意正在收住，手指停在一个名字上；关平站在一旁",
+          "description": "侧向镜头呈现关羽读简与关平身后注视，竹简朝外的一面和木案保持无字。",
           "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Guan Yu, red-faced with a long black beard in a green robe, laughs heartily reading a bamboo battle report in his hall, then his laugh is fading as his finger rests on one name; Guan Ping, a young officer, stands beside him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"关羽在堂上读竹简战报，笑意正在收住，手指停在一个名字上；关平站在一旁\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. The authored action is a finger resting on a name; comply with the no-text rule by showing his fingertip resting on a blank bamboo slat, keeping the report face turned away from the camera. Show NO map table or labelled marker flags. Retain the authored figures and actions.",
           "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
           "authored_job": {
@@ -3204,7 +3204,7 @@
           "tool": "image_gen.imagegen",
           "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
           "seed": null,
-          "description": "A：战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血",
+          "description": "温芷在灯下为左侧成年伤兵包扎手臂，伤兵床铺排向营帐后方。",
           "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A field hospital after battle, rows of wounded soldiers on straw mats under a long awning; Wen Zhi, a young woman physician, sleeves tied back, exhausted, bandages a soldier's arm by lantern light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.",
           "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
           "authored_job": {
@@ -3271,7 +3271,7 @@
           "tool": "image_gen.imagegen",
           "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
           "seed": null,
-          "description": "B：独立构图候选；战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血",
+          "description": "拉近温芷与敞衣伤兵的包扎动作，右后方药箱与帐内床铺展开。",
           "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A field hospital after battle, rows of wounded soldiers on straw mats under a long awning; Wen Zhi, a young woman physician, sleeves tied back, exhausted, bandages a soldier's arm by lantern light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.",
           "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
           "authored_job": {
@@ -3387,9 +3387,150 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "关羽左侧纵马追击，右侧庞德回首拉弓，魏军与木棺位于樊城外的中景。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A battlefield outside Fancheng under a grey sky: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at full gallop with his crescent blade; ahead, Pang De, a fierce Wei general in dark armour, turns in the saddle drawing a bow; behind the Wei lines a plain wooden coffin is carried on poles. No gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"樊城外：关羽纵马追击，庞德回身拉弓；远处魏军阵前抬着一口木棺\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_pangde",
+            "kind": "scene",
+            "name": "v4_pangde",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "樊城外：关羽纵马追击，庞德回身拉弓；远处魏军阵前抬着一口木棺",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A battlefield outside Fancheng under a grey sky: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at full gallop with his crescent blade; ahead, Pang De, a fierce Wei general in dark armour, turns in the saddle drawing a bow; behind the Wei lines a plain wooden coffin is carried on poles. No gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "original_sha256": "95a1e121b70b522bd8f5e4356158d268f237cd1afae4037c4f9e7bbc47738fa3",
+          "created_at": "2026-10-27T07:10:01.898555+00:00",
+          "review_notes": [
+            "请Claude重点复核庞德回身射箭的方向与拉弓动作。"
+          ],
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_pangde/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_pangde/a.png",
+          "sha256": "95a1e121b70b522bd8f5e4356158d268f237cd1afae4037c4f9e7bbc47738fa3",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 3198244
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "镜头拉开两骑之间的战场空间，保留庞德弓箭、关羽青龙刀与后方木棺。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A battlefield outside Fancheng under a grey sky: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at full gallop with his crescent blade; ahead, Pang De, a fierce Wei general in dark armour, turns in the saddle drawing a bow; behind the Wei lines a plain wooden coffin is carried on poles. No gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"樊城外：关羽纵马追击，庞德回身拉弓；远处魏军阵前抬着一口木棺\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_pangde",
+            "kind": "scene",
+            "name": "v4_pangde",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "樊城外：关羽纵马追击，庞德回身拉弓；远处魏军阵前抬着一口木棺",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A battlefield outside Fancheng under a grey sky: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at full gallop with his crescent blade; ahead, Pang De, a fierce Wei general in dark armour, turns in the saddle drawing a bow; behind the Wei lines a plain wooden coffin is carried on poles. No gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "original_sha256": "33ed456e17a98c1edc36179c12c6ac0c80f5e6bb5d8ea2bdf3a210f0287c2615",
+          "created_at": "2026-10-27T07:10:53.946657+00:00",
+          "review_notes": [
+            "请Claude重点复核庞德回身射箭的方向与拉弓动作。"
+          ],
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_pangde/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_pangde/b.png",
+          "sha256": "33ed456e17a98c1edc36179c12c6ac0c80f5e6bb5d8ea2bdf3a210f0287c2615",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 3122420
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_flood",
@@ -3440,9 +3581,144 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_feishi.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "关羽立在左前景雨中山脊，兵士与船筏在旁，洪流冲入右侧营寨。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Night storm over a river valley: a vast flood pours through broken dams into a valley full of drowned tents and banners; on a ridge in the foreground Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, stands in the rain beside boats and rafts, watching. No bodies, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"雨夜，洪水冲进山谷里的营寨；前景山脊上关羽带着船筏冒雨观望；不画尸体\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_flood",
+            "kind": "scene",
+            "name": "v4_flood",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_feishi.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "雨夜，洪水冲进山谷里的营寨；前景山脊上关羽带着船筏冒雨观望；不画尸体",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Night storm over a river valley: a vast flood pours through broken dams into a valley full of drowned tents and banners; on a ridge in the foreground Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, stands in the rain beside boats and rafts, watching. No bodies, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_feishi.webp",
+              "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9"
+            }
+          ],
+          "original_sha256": "865abd4ec866d8a4f40621d18872b131b84bded7c4f34fc87d901c09c7638e98",
+          "created_at": "2026-10-27T07:12:03.143121+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_flood/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_flood/a.png",
+          "sha256": "865abd4ec866d8a4f40621d18872b131b84bded7c4f34fc87d901c09c7638e98",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 3223028
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "更开阔的雨夜山谷视角，关羽和木筏居左，决口与淹没营寨铺向远景。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Night storm over a river valley: a vast flood pours through broken dams into a valley full of drowned tents and banners; on a ridge in the foreground Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, stands in the rain beside boats and rafts, watching. No bodies, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"雨夜，洪水冲进山谷里的营寨；前景山脊上关羽带着船筏冒雨观望；不画尸体\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_flood",
+            "kind": "scene",
+            "name": "v4_flood",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_feishi.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "雨夜，洪水冲进山谷里的营寨；前景山脊上关羽带着船筏冒雨观望；不画尸体",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Night storm over a river valley: a vast flood pours through broken dams into a valley full of drowned tents and banners; on a ridge in the foreground Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, stands in the rain beside boats and rafts, watching. No bodies, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_feishi.webp",
+              "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9"
+            }
+          ],
+          "original_sha256": "0c2be559d7e28954842c43c06c4f712a93655e32c00cba98bd65b40a2973964f",
+          "created_at": "2026-10-27T07:12:59.297239+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_flood/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_flood/b.png",
+          "sha256": "0c2be559d7e28954842c43c06c4f712a93655e32c00cba98bd65b40a2973964f",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 3252045
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_feast",
@@ -3502,9 +3778,164 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wang.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "刘备在左侧举杯庆贺，白衣诸葛亮在右侧独看战报，宴席群臣围拢。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A lantern-lit feast hall in Chengdu: Liu Bei, a kindly ruler in his fifties with greying temples, raises a wine cup in celebration among officials; Zhuge Liang in white robes with a feather fan sits apart, not drinking, looking at a dispatch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）\",\n    \"诸葛亮：长发、白衣、白羽扇、清秀无须\"\n  ],\n  \"composition\": \"成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_feast",
+            "kind": "scene",
+            "name": "v4_feast",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "liubei",
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/liubei.webp",
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_wang.webp"
+            ],
+            "keep": [
+              "刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）",
+              "诸葛亮：长发、白衣、白羽扇、清秀无须"
+            ],
+            "composition": "成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A lantern-lit feast hall in Chengdu: Liu Bei, a kindly ruler in his fifties with greying temples, raises a wine cup in celebration among officials; Zhuge Liang in white robes with a feather fan sits apart, not drinking, looking at a dispatch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/liubei.webp",
+              "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_wang.webp",
+              "sha256": "22b5c84fdeb54a2a650970d45a367d4cc9c41d17b3ccd010cf92914793a12a20"
+            }
+          ],
+          "original_sha256": "0353e5158d690e98f62ce02aca46d6da08c6a5fd5957b34511d138b1783c39dc",
+          "created_at": "2026-10-27T07:15:51.498912+00:00",
+          "review_notes": [
+            "请Claude重点复核刘备五十余岁的年龄感与灰白鬓角。"
+          ],
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_feast/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_feast/a.png",
+          "sha256": "0353e5158d690e98f62ce02aca46d6da08c6a5fd5957b34511d138b1783c39dc",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2358127
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "镜头下移到宴席高度，刘备举杯与诸葛亮持扇读简形成同席对照。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A lantern-lit feast hall in Chengdu: Liu Bei, a kindly ruler in his fifties with greying temples, raises a wine cup in celebration among officials; Zhuge Liang in white robes with a feather fan sits apart, not drinking, looking at a dispatch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）\",\n    \"诸葛亮：长发、白衣、白羽扇、清秀无须\"\n  ],\n  \"composition\": \"成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_feast",
+            "kind": "scene",
+            "name": "v4_feast",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "liubei",
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/liubei.webp",
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_wang.webp"
+            ],
+            "keep": [
+              "刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）",
+              "诸葛亮：长发、白衣、白羽扇、清秀无须"
+            ],
+            "composition": "成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A lantern-lit feast hall in Chengdu: Liu Bei, a kindly ruler in his fifties with greying temples, raises a wine cup in celebration among officials; Zhuge Liang in white robes with a feather fan sits apart, not drinking, looking at a dispatch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/liubei.webp",
+              "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_wang.webp",
+              "sha256": "22b5c84fdeb54a2a650970d45a367d4cc9c41d17b3ccd010cf92914793a12a20"
+            }
+          ],
+          "original_sha256": "cf6432e8cd6df99b757da73f624f76e64c88dfd9c07b648b3bccd7019a8a6414",
+          "created_at": "2026-10-27T07:17:33.699227+00:00",
+          "review_notes": [
+            "请Claude重点复核刘备五十余岁的年龄感与灰白鬓角。"
+          ],
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_feast/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_feast/b.png",
+          "sha256": "cf6432e8cd6df99b757da73f624f76e64c88dfd9c07b648b3bccd7019a8a6414",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2343254
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_pow",
@@ -3555,9 +3986,77 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "B：独立构图候选；水退后营外：成排的魏军降兵坐在泥地上；粮官拿着账本发愁；远处关羽的绿旗",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Outside a camp after the flood: long lines of surrendered Wei soldiers in muddy clothes sit on the wet ground, unarmed; a grain officer with a ledger talks anxiously; Guan Yu's green banner in the background. All adults, no violence. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"水退后营外：成排的魏军降兵坐在泥地上；粮官拿着账本发愁；远处关羽的绿旗\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nThe LAST reference is STYLE ONLY: do not copy its composition or its identifiable people into the new scene. Only show the named people from this authored brief; additional background people must be anonymous, not recognizable heroes from the style reference. Reference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. This is a scene of anonymous surrendered prisoners and one anonymous grain officer only. NONE of the reference heroes may physically appear: NO Guan Yu, Liu Bei, Fa Zheng, Zhuge Liang or any recognizable hero. Guan Yu is represented ONLY by a plain green cloth banner in the BACKGROUND, with no portrait or markings. The worried grain officer is an anonymous plainly dressed civil servant, not the black-capped man from the style image. Keep the surrendered men seated unarmed in muddy clothes and the ledger completely blank.",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_pow",
+            "kind": "scene",
+            "name": "v4_pow",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_council.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "水退后营外：成排的魏军降兵坐在泥地上；粮官拿着账本发愁；远处关羽的绿旗",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Outside a camp after the flood: long lines of surrendered Wei soldiers in muddy clothes sit on the wet ground, unarmed; a grain officer with a ledger talks anxiously; Guan Yu's green banner in the background. All adults, no violence. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "original_sha256": "5d0dccb701dac7ed46f2dc8def9ffec003f598ce4348ff677bf14f80544a3923",
+          "created_at": "2026-10-27T07:21:26.915607+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_pow/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_pow/b.png",
+          "sha256": "5d0dccb701dac7ed46f2dc8def9ffec003f598ce4348ff677bf14f80544a3923",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2881345
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "partial"
     },
     {
       "id": "scene-v4_bone",
@@ -3661,9 +4160,144 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wz_road.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "温芷在左侧岸边背药箱回望营地，华佗白须素袍坐在右侧晨雾小舟。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A misty riverbank at dawn: a small boat waits; an old white-bearded physician sits in it; Wen Zhi stands on the bank with her medicine chest, looking back toward the camp. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"晨雾江边：华佗坐在小船上；温芷背着药箱站在岸边回头望营地\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_huatuo",
+            "kind": "scene",
+            "name": "v4_huatuo",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "wenzhi"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/wenzhi.webp",
+              "game/sanguo/art/scenes/v3_wz_road.webp"
+            ],
+            "keep": [
+              "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子"
+            ],
+            "composition": "晨雾江边：华佗坐在小船上；温芷背着药箱站在岸边回头望营地",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A misty riverbank at dawn: a small boat waits; an old white-bearded physician sits in it; Wen Zhi stands on the bank with her medicine chest, looking back toward the camp. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/wenzhi.webp",
+              "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+              "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e"
+            }
+          ],
+          "original_sha256": "ac43a3fa7c8092c71a0cc9dccb1feca552143f7dd25564ba84b6f42874cb35ae",
+          "created_at": "2026-10-27T07:19:18.325842+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_huatuo/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_huatuo/a.png",
+          "sha256": "ac43a3fa7c8092c71a0cc9dccb1feca552143f7dd25564ba84b6f42874cb35ae",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2808634
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "B：独立构图候选；晨雾江边：华佗坐在小船上；温芷背着药箱站在岸边回头望营地",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A misty riverbank at dawn: a small boat waits; an old white-bearded physician sits in it; Wen Zhi stands on the bank with her medicine chest, looking back toward the camp. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"晨雾江边：华佗坐在小船上；温芷背着药箱站在岸边回头望营地\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_huatuo",
+            "kind": "scene",
+            "name": "v4_huatuo",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "wenzhi"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/wenzhi.webp",
+              "game/sanguo/art/scenes/v3_wz_road.webp"
+            ],
+            "keep": [
+              "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子"
+            ],
+            "composition": "晨雾江边：华佗坐在小船上；温芷背着药箱站在岸边回头望营地",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A misty riverbank at dawn: a small boat waits; an old white-bearded physician sits in it; Wen Zhi stands on the bank with her medicine chest, looking back toward the camp. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/wenzhi.webp",
+              "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+              "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e"
+            }
+          ],
+          "original_sha256": "d0a2643d98416aa3abc435adba09c7a5106a9ffeeec26d37bc5b1cefc77d996f",
+          "created_at": "2026-10-27T07:20:25.729781+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_huatuo/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_huatuo/b.png",
+          "sha256": "d0a2643d98416aa3abc435adba09c7a5106a9ffeeec26d37bc5b1cefc77d996f",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2892745
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_luxun",
@@ -3714,9 +4348,77 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_feishi.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "A：中军帐：关羽仰面大笑，手里拿着展开的信；案上礼盒；帐外兵马北上",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A command tent: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, throws back his head laughing, holding an unrolled letter; lacquered gift boxes on the table; through the tent flap, troops marching north. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"中军帐：关羽仰面大笑，手里拿着展开的信；案上礼盒；帐外兵马北上\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_luxun",
+            "kind": "scene",
+            "name": "v4_luxun",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_feishi.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "中军帐：关羽仰面大笑，手里拿着展开的信；案上礼盒；帐外兵马北上",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A command tent: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, throws back his head laughing, holding an unrolled letter; lacquered gift boxes on the table; through the tent flap, troops marching north. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_feishi.webp",
+              "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9"
+            }
+          ],
+          "original_sha256": "0b563bf6ca963ca402cc6e089ff206be5dec2a154aebdb716c659295e67f3b7f",
+          "created_at": "2026-10-27T07:21:19.210341+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_luxun/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_luxun/a.png",
+          "sha256": "0b563bf6ca963ca402cc6e089ff206be5dec2a154aebdb716c659295e67f3b7f",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2648587
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "partial"
     },
     {
       "id": "scene-v4_zhuge_night",
@@ -3820,9 +4522,144 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "A：深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A muddy road in late autumn: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at the head of a thinning column of weary soldiers, his left arm in a sling; in the far south, smoke over a city; deserters slipping away into reeds. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nThe LAST reference is STYLE ONLY: do not copy its composition or its identifiable people into the new scene. Only show the named people from this authored brief; additional background people must be anonymous, not recognizable heroes from the style reference. Reference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. Only Guan Yu is a named hero in this retreat. DO NOT include Zhao Yun, Huang Zhong, a white-bearded golden-armoured general or a handsome white-and-blue silver-armoured lancer anywhere, even though they are in the last style reference. All other soldiers are anonymous weary adult rank-and-file infantry in worn plain grey cloth and simple helmets. Keep Guan Yu's LEFT arm visibly in a sling and his RIGHT hand on the reins. Do not create other heroic mounted portraits.",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_retreat",
+            "kind": "scene",
+            "name": "v4_retreat",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A muddy road in late autumn: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at the head of a thinning column of weary soldiers, his left arm in a sling; in the far south, smoke over a city; deserters slipping away into reeds. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "original_sha256": "57ac1a77b5cf7c830316a932c7d4b5491b31574dc6fea51622008c31eaff2da9",
+          "created_at": "2026-10-27T07:15:15.242197+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_retreat/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_retreat/a.png",
+          "sha256": "57ac1a77b5cf7c830316a932c7d4b5491b31574dc6fea51622008c31eaff2da9",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "bytes": 3289811
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "B：独立构图候选；深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A muddy road in late autumn: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at the head of a thinning column of weary soldiers, his left arm in a sling; in the far south, smoke over a city; deserters slipping away into reeds. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nThe LAST reference is STYLE ONLY: do not copy its composition or its identifiable people into the new scene. Only show the named people from this authored brief; additional background people must be anonymous, not recognizable heroes from the style reference. Reference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. Only Guan Yu is a named hero in this retreat. DO NOT include Zhao Yun, Huang Zhong, a white-bearded golden-armoured general or a handsome white-and-blue silver-armoured lancer anywhere, even though they are in the last style reference. All other soldiers are anonymous weary adult rank-and-file infantry in worn plain grey cloth and simple helmets. Keep Guan Yu's LEFT arm visibly in a sling and his RIGHT hand on the reins. Do not create other heroic mounted portraits.",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_retreat",
+            "kind": "scene",
+            "name": "v4_retreat",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+            ],
+            "composition": "深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A muddy road in late autumn: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at the head of a thinning column of weary soldiers, his left arm in a sling; in the far south, smoke over a city; deserters slipping away into reeds. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "original_sha256": "7f8737c250dffe2a043548a0460323978e790fb02d0516a5050e070e85d6f714",
+          "created_at": "2026-10-27T07:16:17.848998+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_retreat/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_retreat/b.png",
+          "sha256": "7f8737c250dffe2a043548a0460323978e790fb02d0516a5050e070e85d6f714",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "bytes": 3064193
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_shangyong",
@@ -3865,9 +4702,132 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "A：上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A mountain-town hall at Shangyong: a young general (Liu Feng) sits uneasily behind a desk with a sealed order on it; a smooth-faced older officer (Meng Da) leans in to whisper; a dusty messenger (Liao Hua) kneels before them; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands to one side. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nThe LAST reference is STYLE ONLY: do not copy its composition or its identifiable people into the new scene. Only show the named people from this authored brief; additional background people must be anonymous, not recognizable heroes from the style reference. Reference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. The last image is a STYLE reference only. Its seated bearded green-robed ruler is LIU BEI and its tall black-capped whispering scholar is FA ZHENG: neither of those two characters is present in this scene, so DO NOT copy their faces, beard, costume or arrangement. Depict the authored cast Liu Feng (young general), Meng Da (smooth-faced older officer, no beard), kneeling dusty Liao Hua, and back-facing Ziheng. No Liu Bei or Fa Zheng. Keep the sealed order visible on the desk, completely unlabelled.",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_shangyong",
+            "kind": "scene",
+            "name": "v4_shangyong",
+            "batch": 3,
+            "status": "queued",
+            "refs": [],
+            "ref_paths": [
+              "game/sanguo/art/scenes/v3_council.webp"
+            ],
+            "keep": [
+              "子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸"
+            ],
+            "composition": "上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+              "子衡不露脸"
+            ],
+            "prompt": "A mountain-town hall at Shangyong: a young general (Liu Feng) sits uneasily behind a desk with a sealed order on it; a smooth-faced older officer (Meng Da) leans in to whisper; a dusty messenger (Liao Hua) kneels before them; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands to one side. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "original_sha256": "da192466370bc49a0c66678bb1456af5ed9bda042a9ef131ae697b2edfa34fc8",
+          "created_at": "2026-10-27T07:18:43.284525+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_shangyong/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_shangyong/a.png",
+          "sha256": "da192466370bc49a0c66678bb1456af5ed9bda042a9ef131ae697b2edfa34fc8",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2616257
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "B：独立构图候选；上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A mountain-town hall at Shangyong: a young general (Liu Feng) sits uneasily behind a desk with a sealed order on it; a smooth-faced older officer (Meng Da) leans in to whisper; a dusty messenger (Liao Hua) kneels before them; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands to one side. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nThe LAST reference is STYLE ONLY: do not copy its composition or its identifiable people into the new scene. Only show the named people from this authored brief; additional background people must be anonymous, not recognizable heroes from the style reference. Reference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. The last image is a STYLE reference only. Its seated bearded green-robed ruler is LIU BEI and its tall black-capped whispering scholar is FA ZHENG: neither of those two characters is present in this scene, so DO NOT copy their faces, beard, costume or arrangement. Depict the authored cast Liu Feng (young general), Meng Da (smooth-faced older officer, no beard), kneeling dusty Liao Hua, and back-facing Ziheng. No Liu Bei or Fa Zheng. Keep the sealed order visible on the desk, completely unlabelled.",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_shangyong",
+            "kind": "scene",
+            "name": "v4_shangyong",
+            "batch": 3,
+            "status": "queued",
+            "refs": [],
+            "ref_paths": [
+              "game/sanguo/art/scenes/v3_council.webp"
+            ],
+            "keep": [
+              "子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸"
+            ],
+            "composition": "上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+              "子衡不露脸"
+            ],
+            "prompt": "A mountain-town hall at Shangyong: a young general (Liu Feng) sits uneasily behind a desk with a sealed order on it; a smooth-faced older officer (Meng Da) leans in to whisper; a dusty messenger (Liao Hua) kneels before them; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands to one side. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "original_sha256": "dc82d8c910c413a6022a35b5857ad4c8a46057ad3a1b6ddddb9f21ebaf0af3af",
+          "created_at": "2026-10-27T07:19:45.724630+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_shangyong/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_shangyong/b.png",
+          "sha256": "dc82d8c910c413a6022a35b5857ad4c8a46057ad3a1b6ddddb9f21ebaf0af3af",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2535318
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_wz_letter",
@@ -3918,9 +4878,144 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wz_road.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "左侧暖灯和梅枝照亮桌上空白折信，右侧蓝灰药囊呼应窗外冷雨。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Still life by lamplight: a folded letter on a wooden table beside a small medicine pouch and a plum blossom sprig; rain on the window. No people. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"静物：灯下木桌上折好的信、药囊、一枝梅；窗外下雨；没有人物\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. Strictly a still life with NO people and NO human faces, silhouettes or portraits anywhere. The Wen Zhi portrait reference only supplies the visual identity of her medicine pouch and series palette; do not insert Wen Zhi herself. The folded letter is completely blank; retain the medicine pouch and plum sprig.",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_wz_letter",
+            "kind": "scene",
+            "name": "v4_wz_letter",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "wenzhi"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/wenzhi.webp",
+              "game/sanguo/art/scenes/v3_wz_road.webp"
+            ],
+            "keep": [
+              "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子"
+            ],
+            "composition": "静物：灯下木桌上折好的信、药囊、一枝梅；窗外下雨；没有人物",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Still life by lamplight: a folded letter on a wooden table beside a small medicine pouch and a plum blossom sprig; rain on the window. No people. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/wenzhi.webp",
+              "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+              "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e"
+            }
+          ],
+          "original_sha256": "960079b9d5113dd07c989fc78a0b81c02e7c9bbb33e7128c1b6f427c498fc19d",
+          "created_at": "2026-10-27T07:15:24.028970+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_wz_letter/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_wz_letter/a.png",
+          "sha256": "960079b9d5113dd07c989fc78a0b81c02e7c9bbb33e7128c1b6f427c498fc19d",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2390467
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "信纸与药囊移至前景中央，梅枝居右，左侧灯影与雨窗构成另一种静物布局。",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Still life by lamplight: a folded letter on a wooden table beside a small medicine pouch and a plum blossom sprig; rain on the window. No people. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"静物：灯下木桌上折好的信、药囊、一枝梅；窗外下雨；没有人物\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. Strictly a still life with NO people and NO human faces, silhouettes or portraits anywhere. The Wen Zhi portrait reference only supplies the visual identity of her medicine pouch and series palette; do not insert Wen Zhi herself. The folded letter is completely blank; retain the medicine pouch and plum sprig.",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_wz_letter",
+            "kind": "scene",
+            "name": "v4_wz_letter",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "wenzhi"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/wenzhi.webp",
+              "game/sanguo/art/scenes/v3_wz_road.webp"
+            ],
+            "keep": [
+              "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子"
+            ],
+            "composition": "静物：灯下木桌上折好的信、药囊、一枝梅；窗外下雨；没有人物",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Still life by lamplight: a folded letter on a wooden table beside a small medicine pouch and a plum blossom sprig; rain on the window. No people. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/wenzhi.webp",
+              "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+              "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e"
+            }
+          ],
+          "original_sha256": "dd35fc7f11c232b6e33a025d178cb052a7a6573ee43c5eefd6f5030313c7f2e9",
+          "created_at": "2026-10-27T07:15:58.653807+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_wz_letter/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_wz_letter/b.png",
+          "sha256": "dd35fc7f11c232b6e33a025d178cb052a7a6573ee43c5eefd6f5030313c7f2e9",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2478869
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_maicheng",
@@ -3973,9 +5068,148 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "A：冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Night at the north gate of a small walled town in winter: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, mounted, at a fork where a main road and a narrow mountain path split; a few hundred exhausted soldiers with torches behind him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible holds his horse's bridle. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\",\n    \"子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_maicheng",
+            "kind": "scene",
+            "name": "v4_maicheng",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_guanyu_night.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲",
+              "子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸"
+            ],
+            "composition": "冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+              "子衡不露脸"
+            ],
+            "prompt": "Night at the north gate of a small walled town in winter: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, mounted, at a fork where a main road and a narrow mountain path split; a few hundred exhausted soldiers with torches behind him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible holds his horse's bridle. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_guanyu_night.webp",
+              "sha256": "ec0ee68d2c0e861622b9ae39baa5aa3a10f9ec3f03d3d1768171a19381d89cc7"
+            }
+          ],
+          "original_sha256": "663f4db2c1f46873dd7907f1083e2bfde8072a219aa03f7c70410358916fcda0",
+          "created_at": "2026-10-27T07:16:51.351777+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_maicheng/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_maicheng/a.png",
+          "sha256": "663f4db2c1f46873dd7907f1083e2bfde8072a219aa03f7c70410358916fcda0",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 3111667
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "B：独立构图候选；冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Night at the north gate of a small walled town in winter: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, mounted, at a fork where a main road and a narrow mountain path split; a few hundred exhausted soldiers with torches behind him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible holds his horse's bridle. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\",\n    \"子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_maicheng",
+            "kind": "scene",
+            "name": "v4_maicheng",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/scenes/v3_guanyu_night.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲",
+              "子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸"
+            ],
+            "composition": "冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+              "子衡不露脸"
+            ],
+            "prompt": "Night at the north gate of a small walled town in winter: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, mounted, at a fork where a main road and a narrow mountain path split; a few hundred exhausted soldiers with torches behind him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible holds his horse's bridle. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_guanyu_night.webp",
+              "sha256": "ec0ee68d2c0e861622b9ae39baa5aa3a10f9ec3f03d3d1768171a19381d89cc7"
+            }
+          ],
+          "original_sha256": "d31f48dc719a4b89ba1951f6d7cf6e79bf7221613294b5cbd710afbfd07c6987",
+          "created_at": "2026-10-27T07:17:42.226297+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_maicheng/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_maicheng/b.png",
+          "sha256": "d31f48dc719a4b89ba1951f6d7cf6e79bf7221613294b5cbd710afbfd07c6987",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2824928
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_west",
@@ -4037,9 +5271,162 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_nanjun.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "A：黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A mountain road in the west at dusk, the walls of Chengdu ahead: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, walks leading his horse; at the city gate Liu Bei, in his fifties, runs out to meet him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible walks a little behind. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\",\n    \"刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）\",\n    \"子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_west",
+            "kind": "scene",
+            "name": "v4_west",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu",
+              "liubei"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/portraits/liubei.webp",
+              "game/sanguo/art/scenes/v2_nanjun.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲",
+              "刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）",
+              "子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸"
+            ],
+            "composition": "黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+              "子衡不露脸"
+            ],
+            "prompt": "A mountain road in the west at dusk, the walls of Chengdu ahead: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, walks leading his horse; at the city gate Liu Bei, in his fifties, runs out to meet him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible walks a little behind. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/portraits/liubei.webp",
+              "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v2_nanjun.webp",
+              "sha256": "dd08c650c4daad2bea37017334cb3754bb1222804eddae18d3403d0aaeafde51"
+            }
+          ],
+          "original_sha256": "de67636d8d9a7a046eba57b26e757e336c30f63a0136dcbf6cc7fcb37bada02e",
+          "created_at": "2026-10-27T07:18:32.877991+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_west/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_west/a.png",
+          "sha256": "de67636d8d9a7a046eba57b26e757e336c30f63a0136dcbf6cc7fcb37bada02e",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2922686
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "B：独立构图候选；黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A mountain road in the west at dusk, the walls of Chengdu ahead: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, walks leading his horse; at the city gate Liu Bei, in his fifties, runs out to meet him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible walks a little behind. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\",\n    \"刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）\",\n    \"子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_west",
+            "kind": "scene",
+            "name": "v4_west",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "guanyu",
+              "liubei"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/guanyu.webp",
+              "game/sanguo/art/portraits/liubei.webp",
+              "game/sanguo/art/scenes/v2_nanjun.webp"
+            ],
+            "keep": [
+              "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲",
+              "刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）",
+              "子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸"
+            ],
+            "composition": "黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+              "子衡不露脸"
+            ],
+            "prompt": "A mountain road in the west at dusk, the walls of Chengdu ahead: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, walks leading his horse; at the city gate Liu Bei, in his fifties, runs out to meet him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible walks a little behind. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/guanyu.webp",
+              "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+            },
+            {
+              "path": "game/sanguo/art/portraits/liubei.webp",
+              "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v2_nanjun.webp",
+              "sha256": "dd08c650c4daad2bea37017334cb3754bb1222804eddae18d3403d0aaeafde51"
+            }
+          ],
+          "original_sha256": "8a7af460ae0cb92f3a3ab451489e14bb368ff500ccf29d62f173be6724e3fa23",
+          "created_at": "2026-10-27T07:19:43.909453+00:00",
+          "candidate": "b",
+          "path": "game/sanguo/art/candidates/scene-v4_west/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_west/b.png",
+          "sha256": "8a7af460ae0cb92f3a3ab451489e14bb368ff500ccf29d62f173be6724e3fa23",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 3005995
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v4_news",
@@ -4099,9 +5486,84 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"
         }
       ],
-      "candidates": [],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "description": "A：冬天成都殿上：刘备昏倒在众人臂弯里，战报掉在地上；诸葛亮跪在旁边；冷灰光",
+          "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A palace hall in Chengdu in winter: Liu Bei has collapsed into the arms of officials, a dispatch fallen to the floor; Zhuge Liang kneels beside him; grey cold light. No blood. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）\",\n    \"诸葛亮：长发、白衣、白羽扇、清秀无须\"\n  ],\n  \"composition\": \"冬天成都殿上：刘备昏倒在众人臂弯里，战报掉在地上；诸葛亮跪在旁边；冷灰光\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+          "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+          "authored_job": {
+            "id": "scene-v4_news",
+            "kind": "scene",
+            "name": "v4_news",
+            "batch": 3,
+            "status": "queued",
+            "refs": [
+              "liubei",
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/liubei.webp",
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_council.webp"
+            ],
+            "keep": [
+              "刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）",
+              "诸葛亮：长发、白衣、白羽扇、清秀无须"
+            ],
+            "composition": "冬天成都殿上：刘备昏倒在众人臂弯里，战报掉在地上；诸葛亮跪在旁边；冷灰光",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A palace hall in Chengdu in winter: Liu Bei has collapsed into the arms of officials, a dispatch fallen to the floor; Zhuge Liang kneels beside him; grey cold light. No blood. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1536,
+            1024
+          ],
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/liubei.webp",
+              "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "original_sha256": "80c7af9a0e7d55f9ac1019d4afeff688129a1b034267c0ec6a3e706797c3b73f",
+          "created_at": "2026-10-27T07:20:53.039479+00:00",
+          "candidate": "a",
+          "path": "game/sanguo/art/candidates/scene-v4_news/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_news/a.png",
+          "sha256": "80c7af9a0e7d55f9ac1019d4afeff688129a1b034267c0ec6a3e706797c3b73f",
+          "dimensions": [
+            1536,
+            1024
+          ],
+          "bytes": 2640445
+        }
+      ],
       "blocker": null,
-      "status": "pending"
+      "status": "partial"
     }
   ]
 }
