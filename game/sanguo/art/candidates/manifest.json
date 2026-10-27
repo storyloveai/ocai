@@ -1,6 +1,7 @@
 {
   "issue": 56,
   "branch": "codex/art-candidates",
+  "candidate_asset_ref": "1066c33a077a6ae37ba94f8e69be69955f525f63",
   "expected_scenes": 31,
   "target_candidates_per_scene": 2,
   "scenes_with_two_candidates": 30,
@@ -118,7 +119,7 @@
           "created_at": "2026-10-27T06:47:46.138090+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_clinic/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_clinic/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_clinic/a.png",
           "sha256": "769cd461dee1deb361a674823e971306eb3f4b0fe9b4f52ab240d352ed747add",
           "dimensions": [
             1536,
@@ -185,7 +186,7 @@
           "created_at": "2026-10-27T06:49:18.572243+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_clinic/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_clinic/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_clinic/b.png",
           "sha256": "65891f42f3dc71f4ff1f1588a820d6d4fff7d58054ae1d1134c08fff3a39c73b",
           "dimensions": [
             1536,
@@ -322,7 +323,7 @@
           "created_at": "2026-10-27T06:49:21.317784+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_dingjun/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dingjun/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_dingjun/a.png",
           "sha256": "fa9e1342cba14855e31fdec43014a9daa3f3a1bc03540731381ca6fc269c7f57",
           "dimensions": [
             1536,
@@ -396,7 +397,7 @@
           "created_at": "2026-10-27T06:49:23.148632+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_dingjun/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dingjun/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_dingjun/b.png",
           "sha256": "84f574858fd2c7b0409a15f40c348c1cb58b96537276e7a833c2c818ff8a5519",
           "dimensions": [
             1536,
@@ -537,7 +538,7 @@
           "created_at": "2026-10-27T06:49:25.832625+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-g_cold/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_cold/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-g_cold/a.png",
           "sha256": "11df76a86293e5fddcd881517a422c2cbd3612380c2c80564f5e051590f1cf12",
           "dimensions": [
             1536,
@@ -613,7 +614,7 @@
           "created_at": "2026-10-27T06:49:27.640061+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-g_cold/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_cold/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-g_cold/b.png",
           "sha256": "98a083a836ff8bf6d0285fc78f5495f6095adbf9e4436b4bffd61c786a6dffa4",
           "dimensions": [
             1536,
@@ -750,7 +751,7 @@
           "created_at": "2026-10-27T06:49:30.350710+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_dandao/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dandao/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_dandao/a.png",
           "sha256": "de5dcdd8f3bc8e34089f7c939758264c432038ba9195d4da5466402a6ee7a265",
           "dimensions": [
             1536,
@@ -824,7 +825,7 @@
           "created_at": "2026-10-27T06:49:32.199113+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_dandao/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dandao/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_dandao/b.png",
           "sha256": "58f2d3bec4b17fe874b580190af6e7cb6402170e1d990ef2753089708ea5c65f",
           "dimensions": [
             1536,
@@ -961,7 +962,7 @@
           "created_at": "2026-10-27T06:49:34.970044+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v2_chengdu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_chengdu/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v2_chengdu/a.png",
           "sha256": "8dc6641a8ddac3ffa5b80363b230d692130663d9653929d291d83ac1fef7150f",
           "dimensions": [
             1536,
@@ -1035,7 +1036,7 @@
           "created_at": "2026-10-27T06:49:36.825966+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v2_chengdu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_chengdu/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v2_chengdu/b.png",
           "sha256": "52bf996f713df6ac561485f0ef6875f8f0aac4c03c793e03f4588708795fcbf5",
           "dimensions": [
             1536,
@@ -1160,7 +1161,7 @@
           "created_at": "2026-10-27T06:53:27.292445+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v2_pangtong_night/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_pangtong_night/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v2_pangtong_night/a.png",
           "sha256": "73ce8c5ce36d051f827d8caa0bf47e8235671c9fb49b1398633adcb0386c13bf",
           "dimensions": [
             1536,
@@ -1229,7 +1230,7 @@
           "created_at": "2026-10-27T06:52:25.312820+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v2_pangtong_night/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_pangtong_night/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v2_pangtong_night/b.png",
           "sha256": "ec37a4b378befdddfe97680e5edb370378191f36cb172dd1cf940695fa879633",
           "dimensions": [
             1536,
@@ -1330,7 +1331,7 @@
           "created_at": "2026-10-27T06:53:56.357519+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_letter/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_letter/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_letter/a.png",
           "sha256": "ee488a8c6970ca9f5d946e3c8fc5008c56dbe4f5ba91733e47d62e40ec93e335",
           "dimensions": [
             1536,
@@ -1388,7 +1389,7 @@
           "created_at": "2026-10-27T06:54:29.986338+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_letter/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_letter/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_letter/b.png",
           "sha256": "a94f99d25831de9542538f945dbb921c0ab1bf83ef0c26355393793c25ce5d1a",
           "dimensions": [
             1536,
@@ -1525,7 +1526,7 @@
           "created_at": "2026-10-27T06:57:22.631418+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_wakou/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_wakou/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_wakou/a.png",
           "sha256": "966ede06d71590d6a15f55423b00b57c5d8ad2bc101ea460378c5e6e0d83f9f7",
           "dimensions": [
             1536,
@@ -1599,7 +1600,7 @@
           "created_at": "2026-10-27T06:56:15.652318+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_wakou/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_wakou/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_wakou/b.png",
           "sha256": "908b292a6eb5a43bcff67301f15969107847270d381e5ea789f8e26563d5835c",
           "dimensions": [
             1536,
@@ -1720,7 +1721,7 @@
           "created_at": "2026-10-27T06:55:23.963694+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_laozu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_laozu/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_laozu/a.png",
           "sha256": "87d3ddcaaf19ed0327720ec08c46e6eb9ae9898ddb73589df9ab35856e43534d",
           "dimensions": [
             1536,
@@ -1787,7 +1788,7 @@
           "created_at": "2026-10-27T06:57:56.584287+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_laozu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_laozu/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_laozu/b.png",
           "sha256": "d748342d10b8c6a906e756042f60b7a98fff02c4a9c33f7c42c6fe7fb8e7a2d9",
           "dimensions": [
             1536,
@@ -1908,7 +1909,7 @@
           "created_at": "2026-10-27T06:58:44.580606+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_huniu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_huniu/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_huniu/a.png",
           "sha256": "4116de7bedd5af87c637c9f3e0f47c36375ff2bf157dd50811bb9b8d37280c05",
           "dimensions": [
             1536,
@@ -1975,7 +1976,7 @@
           "created_at": "2026-10-27T07:00:11.332574+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_huniu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_huniu/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_huniu/b.png",
           "sha256": "ecac7f3aab34a4450b01f7e50400c6118f29ed6c8edb0b13ace879c155f93d8a",
           "dimensions": [
             1536,
@@ -2096,7 +2097,7 @@
           "created_at": "2026-10-27T07:00:55.376998+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_fire/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_fire/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_fire/a.png",
           "sha256": "2a1696f93a5d48873f68d671d0c7d9ae1d0ccc0f3364ddf76d83ffa136e86832",
           "dimensions": [
             1536,
@@ -2163,7 +2164,7 @@
           "created_at": "2026-10-27T07:01:43.580413+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_fire/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_fire/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_fire/b.png",
           "sha256": "198226b0b89ab559aefb63a8d4a49053cfc07b6a7436fc15e15cfeb49b69f201",
           "dimensions": [
             1536,
@@ -2300,7 +2301,7 @@
           "created_at": "2026-10-27T06:55:53.322906+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_far/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_far/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_far/a.png",
           "sha256": "c1736dfe52b2f896f987d2d5210906ed0bb7fbc13e55a3ba05c9d03734e29aa1",
           "dimensions": [
             1536,
@@ -2374,7 +2375,7 @@
           "created_at": "2026-10-27T06:56:54.472818+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_far/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_far/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_far/b.png",
           "sha256": "99fcc95baacf7033c863e2467eaeedc2b8b1174f48bd4c10f2151748359bd8f9",
           "dimensions": [
             1536,
@@ -2499,7 +2500,7 @@
           "created_at": "2026-10-27T06:58:01.086971+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_guan_hall/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_guan_hall/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_guan_hall/a.png",
           "sha256": "549bde4a4c982b460a2d10028343adefb8bda24169cf45fd8a8828f175741458",
           "dimensions": [
             1536,
@@ -2568,7 +2569,7 @@
           "created_at": "2026-10-27T06:58:31.119562+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_guan_hall/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_guan_hall/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_guan_hall/b.png",
           "sha256": "e56894227733dc71523b089d709b3e341c9742043fef40382bd64b9fba3e4167",
           "dimensions": [
             1536,
@@ -2689,7 +2690,7 @@
           "created_at": "2026-10-27T07:07:10.902979+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_report/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_report/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_report/a.png",
           "sha256": "5c89cc650bbf686f80b2b13268b3dbb9c14f0690599ad06ac8c95cf58a3d7748",
           "dimensions": [
             1536,
@@ -2756,7 +2757,7 @@
           "created_at": "2026-10-27T07:04:16.870620+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_report/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_report/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_report/b.png",
           "sha256": "06c5686525ed92b163e48857e58d7b6d58a28ebaa5bd31a7c3159c8b162ba04e",
           "dimensions": [
             1536,
@@ -2881,7 +2882,7 @@
           "created_at": "2026-10-27T07:01:39.446057+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_guanping/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_guanping/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_guanping/a.png",
           "sha256": "9e123044164ce6142abdd4400b6e0f615839ce4d61682db939e59f24d183e2f3",
           "dimensions": [
             1536,
@@ -2950,7 +2951,7 @@
           "created_at": "2026-10-27T07:02:32.215987+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_guanping/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_guanping/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_guanping/b.png",
           "sha256": "fea985fed0c9f27da5492cacc85f03a61277070442edb87ade90463e28d45a3d",
           "dimensions": [
             1536,
@@ -3071,7 +3072,7 @@
           "created_at": "2026-10-27T07:03:26.077471+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v3_wz_jing/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_wz_jing/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_wz_jing/a.png",
           "sha256": "3cb235e4724e45abfd10308507d7db6617b9382ad42afa9e89f6d804bae0dc1b",
           "dimensions": [
             1536,
@@ -3138,7 +3139,7 @@
           "created_at": "2026-10-27T07:04:14.372339+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v3_wz_jing/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_wz_jing/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v3_wz_jing/b.png",
           "sha256": "d0fcd38c8f1d757a09663273a4fcb4dad6d90652cbb959a68a44975bcb354a41",
           "dimensions": [
             1536,
@@ -3259,7 +3260,7 @@
           "created_at": "2026-10-27T07:05:06.358828+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-g_wounded/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_wounded/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-g_wounded/a.png",
           "sha256": "807f39d93b4e877acc0028f211703e0fe135590b68056ed1b9758e05df920eb7",
           "dimensions": [
             1536,
@@ -3326,7 +3327,7 @@
           "created_at": "2026-10-27T07:06:01.752644+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-g_wounded/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_wounded/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-g_wounded/b.png",
           "sha256": "621aaba9ebe4a01d478793e859d1a91634c422e17ef016eef24e3fac50d462bf",
           "dimensions": [
             1536,
@@ -3450,7 +3451,7 @@
           ],
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_pangde/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_pangde/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_pangde/a.png",
           "sha256": "95a1e121b70b522bd8f5e4356158d268f237cd1afae4037c4f9e7bbc47738fa3",
           "dimensions": [
             1536,
@@ -3520,7 +3521,7 @@
           ],
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_pangde/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_pangde/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_pangde/b.png",
           "sha256": "33ed456e17a98c1edc36179c12c6ac0c80f5e6bb5d8ea2bdf3a210f0287c2615",
           "dimensions": [
             1536,
@@ -3641,7 +3642,7 @@
           "created_at": "2026-10-27T07:12:03.143121+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_flood/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_flood/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_flood/a.png",
           "sha256": "865abd4ec866d8a4f40621d18872b131b84bded7c4f34fc87d901c09c7638e98",
           "dimensions": [
             1536,
@@ -3708,7 +3709,7 @@
           "created_at": "2026-10-27T07:12:59.297239+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_flood/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_flood/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_flood/b.png",
           "sha256": "0c2be559d7e28954842c43c06c4f712a93655e32c00cba98bd65b40a2973964f",
           "dimensions": [
             1536,
@@ -3848,7 +3849,7 @@
           ],
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_feast/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_feast/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_feast/a.png",
           "sha256": "0353e5158d690e98f62ce02aca46d6da08c6a5fd5957b34511d138b1783c39dc",
           "dimensions": [
             1536,
@@ -3925,7 +3926,7 @@
           ],
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_feast/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_feast/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_feast/b.png",
           "sha256": "cf6432e8cd6df99b757da73f624f76e64c88dfd9c07b648b3bccd7019a8a6414",
           "dimensions": [
             1536,
@@ -4046,7 +4047,7 @@
           "created_at": "2026-10-27T07:22:31.239452+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_pow/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_pow/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_pow/a.png",
           "sha256": "a3af152b64a8d1617951fefa3bafc971749a64d661289d4b860b3d64e6eeea43",
           "dimensions": [
             1536,
@@ -4113,7 +4114,7 @@
           "created_at": "2026-10-27T07:21:26.915607+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_pow/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_pow/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_pow/b.png",
           "sha256": "5d0dccb701dac7ed46f2dc8def9ffec003f598ce4348ff677bf14f80544a3923",
           "dimensions": [
             1536,
@@ -4248,7 +4249,7 @@
           "created_at": "2026-10-27T07:36:04.004929+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_bone/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_bone/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_bone/a.png",
           "sha256": "670318229ec1ee52b652ca273ce3b523cd45e449096e51f625d0845b49a00519",
           "dimensions": [
             1536,
@@ -4329,7 +4330,7 @@
           "created_at": "2026-10-27T07:36:58.272437+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_bone/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_bone/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_bone/b.png",
           "sha256": "711457b4e45f9d9edccc04eb650c64f857116180bb9353127df612196b99d617",
           "dimensions": [
             1536,
@@ -4450,7 +4451,7 @@
           "created_at": "2026-10-27T07:19:18.325842+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_huatuo/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_huatuo/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_huatuo/a.png",
           "sha256": "ac43a3fa7c8092c71a0cc9dccb1feca552143f7dd25564ba84b6f42874cb35ae",
           "dimensions": [
             1536,
@@ -4517,7 +4518,7 @@
           "created_at": "2026-10-27T07:20:25.729781+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_huatuo/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_huatuo/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_huatuo/b.png",
           "sha256": "d0a2643d98416aa3abc435adba09c7a5106a9ffeeec26d37bc5b1cefc77d996f",
           "dimensions": [
             1536,
@@ -4638,7 +4639,7 @@
           "created_at": "2026-10-27T07:21:19.210341+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_luxun/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_luxun/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_luxun/a.png",
           "sha256": "0b563bf6ca963ca402cc6e089ff206be5dec2a154aebdb716c659295e67f3b7f",
           "dimensions": [
             1536,
@@ -4705,7 +4706,7 @@
           "created_at": "2026-10-27T07:22:24.460410+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_luxun/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_luxun/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_luxun/b.png",
           "sha256": "f6bdff851cc7417850426a9ee7089390c091dbb8af662f4570968cc81b0344d6",
           "dimensions": [
             1536,
@@ -4879,7 +4880,7 @@
           "created_at": "2026-10-27T07:15:15.242197+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_retreat/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_retreat/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_retreat/a.png",
           "sha256": "57ac1a77b5cf7c830316a932c7d4b5491b31574dc6fea51622008c31eaff2da9",
           "dimensions": [
             1983,
@@ -4946,7 +4947,7 @@
           "created_at": "2026-10-27T07:16:17.848998+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_retreat/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_retreat/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_retreat/b.png",
           "sha256": "7f8737c250dffe2a043548a0460323978e790fb02d0516a5050e070e85d6f714",
           "dimensions": [
             1983,
@@ -5053,7 +5054,7 @@
           "created_at": "2026-10-27T07:18:43.284525+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_shangyong/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_shangyong/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_shangyong/a.png",
           "sha256": "da192466370bc49a0c66678bb1456af5ed9bda042a9ef131ae697b2edfa34fc8",
           "dimensions": [
             1536,
@@ -5122,7 +5123,7 @@
           "created_at": "2026-10-27T07:27:25.675603+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_shangyong/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_shangyong/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_shangyong/b.png",
           "sha256": "48f1d1263a74518d3f1cd4b59b6cd50484091504685bcb4e7d3145d901864da0",
           "dimensions": [
             1983,
@@ -5243,7 +5244,7 @@
           "created_at": "2026-10-27T07:15:24.028970+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_wz_letter/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_wz_letter/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_wz_letter/a.png",
           "sha256": "960079b9d5113dd07c989fc78a0b81c02e7c9bbb33e7128c1b6f427c498fc19d",
           "dimensions": [
             1536,
@@ -5310,7 +5311,7 @@
           "created_at": "2026-10-27T07:15:58.653807+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_wz_letter/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_wz_letter/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_wz_letter/b.png",
           "sha256": "dd35fc7f11c232b6e33a025d178cb052a7a6573ee43c5eefd6f5030313c7f2e9",
           "dimensions": [
             1536,
@@ -5435,7 +5436,7 @@
           "created_at": "2026-10-27T07:16:51.351777+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_maicheng/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_maicheng/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_maicheng/a.png",
           "sha256": "663f4db2c1f46873dd7907f1083e2bfde8072a219aa03f7c70410358916fcda0",
           "dimensions": [
             1536,
@@ -5504,7 +5505,7 @@
           "created_at": "2026-10-27T07:17:42.226297+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_maicheng/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_maicheng/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_maicheng/b.png",
           "sha256": "d31f48dc719a4b89ba1951f6d7cf6e79bf7221613294b5cbd710afbfd07c6987",
           "dimensions": [
             1536,
@@ -5655,7 +5656,7 @@
           "created_at": "2026-10-27T07:32:49.152377+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_west/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_west/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_west/a.png",
           "sha256": "2d30e778fc5e5870ec9b992ed63105914e150c83c50533eafdbd03db1d8df14d",
           "dimensions": [
             1974,
@@ -5731,7 +5732,7 @@
           "created_at": "2026-10-27T07:19:43.909453+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_west/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_west/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_west/b.png",
           "sha256": "8a7af460ae0cb92f3a3ab451489e14bb368ff500ccf29d62f173be6724e3fa23",
           "dimensions": [
             1536,
@@ -5868,7 +5869,7 @@
           "created_at": "2026-10-27T07:20:53.039479+00:00",
           "candidate": "a",
           "path": "game/sanguo/art/candidates/scene-v4_news/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_news/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_news/a.png",
           "sha256": "80c7af9a0e7d55f9ac1019d4afeff688129a1b034267c0ec6a3e706797c3b73f",
           "dimensions": [
             1536,
@@ -5942,7 +5943,7 @@
           "created_at": "2026-10-27T07:21:57.843920+00:00",
           "candidate": "b",
           "path": "game/sanguo/art/candidates/scene-v4_news/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v4_news/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/1066c33a077a6ae37ba94f8e69be69955f525f63/game/sanguo/art/candidates/scene-v4_news/b.png",
           "sha256": "ac2df332dbb56dc2573f25743040c61d6aa827a294ab3631e8f981779e011884",
           "dimensions": [
             1536,
