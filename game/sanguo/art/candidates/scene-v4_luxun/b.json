@@ -1,0 +1,58 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "低角度拉近关羽扬首读信的瞬间，右侧一名传信者在场，礼盒与帐外行军形成纵深。",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A command tent: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, throws back his head laughing, holding an unrolled letter; lacquered gift boxes on the table; through the tent flap, troops marching north. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"中军帐：关羽仰面大笑，手里拿着展开的信；案上礼盒；帐外兵马北上\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.\n\nReference images can contain writing or emblems; NEVER copy any writing, glyph, seal or emblem that resembles writing. Maps, letters and bamboo slips must remain completely unlabelled: blank surfaces or terrain contours only, with NO label flags or character-like markings. ",
+  "source_commit": "cedfc9c717d2384d0dadded975a409db5715c9ef",
+  "authored_job": {
+    "id": "scene-v4_luxun",
+    "kind": "scene",
+    "name": "v4_luxun",
+    "batch": 3,
+    "status": "queued",
+    "refs": [
+      "guanyu"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/guanyu.webp",
+      "game/sanguo/art/scenes/v3_feishi.webp"
+    ],
+    "keep": [
+      "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+    ],
+    "composition": "中军帐：关羽仰面大笑，手里拿着展开的信；案上礼盒；帐外兵马北上",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A command tent: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, throws back his head laughing, holding an unrolled letter; lacquered gift boxes on the table; through the tent flap, troops marching north. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/guanyu.webp",
+      "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_feishi.webp",
+      "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9"
+    }
+  ],
+  "original_sha256": "f6bdff851cc7417850426a9ee7089390c091dbb8af662f4570968cc81b0344d6",
+  "created_at": "2026-10-27T07:22:24.460410+00:00"
+}

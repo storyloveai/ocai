@@ -1,6 +1,6 @@
 # 三国·谋士：未采用的场景候选
 
-Issue #56，26/31 场景已有两张候选，共 55 张未裁切原图。
+Issue #56，30/31 场景已有两张候选，共 60 张未裁切原图。
 
 预览：https://storydate-zhou-git-codex-art-candidates-zhou-zeyas-projects.vercel.app/assets/art-candidates/index.html
 
@@ -30,14 +30,14 @@ Issue #56，26/31 场景已有两张候选，共 55 张未裁切原图。
 | scene-v4_pangde | 2/2 | [A](scene-v4_pangde/a.png) | [B](scene-v4_pangde/b.png) |
 | scene-v4_flood | 2/2 | [A](scene-v4_flood/a.png) | [B](scene-v4_flood/b.png) |
 | scene-v4_feast | 2/2 | [A](scene-v4_feast/a.png) | [B](scene-v4_feast/b.png) |
-| scene-v4_pow | 1/2 | 待生成 | [B](scene-v4_pow/b.png) |
-| scene-v4_bone | 待 Claude 在指定参考中补入温芷头像以锁定角色。 | 待生成 | 待生成 |
+| scene-v4_pow | 2/2 | [A](scene-v4_pow/a.png) | [B](scene-v4_pow/b.png) |
+| scene-v4_bone | 2/2 | [A](scene-v4_bone/a.png) | [B](scene-v4_bone/b.png) |
 | scene-v4_huatuo | 2/2 | [A](scene-v4_huatuo/a.png) | [B](scene-v4_huatuo/b.png) |
-| scene-v4_luxun | 1/2 | [A](scene-v4_luxun/a.png) | 待生成 |
+| scene-v4_luxun | 2/2 | [A](scene-v4_luxun/a.png) | [B](scene-v4_luxun/b.png) |
 | scene-v4_zhuge_night | 待 Claude 澄清：地图在墙上与羽扇放在地图上的构图关系。 | 待生成 | 待生成 |
 | scene-v4_retreat | 2/2 | [A](scene-v4_retreat/a.png) | [B](scene-v4_retreat/b.png) |
 | scene-v4_shangyong | 2/2 | [A](scene-v4_shangyong/a.png) | [B](scene-v4_shangyong/b.png) |
 | scene-v4_wz_letter | 2/2 | [A](scene-v4_wz_letter/a.png) | [B](scene-v4_wz_letter/b.png) |
 | scene-v4_maicheng | 2/2 | [A](scene-v4_maicheng/a.png) | [B](scene-v4_maicheng/b.png) |
 | scene-v4_west | 2/2 | [A](scene-v4_west/a.png) | [B](scene-v4_west/b.png) |
-| scene-v4_news | 1/2 | [A](scene-v4_news/a.png) | 待生成 |
+| scene-v4_news | 2/2 | [A](scene-v4_news/a.png) | [B](scene-v4_news/b.png) |
