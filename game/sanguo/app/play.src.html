@@ -57,6 +57,9 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .how li { display: grid; grid-template-columns: 28px 1fr; gap: 8px; color: var(--muted) }
 .how li b { color: var(--text); font-weight: 600 }
 .how .n { font: 600 14px/1.6 var(--display); color: var(--accent-text) }
+.howfold { margin: 4px 0 18px; font-size: 14px }
+.howfold summary { cursor: pointer; color: var(--accent-text); font-weight: 600; list-style-position: inside }
+.howfold .how { margin: 12px 0 4px }
 .btns { display: flex; gap: 12px; flex-wrap: wrap }
 .btn { border: 0; border-radius: 10px; padding: 12px 22px; font-weight: 600; background: var(--accent); color: var(--accent-ink) }
 .btn.ghost { background: none; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--line) }
@@ -298,6 +301,7 @@ const UI = {
     title: "三国·谋士", start: "开始",
     cont: "继续", restart: "重新开始", restartSure: "确定重新开始？", cancel: "取消",
     premise: ["建安四年，许都。天下还没有三分，曹操挟天子以令诸侯，刘备寄人篱下，在后园种菜。", "你是一个原创人物：颍川来的年轻谋士子衡。你不是名将，也不是主公。你能做的，是献策、荐人、结交、站队，以及在别人的名场面里插一句话。"],
+    howH: "怎么玩（三条）",
     how: [["名场面是节点，不是剧本。", "煮酒论英雄、土山约三事、三顾茅庐、华容道——你在场，但不是主角。原著的大事照样发生，发生的方式、谁付出代价、谁欠谁的情，由你决定。"],
           ["前面的选择会在后面回响。", "你在第一章做的事，可能在第八章被人提起。标着「回响」的段落，会告诉你是因为哪一步。"],
           ["你知道结局，但说出来有代价。", "标着「先见」的选项用到了你对原著的了解。用得多了，身边的人会觉得你异样。"]],
@@ -341,6 +345,7 @@ const UI = {
     title: "Three Kingdoms: The Strategist", start: "Begin",
     cont: "Continue", restart: "Start over", restartSure: "Really start over?", cancel: "Cancel",
     premise: ["Xuchang, 199 AD. The realm has not yet split in three. Cao Cao holds the Emperor and rules in his name; Liu Bei lives under Cao's roof, growing vegetables in the back garden.", "You are an original character: Ziheng, a young strategist from Yingchuan. You are not a famous general or a lord. What you can do is advise, recommend, befriend, take sides—and say a word in someone else's famous scene."],
+    howH: "How this works (three things)",
     how: [["Famous scenes are moments, not scripts.", "Heroes over plum wine, the three terms on the hill, the three visits, the Huarong road—you're there, but you're not the lead. The great events still happen. How they happen, who pays, and who owes whom is up to you."],
           ["Early choices echo later.", "What you do in Chapter 1 may be brought up in Chapter 8. Passages marked Echo tell you which step caused them."],
           ["You know the ending. Saying so has a price.", "Choices marked Foresight use what you know from the novel. Use it too often and people start to find you strange."]],
@@ -994,7 +999,8 @@ function renderStory() {
       s.append(mark(h("section", { class: "chapter" }, h("div", { class: "kicker" }, `${t(c.year)} · ${l.canonRef(t(c.canon))}`,
           hasCk ? [" · ", h("button", { type: "button", class: "linkbtn", onclick: () => { V.branchAsk = asking ? null : ci; renderStory(); } }, ci ? l.replayCh : l.replayVol)] : null),
         asking ? h("p", { class: "muted" }, l.replaySure, " ", h("button", { type: "button", class: "linkbtn", onclick: () => branchFrom(G.run, ci) }, l.yes), " ", h("button", { type: "button", class: "linkbtn", onclick: () => { V.branchAsk = null; renderStory(); } }, l.cancel)) : null,
-        h("h2", {}, h("span", { class: "num" }, l.chap(ci)), t(c.title)), e.p.map(k => para(t(c.intro[k].text))))));
+        h("h2", {}, h("span", { class: "num" }, l.chap(ci)), t(c.title)), e.p.map(k => para(t(c.intro[k].text))),
+        ci === 0 && volIndex(G.vol) === 0 ? h("details", { class: "howfold" }, h("summary", {}, l.howH), h("ol", { class: "how" }, l.how.map((x, n) => h("li", {}, h("span", { class: "n" }, String(n + 1)), h("span", {}, h("b", {}, x[0]), " ", x[1]))))) : null)));
     } else if (e.k === "carry") {
       const p = e.preset && (CAMP.presets || []).find(x => x.id === e.preset);
       const from = G.from && runsList().find(m => m.id === G.from);
@@ -1113,7 +1119,7 @@ function recapEl(ci) {
 }
 function renderOffer(e) {
   const l = L();
-  const box = h("div", { class: "offer" }, h("h4", {}, t(CAMP.side_prompt)),
+  const box = h("div", { class: "offer" }, h("h4", {}, t((CAMP.chapters[G.ch] || {}).side_prompt || CAMP.side_prompt)),
     h("div", { class: "cards" }, e.ids.map(id => { const n = N(id); const teaser = t(n.intro[0].text);
       return h("button", { type: "button", class: "card" + (n.mood === "romance" ? " romance" : ""), onclick: () => pickSide(id) }, n.art ? painting(n.art.scene, CC.layers(CAMP, G, n.art.layers, null), t(n.title), n.art.illus) : null, h("b", {}, t(n.title)), h("span", {}, teaser.length > 64 ? teaser.slice(0, settings.lang === "zh" ? 42 : 110) + "…" : teaser)); })));
   if (settings.creator) box.append(directorTable(e.scores, e.ids));
@@ -1135,8 +1141,8 @@ function renderAct() {
   if (q) {
     box.append(h("div", { class: "ask" }, h("div", { class: "line" }, face(q.who, levelMood(q.who)), h("div", {}, h("span", { class: "et" }, t(CAMP.chars[q.who].name) + " · " + l.askL), para(t(q.q), "reply"))),
       h("p", { class: "muted", style: "font-size:13px;margin:8px 0 0" }, l.askHint),
-      h("form", { class: "free", onsubmit: ev => { ev.preventDefault(); const i = ev.target.querySelector("input"); const v = i.value; i.value = ""; onAnswer(v); } },
-        h("input", { type: "text", placeholder: l.askPh, "aria-label": l.askPh, maxlength: "200", disabled: V.busy }), h("button", { class: "btn small", type: "submit", disabled: V.busy }, l.send)),
+      h("form", { class: "free", onsubmit: ev => { ev.preventDefault(); const i = ev.target.querySelector("input"); const v = i.value; i.value = ""; V.prefill = null; onAnswer(v); } },
+        h("input", { type: "text", placeholder: l.askPh, "aria-label": l.askPh, maxlength: "200", disabled: V.busy, value: V.prefill || "" }), h("button", { class: "btn small", type: "submit", disabled: V.busy }, l.send)),
       (V.busy || l.aiOn || l.aiOff) ? h("div", { class: "ai" }, V.busy ? l.aiBusy : (RT.ai === "ready" ? l.aiOn : RT.ai === "checking" ? "" : l.aiOff)) : null));
     return;
   }
@@ -1426,7 +1432,14 @@ async function loadPlay() {
 document.documentElement.lang = settings.lang === "zh" ? "zh-CN" : "en";
 document.title = L().title;
 if (G) V.firstNew = -1;
-render();
+// a first visit opens straight into Volume I (the contents page is one tap away); 2026-10-27, 决策记录 v2.9
+const ENTRY = new URLSearchParams(location.search || "");
+if (!G && !runsList().length) newGame(BOOK.volumes[0].id); else render();
+if (G && G.n === 1 && G.phase === "node" && G.log.filter(e => e.k === "pick" || e.k === "choice").length === 0) {
+  const cid = ENTRY.get("choice"), said = (ENTRY.get("say") || "").trim().slice(0, 200);
+  if (cid && CC.choices(CAMP, G, G.cur).some(x => x.id === cid && !x.locked)) choose(cid, "entry");
+  else if (said) { V.prefill = said; render(); }   // the words typed on the front page wait in the answer box; the player presses Say
+}
 initRuntime();
 if (G && G.phase !== "end") { const last = document.querySelector("#act") || document.querySelector(".offer"); if (last) last.scrollIntoView({ block: "center" }); }
 </script>
