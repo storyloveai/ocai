@@ -24,6 +24,7 @@
 
 - `portrait-jobs.jsonl`：人物头像。
 - `edition-jobs.jsonl`：卷一的场景、结局、高光、封面。
+- `edition-jobs-v6.jsonl`：卷六的场景图（14 张，`v6_` 开头），排在卷五之后。
 - `edition-jobs-v5.jsonl`：卷五的场景图（17 张，`v5_` 开头），排在卷四之后。
 - `edition-jobs-v4.jsonl`：卷四的场景图（14 张，`v4_` 开头；还没画时插画版用水墨顶上）。字段和 v23 清单一样。
 - `edition-jobs-v4.jsonl`：卷四的场景图（14 张，`v4_` 开头；还没画时插画版用水墨顶上）。每条带参考图路径、必须保留的特征、构图和验收要点。
