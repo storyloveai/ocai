@@ -28,4 +28,4 @@
 - 罗宾：https://one-piece.com/character/robin/
 - 汉库克：https://one-piece.com/character/Boa_Hancock/index.html
 
-场景、开场白和语气是原创同人配置。构建、JS语法检查通过；六项服务器测试覆盖全部九个有效 ID 与不同私有提示。生产部署验收见 HANDOFF.md。
+场景、开场白和语气是原创同人配置。构建、JS语法检查通过；六项服务器测试覆盖全部九个有效 ID 与不同私有提示。历史生产部署记录见 [archive/HANDOFF-2026-10-10.md](archive/HANDOFF-2026-10-10.md)；当前进度见 [当前进度.md](当前进度.md)。

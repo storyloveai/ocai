@@ -1,12 +1,14 @@
 # 协作说明（给人，也给 Codex / Claude Code 等 AI 助手）
 
+AI 助手当前的分工、认领和 Preview 验收规则，统一见 [docs/当前进度.md](docs/当前进度.md) 的「AI 助手分工和协作规则」；规则只在那里维护。
+
 动手之前先读 `docs/当前进度.md`（现在在做什么、AI 助手怎么分工、待办），再确认你改的是哪一块。做完一块回来更新它。（2026-10-21 起分工调整：网站开发由 zhouzeya 接手，兰馨负责故事和角色内容。）
 
 | 区域 | 内容 | 负责人（GitHub） | 先读 |
 |---|---|---|---|
 | 网站 | `ooc-replica/`（现在的网站）；`src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/`（早期版本） | zhouzeya（@666ZHOUZEYA） | `ooc-replica/README.md` |
 | 故事和角色内容 | `ooc-replica/content/`（原创书目、角色）、`ooc-replica/book-campaigns/`（名著互动） | 兰馨（@allliiita / @Lindsey-cyber） | `ooc-replica/content/original-catalog/README.md`、`game/engine/README.md` |
-| 互动小说玩法 | `game/engine/`：所有书共用的引擎、五档、题材包、检查和升级工具；`game/sanguo/`：三国·谋士，卷一、卷二已完成 | zhouzeya（@666ZHOUZEYA） | `game/engine/README.md`、`game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
+| 互动小说玩法 | `game/engine/`：所有书共用的引擎、五档、题材包、检查和升级工具；`game/sanguo/`：三国·谋士，卷一至卷三已完成 | zhouzeya（@666ZHOUZEYA） | `game/engine/README.md`、`game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
 
 ## 分支和部署
 
