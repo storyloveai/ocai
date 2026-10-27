@@ -1,0 +1,56 @@
+{
+  "source_pr": 58,
+  "source_commit": "621e7cb57d2be2044434ca0f20529603e77be84a",
+  "source_manifest": "game/sanguo/art/edition-jobs-v23.jsonl",
+  "source_manifest_sha256": "a829fe864dabfd4be588454e7c3438acc48d12f1ca03fd19a2fcf607bcb3af16",
+  "snapshot_sha256": "6c38394b3531c05eb0e824c0d368b79e2698802e5806af0b6d85bcdacf601166",
+  "selected_ids": [
+    "scene-v3_clinic",
+    "scene-v3_dingjun",
+    "scene-g_cold"
+  ],
+  "authored_batch_field": 1,
+  "execution_batch": 0,
+  "references": [
+    {
+      "source": "game/sanguo/art/portraits/fazheng.webp",
+      "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e",
+      "git_blob_sha": "58fa31824b28cb627b0ef807f6877888ccd3a23b"
+    },
+    {
+      "source": "game/sanguo/art/portraits/huangzhong.webp",
+      "sha256": "9c38b454d1917da87bd4e05e3e16717c0ee1062518c3a276dee4894f4a9e18a7",
+      "git_blob_sha": "22c52d8bce283de69c03fa392b193e2a2cf3d917"
+    },
+    {
+      "source": "game/sanguo/art/portraits/liubei.webp",
+      "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6",
+      "git_blob_sha": "08edd6b24525f33e7b903694f2125ec53a8ed3d0"
+    },
+    {
+      "source": "game/sanguo/art/portraits/wenzhi.webp",
+      "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+      "git_blob_sha": "a510922f5633e60291028938592c4f9a0ecf1075"
+    },
+    {
+      "source": "game/sanguo/art/portraits/zhuge.webp",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+      "git_blob_sha": "5acc0d5eb8317c5c60cd5e3b3a5eed38990361b9"
+    },
+    {
+      "source": "game/sanguo/art/scenes/v2_wenzhi.webp",
+      "sha256": "6df43e8e84158d757a6f001f5230668838dbd9c277372b683039e18cfb4e9b3d",
+      "git_blob_sha": "9282b0419f855d5e5d0734f3ca3d24e59a434432"
+    },
+    {
+      "source": "game/sanguo/art/scenes/v3_council.webp",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+      "git_blob_sha": "82962c04a25c95a68637ad82241df6183594972c"
+    },
+    {
+      "source": "game/sanguo/art/scenes/v3_hanshui.webp",
+      "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90",
+      "git_blob_sha": "5bacf51a66309e10b1b381e2f709877a45f713a3"
+    }
+  ]
+}

@@ -161,5 +161,39 @@ class ComfyTest(unittest.TestCase):
         self.assertRaises(RuntimeError, client.wait, 'task-123', ['32'], 1, 0)
 
 
+    def test_candidate_output_root_does_not_redirect_character_references(self):
+        original_ref = gen.ART / 'portraits/a.webp'
+        original_ref.parent.mkdir(parents=True); original_ref.write_bytes(image_bytes())
+        self.args.output_root = str(self.root / 'review')
+        self.args.records = 'art/comfy-records.json'
+        class Fake:
+            def __init__(self, *a): pass
+            def check(self, graph): pass
+            def upload(self, raw): return 'uploaded.png'
+            def submit(self, graph): return 'task-candidate'
+            def wait(self, *a): return image_bytes()
+        with patch.object(gen, 'reference_images', return_value=[b'reference']), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(gen.run(self.args, Fake), 0)
+        self.assertEqual(gen.char_ref('a'), original_ref)
+        self.assertTrue((self.root / 'review/scenes/one.webp').is_file())
+        self.assertTrue((self.root / 'review/source/scene-one.comfy.png').is_file())
+        self.assertTrue((self.root / 'review/comfy-records.json').is_file())
+        self.assertFalse((gen.ART / 'scenes/one.webp').exists())
+
+
+    def test_explicit_claude_ref_paths_are_used_instead_of_generic_covers(self):
+        root = self.root / 'pinned'
+        names = ['game/sanguo/art/portraits/a.webp', 'game/sanguo/art/portraits/b.webp', 'game/sanguo/art/scenes/style.webp']
+        for name in names:
+            path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(image_bytes())
+        job = {**self.jobs[0], 'refs': ['a', 'b'], 'ref_paths': names}
+        styles, casts = gen.resolve_references(job, [self.root / 'not-used.webp'], root)
+        self.assertEqual(styles, [root / names[-1]])
+        self.assertEqual(casts, [root / name for name in names[:-1]])
+        self.assertEqual(len(gen.reference_images(job, [], root)), 3)
+        self.assertRaises(ValueError, gen.resolve_references, {**job, 'ref_paths': ['../escape', *names[1:]]}, [], root)
+        self.assertRaises(ValueError, gen.resolve_references, {**job, 'ref_paths': names[:-1]}, [], root)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -38,19 +38,20 @@ def job_id(job):
     return safe_id(job.get('character') if job.get('kind', 'portrait') == 'portrait' else job.get('id'))
 
 
-def target(job):
+def target(job, output_root=None):
+    art = Path(output_root) if output_root is not None else ART
     kind = job.get('kind', 'portrait')
     if kind == 'portrait':
-        return ART / 'portraits' / f"{safe_id(job['character'])}.webp", (300, 400), 'top'
+        return art / 'portraits' / f"{safe_id(job['character'])}.webp", (300, 400), 'top'
     dims = job.get('out')
     if not isinstance(dims, list) or len(dims) != 2 or any(type(n) is not int or not 1 <= n <= 8192 for n in dims):
         raise ValueError('Non-portrait jobs require two positive out dimensions, at most 8192')
     if kind == 'cover':
-        return ART / 'cover.webp', tuple(dims), 'center'
+        return art / 'cover.webp', tuple(dims), 'center'
     folder = {'scene': 'scenes', 'cg': 'cg', 'ending': 'ending'}.get(kind)
     if not folder:
         raise ValueError('Unsupported job kind')
-    return ART / folder / f"{safe_id(job['name'])}.webp", tuple(dims), 'center'
+    return art / folder / f"{safe_id(job['name'])}.webp", tuple(dims), 'center'
 
 
 def canvas_size(job):
@@ -88,13 +89,30 @@ def sheet(paths, size, labels=None):
     buf = io.BytesIO(); board.save(buf, 'PNG'); return buf.getvalue()
 
 
-def reference_images(job, styles):
+def resolve_references(job, styles, reference_root=None):
+    if 'ref_paths' in job:
+        paths = job['ref_paths']
+        if not isinstance(paths, list) or len(paths) != len(job.get('refs', [])) + 1:
+            raise ValueError('ref_paths must contain each character reference followed by one style scene')
+        root = (Path(reference_root) if reference_root is not None else R.parents[1]).resolve()
+        resolved = []
+        for value in paths:
+            if not isinstance(value, str) or Path(value).is_absolute() or '..' in Path(value).parts:
+                raise ValueError('ref_paths must be relative repository paths')
+            path = (root / value).resolve()
+            if not path.is_relative_to(root): raise ValueError('Reference path escapes its input root')
+            resolved.append(path)
+        return [resolved[-1]], resolved[:-1]
+    return styles, [char_ref(cid) for cid in job.get('refs', [])]
+
+
+def reference_images(job, styles, reference_root=None):
     refs = job.get('refs', [])
-    paths = [char_ref(cid) for cid in refs]
-    if any(path is None for path in paths):
-        raise ValueError('Missing character references: ' + ', '.join(cid for cid, path in zip(refs, paths) if path is None))
+    styles, paths = resolve_references(job, styles, reference_root)
+    if any(path is None or not path.is_file() for path in paths):
+        raise ValueError('Missing character references: ' + ', '.join(cid for cid, path in zip(refs, paths) if path is None or not path.is_file()))
     if not styles or any(not path.is_file() for path in styles):
-        raise ValueError('Style references are missing; use --style or restore the existing style images')
+        raise ValueError('Style references are missing; restore the explicit ref_paths or use --style')
     images = [sheet(styles, canvas_size(job))]
     # The official encoder has three image slots. Never silently discard extra characters.
     if len(paths) > 2:
@@ -203,14 +221,14 @@ class Client:
             time.sleep(poll)
 
 
-def save_image(job, raw):
+def save_image(job, raw, output_root=None):
     from PIL import Image
-    out, (width, height), anchor = target(job)
+    out, (width, height), anchor = target(job, output_root)
     with Image.open(io.BytesIO(raw)) as source:
         extension = {'PNG': 'png', 'JPEG': 'jpg', 'WEBP': 'webp'}.get(source.format)
         if not extension: raise ValueError('Unsupported ComfyUI output image format')
         image = source.convert('RGB')
-    original = ART / 'source' / f'{job_id(job)}.comfy.{extension}'
+    original = (Path(output_root) if output_root is not None else ART) / 'source' / f'{job_id(job)}.comfy.{extension}'
     original.parent.mkdir(parents=True, exist_ok=True); original.write_bytes(raw)
     w, h = image.size
     crop_w, crop_h = (round(h * width / height), h) if w / h > width / height else (w, round(w * height / width))
@@ -235,19 +253,27 @@ def run(args, client_factory=Client):
     wanted = {safe_id(value.strip()) for value in args.ids.split(',') if value.strip()}
     if wanted - set(ids): raise ValueError('Unknown IDs: ' + ', '.join(sorted(wanted - set(ids))))
     styles = [Path(path) if Path(path).is_absolute() else R / path for path in args.style] if args.style else DEFAULT_STYLE
-    todo = [job for job in jobs if (not wanted or job_id(job) in wanted) and (args.force or not target(job)[0].exists())]
+    output_root = Path(args.output_root) if args.output_root else None
+    if output_root is not None and not output_root.is_absolute(): output_root = R / output_root
+    todo = [job for job in jobs if (not wanted or job_id(job) in wanted) and (args.force or not target(job, output_root)[0].exists())]
     if args.dry_run:
-        print(json.dumps([{'id': job_id(job), 'output': str(target(job)[0]), 'crop': target(job)[1], 'refs': [{'id': cid, 'path': str(char_ref(cid)) if char_ref(cid) else None} for cid in job.get('refs', [])], 'style': [{'path': str(path), 'exists': path.is_file()} for path in styles], 'size': canvas_size(job)} for job in todo], ensure_ascii=False, indent=2)); return 0
+        report = []
+        for job in todo:
+            selected_styles, selected_refs = resolve_references(job, styles, args.reference_root)
+            report.append({'id': job_id(job), 'output': str(target(job, output_root)[0]), 'crop': target(job, output_root)[1], 'refs': [{'id': cid, 'path': str(path) if path else None, 'exists': bool(path and path.is_file())} for cid, path in zip(job.get('refs', []), selected_refs)], 'style': [{'path': str(path), 'exists': path.is_file()} for path in selected_styles], 'size': canvas_size(job)})
+        print(json.dumps(report, ensure_ascii=False, indent=2)); return 0
     if not todo: print('No missing outputs selected.'); return 0
     if not args.url: raise ValueError('COMFYUI_API_URL is not set')
-    record_path = Path(args.records); record_path = record_path if record_path.is_absolute() else R / record_path
+    record_path = output_root / 'comfy-records.json' if output_root is not None and args.records == 'art/comfy-records.json' else Path(args.records); record_path = record_path if record_path.is_absolute() else R / record_path
     records = json.loads(record_path.read_text()) if record_path.exists() else []
     if not isinstance(records, list): raise ValueError('Generation records must be a JSON array')
     client = client_factory(args.url, args.use_proxy, os.environ.get('COMFYUI_API_TOKEN'))
     failures = 0
     for job in todo:
         key = job_id(job)
-        settings = {'unet': args.unet, 'clip': args.clip, 'vae': args.vae, 'steps': args.steps, 'cfg': args.cfg, 'style': list(map(str, styles)), 'seed': args.seed, 'endpoint_hash': hashlib.sha256(args.url.encode()).hexdigest()}
+        actual_styles, actual_cast = resolve_references(job, styles, args.reference_root)
+        reference_files = [*actual_styles, *actual_cast]
+        settings = {'unet': args.unet, 'clip': args.clip, 'vae': args.vae, 'steps': args.steps, 'cfg': args.cfg, 'style': list(map(str, actual_styles)), 'references': [str(path) if path else None for path in actual_cast], 'reference_hashes': [hashlib.sha256(path.read_bytes()).hexdigest() if path and path.is_file() else None for path in reference_files], 'seed': args.seed, 'endpoint_hash': hashlib.sha256(args.url.encode()).hexdigest(), 'reference_root': args.reference_root}
         signature = hashlib.sha256(json.dumps({'job': job, 'settings': settings, 'workflow': Path(args.workflow_api).read_text() if args.workflow_api else None}, sort_keys=True).encode()).hexdigest()
         old = next((item for item in reversed(records) if item.get('id') == key and item.get('prompt_id')), None)
         record = {'id': key, 'fingerprint': signature, 'seed': args.seed if args.seed is not None else secrets.randbelow(2 ** 63), 'started_at': datetime.now(timezone.utc).isoformat(), 'status': 'preparing', 'models': settings}
@@ -262,12 +288,12 @@ def run(args, client_factory=Client):
                 record.update(prompt_id=old['prompt_id'], seed=old['seed'], status='queued')
             else:
                 client.check(graph)
-                names = [client.upload(raw) for raw in reference_images(job, styles)]
+                names = [client.upload(raw) for raw in reference_images(job, styles, args.reference_root)]
                 graph = workflow(job, names, args, record['seed'])
                 record.update(prompt_id=client.submit(graph), status='queued')
             write_records(record_path, records)  # persist prompt_id before the first poll
             raw = client.wait(record['prompt_id'], outputs, args.timeout, args.poll)
-            original, out = save_image(job, raw)
+            original, out = save_image(job, raw, output_root)
             record.update(status='completed', original=original, output=out)
             print(f'{key}: saved {out}', flush=True)
         except Exception as error:
@@ -287,6 +313,8 @@ def parser():
     ap.add_argument('--url', default=os.environ.get('COMFYUI_API_URL')); ap.add_argument('--use-proxy', action='store_true')
     ap.add_argument('--style', action='append'); ap.add_argument('--records', default='art/comfy-records.json')
     ap.add_argument('--workflow-api'); ap.add_argument('--seed', type=int)
+    ap.add_argument('--reference-root', help='Root for explicit repository-relative ref_paths; does not rewrite the job')
+    ap.add_argument('--output-root', help='Separate candidate output root; original character/style references stay unchanged')
     ap.add_argument('--unet', default='qwen_image_edit_2511_bf16.safetensors')
     ap.add_argument('--clip', default='qwen_2.5_vl_7b_fp8_scaled.safetensors'); ap.add_argument('--vae', default='qwen_image_vae.safetensors')
     ap.add_argument('--steps', type=int, default=40); ap.add_argument('--cfg', type=float, default=4.0)
