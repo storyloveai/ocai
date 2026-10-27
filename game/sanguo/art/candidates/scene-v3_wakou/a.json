@@ -1,0 +1,65 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "A：前景：刘备惊讶、诸葛亮摇扇微笑；中景：兵士从车上卸五十坛酒；远景山口：张飞在阵前席地醉卧",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A field camp in the mountains: soldiers unload fifty large wine jars from carts under a banner; in the foreground Liu Bei looks alarmed while Zhuge Liang smiles with his feather fan; in the distance, at a mountain pass, Zhang Fei (a burly warrior with a leopard-like head, round fierce eyes and a bristling tiger-whisker beard, black armour) lounges drunk on a mat in front of the enemy lines. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"刘备：束发、温和笑意、短须、绿褐色外袍\",\n    \"诸葛亮：长发披肩、白衣、白羽扇、清秀无须\"\n  ],\n  \"composition\": \"前景：刘备惊讶、诸葛亮摇扇微笑；中景：兵士从车上卸五十坛酒；远景山口：张飞在阵前席地醉卧\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.",
+  "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
+  "authored_job": {
+    "id": "scene-v3_wakou",
+    "kind": "scene",
+    "name": "v3_wakou",
+    "batch": 2,
+    "status": "queued",
+    "refs": [
+      "liubei",
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/liubei.webp",
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/scenes/v3_council.webp"
+    ],
+    "keep": [
+      "刘备：束发、温和笑意、短须、绿褐色外袍",
+      "诸葛亮：长发披肩、白衣、白羽扇、清秀无须"
+    ],
+    "composition": "前景：刘备惊讶、诸葛亮摇扇微笑；中景：兵士从车上卸五十坛酒；远景山口：张飞在阵前席地醉卧",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A field camp in the mountains: soldiers unload fifty large wine jars from carts under a banner; in the foreground Liu Bei looks alarmed while Zhuge Liang smiles with his feather fan; in the distance, at a mountain pass, Zhang Fei (a burly warrior with a leopard-like head, round fierce eyes and a bristling tiger-whisker beard, black armour) lounges drunk on a mat in front of the enemy lines. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/liubei.webp",
+      "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+    },
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_council.webp",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+    }
+  ],
+  "original_sha256": "966ede06d71590d6a15f55423b00b57c5d8ad2bc101ea460378c5e6e0d83f9f7",
+  "created_at": "2026-10-27T06:57:22.631418+00:00"
+}

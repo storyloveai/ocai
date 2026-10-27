@@ -1,0 +1,65 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "A：成都书房灯下：诸葛亮站着读战报、羽扇垂下、忧色；刘备坐在后面；窗外东边群山、红色晚霞",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A study in Chengdu by lamplight: Zhuge Liang stands reading a stack of war reports, feather fan lowered, worried; Liu Bei sits behind him; through the window, mountains under a red evening sky to the east. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"诸葛亮：长发披肩、白衣、白羽扇、清秀无须\",\n    \"刘备：束发、温和笑意、短须、绿褐色外袍\"\n  ],\n  \"composition\": \"成都书房灯下：诸葛亮站着读战报、羽扇垂下、忧色；刘备坐在后面；窗外东边群山、红色晚霞\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.",
+  "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
+  "authored_job": {
+    "id": "scene-v3_far",
+    "kind": "scene",
+    "name": "v3_far",
+    "batch": 2,
+    "status": "queued",
+    "refs": [
+      "zhuge",
+      "liubei"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/portraits/liubei.webp",
+      "game/sanguo/art/scenes/v3_council.webp"
+    ],
+    "keep": [
+      "诸葛亮：长发披肩、白衣、白羽扇、清秀无须",
+      "刘备：束发、温和笑意、短须、绿褐色外袍"
+    ],
+    "composition": "成都书房灯下：诸葛亮站着读战报、羽扇垂下、忧色；刘备坐在后面；窗外东边群山、红色晚霞",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A study in Chengdu by lamplight: Zhuge Liang stands reading a stack of war reports, feather fan lowered, worried; Liu Bei sits behind him; through the window, mountains under a red evening sky to the east. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+    },
+    {
+      "path": "game/sanguo/art/portraits/liubei.webp",
+      "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_council.webp",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+    }
+  ],
+  "original_sha256": "c1736dfe52b2f896f987d2d5210906ed0bb7fbc13e55a3ba05c9d03734e29aa1",
+  "created_at": "2026-10-27T06:55:53.322906+00:00"
+}

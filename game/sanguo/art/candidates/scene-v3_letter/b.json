@@ -1,0 +1,49 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "B：独立构图候选；静物，没有人物：刚拆开的信、干青梅枝小瓶、笔砚；窗格积雪，冷蓝晨光",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"Still life by a north-facing window in winter: a letter on bamboo-paper just unfolded on a desk, beside it a dried green plum branch in a small vase, a brush and inkstone; snow on the window lattice, cold blue morning light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [],\n  \"composition\": \"静物，没有人物：刚拆开的信、干青梅枝小瓶、笔砚；窗格积雪，冷蓝晨光\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate B; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Produce an independently staged alternative with a subtly different camera distance and lighting treatment while obeying the exact composition, actions and reference identity.",
+  "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
+  "authored_job": {
+    "id": "scene-v3_letter",
+    "kind": "scene",
+    "name": "v3_letter",
+    "batch": 2,
+    "status": "queued",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/scenes/letter.webp"
+    ],
+    "keep": [],
+    "composition": "静物，没有人物：刚拆开的信、干青梅枝小瓶、笔砚；窗格积雪，冷蓝晨光",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "Still life by a north-facing window in winter: a letter on bamboo-paper just unfolded on a desk, beside it a dried green plum branch in a small vase, a brush and inkstone; snow on the window lattice, cold blue morning light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/letter.webp",
+      "sha256": "ed29bcb9f92548e438aeb277e069b2853fdd62b855502c24a9356b3bc4c6d677"
+    }
+  ],
+  "original_sha256": "a94f99d25831de9542538f945dbb921c0ab1bf83ef0c26355393793c25ce5d1a",
+  "created_at": "2026-10-27T06:54:29.986338+00:00"
+}

@@ -1,6 +1,6 @@
 # 三国·谋士：未采用的场景候选
 
-Issue #56，5/31 场景已有两张候选，共 10 张未裁切原图。
+Issue #56，11/31 场景已有两张候选，共 23 张未裁切原图。
 
 预览：https://storydate-zhou-git-codex-art-candidates-zhou-zeyas-projects.vercel.app/assets/art-candidates/index.html
 
@@ -15,14 +15,14 @@ Issue #56，5/31 场景已有两张候选，共 10 张未裁切原图。
 | scene-g_cold | 2/2 | [A](scene-g_cold/a.png) | [B](scene-g_cold/b.png) |
 | scene-v3_dandao | 2/2 | [A](scene-v3_dandao/a.png) | [B](scene-v3_dandao/b.png) |
 | scene-v2_chengdu | 2/2 | [A](scene-v2_chengdu/a.png) | [B](scene-v2_chengdu/b.png) |
-| scene-v2_pangtong_night | 0/2 | 待生成 | 待生成 |
-| scene-v3_letter | 0/2 | 待生成 | 待生成 |
-| scene-v3_wakou | 0/2 | 待生成 | 待生成 |
-| scene-v3_laozu | 0/2 | 待生成 | 待生成 |
-| scene-v3_huniu | 0/2 | 待生成 | 待生成 |
+| scene-v2_pangtong_night | 2/2 | [A](scene-v2_pangtong_night/a.png) | [B](scene-v2_pangtong_night/b.png) |
+| scene-v3_letter | 2/2 | [A](scene-v3_letter/a.png) | [B](scene-v3_letter/b.png) |
+| scene-v3_wakou | 2/2 | [A](scene-v3_wakou/a.png) | [B](scene-v3_wakou/b.png) |
+| scene-v3_laozu | 2/2 | [A](scene-v3_laozu/a.png) | [B](scene-v3_laozu/b.png) |
+| scene-v3_huniu | 1/2 | [A](scene-v3_huniu/a.png) | 待生成 |
 | scene-v3_fire | 0/2 | 待生成 | 待生成 |
-| scene-v3_far | 0/2 | 待生成 | 待生成 |
-| scene-v3_guan_hall | 0/2 | 待生成 | 待生成 |
+| scene-v3_far | 2/2 | [A](scene-v3_far/a.png) | [B](scene-v3_far/b.png) |
+| scene-v3_guan_hall | 2/2 | [A](scene-v3_guan_hall/a.png) | [B](scene-v3_guan_hall/b.png) |
 | scene-v3_report | 0/2 | 待生成 | 待生成 |
 | scene-v3_guanping | 0/2 | 待生成 | 待生成 |
 | scene-v3_wz_jing | 0/2 | 待生成 | 待生成 |
@@ -31,10 +31,10 @@ Issue #56，5/31 场景已有两张候选，共 10 张未裁切原图。
 | scene-v4_flood | 0/2 | 待生成 | 待生成 |
 | scene-v4_feast | 0/2 | 待生成 | 待生成 |
 | scene-v4_pow | 0/2 | 待生成 | 待生成 |
-| scene-v4_bone | 0/2 | 待生成 | 待生成 |
+| scene-v4_bone | 待 Claude 在指定参考中补入温芷头像以锁定角色。 | 待生成 | 待生成 |
 | scene-v4_huatuo | 0/2 | 待生成 | 待生成 |
 | scene-v4_luxun | 0/2 | 待生成 | 待生成 |
-| scene-v4_zhuge_night | 0/2 | 待生成 | 待生成 |
+| scene-v4_zhuge_night | 待 Claude 澄清：地图在墙上与羽扇放在地图上的构图关系。 | 待生成 | 待生成 |
 | scene-v4_retreat | 0/2 | 待生成 | 待生成 |
 | scene-v4_shangyong | 0/2 | 待生成 | 待生成 |
 | scene-v4_wz_letter | 0/2 | 待生成 | 待生成 |
