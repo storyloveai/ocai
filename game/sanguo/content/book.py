@@ -26,7 +26,7 @@ BOOK = {
          "blurb": T("为兄弟复仇的一战，和白帝城的托孤。", "A war for a brother's revenge, and the last charge at Baidi.")},
         {"id": "sanguo_strategist_v6", "file": "v6/campaign_v6.json", "title": T("南中", "The South"), "canon": T("第86–90回", "Ch. 86–90"), "years": T("建兴元年至三年", "223–225"),
          "blurb": T("七擒孟获：攻心为上。", "Seven captures of Meng Huo: winning hearts before cities.")},
-        {"id": "sanguo_strategist_v7", "title": T("出师", "The Northern Campaigns"), "canon": T("第91–104回", "Ch. 91–104"), "years": T("建兴五年至十二年", "227–234"),
+        {"id": "sanguo_strategist_v7", "file": "v7/campaign_v7.json", "title": T("出师", "The Northern Campaigns"), "canon": T("第91–104回", "Ch. 91–104"), "years": T("建兴五年至十二年", "227–234"),
          "blurb": T("出师表、街亭、五丈原。子衡老了，诸葛亮也是。", "The memorial, Jieting, Wuzhang Plains. Ziheng has grown old. So has Zhuge Liang.")},
         {"id": "sanguo_strategist_v8", "title": T("归晋", "The Realm Made One"), "canon": T("第105–120回", "Ch. 105–120"), "years": T("建兴十二年至太康元年", "234–280"),
          "blurb": T("由你带出来的那个人，接着走完最后一段。", "The one you raised walks the last stretch.")},
