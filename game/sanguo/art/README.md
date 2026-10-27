@@ -25,6 +25,13 @@
 - `portrait-jobs.jsonl`：人物头像。
 - `edition-jobs.jsonl`：卷一的场景、结局、高光、封面。
 - `edition-jobs-v23.jsonl`：卷二、卷三的场景图（51 张，覆盖两卷所有节点）。每条的 `refs` 列出画面里出现的角色，生成时会把他们的头像一起发给模型，保持脸一致。
+  每条还有给出图的人看的字段：
+  - `batch`、`status`：`done` 已采用；`ready` 可以出图（第 1 批）；`queued` 排队（第 2 批）。
+  - `ref_paths`：要一起发给模型的参考图，先是出场角色的头像，最后一张是画风对齐用的已采用场景图。
+  - `keep`：每个角色必须保住的特征。
+  - `composition`：构图和关键动作。
+  - `accept`：验收要点。
+  出图的人每张交 2–3 张候选，放在 PR 里；Claude 选图，采用后裁成 1200×480 放进 `scenes/`，原图留在 `source/`，再把 `status` 改成 `done`。
 
 ## 生成
 
