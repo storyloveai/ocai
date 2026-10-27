@@ -58,6 +58,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .how li b { color: var(--text); font-weight: 600 }
 .how .n { font: 600 14px/1.6 var(--display); color: var(--accent-text) }
 .howfold { margin: 4px 0 18px; font-size: 14px }
+.entrycard { display: grid; gap: 12px; margin: 8px 0 24px; padding: 16px 18px; border: 1px solid var(--accent); border-radius: 14px; background: var(--card, transparent) }
 .howfold summary { cursor: pointer; color: var(--accent-text); font-weight: 600; list-style-position: inside }
 .howfold .how { margin: 12px 0 4px }
 .btns { display: flex; gap: 12px; flex-wrap: wrap }
@@ -302,6 +303,7 @@ const UI = {
     cont: "继续", restart: "重新开始", restartSure: "确定重新开始？", cancel: "取消",
     premise: ["建安四年，许都。天下还没有三分，曹操挟天子以令诸侯，刘备寄人篱下，在后园种菜。", "你是一个原创人物：颍川来的年轻谋士子衡。你不是名将，也不是主公。你能做的，是献策、荐人、结交、站队，以及在别人的名场面里插一句话。"],
     howH: "怎么玩（三条）",
+    entryPicked: x => `你在首页选了「${x}」`, entrySaid: x => `你在首页说：「${x}」`, entryNew: "从这一幕开一局新的", entryKeep: "继续我的存档",
     how: [["名场面是节点，不是剧本。", "煮酒论英雄、土山约三事、三顾茅庐、华容道——你在场，但不是主角。原著的大事照样发生，发生的方式、谁付出代价、谁欠谁的情，由你决定。"],
           ["前面的选择会在后面回响。", "你在第一章做的事，可能在第八章被人提起。标着「回响」的段落，会告诉你是因为哪一步。"],
           ["你知道结局，但说出来有代价。", "标着「先见」的选项用到了你对原著的了解。用得多了，身边的人会觉得你异样。"]],
@@ -346,6 +348,7 @@ const UI = {
     cont: "Continue", restart: "Start over", restartSure: "Really start over?", cancel: "Cancel",
     premise: ["Xuchang, 199 AD. The realm has not yet split in three. Cao Cao holds the Emperor and rules in his name; Liu Bei lives under Cao's roof, growing vegetables in the back garden.", "You are an original character: Ziheng, a young strategist from Yingchuan. You are not a famous general or a lord. What you can do is advise, recommend, befriend, take sides—and say a word in someone else's famous scene."],
     howH: "How this works (three things)",
+    entryPicked: x => `On the front page you chose: “${x}”`, entrySaid: x => `On the front page you said: “${x}”`, entryNew: "Start a new run from this moment", entryKeep: "Back to my saves",
     how: [["Famous scenes are moments, not scripts.", "Heroes over plum wine, the three terms on the hill, the three visits, the Huarong road—you're there, but you're not the lead. The great events still happen. How they happen, who pays, and who owes whom is up to you."],
           ["Early choices echo later.", "What you do in Chapter 1 may be brought up in Chapter 8. Passages marked Echo tell you which step caused them."],
           ["You know the ending. Saying so has a price.", "Choices marked Foresight use what you know from the novel. Use it too often and people start to find you strange."]],
@@ -932,6 +935,10 @@ function endingLine(m) {
 }
 function renderHome() {
   const s = $("#story"); const l = L(), H = V.home || (V.home = {});
+  const entry = !V.entryUsed && entryAsk();
+  if (entry) s.append(h("section", { class: "entrycard" }, h("b", {}, entry.label ? l.entryPicked(t(entry.label)) : l.entrySaid(entry.said)),
+    h("div", { class: "btns" }, h("button", { class: "btn", type: "button", onclick: () => { newGame(BOOK.volumes[0].id); applyEntry(); } }, l.entryNew),
+      h("button", { class: "btn ghost", type: "button", onclick: () => { V.entryUsed = true; renderStory(); } }, l.entryKeep))));
   const runs = runsList().filter(m => VOL(m.vol));
   const fmt = ts => new Date(ts).toLocaleString(settings.lang === "zh" ? "zh-CN" : "en-GB", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
   const volCard = (v, i) => {
@@ -1428,22 +1435,34 @@ async function loadPlay() {
   renderPanel();
 }
 
+/* ---------------- arriving from the website's front page ---------------- */
+// ?choice=<id> plays that choice in Volume I's opening scene; ?say=<words> waits in its reply box. Only a brand-new run
+// takes them: a player with saves is asked first (renderHome shows a card), so a stray click never starts a run.
+function entryAsk() {
+  const q = new URLSearchParams(location.search || ""), cid = q.get("choice"), said = (q.get("say") || "").trim().slice(0, 200);
+  const opening = CAMP && CAMP.id === BOOK.volumes[0].camp.id ? CAMP : BOOK.volumes[0].camp;
+  const node = opening.chapters[0] && Object.values(opening.nodes).find(n => n.chapter === opening.chapters[0].id && n.kind === "main");
+  const c = cid && node && node.choices.find(x => x.id === cid);
+  return c || said ? { cid: c ? c.id : null, label: c ? c.label : null, said } : null;
+}
+function applyEntry() {
+  const e = V.entryUsed ? null : entryAsk(); V.entryUsed = true;
+  if (!e || !G || G.phase !== "node" || G.log.some(x => x.k === "pick" || x.k === "choice" || x.k === "ans")) return;
+  // the banner asks "Thunder cracks. What do you do?": its answer belongs to this moment, so Cao Cao's opening
+  // question is passed over (no effects, nothing logged) and the player lands on the thunderclap
+  G.asked = G.asked || {}; G.asked[G.cur] = G.asked[G.cur] || "entry"; save();
+  if (e.cid && CC.choices(CAMP, G, G.cur).some(x => x.id === e.cid && !x.locked)) choose(e.cid, "entry");
+  else if (e.said) { V.prefill = e.said; render(); }   // the words wait in the box; the player presses Say
+}
+
 /* ---------------- boot ---------------- */
 document.documentElement.lang = settings.lang === "zh" ? "zh-CN" : "en";
 document.title = L().title;
 if (G) V.firstNew = -1;
 // a first visit opens straight into Volume I (the contents page is one tap away); 2026-10-27, 决策记录 v2.9
 const ENTRY = new URLSearchParams(location.search || "");
-if (!G && !runsList().length) newGame(BOOK.volumes[0].id); else render();
-if (G && G.n === 1 && G.phase === "node" && G.log.filter(e => e.k === "pick" || e.k === "choice" || e.k === "ans").length === 0) {
-  // the front-page banner asks "Thunder cracks. What do you do?": its answer belongs to this moment, so Cao Cao's
-  // opening question is passed over (no effects, nothing logged) and the player lands on the thunderclap
-  const cid = ENTRY.get("choice"), said = (ENTRY.get("say") || "").trim().slice(0, 200);
-  const valid = cid && CC.choices(CAMP, G, G.cur).some(x => x.id === cid && !x.locked);
-  if (valid || said) { G.asked = G.asked || {}; G.asked[G.cur] = G.asked[G.cur] || "entry"; save(); }
-  if (valid) choose(cid, "entry");
-  else if (said) { V.prefill = said; render(); }   // the words typed on the front page wait in the box; the player presses Say
-}
+const FRESH = !G && !runsList().length;   // nobody's save list has anything in it (new player, or every save deleted)
+if (FRESH) { newGame(BOOK.volumes[0].id); applyEntry(); } else render();
 initRuntime();
 if (G && G.phase !== "end") { const last = document.querySelector("#act") || document.querySelector(".offer"); if (last) last.scrollIntoView({ block: "center" }); }
 </script>
