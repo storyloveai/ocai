@@ -43,7 +43,7 @@
   "reference_inputs_in_order": [
     {
       "path": "game/sanguo/art/candidates/scene-v5_liufeng/a.png",
-      "source_commit": null,
+      "source_commit": "4a0020840e3b6767615f8894a2a88881da4b7a76",
       "role": "provisional_round2_identity_reference_for_aged_emperor_liubei",
       "sha256": "54310fd22bb646d95310aaa49c4de9ebd834ab2aedd9d0ed46c895f9320470d1"
     },

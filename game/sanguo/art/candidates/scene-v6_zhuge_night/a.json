@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：南方营地湿热的夜：诸葛亮坐在小火旁，身边卷着地图；子衡背影坐在对面；萤火、黑林",
+  "description": "湿热营夜的小火旁，诸葛亮面向子衡背影而坐，地图卷在身侧木箱上。",
   "authored_job": {
     "id": "scene-v6_zhuge_night",
     "kind": "scene",
@@ -64,5 +64,9 @@
     1024
   ],
   "original_sha256": "237ec183e6693d1b30644283302b582eae0265a9905172a0e18a7e53155e750d",
-  "created_at": "2026-10-27T09:11:37.329985+00:00"
+  "created_at": "2026-10-27T09:11:37.329985+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude",
+  "review_notes": [
+    "未明显呈现当卷黑色纶巾；请优先对比 B 的冠帽。"
+  ]
 }

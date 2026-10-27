@@ -63,5 +63,8 @@
   ],
   "original_sha256": "63d859941cca6d4b536fec89c362862bca5ad29bd3c4fbe9ff4ba2ade584f972",
   "created_at": "2026-10-27T08:58:27.163285+00:00",
-  "codex_visual_check": "inspected; final acceptance remains with Claude"
+  "codex_visual_check": "inspected; final acceptance remains with Claude",
+  "review_notes": [
+    "冠帽的浅色造型需按卷六服饰要求复核；A 的黑色冠帽更明确。"
+  ]
 }

@@ -1,6 +1,6 @@
 # 三国·谋士：场景原图候选
 
-Issue #56 · PR #62。第二轮 31/33 场景，共 63 张新原图；第一轮 29 场景已由 Claude 通过 PR #65 采用。
+Issue #56 · PR #62。第二轮 33/33 场景，共 66 张新原图；第一轮 29 场景已由 Claude 通过 PR #65 采用。
 
 预览：https://storydate-zhou-git-codex-art-candidates-zhou-zeyas-projects.vercel.app/assets/art-candidates/index.html
 
@@ -48,7 +48,7 @@ Issue #56 · PR #62。第二轮 31/33 场景，共 63 张新原图；第一轮 2
 | scene-v5_fazheng | 2/2，待 Claude 审图 | [A](scene-v5_fazheng/a.png) / [B](scene-v5_fazheng/b.png) |
 | scene-v5_liufeng | 2/2，待 Claude 审图 | [A](scene-v5_liufeng/a.png) / [B](scene-v5_liufeng/b.png) |
 | scene-v5_guan_arm | 2/2，待 Claude 审图 | [A](scene-v5_guan_arm/a.png) / [B](scene-v5_guan_arm/b.png) |
-| scene-v5_emperor | 0/2，待 Claude 审图 | 待生成 |
+| scene-v5_emperor | 2/2，待 Claude 审图 | [A](scene-v5_emperor/a.png) / [B](scene-v5_emperor/b.png) |
 | scene-v5_fei | 2/2，待 Claude 审图 | [A](scene-v5_fei/a.png) / [B](scene-v5_fei/b.png) |
 | scene-v5_langzhong | 2/2，待 Claude 审图 | [A](scene-v5_langzhong/a.png) / [B](scene-v5_langzhong/b.png) |
 | scene-v5_mourning | 2/2，待 Claude 审图 | [A](scene-v5_mourning/a.png) / [B](scene-v5_mourning/b.png) |
@@ -74,5 +74,5 @@ Issue #56 · PR #62。第二轮 31/33 场景，共 63 张新原图；第一轮 2
 | scene-v6_spring | 2/2，待 Claude 审图 | [A](scene-v6_spring/a.png) / [B](scene-v6_spring/b.png) |
 | scene-v6_rattan | 2/2，待 Claude 审图 | [A](scene-v6_rattan/a.png) / [B](scene-v6_rattan/b.png) |
 | scene-v6_wz_burns | 2/2，待 Claude 审图 | [A](scene-v6_wz_burns/a.png) / [B](scene-v6_wz_burns/b.png) |
-| scene-v6_seventh | 1/2，待 Claude 审图 | [A](scene-v6_seventh/a.png) |
+| scene-v6_seventh | 2/2，待 Claude 审图 | [A](scene-v6_seventh/a.png) / [B](scene-v6_seventh/b.png) |
 | scene-v6_offering | 2/2，待 Claude 审图 | [A](scene-v6_offering/a.png) / [B](scene-v6_offering/b.png) |

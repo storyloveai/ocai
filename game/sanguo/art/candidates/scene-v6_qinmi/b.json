@@ -38,7 +38,7 @@
   "reference_inputs_in_order": [
     {
       "path": "game/sanguo/art/candidates/scene-v6_qinmi/a.png",
-      "source_commit": "1e77aee",
+      "source_commit": "1e77aeeaf7dbfee6305c972a8ee69570b9adc51e",
       "role": "provisional_round2_identity_reference_for_qin_mi_and_zhang_wen",
       "sha256": "3425e54f3041534e0f575d338ebf12ffc6eaebb5bd82c52b954ee4012d622cad"
     },

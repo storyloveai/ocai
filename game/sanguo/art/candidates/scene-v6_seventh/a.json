@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：大帐：孟获袒肩跪地请罪；诸葛亮起身去扶；南方长老和蜀将在旁看着",
+  "description": "孟获袒肩跪地，诸葛亮起身握住他的手扶起，两方长老与军士在后见证。",
   "authored_job": {
     "id": "scene-v6_seventh",
     "kind": "scene",
@@ -43,7 +43,7 @@
   "reference_inputs_in_order": [
     {
       "path": "game/sanguo/art/candidates/scene-v6_first/a.png",
-      "source_commit": null,
+      "source_commit": "5cb7c8cb1f6befde97f23198be4e6dae0d04eaba",
       "role": "provisional_round2_identity_reference_for_meng_huo",
       "sha256": "141ff62b6842a073aeb8325cd928c6a7c76f080c738e395900e6d7d8e7abdc3a"
     },
@@ -68,5 +68,6 @@
     1024
   ],
   "original_sha256": "9ac1e715952d2523e3bafe4eb8b023cba6ccf11da713278670027c1b608b7b55",
-  "created_at": "2026-10-27T09:14:59.817379+00:00"
+  "created_at": "2026-10-27T09:14:59.817379+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

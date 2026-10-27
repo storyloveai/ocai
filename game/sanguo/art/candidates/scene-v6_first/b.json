@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "b",
-  "description": "B：南方山中营地：诸葛亮从容坐着；兵士给头插羽毛、披兽皮的高大头领孟获松绑；远处密林",
+  "description": "扩大南方山营的横向距离，孟获披兽皮昂首不服，两名蜀兵在两侧解绳。",
   "authored_job": {
     "id": "scene-v6_first",
     "kind": "scene",
@@ -62,5 +62,9 @@
     1024
   ],
   "original_sha256": "a4212dc300e7b9b6d1c751b0e394169f020b5cee11036a20c77927c8c3c46f61",
-  "created_at": "2026-10-27T09:10:44.265146+00:00"
+  "created_at": "2026-10-27T09:10:44.265146+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude",
+  "review_notes": [
+    "冠帽沿用了头像的浅色造型；请按卷六黑纶巾的服饰要求复核，并对比 A。"
+  ]
 }
