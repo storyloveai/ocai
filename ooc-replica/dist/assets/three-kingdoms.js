@@ -15,9 +15,11 @@ export function mountThreeKingdoms(path,{reference,account,helpers}){
  // the game starts in the site language; the setting is saved the next time the game itself saves its settings
  if(['zh','en'].includes(lang))snapshot['campaign.settings']={...(snapshot['campaign.settings']||{}),lang};
  const page=classic?'three-kingdoms':ink?'sanguo-campaign':'sanguo-campaign-illus';
+ // a choice or words from the home banner are handed to the game, which plays them into chapter 1's opening scene
+ const pass=new URLSearchParams();for(const k of ['choice','say']){const v=params.get(k);if(v)pass.set(k,v.slice(0,200));}const entry=!classic&&[...pass].length?'?'+pass:'';
  const switcher=classic?`<a style="font-size:12px" href="/play/three-kingdoms">谋士八章</a>`:`<a style="font-size:12px" href="/play/three-kingdoms${ink?'':'-ink'}">${ink?'插画版':'水墨版'}</a><a style="font-size:12px" href="/play/three-kingdoms?edition=classic">经典三章</a>`;
  if(path.startsWith('/play/'))helpers.save('ooc-history',[threeKingdoms.id,...helpers.read('ooc-history',[]).filter(id=>id!==threeKingdoms.id)]);
- const root=reference.mountShell(`<header class="shell-page-header" style="gap:12px;min-height:56px"><a href="/">‹ 返回</a><h1 style="font-size:16px">三国演义</h1>${switcher}<span style="margin-left:auto;font-size:12px;color:#aaa">进度自动保存</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/${page}.html" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>`,helpers,'three-kingdoms');
+ const root=reference.mountShell(`<header class="shell-page-header" style="gap:12px;min-height:56px"><a href="/">‹ 返回</a><h1 style="font-size:16px">三国演义</h1>${switcher}<span style="margin-left:auto;font-size:12px;color:#aaa">进度自动保存</span></header><iframe id="three-kingdoms-frame" title="三国演义互动故事" src="/assets/${page}.html${entry}" style="display:block;width:100%;height:calc(100dvh - 57px);min-height:480px;border:0;background:#111113"></iframe>`,helpers,'three-kingdoms');
  const frame=root.querySelector('#three-kingdoms-frame');
  const edition=classic?'classic':ink?'ink':'illustrated';track('game_opened',{game:'three-kingdoms',edition,lang});
  const progress=gameTracker({game:'three-kingdoms',edition});

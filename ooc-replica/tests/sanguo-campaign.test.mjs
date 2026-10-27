@@ -6,7 +6,8 @@ import {parseHTML} from 'linkedom';
 import {buildCampaignStage,campaign} from '../server/sanguo-prompt.js';
 import {createCampaignHandler} from '../api/sanguo.js';
 import CC from '../server/sanguo-core.cjs';
-function enterPlum(g){CC.pickSide(campaign,g,g.offer[0]);CC.choose(campaign,g,'reminisce');return g;}
+// Chapter 1 opens on the plum-wine scene (main_first, 决策记录 v2.9): a new game is already there.
+function enterPlum(g){assert.equal(g.cur,'c1_plum');return g;}
 const snap=(g,id='test')=>({['campaign.run.'+id]:g,'campaign.cur':id,'campaign.runs':[{id,vol:'sanguo_strategist_v1',n:1,created:1,updated:1,status:'play',early:false,ch:0,chap:'c1',node:'c1_plum',from:null,preset:null,branch:null,frags:null}]});
 const tick=()=>new Promise(r=>setTimeout(r,15));
 async function page({snapshot={},model=false,api}={}){
@@ -28,14 +29,14 @@ test('campaign prompt binds authored scene and legal options; rejects raw prompt
 });
 test('embedded v2 waits for a trusted snapshot, starts, saves, keeps sidebar tabs local and resumes',async()=>{
  const p=await page();assert.equal(p.sent[0].type,'sg2-ready');assert.equal(p.document.querySelector('.hero'),null);p.init('https://evil.example');assert.equal(p.document.querySelector('.hero'),null);p.init();await tick();
- assert.ok(p.document.querySelector('.hero'));assert.ok(!p.document.querySelector('button[aria-pressed="true"]')?.textContent.includes('创作者'));
- p.click(p.document.querySelector('.volcard .btn'));p.click(p.document.querySelector('.offer button'));p.click(p.document.querySelector('.choice:not([disabled])'));await tick();assert.ok(p.sent.some(m=>/^campaign\.run\./.test(m.key)));assert.ok(p.document.querySelector('#act input'));
+ // a first visit opens straight into Volume I, chapter 1
+ assert.equal(p.document.querySelector('.volcard'),null);assert.ok(p.document.querySelector('.chapter'));assert.ok(!p.document.querySelector('button[aria-pressed="true"]')?.textContent.includes('创作者'));await tick();assert.ok(p.sent.some(m=>/^campaign\.run\./.test(m.key)));assert.ok(p.document.querySelector('#act input'));
  let restoredScroll=null;p.window.scrollY=250;p.window.scrollTo=pos=>{restoredScroll=pos.top;};const story=p.document.querySelector('#story').innerHTML;p.click([...p.document.querySelectorAll('[role=tab]')].find(e=>e.textContent==='舆图'));assert.equal(p.document.querySelector('#story').innerHTML,story);assert.ok(p.document.querySelector('#panel svg'));assert.equal(restoredScroll,250);
  const state=p.sent.findLast(m=>/^campaign\.run\./.test(m.key)).value;
  const r=await page({snapshot:snap(state)});r.init();await tick();assert.ok(r.document.querySelector('.resume'));r.click(r.document.querySelector('.resume .btn'));await tick();assert.ok(r.document.querySelector('#story').textContent.includes('许都'));
 });
 test('free answer advances the rules once and supports subsequent authored choices without AI',async()=>{
- const p=await page();p.init();await tick();p.click(p.document.querySelector('.volcard .btn'));p.click(p.document.querySelector('.offer button'));p.click(p.document.querySelector('.choice:not([disabled])'));p.submit('真正的英雄当为百姓谋生。');await tick();
+ const p=await page();p.init();await tick();p.submit('真正的英雄当为百姓谋生。');await tick();
  const save=p.sent.findLast(m=>/^campaign\.run\./.test(m.key)).value;assert.ok(save.asked.c1_plum);assert.equal(save.log.filter(e=>e.k==='ans').length,1);assert.ok(p.document.querySelector('.choice'));
  p.click(p.document.querySelector('.choice:not([disabled])'));assert.ok(p.sent.findLast(m=>/^campaign\.run\./.test(m.key)).value.log.length>save.log.length);
 });
