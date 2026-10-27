@@ -69,3 +69,18 @@ See [Firebase setup](docs/FIREBASE-SETUP.md) for deployment variables, Google an
 [两部名著战役](book-campaigns/README.md)开放《凡人修仙传·谷外微尘》《基督山伯爵·余烬与潮汐》卷一，复用三国CC规则核心，当前各开放前两章试玩，后续结构保留为草稿；账号独立存档与AI流式对白。访问 `/play/mortal-path` 与 `/play/monte-cristo`。
 
 [DeepSeek完整文字批次](content/original-catalog/generated-text/INDEX.md)包含40个故事、40个角色，仍为待编辑、待图片的草稿，不自动替换现有目录。
+
+## Payment verification — issue #39
+
+Use the current **storydate-zhou** Vercel project (Root Directory `ooc-replica`). Older project/domain names elsewhere in these historical notes are not the deployment target.
+
+1. Run `npm run build && npm run check`. The payment suite uses a transactional in-memory wallet and mocked Stripe responses: checkout → signed webhook → receipt → balance → return status, including duplicates, ownership, wrong amount/environment, cancellation, expiration and database outage. This is not a real Stripe or Firestore acceptance test.
+2. To verify **Production variable names only**, put an authorized Vercel token in your local/sandbox secret environment, optionally set `VERCEL_TEAM_ID` and `VERCEL_PROJECT_ID`, then run `node scripts/audit-payment-env.mjs`. The default project is `storydate-zhou`; the script requests encrypted metadata, prints only required variable names and presence, and never outputs values. Exit 2 means the platform audit was not verified; do not interpret it as missing variables. This environment currently has no Vercel token, so Production presence has not been confirmed.
+3. Preview must have `sk_test_…` and its own test webhook secret/prices. `STRIPE_LIVE_SECRET_KEY` cannot override a Preview sandbox key; accidental live-only Preview configuration disables wallet and payment access instead of touching live balances. Test/live receipts and balances use separate Firestore collections. Public config booleans do not prove credential validity.
+4. In the deployed sandbox, sign in and record the balance. Buy the smallest pack using Stripe's test card `4242 4242 4242 4242` with a future expiry. Verify the signed webhook delivery, `replica-receipts-test` receipt, a single +200 entry and refreshed UI balance. Resend the event and reload the return page: balance must stay unchanged. Cancel another checkout and expire one in Stripe: neither may credit. A decline/3DS attempt must not grant until paid.
+5. Switch accounts and verify private balances/order lookup remain isolated. If webhook delivery is delayed, the return page reports pending fulfillment and refresh checks the receipt; the return URL itself never credits.
+6. After explicit merge/live authorization, the account holder performs one genuine $1.99 purchase on `storydate-zhou.vercel.app` with a real card and confirms exactly +200 in the live receipt, wallet ledger and UI. Never use a test card on a live checkout. This manual step remains pending.
+
+### Purchase analytics decision
+
+`purchase_completed` currently fires in the browser only after the server confirms a committed receipt. It counts confirmed returns, not every paid order, and is not a financial ledger. Keep this event for the current funnel: browser PostHog respects Do Not Track and user opt-out; a naive webhook capture would bypass that preference. Billing truth remains the Stripe session plus atomic Firestore receipt. Moving the event server-side requires consent propagation and a durable, deduplicated delivery mechanism; it is deliberately not mixed into credit fulfillment. No PostHog event is sent by local automated checks.
