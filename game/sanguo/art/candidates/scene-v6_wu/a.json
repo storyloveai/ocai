@@ -1,0 +1,68 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "a",
+  "description": "A：成都厅上：诸葛亮站在天下地图旁和众官说话；子衡背影站在对面",
+  "authored_job": {
+    "id": "scene-v6_wu",
+    "kind": "scene",
+    "name": "v6_wu",
+    "batch": 5,
+    "status": "queued",
+    "refs": [
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/scenes/v3_council.webp"
+    ],
+    "keep": [
+      "诸葛亮：长发、白衣、白羽扇、清秀无须（四十五岁上下，略显疲惫）",
+      "子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸"
+    ],
+    "composition": "成都厅上：诸葛亮站在天下地图旁和众官说话；子衡背影站在对面",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "南方各族的衣饰要庄重，不丑化",
+      "子衡不露脸"
+    ],
+    "prompt": "Zhuge Liang, about forty-five, in white robes with a feather fan and a black silk scholar's cap, stands in a hall in Chengdu beside a map of the realm, speaking to officials; Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands opposite him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game. Southern tribal peoples are depicted with dignity, not as caricatures.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v6.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"Zhuge Liang, about forty-five, in white robes with a feather fan and a black silk scholar's cap, stands in a hall in Chengdu beside a map of the realm, speaking to officials; Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands opposite him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game. Southern tribal peoples are depicted with dignity, not as caricatures.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇、清秀无须（四十五岁上下，略显疲惫）\",\n    \"子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"成都厅上：诸葛亮站在天下地图旁和众官说话；子衡背影站在对面\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"南方各族的衣饰要庄重，不丑化\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery candidate A: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Use clear cinematic staging matching the authored composition.\n\nZhuge Liang when present is now approximately FORTY-FIVE, subtly mature and tired, but still the SAME canonical face and long dark hair, white robe and feather fan. He is CLEAN-SHAVEN: no moustache or beard. Do not copy the faces or costumes of unrelated heroes from the final style reference. If Ziheng is present he is around fifty with discreet grey at temples, back to viewer, NO face. Blank solid-color banners and maps with NO written markings.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_council.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "b771ed80aaf36c955c3aac04857ce505b7a56522f44138447e1223f0592fa032",
+  "created_at": "2026-10-27T08:50:59.222808+00:00"
+}

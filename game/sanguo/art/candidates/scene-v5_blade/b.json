@@ -1,0 +1,57 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "b",
+  "description": "B：猇亭营中：关兴白孝罩甲，双手捧着父亲的青龙偃月刀，眼眶通红；子衡背影伸手去摸刀柄",
+  "authored_job": {
+    "id": "scene-v5_blade",
+    "kind": "scene",
+    "name": "v5_blade",
+    "batch": 4,
+    "status": "queued",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/scenes/v3_feishi.webp"
+    ],
+    "keep": [
+      "子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸"
+    ],
+    "composition": "猇亭营中：关兴白孝罩甲，双手捧着父亲的青龙偃月刀，眼眶通红；子衡背影伸手去摸刀柄",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A camp at Xiaoting: a young general (Guan Xing, in white mourning over armour) holds out his father's great crescent-blade glaive with both hands, eyes red; Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible reaches toward the hilt. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v5.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"A camp at Xiaoting: a young general (Guan Xing, in white mourning over armour) holds out his father's great crescent-blade glaive with both hands, eyes red; Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible reaches toward the hilt. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"猇亭营中：关兴白孝罩甲，双手捧着父亲的青龙偃月刀，眼眶通红；子衡背影伸手去摸刀柄\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery candidate B: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Make an independent alternative using a modestly different camera distance and staging, preserving all authored identities, physical actions and composition.\n\nGuan Xing is a young ADULT, eyes reddened by grief, white mourning cloth over armour; he is NOT the long-bearded red-faced Guan Yu. Ziheng fifty, greying temples, viewed entirely from behind.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/v3_feishi.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "b2e31b53a87e257aeaee0335377ace358acf311511deb6113cb4209778427c67",
+  "created_at": "2026-10-27T08:49:16.965004+00:00"
+}

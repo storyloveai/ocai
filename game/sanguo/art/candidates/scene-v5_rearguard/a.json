@@ -1,0 +1,65 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "a",
+  "description": "A：夜，燃烧的林边：关羽独自持刀立马面对火与敌；远处有人被架走",
+  "authored_job": {
+    "id": "scene-v5_rearguard",
+    "kind": "scene",
+    "name": "v5_rearguard",
+    "batch": 4,
+    "status": "queued",
+    "refs": [
+      "guanyu"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/guanyu.webp",
+      "game/sanguo/art/scenes/v3_guanyu_night.webp"
+    ],
+    "keep": [
+      "关羽：枣红脸、及胸长黑须、绿袍，左臂不灵"
+    ],
+    "composition": "夜，燃烧的林边：关羽独自持刀立马面对火与敌；远处有人被架走",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "Night, at the edge of a burning forest: Guan Yu, red-faced with a long black beard, sits his horse alone holding his glaive, facing the fire and the enemy; far behind, riders carry someone away. Heroic, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v5.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"Night, at the edge of a burning forest: Guan Yu, red-faced with a long black beard, sits his horse alone holding his glaive, facing the fire and the enemy; far behind, riders carry someone away. Heroic, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、绿袍，左臂不灵\"\n  ],\n  \"composition\": \"夜，燃烧的林边：关羽独自持刀立马面对火与敌；远处有人被架走\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery candidate A: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Use clear cinematic staging matching the authored composition.\n\nGuan Yu's LEFT arm is stiff/injured and must remain immobilized; use his RIGHT hand to hold the crescent glaive or point. Keep his canonical red face, very long black beard, green headscarf, green robe and dark-gold armour. Do not mirror the anatomy.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/guanyu.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_guanyu_night.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "ec0ee68d2c0e861622b9ae39baa5aa3a10f9ec3f03d3d1768171a19381d89cc7"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "59ff2628034e0fc023e363362dbd3fb9816073bcd30b46b69b3beca6d083caf3",
+  "created_at": "2026-10-27T08:50:14.677900+00:00"
+}
