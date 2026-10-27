@@ -136,6 +136,13 @@ test('both editions mount: illustrated by default, ink on its own path, and ?lan
  assert.match(frames.at(-1).getAttribute('src'),/sanguo-campaign-illus\.html$/);
  const ready=new window.Event('message');Object.assign(ready,{origin:'https://test.example',source:frames.at(-1).contentWindow,data:{type:'sg2-ready'}});window.dispatchEvent(ready);
  assert.equal(sent.at(-1).snapshot['campaign.settings'].lang,'en');
+ // a choice or words from the home banner are handed on to the game; nothing else is
+ globalThis.location={origin:'https://test.example',search:'?lang=en&choice=cover&x=1'};
+ mountThreeKingdoms('/play/three-kingdoms',{reference,account:{},helpers});
+ assert.match(frames.at(-1).getAttribute('src'),/sanguo-campaign-illus\.html\?choice=cover$/);
+ globalThis.location={origin:'https://test.example',search:'?say=I%20pour%20him%20wine'};
+ mountThreeKingdoms('/play/three-kingdoms',{reference,account:{},helpers});
+ assert.match(frames.at(-1).getAttribute('src'),/\?say=I\+pour\+him\+wine$/);
  globalThis.location={origin:'https://test.example',search:'?edition=classic'};
  mountThreeKingdoms('/play/three-kingdoms',{reference,account:{},helpers});
  assert.match(frames.at(-1).getAttribute('src'),/\/three-kingdoms\.html$/);
