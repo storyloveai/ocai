@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：夜，燃烧的林边：关羽独自持刀立马面对火与敌；远处有人被架走",
+  "description": "关羽右手持刀立马火林前，左臂裹缚，远处同袍架着伤者撤走。",
   "authored_job": {
     "id": "scene-v5_rearguard",
     "kind": "scene",
@@ -61,5 +61,6 @@
     1024
   ],
   "original_sha256": "59ff2628034e0fc023e363362dbd3fb9816073bcd30b46b69b3beca6d083caf3",
-  "created_at": "2026-10-27T08:50:14.677900+00:00"
+  "created_at": "2026-10-27T08:50:14.677900+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

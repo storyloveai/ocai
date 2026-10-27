@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：成都厅上：诸葛亮站在天下地图旁和众官说话；子衡背影站在对面",
+  "description": "诸葛亮白衣持扇立在无字天下地图旁，向对面背向的子衡及群臣说话。",
   "authored_job": {
     "id": "scene-v6_wu",
     "kind": "scene",
@@ -64,5 +64,6 @@
     1024
   ],
   "original_sha256": "b771ed80aaf36c955c3aac04857ce505b7a56522f44138447e1223f0592fa032",
-  "created_at": "2026-10-27T08:50:59.222808+00:00"
+  "created_at": "2026-10-27T08:50:59.222808+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

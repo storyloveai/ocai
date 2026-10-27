@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "b",
-  "description": "B：营中夜：宴帐里穿南方衣饰的人伏在酒坛上昏睡；帐外蜀兵埋伏；诸葛亮在坡上举火看着",
+  "description": "更开阔的夜营视角，醉卧宴席居左，诸葛亮在右前景举火，伏兵沿下方展开。",
   "authored_job": {
     "id": "scene-v6_mengyou",
     "kind": "scene",
@@ -62,5 +62,6 @@
     1024
   ],
   "original_sha256": "4481f67c22e18ef303a4b2b95ae526009c2654afa7e845ad1059d87d9b03fe18",
-  "created_at": "2026-10-27T08:55:52.839603+00:00"
+  "created_at": "2026-10-27T08:55:52.839603+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

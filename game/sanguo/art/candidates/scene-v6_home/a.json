@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：成都小院春天：药畦和一棵小梅树；温芷蹲着侍弄草药，抬头看站在门口的子衡背影",
+  "description": "春日小院里温芷俯身照料药畦，抬眼看门口背向的子衡，梅花映在右上方。",
   "authored_job": {
     "id": "scene-v6_home",
     "kind": "scene",
@@ -64,5 +64,6 @@
     1024
   ],
   "original_sha256": "6ef3133540a29ab184ec5c285546d79e412d70c2ad280185fff938738113b279",
-  "created_at": "2026-10-27T08:56:36.937807+00:00"
+  "created_at": "2026-10-27T08:56:36.937807+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

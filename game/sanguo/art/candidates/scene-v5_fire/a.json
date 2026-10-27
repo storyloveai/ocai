@@ -1,0 +1,81 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "a",
+  "description": "老将赵云银甲引路，神情疲惫的刘备与少量卫士骑马撤出连营大火。",
+  "authored_job": {
+    "id": "scene-v5_fire",
+    "kind": "scene",
+    "name": "v5_fire",
+    "batch": 4,
+    "status": "queued",
+    "refs": [
+      "liubei",
+      "zhaoyun"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/liubei.webp",
+      "game/sanguo/art/portraits/zhaoyun.webp",
+      "game/sanguo/art/scenes/v3_hanshui.webp"
+    ],
+    "keep": [
+      "刘备：六十岁上下，鬓发花白、短须，这一卷穿帝王的黑红冕服",
+      "赵云：浓眉大眼、阔面，银白铠甲，年纪已长"
+    ],
+    "composition": "夜，东南风里沿江林中连营起火；刘备带少数卫士穿过烟；前方路上赵云银甲带火把队来接",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "Night, a forest of army camps burning along a river under a southeast wind; Liu Bei, now around sixty, an emperor in a black-and-red imperial robe with a jade-beaded crown, kindly face, grey in his short beard, rides through smoke with a few guards; ahead on the road Zhao Yun in silver armour leads a column of torches to meet him. No bodies. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v5.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"Night, a forest of army camps burning along a river under a southeast wind; Liu Bei, now around sixty, an emperor in a black-and-red imperial robe with a jade-beaded crown, kindly face, grey in his short beard, rides through smoke with a few guards; ahead on the road Zhao Yun in silver armour leads a column of torches to meet him. No bodies. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"刘备：六十岁上下，鬓发花白、短须，这一卷穿帝王的黑红冕服\",\n    \"赵云：浓眉大眼、阔面，银白铠甲，年纪已长\"\n  ],\n  \"composition\": \"夜，东南风里沿江林中连营起火；刘备带少数卫士穿过烟；前方路上赵云银甲带火把队来接\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery candidate A: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Use clear cinematic staging matching the authored composition.\n\nThe FIRST extra image is an unadopted round-2 candidate identity anchor ONLY for Liu Bei at age sixty: keep his grey temples, short salt-and-pepper beard, facial proportions and black-red embroidered imperial robe consistent. Do not copy its young kneeling general or its throne scene. Retain all original portrait and final style references. Match the current scene's action, not the anchor composition. Zhao Yun is an OLDER man in silver-white armour with blue accents: age the canonical youthful portrait without changing his strong eyebrows, broad face, dark hair/headband or bright expressive eyes. Zhuge Liang if present is clean-shaven in white. Do not bring Huang Zhong or other heroes from the style reference.\nCRITICAL AGING AND EMOTION: Zhao Yun is a weathered FIFTY-FIVE-YEAR-OLD VETERAN in THIS SCENE, not the twenty-year-old from the early-volume portrait. Keep the SAME broad facial proportions, thick brows and dark eyes but add clear crow's-feet, forehead lines, nasolabial folds, subtly grey temples and a mature strong jaw. His silver armour and blue accent stay recognizable. NO TEENAGE OR TWENTIES FACE. Liu Bei is SIXTY with salt-and-pepper SHORT beard and grey temples, black-red imperial robe and jade crown, EXHAUSTED and SHAKEN by the catastrophe, no smiling or cheerful reunion. Zhao Yun anxiously escorts the emperor away from the burning forest camps through smoke, with a small torch-bearing adult cavalry escort. Keep clear crisis tension, no victory celebration.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/candidates/scene-v5_liufeng/a.png",
+      "source_commit": null,
+      "role": "provisional_round2_identity_reference_for_aged_emperor_liubei",
+      "sha256": "54310fd22bb646d95310aaa49c4de9ebd834ab2aedd9d0ed46c895f9320470d1"
+    },
+    {
+      "path": "game/sanguo/art/portraits/liubei.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+    },
+    {
+      "path": "game/sanguo/art/portraits/zhaoyun.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "781b0c5dde10c45803771ec36f2ddb1ddc71e1cf04d0ae00c19ecaee1f76af47",
+  "created_at": "2026-10-27T09:08:55.800927+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
+}

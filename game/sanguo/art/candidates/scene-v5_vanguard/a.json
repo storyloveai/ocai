@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：夕阳秭归城头：关羽左手用布缠在缰绳上，指向东边群山；子衡背影站在旁边",
+  "description": "关羽右手向画面左侧群山指去，受伤左手低缚缰绳，子衡背影立在右侧。",
   "authored_job": {
     "id": "scene-v5_vanguard",
     "kind": "scene",
@@ -63,5 +63,6 @@
     1024
   ],
   "original_sha256": "0342e49285489ecf0558f3904cb117d24501ad09b7e621b971ddab1c5c9b4391",
-  "created_at": "2026-10-27T08:56:00.104552+00:00"
+  "created_at": "2026-10-27T08:56:00.104552+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

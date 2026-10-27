@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：宴厅灯下：醉醺醺的蜀中学士秦宓举杯起身作答；吴使张温深蓝袍满脸窘迫；宾客大笑",
+  "description": "秦宓起身举杯从容作答，深蓝袍张温尴尬俯身，宴席宾客放声大笑。",
   "authored_job": {
     "id": "scene-v6_qinmi",
     "kind": "scene",
@@ -51,5 +51,6 @@
     1024
   ],
   "original_sha256": "3425e54f3041534e0f575d338ebf12ffc6eaebb5bd82c52b954ee4012d622cad",
-  "created_at": "2026-10-27T08:54:37.040168+00:00"
+  "created_at": "2026-10-27T08:54:37.040168+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

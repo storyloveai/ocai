@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：挂白孝布的殿：刘备昏倒在众人臂弯；战报掉在地上",
+  "description": "挂白幡的殿中，刘备昏倒在群臣臂间，空白战报散落前景。",
   "authored_job": {
     "id": "scene-v5_mourning",
     "kind": "scene",
@@ -67,5 +67,6 @@
     1024
   ],
   "original_sha256": "ea2e1f42db0cd8d220755362a1cfb4cd05b1de2ada43929ba726e73a5a38b180",
-  "created_at": "2026-10-27T08:53:51.939973+00:00"
+  "created_at": "2026-10-27T08:53:51.939973+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

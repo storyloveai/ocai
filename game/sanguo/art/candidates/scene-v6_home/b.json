@@ -1,0 +1,69 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "b",
+  "description": "从门内看向药畦，温芷蹲着抬头微笑，子衡在右前景始终背向观者。",
+  "authored_job": {
+    "id": "scene-v6_home",
+    "kind": "scene",
+    "name": "v6_home",
+    "batch": 5,
+    "status": "queued",
+    "refs": [
+      "wenzhi"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/wenzhi.webp",
+      "game/sanguo/art/scenes/v3_wz_road.webp"
+    ],
+    "keep": [
+      "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子",
+      "子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸"
+    ],
+    "composition": "成都小院春天：药畦和一棵小梅树；温芷蹲着侍弄草药，抬头看站在门口的子衡背影",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "南方各族的衣饰要庄重，不丑化",
+      "子衡不露脸"
+    ],
+    "prompt": "A small courtyard in Chengdu in spring: herb beds and a young plum tree; Wen Zhi kneels tending herbs and looks up toward Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible standing in the gate. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game. Southern tribal peoples are depicted with dignity, not as caricatures.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v6.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"A small courtyard in Chengdu in spring: herb beds and a young plum tree; Wen Zhi kneels tending herbs and looks up toward Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible standing in the gate. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game. Southern tribal peoples are depicted with dignity, not as caricatures.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\",\n    \"子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"成都小院春天：药畦和一棵小梅树；温芷蹲着侍弄草药，抬头看站在门口的子衡背影\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"南方各族的衣饰要庄重，不丑化\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery candidate B: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Make an independent alternative using a modestly different camera distance and staging, preserving all authored identities, physical actions and composition.\n\nZhuge Liang when present is now approximately FORTY-FIVE, subtly mature and tired, but still the SAME canonical face and long dark hair, white robe and feather fan. He is CLEAN-SHAVEN: no moustache or beard. Do not copy the faces or costumes of unrelated heroes from the final style reference. If Ziheng is present he is around fifty with discreet grey at temples, back to viewer, NO face. Blank solid-color banners and maps with NO written markings. Wen Zhi retains canonical face, one white plum blossom and pale blue-gray robe, only she and back-facing Ziheng. No soldier from style reference.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/wenzhi.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "431a32186f4574e11dbee91c526dd11746bf345b62afdd1f5aabaa8d5a6db930",
+  "created_at": "2026-10-27T09:00:24.081024+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
+}

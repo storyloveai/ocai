@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "a",
-  "description": "A：烈日下宽浅的河，热气蒸腾；岸上盖着布的兵士（不露脸、不见血）；诸葛亮愕然站着；几个当地人远远看着",
+  "description": "烈日浅河旁诸葛亮垂扇愕立，前景士卒被布遮盖，远岸当地人静静观望。",
   "authored_job": {
     "id": "scene-v6_lushui",
     "kind": "scene",
@@ -62,5 +62,6 @@
     1024
   ],
   "original_sha256": "efd0bdf1205877eb53b538bccca942e4bf40d23cbcbd1ca23aa8a1466560722f",
-  "created_at": "2026-10-27T08:52:23.075096+00:00"
+  "created_at": "2026-10-27T08:52:23.075096+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

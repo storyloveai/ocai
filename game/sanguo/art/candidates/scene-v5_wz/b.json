@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "b",
-  "description": "B：宫中偏殿灯下：温芷扇着小炉煎药，抬头看刚进来的人；手边几页手抄医书",
+  "description": "更远的偏殿视角，温芷守着小炉，前景纸页全无字迹，来人只露衣角。",
   "authored_job": {
     "id": "scene-v5_wz",
     "kind": "scene",
@@ -61,5 +61,6 @@
     1024
   ],
   "original_sha256": "fd7a0f46af0149433bd511591908cfd522408fed592cef7134f1a17ed6f9b9b0",
-  "created_at": "2026-10-27T08:53:14.353420+00:00"
+  "created_at": "2026-10-27T08:53:14.353420+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

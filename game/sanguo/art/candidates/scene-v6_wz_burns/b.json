@@ -1,0 +1,67 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "b",
+  "description": "反向展开医治队伍，温芷在右侧专注包扎，左侧伤者与谷口烟气相接。",
+  "authored_job": {
+    "id": "scene-v6_wz_burns",
+    "kind": "scene",
+    "name": "v6_wz_burns",
+    "batch": 5,
+    "status": "queued",
+    "refs": [
+      "wenzhi"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/wenzhi.webp",
+      "game/sanguo/art/scenes/v2_wound.webp"
+    ],
+    "keep": [
+      "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子"
+    ],
+    "composition": "黎明冒烟的谷口：温芷跪着给一个南方族人包扎烧伤的手臂；其他人坐着等；烟飘着；不画伤口细节",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "南方各族的衣饰要庄重，不丑化"
+    ],
+    "prompt": "Dawn at the mouth of a smoking valley: Wen Zhi kneels binding the burned arm of a southern tribesman; others sit waiting; smoke drifting. No graphic wounds. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game. Southern tribal peoples are depicted with dignity, not as caricatures.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v6.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"Dawn at the mouth of a smoking valley: Wen Zhi kneels binding the burned arm of a southern tribesman; others sit waiting; smoke drifting. No graphic wounds. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game. Southern tribal peoples are depicted with dignity, not as caricatures.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"黎明冒烟的谷口：温芷跪着给一个南方族人包扎烧伤的手臂；其他人坐着等；烟飘着；不画伤口细节\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"南方各族的衣饰要庄重，不丑化\"\n  ]\n}\n\nDelivery candidate B: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Make an independent alternative using a modestly different camera distance and staging, preserving all authored identities, physical actions and composition.\n\n",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/wenzhi.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v2_wound.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "6b5645deb483b7602bd643e1462037a6516c573be8fdc4ea9e5bdef46fa69b00"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "2b1ef8294bdd9a02c12c004bb3175aca3337d9e211574c8f22e9f70925ba777d",
+  "created_at": "2026-10-27T09:01:43.151680+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
+}

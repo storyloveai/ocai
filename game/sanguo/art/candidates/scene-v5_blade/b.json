@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "b",
-  "description": "B：猇亭营中：关兴白孝罩甲，双手捧着父亲的青龙偃月刀，眼眶通红；子衡背影伸手去摸刀柄",
+  "description": "关兴在营中抬眼望着子衡，长刀横贯两人之间，营火与江岸在后。",
   "authored_job": {
     "id": "scene-v5_blade",
     "kind": "scene",
@@ -53,5 +53,6 @@
     1024
   ],
   "original_sha256": "b2e31b53a87e257aeaee0335377ace358acf311511deb6113cb4209778427c67",
-  "created_at": "2026-10-27T08:49:16.965004+00:00"
+  "created_at": "2026-10-27T08:49:16.965004+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }

@@ -4,7 +4,7 @@
   "seed": null,
   "round": 2,
   "candidate": "b",
-  "description": "B：殿上：张飞（豹头环眼、虎须，白孝衣罩黑甲）跪抱刘备衣袍，两人都在哭",
+  "description": "拉开殿内距离，张飞跪地攥住刘备冕服，刘备俯身抚慰。",
   "authored_job": {
     "id": "scene-v5_fei",
     "kind": "scene",
@@ -68,5 +68,6 @@
     1024
   ],
   "original_sha256": "39ac2570dce16f327a08720cd28a0bb9503a8375e1dd654ea2e8027ca6e91799",
-  "created_at": "2026-10-27T08:52:43.656469+00:00"
+  "created_at": "2026-10-27T08:52:43.656469+00:00",
+  "codex_visual_check": "inspected; final acceptance remains with Claude"
 }
