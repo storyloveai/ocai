@@ -1,0 +1,67 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "b",
+  "description": "更远的床侧构图，灯下法正面容消瘦，残页与握住的手都留在画面中。",
+  "authored_job": {
+    "id": "scene-v5_fazheng",
+    "kind": "scene",
+    "name": "v5_fazheng",
+    "batch": 4,
+    "status": "queued",
+    "refs": [
+      "fazheng"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/fazheng.webp",
+      "game/sanguo/art/scenes/v3_fazheng_night.webp"
+    ],
+    "keep": [
+      "法正：瘦脸、短须，病容",
+      "子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸"
+    ],
+    "composition": "病房灯下：法正病容倚在床上，手边一张撕下的纸；子衡背影坐在床边握着他的手",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A dim sickroom by lamplight: Fa Zheng, gaunt and ill, lies propped on a bed with a torn page under his hand; Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits beside the bed holding his hand. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v5.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"A dim sickroom by lamplight: Fa Zheng, gaunt and ill, lies propped on a bed with a torn page under his hand; Ziheng (the player, a scholar around fifty in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits beside the bed holding his hand. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"法正：瘦脸、短须，病容\",\n    \"子衡（玩家）：灰蓝布袍的书生，五十岁上下，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"病房灯下：法正病容倚在床上，手边一张撕下的纸；子衡背影坐在床边握着他的手\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery candidate B: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Make an independent alternative using a modestly different camera distance and staging, preserving all authored identities, physical actions and composition.\n\n",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/fazheng.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "80e26cfe21097b30cab6ae670dffde1074a6e8dfddeb7d0ae35afce363f93f1f",
+  "created_at": "2026-10-27T08:44:21.281449+00:00"
+}

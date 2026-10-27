@@ -1,0 +1,66 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "round": 2,
+  "candidate": "c",
+  "description": "两骑均向右驰行，右侧庞德扭身朝左后方的关羽引弓，魏军抬棺在后。",
+  "authored_job": {
+    "id": "scene-v4_pangde",
+    "kind": "scene",
+    "name": "v4_pangde",
+    "batch": 3,
+    "status": "ready",
+    "refs": [
+      "guanyu"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/guanyu.webp",
+      "game/sanguo/art/scenes/v3_hanshui.webp"
+    ],
+    "keep": [
+      "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲"
+    ],
+    "composition": "樊城外：关羽在左侧纵马追来；庞德在右侧往右逃，回身拉弓，箭头朝左指向关羽；远处魏军阵前抬着一口木棺",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A battlefield outside Fancheng under a grey sky: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at full gallop with his crescent blade; ahead of him Pang De, a fierce Wei general in dark armour, rides AWAY toward the right of the picture but twists back in the saddle, his bow drawn and the arrow aimed BACK to the left at Guan Yu who pursues him; behind the Wei lines a plain wooden coffin is carried on poles. No gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ],
+    "redo": "第一轮两张里庞德的箭都朝前方（右边）射，要改成回身向后（左边）射向追来的关羽"
+  },
+  "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v4.jsonl",
+  "full_generation_prompt": "Create ONE standalone full-frame uncropped original Chinese historical illustrated visual-novel scene. Use ALL attached references. The original reference portraits lock each named character's face and hairstyle. The LAST attached image is the adopted ART STYLE ONLY: do NOT copy its composition or introduce recognizable people from it who are not in this authored scene. Match the polished Chinese historical illustration, clean expressive linework and painted highlights. Reference outfits may be from earlier volumes; follow the EXACT AGE and COSTUME stated in the current authored brief.\n\nAuthored fields, copied VERBATIM (do not render any of this as writing):\n{\n  \"prompt\": \"A battlefield outside Fancheng under a grey sky: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at full gallop with his crescent blade; ahead of him Pang De, a fierce Wei general in dark armour, rides AWAY toward the right of the picture but twists back in the saddle, his bow drawn and the arrow aimed BACK to the left at Guan Yu who pursues him; behind the Wei lines a plain wooden coffin is carried on poles. No gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\"\n  ],\n  \"composition\": \"樊城外：关羽在左侧纵马追来；庞德在右侧往右逃，回身拉弓，箭头朝左指向关羽；远处魏军阵前抬着一口木棺\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery candidate C: one landscape original, requested size 1536x1024. Keep all principal faces and key actions within the central horizontal band for the reviewer to crop to 2.5:1 later; DO NOT crop the original. No writing, glyphs, pseudo-calligraphy, seals, lettering, watermarks or written emblems ANYWHERE, including maps, tablet surfaces, books, paper, signs and banners. Use blank surfaces, unlabelled geographic contours, or turn text-bearing sides away. Never copy lettering from a reference. All people are ADULTS. No blood, graphic wounds or gore. If Ziheng is present, show only his back or three-quarter back, NO visible eyes or face. Anonymous background people must not duplicate recognizable heroes from style references. Use clear cinematic staging matching the authored composition.\n\nCritical corrected physical layout: BOTH horses are travelling toward the RIGHT of the canvas. Pursuer Guan Yu is on the LEFT, behind Pang De. Pang De is on the RIGHT; his horse's head faces RIGHT but his upper torso twists BACK toward LEFT. His fully drawn bow and the visible arrowhead aim LEFT toward Guan Yu: arrowhead must be to the LEFT of the bow grip, never to its right. Show a side-on view so this geometry is unambiguous. The plain wooden coffin is carried on poles behind the Wei line. No text on any flag. Do not copy Huang Zhong or Zhao Yun from the style reference.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/guanyu.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_character_reference",
+      "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+      "source_commit": "67361b46d8c60ec131c5e967f385f00220ad75e1",
+      "role": "authored_style_reference",
+      "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "77d41339d9ccb9db22a02704d2ddd593d13955c812e35c9093304f2a6870a142",
+  "created_at": "2026-10-27T08:41:58.127867+00:00"
+}
