@@ -22,7 +22,7 @@ BOOK = {
                     "The meeting with a single sword, Mount Dingjun, the King of Hanzhong, a tiger's daughter. The years Liu Bei came closest—spent in Chengdu or at Guan Yu's side, as your Volume II decided.")},
         {"id": "sanguo_strategist_v4", "file": "v4/campaign_v4.json", "title": T("荆州之殇", "The Fall of Jingzhou"), "canon": T("第74–77回", "Ch. 74–77"), "years": T("建安二十四年", "219–220"),
          "blurb": T("水淹七军，然后是麦城。你和关羽之间的一切，都会在这里兑现。", "The flood at Fancheng, then Maicheng. Everything between you and Guan Yu comes due here.")},
-        {"id": "sanguo_strategist_v5", "title": T("夷陵与白帝", "Yiling and Baidi"), "canon": T("第78–85回", "Ch. 78–85"), "years": T("黄初元年至章武三年", "220–223"),
+        {"id": "sanguo_strategist_v5", "file": "v5/campaign_v5.json", "title": T("夷陵与白帝", "Yiling and Baidi"), "canon": T("第78–85回", "Ch. 78–85"), "years": T("黄初元年至章武三年", "220–223"),
          "blurb": T("为兄弟复仇的一战，和白帝城的托孤。", "A war for a brother's revenge, and the last charge at Baidi.")},
         {"id": "sanguo_strategist_v6", "title": T("南中", "The South"), "canon": T("第86–90回", "Ch. 86–90"), "years": T("建兴元年至三年", "223–225"),
          "blurb": T("七擒孟获：攻心为上。", "Seven captures of Meng Huo: winning hearts before cities.")},
