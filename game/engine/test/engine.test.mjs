@@ -101,3 +101,19 @@ test("hard tiers: once at the tier, only key moments raise the value; losses alw
   assert.equal(CC.heldBack(camp, "rel.a.trust", 7, { add: "rel.a.trust", by: -1 }), false);
   assert.equal(CC.heldBack(camp, "rel.b.trust", 9, { add: "rel.b.trust", by: 1 }), false);   // other vars untouched
 });
+
+test("main_first: a chapter can open on its main scene and offer its sides afterwards", () => {
+  const c = as04(tiny("storydate.campaign/0.4"));
+  c.chapters = [{ id: "c1", title: "一", intro: [], offer: 1, main_first: true }, { id: "c2", title: "二", intro: [], offer: 0 }];
+  c.nodes.c1_s1 = { id: "c1_s1", chapter: "c1", kind: "side", lock: "free", order: 2, salience: 1, title: "支线", intro: [], cast: [],
+    choices: [{ id: "go", type: "strategy", label: "去", out: [], effects: [{ add: "rel.tao.trust", by: 0 }] }] };
+  c.nodes.c2_m1 = { id: "c2_m1", chapter: "c2", kind: "main", lock: "free", order: 1, title: "下山", intro: [], cast: [],
+    choices: [{ id: "on", type: "strategy", label: "走", out: [], effects: [{ add: "rel.tao.trust", by: 0 }] }] };
+  delete c.nodes.x_seen;
+  const st = CC.newGame(c);
+  assert.equal(st.phase, "node"); assert.equal(st.cur, "c1_m1");          // the main scene comes first
+  CC.choose(c, st, "walk");
+  assert.equal(st.phase, "side"); assert.deepEqual(st.offer, ["c1_s1"]);  // then the side storylet
+  CC.pickSide(c, st, "c1_s1"); CC.choose(c, st, "go");
+  assert.equal(st.cur, "c2_m1");                                           // then the next chapter, which runs as usual
+});

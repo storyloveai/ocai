@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.1";
+  CC.VERSION = "0.4.2";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -181,6 +181,13 @@
   }
   function chapterBody(camp, st) {
     const chap = chapterOf(camp, st);
+    // main_first: the chapter opens on its main scene (a cold open); its side storylets are offered afterwards
+    if (chap.main_first && st.sidedCh !== chap.id && st.lastOrder === -1) return nextMain(camp, st);
+    offerSides(camp, st);
+  }
+  function offerSides(camp, st) {
+    const chap = chapterOf(camp, st);
+    st.sidedCh = chap.id;
     const hasSides = nodesIn(camp, chap.id, "side").length > 0;
     const d = CC.director(camp, st, chap.id);
     if (d.offer.length) {
@@ -196,7 +203,7 @@
   function nextMain(camp, st) {
     const chap = chapterOf(camp, st);
     const n = nodesIn(camp, chap.id, "main").find(n => n.order > st.lastOrder && !st.done.includes(n.id) && evalCond(st, n.when));
-    if (!n) return enterChapter(camp, st, st.ch + 1);
+    if (!n) return chap.main_first && st.sidedCh !== chap.id ? offerSides(camp, st) : enterChapter(camp, st, st.ch + 1);
     st.lastOrder = n.order;
     enterNode(camp, st, n.id);
   }

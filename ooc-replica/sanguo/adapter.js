@@ -60,7 +60,7 @@ renderStory=function(){
   (async()=>{for(const [el,text]of pending){if(controller.signal.aborted)break;el.classList.add('site-typing');await sitePacer((async function*(){yield text;})(),{signal:controller.signal,onText:value=>{el.textContent=value;},onState:()=>{}});el.classList.remove('site-typing');}if(siteTyping===controller){siteTyping=null;stop.remove();}})();
  }
 };
-renderAct=function(){const input=$('#act input');if(input&&!V.busy&&input.value)siteDraft=input.value;originalAct();const next=$('#act input');if(next&&!V.busy)next.value=siteDraft;if(siteNotice&&$('#act'))$('#act').append(h('div',{class:'site-notice',role:'status'},siteNotice));};
+renderAct=function(){const input=$('#act input');if(input&&!V.busy&&input.value)siteDraft=input.value;originalAct();const next=$('#act input');if(next&&!V.busy)next.value=siteDraft||V.prefill||'';if(siteNotice&&$('#act'))$('#act').append(h('div',{class:'site-notice',role:'status'},siteNotice));};
 render=function(scrollNew){if(siteTurn?.cancelled)return;originalRender(false);if(scrollNew&&V.firstNew>=0){const first=document.querySelector(`[data-li="${V.firstNew}"]`);if(first&&first.getBoundingClientRect().top>window.innerHeight-80)first.scrollIntoView({behavior:reduced()?'auto':'smooth',block:'start'});}};
 function wrapTurn(fn){return async text=>{
  if(siteTurn||V.busy||!text.trim())return;finishTyping();siteDraft='';siteNotice='';const saved=clone(G),gallery=clone(COL),turn={controller:new AbortController(),cancelled:false};siteTurn=turn;

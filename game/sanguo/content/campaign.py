@@ -123,9 +123,13 @@ DEBTS = {
 # ------------------------------------------------------------------ chapters
 SIDE_PROMPT = T("这段日子，你只来得及做一件事。", "These days you only have time for one thing.")
 CHAPTERS = [
+    # 冷开场（2026-10-27，决策记录 v2.9）：第一章先演煮酒论英雄，三个支线放在它之后
     {"id": "c1", "title": T("许都", "Xuchang"), "year": T("建安四年（199）", "Jian'an 4 (199)"), "canon": T("第20–21回", "Ch. 20–21"), "offer": 3,
-     "intro": [P(T("建安四年，许都。刘备寄身曹操门下，每天在后园种菜。你是颍川来的年轻书生，字子衡，经糜竺引荐，做了刘备的门客。府里人都说你话少，记性好。",
-                   "Xuchang, Jian'an 4 (199). Liu Bei lives under Cao Cao's eye and spends his days growing vegetables in the back garden. You are a young scholar from Yingchuan, styled Ziheng. Mi Zhu introduced you, and Liu Bei took you in as a retainer. The household says you talk little and forget nothing."))]},
+     "main_first": True, "side_prompt": T("煮酒之后的几天，你只来得及做一件事。", "In the days after the plum wine, you only have time for one thing."),
+     "intro": [P(T("建安四年，许都。刘备寄身曹操门下，每天在后园种菜。你是颍川来的年轻书生，字子衡，做了刘备的门客。",
+                   "Xuchang, 199. Liu Bei lives under Cao Cao's eye, growing vegetables in the back garden. You are Ziheng, a young scholar from Yingchuan, and you serve in his household.")),
+               P(T("前几天夜里，董承来过。刘备在一道血书上写下了自己的名字。从那以后，他种菜种得更勤了。",
+                   "A few nights ago General Dong Cheng came by, and Liu Bei signed his name to an edict written in blood. Since then he has worked the vegetable beds harder than ever."))]},
     {"id": "c2", "title": T("出许都", "Leaving Xuchang"), "year": T("建安四年（199）", "Jian'an 4 (199)"), "canon": T("第21回", "Ch. 21"), "offer": 2,
      "intro": [P(T("煮酒之后，刘备坐立不安。消息传来：袁术要北上投奔袁绍，必经徐州。",
                    "After the plum-wine meeting Liu Bei cannot sit still. News arrives: Yuan Shu means to go north to join Yuan Shao, and his road runs through Xuzhou."), NF("flag.left_behind")),
@@ -200,19 +204,19 @@ N.append(node("c1_wenzhi", "c1", "side", T("故人温芷", "An Old Friend"), "fr
             [rel("wenzhi", "trust", 1)])],
     salience=2, order=2))
 
-N.append(node("c1_dongcheng", "c1", "side", T("衣带诏", "The Belt Edict"), "literal", T("第20–21回", "Ch. 20–21"),
-    T("车骑将军董承深夜来访，屏退左右，从衣带里取出一道血书：天子密诏，讨曹。刘备看完，手在发抖。董承看了你一眼：『此人可信否？』",
-      "General Dong Cheng visits at night, sends everyone out, and draws a letter written in blood from the lining of a belt: a secret edict from the Emperor ordering Cao Cao's destruction. Liu Bei's hands shake as he reads. Dong Cheng glances at you. 'Can this one be trusted?'"),
-    [choice("sign", "strategy", T("劝主公签名。这是汉臣的本分。", "Urge your lord to sign. It is a Han subject's duty."),
-            T("刘备提笔，写下『左将军刘备』。董承收起诏书，向你拱手。", "Liu Bei takes up the brush and writes 'Liu Bei, General of the Left.' Dong Cheng puts the edict away and bows to you."),
+N.append(node("c1_dongcheng", "c1", "side", T("衣带诏", "The Belt Edict"), "functional", T("第20–21回", "Ch. 20–21"),
+    T("煮酒之后第三天夜里，董承又来了。他屏退左右，从衣带里取出那道血书：名单上已经有了好几个名字。『曹贼今日能放过玄德公，明日未必。』他看了你一眼：『此人可信否？』",
+      "Three nights after the plum wine, Dong Cheng comes again. He sends everyone out and draws the blood-written edict from the lining of his belt: there are several names on it now. 'Cao let you go today. He may not tomorrow.' He glances at you. 'Can this one be trusted?'"),
+    [choice("sign", "strategy", T("劝主公给董承一句准话：时机一到，必定起事。这是汉臣的本分。", "Urge your lord to give Dong Cheng his word: when the moment comes, he will rise. It is a Han subject's duty."),
+            T("刘备握住董承的手：『名字既已写下，备不会退。』董承收起诏书，向你拱手。", "Liu Bei takes Dong Cheng's hands. 'My name is on it. I will not step back.' Dong Cheng puts the edict away and bows to you."),
             [rel("liubei", "trust", 1), add("renown.loyal")]),
-     choice("delay", "dilemma", T("劝主公先别签：名单越长，越容易泄露。", "Tell him not to sign yet: the longer the list, the easier it leaks."),
-            T("刘备犹豫再三，还是签了。事后他对你说：『你说得对，可这个名字我不能不写。』",
-              "Liu Bei hesitates, then signs anyway. Afterwards he tells you, 'You were right. But I couldn't leave my name off.'"),
+     choice("delay", "dilemma", T("劝主公先想办法离开许都：名单越长，越容易泄露；人在城里，就是人质。", "Urge your lord to find a way out of Xuchang first: the longer the list, the easier it leaks, and inside the walls he is a hostage."),
+            T("刘备沉默很久。董承走后，他对你说：『你说得对。可这个名字，我当初不能不写。』",
+              "Liu Bei is silent a long time. When Dong Cheng has gone he tells you, 'You're right. But I couldn't have left my name off.'"),
             [rel("liubei", "trust", 1), add("renown.cunning")]),
      choice("foresee", "strategy", T("直说：这份名单将来一定会落到曹操手里。", "Say it plainly: this list will end up in Cao Cao's hands."),
-            T("屋里一片寂静。董承脸色发青：『你怎么知道？』刘备按住他的手，还是签了名。散席后，刘备盯着你看了很久。",
-              "The room goes silent. Dong Cheng turns grey. 'How would you know?' Liu Bei puts a hand on his arm and signs anyway. When the guest has gone, Liu Bei looks at you for a long time."),
+            T("屋里一片寂静。董承脸色发青：『你怎么知道？』刘备按住他的手，没有让他发作。董承走后，刘备盯着你看了很久。",
+              "The room goes silent. Dong Cheng turns grey. 'How would you know?' Liu Bei puts a hand on his arm before he can say more. When the guest has gone, Liu Bei looks at you for a long time."),
             [add("uncanny"), rel("liubei", "trust", 1), setv("flag.foresaw_yidai")], foresight=True, echo=["e_foresaw"])],
     salience=0, order=3))
 
@@ -750,7 +754,7 @@ def lay(id, when=None, choice=None):
     if choice: d["choice"] = choice
     return d
 ART = {
-    "c1_guanyu": ("lamp", [], "xuchang"), "c1_wenzhi": ("herbs", [], "xuchang"), "c1_dongcheng": ("lamp", [lay("edict")], "xuchang"),
+    "c1_guanyu": ("lamp", [], "xuchang"), "c1_wenzhi": ("herbs", [], "xuchang"), "c1_dongcheng": ("lamp", [lay("edict")], "xuchang", "letter"),
     "c1_plum": ("garden", [lay("storm")], "xuchang"),
     "c2_note": ("letter", [lay("packet")], "xuchang"), "c2_pretext": ("road", [], "xuchang"), "c2_xuchu": ("road", [lay("chase", NF("flag.fast_departure"))], "xiapi"),
     "c3_terms": ("hill", [lay("escape", choice="carry")], "xiapi"),
@@ -771,9 +775,10 @@ ART = {
     "c8_cao": ("huarong", [lay("blocker"), lay("medic", ANY(F("flag.wenzhi_warned"), F("flag.wenzhi_together")))], "huarong"),
 }
 PLACE_AFTER = {("c4_seal", "follow"): "gucheng", ("c4_seal", "pass"): "gucheng", ("c4_yuan", "*"): "gucheng", ("c7_fire", "*"): "chibi"}
-for nid, (sc, layers, place) in ART.items():
+for nid, (sc, layers, place, *illus) in ART.items():   # optional 4th item: the illustration the illustrated edition uses
     nd = next(n for n in N if n["id"] == nid)
     nd["art"] = {"scene": sc, "layers": layers}
+    if illus: nd["art"]["illus"] = illus[0]
     nd["place"] = place
     for c in nd["choices"]:
         pa = PLACE_AFTER.get((nid, c["id"])) or PLACE_AFTER.get((nid, "*"))
