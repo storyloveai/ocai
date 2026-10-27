@@ -1,8 +1,14 @@
 # Issue #57：第 0 批本机执行与回传
 
-本轮只运行三张：`scene-v3_clinic`、`scene-v3_dingjun`、`scene-g_cold`。每个场景一个候选，交付原图和真实 1200×480 裁切图。Claude 评审通过前不运行下一批。本入口没有 `--ids`、`--jobs`、`--force` 或下一批选项，也不会换用内置生图或 OpenAI API。
+本轮只运行三张：`scene-v3_clinic`、`scene-v3_dingjun`、`scene-g_cold`。每个场景一个候选，交付原图和真实 1200×480 裁切图。Claude 评审通过前不运行下一批。本入口没有 `--ids`、`--jobs`、`--force`、任意工作流或下一批选项，也不会换用内置生图或 OpenAI API。
 
 云环境没有配置 `COMFYUI_API_URL`，所以没有提交 GPU 任务；不能将这里的准备页当作三张已经生成。公司是否已安装模型、URL 是否可达、GPU 是否足够，仍由本机实际运行确认。
+
+## 固定输入版本与三张限制
+
+执行文件来自 Claude 的 PR #58，固定提交 `621e7cb57d2be2044434ca0f20529603e77be84a`。该版本由 Claude 修正了医馆描述，并指定 `ref_paths`。本分支仅保存其中三条原文快照及八张原字节参考图，放在审阅目录的 `inputs/`；运行前验证快照与参考图 SHA。没有覆盖 Claude 正在编辑的原清单或 `game/art`。
+
+Claude 该清单的作者字段为 `batch: 1`，有五条 `ready`；本轮的**执行批次是用户指定的第 0 批，仅三个固定 ID、每个一个候选**，不修改作者字段，也不自动选取全部 ready 或增加候选数。`.source` / `inputs/provenance.json` 可核对来源版本。
 
 ## 1. 建立独立工作区（macOS / Linux，首次执行）
 
@@ -17,7 +23,15 @@ python3 -m venv .venv-comfy
 python3 -m pip install requests pillow
 ```
 
-这条分支包含 PR #51 的 ComfyUI 客户端及第 0 批入口；不需要先合并 main。若工作区已存在，直接进入 `../ocai-batch0` 并激活虚拟环境，不重复创建。
+这条分支包含 PR #51 的 ComfyUI 客户端及第 0 批入口；不需要先合并 main。若工作区已存在，不重复创建；先保留本机结果并确认工作区干净，再进入 `../ocai-batch0` 更新代码：
+
+```sh
+git fetch origin
+git merge --ff-only origin/codex/57-batch0
+. .venv-comfy/bin/activate
+```
+
+如果有未提交结果或 fast-forward 被拒绝，停止并保留现场，交给 Codex 同步，不用 reset/force。执行前确认 `inputs/provenance.json` 的 source_commit 为上面的 Claude 提交；dry-run 的参考应位于 `art-batch0/inputs/reference-root`，不能仍指向旧版通用封面或旧清单。
 
 ## 2. 设置公司地址并确认只选三张
 
@@ -34,7 +48,7 @@ python3 game/sanguo/tools/gen_batch0.py --dry-run
 - `qwen_2.5_vl_7b_fp8_scaled.safetensors`
 - `qwen_image_vae.safetensors`
 
-实际运行会用 `/object_info` 预检节点和模型。公司若安装其他文件名（例如 fp8mixed），用下一节的参数明确指定，不能假定已有默认模型。默认使用官方基础模型分支的 40 steps / CFG 4；可选 Lightning 必须通过明确的 API 工作流配置，不能只把基础模型步数改成 4。
+实际运行会用 `/object_info` 预检节点和模型。公司若安装其他文件名（例如 fp8mixed），用下一节的参数明确指定，不能假定已有默认模型。默认使用官方基础模型分支的 40 steps / CFG 4；本批固定基础模型工作流，不接受任意工作流或 Lightning 配置，以免额外的批大小/分支偷偷增加出图数量；公司若只有其他工作流，请先在 issue 说明，不直接换图运行。
 
 如果公司服务需要 Bearer token，在本机安全设置 `COMFYUI_API_TOKEN`，不要写入命令文档或 Git。默认不使用代理；确实需要代理时才显式添加 `--use-proxy`。
 
@@ -55,7 +69,7 @@ python3 game/sanguo/tools/gen_batch0.py --seed 20261027 \
 
 两条是替代选项，不要都运行。也不要直接运行没有 `--ids` 的通用 `gen_comfy.py`，那会选择其他缺图；本轮统一用锁定三张的 `gen_batch0.py`。
 
-如果超时/断线，保留原工作区、seed、模型和工作流参数，重跑同一条命令。已有完整候选会跳过，已排队任务按原 prompt_id 续查，不自动提交第二个候选或下一批。不要删除本机的 `ooc-replica/.cache/art-batch0/records.json`。Ctrl+C 不取消公司共享队列，请先看服务器任务历史。
+如果超时/断线，保留原工作区、seed 和模型参数，重跑同一条命令。已有完整候选会跳过，已排队任务按原 prompt_id 续查，不自动提交第二个候选或下一批。不要删除本机的 `ooc-replica/.cache/art-batch0/records.json`。Ctrl+C 不取消公司共享队列，请先看服务器任务历史。
 
 ## 4. 看原图、裁切图和旧图对照
 
@@ -71,7 +85,7 @@ ooc-replica/dist/assets/art-batch0/
   storydate-batch0-review.zip  有真实候选后才提供
 ```
 
-`game/sanguo/art` 中的人物/画风参考继续从原位置读取；`--output-root` 仅改变新图的输出路径，不把候选当作下一张图的角色参考。本机记录单独存放在 `.cache`，不放进公开交付包。原作图清单及提示词不会改动。
+本入口使用 Claude PR #58 的明确 `ref_paths`：前面的文件是角色参考，最后一张是指定画风场景。读取的是 `inputs/reference-root/` 下的原字节副本，来源路径与 SHA 在 provenance 中；不会用通用封面替代明确参考，也不会把新候选当下一张图的角色参考。`--output-root` 仅改变新图输出，`--reference-root` 只映射参考根目录，不改作图清单字符串。本机记录单独存放在 `.cache`，不放进公开交付包。原作图清单及提示词不会改动。
 
 可用静态服务器打开页面：
 

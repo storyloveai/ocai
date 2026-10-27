@@ -58,4 +58,4 @@ No company endpoint was accessed and no GPU generation was run in the cloud envi
 
 ## Issue #57：仅第 0 批
 
-本轮统一使用 `gen_batch0.py` 的锁定入口，见 [ART-BATCH0.md](ART-BATCH0.md)。通用客户端新增 `--output-root`，可隔离新候选输出，同时保留原角色/画风参考的读取位置。第 0 批不覆盖正式场景、不自动执行下一批。
+本轮统一使用 `gen_batch0.py` 的锁定入口，见 [ART-BATCH0.md](ART-BATCH0.md)。通用客户端新增 `--output-root` 隔离候选输出；出现 Claude 的 `ref_paths` 时优先使用该明确清单（角色参考在前，画风场景最后），`--reference-root` 可映射固定副本的根目录。未提供明确路径时才沿用原参考规则。第 0 批不覆盖正式场景、不自动执行下一批。

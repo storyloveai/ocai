@@ -181,5 +181,19 @@ class ComfyTest(unittest.TestCase):
         self.assertFalse((gen.ART / 'scenes/one.webp').exists())
 
 
+    def test_explicit_claude_ref_paths_are_used_instead_of_generic_covers(self):
+        root = self.root / 'pinned'
+        names = ['game/sanguo/art/portraits/a.webp', 'game/sanguo/art/portraits/b.webp', 'game/sanguo/art/scenes/style.webp']
+        for name in names:
+            path = root / name; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(image_bytes())
+        job = {**self.jobs[0], 'refs': ['a', 'b'], 'ref_paths': names}
+        styles, casts = gen.resolve_references(job, [self.root / 'not-used.webp'], root)
+        self.assertEqual(styles, [root / names[-1]])
+        self.assertEqual(casts, [root / name for name in names[:-1]])
+        self.assertEqual(len(gen.reference_images(job, [], root)), 3)
+        self.assertRaises(ValueError, gen.resolve_references, {**job, 'ref_paths': ['../escape', *names[1:]]}, [], root)
+        self.assertRaises(ValueError, gen.resolve_references, {**job, 'ref_paths': names[:-1]}, [], root)
+
+
 if __name__ == '__main__':
     unittest.main()

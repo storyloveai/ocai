@@ -27,7 +27,14 @@ class Batch0Test(unittest.TestCase):
         rows.append({**rows[0], 'id': 'scene-next-batch', 'name': 'next'})
         self.jobs.write_text('\n'.join(map(json.dumps, rows)))
         self.records = self.root / 'private/records.json'
-        self.patch = patch.multiple(batch, REPO=self.root, REVIEW=self.review, RECORDS=self.records, JOBS=self.jobs)
+        self.input_root = self.review / 'inputs/reference-root'
+        style = self.input_root / 'game/sanguo/art/scenes/style.webp'
+        style.parent.mkdir(parents=True); Image.new('RGB', (20, 20)).save(style)
+        rows = [{**row, 'ref_paths': ['game/sanguo/art/scenes/style.webp']} for row in rows]
+        self.jobs.write_text('\n'.join(map(json.dumps, rows)))
+        self.provenance = self.review / 'inputs/provenance.json'
+        self.provenance.write_text(json.dumps({'source_pr': 58, 'selected_ids': list(batch.BATCH0), 'snapshot_sha256': batch.sha(self.jobs), 'references': [{'source': 'game/sanguo/art/scenes/style.webp', 'sha256': batch.sha(style)}]}))
+        self.patch = patch.multiple(batch, REPO=self.root, REVIEW=self.review, RECORDS=self.records, JOBS=self.jobs, INPUT_ROOT=self.input_root, PROVENANCE=self.provenance)
         self.patch.start()
         self.core_patch = patch.multiple(batch.comfy, R=self.root / 'game/sanguo', ART=self.root / 'game/sanguo/art')
         self.core_patch.start()
@@ -52,7 +59,7 @@ class Batch0Test(unittest.TestCase):
         self.assertFalse(core.force)
         self.assertTrue(Path(core.output_root).is_relative_to(self.review))
         self.assertFalse(Path(core.records).is_relative_to(self.review))
-        for flag in ['--ids', '--jobs', '--force', '--batch']:
+        for flag in ['--ids', '--jobs', '--force', '--batch', '--workflow-api']:
             with contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit): batch.parser().parse_args([flag])
 
     def test_prepare_never_claims_reference_images_are_new_outputs(self):
@@ -107,6 +114,15 @@ class Batch0Test(unittest.TestCase):
         manifest = batch.build_review()
         self.assertEqual(manifest['generated_scenes'], 0)
         self.assertNotIn('original', manifest['items'][0])
+
+
+    def test_modified_authored_snapshot_is_refused_before_execution(self):
+        self.jobs.write_text(self.jobs.read_text().replace('Exact authored prompt', 'Changed prompt'))
+        try:
+            with self.assertRaisesRegex(ValueError, 'snapshot changed'):
+                batch.run(batch.parser().parse_args(['--prepare']))
+        finally:
+            self.jobs.write_bytes(self.before)
 
 
 if __name__ == '__main__':

@@ -89,13 +89,30 @@ def sheet(paths, size, labels=None):
     buf = io.BytesIO(); board.save(buf, 'PNG'); return buf.getvalue()
 
 
-def reference_images(job, styles):
+def resolve_references(job, styles, reference_root=None):
+    if 'ref_paths' in job:
+        paths = job['ref_paths']
+        if not isinstance(paths, list) or len(paths) != len(job.get('refs', [])) + 1:
+            raise ValueError('ref_paths must contain each character reference followed by one style scene')
+        root = (Path(reference_root) if reference_root is not None else R.parents[1]).resolve()
+        resolved = []
+        for value in paths:
+            if not isinstance(value, str) or Path(value).is_absolute() or '..' in Path(value).parts:
+                raise ValueError('ref_paths must be relative repository paths')
+            path = (root / value).resolve()
+            if not path.is_relative_to(root): raise ValueError('Reference path escapes its input root')
+            resolved.append(path)
+        return [resolved[-1]], resolved[:-1]
+    return styles, [char_ref(cid) for cid in job.get('refs', [])]
+
+
+def reference_images(job, styles, reference_root=None):
     refs = job.get('refs', [])
-    paths = [char_ref(cid) for cid in refs]
-    if any(path is None for path in paths):
-        raise ValueError('Missing character references: ' + ', '.join(cid for cid, path in zip(refs, paths) if path is None))
+    styles, paths = resolve_references(job, styles, reference_root)
+    if any(path is None or not path.is_file() for path in paths):
+        raise ValueError('Missing character references: ' + ', '.join(cid for cid, path in zip(refs, paths) if path is None or not path.is_file()))
     if not styles or any(not path.is_file() for path in styles):
-        raise ValueError('Style references are missing; use --style or restore the existing style images')
+        raise ValueError('Style references are missing; restore the explicit ref_paths or use --style')
     images = [sheet(styles, canvas_size(job))]
     # The official encoder has three image slots. Never silently discard extra characters.
     if len(paths) > 2:
@@ -240,7 +257,11 @@ def run(args, client_factory=Client):
     if output_root is not None and not output_root.is_absolute(): output_root = R / output_root
     todo = [job for job in jobs if (not wanted or job_id(job) in wanted) and (args.force or not target(job, output_root)[0].exists())]
     if args.dry_run:
-        print(json.dumps([{'id': job_id(job), 'output': str(target(job, output_root)[0]), 'crop': target(job, output_root)[1], 'refs': [{'id': cid, 'path': str(char_ref(cid)) if char_ref(cid) else None} for cid in job.get('refs', [])], 'style': [{'path': str(path), 'exists': path.is_file()} for path in styles], 'size': canvas_size(job)} for job in todo], ensure_ascii=False, indent=2)); return 0
+        report = []
+        for job in todo:
+            selected_styles, selected_refs = resolve_references(job, styles, args.reference_root)
+            report.append({'id': job_id(job), 'output': str(target(job, output_root)[0]), 'crop': target(job, output_root)[1], 'refs': [{'id': cid, 'path': str(path) if path else None, 'exists': bool(path and path.is_file())} for cid, path in zip(job.get('refs', []), selected_refs)], 'style': [{'path': str(path), 'exists': path.is_file()} for path in selected_styles], 'size': canvas_size(job)})
+        print(json.dumps(report, ensure_ascii=False, indent=2)); return 0
     if not todo: print('No missing outputs selected.'); return 0
     if not args.url: raise ValueError('COMFYUI_API_URL is not set')
     record_path = output_root / 'comfy-records.json' if output_root is not None and args.records == 'art/comfy-records.json' else Path(args.records); record_path = record_path if record_path.is_absolute() else R / record_path
@@ -250,7 +271,9 @@ def run(args, client_factory=Client):
     failures = 0
     for job in todo:
         key = job_id(job)
-        settings = {'unet': args.unet, 'clip': args.clip, 'vae': args.vae, 'steps': args.steps, 'cfg': args.cfg, 'style': list(map(str, styles)), 'seed': args.seed, 'endpoint_hash': hashlib.sha256(args.url.encode()).hexdigest()}
+        actual_styles, actual_cast = resolve_references(job, styles, args.reference_root)
+        reference_files = [*actual_styles, *actual_cast]
+        settings = {'unet': args.unet, 'clip': args.clip, 'vae': args.vae, 'steps': args.steps, 'cfg': args.cfg, 'style': list(map(str, actual_styles)), 'references': [str(path) if path else None for path in actual_cast], 'reference_hashes': [hashlib.sha256(path.read_bytes()).hexdigest() if path and path.is_file() else None for path in reference_files], 'seed': args.seed, 'endpoint_hash': hashlib.sha256(args.url.encode()).hexdigest(), 'reference_root': args.reference_root}
         signature = hashlib.sha256(json.dumps({'job': job, 'settings': settings, 'workflow': Path(args.workflow_api).read_text() if args.workflow_api else None}, sort_keys=True).encode()).hexdigest()
         old = next((item for item in reversed(records) if item.get('id') == key and item.get('prompt_id')), None)
         record = {'id': key, 'fingerprint': signature, 'seed': args.seed if args.seed is not None else secrets.randbelow(2 ** 63), 'started_at': datetime.now(timezone.utc).isoformat(), 'status': 'preparing', 'models': settings}
@@ -265,7 +288,7 @@ def run(args, client_factory=Client):
                 record.update(prompt_id=old['prompt_id'], seed=old['seed'], status='queued')
             else:
                 client.check(graph)
-                names = [client.upload(raw) for raw in reference_images(job, styles)]
+                names = [client.upload(raw) for raw in reference_images(job, styles, args.reference_root)]
                 graph = workflow(job, names, args, record['seed'])
                 record.update(prompt_id=client.submit(graph), status='queued')
             write_records(record_path, records)  # persist prompt_id before the first poll
@@ -290,6 +313,7 @@ def parser():
     ap.add_argument('--url', default=os.environ.get('COMFYUI_API_URL')); ap.add_argument('--use-proxy', action='store_true')
     ap.add_argument('--style', action='append'); ap.add_argument('--records', default='art/comfy-records.json')
     ap.add_argument('--workflow-api'); ap.add_argument('--seed', type=int)
+    ap.add_argument('--reference-root', help='Root for explicit repository-relative ref_paths; does not rewrite the job')
     ap.add_argument('--output-root', help='Separate candidate output root; original character/style references stay unchanged')
     ap.add_argument('--unet', default='qwen_image_edit_2511_bf16.safetensors')
     ap.add_argument('--clip', default='qwen_2.5_vl_7b_fp8_scaled.safetensors'); ap.add_argument('--vae', default='qwen_image_vae.safetensors')
