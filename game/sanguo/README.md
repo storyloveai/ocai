@@ -1,4 +1,4 @@
-# 三国·谋士（卷一至卷四 · v2.10）
+# 三国·谋士（卷一至卷五 · v2.11）
 
 > 这个目录属于 StoryLove 仓库里的 `game/` 部分。协作规矩见仓库根目录的 `AGENTS.md`；网站怎么接入见 `docs/接入约定.md`；设计的来龙去脉见 `docs/决策记录.md`。
 
@@ -31,6 +31,7 @@ content/book.py        v2.1 新增：全书目录。哪几卷能玩、哪几卷�
 content/v2/            v2.1 新增：卷二《荆州与西川》（campaign_v2.py → campaign_v2.json；people_v2.py 新人物；presets.json 前情，由 tools/presets.js 生成）
 content/v3/            v2.7 新增：卷三《汉中》（campaign_v3.py → campaign_v3.json；people_v3.py 新人物法正、黄忠；presets.json 前情，由 tools/presets.js v3 生成）
 content/v4/            v2.10 新增：卷四《荆州之殇》（campaign_v4.py → campaign_v4.json；people_v4.py 本卷人物的样子；presets.json 前情，由 tools/presets.js v4 生成）
+content/v5/            v2.11 新增：卷五《夷陵与白帝》（campaign_v5.py → campaign_v5.json；people_v5.py 本卷人物的样子；presets.json 前情，由 tools/presets.js v5 生成）
 engine/portraits.js    人物立绘（水墨版）：卷一 5 人 + 卷二周瑜、鲁肃、赵云、孙夫人、庞统、张松 + 卷三法正、黄忠，每人 6 种表情（按原著描写，代码绘制，原创）
 art/                   插画版的图（人像、场景、高光、结局、封面），见 art/README.md
 engine/art.js          水墨配图：23 个场景 + 状态图层、每卷各自的舆图、人物印章（代码绘制，原创）

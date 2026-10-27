@@ -1,12 +1,13 @@
 {
-  "commit": "73129ac97990bb1f6a5fcef0c9b38987b182a239",
+  "commit": "fe58358d20469a57449b1a05b0d1c40eae1f9668",
   "blobs": {
-    "index.html": "79bb59f765a7f2223009e0d00b0e029b5b0a8a6b",
-    "illus.html": "322f6b18fd92e4eb9a45894b0d58538c696d8f14",
+    "index.html": "93247672c480c172d59a46bde6e52691d011b923",
+    "illus.html": "87df895369f4cbaad27ff56e6be81ee2adad8750",
     "campaign.json": "b44e7107f780d4f1b38e62cde9e69854748f4728",
     "campaign_v2.json": "7e84501dab6c893d69cdaec3b574ebcc05288aae",
     "campaign_v3.json": "d546ed2149b0b41aa6091730465781509966f7c7",
     "campaign_v4.json": "cc589a70992bd6e56698023d3901a53306cb1c6d",
+    "campaign_v5.json": "c6ae1a888009592a23f2f3709c8969b416d485e9",
     "campaign_core.js": "572061f06e2c0d0b6e3013a18da68a94a1069705"
   }
 }

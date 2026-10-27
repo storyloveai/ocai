@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Backstories for a later volume: play the previous volume with typical player types and keep where they ended.
-// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3|v4]
+// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3|v4|v5]
 // The last argument says which volume the backstories are for (default v2: backstories from Volume I).
 const fs = require("fs");
 const CC = require("../engine/campaign_core.js");
@@ -46,8 +46,24 @@ const WANT_V4 = [
   { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
     title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。汉中和荆州的事，你是从远处听说的。", "You left early. You heard about Hanzhong and Jingzhou from far away.") },
 ];
+// Volume V starts from Volume IV: everyone still with Liu Bei is in Chengdu; the backstories differ in whether Guan Yu lived.
+const SAVER = Object.assign({}, CC.policies.loyal, { "flag.v4_kept_rear": 20, "flag.v4_mf_path": 20, "flag.v4_relief": 20, "flag.v4_early_call": 20, "flag.warned_jing": 20, "flag.guan_alive": 40, "flag.bone_rest": 8, "flag.v4_to_jing": -5, "rel.guanyu.trust": 3, "rel.guanyu.warmth": 3 });
+const WANT_V5 = [
+  { id: "chengdu", policy: "loyal", ok: st => st.v.track === "liu" && !st.v.ended_early && !st.v["flag.guan_alive"],
+    title: T("汉中王身边的人", "At the King's Side"), desc: T("荆州丢了，关羽没能回来。你留在汉中王身边，看着他一夜白了头。", "Jingzhou is lost and Guan Yu never came back. You stayed at the King's side and watched his hair go white in a night.") },
+  { id: "guan", weights: SAVER, ok: st => st.v.track === "liu" && !st.v.ended_early && st.v["flag.guan_alive"],
+    title: T("麦城走大路的人", "The One Who Took the Main Road"), desc: T("麦城那夜，你拉住了关羽的马。荆州丢了，他活着回到了成都。", "That night at Maicheng you caught Guan Yu's bridle. Jingzhou was lost, but he came back to Chengdu alive.") },
+  { id: "romance", policy: "romance", ok: st => !st.v.ended_early && (st.v["flag.wz_west"] || st.v["flag.wz_jingzhou"] || st.v["flag.wz_huatuo"]) && st.v["rel.wenzhi.intimacy"] >= 4,
+    title: T("江边人", "The One by the River"), desc: T("温芷一直在你身边。荆州的火，她也看见了。", "Wen Zhi has been at your side all along. She saw the fires of Jingzhou too.") },
+  { id: "healer", weights: Object.assign({}, CC.policies.romance, { "flag.wz_huatuo": 15 }), ok: st => !st.v.ended_early && st.v["flag.wz_huatuo"],
+    title: T("等她来信的人", "Waiting for Her Letters"), desc: T("刮骨疗毒那年，温芷跟着华佗学医去了。荆州丢的时候，她不在荆州。", "The year of the bone-scraping, Wen Zhi went off to learn from Hua Tuo. When Jingzhou fell, she wasn't there.") },
+  { id: "seer", policy: "seer", ok: st => !st.v.ended_early && st.v.uncanny >= 3,
+    title: T("异人", "The Uncanny One"), desc: T("荆州的事，你说中了太多。有人叫你先生，有人叫你妖人。", "You called too much of Jingzhou before it happened. Some call you Master; some call you a sorcerer.") },
+  { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
+    title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。荆州和麦城的事，你是从远处听说的。", "You left early. You heard about Jingzhou and Maicheng from far away.") },
+];
 const res = [];
-for (const w of (target === "v4" ? WANT_V4 : target === "v3" ? WANT_V3 : WANT)) {
+for (const w of (target === "v5" ? WANT_V5 : target === "v4" ? WANT_V4 : target === "v3" ? WANT_V3 : WANT)) {
   let found = null;
   for (let seed = 1; seed < 400 && !found; seed++) { const st = CC.playPolicy(camp, CC.rng(seed * 7919), w.weights || (w.policy ? CC.policies[w.policy] : null)); if (w.ok(st)) found = st; }
   if (!found) { console.error("no run for", w.id); process.exit(1); }
