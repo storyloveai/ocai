@@ -1168,8 +1168,8 @@ function renderAct() {
   sceneFree > 0 ? h("div", { class: "targets" }, h("span", { class: "muted" }, sceneFree === 1 ? l.sceneLast : l.sceneHint),
     cast.length > 1 ? h("div", { class: "pills" }, h("span", { class: "muted", style: "font-size:12.5px" }, l.toWho), cast.map(c => h("button", { type: "button", class: "pill tgt", "aria-pressed": String(V.target === c), onclick: () => { V.target = c; renderAct(); } }, face(c, levelMood(c), true), t(CAMP.chars[c].name)))) : null) : null,
   sealed ? h("p", { class: "muted sealed", style: "font-size:13px;margin:10px 0 0" }, l.sealedNote) : null,
-  h("form", { class: "free" + (sealed ? " sealed" : ""), onsubmit: ev => { ev.preventDefault(); if (sealed) return; const i = ev.target.querySelector("input"); const v = i.value; i.value = ""; onFree(v); } },
-    h("input", { type: "text", placeholder: sealed ? l.sealedPh : talking ? l.talkPh : sceneFree > 0 ? l.scenePh(t(CAMP.chars[V.target].name)) : l.ph, "aria-label": sealed ? l.sealedPh : talking ? l.talkPh : l.ph, maxlength: "200", disabled: V.busy || sealed }), h("button", { class: "btn small ghost", type: "submit", disabled: V.busy || sealed }, l.send)),
+  h("form", { class: "free" + (sealed ? " sealed" : ""), onsubmit: ev => { ev.preventDefault(); if (sealed) return; const i = ev.target.querySelector("input"); const v = i.value; i.value = ""; V.prefill = null; onFree(v); } },
+    h("input", { type: "text", placeholder: sealed ? l.sealedPh : talking ? l.talkPh : sceneFree > 0 ? l.scenePh(t(CAMP.chars[V.target].name)) : l.ph, "aria-label": sealed ? l.sealedPh : talking ? l.talkPh : l.ph, maxlength: "200", disabled: V.busy || sealed , value: V.prefill || "" }), h("button", { class: "btn small ghost", type: "submit", disabled: V.busy || sealed }, l.send)),
   (V.busy || l.aiOn || l.aiOff) ? h("div", { class: "ai" }, V.busy ? l.aiBusy : (RT.ai === "ready" ? l.aiOn : RT.ai === "checking" ? "" : l.aiOff)) : null));
 }
 
@@ -1435,10 +1435,14 @@ if (G) V.firstNew = -1;
 // a first visit opens straight into Volume I (the contents page is one tap away); 2026-10-27, 决策记录 v2.9
 const ENTRY = new URLSearchParams(location.search || "");
 if (!G && !runsList().length) newGame(BOOK.volumes[0].id); else render();
-if (G && G.n === 1 && G.phase === "node" && G.log.filter(e => e.k === "pick" || e.k === "choice").length === 0) {
+if (G && G.n === 1 && G.phase === "node" && G.log.filter(e => e.k === "pick" || e.k === "choice" || e.k === "ans").length === 0) {
+  // the front-page banner asks "Thunder cracks. What do you do?": its answer belongs to this moment, so Cao Cao's
+  // opening question is passed over (no effects, nothing logged) and the player lands on the thunderclap
   const cid = ENTRY.get("choice"), said = (ENTRY.get("say") || "").trim().slice(0, 200);
-  if (cid && CC.choices(CAMP, G, G.cur).some(x => x.id === cid && !x.locked)) choose(cid, "entry");
-  else if (said) { V.prefill = said; render(); }   // the words typed on the front page wait in the answer box; the player presses Say
+  const valid = cid && CC.choices(CAMP, G, G.cur).some(x => x.id === cid && !x.locked);
+  if (valid || said) { G.asked = G.asked || {}; G.asked[G.cur] = G.asked[G.cur] || "entry"; save(); }
+  if (valid) choose(cid, "entry");
+  else if (said) { V.prefill = said; render(); }   // the words typed on the front page wait in the box; the player presses Say
 }
 initRuntime();
 if (G && G.phase !== "end") { const last = document.querySelector("#act") || document.querySelector(".offer"); if (last) last.scrollIntoView({ block: "center" }); }
