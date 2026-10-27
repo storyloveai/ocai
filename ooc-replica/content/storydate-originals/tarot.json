@@ -1,0 +1,66 @@
+[
+ {
+  "id": "tr-001",
+  "title": "The Tale of The Fool",
+  "title_zh": "愚者传",
+  "summary": "He steps off the cliff with a bundle and a dog, certain of nothing, and that is why he is free. Take the first step with the card that starts every reading.",
+  "summary_zh": "他带着一只包袱和一条狗迈下悬崖，什么都不确定，正因如此才自由。与这张开启每一次占卜的牌，一起迈出第一步。",
+  "character_brief": "The Fool, appears early 20s, androgynous, tousled gold hair, bright patchwork coat, white rose in hand, bundle on a stick, small white dog, cheerful and unguarded"
+ },
+ {
+  "id": "tr-002",
+  "title": "The Tale of The Magician",
+  "title_zh": "魔术师传",
+  "summary": "Four tools on one table and a promise that the world can be rearranged by someone who knows exactly what they want. Learn his trade, and find out what he wants.",
+  "summary_zh": "桌上四件道具，一句承诺：只要清楚自己要什么，世界就能被重新排列。向他学艺，也看看他究竟想要什么。",
+  "character_brief": "The Magician, 30s, male, slick dark hair, red cloak over white tunic, infinity-sign pin, one hand raised, one pointing down, sharp amused eyes"
+ },
+ {
+  "id": "tr-003",
+  "title": "The Tale of The High Priestess",
+  "title_zh": "女祭司传",
+  "summary": "She sits between two pillars with a scroll half-unrolled and has never answered a question directly. Sit across from her and learn how to ask the one that she will.",
+  "summary_zh": "她坐在两根立柱之间，卷轴半展，从不直接回答问题。坐到她对面，学会问出那个她愿意回答的问题。",
+  "character_brief": "The High Priestess, appears 30s, female, long dark hair, pale blue robe falling like water, silver crescent crown, half-open scroll, serene and unreadable"
+ },
+ {
+  "id": "tr-004",
+  "title": "The Tale of Death",
+  "title_zh": "死神传",
+  "summary": "Not an ending, a turning of the card: the one who clears the ground so something else can grow. Sit with him in the quiet after the thing has finished, and see what stays.",
+  "summary_zh": "他不是终结，只是牌面翻转：清场的人，好让别的东西生长。在事情结束后的安静里与他同坐，看看什么留下来。",
+  "character_brief": "Death, ageless, male, pale tall figure in black armor and a white-rose banner, calm hollow eyes, bone-white hands, gentle and patient"
+ },
+ {
+  "id": "tr-005",
+  "title": "The Tale of The Lovers",
+  "title_zh": "恋人传",
+  "summary": "Two people, one angel overhead, and a choice that is never about the other person. Walk with them through the garden and decide who you are when you choose.",
+  "summary_zh": "两个人，头顶一位天使，每次抉择其实都与对方无关。陪他们走过花园，看看你选择的时候，你是谁。",
+  "character_brief": "The Lovers, both appear 20s, a man and a woman, linen robes, golden wreaths, standing beneath a bright winged figure, uncertain and tender"
+ },
+ {
+  "id": "tr-006",
+  "title": "The Tale of The Hermit",
+  "title_zh": "隐者传",
+  "summary": "He carries a lantern that lights exactly one step and has never been lost. Climb with him to the summit and learn what it means to go alone without being lonely.",
+  "summary_zh": "他提着一盏只够照亮一步的灯，却从未迷路。随他登上山顶，体会独行而不孤单是什么意思。",
+  "character_brief": "The Hermit, appears 60s, male, grey hooded cloak, long white beard, star-lit lantern, wooden staff, weathered and warm"
+ },
+ {
+  "id": "tr-007",
+  "title": "The Tale of The Moon",
+  "title_zh": "月亮传",
+  "summary": "A path between two towers, a dog and a wolf howling, and a crayfish crawling out of the pool. Walk the path with the card that rules dreams and decide which fears are real.",
+  "summary_zh": "两座塔之间的小路，犬与狼在嗥叫，池中爬出一只螯虾。与这张主宰梦境的牌同行，分辨哪些恐惧是真的。",
+  "character_brief": "The Moon, appears early 30s, female, long indigo hair with silver streaks, midnight-blue gown dotted with pale lights, half-lidded eyes, dreamy and hard to read"
+ },
+ {
+  "id": "tr-008",
+  "title": "The Tale of The Star",
+  "title_zh": "星星传",
+  "summary": "After the tower falls, she kneels at the water and pours out the only thing she has left: hope, in two jugs. Kneel beside her and learn how to stay gentle after disaster.",
+  "summary_zh": "塔倒了之后，她跪在水边，倒出仅剩的东西：两罐希望。陪她一起跪下，学会灾难之后依然温柔。",
+  "character_brief": "The Star, appears mid-20s, female, long pale hair, bare shoulders, light silver-blue wrap, two jugs, eight-pointed star overhead, quiet and kind"
+ }
+]
