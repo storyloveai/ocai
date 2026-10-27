@@ -1,0 +1,156 @@
+{
+  "issue": 57,
+  "batch": 0,
+  "allowed_ids": [
+    "scene-v3_clinic",
+    "scene-v3_dingjun",
+    "scene-g_cold"
+  ],
+  "expected_scenes": 3,
+  "candidates_per_scene": 1,
+  "generated_scenes": 0,
+  "review_passed": false,
+  "next_batch_enabled": false,
+  "source_manifest": "game/sanguo/art/edition-jobs-v23.jsonl",
+  "source_manifest_sha256": "1526bb7a311dde7e6e7c36a75c3b36a3b8d928f67f811e3fa9445dca94a26c22",
+  "provider": "company ComfyUI only; never substitutes conversation image generation or OpenAI API",
+  "items": [
+    {
+      "id": "scene-v3_clinic",
+      "label": "温芷 · 街市医馆",
+      "state": "awaiting_company_run",
+      "authored_job_snapshot": {
+        "id": "scene-v3_clinic",
+        "kind": "scene",
+        "name": "v3_clinic",
+        "refs": [
+          "wenzhi"
+        ],
+        "prompt": "A small busy clinic in a city street: Wen Zhi, a young woman physician, writes in an account book at a counter of herb drawers while poor townsfolk wait on benches, a mother with a child, an old man with a cane; warm afternoon light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "status": "pending"
+      },
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "references": [
+        {
+          "label": "wenzhi · 角色参考",
+          "source": "game/sanguo/art/source/wenzhi.webp",
+          "file": "references/game/sanguo/art/source/wenzhi.webp",
+          "sha256": "2aae28ff10cd3c634b2f6782a1e13f1116f7fe1ceee97573281ff86f554d1395"
+        },
+        {
+          "label": "现有场景 · 画风对照",
+          "source": "game/sanguo/art/scenes/v3_wz_road.webp",
+          "file": "references/game/sanguo/art/scenes/v3_wz_road.webp",
+          "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e"
+        }
+      ]
+    },
+    {
+      "id": "scene-v3_dingjun",
+      "label": "法正与黄忠 · 定军",
+      "state": "awaiting_company_run",
+      "authored_job_snapshot": {
+        "id": "scene-v3_dingjun",
+        "kind": "scene",
+        "name": "v3_dingjun",
+        "refs": [
+          "fazheng",
+          "huangzhong"
+        ],
+        "prompt": "Mount Dingjun: on a hilltop Fa Zheng in a black cap and teal robe raises a red flag; below, Huang Zhong, white-bearded in golden armour, charges downhill on horseback with his broadsword raised, his troops pouring after him toward the enemy camp in the valley. Heroic, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "status": "pending"
+      },
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "references": [
+        {
+          "label": "fazheng · 角色参考",
+          "source": "game/sanguo/art/source/fazheng.webp",
+          "file": "references/game/sanguo/art/source/fazheng.webp",
+          "sha256": "d81425d67a8e65a8c38b34f610bdcc39aa326f20f6020af2819ec1767e272f87"
+        },
+        {
+          "label": "huangzhong · 角色参考",
+          "source": "game/sanguo/art/source/huangzhong.webp",
+          "file": "references/game/sanguo/art/source/huangzhong.webp",
+          "sha256": "00c294c15b3deb236d5737d969d6ece539d11e1e4dcea6dc86980b6f6ab2e259"
+        },
+        {
+          "label": "现有场景 · 画风对照",
+          "source": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+          "file": "references/game/sanguo/art/scenes/v3_fazheng_night.webp",
+          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4"
+        },
+        {
+          "label": "现有场景 · 画风对照",
+          "source": "game/sanguo/art/scenes/v3_huangzhong_night.webp",
+          "file": "references/game/sanguo/art/scenes/v3_huangzhong_night.webp",
+          "sha256": "3555ec2669064661dbd6eb338387391eae92f4718633a863d5705b30a78a3184"
+        }
+      ]
+    },
+    {
+      "id": "scene-g_cold",
+      "label": "刘备与诸葛亮 · 玩家背影",
+      "state": "awaiting_company_run",
+      "authored_job_snapshot": {
+        "id": "scene-g_cold",
+        "kind": "scene",
+        "name": "g_cold",
+        "refs": [
+          "liubei",
+          "zhuge"
+        ],
+        "prompt": "A council in progress in Liu Bei's hall: Liu Bei and his officers lean over a map together at the far end; Ziheng (the player, a young scholar in his early 20s in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits alone at a side table in cold shadow, a cup untouched; Zhuge Liang glances back at him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "status": "pending"
+      },
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "references": [
+        {
+          "label": "liubei · 角色参考",
+          "source": "game/sanguo/art/portraits/liubei.webp",
+          "file": "references/game/sanguo/art/portraits/liubei.webp",
+          "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6"
+        },
+        {
+          "label": "zhuge · 角色参考",
+          "source": "game/sanguo/art/portraits/zhuge.webp",
+          "file": "references/game/sanguo/art/portraits/zhuge.webp",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+        },
+        {
+          "label": "现有场景 · 画风对照",
+          "source": "game/sanguo/art/scenes/v3_council.webp",
+          "file": "references/game/sanguo/art/scenes/v3_council.webp",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+        }
+      ]
+    }
+  ]
+}

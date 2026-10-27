@@ -161,5 +161,25 @@ class ComfyTest(unittest.TestCase):
         self.assertRaises(RuntimeError, client.wait, 'task-123', ['32'], 1, 0)
 
 
+    def test_candidate_output_root_does_not_redirect_character_references(self):
+        original_ref = gen.ART / 'portraits/a.webp'
+        original_ref.parent.mkdir(parents=True); original_ref.write_bytes(image_bytes())
+        self.args.output_root = str(self.root / 'review')
+        self.args.records = 'art/comfy-records.json'
+        class Fake:
+            def __init__(self, *a): pass
+            def check(self, graph): pass
+            def upload(self, raw): return 'uploaded.png'
+            def submit(self, graph): return 'task-candidate'
+            def wait(self, *a): return image_bytes()
+        with patch.object(gen, 'reference_images', return_value=[b'reference']), contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(gen.run(self.args, Fake), 0)
+        self.assertEqual(gen.char_ref('a'), original_ref)
+        self.assertTrue((self.root / 'review/scenes/one.webp').is_file())
+        self.assertTrue((self.root / 'review/source/scene-one.comfy.png').is_file())
+        self.assertTrue((self.root / 'review/comfy-records.json').is_file())
+        self.assertFalse((gen.ART / 'scenes/one.webp').exists())
+
+
 if __name__ == '__main__':
     unittest.main()
