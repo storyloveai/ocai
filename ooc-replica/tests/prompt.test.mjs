@@ -23,3 +23,16 @@ test('Gemini uses its own key and native adapter while explicit providers remain
 });
 
 test('DeepSeek defaults to current Flash with separately keyed Gemini backup',async()=>{const {fallbackConfig}=await import('../server/provider.js');const env={DEEPSEEK_API_KEY:'ds',GEMINI_API_KEY:'gg'};const primary=providerConfig(env);assert.equal(primary.model,'deepseek-flash');assert.equal(primary.key,'ds');assert.equal(fallbackConfig(primary,env).key,'gg');assert.equal(fallbackConfig(primary,{}),null);assert.equal(fallbackConfig(providerConfig({GEMINI_API_KEY:'gg'}),env),null);});
+
+// Catalogue type is authoritative across frontend routing and server prompt selection.
+test('Three Kingdoms characters use their own identities and character output contracts',async()=>{
+ const {storydateCharacters}=await import('../dist/assets/storydate-originals.js');
+ for(const character of storydateCharacters){
+  const packet=buildPrompt({...input,titleId:character.id});
+  assert.equal(packet.mode,'character');
+  assert.ok(packet.system.includes(character.title));
+  assert.doesNotMatch(packet.system,/Ashley|Apartment doorway/);
+ }
+ const storyPacket=buildPrompt({...input,titleId:'sg-007'});
+ assert.equal(storyPacket.mode,'story');
+});
