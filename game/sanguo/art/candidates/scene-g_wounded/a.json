@@ -1,0 +1,58 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "A：战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A field hospital after battle, rows of wounded soldiers on straw mats under a long awning; Wen Zhi, a young woman physician, sleeves tied back, exhausted, bandages a soldier's arm by lantern light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子\"\n  ],\n  \"composition\": \"战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.",
+  "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
+  "authored_job": {
+    "id": "scene-g_wounded",
+    "kind": "scene",
+    "name": "g_wounded",
+    "batch": 2,
+    "status": "queued",
+    "refs": [
+      "wenzhi"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/wenzhi.webp",
+      "game/sanguo/art/scenes/v2_wound.webp"
+    ],
+    "keep": [
+      "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子"
+    ],
+    "composition": "战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A field hospital after battle, rows of wounded soldiers on straw mats under a long awning; Wen Zhi, a young woman physician, sleeves tied back, exhausted, bandages a soldier's arm by lantern light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/wenzhi.webp",
+      "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v2_wound.webp",
+      "sha256": "6b5645deb483b7602bd643e1462037a6516c573be8fdc4ea9e5bdef46fa69b00"
+    }
+  ],
+  "original_sha256": "807f39d93b4e877acc0028f211703e0fe135590b68056ed1b9758e05df920eb7",
+  "created_at": "2026-10-27T07:05:06.358828+00:00"
+}

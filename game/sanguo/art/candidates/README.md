@@ -1,6 +1,6 @@
 # 三国·谋士：未采用的场景候选
 
-Issue #56，11/31 场景已有两张候选，共 23 张未裁切原图。
+Issue #56，17/31 场景已有两张候选，共 34 张未裁切原图。
 
 预览：https://storydate-zhou-git-codex-art-candidates-zhou-zeyas-projects.vercel.app/assets/art-candidates/index.html
 
@@ -19,14 +19,14 @@ Issue #56，11/31 场景已有两张候选，共 23 张未裁切原图。
 | scene-v3_letter | 2/2 | [A](scene-v3_letter/a.png) | [B](scene-v3_letter/b.png) |
 | scene-v3_wakou | 2/2 | [A](scene-v3_wakou/a.png) | [B](scene-v3_wakou/b.png) |
 | scene-v3_laozu | 2/2 | [A](scene-v3_laozu/a.png) | [B](scene-v3_laozu/b.png) |
-| scene-v3_huniu | 1/2 | [A](scene-v3_huniu/a.png) | 待生成 |
-| scene-v3_fire | 0/2 | 待生成 | 待生成 |
+| scene-v3_huniu | 2/2 | [A](scene-v3_huniu/a.png) | [B](scene-v3_huniu/b.png) |
+| scene-v3_fire | 2/2 | [A](scene-v3_fire/a.png) | [B](scene-v3_fire/b.png) |
 | scene-v3_far | 2/2 | [A](scene-v3_far/a.png) | [B](scene-v3_far/b.png) |
 | scene-v3_guan_hall | 2/2 | [A](scene-v3_guan_hall/a.png) | [B](scene-v3_guan_hall/b.png) |
-| scene-v3_report | 0/2 | 待生成 | 待生成 |
-| scene-v3_guanping | 0/2 | 待生成 | 待生成 |
-| scene-v3_wz_jing | 0/2 | 待生成 | 待生成 |
-| scene-g_wounded | 0/2 | 待生成 | 待生成 |
+| scene-v3_report | 2/2 | [A](scene-v3_report/a.png) | [B](scene-v3_report/b.png) |
+| scene-v3_guanping | 2/2 | [A](scene-v3_guanping/a.png) | [B](scene-v3_guanping/b.png) |
+| scene-v3_wz_jing | 2/2 | [A](scene-v3_wz_jing/a.png) | [B](scene-v3_wz_jing/b.png) |
+| scene-g_wounded | 2/2 | [A](scene-g_wounded/a.png) | [B](scene-g_wounded/b.png) |
 | scene-v4_pangde | 0/2 | 待生成 | 待生成 |
 | scene-v4_flood | 0/2 | 待生成 | 待生成 |
 | scene-v4_feast | 0/2 | 待生成 | 待生成 |

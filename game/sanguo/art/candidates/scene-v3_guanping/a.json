@@ -1,0 +1,60 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "子衡背影在左指点，关平中央持笔练字，关羽从右侧廊道经过。",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A quiet study in Jiangling: Guan Ping, Guan Yu's son, a sincere young officer in his twenties in light armour, practises calligraphy with a brush at a low desk; Ziheng (the player, a young scholar in his early 20s in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible guides him; Guan Yu glimpsed passing in the corridor. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\",\n    \"子衡（玩家）：灰蓝布袍的年轻书生，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"江陵书房：关平（二十多岁、轻甲）在矮案前练字；子衡背影在旁指点；走廊里关羽一闪而过\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no blood or gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.",
+  "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
+  "authored_job": {
+    "id": "scene-v3_guanping",
+    "kind": "scene",
+    "name": "v3_guanping",
+    "batch": 2,
+    "status": "queued",
+    "refs": [
+      "guanyu"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/guanyu.webp",
+      "game/sanguo/art/scenes/v3_guanyu_night.webp"
+    ],
+    "keep": [
+      "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲",
+      "子衡（玩家）：灰蓝布袍的年轻书生，只能背影或侧后方，不露脸"
+    ],
+    "composition": "江陵书房：关平（二十多岁、轻甲）在矮案前练字；子衡背影在旁指点；走廊里关羽一闪而过",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A quiet study in Jiangling: Guan Ping, Guan Yu's son, a sincere young officer in his twenties in light armour, practises calligraphy with a brush at a low desk; Ziheng (the player, a young scholar in his early 20s in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible guides him; Guan Yu glimpsed passing in the corridor. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/guanyu.webp",
+      "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_guanyu_night.webp",
+      "sha256": "ec0ee68d2c0e861622b9ae39baa5aa3a10f9ec3f03d3d1768171a19381d89cc7"
+    }
+  ],
+  "original_sha256": "9e123044164ce6142abdd4400b6e0f615839ce4d61682db939e59f24d183e2f3",
+  "created_at": "2026-10-27T07:01:39.446057+00:00"
+}
