@@ -1,0 +1,65 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "description": "关羽左侧从容举杯、周仓持刀立后，鲁肃在右侧紧张对坐。",
+  "full_generation_prompt": "Create one standalone, uncropped original scene illustration. Use ALL attached references: earlier images lock each named character's face, hair and clothing; the LAST image is the adopted art-style reference. Preserve their Chinese historical illustrated visual-novel style. Follow the authored fields verbatim as the brief; do not render these fields as text.\n\n{\n  \"prompt\": \"A banquet pavilion on the riverbank at Lukou: Guan Yu, red-faced with a long black beard in a green robe, sits at the feast holding a wine cup, perfectly calm, his great crescent blade held upright behind him by a dark-skinned attendant; Lu Su across the table, tense; behind the screens, glints of hidden armour; a single small boat waits at the shore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"keep\": [\n    \"关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲\",\n    \"鲁肃：宽厚脸、短须、小冠、赭黄官袍\"\n  ],\n  \"composition\": \"临江亭子横向展开：关羽居左举杯从容，身后周仓竖持青龙刀；鲁肃居右紧张；屏风后隐约有甲光；远处岸边一条小船\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ]\n}\n\nDelivery: candidate A; one full-frame landscape image, requested original size 1536x1024. All key faces and actions inside the central horizontal band for later 2.5:1 cropping. Do not crop this original. All people adults; no visible writing on books, maps or banners; no gore. Ziheng, if present, only from behind, face not visible. Use a clear cinematic staging following the exact authored composition.",
+  "source_commit": "f134fe88ebfa174ff9c80bd145c205dca98828f5",
+  "authored_job": {
+    "id": "scene-v3_dandao",
+    "kind": "scene",
+    "name": "v3_dandao",
+    "batch": 1,
+    "status": "ready",
+    "refs": [
+      "guanyu",
+      "lusu"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/guanyu.webp",
+      "game/sanguo/art/portraits/lusu.webp",
+      "game/sanguo/art/scenes/v3_xiang.webp"
+    ],
+    "keep": [
+      "关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲",
+      "鲁肃：宽厚脸、短须、小冠、赭黄官袍"
+    ],
+    "composition": "临江亭子横向展开：关羽居左举杯从容，身后周仓竖持青龙刀；鲁肃居右紧张；屏风后隐约有甲光；远处岸边一条小船",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A banquet pavilion on the riverbank at Lukou: Guan Yu, red-faced with a long black beard in a green robe, sits at the feast holding a wine cup, perfectly calm, his great crescent blade held upright behind him by a dark-skinned attendant; Lu Su across the table, tense; behind the screens, glints of hidden armour; a single small boat waits at the shore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/guanyu.webp",
+      "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991"
+    },
+    {
+      "path": "game/sanguo/art/portraits/lusu.webp",
+      "sha256": "d71b36d0447d05a87bcad0f943854166fba014ec4c9af2d5ff421f94a45b3499"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_xiang.webp",
+      "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338"
+    }
+  ],
+  "original_sha256": "de5dcdd8f3bc8e34089f7c939758264c432038ba9195d4da5466402a6ee7a265",
+  "created_at": "2026-10-27T06:49:30.350710+00:00"
+}

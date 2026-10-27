@@ -1,0 +1,965 @@
+<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>三国·谋士 · 候选原图评审</title><style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#111;color:#eee}body{margin:0}main{max-width:1440px;margin:auto;padding:28px 20px}h1{font-size:clamp(24px,4vw,38px);margin-bottom:12px}p,li{line-height:1.7;color:#bbb}a{color:#e3bd75;overflow-wrap:anywhere}header{padding-bottom:24px}article{margin:28px 0;padding:24px;background:#1b1b1b;border-radius:14px;scroll-margin-top:20px}h2{font-size:22px;overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}figure{margin:0;min-width:0}figure img{display:block;width:100%;height:auto;border-radius:8px;background:#101010}figcaption{padding:10px 0;line-height:1.6;overflow-wrap:anywhere}.pending{padding:40px 16px;background:#141414;color:#999;border-radius:8px}.refs{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}.refs img{height:140px;max-width:100%;object-fit:contain}.refs figure{max-width:360px}.refs figcaption{font-size:12px}details{margin-top:18px}summary{cursor:pointer;color:#e3bd75}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.7}label{display:inline-flex;gap:12px;align-items:center}select{padding:8px;background:#222;color:#fff;border:1px solid #666;border-radius:6px}.badge{color:#dfb564;font-size:14px}.links{display:flex;gap:20px;flex-wrap:wrap}@media(max-width:700px){main{padding:20px 12px}article{padding:16px}.grid{grid-template-columns:1fr}}
+</style><main><header><small>STORYDATE · ISSUE #56 · 原图候选</small><h1>三国·谋士 · 5/31 场景已有两张候选</h1><p>共 10 张实际原图。全部未经裁切、未经采用，等待 Claude 逐张审图；没有修改剧情、作图清单或正式游戏图片。</p><p>工具：ChatGPT 自带 image_gen.imagegen；底层模型名称未由工具公开。不调用按张付费的 OpenAI 图片 API。点击图片查看原始 PNG；图片从本 PR 的 GitHub 分支读取，参考图固定到来源提交。</p><nav class="links"><a href="manifest.json">完整清单与生成记录</a><a href="https://github.com/storyloveai/ocai/issues/56">Issue #56</a><a href="https://github.com/storyloveai/ocai/tree/codex/art-candidates/game/sanguo/art/candidates">GitHub 原图目录</a></nav><p><label>查看批次 <select id="group"><option value="all">全部 31 场景</option value="batch1">卷二、三 · Batch 1</option><option value="batch2">卷二、三 · Batch 2</option><option value="v4">卷四</option></select></label></p></header><article data-group="batch1" id="scene-v3_clinic"><span class="badge">batch1 · 2/2 候选</span><h2>scene-v3_clinic</h2><p>街边小医馆：温芷在药柜前柜台记账；候诊的都是成年穷苦百姓（疲惫的年轻妇人、拄杖老人、手缠布条的脚夫）；午后暖光</p><div class="grid"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_clinic/a.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_clinic/a.png" alt="scene-v3_clinic 候选 A 未裁原图"></a><figcaption><strong>A</strong> · 温芷在右侧药柜前记账，候诊妇人、老人和包手脚夫沿左侧与前景排开。<br>1536 × 1024 · PNG 原图</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_clinic/b.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_clinic/b.png" alt="scene-v3_clinic 候选 B 未裁原图"></a><figcaption><strong>B</strong> · 温芷移至左侧柜台，右侧候诊人群与街口暖光形成另一种横向布局。<br>1536 × 1024 · PNG 原图</figcaption></figure></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp" alt="旧参考图 game/sanguo/art/portraits/wenzhi.webp"></a><figcaption>game/sanguo/art/portraits/wenzhi.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_wenzhi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_wenzhi.webp" alt="旧参考图 game/sanguo/art/scenes/v2_wenzhi.webp"></a><figcaption>game/sanguo/art/scenes/v2_wenzhi.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_clinic&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_clinic&quot;,
+  &quot;batch&quot;: 1,
+  &quot;status&quot;: &quot;ready&quot;,
+  &quot;refs&quot;: [
+    &quot;wenzhi&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/wenzhi.webp&quot;,
+    &quot;game/sanguo/art/scenes/v2_wenzhi.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子&quot;
+  ],
+  &quot;composition&quot;: &quot;街边小医馆：温芷在药柜前柜台记账；候诊的都是成年穷苦百姓（疲惫的年轻妇人、拄杖老人、手缠布条的脚夫）；午后暖光&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A small busy clinic in a city street: Wen Zhi, a young woman physician, writes in an account book at a counter of herb drawers while poor townsfolk wait on benches, a tired young woman, an old man with a cane, a porter with a cloth-wrapped hand; warm afternoon light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch1" id="scene-v3_dingjun"><span class="badge">batch1 · 2/2 候选</span><h2>scene-v3_dingjun</h2><p>左上山头：法正举红旗；右下：黄忠骑马挥刀冲下山，兵马随后涌向谷中敌营；不见血</p><div class="grid"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dingjun/a.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dingjun/a.png" alt="scene-v3_dingjun 候选 A 未裁原图"></a><figcaption><strong>A</strong> · 法正在左上高处举旗，黄忠居中纵马冲向右侧谷地军营。<br>1536 × 1024 · PNG 原图</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dingjun/b.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dingjun/b.png" alt="scene-v3_dingjun 候选 B 未裁原图"></a><figcaption><strong>B</strong> · 拉近左侧法正与黄忠，保留右侧山谷敌营和随行兵马的纵深。<br>1536 × 1024 · PNG 原图</figcaption></figure></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/fazheng.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/fazheng.webp" alt="旧参考图 game/sanguo/art/portraits/fazheng.webp"></a><figcaption>game/sanguo/art/portraits/fazheng.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/huangzhong.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/huangzhong.webp" alt="旧参考图 game/sanguo/art/portraits/huangzhong.webp"></a><figcaption>game/sanguo/art/portraits/huangzhong.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp" alt="旧参考图 game/sanguo/art/scenes/v3_hanshui.webp"></a><figcaption>game/sanguo/art/scenes/v3_hanshui.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_dingjun&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_dingjun&quot;,
+  &quot;batch&quot;: 1,
+  &quot;status&quot;: &quot;ready&quot;,
+  &quot;refs&quot;: [
+    &quot;fazheng&quot;,
+    &quot;huangzhong&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/fazheng.webp&quot;,
+    &quot;game/sanguo/art/portraits/huangzhong.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_hanshui.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;法正：黑色高冠、瘦脸细眼、短须、深青色袍&quot;,
+    &quot;黄忠：白发长白须、金甲、背大弓、老当益壮&quot;
+  ],
+  &quot;composition&quot;: &quot;左上山头：法正举红旗；右下：黄忠骑马挥刀冲下山，兵马随后涌向谷中敌营；不见血&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Mount Dingjun: on a hilltop Fa Zheng in a black cap and teal robe raises a red flag; below, Huang Zhong, white-bearded in golden armour, charges downhill on horseback with his broadsword raised, his troops pouring after him toward the enemy camp in the valley. Heroic, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch1" id="scene-g_cold"><span class="badge">batch1 · 2/2 候选</span><h2>scene-g_cold</h2><p>刘备和众将在远端围着地图；子衡背影独坐侧案、冷暗阴影里、杯子没动；诸葛亮回头看他</p><div class="grid"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_cold/a.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_cold/a.png" alt="scene-g_cold 候选 A 未裁原图"></a><figcaption><strong>A</strong> · 子衡背影独坐左前景冷暗侧案，诸葛亮从远端议事桌回望。<br>1536 × 1024 · PNG 原图</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_cold/b.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-g_cold/b.png" alt="scene-g_cold 候选 B 未裁原图"></a><figcaption><strong>B</strong> · 子衡背影改置右前景侧案，白衣诸葛亮回头与身后群臣形成距离。<br>1536 × 1024 · PNG 原图</figcaption></figure></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp" alt="旧参考图 game/sanguo/art/portraits/liubei.webp"></a><figcaption>game/sanguo/art/portraits/liubei.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp" alt="旧参考图 game/sanguo/art/portraits/zhuge.webp"></a><figcaption>game/sanguo/art/portraits/zhuge.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp" alt="旧参考图 game/sanguo/art/scenes/v3_council.webp"></a><figcaption>game/sanguo/art/scenes/v3_council.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-g_cold&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;g_cold&quot;,
+  &quot;batch&quot;: 1,
+  &quot;status&quot;: &quot;ready&quot;,
+  &quot;refs&quot;: [
+    &quot;liubei&quot;,
+    &quot;zhuge&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/liubei.webp&quot;,
+    &quot;game/sanguo/art/portraits/zhuge.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_council.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;刘备：束发、温和笑意、短须、绿褐色外袍&quot;,
+    &quot;诸葛亮：长发披肩、白衣、白羽扇、清秀无须&quot;,
+    &quot;子衡（玩家）：灰蓝布袍的年轻书生，只能背影或侧后方，不露脸&quot;
+  ],
+  &quot;composition&quot;: &quot;刘备和众将在远端围着地图；子衡背影独坐侧案、冷暗阴影里、杯子没动；诸葛亮回头看他&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;,
+    &quot;子衡不露脸&quot;
+  ],
+  &quot;prompt&quot;: &quot;A council in progress in Liu Bei&#x27;s hall: Liu Bei and his officers lean over a map together at the far end; Ziheng (the player, a young scholar in his early 20s in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits alone at a side table in cold shadow, a cup untouched; Zhuge Liang glances back at him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch1" id="scene-v3_dandao"><span class="badge">batch1 · 2/2 候选</span><h2>scene-v3_dandao</h2><p>临江亭子横向展开：关羽居左举杯从容，身后周仓竖持青龙刀；鲁肃居右紧张；屏风后隐约有甲光；远处岸边一条小船</p><div class="grid"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dandao/a.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dandao/a.png" alt="scene-v3_dandao 候选 A 未裁原图"></a><figcaption><strong>A</strong> · 关羽左侧从容举杯、周仓持刀立后，鲁肃在右侧紧张对坐。<br>1536 × 1024 · PNG 原图</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dandao/b.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v3_dandao/b.png" alt="scene-v3_dandao 候选 B 未裁原图"></a><figcaption><strong>B</strong> · 更宽的江亭视角展现屏风后的甲士与岸边小船，关羽和鲁肃分列左右。<br>1536 × 1024 · PNG 原图</figcaption></figure></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/lusu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/lusu.webp" alt="旧参考图 game/sanguo/art/portraits/lusu.webp"></a><figcaption>game/sanguo/art/portraits/lusu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_xiang.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_xiang.webp" alt="旧参考图 game/sanguo/art/scenes/v3_xiang.webp"></a><figcaption>game/sanguo/art/scenes/v3_xiang.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_dandao&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_dandao&quot;,
+  &quot;batch&quot;: 1,
+  &quot;status&quot;: &quot;ready&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;,
+    &quot;lusu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/portraits/lusu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_xiang.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;,
+    &quot;鲁肃：宽厚脸、短须、小冠、赭黄官袍&quot;
+  ],
+  &quot;composition&quot;: &quot;临江亭子横向展开：关羽居左举杯从容，身后周仓竖持青龙刀；鲁肃居右紧张；屏风后隐约有甲光；远处岸边一条小船&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A banquet pavilion on the riverbank at Lukou: Guan Yu, red-faced with a long black beard in a green robe, sits at the feast holding a wine cup, perfectly calm, his great crescent blade held upright behind him by a dark-skinned attendant; Lu Su across the table, tense; behind the screens, glints of hidden armour; a single small boat waits at the shore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch1" id="scene-v2_chengdu"><span class="badge">batch1 · 2/2 候选</span><h2>scene-v2_chengdu</h2><p>城门在中景敞开；刘备骑马居中，诸葛亮在旁；两侧是成年百姓夹道；远处蜀山</p><div class="grid"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_chengdu/a.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_chengdu/a.png" alt="scene-v2_chengdu 候选 A 未裁原图"></a><figcaption><strong>A</strong> · 刘备与诸葛亮近景骑马入城，两旁成年百姓举杯相迎。<br>1536 × 1024 · PNG 原图</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_chengdu/b.png" target="_blank" rel="noopener"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-candidates/game/sanguo/art/candidates/scene-v2_chengdu/b.png" alt="scene-v2_chengdu 候选 B 未裁原图"></a><figcaption><strong>B</strong> · 拉开入城街道纵深，刘备挥手、诸葛亮持扇并骑，蜀山映在城门后。<br>1536 × 1024 · PNG 原图</figcaption></figure></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp" alt="旧参考图 game/sanguo/art/portraits/liubei.webp"></a><figcaption>game/sanguo/art/portraits/liubei.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp" alt="旧参考图 game/sanguo/art/portraits/zhuge.webp"></a><figcaption>game/sanguo/art/portraits/zhuge.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_nanjun.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_nanjun.webp" alt="旧参考图 game/sanguo/art/scenes/v2_nanjun.webp"></a><figcaption>game/sanguo/art/scenes/v2_nanjun.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v2_chengdu&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v2_chengdu&quot;,
+  &quot;batch&quot;: 1,
+  &quot;status&quot;: &quot;ready&quot;,
+  &quot;refs&quot;: [
+    &quot;liubei&quot;,
+    &quot;zhuge&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/liubei.webp&quot;,
+    &quot;game/sanguo/art/portraits/zhuge.webp&quot;,
+    &quot;game/sanguo/art/scenes/v2_nanjun.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;刘备：束发、温和笑意、短须、绿褐色外袍&quot;,
+    &quot;诸葛亮：长发披肩、白衣、白羽扇、清秀无须&quot;
+  ],
+  &quot;composition&quot;: &quot;城门在中景敞开；刘备骑马居中，诸葛亮在旁；两侧是成年百姓夹道；远处蜀山&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;The great gate of Chengdu opens: Liu Bei rides in on horseback under red banners, Zhuge Liang beside him with a feather fan; crowds of townspeople line the street, adult men and women, some bowing, some raising cups of welcome; mountains of Shu beyond. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v2_pangtong_night"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v2_pangtong_night</h2><p>帐内一盏灯是唯一光源；庞统居中偏右坐着、往旁边挪出位置；子衡背影在左前景；洛城地图摊在两人之间</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/pangtong.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/pangtong.webp" alt="旧参考图 game/sanguo/art/portraits/pangtong.webp"></a><figcaption>game/sanguo/art/portraits/pangtong.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_zhaoyun_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_zhaoyun_night.webp" alt="旧参考图 game/sanguo/art/scenes/v2_zhaoyun_night.webp"></a><figcaption>game/sanguo/art/scenes/v2_zhaoyun_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v2_pangtong_night&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v2_pangtong_night&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;pangtong&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/pangtong.webp&quot;,
+    &quot;game/sanguo/art/scenes/v2_zhaoyun_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;庞统：浓眉、黑脸、短须、褐色头巾、相貌古怪&quot;,
+    &quot;子衡（玩家）：灰蓝布袍的年轻书生，只能背影或侧后方，不露脸&quot;
+  ],
+  &quot;composition&quot;: &quot;帐内一盏灯是唯一光源；庞统居中偏右坐着、往旁边挪出位置；子衡背影在左前景；洛城地图摊在两人之间&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;,
+    &quot;子衡不露脸&quot;
+  ],
+  &quot;prompt&quot;: &quot;Night in an army tent before the march into Shu: Pang Tong, a short plain-faced man with thick brows, sits alone drinking by a lamp, a map of Luo city spread in front of him; he shifts over to make room for Ziheng (the player, a young scholar in his early 20s in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_letter"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_letter</h2><p>静物，没有人物：刚拆开的信、干青梅枝小瓶、笔砚；窗格积雪，冷蓝晨光</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/letter.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/letter.webp" alt="旧参考图 game/sanguo/art/scenes/letter.webp"></a><figcaption>game/sanguo/art/scenes/letter.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_letter&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_letter&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/scenes/letter.webp&quot;
+  ],
+  &quot;keep&quot;: [],
+  &quot;composition&quot;: &quot;静物，没有人物：刚拆开的信、干青梅枝小瓶、笔砚；窗格积雪，冷蓝晨光&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Still life by a north-facing window in winter: a letter on bamboo-paper just unfolded on a desk, beside it a dried green plum branch in a small vase, a brush and inkstone; snow on the window lattice, cold blue morning light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_wakou"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_wakou</h2><p>前景：刘备惊讶、诸葛亮摇扇微笑；中景：兵士从车上卸五十坛酒；远景山口：张飞在阵前席地醉卧</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp" alt="旧参考图 game/sanguo/art/portraits/liubei.webp"></a><figcaption>game/sanguo/art/portraits/liubei.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp" alt="旧参考图 game/sanguo/art/portraits/zhuge.webp"></a><figcaption>game/sanguo/art/portraits/zhuge.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp" alt="旧参考图 game/sanguo/art/scenes/v3_council.webp"></a><figcaption>game/sanguo/art/scenes/v3_council.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_wakou&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_wakou&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;liubei&quot;,
+    &quot;zhuge&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/liubei.webp&quot;,
+    &quot;game/sanguo/art/portraits/zhuge.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_council.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;刘备：束发、温和笑意、短须、绿褐色外袍&quot;,
+    &quot;诸葛亮：长发披肩、白衣、白羽扇、清秀无须&quot;
+  ],
+  &quot;composition&quot;: &quot;前景：刘备惊讶、诸葛亮摇扇微笑；中景：兵士从车上卸五十坛酒；远景山口：张飞在阵前席地醉卧&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A field camp in the mountains: soldiers unload fifty large wine jars from carts under a banner; in the foreground Liu Bei looks alarmed while Zhuge Liang smiles with his feather fan; in the distance, at a mountain pass, Zhang Fei (a burly warrior with a leopard-like head, round fierce eyes and a bristling tiger-whisker beard, black armour) lounges drunk on a mat in front of the enemy lines. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_laozu"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_laozu</h2><p>江陵宴厅：关羽刚把酒杯重重放下；满桌宾客噤声互看；灯笼，紧张</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp" alt="旧参考图 game/sanguo/art/scenes/v3_guanyu_night.webp"></a><figcaption>game/sanguo/art/scenes/v3_guanyu_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_laozu&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_laozu&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_guanyu_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;江陵宴厅：关羽刚把酒杯重重放下；满桌宾客噤声互看；灯笼，紧张&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A feast hall in Jiangling: Guan Yu, red-faced with a long black beard in a green robe, has set down his wine cup hard; the guests around the table fall silent and look at each other; lanterns, tension. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_huniu"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_huniu</h2><p>关羽起身怒指门外；诸葛瑾（年长吴国使者、深蓝袍）捧求亲书后退；侍从僵住</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp" alt="旧参考图 game/sanguo/art/scenes/v3_guanyu_night.webp"></a><figcaption>game/sanguo/art/scenes/v3_guanyu_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_huniu&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_huniu&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_guanyu_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;关羽起身怒指门外；诸葛瑾（年长吴国使者、深蓝袍）捧求亲书后退；侍从僵住&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Guan Yu&#x27;s hall: Guan Yu, red-faced with a long black beard, rises in anger pointing at the door; Zhuge Jin, an older scholar envoy in Wu-style dark blue robes, steps back holding a marriage proposal scroll; attendants frozen. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_fire"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_fire</h2><p>夜，粮仓起火、烟焰与烧毁的车；关羽持刀怒立；两名部将（一胖）跪地求饶</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_mifang.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_mifang.webp" alt="旧参考图 game/sanguo/art/scenes/v3_mifang.webp"></a><figcaption>game/sanguo/art/scenes/v3_mifang.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_fire&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_fire&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_mifang.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;夜，粮仓起火、烟焰与烧毁的车；关羽持刀怒立；两名部将（一胖）跪地求饶&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Night in Jiangling: a supply depot on fire, flames and smoke over burnt carts; Guan Yu, red-faced with a long black beard, stands furious with his crescent blade; two officers, one plump, kneel before him begging. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_far"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_far</h2><p>成都书房灯下：诸葛亮站着读战报、羽扇垂下、忧色；刘备坐在后面；窗外东边群山、红色晚霞</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp" alt="旧参考图 game/sanguo/art/portraits/zhuge.webp"></a><figcaption>game/sanguo/art/portraits/zhuge.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp" alt="旧参考图 game/sanguo/art/portraits/liubei.webp"></a><figcaption>game/sanguo/art/portraits/liubei.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp" alt="旧参考图 game/sanguo/art/scenes/v3_council.webp"></a><figcaption>game/sanguo/art/scenes/v3_council.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_far&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_far&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;zhuge&quot;,
+    &quot;liubei&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/zhuge.webp&quot;,
+    &quot;game/sanguo/art/portraits/liubei.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_council.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;诸葛亮：长发披肩、白衣、白羽扇、清秀无须&quot;,
+    &quot;刘备：束发、温和笑意、短须、绿褐色外袍&quot;
+  ],
+  &quot;composition&quot;: &quot;成都书房灯下：诸葛亮站着读战报、羽扇垂下、忧色；刘备坐在后面；窗外东边群山、红色晚霞&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A study in Chengdu by lamplight: Zhuge Liang stands reading a stack of war reports, feather fan lowered, worried; Liu Bei sits behind him; through the window, mountains under a red evening sky to the east. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_guan_hall"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_guan_hall</h2><p>关羽拍案、酒杯震起；周仓按剑；子衡背影站在案前</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp" alt="旧参考图 game/sanguo/art/scenes/v3_guanyu_night.webp"></a><figcaption>game/sanguo/art/scenes/v3_guanyu_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_guan_hall&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_guan_hall&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_guanyu_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;,
+    &quot;子衡（玩家）：灰蓝布袍的年轻书生，只能背影或侧后方，不露脸&quot;
+  ],
+  &quot;composition&quot;: &quot;关羽拍案、酒杯震起；周仓按剑；子衡背影站在案前&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;,
+    &quot;子衡不露脸&quot;
+  ],
+  &quot;prompt&quot;: &quot;Guan Yu slams his palm on the table so the wine cups jump; his dark-skinned attendant grips his sword hilt; Ziheng (the player, a young scholar in his early 20s in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible, stands before the table. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_report"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_report</h2><p>关羽在堂上读竹简战报，笑意正在收住，手指停在一个名字上；关平站在一旁</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_xiang.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_xiang.webp" alt="旧参考图 game/sanguo/art/scenes/v3_xiang.webp"></a><figcaption>game/sanguo/art/scenes/v3_xiang.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_report&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_report&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_xiang.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;关羽在堂上读竹简战报，笑意正在收住，手指停在一个名字上；关平站在一旁&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Guan Yu, red-faced with a long black beard in a green robe, laughs heartily reading a bamboo battle report in his hall, then his laugh is fading as his finger rests on one name; Guan Ping, a young officer, stands beside him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_guanping"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_guanping</h2><p>江陵书房：关平（二十多岁、轻甲）在矮案前练字；子衡背影在旁指点；走廊里关羽一闪而过</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp" alt="旧参考图 game/sanguo/art/scenes/v3_guanyu_night.webp"></a><figcaption>game/sanguo/art/scenes/v3_guanyu_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_guanping&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_guanping&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_guanyu_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;,
+    &quot;子衡（玩家）：灰蓝布袍的年轻书生，只能背影或侧后方，不露脸&quot;
+  ],
+  &quot;composition&quot;: &quot;江陵书房：关平（二十多岁、轻甲）在矮案前练字；子衡背影在旁指点；走廊里关羽一闪而过&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;,
+    &quot;子衡不露脸&quot;
+  ],
+  &quot;prompt&quot;: &quot;A quiet study in Jiangling: Guan Ping, Guan Yu&#x27;s son, a sincere young officer in his twenties in light armour, practises calligraphy with a brush at a low desk; Ziheng (the player, a young scholar in his early 20s in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible guides him; Guan Yu glimpsed passing in the corridor. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-v3_wz_jing"><span class="badge">batch2 · 0/2 候选</span><h2>scene-v3_wz_jing</h2><p>江陵城头夜：温芷披斗篷提灯、挎药篮，向北望黑色江面；身后哨兵和火盆。和 v2_wenzhi 是同一人，不要重复同一构图（换成侧身、站在垛口旁）</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp" alt="旧参考图 game/sanguo/art/portraits/wenzhi.webp"></a><figcaption>game/sanguo/art/portraits/wenzhi.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_wenzhi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_wenzhi.webp" alt="旧参考图 game/sanguo/art/scenes/v2_wenzhi.webp"></a><figcaption>game/sanguo/art/scenes/v2_wenzhi.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v3_wz_jing&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v3_wz_jing&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;wenzhi&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/wenzhi.webp&quot;,
+    &quot;game/sanguo/art/scenes/v2_wenzhi.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子&quot;
+  ],
+  &quot;composition&quot;: &quot;江陵城头夜：温芷披斗篷提灯、挎药篮，向北望黑色江面；身后哨兵和火盆。和 v2_wenzhi 是同一人，不要重复同一构图（换成侧身、站在垛口旁）&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Night on the city wall of Jiangling: Wen Zhi, a young woman physician in a cloak, holds a lantern and a basket of medicine, gazing north over the dark river; sentries by a brazier behind her. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="batch2" id="scene-g_wounded"><span class="badge">batch2 · 0/2 候选</span><h2>scene-g_wounded</h2><p>战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp" alt="旧参考图 game/sanguo/art/portraits/wenzhi.webp"></a><figcaption>game/sanguo/art/portraits/wenzhi.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_wound.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_wound.webp" alt="旧参考图 game/sanguo/art/scenes/v2_wound.webp"></a><figcaption>game/sanguo/art/scenes/v2_wound.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-g_wounded&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;g_wounded&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;wenzhi&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/wenzhi.webp&quot;,
+    &quot;game/sanguo/art/scenes/v2_wound.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子&quot;
+  ],
+  &quot;composition&quot;: &quot;战后伤兵营：长棚下草席成排；温芷挽起袖子、疲惫，在灯下给一名士兵包扎手臂；不见血&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A field hospital after battle, rows of wounded soldiers on straw mats under a long awning; Wen Zhi, a young woman physician, sleeves tied back, exhausted, bandages a soldier&#x27;s arm by lantern light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_pangde"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_pangde</h2><p>樊城外：关羽纵马追击，庞德回身拉弓；远处魏军阵前抬着一口木棺</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp" alt="旧参考图 game/sanguo/art/scenes/v3_hanshui.webp"></a><figcaption>game/sanguo/art/scenes/v3_hanshui.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_pangde&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_pangde&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_hanshui.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;樊城外：关羽纵马追击，庞德回身拉弓；远处魏军阵前抬着一口木棺&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A battlefield outside Fancheng under a grey sky: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at full gallop with his crescent blade; ahead, Pang De, a fierce Wei general in dark armour, turns in the saddle drawing a bow; behind the Wei lines a plain wooden coffin is carried on poles. No gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_flood"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_flood</h2><p>雨夜，洪水冲进山谷里的营寨；前景山脊上关羽带着船筏冒雨观望；不画尸体</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_feishi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_feishi.webp" alt="旧参考图 game/sanguo/art/scenes/v3_feishi.webp"></a><figcaption>game/sanguo/art/scenes/v3_feishi.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_flood&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_flood&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_feishi.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;雨夜，洪水冲进山谷里的营寨；前景山脊上关羽带着船筏冒雨观望；不画尸体&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Night storm over a river valley: a vast flood pours through broken dams into a valley full of drowned tents and banners; on a ridge in the foreground Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, stands in the rain beside boats and rafts, watching. No bodies, no gore. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_feast"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_feast</h2><p>成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp" alt="旧参考图 game/sanguo/art/portraits/liubei.webp"></a><figcaption>game/sanguo/art/portraits/liubei.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp" alt="旧参考图 game/sanguo/art/portraits/zhuge.webp"></a><figcaption>game/sanguo/art/portraits/zhuge.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wang.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wang.webp" alt="旧参考图 game/sanguo/art/scenes/v3_wang.webp"></a><figcaption>game/sanguo/art/scenes/v3_wang.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_feast&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_feast&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;liubei&quot;,
+    &quot;zhuge&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/liubei.webp&quot;,
+    &quot;game/sanguo/art/portraits/zhuge.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_wang.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）&quot;,
+    &quot;诸葛亮：长发、白衣、白羽扇、清秀无须&quot;
+  ],
+  &quot;composition&quot;: &quot;成都宴厅：刘备举杯庆贺；诸葛亮白衣持扇坐在一旁没喝，看着战报&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A lantern-lit feast hall in Chengdu: Liu Bei, a kindly ruler in his fifties with greying temples, raises a wine cup in celebration among officials; Zhuge Liang in white robes with a feather fan sits apart, not drinking, looking at a dispatch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_pow"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_pow</h2><p>水退后营外：成排的魏军降兵坐在泥地上；粮官拿着账本发愁；远处关羽的绿旗</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp" alt="旧参考图 game/sanguo/art/scenes/v3_council.webp"></a><figcaption>game/sanguo/art/scenes/v3_council.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_pow&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_pow&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_council.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;水退后营外：成排的魏军降兵坐在泥地上；粮官拿着账本发愁；远处关羽的绿旗&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Outside a camp after the flood: long lines of surrendered Wei soldiers in muddy clothes sit on the wet ground, unarmed; a grain officer with a ledger talks anxiously; Guan Yu&#x27;s green banner in the background. All adults, no violence. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_bone"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_bone</h2><p>营帐灯下：关羽右手下棋，左臂搁在布上；华佗低头施刀（不露血和伤口）；温芷捧药盘；旁人掩面</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp" alt="旧参考图 game/sanguo/art/scenes/v3_guanyu_night.webp"></a><figcaption>game/sanguo/art/scenes/v3_guanyu_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_bone&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_bone&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_guanyu_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;营帐灯下：关羽右手下棋，左臂搁在布上；华佗低头施刀（不露血和伤口）；温芷捧药盘；旁人掩面&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Inside a lamp-lit army tent: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, sits calmly playing weiqi with his right hand while his left arm rests on a cloth on a small table; an old physician (Hua Tuo, white-bearded, plain robe) bends over the arm with a small knife; Wen Zhi holds a tray of medicine bowls; onlookers turn away. Show no blood or open wound — the arm is covered by the physician&#x27;s hands and cloth. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_huatuo"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_huatuo</h2><p>晨雾江边：华佗坐在小船上；温芷背着药箱站在岸边回头望营地</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp" alt="旧参考图 game/sanguo/art/portraits/wenzhi.webp"></a><figcaption>game/sanguo/art/portraits/wenzhi.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wz_road.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wz_road.webp" alt="旧参考图 game/sanguo/art/scenes/v3_wz_road.webp"></a><figcaption>game/sanguo/art/scenes/v3_wz_road.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_huatuo&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_huatuo&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;wenzhi&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/wenzhi.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_wz_road.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子&quot;
+  ],
+  &quot;composition&quot;: &quot;晨雾江边：华佗坐在小船上；温芷背着药箱站在岸边回头望营地&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A misty riverbank at dawn: a small boat waits; an old white-bearded physician sits in it; Wen Zhi stands on the bank with her medicine chest, looking back toward the camp. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_luxun"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_luxun</h2><p>中军帐：关羽仰面大笑，手里拿着展开的信；案上礼盒；帐外兵马北上</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_feishi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_feishi.webp" alt="旧参考图 game/sanguo/art/scenes/v3_feishi.webp"></a><figcaption>game/sanguo/art/scenes/v3_feishi.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_luxun&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_luxun&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_feishi.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;中军帐：关羽仰面大笑，手里拿着展开的信；案上礼盒；帐外兵马北上&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A command tent: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, throws back his head laughing, holding an unrolled letter; lacquered gift boxes on the table; through the tent flap, troops marching north. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_zhuge_night"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_zhuge_night</h2><p>成都书房夜：诸葛亮坐在墙上旧地图前，羽扇放在地图的荆州位置上；一盏灯</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp" alt="旧参考图 game/sanguo/art/portraits/zhuge.webp"></a><figcaption>game/sanguo/art/portraits/zhuge.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_fazheng_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_fazheng_night.webp" alt="旧参考图 game/sanguo/art/scenes/v3_fazheng_night.webp"></a><figcaption>game/sanguo/art/scenes/v3_fazheng_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_zhuge_night&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_zhuge_night&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;zhuge&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/zhuge.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_fazheng_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;诸葛亮：长发、白衣、白羽扇、清秀无须&quot;
+  ],
+  &quot;composition&quot;: &quot;成都书房夜：诸葛亮坐在墙上旧地图前，羽扇放在地图的荆州位置上；一盏灯&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A quiet study in Chengdu at night: Zhuge Liang in white robes sits before an old hand-drawn map on the wall, his feather fan laid on the map over the Jingzhou region; a single lamp. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_retreat"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_retreat</h2><p>深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_hanshui.webp" alt="旧参考图 game/sanguo/art/scenes/v3_hanshui.webp"></a><figcaption>game/sanguo/art/scenes/v3_hanshui.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_retreat&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_retreat&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_hanshui.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;
+  ],
+  &quot;composition&quot;: &quot;深秋泥路：关羽左臂吊着带一支越来越稀的队伍；南边远城冒烟；有人往芦苇里溜走&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A muddy road in late autumn: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, rides at the head of a thinning column of weary soldiers, his left arm in a sling; in the far south, smoke over a city; deserters slipping away into reeds. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_shangyong"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_shangyong</h2><p>上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp" alt="旧参考图 game/sanguo/art/scenes/v3_council.webp"></a><figcaption>game/sanguo/art/scenes/v3_council.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_shangyong&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_shangyong&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/scenes/v3_council.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸&quot;
+  ],
+  &quot;composition&quot;: &quot;上庸山城的厅：刘封坐在案后犹豫，案上有封好的令；孟达俯身低语；廖化风尘仆仆跪着；子衡背影站在一旁&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;,
+    &quot;子衡不露脸&quot;
+  ],
+  &quot;prompt&quot;: &quot;A mountain-town hall at Shangyong: a young general (Liu Feng) sits uneasily behind a desk with a sealed order on it; a smooth-faced older officer (Meng Da) leans in to whisper; a dusty messenger (Liao Hua) kneels before them; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands to one side. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_wz_letter"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_wz_letter</h2><p>静物：灯下木桌上折好的信、药囊、一枝梅；窗外下雨；没有人物</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/wenzhi.webp" alt="旧参考图 game/sanguo/art/portraits/wenzhi.webp"></a><figcaption>game/sanguo/art/portraits/wenzhi.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wz_road.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_wz_road.webp" alt="旧参考图 game/sanguo/art/scenes/v3_wz_road.webp"></a><figcaption>game/sanguo/art/scenes/v3_wz_road.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_wz_letter&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_wz_letter&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;wenzhi&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/wenzhi.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_wz_road.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙、药囊，成年女子&quot;
+  ],
+  &quot;composition&quot;: &quot;静物：灯下木桌上折好的信、药囊、一枝梅；窗外下雨；没有人物&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;Still life by lamplight: a folded letter on a wooden table beside a small medicine pouch and a plum blossom sprig; rain on the window. No people. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_maicheng"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_maicheng</h2><p>冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_guanyu_night.webp" alt="旧参考图 game/sanguo/art/scenes/v3_guanyu_night.webp"></a><figcaption>game/sanguo/art/scenes/v3_guanyu_night.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_maicheng&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_maicheng&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_guanyu_night.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;,
+    &quot;子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸&quot;
+  ],
+  &quot;composition&quot;: &quot;冬夜小城北门：关羽骑马停在大路和小路的岔口；身后几百残兵举火把；子衡背影拉着他的马缰&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;,
+    &quot;子衡不露脸&quot;
+  ],
+  &quot;prompt&quot;: &quot;Night at the north gate of a small walled town in winter: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, mounted, at a fork where a main road and a narrow mountain path split; a few hundred exhausted soldiers with torches behind him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible holds his horse&#x27;s bridle. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_west"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_west</h2><p>黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/guanyu.webp" alt="旧参考图 game/sanguo/art/portraits/guanyu.webp"></a><figcaption>game/sanguo/art/portraits/guanyu.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp" alt="旧参考图 game/sanguo/art/portraits/liubei.webp"></a><figcaption>game/sanguo/art/portraits/liubei.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_nanjun.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v2_nanjun.webp" alt="旧参考图 game/sanguo/art/scenes/v2_nanjun.webp"></a><figcaption>game/sanguo/art/scenes/v2_nanjun.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_west&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_west&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;guanyu&quot;,
+    &quot;liubei&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/guanyu.webp&quot;,
+    &quot;game/sanguo/art/portraits/liubei.webp&quot;,
+    &quot;game/sanguo/art/scenes/v2_nanjun.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;关羽：枣红脸、及胸长黑须、丹凤眼、绿头巾、绿袍罩暗金甲&quot;,
+    &quot;刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）&quot;,
+    &quot;子衡（玩家）：灰蓝布袍的书生，四十岁上下，只能背影或侧后方，不露脸&quot;
+  ],
+  &quot;composition&quot;: &quot;黄昏蜀道，前方成都城：关羽牵马步行；城门口刘备跑出来迎；子衡背影跟在后面&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;,
+    &quot;子衡不露脸&quot;
+  ],
+  &quot;prompt&quot;: &quot;A mountain road in the west at dusk, the walls of Chengdu ahead: Guan Yu, red-faced with a long black beard to his chest, phoenix eyes, green headscarf and green robe over dark gold armour, walks leading his horse; at the city gate Liu Bei, in his fifties, runs out to meet him; Ziheng (the player, a scholar in his forties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible walks a little behind. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><article data-group="v4" id="scene-v4_news"><span class="badge">v4 · 0/2 候选</span><h2>scene-v4_news</h2><p>冬天成都殿上：刘备昏倒在众人臂弯里，战报掉在地上；诸葛亮跪在旁边；冷灰光</p><div class="grid"><div class="pending">A · 尚未生成</div><div class="pending">B · 尚未生成</div></div><details><summary>全部输入参考图（旧图，不计为新候选）</summary><div class="refs"><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/liubei.webp" alt="旧参考图 game/sanguo/art/portraits/liubei.webp"></a><figcaption>game/sanguo/art/portraits/liubei.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/portraits/zhuge.webp" alt="旧参考图 game/sanguo/art/portraits/zhuge.webp"></a><figcaption>game/sanguo/art/portraits/zhuge.webp</figcaption></figure><figure><a href="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp"><img loading="lazy" src="https://raw.githubusercontent.com/storyloveai/ocai/f134fe88ebfa174ff9c80bd145c205dca98828f5/game/sanguo/art/scenes/v3_council.webp" alt="旧参考图 game/sanguo/art/scenes/v3_council.webp"></a><figcaption>game/sanguo/art/scenes/v3_council.webp</figcaption></figure></div></details><details><summary>Claude 清单原文与验收点</summary><pre>{
+  &quot;id&quot;: &quot;scene-v4_news&quot;,
+  &quot;kind&quot;: &quot;scene&quot;,
+  &quot;name&quot;: &quot;v4_news&quot;,
+  &quot;batch&quot;: 3,
+  &quot;status&quot;: &quot;queued&quot;,
+  &quot;refs&quot;: [
+    &quot;liubei&quot;,
+    &quot;zhuge&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/sanguo/art/portraits/liubei.webp&quot;,
+    &quot;game/sanguo/art/portraits/zhuge.webp&quot;,
+    &quot;game/sanguo/art/scenes/v3_council.webp&quot;
+  ],
+  &quot;keep&quot;: [
+    &quot;刘备：束发、温和、短须、绿褐色外袍（这一卷五十多岁，鬓角有白）&quot;,
+    &quot;诸葛亮：长发、白衣、白羽扇、清秀无须&quot;
+  ],
+  &quot;composition&quot;: &quot;冬天成都殿上：刘备昏倒在众人臂弯里，战报掉在地上；诸葛亮跪在旁边；冷灰光&quot;,
+  &quot;accept&quot;: [
+    &quot;和 ref_paths 里的头像比，脸、发型、服色一致&quot;,
+    &quot;汉服，不是和服；画面里没有任何文字&quot;,
+    &quot;人物都是成年人&quot;,
+    &quot;裁成 2.5:1 横条后，主要人物和动作不被切掉&quot;
+  ],
+  &quot;prompt&quot;: &quot;A palace hall in Chengdu in winter: Liu Bei has collapsed into the arms of officials, a dispatch fallen to the floor; Zhuge Liang kneels beside him; grey cold light. No blood. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1200,
+    480
+  ]
+}</pre></details></article><script>document.querySelector('#group').addEventListener('change',event=>{for(const article of document.querySelectorAll('article'))article.hidden=event.target.value!=='all'&&article.dataset.group!==event.target.value})</script></main></html>
