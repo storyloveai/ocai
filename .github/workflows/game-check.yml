@@ -60,7 +60,7 @@ jobs:
           python3 tools/build.py
       - name: Committed build outputs are up to date
         run: |
-          git diff --exit-code -- content/campaign.json content/v2/campaign_v2.json content/v2/presets.json content/v3/campaign_v3.json content/v3/presets.json content/v4/campaign_v4.json content/v4/presets.json content/v5/campaign_v5.json content/v5/presets.json web/index.html web/illus.html engine/campaign_core.js || (echo "::error::Run 'python3 content/campaign.py && python3 tools/build.py' in game/sanguo and commit the results." && exit 1)
+          git diff --exit-code -- content/campaign.json content/v2/campaign_v2.json content/v2/presets.json content/v3/campaign_v3.json content/v3/presets.json content/v4/campaign_v4.json content/v4/presets.json content/v5/campaign_v5.json content/v5/presets.json content/v6/campaign_v6.json content/v6/presets.json web/index.html web/illus.html engine/campaign_core.js || (echo "::error::Run 'python3 content/campaign.py && python3 tools/build.py' in game/sanguo and commit the results." && exit 1)
       - name: Static checks and simulated players
         run: |
           node tools/check.js content/campaign.json 3000
@@ -68,3 +68,4 @@ jobs:
           node tools/check.js content/v3/campaign_v3.json 3000
           node tools/check.js content/v4/campaign_v4.json 3000
           node tools/check.js content/v5/campaign_v5.json 3000
+          node tools/check.js content/v6/campaign_v6.json 3000

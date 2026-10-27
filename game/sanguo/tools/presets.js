@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Backstories for a later volume: play the previous volume with typical player types and keep where they ended.
-// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3|v4|v5]
+// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3|v4|v5|v6]
 // The last argument says which volume the backstories are for (default v2: backstories from Volume I).
 const fs = require("fs");
 const CC = require("../engine/campaign_core.js");
@@ -62,8 +62,21 @@ const WANT_V5 = [
   { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
     title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。荆州和麦城的事，你是从远处听说的。", "You left early. You heard about Jingzhou and Maicheng from far away.") },
 ];
+// Volume VI starts from Volume V: Liu Bei is dead; the backstories differ in who else lived and what you were trusted with.
+const WANT_V6 = [
+  { id: "trusted", weights: Object.assign({}, CC.policies.loyal, { "flag.v5_entrusted": 30, "flag.v5_guard": 10, "flag.v5_firebreak": 10 }), ok: st => st.v.track === "liu" && !st.v.ended_early && st.v["flag.v5_entrusted"],
+    title: T("受托孤的人", "The One Entrusted"), desc: T("白帝城里，先帝把你的手和丞相的手放在了一起。", "In Baidi, the late emperor laid your hand with the Chancellor's.") },
+  { id: "brothers", weights: Object.assign({}, CC.policies.loyal, { "flag.fei_alive": 40, "flag.v5_fei_letter": 20, "flag.v5_langzhong": 20 }), ok: st => st.v.track === "liu" && !st.v.ended_early && st.v["flag.fei_alive"],
+    title: T("阆中守夜的人", "The Watch at Langzhong"), desc: T("那一夜你守在张飞帐外。范疆、张达扔下刀跑了。", "That night you kept watch outside Zhang Fei's tent. Fan Jiang and Zhang Da dropped their knives and ran.") },
+  { id: "romance", weights: Object.assign({}, CC.policies.romance, { "flag.wz_wed": 30 }), ok: st => !st.v.ended_early && st.v["flag.wz_wed"],
+    title: T("说定成亲的人", "Promised"), desc: T("永安宫的偏殿里，你和温芷说定了：回成都就成亲。", "In a side hall of the Palace of Enduring Peace, you and Wen Zhi agreed: back in Chengdu, you'd marry.") },
+  { id: "seer", policy: "seer", ok: st => !st.v.ended_early && st.v.uncanny >= 3,
+    title: T("异人", "The Uncanny One"), desc: T("鱼腹浦的石头会动，你早就知道。有人叫你先生，有人叫你妖人。", "You knew the stones at Yufu Shore would move. Some call you Master; some call you a sorcerer.") },
+  { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
+    title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。白帝城的事，你是从远处听说的。", "You left early. You heard about Baidi from far away.") },
+];
 const res = [];
-for (const w of (target === "v5" ? WANT_V5 : target === "v4" ? WANT_V4 : target === "v3" ? WANT_V3 : WANT)) {
+for (const w of (target === "v6" ? WANT_V6 : target === "v5" ? WANT_V5 : target === "v4" ? WANT_V4 : target === "v3" ? WANT_V3 : WANT)) {
   let found = null;
   for (let seed = 1; seed < 400 && !found; seed++) { const st = CC.playPolicy(camp, CC.rng(seed * 7919), w.weights || (w.policy ? CC.policies[w.policy] : null)); if (w.ok(st)) found = st; }
   if (!found) { console.error("no run for", w.id); process.exit(1); }
