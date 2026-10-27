@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Backstories for a later volume: play the previous volume with typical player types and keep where they ended.
-// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3]
+// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3|v4]
 // The last argument says which volume the backstories are for (default v2: backstories from Volume I).
 const fs = require("fs");
 const CC = require("../engine/campaign_core.js");
@@ -32,8 +32,22 @@ const WANT_V3 = [
   { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
     title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。荆州和西川的事，你是从远处听说的。", "You left early. You heard about Jingzhou and the west from far away.") },
 ];
+// Volume IV starts from Volume III (which carries II and I): the two places Volume III can leave you, plus the usual types.
+const WANT_V4 = [
+  { id: "chengdu", weights: Object.assign({}, CC.policies.loyal, { "flag.v3_to_jing": -12 }), ok: st => st.v.track === "liu" && !st.v.ended_early && !st.v["flag.post_jingzhou"] && !st.v["flag.v3_to_jing"],
+    title: T("成都的谋士", "The Strategist in Chengdu"), desc: T("汉中打下来了，你留在汉中王身边。荆州的战报，你每一封都看两遍。", "Hanzhong is won, and you stayed at the King's side. You read every report from Jingzhou twice.") },
+  { id: "guan", weights: Object.assign({}, CC.policies.loyal, { "flag.v3_to_jing": 12, "flag.post_jingzhou": 12, "rel.guanyu.trust": 3, "rel.guanyu.warmth": 3 }),
+    ok: st => st.v.track === "liu" && !st.v.ended_early && (st.v["flag.post_jingzhou"] || st.v["flag.v3_to_jing"]),
+    title: T("关羽身边的人", "The One Beside Guan Yu"), desc: T("关羽北上樊城，你在他的中军帐里。他说，有你在，他心里踏实些。", "Guan Yu marches on Fancheng, and you're in his headquarters tent. He says that with you there he feels steadier.") },
+  { id: "romance", policy: "romance", ok: st => !st.v.ended_early && (st.v["flag.wz_west"] || st.v["flag.wz_jingzhou"]) && st.v["rel.wenzhi.intimacy"] >= 4,
+    title: T("江边人", "The One by the River"), desc: T("温芷一直在你身边，从赤壁的火，到汉中的山。", "Wen Zhi has been at your side all along, from the fire at Red Cliffs to the mountains of Hanzhong.") },
+  { id: "seer", policy: "seer", ok: st => !st.v.ended_early && st.v.uncanny >= 3,
+    title: T("异人", "The Uncanny One"), desc: T("鸡肋两个字，你听出了一条人命。有人叫你先生，有人叫你妖人。", "In two words, 'chicken rib', you heard a man's death. Some call you Master; some call you a sorcerer.") },
+  { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
+    title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。汉中和荆州的事，你是从远处听说的。", "You left early. You heard about Hanzhong and Jingzhou from far away.") },
+];
 const res = [];
-for (const w of (target === "v3" ? WANT_V3 : WANT)) {
+for (const w of (target === "v4" ? WANT_V4 : target === "v3" ? WANT_V3 : WANT)) {
   let found = null;
   for (let seed = 1; seed < 400 && !found; seed++) { const st = CC.playPolicy(camp, CC.rng(seed * 7919), w.weights || (w.policy ? CC.policies[w.policy] : null)); if (w.ok(st)) found = st; }
   if (!found) { console.error("no run for", w.id); process.exit(1); }

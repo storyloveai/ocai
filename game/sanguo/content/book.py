@@ -20,7 +20,7 @@ BOOK = {
         {"id": "sanguo_strategist_v3", "file": "v3/campaign_v3.json", "title": T("汉中", "Hanzhong"), "canon": T("第66–73回", "Ch. 66–73"), "years": T("建安二十年至二十四年", "215–219"),
          "blurb": T("单刀赴会、定军山、汉中王、虎女犬子。刘备离天下最近的那几年——你在成都，还是在关羽身边，由卷二的你决定。",
                     "The meeting with a single sword, Mount Dingjun, the King of Hanzhong, a tiger's daughter. The years Liu Bei came closest—spent in Chengdu or at Guan Yu's side, as your Volume II decided.")},
-        {"id": "sanguo_strategist_v4", "title": T("荆州之殇", "The Fall of Jingzhou"), "canon": T("第74–77回", "Ch. 74–77"), "years": T("建安二十四年", "219–220"),
+        {"id": "sanguo_strategist_v4", "file": "v4/campaign_v4.json", "title": T("荆州之殇", "The Fall of Jingzhou"), "canon": T("第74–77回", "Ch. 74–77"), "years": T("建安二十四年", "219–220"),
          "blurb": T("水淹七军，然后是麦城。你和关羽之间的一切，都会在这里兑现。", "The flood at Fancheng, then Maicheng. Everything between you and Guan Yu comes due here.")},
         {"id": "sanguo_strategist_v5", "title": T("夷陵与白帝", "Yiling and Baidi"), "canon": T("第78–85回", "Ch. 78–85"), "years": T("黄初元年至章武三年", "220–223"),
          "blurb": T("为兄弟复仇的一战，和白帝城的托孤。", "A war for a brother's revenge, and the last charge at Baidi.")},

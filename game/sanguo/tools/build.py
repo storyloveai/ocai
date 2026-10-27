@@ -13,6 +13,9 @@ if (R / "content/v2/campaign_v2.py").exists():
 if (R / "content/v3/campaign_v3.py").exists():
     subprocess.run(["node", str(R / "tools/presets.js"), str(R / "content/v2/campaign_v2.json"), str(R / "content/v3/presets.json"), "v3"], check=True, stdout=subprocess.DEVNULL)
     subprocess.run([sys.executable, str(R / "content/v3/campaign_v3.py")], check=True, stdout=subprocess.DEVNULL)
+if (R / "content/v4/campaign_v4.py").exists():
+    subprocess.run(["node", str(R / "tools/presets.js"), str(R / "content/v3/campaign_v3.json"), str(R / "content/v4/presets.json"), "v4"], check=True, stdout=subprocess.DEVNULL)
+    subprocess.run([sys.executable, str(R / "content/v4/campaign_v4.py")], check=True, stdout=subprocess.DEVNULL)
 sys.path.insert(0, str(R / "content"))
 import book
 camp = book.load()
