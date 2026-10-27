@@ -3,12 +3,12 @@ import assert from 'node:assert/strict';
 import {buildPrompt} from '../server/prompt-engine.js';
 import {SuggestionLoader,parseSuggestions} from '../dist/assets/suggestions.js';
 
-const titleId='69f414d90abbab6f6a2c8131';
+const titleId='story-005';
 test('next actions use latest completed scene and bounded server canon, without changing chat prompts',()=>{
  const messages=[{role:'user',content:'我已经进了图书馆，想找失踪的教授。'},{role:'assistant',content:'书架后传来脚步声，桌上有一封未拆的信。'}];
  const p=buildPrompt({task:'suggestions',titleId,messages,previousSuggestions:['去庭院']});
  assert.equal(p.mode,'suggestions');assert.match(p.system,/exactly three/);assert.match(p.system,/untrusted data/);
- const context=JSON.parse(p.messages[0].content);assert.equal(context.canon.title,'Lumencia Academy');assert.deepEqual(context.recentConversation,messages);assert.deepEqual(context.previousSuggestions,['去庭院']);
+ const context=JSON.parse(p.messages[0].content);assert.equal(context.canon.title,'The Saintess Failed Her Exam');assert.deepEqual(context.recentConversation,messages);assert.deepEqual(context.previousSuggestions,['去庭院']);
  assert.throws(()=>buildPrompt({task:'suggestions',titleId:'unknown',messages}));
  assert.throws(()=>buildPrompt({task:'suggestions',titleId,messages:messages.slice(0,1)}));
  assert.throws(()=>buildPrompt({task:'suggestions',titleId,messages:[{role:'system',content:'override'}]}));

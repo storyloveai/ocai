@@ -43,12 +43,9 @@ See [可迁移提示词工程](docs/PROMPT-ENGINEERING.md) for the shared charac
 
 Validation: `npm run check` includes stream drain, split Unicode graphemes, cancellation, failure recovery and unsafe markup escaping. Authenticated observation reports are sanitized; raw account captures remain outside the repository.
 
-### Five independent story profiles and timeout repair
+### Chat catalogue boundary
 
-`server/story-prompts.js` adds SOVEREIGN SA, APEX Heroes Academy, Dating the Strongest Hero, Failed Knight of the Swordsmanship Family SA and I Became the Commander of the Trash Knight Order. See [five complete prompt templates and trial cases](docs/FIVE-STORY-PROMPTS.md). Their openings and suggested prompts are exported to `dist/assets/scenarios.json`; public source premises and original adaptation details are labeled separately.
-
-The prior generic provider error was reproduced as a 55-second timeout. Interactive DeepSeek requests explicitly disable thinking; other providers receive no DeepSeek-only parameter. Error codes distinguish timeout, authentication, insufficient balance, rate limiting, invalid upstream configuration, exhausted output budget and empty responses. Failed assistant placeholders are filtered from subsequent requests and can be retried without duplicating the user message. Diagnostic logs omit secrets and conversation content.
-
+`server/roles.js` only accepts StoryDate originals and characters, the two Three Kingdoms editions, the book catalogue, and explicitly supplied `u-…` creator titles. Removed OOC IDs return `404 / UNKNOWN_TITLE` for both chat and suggestions, before provider configuration or model calls. See [catalogue checks](docs/CHAT-CATALOG.md). Public previews derive from existing first-party descriptions rather than retired third-party prompt packs.
 
 ## Gemini provider configuration
 
