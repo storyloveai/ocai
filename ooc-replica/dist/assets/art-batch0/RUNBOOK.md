@@ -42,7 +42,7 @@ export COMFYUI_API_URL='http://替换为公司ComfyUI主机:8188'
 python3 game/sanguo/tools/gen_batch0.py --dry-run
 ```
 
-输出必须恰好是上面的三个 ID。dry-run 不连接服务、不出图。检查每个角色参考 `path` 都存在、四张风格参考的 `exists` 都为 true。当前默认模型名为：
+输出必须恰好是上面的三个 ID。dry-run 不连接服务、不出图。检查每个角色参考 `path` 都存在，每个任务的一张画风参考 `exists` 都为 true。当前默认模型名为：
 
 - `qwen_image_edit_2511_bf16.safetensors`
 - `qwen_2.5_vl_7b_fp8_scaled.safetensors`
@@ -79,7 +79,7 @@ python3 game/sanguo/tools/gen_batch0.py --seed 20261027 \
 ooc-replica/dist/assets/art-batch0/
   candidates/source/        原始 ComfyUI 图片（保留下载字节）
   candidates/scenes/        实际裁出的 1200×480 WebP
-  references/              旧角色图与卷二/三场景对照
+  inputs/reference-root/   Claude 指定的旧角色图与场景对照
   manifest.json            三张的状态、原清单快照、尺寸、seed、prompt_id、校验值
   index.html               对照页
   storydate-batch0-review.zip  有真实候选后才提供
