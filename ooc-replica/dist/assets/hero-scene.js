@@ -16,8 +16,8 @@ export const SCENES = {
       quote: '“The only heroes under heaven are you, my lord, and I.”',
       ask: 'Thunder cracks. Your lord’s chopsticks hit the floor. What do you do?',
       choices: [
-        { label: 'Knock over your own cup', hint: 'Cover his alarm. Cao Cao will notice you.' },
-        { label: 'Speak up and rate the heroes yourself', hint: 'Draw every eye in the garden to you.' }
+        { id: 'cover', label: 'Knock over your own cup', hint: 'Cover his alarm. Cao Cao will notice you.' },
+        { id: 'speak', label: 'Speak up and rate the heroes yourself', hint: 'Draw every eye in the garden to you.' }
       ],
       placeholder: 'Or do something else…', cta: 'Start chapter 1', note: 'You face this moment in chapter 1 · 8 chapters, and what you say is remembered.'
     },
@@ -27,8 +27,8 @@ export const SCENES = {
       quote: '「今天下英雄，惟使君与操耳。」',
       ask: '一声惊雷，主公手中的匙箸落在地上。你怎么做？',
       choices: [
-        { label: '打翻自己的酒樽', hint: '替主公遮过慌乱。曹操会注意到你。' },
-        { label: '接过话头，自己评点英雄', hint: '把满园的目光引到你身上。' }
+        { id: 'cover', label: '打翻自己的酒樽', hint: '替主公遮过慌乱。曹操会注意到你。' },
+        { id: 'speak', label: '接过话头，自己评点英雄', hint: '把满园的目光引到你身上。' }
       ],
       placeholder: '或者，做点别的……', cta: '开始第一章', note: '这一幕在第一章 · 共八章，你说过的话都会被记住。'
     }
@@ -126,8 +126,14 @@ const CSS = `
 }`;
 
 // Where a click leads: the Three Kingdoms game in the banner's language, or Diaochan's chat opened with the reply.
-export function heroHref(page, lang, reply = '') {
-  if (page === 'home') return `${SCENES.home.href}?lang=${lang}`;
+// On the home banner a choice goes in as ?choice=<id> (the game plays it out at once); typed words go in as ?say=
+// and wait in the game's reply box at the same moment (game/sanguo 决策记录 v2.9).
+export function heroHref(page, lang, reply = '', choice = '') {
+  if (page === 'home') {
+    const q = new URLSearchParams({ lang });
+    if (/^[a-z_]{1,20}$/.test(choice)) q.set('choice', choice); else if (reply.trim()) q.set('say', reply.trim().slice(0, 200));
+    return `${SCENES.home.href}?${q}`;
+  }
   const say = reply.trim().slice(0, 300);
   return say ? `${SCENES.character.chat}?say=${encodeURIComponent(say)}` : SCENES.character.chat;
 }
@@ -170,7 +176,7 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
     hero.innerHTML = heroSceneMarkup(page, l);
     const input = hero.querySelector('input');
     // A choice is an answer: it goes straight in. Typing is for anything else.
-    hero.querySelectorAll('[data-hero-choice]').forEach(b => b.onclick = () => go(heroHref(page, l, s[l].choices[Number(b.dataset.heroChoice)].label)));
+    hero.querySelectorAll('[data-hero-choice]').forEach(b => { const c = s[l].choices[Number(b.dataset.heroChoice)]; b.onclick = () => go(heroHref(page, l, c.label, c.id || '')); });
     hero.querySelector('[data-hero-form]').onsubmit = e => { e.preventDefault(); go(heroHref(page, l, input.value)); };
 
   };

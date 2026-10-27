@@ -33,12 +33,16 @@ test('home keeps its catalogue transition free of inserted dividers and preserve
  assert.equal(document.querySelectorAll('.sd-home-old-carousel').length,2);
  assert.equal(document.querySelector('.sd-hero-footer'),null);assert.equal(document.querySelector('.sd-library-heading'),null);
  listeners['sd-lang']({detail:'zh'});assert.equal(hero.querySelector('.sd-hero-quote').textContent,SCENES.home.zh.quote);
- hero.querySelector('[data-hero-choice="0"]').click();assert.deepEqual(routes,['/play/three-kingdoms?lang=zh']);
+ hero.querySelector('[data-hero-choice="0"]').click();assert.deepEqual(routes,['/play/three-kingdoms?lang=zh&choice=cover']);
  mountHeroScene(document.body,'home',{win,navigate(){}});assert.equal(document.querySelectorAll('[data-sd-hero]').length,1);
 });
 
 test('a choice goes straight in: the game in the banner language, or the chat with that line', () => {
   assert.equal(heroHref('home', 'zh'), '/play/three-kingdoms?lang=zh');
+  // the home banner hands its choice or the typed words to the game (game/sanguo 决策记录 v2.9)
+  assert.equal(heroHref('home', 'en', SCENES.home.en.choices[0].label, SCENES.home.en.choices[0].id), '/play/three-kingdoms?lang=en&choice=cover');
+  assert.equal(heroHref('home', 'zh', '', SCENES.home.zh.choices[1].id), '/play/three-kingdoms?lang=zh&choice=speak');
+  assert.equal(heroHref('home', 'en', ' I pour him more wine '), '/play/three-kingdoms?lang=en&say=I+pour+him+more+wine');
   assert.equal(heroHref('character', 'en', 'Who is listening?'), '/play/sgc-007?say=Who%20is%20listening%3F');
   assert.equal(heroHref('character', 'en', '   '), '/play/sgc-007');
   const {document, window} = parseHTML('<html><head></head><body><div><div class="hidden tl:h-10"></div><section><div><div data-hero-desktop><h1>Old</h1></div><div class="tl:hidden"><a href="#">m</a></div></div></section><div class="hidden h-4"></div><div class="tl:hidden"><img></div><div class="content"><button>Main</button></div></div></body></html>');
