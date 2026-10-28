@@ -1,0 +1,75 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "portrait-weiyan",
+    "character": "weiyan",
+    "name": "Wei Yan",
+    "prompt": "Bust portrait of Wei Yan: a tall Shu general in his forties, a face 'red as a ripe date' and eyes 'bright as stars' (Romance of the Three Kingdoms ch. 53), a short black beard (not long), thick brows, a steel helmet and dark red armour; proud, fierce, restless. Must look clearly different from Guan Yu: no long beard, no green headscarf or green robe. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+    "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+    "aspect_ratio": "3:4",
+    "width": 768,
+    "height": 1024,
+    "output_filename": "weiyan.webp",
+    "status": "ready"
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. This is a BRAND NEW character portrait, NOT a portrait of any person in the style references. Keep a clearly individual face matching the authored text. Use refs for rendering/style only. Exactly ONE adult character, bust portrait head-and-shoulders, VERTICAL THREE TO FOUR (3:4), requested 768 by 1024. Face readable at 48px; the entire head, helmet/hat and shoulders fit comfortably inside the frame; face in upper third, no tall empty space. A quiet softly painted unmarked background. Final avatar target is 300x400; preserve full original output.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"portrait-weiyan\",\n  \"character\": \"weiyan\",\n  \"name\": \"Wei Yan\",\n  \"prompt\": \"Bust portrait of Wei Yan: a tall Shu general in his forties, a face 'red as a ripe date' and eyes 'bright as stars' (Romance of the Three Kingdoms ch. 53), a short black beard (not long), thick brows, a steel helmet and dark red armour; proud, fierce, restless. Must look clearly different from Guan Yu: no long beard, no green headscarf or green robe. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.\",\n  \"aspect_ratio\": \"3:4\",\n  \"width\": 768,\n  \"height\": 1024,\n  \"output_filename\": \"weiyan.webp\",\n  \"status\": \"ready\"\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nExactly ONE original Wei Yan in his FORTIES: ruddy date-red complexion, thick brows, sharp star-bright eyes, SHORT BLACK BEARD ending just below chin, STEEL HELMET and DARK RED ARMOUR. Clearly DIFFERENT from Guan Yu: NO green of any kind in clothing/headwear, NO long beard, NO flowing headscarf, NO crescent glaive. Fierce proud restless personality. He is a burly experienced general, not a youngster and not an old man. Complete helmet top comfortably inside frame with small margin. Re-generate a clean original, not a composite.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/fazheng.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "additional_style_reference_not_character_identity",
+      "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+    },
+    {
+      "path": "game/sanguo/art/portraits/zhaoyun.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "additional_style_reference_not_character_identity",
+      "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_council.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "additional_style_reference_not_character_identity",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+    }
+  ],
+  "description": "四十多岁的魏延，枣红脸、短须、钢盔暗红甲，神情强硬。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    300,
+    400
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1086,
+    1448
+  ],
+  "original_sha256": "826e40a39e40d72a908570719e442dadec63661f546debb653618356ba0d93f0",
+  "created_at": "2026-10-28T02:09:24.636566+00:00",
+  "bytes": 2650165,
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/portrait-weiyan/a-300x400.png",
+    "dimensions": [
+      300,
+      400
+    ],
+    "box": [
+      0,
+      0,
+      1086,
+      1448
+    ],
+    "sha256": "cdd57aaca38f78fbd104f36309fcccfef06bab3a1436343d6aef0bc71d1f0611",
+    "original_sha256": "826e40a39e40d72a908570719e442dadec63661f546debb653618356ba0d93f0",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "codex_visual_check": "pass"
+}

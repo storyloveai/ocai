@@ -1,0 +1,2110 @@
+{
+  "issue": 68,
+  "branch": "codex/art-v7-endings",
+  "asset_ref": "codex/art-v7-endings",
+  "items": [
+    {
+      "id": "portrait-jiangwei",
+      "group": "portrait",
+      "authored_job": {
+        "id": "portrait-jiangwei",
+        "character": "jiangwei",
+        "name": "Jiang Wei",
+        "prompt": "Bust portrait of Jiang Wei: a young general of about 27 from Tianshui, handsome and earnest, clear bright eyes, clean-shaven, a light silver-blue helmet and armour over a blue-grey robe, the look of a scholar who also fights; calm and determined. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+        "aspect_ratio": "3:4",
+        "width": 768,
+        "height": 1024,
+        "output_filename": "jiangwei.webp",
+        "status": "ready"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/fazheng.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e",
+          "role": "additional_style_only"
+        },
+        {
+          "path": "game/sanguo/art/portraits/zhaoyun.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7",
+          "role": "additional_style_only"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_council.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+          "role": "additional_style_only"
+        }
+      ],
+      "target_dimensions": [
+        300,
+        400
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "a",
+          "authored_job": {
+            "id": "portrait-jiangwei",
+            "character": "jiangwei",
+            "name": "Jiang Wei",
+            "prompt": "Bust portrait of Jiang Wei: a young general of about 27 from Tianshui, handsome and earnest, clear bright eyes, clean-shaven, a light silver-blue helmet and armour over a blue-grey robe, the look of a scholar who also fights; calm and determined. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+            "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+            "aspect_ratio": "3:4",
+            "width": 768,
+            "height": 1024,
+            "output_filename": "jiangwei.webp",
+            "status": "ready"
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. This is a BRAND NEW character portrait, NOT a portrait of any person in the style references. Keep a clearly individual face matching the authored text. Use refs for rendering/style only. Exactly ONE adult character, bust portrait head-and-shoulders, VERTICAL THREE TO FOUR (3:4), requested 768 by 1024. Face readable at 48px; the entire head, helmet/hat and shoulders fit comfortably inside the frame; face in upper third, no tall empty space. A quiet softly painted unmarked background. Final avatar target is 300x400; preserve full original output.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"portrait-jiangwei\",\n  \"character\": \"jiangwei\",\n  \"name\": \"Jiang Wei\",\n  \"prompt\": \"Bust portrait of Jiang Wei: a young general of about 27 from Tianshui, handsome and earnest, clear bright eyes, clean-shaven, a light silver-blue helmet and armour over a blue-grey robe, the look of a scholar who also fights; calm and determined. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.\",\n  \"aspect_ratio\": \"3:4\",\n  \"width\": 768,\n  \"height\": 1024,\n  \"output_filename\": \"jiangwei.webp\",\n  \"status\": \"ready\"\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nExactly ONE original new Jiang Wei, age TWENTY-SEVEN, clean-shaven handsome earnest face, light SILVER-BLUE HELMET and matching armour over blue-grey robe. Do not reuse Zhao Yun's exposed forehead/headband or his wide grin; Jiang Wei has a visibly different calm, thoughtful oval face and narrower refined jaw, scholar-warrior bearing, helmet clearly visible. Do not copy Fa Zheng's beard or dark robe.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/fazheng.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhaoyun.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "银蓝盔甲、无须、神情沉静的二十七岁姜维，偏正面取景。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            300,
+            400
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1086,
+            1448
+          ],
+          "original_sha256": "e47cfa85e548cffa8c82aedaf2659f48ce356266134fb67a1a1f0f6acf492e42",
+          "created_at": "2026-10-28T01:58:49.392215+00:00",
+          "bytes": 2701318,
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/portrait-jiangwei/a-300x400.png",
+            "dimensions": [
+              300,
+              400
+            ],
+            "box": [
+              0,
+              0,
+              1086,
+              1448
+            ],
+            "sha256": "84df06c69b08993dac363a7c4d6f364c37cbc2206be8c6959a5bf487aaaea667",
+            "original_sha256": "e47cfa85e548cffa8c82aedaf2659f48ce356266134fb67a1a1f0f6acf492e42",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "path": "game/sanguo/art/candidates/portrait-jiangwei/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "portrait-jiangwei",
+            "character": "jiangwei",
+            "name": "Jiang Wei",
+            "prompt": "Bust portrait of Jiang Wei: a young general of about 27 from Tianshui, handsome and earnest, clear bright eyes, clean-shaven, a light silver-blue helmet and armour over a blue-grey robe, the look of a scholar who also fights; calm and determined. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+            "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+            "aspect_ratio": "3:4",
+            "width": 768,
+            "height": 1024,
+            "output_filename": "jiangwei.webp",
+            "status": "ready"
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. This is a BRAND NEW character portrait, NOT a portrait of any person in the style references. Keep a clearly individual face matching the authored text. Use refs for rendering/style only. Exactly ONE adult character, bust portrait head-and-shoulders, VERTICAL THREE TO FOUR (3:4), requested 768 by 1024. Face readable at 48px; the entire head, helmet/hat and shoulders fit comfortably inside the frame; face in upper third, no tall empty space. A quiet softly painted unmarked background. Final avatar target is 300x400; preserve full original output.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"portrait-jiangwei\",\n  \"character\": \"jiangwei\",\n  \"name\": \"Jiang Wei\",\n  \"prompt\": \"Bust portrait of Jiang Wei: a young general of about 27 from Tianshui, handsome and earnest, clear bright eyes, clean-shaven, a light silver-blue helmet and armour over a blue-grey robe, the look of a scholar who also fights; calm and determined. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.\",\n  \"aspect_ratio\": \"3:4\",\n  \"width\": 768,\n  \"height\": 1024,\n  \"output_filename\": \"jiangwei.webp\",\n  \"status\": \"ready\"\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nExactly ONE original new Jiang Wei, age TWENTY-SEVEN, clean-shaven handsome earnest face, light SILVER-BLUE HELMET and matching armour over blue-grey robe. Do not reuse Zhao Yun's exposed forehead/headband or his wide grin; Jiang Wei has a visibly different calm, thoughtful oval face and narrower refined jaw, scholar-warrior bearing, helmet clearly visible. Do not copy Fa Zheng's beard or dark robe.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/fazheng.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhaoyun.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "更轻的侧转角度，保留银蓝头盔和书生将军的清亮眼神。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            300,
+            400
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1086,
+            1448
+          ],
+          "original_sha256": "cf192de8439b75b89bee2d68e03aa753998da1bb9568d5aa8ca2dba0493134e0",
+          "created_at": "2026-10-28T01:59:39.127684+00:00",
+          "bytes": 2807679,
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/portrait-jiangwei/b-300x400.png",
+            "dimensions": [
+              300,
+              400
+            ],
+            "box": [
+              0,
+              0,
+              1086,
+              1448
+            ],
+            "sha256": "64948b8847c5325892c9094923b8e9c401ab5efb8bf4f65c63826ea49c4dd3da",
+            "original_sha256": "cf192de8439b75b89bee2d68e03aa753998da1bb9568d5aa8ca2dba0493134e0",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "path": "game/sanguo/art/candidates/portrait-jiangwei/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b.json"
+        }
+      ],
+      "status": "awaiting_claude_review"
+    },
+    {
+      "id": "portrait-simayi",
+      "group": "portrait",
+      "authored_job": {
+        "id": "portrait-simayi",
+        "character": "simayi",
+        "name": "Sima Yi",
+        "prompt": "Bust portrait of Sima Yi: the Wei grand commander, around fifty, a long narrow face, deep-set watchful narrow eyes that seem to look back over his shoulder, a thin long beard, a tall black official hat, dark navy Wei court robes; patient, cautious, unreadable. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+        "aspect_ratio": "3:4",
+        "width": 768,
+        "height": 1024,
+        "output_filename": "simayi.webp",
+        "status": "ready"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/fazheng.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e",
+          "role": "additional_style_only"
+        },
+        {
+          "path": "game/sanguo/art/portraits/zhaoyun.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7",
+          "role": "additional_style_only"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_council.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+          "role": "additional_style_only"
+        }
+      ],
+      "target_dimensions": [
+        300,
+        400
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "a",
+          "authored_job": {
+            "id": "portrait-simayi",
+            "character": "simayi",
+            "name": "Sima Yi",
+            "prompt": "Bust portrait of Sima Yi: the Wei grand commander, around fifty, a long narrow face, deep-set watchful narrow eyes that seem to look back over his shoulder, a thin long beard, a tall black official hat, dark navy Wei court robes; patient, cautious, unreadable. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+            "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+            "aspect_ratio": "3:4",
+            "width": 768,
+            "height": 1024,
+            "output_filename": "simayi.webp",
+            "status": "ready"
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. This is a BRAND NEW character portrait, NOT a portrait of any person in the style references. Keep a clearly individual face matching the authored text. Use refs for rendering/style only. Exactly ONE adult character, bust portrait head-and-shoulders, VERTICAL THREE TO FOUR (3:4), requested 768 by 1024. Face readable at 48px; the entire head, helmet/hat and shoulders fit comfortably inside the frame; face in upper third, no tall empty space. A quiet softly painted unmarked background. Final avatar target is 300x400; preserve full original output.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"portrait-simayi\",\n  \"character\": \"simayi\",\n  \"name\": \"Sima Yi\",\n  \"prompt\": \"Bust portrait of Sima Yi: the Wei grand commander, around fifty, a long narrow face, deep-set watchful narrow eyes that seem to look back over his shoulder, a thin long beard, a tall black official hat, dark navy Wei court robes; patient, cautious, unreadable. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.\",\n  \"aspect_ratio\": \"3:4\",\n  \"width\": 768,\n  \"height\": 1024,\n  \"output_filename\": \"simayi.webp\",\n  \"status\": \"ready\"\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nExactly ONE original Sima Yi around FIFTY. Clearly mature, long narrow face, deep-set narrow watchful eyes, subtle forehead lines, fine long narrow beard, tall BLACK official hat and dark NAVY court robe. His neck and shoulders turn subtly as his eyes look back toward the viewer. Do not copy Fa Zheng's younger lean face/short beard/dark teal clothing: Sima Yi must have a longer older face and a much longer thinner beard. Patient guarded expression, no youthful pretty-boy face. Full tall hat must remain inside frame.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/fazheng.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhaoyun.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "五十岁司马懿回身审视，黑高冠、深青魏服、细长须，神情谨慎。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            300,
+            400
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1086,
+            1448
+          ],
+          "original_sha256": "1ea49eb04f6c93e0cf57a3ec86a3acfa7436704aabce26318192108e4b4fcba2",
+          "created_at": "2026-10-28T02:00:40.480644+00:00",
+          "bytes": 2241684,
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/portrait-simayi/a-300x400.png",
+            "dimensions": [
+              300,
+              400
+            ],
+            "box": [
+              0,
+              0,
+              1086,
+              1448
+            ],
+            "sha256": "f64650b0a27bdcd130a6fabe202b4d993c9f2d62cbb526e522f444ae66fdc9c9",
+            "original_sha256": "1ea49eb04f6c93e0cf57a3ec86a3acfa7436704aabce26318192108e4b4fcba2",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "path": "game/sanguo/art/candidates/portrait-simayi/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "portrait-simayi",
+            "character": "simayi",
+            "name": "Sima Yi",
+            "prompt": "Bust portrait of Sima Yi: the Wei grand commander, around fifty, a long narrow face, deep-set watchful narrow eyes that seem to look back over his shoulder, a thin long beard, a tall black official hat, dark navy Wei court robes; patient, cautious, unreadable. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+            "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+            "aspect_ratio": "3:4",
+            "width": 768,
+            "height": 1024,
+            "output_filename": "simayi.webp",
+            "status": "ready"
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. This is a BRAND NEW character portrait, NOT a portrait of any person in the style references. Keep a clearly individual face matching the authored text. Use refs for rendering/style only. Exactly ONE adult character, bust portrait head-and-shoulders, VERTICAL THREE TO FOUR (3:4), requested 768 by 1024. Face readable at 48px; the entire head, helmet/hat and shoulders fit comfortably inside the frame; face in upper third, no tall empty space. A quiet softly painted unmarked background. Final avatar target is 300x400; preserve full original output.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"portrait-simayi\",\n  \"character\": \"simayi\",\n  \"name\": \"Sima Yi\",\n  \"prompt\": \"Bust portrait of Sima Yi: the Wei grand commander, around fifty, a long narrow face, deep-set watchful narrow eyes that seem to look back over his shoulder, a thin long beard, a tall black official hat, dark navy Wei court robes; patient, cautious, unreadable. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.\",\n  \"aspect_ratio\": \"3:4\",\n  \"width\": 768,\n  \"height\": 1024,\n  \"output_filename\": \"simayi.webp\",\n  \"status\": \"ready\"\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nExactly ONE original Sima Yi around FIFTY. Clearly mature, long narrow face, deep-set narrow watchful eyes, subtle forehead lines, fine long narrow beard, tall BLACK official hat and dark NAVY court robe. His neck and shoulders turn subtly as his eyes look back toward the viewer. Do not copy Fa Zheng's younger lean face/short beard/dark teal clothing: Sima Yi must have a longer older face and a much longer thinner beard. Patient guarded expression, no youthful pretty-boy face. Full tall hat must remain inside frame.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/fazheng.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhaoyun.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "更窄的回望角度，眼窝和眉间纹更明显，长脸细须突出隐忍感。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            300,
+            400
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1086,
+            1448
+          ],
+          "original_sha256": "1d01cb16dc607cd63e685995a2f373515656ceb0e6aeedbf8a86de29ccdd7e19",
+          "created_at": "2026-10-28T02:01:28.868838+00:00",
+          "bytes": 2229793,
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/portrait-simayi/b-300x400.png",
+            "dimensions": [
+              300,
+              400
+            ],
+            "box": [
+              0,
+              0,
+              1086,
+              1448
+            ],
+            "sha256": "822ba6fb225643f9ed0f791a2949bfaa0e2f9e229d31586d57cc7563a2ae2590",
+            "original_sha256": "1d01cb16dc607cd63e685995a2f373515656ceb0e6aeedbf8a86de29ccdd7e19",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "path": "game/sanguo/art/candidates/portrait-simayi/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b.json"
+        }
+      ],
+      "status": "awaiting_claude_review"
+    },
+    {
+      "id": "portrait-weiyan",
+      "group": "portrait",
+      "authored_job": {
+        "id": "portrait-weiyan",
+        "character": "weiyan",
+        "name": "Wei Yan",
+        "prompt": "Bust portrait of Wei Yan: a tall Shu general in his forties, a face 'red as a ripe date' and eyes 'bright as stars' (Romance of the Three Kingdoms ch. 53), a short black beard (not long), thick brows, a steel helmet and dark red armour; proud, fierce, restless. Must look clearly different from Guan Yu: no long beard, no green headscarf or green robe. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+        "aspect_ratio": "3:4",
+        "width": 768,
+        "height": 1024,
+        "output_filename": "weiyan.webp",
+        "status": "ready"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/fazheng.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e",
+          "role": "additional_style_only"
+        },
+        {
+          "path": "game/sanguo/art/portraits/zhaoyun.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7",
+          "role": "additional_style_only"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_council.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+          "role": "additional_style_only"
+        }
+      ],
+      "target_dimensions": [
+        300,
+        400
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "a",
+          "authored_job": {
+            "id": "portrait-weiyan",
+            "character": "weiyan",
+            "name": "Wei Yan",
+            "prompt": "Bust portrait of Wei Yan: a tall Shu general in his forties, a face 'red as a ripe date' and eyes 'bright as stars' (Romance of the Three Kingdoms ch. 53), a short black beard (not long), thick brows, a steel helmet and dark red armour; proud, fierce, restless. Must look clearly different from Guan Yu: no long beard, no green headscarf or green robe. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+            "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+            "aspect_ratio": "3:4",
+            "width": 768,
+            "height": 1024,
+            "output_filename": "weiyan.webp",
+            "status": "ready"
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. This is a BRAND NEW character portrait, NOT a portrait of any person in the style references. Keep a clearly individual face matching the authored text. Use refs for rendering/style only. Exactly ONE adult character, bust portrait head-and-shoulders, VERTICAL THREE TO FOUR (3:4), requested 768 by 1024. Face readable at 48px; the entire head, helmet/hat and shoulders fit comfortably inside the frame; face in upper third, no tall empty space. A quiet softly painted unmarked background. Final avatar target is 300x400; preserve full original output.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"portrait-weiyan\",\n  \"character\": \"weiyan\",\n  \"name\": \"Wei Yan\",\n  \"prompt\": \"Bust portrait of Wei Yan: a tall Shu general in his forties, a face 'red as a ripe date' and eyes 'bright as stars' (Romance of the Three Kingdoms ch. 53), a short black beard (not long), thick brows, a steel helmet and dark red armour; proud, fierce, restless. Must look clearly different from Guan Yu: no long beard, no green headscarf or green robe. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.\",\n  \"aspect_ratio\": \"3:4\",\n  \"width\": 768,\n  \"height\": 1024,\n  \"output_filename\": \"weiyan.webp\",\n  \"status\": \"ready\"\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nExactly ONE original Wei Yan in his FORTIES: ruddy date-red complexion, thick brows, sharp star-bright eyes, SHORT BLACK BEARD ending just below chin, STEEL HELMET and DARK RED ARMOUR. Clearly DIFFERENT from Guan Yu: NO green of any kind in clothing/headwear, NO long beard, NO flowing headscarf, NO crescent glaive. Fierce proud restless personality. He is a burly experienced general, not a youngster and not an old man. Complete helmet top comfortably inside frame with small margin. Re-generate a clean original, not a composite.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/fazheng.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhaoyun.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "四十多岁的魏延，枣红脸、短须、钢盔暗红甲，神情强硬。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            300,
+            400
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1086,
+            1448
+          ],
+          "original_sha256": "826e40a39e40d72a908570719e442dadec63661f546debb653618356ba0d93f0",
+          "created_at": "2026-10-28T02:09:24.636566+00:00",
+          "bytes": 2650165,
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/portrait-weiyan/a-300x400.png",
+            "dimensions": [
+              300,
+              400
+            ],
+            "box": [
+              0,
+              0,
+              1086,
+              1448
+            ],
+            "sha256": "cdd57aaca38f78fbd104f36309fcccfef06bab3a1436343d6aef0bc71d1f0611",
+            "original_sha256": "826e40a39e40d72a908570719e442dadec63661f546debb653618356ba0d93f0",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "path": "game/sanguo/art/candidates/portrait-weiyan/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "portrait-weiyan",
+            "character": "weiyan",
+            "name": "Wei Yan",
+            "prompt": "Bust portrait of Wei Yan: a tall Shu general in his forties, a face 'red as a ripe date' and eyes 'bright as stars' (Romance of the Three Kingdoms ch. 53), a short black beard (not long), thick brows, a steel helmet and dark red armour; proud, fierce, restless. Must look clearly different from Guan Yu: no long beard, no green headscarf or green robe. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.",
+            "negative_prompt": "No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.",
+            "aspect_ratio": "3:4",
+            "width": 768,
+            "height": 1024,
+            "output_filename": "weiyan.webp",
+            "status": "ready"
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/portrait-jobs.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. This is a BRAND NEW character portrait, NOT a portrait of any person in the style references. Keep a clearly individual face matching the authored text. Use refs for rendering/style only. Exactly ONE adult character, bust portrait head-and-shoulders, VERTICAL THREE TO FOUR (3:4), requested 768 by 1024. Face readable at 48px; the entire head, helmet/hat and shoulders fit comfortably inside the frame; face in upper third, no tall empty space. A quiet softly painted unmarked background. Final avatar target is 300x400; preserve full original output.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"portrait-weiyan\",\n  \"character\": \"weiyan\",\n  \"name\": \"Wei Yan\",\n  \"prompt\": \"Bust portrait of Wei Yan: a tall Shu general in his forties, a face 'red as a ripe date' and eyes 'bright as stars' (Romance of the Three Kingdoms ch. 53), a short black beard (not long), thick brows, a steel helmet and dark red armour; proud, fierce, restless. Must look clearly different from Guan Yu: no long beard, no green headscarf or green robe. Vertical 3:4 bust portrait, head and shoulders, face in the upper third, looking toward the viewer, readable at 48px. All depicted people are adults. Wholly original design based only on the novel's written description; not resembling any film, TV drama, game or celebrity.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, minors.\",\n  \"aspect_ratio\": \"3:4\",\n  \"width\": 768,\n  \"height\": 1024,\n  \"output_filename\": \"weiyan.webp\",\n  \"status\": \"ready\"\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nExactly ONE original Wei Yan in his FORTIES: ruddy date-red complexion, thick brows, sharp star-bright eyes, SHORT BLACK BEARD ending just below chin, STEEL HELMET and DARK RED ARMOUR. Clearly DIFFERENT from Guan Yu: NO green of any kind in clothing/headwear, NO long beard, NO flowing headscarf, NO crescent glaive. Fierce proud restless personality. He is a burly experienced general, not a youngster and not an old man. Complete helmet top comfortably inside frame with small margin. Re-generate a clean original, not a composite.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/portraits/fazheng.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "26d73a7b7710c04efd24e2d1072ec1ac8883dcb19d491dd1a25102678759142e"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhaoyun.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "additional_style_reference_not_character_identity",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "更正面的怒目取景，短黑须与钢盔红甲保持和关羽的明显区别。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            300,
+            400
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1086,
+            1448
+          ],
+          "original_sha256": "48b77a7846de6bd6caccffb30db05ad01cc742be9f8829760f766eae5147fa75",
+          "created_at": "2026-10-28T02:10:14.103090+00:00",
+          "bytes": 2799921,
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/portrait-weiyan/b-300x400.png",
+            "dimensions": [
+              300,
+              400
+            ],
+            "box": [
+              0,
+              0,
+              1086,
+              1448
+            ],
+            "sha256": "e53f29e658d8df9294e579bdd7b7c83c6ef44972802f4a047d332fd69a19c206",
+            "original_sha256": "48b77a7846de6bd6caccffb30db05ad01cc742be9f8829760f766eae5147fa75",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "path": "game/sanguo/art/candidates/portrait-weiyan/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b.json"
+        }
+      ],
+      "status": "awaiting_claude_review"
+    },
+    {
+      "id": "scene-v7_biao",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_biao",
+        "kind": "scene",
+        "name": "v7_biao",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_fazheng_night.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫",
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "灯下：诸葛亮捧着写好的表（看不见字），眼睛发红；子衡背影坐在对面",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits at a desk by lamplight holding a finished memorial scroll (no visible writing), eyes red; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits across from him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_child",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_child",
+        "kind": "scene",
+        "name": "v7_child",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "wenzhi"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/wenzhi.webp",
+          "game/sanguo/art/scenes/v3_wz_road.webp"
+        ],
+        "keep": [
+          "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙，三十多岁的成年女子",
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "黄昏成都小院梅树下：温芷（三十多岁）一手搭在腰间，低声对子衡背影说话；四周药畦",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A small courtyard in Chengdu under a blossoming plum tree at dusk: Wen Zhi, an adult woman in her thirties, speaks quietly to Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible, one hand resting on her waist; herb beds around. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/wenzhi.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_houzhu",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_houzhu",
+        "kind": "scene",
+        "name": "v7_houzhu",
+        "batch": 6,
+        "status": "queued",
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_council.webp"
+        ],
+        "keep": [
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "安静的殿上：二十岁上下的后主刘禅穿黑红冕服前倾听着；子衡背影躬身",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A quiet palace hall: a young adult emperor in black-and-red robes (Liu Shan, about twenty) leans forward on his throne to listen to Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible who bows before him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_council.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_weiyan",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_weiyan",
+        "kind": "scene",
+        "name": "v7_weiyan",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "weiyan"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_council.webp"
+        ],
+        "keep": [
+          "魏延：面如重枣、短黑须、钢盔暗红甲，和关羽明显不同（新头像出来前，按文字描写）"
+        ],
+        "composition": "军帐：魏延（面如重枣、短须、暗红甲）拍着山谷地图（无字）争辩；诸葛亮坐着摇头",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "A war tent: Wei Yan, a tall general with a ruddy date-red face, short black beard, steel helmet and dark red armour, slaps a map of mountain valleys (no writing) on the table and argues; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits shaking his head. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_council.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "awaiting_adopted_portraits",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "awaiting_adopted_portraits"
+    },
+    {
+      "id": "scene-v7_jiangwei",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_jiangwei",
+        "kind": "scene",
+        "name": "v7_jiangwei",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "jiangwei",
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_xiang.webp"
+        ],
+        "keep": [
+          "姜维：二十七岁上下，相貌端正，不留须，银蓝盔甲（新头像出来前，按文字描写）",
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+        ],
+        "composition": "天水城外：姜维（年轻、无须、银蓝甲）下马跪地；诸葛亮下车双手去扶",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "Outside a town wall at Tianshui: a young general with clean-shaven earnest face in silver-blue armour (Jiang Wei) has dismounted and kneels; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, steps down from a small carriage to raise him with both hands. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_xiang.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "awaiting_adopted_portraits",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "awaiting_adopted_portraits"
+    },
+    {
+      "id": "scene-v7_wanglang",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_wanglang",
+        "kind": "scene",
+        "name": "v7_wanglang",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_hanshui.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+        ],
+        "composition": "两军对阵的平原：中间白须老臣王朗在马上捂着胸口；对面诸葛亮坐在四轮小车上举扇",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "Two armies face each other on an open plain: in the middle an old white-bearded Wei minister on horseback (Wang Lang) clutches his chest; opposite, Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits calmly in a small four-wheeled carriage pointing his fan. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_jieting",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_jieting",
+        "kind": "scene",
+        "name": "v7_jieting",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_council.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+        ],
+        "composition": "中军帐：马谡跪呈军令状（看不见字）；诸葛亮犹豫；众将看着",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "A command tent: a confident officer-scholar (Ma Su) kneels with a written pledge (no visible characters) before Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, who hesitates; officers watch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_council.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_hill",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_hill",
+        "kind": "scene",
+        "name": "v7_hill",
+        "batch": 6,
+        "status": "queued",
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_dingjun.webp"
+        ],
+        "keep": [
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "干燥山口：路旁一座林木茂密的山；大队兵往山上爬，一小队在山下路口筑垒；子衡背影和王平站在路口仰望",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A dry mountain pass: a wooded hill rises beside the road; troops are climbing the hill while a smaller group fortifies the road below; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands with a stern officer (Wang Ping) on the road, looking up. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_dingjun.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "dba95352145cfa40a005a88e2c616bff8c21f91278663cf149e9241b4c537acb",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_kongcheng",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_kongcheng",
+        "kind": "scene",
+        "name": "v7_kongcheng",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_xiang.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫",
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "四门大开的小城，几个“百姓”扫街；城楼上诸葛亮焚香弹琴，两个侍从在旁；子衡背影站在他身边；远处大军停住",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A small city with all four gates wide open and a few 'townsfolk' sweeping the street; on the gate tower Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits playing a zither with incense smoke rising, two attendants beside him; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands at his side; in the distance a vast army halts. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_xiang.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_masu",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_masu",
+        "kind": "scene",
+        "name": "v7_masu",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_council.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+        ],
+        "composition": "中军帐：诸葛亮以袖掩面落泪；卫士押着被绑的马谡出帐；众将低头；不画行刑和血",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "A command tent: Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, weeps with his sleeve to his face; guards lead a bound officer (Ma Su) out of the tent; officers bow their heads. No execution shown, no blood. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_council.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_jiangwei_night",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_jiangwei_night",
+        "kind": "scene",
+        "name": "v7_jiangwei_night",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "jiangwei"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_fazheng_night.webp"
+        ],
+        "keep": [
+          "姜维：二十七岁上下，相貌端正，不留须，银蓝盔甲（新头像出来前，按文字描写）",
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "夜，亮灯的帐外：姜维持枪、手里卷着兵书站岗；子衡背影站在旁边；营上星空",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "Night outside a lamp-lit tent: Jiang Wei, young and clean-shaven in silver-blue armour, stands guard holding a spear and a rolled book; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands beside him; stars over the camp. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "awaiting_adopted_portraits",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "awaiting_adopted_portraits"
+    },
+    {
+      "id": "scene-v7_zilong",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_zilong",
+        "kind": "scene",
+        "name": "v7_zilong",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhaoyun"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhaoyun.webp",
+          "game/sanguo/art/scenes/v2_zhaoyun_night.webp"
+        ],
+        "keep": [
+          "赵云：快七十的老将，白发，银白铠甲",
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "成都卧房：白发的赵云靠在床上淡淡地笑，那杆老枪靠在床边；子衡背影坐在床边",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A quiet bedroom in Chengdu: Zhao Yun, now a white-haired old general, lies propped in bed smiling faintly, his old spear leaning by the bed; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits at the bedside. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhaoyun.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v2_zhaoyun_night.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "117b7a0c08bffc4b1b5ead5756e7b7d514534d58fb3aed2f7c87ec8c9a1c4d94",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_old",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_old",
+        "kind": "scene",
+        "name": "v7_old",
+        "batch": 6,
+        "status": "queued",
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_guanyu_night.webp"
+        ],
+        "keep": [
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "冬日昏暗卧房：一位老将（脸在阴影里，只见白须）躺在床上握着子衡背影的手；一盏灯，窗外雪",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A dim bedroom in winter: an old general (face hidden in shadow, only a white beard visible) lies in bed holding the hand of Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible; a lamp, snow at the window. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_guanyu_night.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "ec0ee68d2c0e861622b9ae39baa5aa3a10f9ec3f03d3d1768171a19381d89cc7",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_feud",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_feud",
+        "kind": "scene",
+        "name": "v7_feud",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "weiyan"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_feishi.webp"
+        ],
+        "keep": [
+          "魏延：面如重枣、短黑须、钢盔暗红甲，和关羽明显不同（新头像出来前，按文字描写）",
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "营中夜：魏延半拔刀隔桌瞪着瘦削的文官杨仪；杨仪往后缩；子衡背影站在两人中间举着手",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A camp at night: Wei Yan in dark red armour, half-drawn blade, glares across a table at a thin civil official (Yang Yi) who shrinks back; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands between them with hands raised. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_feishi.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "awaiting_adopted_portraits",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "awaiting_adopted_portraits"
+    },
+    {
+      "id": "scene-v7_student",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_student",
+        "kind": "scene",
+        "name": "v7_student",
+        "batch": 6,
+        "status": "queued",
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_letter.webp"
+        ],
+        "keep": [
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "营中书案：十九岁的年轻书佐恭敬地跪在子衡背影面前，手边笔和本子",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A clerk's desk in a camp: a young adult clerk of about nineteen kneels respectfully before Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible, a notebook and brush beside him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_letter.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "07ee8fee921c70bfd46689db5f102f112bb2a0c71872d440201c46ec2eeefcca",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_shangfang",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_shangfang",
+        "kind": "scene",
+        "name": "v7_shangfang",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_hanshui.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+        ],
+        "composition": "狭谷火起，忽降倾盆大雨，蒸汽和烟升起；山脊上诸葛亮站在雨里仰望天",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "A narrow valley full of flames suddenly drowned by a torrential downpour, steam and smoke rising; on a ridge Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, stands in the rain looking up at the sky. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_envoy",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_envoy",
+        "kind": "scene",
+        "name": "v7_envoy",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "simayi"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_feishi.webp"
+        ],
+        "keep": [
+          "司马懿：五十上下，长脸细眼，细长须，黑色高冠，深青魏服（新头像出来前，按文字描写）",
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "魏军帅帐：司马懿（长脸、细须、黑高冠）从打开的盒子里拎起一套女人衣裳，笑着；子衡背影坐在对面喝茶",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A Wei commander's tent: Sima Yi, about fifty with a long narrow face, thin beard and tall black hat, holds up a set of women's clothes from an open box and smiles; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits opposite with tea. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_feishi.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "awaiting_adopted_portraits",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "awaiting_adopted_portraits"
+    },
+    {
+      "id": "scene-v7_lamp",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_lamp",
+        "kind": "scene",
+        "name": "v7_lamp",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_fazheng_night.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+        ],
+        "composition": "夜，帐内：地上七盏小灯摆成北斗，一盏大主灯；诸葛亮病中跪在灯前；一阵风吹弯了主灯的火；帐门口有人闯进来",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "Night inside a tent: seven small lamps arranged like the Northern Dipper on the floor with one large master lamp; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, kneels before them, ill; a gust of wind bends the master flame; a figure bursts in at the tent flap. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "scene-v7_last",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_last",
+        "kind": "scene",
+        "name": "v7_last",
+        "batch": 6,
+        "status": "queued",
+        "refs": [
+          "zhuge",
+          "jiangwei"
+        ],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/scenes/v3_xiang.webp"
+        ],
+        "keep": [
+          "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫",
+          "姜维：二十七岁上下，相貌端正，不留须，银蓝盔甲（新头像出来前，按文字描写）"
+        ],
+        "composition": "黄昏秋风高原：病重的诸葛亮裹着斗篷坐在小车上望着营寨；姜维走在车旁；落叶飞",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+        ],
+        "prompt": "Autumn wind on a high plain at dusk: Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, gravely ill, wrapped in a cloak in a small carriage, gazes at the army camps; Jiang Wei walks beside the carriage; fallen leaves blowing. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v3_xiang.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "awaiting_adopted_portraits",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "awaiting_adopted_portraits"
+    },
+    {
+      "id": "scene-v7_home",
+      "group": "scene",
+      "authored_job": {
+        "id": "scene-v7_home",
+        "kind": "scene",
+        "name": "v7_home",
+        "batch": 6,
+        "status": "queued",
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/scenes/v3_wz_road.webp"
+        ],
+        "keep": [
+          "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+        ],
+        "composition": "黄昏山路：白幡的送葬队伍护着灵柩往远处的成都走；子衡背影拿着一把白羽扇走在灵柩旁",
+        "accept": [
+          "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "子衡不露脸"
+        ],
+        "prompt": "A long mountain road at dusk: a funeral procession with white banners escorts a coffin toward distant Chengdu; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible walks beside the coffin carrying a white feather fan. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e",
+          "role": "authored"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "pending"
+    },
+    {
+      "id": "ending-v2_city",
+      "group": "ending",
+      "authored_job": {
+        "id": "ending-v2_city",
+        "kind": "ending",
+        "name": "v2_city",
+        "composition": "成都城头，刚换上刘字旗。子衡和诸葛亮并肩站着，远处是蜀中群山。",
+        "authored_by": "user",
+        "global_constraints": [
+          "1200×480，横幅，黄昏或清晨暖光",
+          "构图对齐 art/ending/city.webp",
+          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
+          "不要画关羽、张飞；卷五以后不要画刘备",
+          "所有图片不出现文字或水印，人物年龄和人数正确"
+        ],
+        "clarifications": [
+          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
+          "用户已确认同时交原图和裁切版"
+        ],
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": null,
+      "references": [
+        {
+          "path": "game/sanguo/art/ending/city.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+          "role": "authored_ending_composition_and_style"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "queued_until_batch2_complete",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "queued_until_batch2_complete"
+    },
+    {
+      "id": "ending-v3_city",
+      "group": "ending",
+      "authored_job": {
+        "id": "ending-v3_city",
+        "kind": "ending",
+        "name": "v3_city",
+        "composition": "汉中，沔阳筑起的高台上旌旗林立，台下是军阵。刘备背影立在台上，子衡和诸葛亮在台侧。",
+        "authored_by": "user",
+        "global_constraints": [
+          "1200×480，横幅，黄昏或清晨暖光",
+          "构图对齐 art/ending/city.webp",
+          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
+          "不要画关羽、张飞；卷五以后不要画刘备",
+          "所有图片不出现文字或水印，人物年龄和人数正确"
+        ],
+        "clarifications": [
+          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
+          "用户已确认同时交原图和裁切版"
+        ],
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": null,
+      "references": [
+        {
+          "path": "game/sanguo/art/ending/city.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+          "role": "authored_ending_composition_and_style"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "queued_until_batch2_complete",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "queued_until_batch2_complete"
+    },
+    {
+      "id": "ending-v4_city",
+      "group": "ending",
+      "authored_job": {
+        "id": "ending-v4_city",
+        "kind": "ending",
+        "name": "v4_city",
+        "composition": "成都城楼，秋天。子衡和诸葛亮朝东望着荆州方向，城下有一面素白的幡，气氛沉。",
+        "authored_by": "user",
+        "global_constraints": [
+          "1200×480，横幅，黄昏或清晨暖光",
+          "构图对齐 art/ending/city.webp",
+          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
+          "不要画关羽、张飞；卷五以后不要画刘备",
+          "所有图片不出现文字或水印，人物年龄和人数正确"
+        ],
+        "clarifications": [
+          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
+          "用户已确认同时交原图和裁切版"
+        ],
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": null,
+      "references": [
+        {
+          "path": "game/sanguo/art/ending/city.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+          "role": "authored_ending_composition_and_style"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "queued_until_batch2_complete",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "queued_until_batch2_complete"
+    },
+    {
+      "id": "ending-v5_city",
+      "group": "ending",
+      "authored_job": {
+        "id": "ending-v5_city",
+        "kind": "ending",
+        "name": "v5_city",
+        "composition": "白帝城，江边山崖，长江三峡，清晨的雾。子衡和诸葛亮立在城头。没有刘备。",
+        "authored_by": "user",
+        "global_constraints": [
+          "1200×480，横幅，黄昏或清晨暖光",
+          "构图对齐 art/ending/city.webp",
+          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
+          "不要画关羽、张飞；卷五以后不要画刘备",
+          "所有图片不出现文字或水印，人物年龄和人数正确"
+        ],
+        "clarifications": [
+          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
+          "用户已确认同时交原图和裁切版"
+        ],
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": null,
+      "references": [
+        {
+          "path": "game/sanguo/art/ending/city.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+          "role": "authored_ending_composition_and_style"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "queued_until_batch2_complete",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "queued_until_batch2_complete"
+    },
+    {
+      "id": "ending-v6_city",
+      "group": "ending",
+      "authored_job": {
+        "id": "ending-v6_city",
+        "kind": "ending",
+        "name": "v6_city",
+        "composition": "成都城门外，南征的军队回来了。子衡和诸葛亮在门前，队伍里有南中的象和铜鼓，热闹但不庆功。",
+        "authored_by": "user",
+        "global_constraints": [
+          "1200×480，横幅，黄昏或清晨暖光",
+          "构图对齐 art/ending/city.webp",
+          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
+          "不要画关羽、张飞；卷五以后不要画刘备",
+          "所有图片不出现文字或水印，人物年龄和人数正确"
+        ],
+        "clarifications": [
+          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
+          "用户已确认同时交原图和裁切版"
+        ],
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": null,
+      "references": [
+        {
+          "path": "game/sanguo/art/ending/city.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+          "role": "authored_ending_composition_and_style"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "queued_until_batch2_complete",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "queued_until_batch2_complete"
+    },
+    {
+      "id": "ending-v7_city",
+      "group": "ending",
+      "authored_job": {
+        "id": "ending-v7_city",
+        "kind": "ending",
+        "name": "v7_city",
+        "composition": "汉中北边的山脊，望向远处有雪的祁山。子衡、诸葛亮（两鬓已白，羽扇）和姜维（年轻）并肩站着。这一张等第 1 批姜维头像采用后再画。",
+        "authored_by": "user",
+        "global_constraints": [
+          "1200×480，横幅，黄昏或清晨暖光",
+          "构图对齐 art/ending/city.webp",
+          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
+          "不要画关羽、张飞；卷五以后不要画刘备",
+          "所有图片不出现文字或水印，人物年龄和人数正确"
+        ],
+        "clarifications": [
+          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
+          "用户已确认同时交原图和裁切版"
+        ],
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "source_commit": null,
+      "references": [
+        {
+          "path": "game/sanguo/art/ending/city.webp",
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+          "role": "authored_ending_composition_and_style"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": "awaiting_adopted_jiangwei_and_batch2",
+      "letters": [
+        "a",
+        "b"
+      ],
+      "candidates": [],
+      "status": "awaiting_adopted_jiangwei_and_batch2"
+    }
+  ],
+  "planned_items": 29,
+  "planned_candidates": 58,
+  "completed_items": 3,
+  "original_candidates": 6,
+  "adoption_confirmations": {},
+  "crop_exports_authorized": true,
+  "art_adopted_by_codex": false
+}
