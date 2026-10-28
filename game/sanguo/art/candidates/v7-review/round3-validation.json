@@ -1,0 +1,20 @@
+{
+  "new_completed_items": 14,
+  "new_original_candidates": 28,
+  "new_exact_1200x480_exports": 28,
+  "new_by_batch": {
+    "batch1": 12,
+    "batch2": 14,
+    "batch3": 2
+  },
+  "new_reference_hash_checks": 77,
+  "total_delivered_originals_in_PR": 62,
+  "remaining_v8_items": 20,
+  "all_originals_match_tool_outputs": true,
+  "all_author_jobs_unchanged": true,
+  "all_new_references_already_adopted": true,
+  "previous_34_accepted_candidate_files_unchanged": true,
+  "protected_files_unchanged": true,
+  "build_or_sync_run": false,
+  "paid_image_api_used": false
+}

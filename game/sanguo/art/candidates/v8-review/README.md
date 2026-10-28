@@ -1,6 +1,6 @@
 # 卷八《归晋》候选评审
 
-已交 0/21 项、0 张原图，每项目标 A/B 两张及相应 1200×480 导出。
+已交 1/21 项、2 张原图，每项目标 A/B 两张及相应 1200×480 导出。
 
 来源：Claude 的 PR #71（叠在 #70 上），清单提交 `326e33f0f33e0df0e5e8477a54bc2de4376b9424`。原始清单未改，完整 prompt / negative_prompt 原文保存在生成记录。
 
@@ -20,7 +20,7 @@
 | scene-v8_gate | — | — | 等 Claude 统一温芷年龄 |
 | scene-v8_oldman | — | — | 等卷七相应场景采用为正式参考 |
 | scene-v8_simayi_letter | — | — | 等卷七相应场景采用为正式参考 |
-| scene-v8_wz_last | — | — | 参考已齐，待生成 |
+| scene-v8_wz_last | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a-1200x480.png" width="240" height="96" alt="scene-v8_wz_last A"></a><br>白发温芷在灯下把针凑近眼前补衣，子衡背影靠在右侧床上醒着。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b-1200x480.png" width="240" height="96" alt="scene-v8_wz_last B"></a><br>金簪白梅仍在白发高髻上，温芷坐在右侧补衣，子衡背影留在左侧床榻。 | 待 Claude 审图 |
 | scene-v8_heir | — | — | 等卷七相应场景采用为正式参考 |
 | scene-v8_fan | — | — | 等卷七相应场景采用为正式参考 |
 | scene-v8_duangu | — | — | 等 Claude 统一血污与禁止血的矛盾 |

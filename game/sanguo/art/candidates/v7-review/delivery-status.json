@@ -1,0 +1,38 @@
+{
+  "existing_draft_pr": 72,
+  "reference_adoption_pr": 71,
+  "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+  "previously_adopted_items": 17,
+  "new_batches": [
+    {
+      "batch": 1,
+      "planned": 6,
+      "completed": 6,
+      "originals": 12,
+      "exports": 12,
+      "status": "awaiting_claude_review"
+    },
+    {
+      "batch": 2,
+      "planned": 7,
+      "completed": 7,
+      "originals": 14,
+      "exports": 14,
+      "status": "awaiting_claude_review"
+    },
+    {
+      "batch": 3,
+      "planned": 21,
+      "completed": 1,
+      "originals": 2,
+      "exports": 2,
+      "waiting": 20,
+      "status": "remaining_wait_for_adopted_scene_references_and_brief_corrections"
+    }
+  ],
+  "new_originals": 28,
+  "new_exports": 28,
+  "all_originals": 62,
+  "github_api_write_status": "403; progress comments and PR body not submitted",
+  "merge_or_production_deploy_performed": false
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "Local Chromium with actual local candidate files routed for raw GitHub URLs; does not verify external deployment",
+  "pages": [
+    {
+      "page": "art-v7",
+      "items": 30,
+      "candidate_figures": 60,
+      "loaded_images": 126,
+      "progress_filters": "pass",
+      "exact_export_dimensions": "pass",
+      "responsive_1440_and_390": "pass",
+      "original_aspect_preserved": true
+    },
+    {
+      "page": "art-v8",
+      "items": 21,
+      "candidate_figures": 2,
+      "loaded_images": 4,
+      "progress_filters": "pass",
+      "exact_export_dimensions": "pass",
+      "responsive_1440_and_390": "pass",
+      "original_aspect_preserved": true
+    }
+  ],
+  "unique_image_requests_served": 124,
+  "page_errors": []
+}
