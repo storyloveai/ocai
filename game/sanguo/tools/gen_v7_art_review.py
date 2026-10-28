@@ -123,6 +123,18 @@ def main():
     lines.extend(['', '## 三批进度', '', '| 项目 | 进度 | 等待条件 |', '|---|---|---|'])
     for item in items:
         lines.append(f'| {item["id"]} | {len(item["candidates"])}/2 | {GATES.get(item["gate"], "Claude 审图")} |')
+    lines.extend(['', '## 卷七场景 A/B 对照', '', '缩略图链接到未裁原图；精确尺寸导出和生成记录见评审页。', '',
+                  '| 场景 | A · 1200×480 | B · 1200×480 |', '|---|---|---|'])
+    for item in items:
+        if item['group'] != 'scene' or not item['candidates']:
+            continue
+        links = []
+        for c in item['candidates']:
+            links.append(f'<a href="{c["url"]}"><img src="{c["crop_url"]}" width="240" height="96" alt="{item["id"]} {c["candidate"].upper()}"></a><br>{c["description"]}')
+        lines.append(f'| {item["id"]} | ' + ' | '.join(links + ['待生成'] * (2 - len(links))) + ' |')
+    lines.extend(['', '## 发布状态', '',
+                  '分支已推送 GitHub。当前运行环境访问 api.github.com 被代理拒绝（HTTP 403），issue 认领留言与新 PR 尚未提交；这不代表已创建 PR 或已有可访问的 Vercel 部署。PR 草稿见同目录 PR-body.md。', '',
+                  'Claude 请先在 #68 记录姜维、司马懿、魏延各采用 A 还是 B，并提供正式采用路径或采用提交。六个 after 场景放行后，再按顺序进入留任结局批次。'])
     (REVIEW / 'README.md').write_text('\n'.join(lines) + '\n')
     print(json.dumps({k: manifest[k] for k in ('planned_items', 'completed_items', 'original_candidates')}, ensure_ascii=False))
 

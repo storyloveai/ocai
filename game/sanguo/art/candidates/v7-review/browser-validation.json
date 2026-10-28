@@ -1,0 +1,22 @@
+{
+  "scope": "Local Chromium browser test; GitHub raw image requests routed to the actual local candidate files. This does not verify a Vercel deployment.",
+  "items": 29,
+  "candidate_figures": 34,
+  "loaded_image_elements": 74,
+  "raw_requests_served": 68,
+  "group_and_progress_filters": "pass",
+  "exact_export_dimensions": "pass",
+  "responsive": [
+    {
+      "viewport": 1440,
+      "no_horizontal_overflow": true,
+      "original_aspect_preserved": true
+    },
+    {
+      "viewport": 390,
+      "no_horizontal_overflow": true,
+      "original_aspect_preserved": true
+    }
+  ],
+  "page_errors": []
+}

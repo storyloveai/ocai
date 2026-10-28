@@ -42,7 +42,7 @@
   "reference_inputs_in_order": [
     {
       "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
-      "source_commit": null,
+      "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
       "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
       "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
     },

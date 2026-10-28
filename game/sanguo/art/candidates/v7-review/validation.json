@@ -1,0 +1,15 @@
+{
+  "original_candidates": 34,
+  "exact_size_exports": 34,
+  "complete_items": 17,
+  "planned_items": 29,
+  "waiting_items": 12,
+  "reference_hash_checks": 80,
+  "unique_raw_outputs": true,
+  "source_jobs_unmodified": true,
+  "original_bytes_match_tool_outputs": true,
+  "gates_respected": true,
+  "protected_files_unchanged": true,
+  "build_or_sync_run": false,
+  "paid_image_api_used": false
+}

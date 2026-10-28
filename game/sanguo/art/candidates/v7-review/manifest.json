@@ -1578,8 +1578,219 @@
         "a",
         "b"
       ],
-      "candidates": [],
-      "status": "pending"
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "a",
+          "authored_job": {
+            "id": "scene-v7_wanglang",
+            "kind": "scene",
+            "name": "v7_wanglang",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "两军对阵的平原：中间白须老臣王朗在马上捂着胸口；对面诸葛亮坐在四轮小车上举扇",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Two armies face each other on an open plain: in the middle an old white-bearded Wei minister on horseback (Wang Lang) clutches his chest; opposite, Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits calmly in a small four-wheeled carriage pointing his fan. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_wanglang\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_wanglang\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_hanshui.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"两军对阵的平原：中间白须老臣王朗在马上捂着胸口；对面诸葛亮坐在四轮小车上举扇\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"Two armies face each other on an open plain: in the middle an old white-bearded Wei minister on horseback (Wang Lang) clutches his chest; opposite, Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits calmly in a small four-wheeled carriage pointing his fan. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER, e.g. 2000x800. The legacy size field stays verbatim only as provenance; current user finished target 1200x480. Pull camera back and put ALL principal heads, hands and story objects safely inside the native wide frame. The FIRST EXTRA image is an unadopted provisional consistency guide for the AGE of the EXISTING Zhuge Liang and silver-haired back-facing Ziheng, NOT any newly introduced character. Keep the canonical underlying face from the following original portrait, visibly mature lean tired age fifty (not twenty), greying temples, forehead/eye lines, black silk cap, white robe/fan and clean-shaven. Do not copy its scroll scene or map table. Wang Lang is an OLD WHITE-BEARDED Wei civil minister on HORSEBACK, clutching his chest. Zhuge Liang is the fifty-year-old lean tired clean-shaven scholar in white with BLACK cap, seated calmly in a SMALL FOUR-WHEELED CART, raising his fan to address Wang Lang. Two distinct principal men, not mounted Zhuge. No Zhao Yun or Huang Zhong from the style reference. Anonymous adult armies facing each other. Mid-wide composition preserving both faces, horse/chest-clutch and cart/fan in the future horizontal crop. Show Wang Lang's FULL HAT AND HEAD on the left, clutching chest atop horse, and Zhuge's FULL BLACK CAP AND HEAD, raised white fan and four-wheeled cart on right. Neither head may be cropped by top edge. Keep both heads at similar vertical level by pulling camera back. ",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "description": "王朗在马上捂胸，诸葛亮在四轮小车中举扇，两军隔阵相对。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "8b87d3662d0a21b18ca9b8b81662e0ad4440325b2272f6699a55dfe457bb87a6",
+          "created_at": "2026-10-28T02:44:31.992540+00:00",
+          "bytes": 2817765,
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_wanglang/a-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "9db7f97045f9c342206d6688672675956abaec03bb4c5129f800ae51f529321b",
+            "original_sha256": "8b87d3662d0a21b18ca9b8b81662e0ad4440325b2272f6699a55dfe457bb87a6",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Native wide framing reviewed: principal heads and story action inside frame; adult cast; no visible lettering or watermark.",
+          "path": "game/sanguo/art/candidates/scene-v7_wanglang/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "scene-v7_wanglang",
+            "kind": "scene",
+            "name": "v7_wanglang",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "两军对阵的平原：中间白须老臣王朗在马上捂着胸口；对面诸葛亮坐在四轮小车上举扇",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Two armies face each other on an open plain: in the middle an old white-bearded Wei minister on horseback (Wang Lang) clutches his chest; opposite, Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits calmly in a small four-wheeled carriage pointing his fan. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_wanglang\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_wanglang\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_hanshui.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"两军对阵的平原：中间白须老臣王朗在马上捂着胸口；对面诸葛亮坐在四轮小车上举扇\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"Two armies face each other on an open plain: in the middle an old white-bearded Wei minister on horseback (Wang Lang) clutches his chest; opposite, Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits calmly in a small four-wheeled carriage pointing his fan. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER, e.g. 2000x800. The legacy size field stays verbatim only as provenance; current user finished target 1200x480. Pull camera back and put ALL principal heads, hands and story objects safely inside the native wide frame. The FIRST EXTRA image is an unadopted provisional consistency guide for the AGE of the EXISTING Zhuge Liang and silver-haired back-facing Ziheng, NOT any newly introduced character. Keep the canonical underlying face from the following original portrait, visibly mature lean tired age fifty (not twenty), greying temples, forehead/eye lines, black silk cap, white robe/fan and clean-shaven. Do not copy its scroll scene or map table. Wang Lang is an OLD WHITE-BEARDED Wei civil minister on HORSEBACK, clutching his chest. Zhuge Liang is the fifty-year-old lean tired clean-shaven scholar in white with BLACK cap, seated calmly in a SMALL FOUR-WHEELED CART, raising his fan to address Wang Lang. Two distinct principal men, not mounted Zhuge. No Zhao Yun or Huang Zhong from the style reference. Anonymous adult armies facing each other. Mid-wide composition preserving both faces, horse/chest-clutch and cart/fan in the future horizontal crop. Show Wang Lang's FULL HAT AND HEAD on the left, clutching chest atop horse, and Zhuge's FULL BLACK CAP AND HEAD, raised white fan and four-wheeled cart on right. Neither head may be cropped by top edge. Keep both heads at similar vertical level by pulling camera back. ",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "description": "平原夕照下，王朗骑黑马近景捂胸，诸葛亮坐车举扇应对。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "e6fb95d7602b35f0f78e728fdd18fa49bfb2cda6c6a8397df37e91dae1f27726",
+          "created_at": "2026-10-28T02:45:11.556598+00:00",
+          "bytes": 2749180,
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Native wide framing reviewed: principal heads and story action inside frame; adult cast; no visible lettering or watermark.",
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_wanglang/b-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "4609fcf301d1c76b72b46121d1bd7bdd2b49af179c9065bbd713f59b0db2a2fa",
+            "original_sha256": "e6fb95d7602b35f0f78e728fdd18fa49bfb2cda6c6a8397df37e91dae1f27726",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "path": "game/sanguo/art/candidates/scene-v7_wanglang/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/b.json"
+        }
+      ],
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v7_jieting",
@@ -1640,8 +1851,230 @@
         "a",
         "b"
       ],
-      "candidates": [],
-      "status": "pending"
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "a",
+          "authored_job": {
+            "id": "scene-v7_jieting",
+            "kind": "scene",
+            "name": "v7_jieting",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_council.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "中军帐：马谡跪呈军令状（看不见字）；诸葛亮犹豫；众将看着",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A command tent: a confident officer-scholar (Ma Su) kneels with a written pledge (no visible characters) before Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, who hesitates; officers watch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_jieting\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_jieting\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_council.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"中军帐：马谡跪呈军令状（看不见字）；诸葛亮犹豫；众将看着\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"A command tent: a confident officer-scholar (Ma Su) kneels with a written pledge (no visible characters) before Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, who hesitates; officers watch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER, e.g. 2000x800. The legacy size field stays verbatim only as provenance; current user finished target 1200x480. Pull camera back and put ALL principal heads, hands and story objects safely inside the native wide frame. The FIRST EXTRA image is an unadopted provisional consistency guide for the AGE of the EXISTING Zhuge Liang and silver-haired back-facing Ziheng, NOT any newly introduced character. Keep the canonical underlying face from the following original portrait, visibly mature lean tired age fifty (not twenty), greying temples, forehead/eye lines, black silk cap, white robe/fan and clean-shaven. Do not copy its scroll scene or map table. Ma Su is the same young ADULT officer in the additional adopted v6_masu reference, now in his early thirties; preserve his clean-shaven earnest face, dark hair and muted blue-grey field armour. He KNEELS holding a completely BLANK BACKED military pledge/scroll toward Zhuge Liang. Zhuge fifty hesitates, clean-shaven, tired, white robe, black cap and fan. Anonymous adult generals observe, no Liu Bei or Fa Zheng copied from style image. Only one Ma Su. Keep kneeling head, presented scroll and Zhuge's hesitant face in the central banner strip. Show Ma Su's FULL BODY including BENT KNEES ON FLOOR presenting the BLANK pledge to seated Zhuge. Both complete heads BLACK cap for Zhuge and bun for Ma Su, hands, blank pledge and KNEES must fit within native wide frame. Mid-wide shot not torso closeup. ",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v6_masu.webp",
+              "source_commit": "6e8ce7302c852e4e114ce94a3330cf52f67ec714",
+              "role": "additional_claude_adopted_ma_su_identity_reference",
+              "sha256": "a85a3a9f7b3e7acdbbd4c9cec65f0366d1b883615088f2fbca78f41c6ec9d852"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "马谡完整跪姿呈上无字军令，诸葛亮持扇迟疑，诸将在后观望。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "6e36d136422676a6619af4707a7ec097dc980aa03861136e832582553d6073dc",
+          "created_at": "2026-10-28T02:45:51.541585+00:00",
+          "bytes": 2643784,
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Native wide framing reviewed: principal heads and story action inside frame; adult cast; no visible lettering or watermark.",
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_jieting/a-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "564070103600e717ee2199de949832d343fbc7407e9cc25e2fcc14dfbfd1d04c",
+            "original_sha256": "6e36d136422676a6619af4707a7ec097dc980aa03861136e832582553d6073dc",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "path": "game/sanguo/art/candidates/scene-v7_jieting/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "scene-v7_jieting",
+            "kind": "scene",
+            "name": "v7_jieting",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_council.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "中军帐：马谡跪呈军令状（看不见字）；诸葛亮犹豫；众将看着",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A command tent: a confident officer-scholar (Ma Su) kneels with a written pledge (no visible characters) before Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, who hesitates; officers watch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_jieting\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_jieting\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_council.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"中军帐：马谡跪呈军令状（看不见字）；诸葛亮犹豫；众将看着\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"A command tent: a confident officer-scholar (Ma Su) kneels with a written pledge (no visible characters) before Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, who hesitates; officers watch. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER, e.g. 2000x800. The legacy size field stays verbatim only as provenance; current user finished target 1200x480. Pull camera back and put ALL principal heads, hands and story objects safely inside the native wide frame. The FIRST EXTRA image is an unadopted provisional consistency guide for the AGE of the EXISTING Zhuge Liang and silver-haired back-facing Ziheng, NOT any newly introduced character. Keep the canonical underlying face from the following original portrait, visibly mature lean tired age fifty (not twenty), greying temples, forehead/eye lines, black silk cap, white robe/fan and clean-shaven. Do not copy its scroll scene or map table. Ma Su is the same young ADULT officer in the additional adopted v6_masu reference, now in his early thirties; preserve his clean-shaven earnest face, dark hair and muted blue-grey field armour. He KNEELS holding a completely BLANK BACKED military pledge/scroll toward Zhuge Liang. Zhuge fifty hesitates, clean-shaven, tired, white robe, black cap and fan. Anonymous adult generals observe, no Liu Bei or Fa Zheng copied from style image. Only one Ma Su. Keep kneeling head, presented scroll and Zhuge's hesitant face in the central banner strip. Show Ma Su's FULL BODY including BENT KNEES ON FLOOR presenting the BLANK pledge to seated Zhuge. Both complete heads BLACK cap for Zhuge and bun for Ma Su, hands, blank pledge and KNEES must fit within native wide frame. Mid-wide shot not torso closeup. ",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v6_masu.webp",
+              "source_commit": "6e8ce7302c852e4e114ce94a3330cf52f67ec714",
+              "role": "additional_claude_adopted_ma_su_identity_reference",
+              "sha256": "a85a3a9f7b3e7acdbbd4c9cec65f0366d1b883615088f2fbca78f41c6ec9d852"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_council.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+            }
+          ],
+          "description": "帐中马谡双膝跪地举起空白军令，诸葛亮持扇沉思，诸将神色凝重。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "4f63e9bdf680009df1bbd41ef904cfe55439d64486f902683b3238f7215a013c",
+          "created_at": "2026-10-28T02:46:43.268004+00:00",
+          "bytes": 2618406,
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_jieting/b-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "288528b9ca88fec4d506656fddd6f348264a82b4f6cf75fdff1830cacaf4b2de",
+            "original_sha256": "4f63e9bdf680009df1bbd41ef904cfe55439d64486f902683b3238f7215a013c",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "path": "game/sanguo/art/candidates/scene-v7_jieting/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/b.json"
+        }
+      ],
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v7_hill",
@@ -1986,7 +2419,7 @@
           "reference_inputs_in_order": [
             {
               "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
-              "source_commit": null,
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
               "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
               "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
             },
@@ -2047,9 +2480,116 @@
           "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/a.png",
           "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/a-1200x480.png",
           "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "scene-v7_kongcheng",
+            "kind": "scene",
+            "name": "v7_kongcheng",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_xiang.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫",
+              "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+            ],
+            "composition": "四门大开的小城，几个“百姓”扫街；城楼上诸葛亮焚香弹琴，两个侍从在旁；子衡背影站在他身边；远处大军停住",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+              "子衡不露脸"
+            ],
+            "prompt": "A small city with all four gates wide open and a few 'townsfolk' sweeping the street; on the gate tower Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits playing a zither with incense smoke rising, two attendants beside him; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands at his side; in the distance a vast army halts. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_kongcheng\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_kongcheng\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_xiang.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\",\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"四门大开的小城，几个“百姓”扫街；城楼上诸葛亮焚香弹琴，两个侍从在旁；子衡背影站在他身边；远处大军停住\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"A small city with all four gates wide open and a few 'townsfolk' sweeping the street; on the gate tower Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits playing a zither with incense smoke rising, two attendants beside him; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands at his side; in the distance a vast army halts. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER, e.g. 2000x800. The legacy size field stays verbatim only as provenance; current user finished target 1200x480. Pull camera back and put ALL principal heads, hands and story objects safely inside the native wide frame. The FIRST EXTRA image is an unadopted provisional consistency guide for the AGE of the EXISTING Zhuge Liang and silver-haired back-facing Ziheng, NOT any newly introduced character. Keep the canonical underlying face from the following original portrait, visibly mature lean tired age fifty (not twenty), greying temples, forehead/eye lines, black silk cap, white robe/fan and clean-shaven. Do not copy its scroll scene or map table. Empty-city strategy: Zhuge fifty, clean-shaven, white robes and BLACK cap sits on the gate tower PLAYING A SEVEN-STRING GUQIN with BOTH HANDS; incense burns beside him and fan RESTS by his side. Exactly FOUR ADULT PEOPLE on the tower: Zhuge, fully back-facing grey-white-haired fifty-eight-year-old Ziheng, and exactly TWO ADULT MALE ATTENDANTS (aged 25+, full adult proportions, not children). Below, a few anonymous ADULT disguised soldiers sweep the street. The town gates are OPEN, the town is small, the distant opposing army has HALTED. Do not show Sima Yi's face or any of the three new characters awaiting adoption. Broad elevated cinematic view with open gateways visible; keep all four tower heads and guqin/hands within the crop-safe central horizontal band.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_xiang.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338"
+            }
+          ],
+          "description": "俯瞰敞开的城门与洒扫街道，诸葛亮双手抚琴，子衡和两名成年侍从在城楼上。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "7021b6f9ac4792782fbe1b239469d405689b9c12fea13c6d8f36437ad1559857",
+          "created_at": "2026-10-28T02:48:48.188734+00:00",
+          "bytes": 2691062,
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_kongcheng/b-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "20ebe0acf6149ec5b77a32f2603c2d54af27368b6056b0c84fbdbdc415c00910",
+            "original_sha256": "7021b6f9ac4792782fbe1b239469d405689b9c12fea13c6d8f36437ad1559857",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Exactly four adults on tower: Zhuge, rear-facing grey-haired Ziheng, two adult attendants; guqin played with both hands, fan resting, incense, open gate and halted distant army.",
+          "path": "game/sanguo/art/candidates/scene-v7_kongcheng/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/b.json"
         }
       ],
-      "status": "partial"
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v7_masu",
@@ -2153,7 +2693,7 @@
           "reference_inputs_in_order": [
             {
               "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
-              "source_commit": null,
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
               "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
               "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
             },
@@ -2264,7 +2804,7 @@
           "reference_inputs_in_order": [
             {
               "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
-              "source_commit": null,
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
               "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
               "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
             },
@@ -3252,8 +3792,219 @@
         "a",
         "b"
       ],
-      "candidates": [],
-      "status": "pending"
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "a",
+          "authored_job": {
+            "id": "scene-v7_shangfang",
+            "kind": "scene",
+            "name": "v7_shangfang",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "狭谷火起，忽降倾盆大雨，蒸汽和烟升起；山脊上诸葛亮站在雨里仰望天",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A narrow valley full of flames suddenly drowned by a torrential downpour, steam and smoke rising; on a ridge Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, stands in the rain looking up at the sky. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_shangfang\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_shangfang\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_hanshui.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"狭谷火起，忽降倾盆大雨，蒸汽和烟升起；山脊上诸葛亮站在雨里仰望天\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"A narrow valley full of flames suddenly drowned by a torrential downpour, steam and smoke rising; on a ridge Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, stands in the rain looking up at the sky. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER e.g. 2000x800. Current final target 1200x480; the legacy size field retained verbatim as provenance. Mid-wide camera: show ENTIRE HEAD INCLUDING BLACK CAP and WHITE FEATHER FAN held at waist, all safely inside native banner. Zhuge about FIFTY, lean tired face grey temples, clean-shaven WHITE robes, stands at left or right third on a ridge looking up in TORRENTIAL RAIN, vain fire attack BELOW on valley floor: dying low fires, drowned debris, extensive rain steam and wet black rocks, NO large successful raging inferno. Narrow rocky Shangfang valley. No extra named heroes and no bodies/gore. Canonical face from portrait, age consistency from first extra reference; do not copy scroll scene. Ridge at left, rain-filled valley to right.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "description": "诸葛亮立于左侧山脊仰望暴雨，谷中火势被雨水和蒸汽压低。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "f30630862ea96e8bff118c545691ac68b6767faa28b47e5dd39ef3dc560c4728",
+          "created_at": "2026-10-28T02:45:00.804251+00:00",
+          "bytes": 2870084,
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Native wide framing reviewed: principal heads and story action inside frame; adult cast; no visible lettering or watermark.",
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_shangfang/a-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "03bc2f2c569423d9b84b409f4c951a3de513ae328745dbefa02f2dfeadb897ee",
+            "original_sha256": "f30630862ea96e8bff118c545691ac68b6767faa28b47e5dd39ef3dc560c4728",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "path": "game/sanguo/art/candidates/scene-v7_shangfang/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "scene-v7_shangfang",
+            "kind": "scene",
+            "name": "v7_shangfang",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_hanshui.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "狭谷火起，忽降倾盆大雨，蒸汽和烟升起；山脊上诸葛亮站在雨里仰望天",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "A narrow valley full of flames suddenly drowned by a torrential downpour, steam and smoke rising; on a ridge Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, stands in the rain looking up at the sky. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_shangfang\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_shangfang\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_hanshui.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"狭谷火起，忽降倾盆大雨，蒸汽和烟升起；山脊上诸葛亮站在雨里仰望天\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"A narrow valley full of flames suddenly drowned by a torrential downpour, steam and smoke rising; on a ridge Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, stands in the rain looking up at the sky. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER e.g. 2000x800. Current final target 1200x480; the legacy size field retained verbatim as provenance. Mid-wide camera: show ENTIRE HEAD INCLUDING BLACK CAP and WHITE FEATHER FAN held at waist, all safely inside native banner. Zhuge about FIFTY, lean tired face grey temples, clean-shaven WHITE robes, stands at left or right third on a ridge looking up in TORRENTIAL RAIN, vain fire attack BELOW on valley floor: dying low fires, drowned debris, extensive rain steam and wet black rocks, NO large successful raging inferno. Narrow rocky Shangfang valley. No extra named heroes and no bodies/gore. Canonical face from portrait, age consistency from first extra reference; do not copy scroll scene. Ridge at right, rain-filled valley to left.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_hanshui.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "adbecaf1c936c70fd5131c70f63e899a6db1f3828bea6cad8cf91f110d1baa90"
+            }
+          ],
+          "description": "右侧诸葛亮握白羽扇望天，湿透的上方谷中残火与白汽相间。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "5214c1704593b88da602ec88d8db797daed4674863cd6f0a40322ec53cc95cbd",
+          "created_at": "2026-10-28T02:46:08.810013+00:00",
+          "bytes": 3186552,
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Native wide framing reviewed: principal heads and story action inside frame; adult cast; no visible lettering or watermark.",
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_shangfang/b-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "44c7b28db01676bda9c89a84b194d469f6d0546d0cd0b21d656620f203841e36",
+            "original_sha256": "5214c1704593b88da602ec88d8db797daed4674863cd6f0a40322ec53cc95cbd",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "path": "game/sanguo/art/candidates/scene-v7_shangfang/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/b.json"
+        }
+      ],
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v7_envoy",
@@ -3372,8 +4123,219 @@
         "a",
         "b"
       ],
-      "candidates": [],
-      "status": "pending"
+      "candidates": [
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "a",
+          "authored_job": {
+            "id": "scene-v7_lamp",
+            "kind": "scene",
+            "name": "v7_lamp",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_fazheng_night.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "夜，帐内：地上七盏小灯摆成北斗，一盏大主灯；诸葛亮病中跪在灯前；一阵风吹弯了主灯的火；帐门口有人闯进来",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Night inside a tent: seven small lamps arranged like the Northern Dipper on the floor with one large master lamp; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, kneels before them, ill; a gust of wind bends the master flame; a figure bursts in at the tent flap. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_lamp\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_lamp\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_fazheng_night.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"夜，帐内：地上七盏小灯摆成北斗，一盏大主灯；诸葛亮病中跪在灯前；一阵风吹弯了主灯的火；帐门口有人闯进来\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"Night inside a tent: seven small lamps arranged like the Northern Dipper on the floor with one large master lamp; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, kneels before them, ill; a gust of wind bends the master flame; a figure bursts in at the tent flap. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER, e.g. 2000x800. The legacy size field stays verbatim only as provenance; current user finished target 1200x480. Pull camera back and put ALL principal heads, hands and story objects safely inside the native wide frame. Exactly TWO ADULT people: visibly sick fifty-year-old Zhuge in WHITE robe BLACK cap kneeling right, one anonymous BACKLIT adult intruder at far left doorway, face completely hidden (not an adopted Wei Yan portrait). ALL lamp flames and bases must be safely inside the full frame. A VERY LARGE master oil lamp stands far right with wind-bent flame. EXACTLY SEVEN SMALL identical oil lamps sit on floor on LEFT HALF in clear BIG DIPPER plan, each separated and COUNTABLE. Small lamp coordinates expressed as relative image positions: (0.10,0.65), (0.17,0.60), (0.24,0.57), (0.31,0.60), (0.38,0.64), (0.38,0.76), (0.28,0.78). Seven small bowls total. Main large lamp at (0.82,0.72). ONE large plus SEVEN small equals EIGHT TOTAL oil lamps; NO other candle flames, lamps or torches anywhere in background. Show all 7 small bowls/flames and ONE large master IN FULL, not cut at bottom. Zhuge head/black cap, kneeling pose, white fan beside him and entire eight-lamp layout must be within banner. Use a wide camera pulled back. Wind from doorway bends master flame but no explosions. Match all canonical portrait proportions.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4"
+            }
+          ],
+          "description": "七盏小灯完整围成斗形，一盏主灯受风偏焰；诸葛亮跪坐，门口来人保持逆光暗影。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "694bf8c2aca5ef55a73d50ad9e672b6b9dafc823d02381d44245039c80804f56",
+          "created_at": "2026-10-28T02:47:25.302186+00:00",
+          "bytes": 2545559,
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Counted seven small foreground oil lamps plus one large master, eight total in the ritual layout; reviewed full head, fan, wind-bent master flame and adult backlit entrant.",
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_lamp/a-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "cb197bc7c7028680e6b637b955b59e8098147186cc7e9940d6432f55a511ed33",
+            "original_sha256": "694bf8c2aca5ef55a73d50ad9e672b6b9dafc823d02381d44245039c80804f56",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "path": "game/sanguo/art/candidates/scene-v7_lamp/a.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a.json"
+        },
+        {
+          "tool": "image_gen.imagegen",
+          "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+          "seed": null,
+          "candidate": "b",
+          "authored_job": {
+            "id": "scene-v7_lamp",
+            "kind": "scene",
+            "name": "v7_lamp",
+            "batch": 6,
+            "status": "queued",
+            "refs": [
+              "zhuge"
+            ],
+            "ref_paths": [
+              "game/sanguo/art/portraits/zhuge.webp",
+              "game/sanguo/art/scenes/v3_fazheng_night.webp"
+            ],
+            "keep": [
+              "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+            ],
+            "composition": "夜，帐内：地上七盏小灯摆成北斗，一盏大主灯；诸葛亮病中跪在灯前；一阵风吹弯了主灯的火；帐门口有人闯进来",
+            "accept": [
+              "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+              "汉服，不是和服；画面里没有任何文字",
+              "人物都是成年人",
+              "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+            ],
+            "prompt": "Night inside a tent: seven small lamps arranged like the Northern Dipper on the floor with one large master lamp; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, kneels before them, ill; a gust of wind bends the master flame; a figure bursts in at the tent flap. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+            "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+            "size": "1536x1024",
+            "out": [
+              1200,
+              480
+            ]
+          },
+          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+          "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_lamp\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_lamp\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_fazheng_night.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"夜，帐内：地上七盏小灯摆成北斗，一盏大主灯；诸葛亮病中跪在灯前；一阵风吹弯了主灯的火；帐门口有人闯进来\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"Night inside a tent: seven small lamps arranged like the Northern Dipper on the floor with one large master lamp; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, kneels before them, ill; a gust of wind bends the master flame; a figure bursts in at the tent flap. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nNATIVE OUTPUT MUST BE EXTRA-WIDE 2.5:1 BANNER, e.g. 2000x800. The legacy size field stays verbatim only as provenance; current user finished target 1200x480. Pull camera back and put ALL principal heads, hands and story objects safely inside the native wide frame. Exactly TWO ADULT people: visibly sick fifty-year-old Zhuge in WHITE robe BLACK cap kneeling right, one anonymous BACKLIT adult intruder at far left doorway, face completely hidden (not an adopted Wei Yan portrait). ALL lamp flames and bases must be safely inside the full frame. A VERY LARGE master oil lamp stands far right with wind-bent flame. EXACTLY SEVEN SMALL identical oil lamps sit on floor on LEFT HALF in clear BIG DIPPER plan, each separated and COUNTABLE. Small lamp coordinates expressed as relative image positions: (0.10,0.65), (0.17,0.60), (0.24,0.57), (0.31,0.60), (0.38,0.64), (0.38,0.76), (0.28,0.78). Seven small bowls total. Main large lamp at (0.82,0.72). ONE large plus SEVEN small equals EIGHT TOTAL oil lamps; NO other candle flames, lamps or torches anywhere in background. Show all 7 small bowls/flames and ONE large master IN FULL, not cut at bottom. Zhuge head/black cap, kneeling pose, white fan beside him and entire eight-lamp layout must be within banner. Use a wide camera pulled back. Wind from doorway bends master flame but no explosions. Match all canonical portrait proportions.",
+          "reference_inputs_in_order": [
+            {
+              "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+              "source_commit": "e9ee3c7f13df4f8150fc03e974c96044ab78a6d1",
+              "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+              "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+            },
+            {
+              "path": "game/sanguo/art/portraits/zhuge.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_character_reference",
+              "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+            },
+            {
+              "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+              "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+              "role": "authored_adopted_scene_style_reference",
+              "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4"
+            }
+          ],
+          "description": "诸葛亮按胸跪坐，七盏小灯与一盏主灯完整可数，来人背影掀入冷风。",
+          "raw_original_unchanged": true,
+          "cropped": false,
+          "final_target_dimensions": [
+            1200,
+            480
+          ],
+          "review_status": "awaiting_claude",
+          "actual_dimensions": [
+            1983,
+            793
+          ],
+          "original_sha256": "e15731ee671f8e3fcc36eeade392885b724fe4c21943da6bffff61b9138c4dc4",
+          "created_at": "2026-10-28T02:48:07.165419+00:00",
+          "bytes": 2425831,
+          "codex_visual_check": "pass",
+          "visual_review_notes": "Counted seven small foreground ritual lamps plus one master lamp; no cropped bowls; kneeling adult Zhuge and anonymous adult entrant with hidden face.",
+          "review_crop_box": [
+            0,
+            0,
+            1983,
+            793
+          ],
+          "crop_export": {
+            "path": "game/sanguo/art/candidates/scene-v7_lamp/b-1200x480.png",
+            "dimensions": [
+              1200,
+              480
+            ],
+            "box": [
+              0,
+              0,
+              1983,
+              793
+            ],
+            "sha256": "3ae0286762161da5da939896cb78617964b76c8679062bea46394e96e93a3df4",
+            "original_sha256": "e15731ee671f8e3fcc36eeade392885b724fe4c21943da6bffff61b9138c4dc4",
+            "tool": "ImageMagick magick",
+            "operation": "geometric crop and Lanczos resize only; original unchanged",
+            "authorization": "User explicitly requested both original and cropped exports in this chat."
+          },
+          "path": "game/sanguo/art/candidates/scene-v7_lamp/b.png",
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b.json"
+        }
+      ],
+      "status": "awaiting_claude_review"
     },
     {
       "id": "scene-v7_last",
@@ -3956,8 +4918,8 @@
   ],
   "planned_items": 29,
   "planned_candidates": 58,
-  "completed_items": 12,
-  "original_candidates": 25,
+  "completed_items": 17,
+  "original_candidates": 34,
   "adoption_confirmations": {},
   "crop_exports_authorized": true,
   "art_adopted_by_codex": false
