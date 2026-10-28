@@ -1,0 +1,97 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "scene-v7_biao",
+    "kind": "scene",
+    "name": "v7_biao",
+    "batch": 6,
+    "status": "queued",
+    "refs": [
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/scenes/v3_fazheng_night.webp"
+    ],
+    "keep": [
+      "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫",
+      "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+    ],
+    "composition": "灯下：诸葛亮捧着写好的表（看不见字），眼睛发红；子衡背影坐在对面",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits at a desk by lamplight holding a finished memorial scroll (no visible writing), eyes red; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits across from him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_biao\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_biao\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_fazheng_night.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\",\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"灯下：诸葛亮捧着写好的表（看不见字），眼睛发红；子衡背影坐在对面\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits at a desk by lamplight holding a finished memorial scroll (no visible writing), eyes red; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits across from him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate B: a second independently generated alternative, subtly different three-quarter angle and staging without changing character traits, current ages, cast or key actions.\nExactly TWO adults: Zhuge Liang at FIFTY and back-facing Ziheng at FIFTY-EIGHT. AGING IS CRITICAL: Zhuge's slim face has visible forehead lines, eye bags/crow's-feet and grey strands at temples; not the unaged twenty-year-old reference. He stays CLEAN-SHAVEN with canonical facial proportions, BLACK SILK hat, WHITE robes, WHITE fan RESTING on desk. Red tired eyes, holds a finished memorial with BOTH hands, completely BLANK back of scroll faces viewer. Ziheng has visibly WHITE-GREY hair in a bun and plain grey-blue robes, only BACK view, no profile. No Fa Zheng/Liu Bei. Keep both faces, hands and memorial action between y=180 and y=780 for the later banner crop; place no essential cast at the extreme top/bottom.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_character_reference",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_adopted_scene_style_reference",
+      "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4"
+    }
+  ],
+  "description": "近景强调诸葛亮疲惫泛红的眼神，羽扇置于案侧。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890",
+  "created_at": "2026-10-28T02:11:45.174950+00:00",
+  "bytes": 2193703,
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_biao/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      130,
+      1536,
+      614
+    ],
+    "sha256": "86c841eff38be622ce8feaed2a2299ecb9687103f29ab5e77fd1166a9ebf2bda",
+    "original_sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "review_crop_box": [
+    0,
+    130,
+    1536,
+    614
+  ],
+  "codex_visual_check": "pass",
+  "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action."
+}

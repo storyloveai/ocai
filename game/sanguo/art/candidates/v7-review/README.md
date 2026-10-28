@@ -1,6 +1,6 @@
 # 卷七及留任结局 · 候选评审
 
-已交 3/29 项、6 张原图，每项目标两张。
+已交 12/29 项、25 张原图，每项目标两张。
 
 工具：ChatGPT 自带 image_gen.imagegen，底层模型名称和 seed 未公开。没有调用按张付费的 OpenAI 图片 API。每张 PNG 原图保持工具返回的原始字节，JSON 保存完整清单原文、实际提示词、参考图及哈希。
 
@@ -25,26 +25,26 @@
 | portrait-jiangwei | 2/2 | Claude 审图 |
 | portrait-simayi | 2/2 | Claude 审图 |
 | portrait-weiyan | 2/2 | Claude 审图 |
-| scene-v7_biao | 0/2 | Claude 审图 |
-| scene-v7_child | 0/2 | Claude 审图 |
-| scene-v7_houzhu | 0/2 | Claude 审图 |
+| scene-v7_biao | 2/2 | Claude 审图 |
+| scene-v7_child | 2/2 | Claude 审图 |
+| scene-v7_houzhu | 2/2 | Claude 审图 |
 | scene-v7_weiyan | 0/2 | 等三张新头像由 Claude 采用，再加入采用的头像参考 |
 | scene-v7_jiangwei | 0/2 | 等三张新头像由 Claude 采用，再加入采用的头像参考 |
 | scene-v7_wanglang | 0/2 | Claude 审图 |
 | scene-v7_jieting | 0/2 | Claude 审图 |
-| scene-v7_hill | 0/2 | Claude 审图 |
-| scene-v7_kongcheng | 0/2 | Claude 审图 |
-| scene-v7_masu | 0/2 | Claude 审图 |
+| scene-v7_hill | 2/2 | Claude 审图 |
+| scene-v7_kongcheng | 1/2 | Claude 审图 |
+| scene-v7_masu | 2/2 | Claude 审图 |
 | scene-v7_jiangwei_night | 0/2 | 等三张新头像由 Claude 采用，再加入采用的头像参考 |
-| scene-v7_zilong | 0/2 | Claude 审图 |
-| scene-v7_old | 0/2 | Claude 审图 |
+| scene-v7_zilong | 2/2 | Claude 审图 |
+| scene-v7_old | 2/2 | Claude 审图 |
 | scene-v7_feud | 0/2 | 等三张新头像由 Claude 采用，再加入采用的头像参考 |
-| scene-v7_student | 0/2 | Claude 审图 |
+| scene-v7_student | 2/2 | Claude 审图 |
 | scene-v7_shangfang | 0/2 | Claude 审图 |
 | scene-v7_envoy | 0/2 | 等三张新头像由 Claude 采用，再加入采用的头像参考 |
 | scene-v7_lamp | 0/2 | Claude 审图 |
 | scene-v7_last | 0/2 | 等三张新头像由 Claude 采用，再加入采用的头像参考 |
-| scene-v7_home | 0/2 | Claude 审图 |
+| scene-v7_home | 2/2 | Claude 审图 |
 | ending-v2_city | 0/2 | 按用户要求，排在第2批之后 |
 | ending-v3_city | 0/2 | 按用户要求，排在第2批之后 |
 | ending-v4_city | 0/2 | 按用户要求，排在第2批之后 |

@@ -1,0 +1,97 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v7_child",
+    "kind": "scene",
+    "name": "v7_child",
+    "batch": 6,
+    "status": "queued",
+    "refs": [
+      "wenzhi"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/wenzhi.webp",
+      "game/sanguo/art/scenes/v3_wz_road.webp"
+    ],
+    "keep": [
+      "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙，三十多岁的成年女子",
+      "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+    ],
+    "composition": "黄昏成都小院梅树下：温芷（三十多岁）一手搭在腰间，低声对子衡背影说话；四周药畦",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A small courtyard in Chengdu under a blossoming plum tree at dusk: Wen Zhi, an adult woman in her thirties, speaks quietly to Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible, one hand resting on her waist; herb beds around. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_child\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_child\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"wenzhi\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/wenzhi.webp\",\n    \"game/sanguo/art/scenes/v3_wz_road.webp\"\n  ],\n  \"keep\": [\n    \"温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙，三十多岁的成年女子\",\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"黄昏成都小院梅树下：温芷（三十多岁）一手搭在腰间，低声对子衡背影说话；四周药畦\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"A small courtyard in Chengdu under a blossoming plum tree at dusk: Wen Zhi, an adult woman in her thirties, speaks quietly to Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible, one hand resting on her waist; herb beds around. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nFOR THIS CANDIDATE THE NATIVE OUTPUT CANVAS MUST BE AN EXTRA-WIDE HORIZONTAL BANNER, ASPECT RATIO EXACTLY 2.5:1 (for example 2000×800). The legacy authored size field is retained as provenance; the USER explicitly requests a 1200×480 finished banner, so draw directly in this wide ratio. Do NOT draw a 3:2 medium shot that would lose the white flower or waist-hand during a banner crop. Exactly TWO fully clothed adults in a SMALL Chengdu courtyard with herb beds and plum tree at warm dusk: Wen Zhi in her THIRTIES and Ziheng FIFTY-EIGHT with GREY-WHITE bun and grey-blue robe, only his BACK visible, no facial profile. Wen Zhi canonical face/high bun/GOLD hairpin/ONE WHITE PLUM BLOSSOM/pale blue-grey dress. She speaks quietly with ONE HAND RESTING ON HER WAIST. WIDE CAMERA from several metres away, both figures from head to knee, with complete head AND complete waist-hand visible within the native 2.5:1 canvas. Keep her flower and full hand well away from top/bottom edges. No child or baby, no soldiers. Landscape NATIVE 2.5:1 aspect ratio, not tall or square.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/wenzhi.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_character_reference",
+      "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_wz_road.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_adopted_scene_style_reference",
+      "sha256": "20237e0df84e50d566743251848f44783166cc43d498ce2d8e396af850c8328e"
+    }
+  ],
+  "description": "闻芷在梅树与药圃旁手扶腰腹，子衡背身相伴，没有婴童入画。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "1cd406a5003bc3593654cfc3c4125472717fc719bfbfb20471b2fc7a232521d3",
+  "created_at": "2026-10-28T02:27:47.744361+00:00",
+  "bytes": 2861519,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_child/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "724754f75dfe5f53ac1920622951a98b4eed2678cfd47dc7bdd7aba7ff257d2b",
+    "original_sha256": "1cd406a5003bc3593654cfc3c4125472717fc719bfbfb20471b2fc7a232521d3",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "codex_visual_check": "pass",
+  "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action."
+}

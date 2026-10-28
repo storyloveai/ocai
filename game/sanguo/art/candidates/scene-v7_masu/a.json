@@ -1,0 +1,107 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v7_masu",
+    "kind": "scene",
+    "name": "v7_masu",
+    "batch": 6,
+    "status": "queued",
+    "refs": [
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/scenes/v3_council.webp"
+    ],
+    "keep": [
+      "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫"
+    ],
+    "composition": "中军帐：诸葛亮以袖掩面落泪；卫士押着被绑的马谡出帐；众将低头；不画行刑和血",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A command tent: Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, weeps with his sleeve to his face; guards lead a bound officer (Ma Su) out of the tent; officers bow their heads. No execution shown, no blood. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_masu\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_masu\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_council.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\"\n  ],\n  \"composition\": \"中军帐：诸葛亮以袖掩面落泪；卫士押着被绑的马谡出帐；众将低头；不画行刑和血\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"A command tent: Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, weeps with his sleeve to his face; guards lead a bound officer (Ma Su) out of the tent; officers bow their heads. No execution shown, no blood. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nThe FIRST EXTRA image is an unadopted provisional consistency guide for the AGE of the EXISTING Zhuge Liang and silver-haired back-facing Ziheng, NOT any newly introduced character. Keep the canonical underlying face from the following original portrait, visibly mature lean tired age fifty (not twenty), greying temples, forehead/eye lines, black silk cap, white robe/fan and clean-shaven. Do not copy its scroll scene or map table. The additional adopted v6_masu scene is an IDENTITY reference for Ma Su (young adult officer with dark hair, clean-shaven face and muted grey-blue armour), not the composition. Exactly ONE bound Ma Su is escorted OUT of the tent by two anonymous ADULT guards. Zhuge fifty sits in white robe and BLACK cap with sleeve over face, openly weeping. Anonymous generals bow heads. Do NOT show any execution, injuries or blood; the narrative has alternative fates. No Liu Bei or Fa Zheng from style reference. Preserve the weeping gesture and escorted prisoner's face in the crop-safe band.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+      "source_commit": null,
+      "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+      "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v6_masu.webp",
+      "source_commit": "6e8ce7302c852e4e114ce94a3330cf52f67ec714",
+      "role": "additional_claude_adopted_ma_su_identity_reference",
+      "sha256": "a85a3a9f7b3e7acdbbd4c9cec65f0366d1b883615088f2fbca78f41c6ec9d852"
+    },
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_character_reference",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_council.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_adopted_scene_style_reference",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+    }
+  ],
+  "description": "诸葛亮举袖掩泪，两名成年守卫押着被缚马谡离开。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "2ec6be25e25b9eb399c51baa02c1ce32c27c63c4798f3d200ca5a009c4418566",
+  "created_at": "2026-10-28T02:22:05.707231+00:00",
+  "bytes": 2524836,
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_masu/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      100,
+      1536,
+      614
+    ],
+    "sha256": "dd9e1630aca4260f9e96d5f081f1dbf2f7b24fa21f6f44562492e59e59efbebb",
+    "original_sha256": "2ec6be25e25b9eb399c51baa02c1ce32c27c63c4798f3d200ca5a009c4418566",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "review_crop_box": [
+    0,
+    100,
+    1536,
+    614
+  ],
+  "codex_visual_check": "pass",
+  "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action."
+}

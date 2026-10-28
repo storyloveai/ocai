@@ -1,0 +1,87 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v7_hill",
+    "kind": "scene",
+    "name": "v7_hill",
+    "batch": 6,
+    "status": "queued",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/scenes/v3_dingjun.webp"
+    ],
+    "keep": [
+      "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+    ],
+    "composition": "干燥山口：路旁一座林木茂密的山；大队兵往山上爬，一小队在山下路口筑垒；子衡背影和王平站在路口仰望",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A dry mountain pass: a wooded hill rises beside the road; troops are climbing the hill while a smaller group fortifies the road below; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands with a stern officer (Wang Ping) on the road, looking up. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_hill\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_hill\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [],\n  \"ref_paths\": [\n    \"game/sanguo/art/scenes/v3_dingjun.webp\"\n  ],\n  \"keep\": [\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"干燥山口：路旁一座林木茂密的山；大队兵往山上爬，一小队在山下路口筑垒；子衡背影和王平站在路口仰望\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"A dry mountain pass: a wooded hill rises beside the road; troops are climbing the hill while a smaller group fortifies the road below; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands with a stern officer (Wang Ping) on the road, looking up. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nThere are TWO PRINCIPAL FOREGROUND ADULTS at the road junction: SILVER-GREY-haired Ziheng fifty-eight from behind and Wang Ping, an adult officer around forty in plain Shu armour/helmet, looking up. The LARGE MAIN COLUMN of anonymous adult soldiers climbs the wooded HILL. A visibly SMALLER detachment builds barricades at the LOW road junction. No Fa Zheng or Huang Zhong from the style reference, no Guan Yu, no new Wei Yan/Jiang Wei/Sima Yi. Dry mountain pass, not a victory attack.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/v3_dingjun.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_adopted_scene_style_reference",
+      "sha256": "dba95352145cfa40a005a88e2c616bff8c21f91278663cf149e9241b4c537acb"
+    }
+  ],
+  "description": "子衡与王平在坡下观察军队上山，前方士卒修筑低处防线。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "e56e32cd3b2abc3655a27429cb9dc877d8a61d96ebd42f41c12fd1c72726ff06",
+  "created_at": "2026-10-28T02:07:25.358081+00:00",
+  "bytes": 3185388,
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_hill/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      200,
+      1536,
+      614
+    ],
+    "sha256": "e129e2e0fbbcd014ba31e870a8d7be5a6e06e043a8771c7bcffeb9e1f01b1351",
+    "original_sha256": "e56e32cd3b2abc3655a27429cb9dc877d8a61d96ebd42f41c12fd1c72726ff06",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "review_crop_box": [
+    0,
+    200,
+    1536,
+    614
+  ],
+  "codex_visual_check": "pass",
+  "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action."
+}

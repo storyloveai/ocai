@@ -1,0 +1,97 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v7_zilong",
+    "kind": "scene",
+    "name": "v7_zilong",
+    "batch": 6,
+    "status": "queued",
+    "refs": [
+      "zhaoyun"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/zhaoyun.webp",
+      "game/sanguo/art/scenes/v2_zhaoyun_night.webp"
+    ],
+    "keep": [
+      "赵云：快七十的老将，白发，银白铠甲",
+      "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+    ],
+    "composition": "成都卧房：白发的赵云靠在床上淡淡地笑，那杆老枪靠在床边；子衡背影坐在床边",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A quiet bedroom in Chengdu: Zhao Yun, now a white-haired old general, lies propped in bed smiling faintly, his old spear leaning by the bed; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits at the bedside. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_zilong\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_zilong\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhaoyun\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhaoyun.webp\",\n    \"game/sanguo/art/scenes/v2_zhaoyun_night.webp\"\n  ],\n  \"keep\": [\n    \"赵云：快七十的老将，白发，银白铠甲\",\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"成都卧房：白发的赵云靠在床上淡淡地笑，那杆老枪靠在床边；子衡背影坐在床边\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"A quiet bedroom in Chengdu: Zhao Yun, now a white-haired old general, lies propped in bed smiling faintly, his old spear leaning by the bed; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits at the bedside. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nExactly TWO adults: Zhao Yun and back-facing Ziheng. Zhao Yun is now ALMOST SEVENTY, with SNOW-WHITE hair, deep forehead/eye lines, a short white beard, an aged strong broad face preserving the canonical bright eyes/eyebrows and facial proportions. He is NOT the black-haired youthful reference. His SILVER-WHITE armour is visible, he lies propped on pillows in the Chengdu bedroom, faint tired smile, an old SPEAR leaning by the bed. No handheld sword from the style image. Ziheng fifty-eight with grey-white bun, back only. No Huang Zhong or Guan Yu.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/zhaoyun.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_character_reference",
+      "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v2_zhaoyun_night.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_adopted_scene_style_reference",
+      "sha256": "117b7a0c08bffc4b1b5ead5756e7b7d514534d58fb3aed2f7c87ec8c9a1c4d94"
+    }
+  ],
+  "description": "白发赵云卧床微笑，银枪置于床边，子衡背身探望。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "297340ab15f8635302dad7673aeda563a86dca5c1835ed2833a1639868c24264",
+  "created_at": "2026-10-28T02:09:11.552948+00:00",
+  "bytes": 2423811,
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_zilong/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      110,
+      1536,
+      614
+    ],
+    "sha256": "188272cceb977c4054c702ba3539c019b2ab310fb5448b8219214666641ff15d",
+    "original_sha256": "297340ab15f8635302dad7673aeda563a86dca5c1835ed2833a1639868c24264",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "review_crop_box": [
+    0,
+    110,
+    1536,
+    614
+  ],
+  "codex_visual_check": "pass",
+  "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action."
+}

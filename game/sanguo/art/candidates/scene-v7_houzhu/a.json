@@ -1,0 +1,87 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v7_houzhu",
+    "kind": "scene",
+    "name": "v7_houzhu",
+    "batch": 6,
+    "status": "queued",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/scenes/v3_council.webp"
+    ],
+    "keep": [
+      "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+    ],
+    "composition": "安静的殿上：二十岁上下的后主刘禅穿黑红冕服前倾听着；子衡背影躬身",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A quiet palace hall: a young adult emperor in black-and-red robes (Liu Shan, about twenty) leans forward on his throne to listen to Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible who bows before him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_houzhu\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_houzhu\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [],\n  \"ref_paths\": [\n    \"game/sanguo/art/scenes/v3_council.webp\"\n  ],\n  \"keep\": [\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"安静的殿上：二十岁上下的后主刘禅穿黑红冕服前倾听着；子衡背影躬身\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"A quiet palace hall: a young adult emperor in black-and-red robes (Liu Shan, about twenty) leans forward on his throne to listen to Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible who bows before him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nExactly TWO adults visible in a QUIET nearly empty palace: emperor Liu Shan about TWENTY and back-facing Ziheng age fifty-eight. Liu Shan is a clean-shaven young ADULT Chinese man with a youthful rounder face, black-red imperial robe and jade-beaded crown, leaning forward to listen; he is NOT the middle-aged bearded Liu Bei from the style image. Ziheng has grey-white hair and bows respectfully with his whole back to viewer. No other recognizable characters or groups of officials copied from the reference.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/v3_council.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_adopted_scene_style_reference",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5"
+    }
+  ],
+  "description": "青年刘禅在御座上托腮前倾，子衡背身躬身于前。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "c8d3f27e24198181b1db7960dc0b8cdb4ac5acd372e94506463bde50029955d1",
+  "created_at": "2026-10-28T02:05:27.872442+00:00",
+  "bytes": 2311677,
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_houzhu/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1536,
+      614
+    ],
+    "sha256": "339a4e9417a87aa84ba48ec92937717eda8e35f2e059061c2803efd2e9905b15",
+    "original_sha256": "c8d3f27e24198181b1db7960dc0b8cdb4ac5acd372e94506463bde50029955d1",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "review_crop_box": [
+    0,
+    0,
+    1536,
+    614
+  ],
+  "codex_visual_check": "pass",
+  "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action."
+}

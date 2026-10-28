@@ -1,0 +1,102 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v7_kongcheng",
+    "kind": "scene",
+    "name": "v7_kongcheng",
+    "batch": 6,
+    "status": "queued",
+    "refs": [
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/scenes/v3_xiang.webp"
+    ],
+    "keep": [
+      "诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫",
+      "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+    ],
+    "composition": "四门大开的小城，几个“百姓”扫街；城楼上诸葛亮焚香弹琴，两个侍从在旁；子衡背影站在他身边；远处大军停住",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A small city with all four gates wide open and a few 'townsfolk' sweeping the street; on the gate tower Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits playing a zither with incense smoke rising, two attendants beside him; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands at his side; in the distance a vast army halts. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical visual-novel illustration, no panels, no borders. ALL attached images are from the same illustrated series. Match clean expressive anime/Chinese-webtoon line art, cel shading with soft painted highlights, detailed glossy hair and cinematic rim light; NOT photorealism or oil painting. Use ALL authored references in order: portraits lock the underlying faces, final reference is STYLE ONLY. Do NOT copy extra named heroes or their actions from the style reference. Follow the CURRENT AGE and COSTUME in the authored scene even when earlier reference portraits look younger. One uncropped LANDSCAPE original requested 1536x1024, with faces and story action arranged in the central horizontal strip for a later 1200x480 export.\n\nAUTHOR'S ORIGINAL FIELDS, copied verbatim as JSON (never render these words):\n{\n  \"id\": \"scene-v7_kongcheng\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_kongcheng\",\n  \"batch\": 6,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/scenes/v3_xiang.webp\"\n  ],\n  \"keep\": [\n    \"诸葛亮：长发、白衣、白羽扇，五十岁上下，清瘦疲惫\",\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"四门大开的小城，几个“百姓”扫街；城楼上诸葛亮焚香弹琴，两个侍从在旁；子衡背影站在他身边；远处大军停住\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"A small city with all four gates wide open and a few 'townsfolk' sweeping the street; on the gate tower Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits playing a zither with incense smoke rising, two attendants beside him; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible stands at his side; in the distance a vast army halts. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nNo text, writing, Chinese characters, calligraphy, glyphs, logos, watermarks, labels, seals, signatures or written banners anywhere, including paper, books, maps and tablets. Use blank paper backs or unlabelled geography; flags are solid unmarked cloth. Eastern Han / Three Kingdoms Chinese clothing, not kimono. All people are adults, no minors. No explicit sexual content, no gore or graphic injuries. If Ziheng appears: a grey-white-haired scholar IN HIS LATE FIFTIES, grey-blue plain robe, ONLY fully rear-facing or three-quarter BACK with NO eyes, nose or facial profile visible. His hair is visibly GREY/WHITE, not the young dark hair of earlier scenes. Do NOT make him a second Zhuge Liang. Zhuge Liang when present is about FIFTY, visibly lean, tired, faint age lines and greying temples but the same canonical facial proportions; long dark hair, BLACK SILK scholar cap, WHITE robe, WHITE feather fan, CLEAN-SHAVEN with absolutely no beard or moustache. Wen Zhi when present is mature THIRTIES, canonical face/high bun/gold hairpin/ONE white plum blossom/pale blue-grey dress. Each named person appears once. Candidate A: clear staging closely following the authored composition.\nThe FIRST EXTRA image is an unadopted provisional consistency guide for the AGE of the EXISTING Zhuge Liang and silver-haired back-facing Ziheng, NOT any newly introduced character. Keep the canonical underlying face from the following original portrait, visibly mature lean tired age fifty (not twenty), greying temples, forehead/eye lines, black silk cap, white robe/fan and clean-shaven. Do not copy its scroll scene or map table. Empty-city strategy: Zhuge fifty, clean-shaven, white robes and BLACK cap sits on the gate tower PLAYING A SEVEN-STRING GUQIN with BOTH HANDS; incense burns beside him and fan RESTS by his side. Exactly FOUR ADULT PEOPLE on the tower: Zhuge, fully back-facing grey-white-haired fifty-eight-year-old Ziheng, and exactly TWO ADULT MALE ATTENDANTS (aged 25+, full adult proportions, not children). Below, a few anonymous ADULT disguised soldiers sweep the street. The town gates are OPEN, the town is small, the distant opposing army has HALTED. Do not show Sima Yi's face or any of the three new characters awaiting adoption. Broad elevated cinematic view with open gateways visible; keep all four tower heads and guqin/hands within the crop-safe central horizontal band.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
+      "source_commit": null,
+      "role": "provisional_aging_consistency_reference_for_existing_zhuge_not_adopted_new_character",
+      "sha256": "84427bffbbce4cf3e00ae41ce21de4da89ad2576551bf59f1e241905df170890"
+    },
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_character_reference",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_xiang.webp",
+      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "role": "authored_adopted_scene_style_reference",
+      "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338"
+    }
+  ],
+  "description": "城楼上诸葛亮双手抚琴，子衡背身与两名成年侍从在旁，城门敞开，街上有人洒扫。",
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "7e9e52507da6b6d7a8c7078e12f01ca48a670b755a8ea93d353f5d50e4f11c0f",
+  "created_at": "2026-10-28T02:20:27.382840+00:00",
+  "bytes": 2660675,
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_kongcheng/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "f52cf78a385dfd0002839fabcfc9887f7bd42c80f1db8976accc9791514c0507",
+    "original_sha256": "7e9e52507da6b6d7a8c7078e12f01ca48a670b755a8ea93d353f5d50e4f11c0f",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "codex_visual_check": "pass"
+}
