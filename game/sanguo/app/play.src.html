@@ -205,6 +205,11 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .epi h2 { font: 600 28px/1.2 var(--display); margin: 0 0 4px }
 .epi .sub { color: var(--muted); margin: 0 0 18px }
 .frag { padding: 14px 0; border-top: 1px solid var(--line) }
+.life { margin-top: 28px; padding-top: 20px; border-top: 2px solid var(--line) }
+.life h2 { font: 600 24px/1.2 var(--display); margin: 0 0 4px }
+.life h3 { font: 600 16px/1.3 var(--display); margin: 18px 0 6px }
+.life ul { margin: 0; padding-left: 20px } .life li { margin: 4px 0 }
+.life-saved { padding: 12px 14px; margin: 12px 0; border: 1px solid var(--line); border-radius: 12px } .life-saved p { margin: 4px 0 0 }
 .frag .gt { font-size: 12px; color: var(--accent-text); letter-spacing: .06em }
 .frag.romance .gt { color: var(--rose) }
 .frag p { font: 17px/1.8 var(--serif); margin: 4px 0 }
@@ -553,15 +558,20 @@ function choose(id, via = "button") {
   save(); render(true);
 }
 
+// who the player is in a chapter: a volume can hand the story to someone else partway (vol. VIII: from Ziheng to his heir)
+function playerAt(chId) { const ch = (chId && CAMP.chapters.find(c => c.id === chId)) || CAMP.chapters[G.ch]; return (ch && ch.player || []).find(x => !x.when || CC.evalCond(G, x.when)) || null; }
+const PN = chId => { const p = playerAt(chId); return p ? p.name.en : "Ziheng"; };
+const PWHO = () => { const p = playerAt(); return p ? p.who.en : "Ziheng, an original young strategist"; };
+
 /* free text: the model may only map words to an existing choice, or write a reaction that changes nothing */
 // an open question: the model (or keywords) only decides which kind of answer it was; the rules settle it
 async function askAnswer(text, n, lang) {
   const q = n.ask, who = CAMP.chars[q.who];
-  const prompt = `You are sorting a player's free-text answer in an interactive adaptation of Romance of the Three Kingdoms. The player is Ziheng, an original young strategist.
+  const prompt = `You are sorting a player's free-text answer in an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}.
 ${t(who.name)} asked: ${JSON.stringify(t(q.q))}
-Ziheng answered: ${JSON.stringify(text)}
+${PN()} answered: ${JSON.stringify(text)}
 Which kind of answer is it? Kinds (id → meaning): ${JSON.stringify(q.answers.map(a => ({ id: a.id, means: t(a.means) })))}
-Judge what Ziheng actually means, including sarcasm, evasion and mixed answers (pick the dominant intent). If none fits, use "${q.fallback}".
+Judge what ${PN()} actually means, including sarcasm, evasion and mixed answers (pick the dominant intent). If none fits, use "${q.fallback}".
 Return only {"pick":"<id>"}.`;
   const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
   return out && q.answers.some(a => a.id === out.pick) ? out.pick : null;
@@ -689,9 +699,9 @@ function talkHistory(nodeId, lang) {
   const n = N(nodeId), out = [];
   for (const e of G.log) {
     if (e.n !== nodeId) continue;
-    if (e.k === "ans") { out.push(`${t(CAMP.chars[n.ask.who].name)}: ${t(n.ask.q)}`, `Ziheng: ${e.said || "(no answer)"}`, `${t(CAMP.chars[n.ask.who].name)}: ${e.p.map(k => t(n.ask.answers.find(a => a.id === e.a).out[k].text)).join(" ")}`); }
-    if (e.k === "say") { const tp = n.talk.topics.find(x => x.id === e.t); out.push(`Ziheng: ${t(tp.label)}`, `${t(CAMP.chars[n.talk.char].name)}: ${e.p.map(k => t(tp.reply[k].text)).join(" ")}`); }
-    if (e.k === "free" && (e.talk || e.to) && !e.matched) { const sp = e.to || (n.talk && n.talk.char); out.push(`Ziheng${e.to && !n.talk ? " (to " + t(CAMP.chars[e.to].name) + ")" : ""}: ${e.text}`); const rl = e.reply && e.reply.lang === lang ? e.reply.text : e.intent && sp ? t(reactLine(sp, e.intent, e.prior) || { zh: "", en: "" }) : ""; if (rl) out.push(`${t(CAMP.chars[sp].name)}: ${rl}`); }
+    if (e.k === "ans") { out.push(`${t(CAMP.chars[n.ask.who].name)}: ${t(n.ask.q)}`, `${PN()}: ${e.said || "(no answer)"}`, `${t(CAMP.chars[n.ask.who].name)}: ${e.p.map(k => t(n.ask.answers.find(a => a.id === e.a).out[k].text)).join(" ")}`); }
+    if (e.k === "say") { const tp = n.talk.topics.find(x => x.id === e.t); out.push(`${PN()}: ${t(tp.label)}`, `${t(CAMP.chars[n.talk.char].name)}: ${e.p.map(k => t(tp.reply[k].text)).join(" ")}`); }
+    if (e.k === "free" && (e.talk || e.to) && !e.matched) { const sp = e.to || (n.talk && n.talk.char); out.push(`${PN()}${e.to && !n.talk ? " (to " + t(CAMP.chars[e.to].name) + ")" : ""}: ${e.text}`); const rl = e.reply && e.reply.lang === lang ? e.reply.text : e.intent && sp ? t(reactLine(sp, e.intent, e.prior) || { zh: "", en: "" }) : ""; if (rl) out.push(`${t(CAMP.chars[sp].name)}: ${rl}`); }
   }
   return out.slice(-10);
 }
@@ -706,24 +716,24 @@ async function askScene(text, n, cid, options, lang, intent, prior, mode) {
   const imp = Object.keys(CAMP.vars).filter(k => k.startsWith("imp." + cid + ".") && G.v[k] > 0).map(k => `${CAMP.vars[k].imp} ${G.v[k]}/5`);
   const forbid = CC.futureTerms(CAMP, G.ch).map(x => x[lang]);
   const hist = talkHistory(n.id, lang);
-  const mem = ((G.mem || {})[cid] || []).filter(m => m.node !== n.id).slice(-3).map(m => `In "${t(N(m.node).title)}" Ziheng said to you: "${m.text}" (${m.intent})`);
+  const mem = ((G.mem || {})[cid] || []).filter(m => m.node !== n.id).slice(-3).map(m => `In "${t(N(m.node).title)}" ${PN(N(m.node).chapter)} said to you: "${m.text}" (${m.intent})`);
   const open = (G.commits || []).filter(k => k.char === cid && k.status === "open").map(k => `"${k.text}" (${k.kind})`);
   const others = castNow(n).filter(x => x !== cid).map(x => t(CAMP.chars[x].name));
   const romance = c.romance
     ? `This character can, over time, return romantic feelings. Closeness is ${G.v["rel." + cid + "." + (c.main || "intimacy")]}/10: below 3 startled or guarded, 3–5 flustered but pleased, 6+ openly tender. Never sexual.`
-    : `This character is not a romantic partner in this story. If Ziheng declares love or flirts, react truthfully in character—surprise, awkwardness, a firm but humane deflection, humor or reproach—never accepting, never cruel.`;
-  const prompt = `You voice one character in an interactive adaptation of Romance of the Three Kingdoms. The player is Ziheng, an original young strategist.
-Character Ziheng is speaking to: ${t(c.persona)}${others.length ? `\nAlso present: ${others.join(", ")}.` : ""}
-Relationship with Ziheng (0–10): ${rel}${c.heat && c.heat.line ? `\nTemper in this scene: ${G.v["heat." + cid] || 0}/${c.heat.line}. At ${c.heat.line} ${cid === "caocao" ? "he acts against Ziheng on the spot" : "they stop talking to him"}; if Ziheng is provoking, let the reply show the temper rising (a warning, a hand on the sword, a cold silence), never laughing it off.` : ""}${imp.length ? `\nLasting impressions of Ziheng: ${imp.join(", ")} — let them color your attitude.` : ""}
+    : `This character is not a romantic partner in this story. If ${PN()} declares love or flirts, react truthfully in character—surprise, awkwardness, a firm but humane deflection, humor or reproach—never accepting, never cruel.`;
+  const prompt = `You voice one character in an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}.
+Character ${PN()} is speaking to: ${t(c.persona)}${others.length ? `\nAlso present: ${others.join(", ")}.` : ""}
+Relationship with ${PN()} (0–10): ${rel}${c.heat && c.heat.line ? `\nTemper in this scene: ${G.v["heat." + cid] || 0}/${c.heat.line}. At ${c.heat.line} ${cid === "caocao" ? "he acts against " + PN() + " on the spot" : "they stop talking to him"}; if ${PN()} is provoking, let the reply show the temper rising (a warning, a hand on the sword, a cold silence), never laughing it off.` : ""}${imp.length ? `\nLasting impressions of ${PN()}: ${imp.join(", ")} — let them color your attitude.` : ""}
 ${romance}
 Scene: ${t(n.title)}. ${(n.intro || []).map(p => t(p.text)).join(" ")}
-${mem.length ? "Memories:\n" + mem.join("\n") + "\n" : ""}${open.length ? "Promises Ziheng has made you and not yet kept: " + open.join("; ") + "\n" : ""}What has been said here so far:
+${mem.length ? "Memories:\n" + mem.join("\n") + "\n" : ""}${open.length ? "Promises ${PN()} has made you and not yet kept: " + open.join("; ") + "\n" : ""}What has been said here so far:
 ${hist.length ? hist.join("\n") : "(nothing yet)"}
-${mode === "scene" ? "Actions Ziheng can take in this scene" : "Topics that carry story weight"} (id → meaning; locked ones are not possible yet): ${JSON.stringify(options)}
-Ziheng now says: ${JSON.stringify(text)}${prior ? `\n(Ziheng has said something like this ${prior} time(s) already here—the character notices and reacts differently.)` : ""}
-If Ziheng's words clearly mean one of the ${mode === "scene" ? "actions" : "topics"}, reply {"pick":"<id>","reply":null,"tone":"flat","mood":"neutral","commit":null}.
+${mode === "scene" ? "Actions ${PN()} can take in this scene" : "Topics that carry story weight"} (id → meaning; locked ones are not possible yet): ${JSON.stringify(options)}
+${PN()} now says: ${JSON.stringify(text)}${prior ? `\n(${PN()} has said something like this ${prior} time(s) already here—the character notices and reacts differently.)` : ""}
+If ${PN()}'s words clearly mean one of the ${mode === "scene" ? "actions" : "topics"}, reply {"pick":"<id>","reply":null,"tone":"flat","mood":"neutral","commit":null}.
 Otherwise reply {"pick":null,"reply":"<the character's answer>","tone":"<warm|rude|romantic|flatter|nonsense|threat|flat>","mood":"<neutral|warm|cold|sad|surprised${c.romance ? "|shy" : ""}>","commit":<null or {"kind":"protect|loyalty|other","text":"<the promise in a few words>"}>}.
-How to answer: react genuinely to whatever Ziheng says, including bold, strange or extreme statements, as this person really would given the relationship, the memories and what has been said here; if Ziheng owes you a promise, you may bring it up. Mostly dialogue, at most one short action beat; never reuse an earlier reply or gesture. "tone" has real consequences, so judge fairly and use "flat" when unsure: warm (sincere, caring), flatter (excessive or self-serving praise), rude (insulting, mocking), threat (threatening harm), romantic (declaring love, flirting), nonsense (gibberish, wildly out of place), flat (anything else). "commit" only when Ziheng clearly makes a promise to you: protect (to protect, rescue or come back for you), loyalty (to stay loyal, never betray or leave), other.
+How to answer: react genuinely to whatever ${PN()} says, including bold, strange or extreme statements, as this person really would given the relationship, the memories and what has been said here; if ${PN()} owes you a promise, you may bring it up. Mostly dialogue, at most one short action beat; never reuse an earlier reply or gesture. "tone" has real consequences, so judge fairly and use "flat" when unsure: warm (sincere, caring), flatter (excessive or self-serving praise), rude (insulting, mocking), threat (threatening harm), romantic (declaring love, flirting), nonsense (gibberish, wildly out of place), flat (anything else). "commit" only when ${PN()} clearly makes a promise to you: protect (to protect, rescue or come back for you), loyalty (to stay loyal, never betray or leave), other.
 Limits: ${lang === "zh" ? "Chinese, at most 100 characters" : "English, at most 60 words"}; reveal no secrets or future events; invent no deaths, betrothals or changes to the situation; never mention: ${forbid.join(", ")}; no sexual content.
 Return only the JSON object.`;
   const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
@@ -746,8 +756,8 @@ async function askRecall(entry) {
   const lang = settings.lang;
   const prompt = `You voice ${t(c.persona)} in an interactive adaptation of Romance of the Three Kingdoms.
 Scene now: ${t(N(entry.n).title)}. ${(N(entry.n).intro || []).map(p => t(p.text)).join(" ")}
-Earlier, in "${t(N(m.node).title)}", Ziheng said to you: "${m.text}" (${m.intent}).
-Write ONE short line in which you bring this up naturally, in character, given the relationship (${Object.keys(c.dims).map(d => `${d} ${G.v["rel." + r.c + "." + d]}/10`).join(", ")}). Quote or paraphrase what Ziheng said; add nothing that didn't happen; no future events; no sexual content.
+Earlier, in "${t(N(m.node).title)}", ${PN(N(m.node).chapter)} said to you: "${m.text}" (${m.intent}).
+Write ONE short line in which you bring this up naturally, in character, given the relationship (${Object.keys(c.dims).map(d => `${d} ${G.v["rel." + r.c + "." + d]}/10`).join(", ")}). Quote or paraphrase what ${PN()} said; add nothing that didn't happen; no future events; no sexual content.
 ${lang === "zh" ? "Chinese, at most 60 characters" : "English, at most 35 words"}. Return only {"line":"..."}.`;
   try {
     const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
@@ -785,7 +795,7 @@ async function askModel(text, opts, lang) {
   const n = N(G.cur);
   const forbid = CC.futureTerms(CAMP, G.ch).map(x => x[lang]);
   const scene = { title: t(n.title), situation: (n.intro || []).map(p => t(p.text)).join(" "), options: opts.filter(o => !o.locked).map(o => ({ id: o.id, means: t(o.c.label) })) };
-  const prompt = `You interpret a player's typed words in an interactive adaptation of Romance of the Three Kingdoms. The player is Ziheng, an original young strategist. Only the listed options can change the story.
+  const prompt = `You interpret a player's typed words in an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}. Only the listed options can change the story.
 Scene JSON: ${JSON.stringify(scene)}
 Player wrote: ${JSON.stringify(text)}
 If the words clearly mean one option, reply {"choice":"<id>","reply":null}.
@@ -1202,12 +1212,37 @@ function renderEnding() {
         h("details", {}, h("summary", {}, l.whyQ), e.why.length ? h("ol", { class: "chain" }, e.why.map(whyItem)) : h("p", { class: "muted", style: "font-size:13px" }, l.noWhy))];
       return ff ? h("div", { class: "frag face" + (f.mood === "romance" ? " romance" : "") }, face(ff[0], ff[1]), h("div", {}, body)) : h("div", { class: "frag" + (f.mood === "romance" ? " romance" : "") }, body); })),
     h("div", { style: "margin-top:20px" }, mapEl("ending")),
+    CAMP.life ? renderLife() : null,
     h("p", { class: "muted", style: "margin-top:16px" }, t(CAMP.end_note)),
     (location.hash === "#playtest" || creatorAllowed()) ? renderSurvey() : null,
     h("div", { class: "btns", style: "margin-top:16px" }, (() => { const next = BOOK.volumes[volIndex(G.vol) + 1]; return next && next.camp ? h("button", { class: "btn", type: "button", onclick: () => newGame(next.id, Object.assign(CC.carryOut(G), { run: G.run }), { from: G.run }) }, l.nextVol(l.volTag(volIndex(next.id)))) : null; })(),
       h("button", { class: "btn ghost", type: "button", onclick: () => branchFrom(G.run, 0) }, l.again),
       h("button", { class: "btn ghost", type: "button", onclick: goHome }, l.toc),
       creatorAllowed() ? h("button", { class: "btn ghost", type: "button", onclick: () => { setCreator(true); V.panelOpen = true; renderPanel(); } }, l.toCreator) : null));
+}
+
+// 这一生: the book's last page. Follows "continue with the next volume" back through the saves to find each volume's
+// run, and checks that volume's items against the state that run ended with. A volume the player began from a backstory
+// has no run; its items are checked against what the current run still carries, and anything it can't tell is left out.
+function lifeRuns() {
+  const runs = { [G.vol]: G }; let g = G;
+  for (let i = 0; i < 20 && g && g.from; i++) { g = loadRun(g.from); if (g && !runs[g.vol]) runs[g.vol] = g; }
+  return runs;
+}
+const condVars = c => !c ? [] : c.v ? [c.v] : [...(c.all || []), ...(c.any || [])].flatMap(condVars);
+function renderLife() {
+  const life = CAMP.life, runs = lifeRuns(), saved = [];
+  const vols = life.vols.map(vol => {
+    const run = runs[vol.vol];
+    const items = vol.items.filter(it => run ? CC.evalCond(run, it.when) : condVars(it.when).every(k => k in G.v) && CC.evalCond(G, it.when));
+    items.forEach(it => { if (it.saved && !saved.some(x => x.zh === it.saved.zh)) saved.push(it.saved); });
+    return h("div", { class: "life-vol" }, h("h3", {}, t(vol.title)),
+      items.length ? h("ul", {}, items.map(it => h("li", {}, t(it.text)))) : null,
+      !run ? h("p", { class: "muted" }, t(items.length ? life.from_preset : life.not_played)) : !items.length ? h("p", { class: "muted" }, t(life.nothing)) : null);
+  });
+  return h("section", { class: "life" }, h("h2", {}, t(life.title)), h("p", { class: "sub" }, t(life.sub)),
+    h("div", { class: "life-saved" }, h("b", {}, t(life.saved_title)), h("p", {}, saved.length ? saved.map(x => t(x)).join(settings.lang === "zh" ? "、" : ", ") : t(life.none_saved))),
+    vols, h("p", { class: "muted" }, `${t(life.deviation)}${settings.lang === "zh" ? "：" : ": "}${G.v.deviation || 0}`));
 }
 
 function renderSurvey() {

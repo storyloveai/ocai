@@ -678,7 +678,7 @@ CAMPAIGN = {
                 {"what": "中文引文核对底本", "url": "https://www.ntdtv.com/b5/2010/02/02/a389902.html", "checked": "2026-10-27", "note": "第96回（斩马谡、自贬三等），繁体转简体"},
                 {"what": "中文引文核对底本", "url": "https://www.ntdtv.com/gb/2010/02/23/a393218.html", "checked": "2026-10-27", "note": "第103回（上方谷、食少事烦、禳星）"},
                 {"what": "中文引文核对底本", "url": "https://www.ntdtv.com/gb/2010/02/25/a393738.html", "checked": "2026-10-27", "note": "第104回（临终、授书姜维、寿五十四）"}],
-    "end_note": T("卷七终。卷八《归晋》尚未开放。", "End of Volume VII. Volume VIII (The Realm Made One) is not yet open."),
+    "end_note": T("卷七终。下一卷：卷八《归晋》，全书最后一卷。", "End of Volume VII. Next: Volume VIII, The Realm Made One—the last volume."),
 }
 
 if __name__ == "__main__":

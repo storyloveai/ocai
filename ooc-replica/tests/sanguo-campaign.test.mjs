@@ -57,3 +57,10 @@ test('campaign endpoint streams structured reply, preserves origin guard and ser
  await handler(req,res);assert.ok(seen.system.includes('Only select pick'));assert.ok(res.chunks.join('').includes('"type":"done"'));
  await handler({...req,headers:{...req.headers,origin:'https://evil.example'}},res);assert.equal(res.code,403);
 });
+
+test('volume VIII hands the story to Ziheng\'s heir from chapter three', () => {
+ const prompt=(node,vars)=>JSON.stringify(buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node,text:'你还记得他吗',vars,turns:2}}));
+ assert.match(prompt('c1_weiyan',{}),/The player is Ziheng/);
+ assert.match(prompt('c3_jiangwei',{'flag.v7_child':true}),/The player is Chengzhi/);
+ assert.match(prompt('c3_jiangwei',{'flag.v7_child':false}),/The player is Shouyan/);
+});

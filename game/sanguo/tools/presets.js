@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Backstories for a later volume: play the previous volume with typical player types and keep where they ended.
-// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3|v4|v5|v6|v7]
+// Usage: node tools/presets.js <previous campaign.json> <out presets.json> [v2|v3|v4|v5|v6|v7|v8]
 // The last argument says which volume the backstories are for (default v2: backstories from Volume I).
 const fs = require("fs");
 const CC = require("../engine/campaign_core.js");
@@ -90,8 +90,20 @@ const WANT_V7 = [
   { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
     title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。南中的事，你是从远处听说的。", "You left early. You heard about the south from far away.") },
 ];
+const WANT_V8 = [
+  { id: "married", policy: "romance", ok: st => !st.v.ended_early && st.v["flag.v7_child"],
+    title: T("有了孩子的人", "The Parent"), desc: T("你和温芷的孩子会写自己的名字了。丞相走了，你护着灵车回成都。", "Your child with Wen Zhi can write their own name now. The Chancellor is gone, and you escort the hearse home.") },
+  { id: "letter", weights: Object.assign({}, CC.policies.loyal, { "flag.v7_weiyan_word": 30, "flag.v7_ziwu": 10, "flag.v7_warned_weiyan": 10, "rel.weiyan.trust": 3 }), ok: st => st.v.track === "liu" && !st.v.ended_early && st.v["flag.v7_weiyan_word"] && st.v["rel.weiyan.trust"] >= 6,
+    title: T("揣着那封信的人", "The One with the Letter"), desc: T("丞相临终写给魏延一封信，交给了你。全营只有你替魏延说过话。", "On his deathbed the Chancellor wrote Wei Yan a letter and gave it to you. In the whole camp, only you ever spoke up for Wei Yan.") },
+  { id: "fan", weights: Object.assign({}, CC.policies.loyal, { "rel.zhuge.trust": 3, "rel.jiangwei.trust": 2 }), ok: st => st.v.track === "liu" && !st.v.ended_early && st.v["flag.v7_fan"] && !st.v["flag.v7_child"],
+    title: T("受了羽扇的人", "The Keeper of the Fan"), desc: T("丞相把白羽扇放进你手里：替亮看着。你收了一个学生。", "The Chancellor put the white feather fan in your hand: watch over them for me. You took on a student.") },
+  { id: "envoy", weights: Object.assign({}, CC.policies.schemer, { "flag.v7_envoy": 20 }), ok: st => !st.v.ended_early && st.v["flag.v7_envoy"] && !st.v["flag.v7_child"],
+    title: T("见过司马懿的人", "The One Who Met Sima Yi"), desc: T("你在司马懿帐里喝过茶，他记住了你的名字。", "You drank tea in Sima Yi's tent, and he remembered your name.") },
+  { id: "wanderer", policy: null, ok: st => !!st.v.ended_early,
+    title: T("流落之人", "The Wanderer"), desc: T("你早早就离开了。五丈原的事，你是从远处听说的。", "You left early. You heard about Wuzhang from far away.") },
+];
 const res = [];
-for (const w of (target === "v7" ? WANT_V7 : target === "v6" ? WANT_V6 : target === "v5" ? WANT_V5 : target === "v4" ? WANT_V4 : target === "v3" ? WANT_V3 : WANT)) {
+for (const w of (target === "v8" ? WANT_V8 : target === "v7" ? WANT_V7 : target === "v6" ? WANT_V6 : target === "v5" ? WANT_V5 : target === "v4" ? WANT_V4 : target === "v3" ? WANT_V3 : WANT)) {
   let found = null;
   for (let seed = 1; seed < 400 && !found; seed++) { const st = CC.playPolicy(camp, CC.rng(seed * 7919), w.weights || (w.policy ? CC.policies[w.policy] : null)); if (w.ok(st)) found = st; }
   if (!found) { console.error("no run for", w.id); process.exit(1); }

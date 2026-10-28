@@ -19,6 +19,7 @@ const FILES = [
   ['game/sanguo/content/v5/campaign_v5.json', 'sanguo/upstream/campaign_v5.json'],
   ['game/sanguo/content/v6/campaign_v6.json', 'sanguo/upstream/campaign_v6.json'],
   ['game/sanguo/content/v7/campaign_v7.json', 'sanguo/upstream/campaign_v7.json'],
+  ['game/sanguo/content/v8/campaign_v8.json', 'sanguo/upstream/campaign_v8.json'],
   ['game/engine/campaign_core.js', 'sanguo/upstream/campaign_core.js'],
   ['game/engine/campaign_core.js', 'book-campaigns/engine/campaign_core.js'],
 ];
