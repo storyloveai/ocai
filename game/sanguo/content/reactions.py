@@ -14,9 +14,9 @@ REACT = {
                T("『夸人的话，说一遍就够了。』他难得笑了一下。", "'Praise is worth saying once.' For once he almost smiles.")],
     "ask": [T("关羽想了想：『这个，你该去问大哥。』", "Guan Yu thinks. 'That's a question for my brother.'"),
             T("『我只知道一件事：跟着大哥，不会错。』", "'I know one thing: following my brother is never wrong.'")],
-    "small": [T("关羽嗯了一声，继续擦刀。", "Guan Yu grunts and goes on cleaning the blade."),
-              T("『明日要赶早路，你也早些歇着。』", "'We start early tomorrow. Get some rest.'"),
-              T("火光照着他半边脸。他没有接话，却也没有赶你走。", "The firelight catches half his face. He doesn't answer, but he doesn't send you away either.")]}},
+    "small": [T("关羽嗯了一声，丹凤眼半闭着。", "Guan Yu grunts, his eyes half closed."),
+              T("关羽抚着长髯，看了你一眼，没有说话。", "Guan Yu strokes his long beard, glances at you, and says nothing."),
+              T("他没有接话，却也没有转身走开。", "He doesn't answer, but he doesn't turn away either.")]}},
   "liubei": {"romance": False, "react": {
     "love": [T("刘备一愣，随即笑了：『先生这话，备记下了。乱世之中，肯说这种话的人不多。』", "Liu Bei blinks, then laughs. 'I'll remember that, sir. Few people say such things in times like these.'"),
              T("『好了好了。』他拍拍你的肩，『你我之间，不必如此。』", "'All right, all right.' He pats your shoulder. 'There's no need for that between us.'"),
@@ -27,9 +27,9 @@ REACT = {
                T("刘备摆摆手，耳根却有些红。", "Liu Bei waves it off, though the tips of his ears redden.")],
     "ask": [T("刘备沉吟片刻：『这件事，我还没想好。先生怎么看？』", "Liu Bei considers. 'I haven't decided. What do you think?'"),
             T("『问得好。』他笑了，『可我答不上来。』", "'A good question.' He smiles. 'But I can't answer it.'")],
-    "small": [T("刘备望着城下的灯火，嗯了一声。", "Liu Bei gazes at the lights below and murmurs agreement."),
-              T("『难得有这样安静的夜。』他说。", "'It's rare to have a night this quiet,' he says."),
-              T("他给你倒了一杯酒，什么也没说。", "He pours you a cup of wine and says nothing.")]}},
+    "small": [T("刘备点点头，没有接话，像是在等你把话说完。", "Liu Bei nods without answering, as if waiting for you to finish."),
+              T("『先生说的是。』他应了一句，心思却像在别处。", "'Quite so, sir,' he says, though his mind seems elsewhere."),
+              T("他看了你一眼，温和地笑了笑。", "He glances at you and smiles mildly.")]}},
   "zhuge": {"romance": False, "react": {
     "love": [T("诸葛亮的扇子停在半空：『子衡兄……亮已有家室。』他说得很认真，眼里却有一点笑意。", "Zhuge Liang's fan stops mid-air. 'Ziheng... I am a married man.' He says it gravely, but his eyes are amused."),
              T("『这一句，亮就当是夸我的计策了。』他轻轻摇扇。", "'I'll take that as praise for my strategy.' He fans himself lightly."),
@@ -40,8 +40,8 @@ REACT = {
                T("诸葛亮摇扇不语，像是在掂量这句话里有几分真。", "Zhuge Liang fans himself in silence, as if weighing how much of that you meant.")],
     "ask": [T("『子衡兄以为呢？』他把问题又推了回来。", "'And what do you think?' He hands the question straight back."),
             T("诸葛亮笑了：『这个问题，三年后再问我。』", "Zhuge Liang smiles. 'Ask me that again in three years.'")],
-    "small": [T("诸葛亮点点头，在灯下翻了一页书。", "Zhuge Liang nods and turns a page by the lamp."),
-              T("『夜里风凉。』他把窗关上了一半。", "'The night air is cold.' He half closes the window."),
+    "small": [T("诸葛亮点点头，羽扇轻轻摇了两下。", "Zhuge Liang nods, his feather fan stirring twice."),
+              T("『哦？』他看了你一眼，没有追问。", "'Oh?' He glances at you and doesn't press."),
               T("他嗯了一声，像是在听，又像是在想别的事。", "He hums, as if listening—or thinking of something else.")]}},
   "caocao": {"romance": False, "react": {
     "love": [T("曹操大笑，笑得酒都洒了：『好！孤喜欢直爽的人。可惜孤不缺这样说话的人，缺的是会打仗的人。』", "Cao Cao roars with laughter and spills his wine. 'Good! I like plain speaking. But I've no shortage of people saying that. What I'm short of is people who can win battles.'"),
@@ -53,9 +53,9 @@ REACT = {
                T("『夸孤的人，多半有事相求。』他斜看你一眼。", "'Those who praise me usually want something.' He eyes you sideways.")],
     "ask": [T("曹操反问：『你猜？』", "Cao answers with a question. 'What do you think?'"),
             T("『这天下的事，孤也有不知道的。』他难得说了句实话。", "'Even I don't know everything under heaven,' he says—an unusually honest admission.")],
-    "small": [T("曹操嗯了一声，又喝了一口酒。", "Cao grunts and drinks again."),
-              T("『月明星稀……』他低声念了半句，没有念完。", "'The moon is bright, the stars are few…' he murmurs, and doesn't finish."),
-              T("他望着廊外，好一会儿没说话。", "He looks out past the veranda and says nothing for a while.")]}},
+    "small": [T("曹操嗯了一声，眯着眼打量你。", "Cao grunts and studies you through narrowed eyes."),
+              T("『哦？』他似笑非笑，『接着说。』", "'Oh?' He half smiles. 'Go on.'"),
+              T("曹操没有接话，手指在案上轻轻敲了两下。", "Cao doesn't answer; his fingers tap the table twice.")]}},
   "wenzhi": {"romance": True, "react": {
     "love": [T("温芷手里的药杵停了。她没有回头，耳朵却红了：『……你知道自己在说什么吗？』", "Wen Zhi's pestle stops. She doesn't turn, but her ears go red. '...Do you know what you're saying?'"),
              T("『说一遍就够了。』她小声说，『说多了，我会当真的。』", "'Once is enough,' she says quietly. 'Say it more and I'll believe you.'"),
@@ -68,7 +68,7 @@ REACT = {
             T("『我也不知道。』她说，『不过你问了，我会想一想。』", "'I don't know,' she says. 'But since you asked, I'll think about it.'")],
     "small": [T("温芷嗯了一声，手里的活没停。", "Wen Zhi hums, her hands still busy."),
               T("『你还是老样子，』她说，『话少，眼睛不老实。』", "'You haven't changed,' she says. 'Few words, restless eyes.'"),
-              T("江风吹过来，她把披风往你这边拉了拉。", "The river wind blows in. She pulls the edge of her cloak over toward you.")]}},
+              T("她抬眼看了看你：『嗯，我听着呢。』", "She looks up at you. 'Mm. I'm listening.'")]}},
 }
 
 PATTERNS = {
