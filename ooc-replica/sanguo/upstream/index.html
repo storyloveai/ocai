@@ -2375,7 +2375,7 @@ function lazyFigure(cls, label, key, draw) {
 // a node may name its own illustration (art.illus); the generic scene pictures were drawn for Volume I's scenes,
 // so later volumes use them only for endings and otherwise fall back to the ink drawing
 function painting(scene, layers, label, illus) {
-  const src = scene === "ending" ? artUrl(`ending/${ENDING_VARIANTS.find(v => layers.includes(v)) || "lone"}.webp`)
+  const src = scene === "ending" ? endingUrl(ENDING_VARIANTS.find(v => layers.includes(v)) || "lone")
     : illus ? artUrl(`scenes/${illus}.webp`) : CAMP === BOOK.volumes[0].camp ? artUrl(`scenes/${scene}.webp`) : null;
   if (src) return imgFigure("art", label, src);
   return lazyFigure("art", label, scene + "|" + layers.join(","), () => ART.scene(scene, layers, { label }));
@@ -2393,6 +2393,8 @@ const EDITION = "ink" === "illus" ? "illus" : "ink";
 const ART_BASE = "";
 const ART_FILES = new Set([]);
 const artUrl = p => EDITION === "illus" && ART_FILES.has(p) ? ART_BASE + p : null;
+// a volume may have its own picture for an ending (ending/v5_city.webp); otherwise the book-wide one (ending/city.webp)
+const endingUrl = v => { const vol = (CAMP.id.match(/_(v\d+)$/) || [])[1]; return (vol && artUrl(`ending/${vol}_${v}.webp`)) || artUrl(`ending/${v}.webp`); };
 // where the face sits in each illustration (object-position), so round avatars stay centred on it
 const PORTRAIT_FOCUS = { liubei: "50% 34%", caocao: "50% 48%", guanyu: "50% 45%", zhuge: "50% 34%", zhouyu: "50% 25%", zhaoyun: "50% 20%", wenzhi: "50% 30%", lusu: "50% 28%", sunfuren: "50% 28%", pangtong: "50% 30%", zhangsong: "50% 30%", fazheng: "50% 34%", huangzhong: "50% 30%" };
 const ENDING_VARIANTS = ["two_boat", "home", "city", "lone"];
