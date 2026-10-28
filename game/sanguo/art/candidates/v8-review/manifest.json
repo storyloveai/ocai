@@ -2,7 +2,7 @@
   "issue": 68,
   "source_pr": 71,
   "existing_pr": 72,
-  "asset_ref": "codex/art-v7-endings",
+  "asset_ref": "5b29ce47aa465f95bce255a5565387c7b79b187b",
   "source_v8_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
   "fallback_authorization": "No replacement references authorized or used. Use adopted references from PR #71; missing scene references wait for adoption.",
   "items": [
@@ -509,9 +509,9 @@
           },
           "visual_review_notes": "Two elderly adults with white hair/visible age lines; Wen Zhi canonical eyes/face, high bun/gold pin/one white plum/pale blue-grey dress; needle/thread and cloth visible; Ziheng full rear view in bed, no children or text.",
           "path": "game/sanguo/art/candidates/scene-v8_wz_last/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v8_wz_last/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v8_wz_last/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v8_wz_last/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -616,9 +616,9 @@
           },
           "visual_review_notes": "Two elderly adults with white hair/visible age lines; Wen Zhi canonical eyes/face, high bun/gold pin/one white plum/pale blue-grey dress; needle/thread and cloth visible; Ziheng full rear view in bed, no children or text.",
           "path": "game/sanguo/art/candidates/scene-v8_wz_last/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v8_wz_last/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v8_wz_last/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v8_wz_last/b.json"
         }
       ],
       "status": "awaiting_claude_review"
