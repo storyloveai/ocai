@@ -1,6 +1,6 @@
 # 卷七及留任结局 · 候选评审
 
-已交 23/30 项、46 张原图，每项目标两张。
+已交 30/30 项、60 张原图，每项目标两张。
 
 工具：ChatGPT 自带 image_gen.imagegen，底层模型名称和 seed 未公开。没有调用按张付费的 OpenAI 图片 API。每张 PNG 原图保持工具返回的原始字节，JSON 保存完整清单原文、实际提示词、参考图及哈希。
 
@@ -45,13 +45,13 @@ Claude 已在 #68 记录采用上一批 17 项（PR #71）：姜维 A、司马�
 | scene-v7_lamp | 2/2 | 已采用 A（#71） |
 | scene-v7_last | 2/2 | Claude 审图 |
 | scene-v7_home | 2/2 | 已采用 B（#71） |
-| ending-v2_city | 0/2 | 已放行，待生成 |
-| ending-v3_city | 0/2 | 已放行，待生成 |
-| ending-v4_city | 0/2 | 已放行，待生成 |
-| ending-v5_city | 0/2 | 已放行，待生成 |
-| ending-v6_city | 0/2 | 已放行，待生成 |
-| ending-v7_city | 0/2 | 已放行，待生成 |
-| ending-v8_city | 0/2 | 已放行，待生成 |
+| ending-v2_city | 2/2 | Claude 审图 |
+| ending-v3_city | 2/2 | Claude 审图 |
+| ending-v4_city | 2/2 | Claude 审图 |
+| ending-v5_city | 2/2 | Claude 审图 |
+| ending-v6_city | 2/2 | Claude 审图 |
+| ending-v7_city | 2/2 | Claude 审图 |
+| ending-v8_city | 2/2 | Claude 审图 |
 
 ## 卷七场景和留任结局 A/B 对照
 
@@ -79,6 +79,13 @@ Claude 已在 #68 记录采用上一批 17 项（PR #71）：姜维 A、司马�
 | scene-v7_lamp | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a-1200x480.png" width="240" height="96" alt="scene-v7_lamp A"></a><br>七盏小灯完整围成斗形，一盏主灯受风偏焰；诸葛亮跪坐，门口来人保持逆光暗影。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b-1200x480.png" width="240" height="96" alt="scene-v7_lamp B"></a><br>诸葛亮按胸跪坐，七盏小灯与一盏主灯完整可数，来人背影掀入冷风。 |
 | scene-v7_last | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/a-1200x480.png" width="240" height="96" alt="scene-v7_last A"></a><br>秋风黄昏中诸葛亮裹斗篷坐在小车里望向营寨，姜维持枪步行在车旁。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/b-1200x480.png" width="240" height="96" alt="scene-v7_last B"></a><br>小车行过秋日高原，诸葛亮裹深色斗篷抱羽扇，姜维持枪随车步行。 |
 | scene-v7_home | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/a-1200x480.png" width="240" height="96" alt="scene-v7_home A"></a><br>黄昏山路上，一具封闭灵柩向成都而行，子衡背身持羽扇。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/b-1200x480.png" width="240" height="96" alt="scene-v7_home B"></a><br>送行队伍与无字白幡沿山道远去，子衡的银发与羽扇留在近景。 |
+| ending-v2_city | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/a-1200x480.png" width="240" height="96" alt="ending-v2_city A"></a><br>成都城头新换无字红旗，子衡背身与诸葛亮并肩，蜀中群山沐在暮光里。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/b-1200x480.png" width="240" height="96" alt="ending-v2_city B"></a><br>两人分列左侧城垛，金色晨昏光照亮城郭与远山，旗面无字。 |
+| ending-v3_city | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/a-1200x480.png" width="240" height="96" alt="ending-v3_city A"></a><br>沔阳高台上刘备背身而立，子衡与诸葛亮在侧，台下军阵与无字旌旗铺向远处。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/b-1200x480.png" width="240" height="96" alt="ending-v3_city B"></a><br>高台侧后方取景保留三人，夕阳照亮汉中城郭与台下整齐军阵。 |
+| ending-v4_city | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/a-1200x480.png" width="240" height="96" alt="ending-v4_city A"></a><br>秋叶下子衡与无须的诸葛亮并肩向东望，城下素白幡与远山静静延伸。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/b-1200x480.png" width="240" height="96" alt="ending-v4_city B"></a><br>秋日成都城楼上两人向东眺望，城下无字白幡映着沉静暖光。 |
+| ending-v5_city | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/a-1200x480.png" width="240" height="96" alt="ending-v5_city A"></a><br>白帝城临江高崖上，两人望向晨雾中的三峡，画面没有刘备。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/b-1200x480.png" width="240" height="96" alt="ending-v5_city B"></a><br>城头背影与诸葛亮居左，长江在暖色晨雾中穿过群山。 |
+| ending-v6_city | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/a-1200x480.png" width="240" height="96" alt="ending-v6_city A"></a><br>南征归军带着象与铜鼓来到成都门外，子衡背身与诸葛亮在门前迎候，热闹而克制。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/b-1200x480.png" width="240" height="96" alt="ending-v6_city B"></a><br>象背铜鼓随归军穿过城门，子衡背影与诸葛亮在左侧静候。 |
+| ending-v7_city | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/a-1200x480.png" width="240" height="96" alt="ending-v7_city A"></a><br>三人在汉中北侧山脊并肩眺望雪覆祁山，年轻姜维银蓝甲与白羽扇清晰可辨。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/b-1200x480.png" width="240" height="96" alt="ending-v7_city B"></a><br>三人以背影面向祁山雪峰，子衡银发、诸葛亮羽扇与姜维银蓝盔甲保持区别。 |
+| ending-v8_city | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/a-1200x480.png" width="240" height="96" alt="ending-v8_city A"></a><br>换过无字晋旗的成都暮色中，接班人背影立在城头，街市照常开张。 | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/b-1200x480.png" width="240" height="96" alt="ending-v8_city B"></a><br>素袍接班人独立城楼，人物性别不可辨，远处市集在暖灯与夕阳里继续日常。 |
 
 ## 发布状态
 

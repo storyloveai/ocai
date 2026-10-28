@@ -1,0 +1,109 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "ending-v3_city",
+    "kind": "ending",
+    "name": "v3_city",
+    "batch": 8,
+    "status": "queued",
+    "refs": [
+      "liubei",
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/liubei.webp",
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/ending/city.webp"
+    ],
+    "keep": [
+      "子衡（玩家）：只能背影或侧后方，不露脸"
+    ],
+    "composition": "汉中沔阳筑起的高台，旌旗林立，台下军阵；刘备背影立在台上，子衡和诸葛亮在台侧。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+    "accept": [
+      "汉服，画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后主体不被切掉",
+      "玩家不露脸"
+    ],
+    "prompt": "A high ceremonial platform at Mianyang in Hanzhong with forests of banners and ranks of troops below; Liu Bei seen from behind atop it, Ziheng and Zhuge Liang at the side. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ],
+    "file": "ending/v3_city.webp"
+  },
+  "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
+  "adoption_confirmation": {
+    "pr": 71,
+    "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+  },
+  "full_generation_prompt": "Create ONE original standalone Chinese historical illustrated visual-novel ending. Native EXTRA-WIDE 2.5:1 cinematic banner, e.g. 2000x800; legacy requested size in the original JSON is provenance, final delivery 1200x480. Composition ALIGN WITH LAST ADOPTED ENDING REFERENCE: characters grouped at LEFT foreground/back or rear view, open sweeping city/river/mountain vista occupying centre and RIGHT, soft warm dawn or dusk, atmospheric distance, gentle rim light. Portrait references lock their character identity. Last image is COMPOSITION and STYLE ONLY: do NOT copy its characters or introduce Guan Yu/Zhang Fei/Liu Bei from it. Match original anime/webtoon linework and softly painted cel shading, not photo or oil painting.\n\nAUTHOR ORIGINAL ENDING JOB VERBATIM JSON (never draw these words):\n{\n  \"id\": \"ending-v3_city\",\n  \"kind\": \"ending\",\n  \"name\": \"v3_city\",\n  \"batch\": 8,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"liubei\",\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/liubei.webp\",\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/ending/city.webp\"\n  ],\n  \"keep\": [\n    \"子衡（玩家）：只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"汉中沔阳筑起的高台，旌旗林立，台下军阵；刘备背影立在台上，子衡和诸葛亮在台侧。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备\",\n  \"accept\": [\n    \"汉服，画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后主体不被切掉\",\n    \"玩家不露脸\"\n  ],\n  \"prompt\": \"A high ceremonial platform at Mianyang in Hanzhong with forests of banners and ranks of troops below; Liu Bei seen from behind atop it, Ziheng and Zhuge Liang at the side. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ],\n  \"file\": \"ending/v3_city.webp\"\n}\n\nExecution: Exactly THREE named adults: Liu Bei at TOP of high Mianyang ceremonial platform FULL BACK (royal green/gold robe/crown based on portrait); Ziheng and Zhuge Liang stand BELOW TO SIDE at left foreground. Ziheng dark-to-grey tied-up hair, grey-blue robe, FULL BACK no face/profile. Zhuge WHITE robe WHITE fan BLACK scholar cap CLEAN-SHAVEN canonical face. Anonymous ADULT ranks and many BLANK banners below platform, Hanzhong valley beyond. Not a fourth named person. No Guan Yu or Zhang Fei. Native wide composition preserves platform and all three principal complete heads, warm dawn or dusk.\nAll people ADULTS, including every distant villager/soldier. Chinese Han clothing, not kimono. No text, glyphs, calligraphy, logos, watermark, inscriptions, fake lettering, labels or subtitles anywhere; flags plain. No gore, blood, wounds, nudity or explicit content. Entire principal heads, bodies and key objects stay well inside native wide frame, no aggressive later clipping. Candidate B: independent alternative with a subtly different rear camera angle and warm light, SAME required cast, identity and scene.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/liubei.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/ending/city.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "intended_adoption_file": "ending/v3_city.webp",
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "高台侧后方取景保留三人，夕阳照亮汉中城郭与台下整齐军阵。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "0a88fcde1c467b103a44263eb3ceaf69eded0e6469c0d61561cdd2b0366f0fc8",
+  "created_at": "2026-10-28T09:45:43.386552+00:00",
+  "bytes": 2583935,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/ending-v3_city/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "6c39d717199198698ae69bd851630cddd5adeba114b5dac36e2d56d92b9211b4",
+    "original_sha256": "0a88fcde1c467b103a44263eb3ceaf69eded0e6469c0d61561cdd2b0366f0fc8",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Three named adults only: back-facing Liu Bei atop platform and rear-view Ziheng with Zhuge at side, adult troop ranks and blank flags; no Guan Yu or Zhang Fei, warm wide vista."
+}

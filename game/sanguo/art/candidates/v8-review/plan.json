@@ -1,13 +1,21 @@
 {
-  "issue": 56,
-  "related_issues": [
-    68
-  ],
-  "source_pr": 70,
+  "issue": 68,
+  "existing_pr": 72,
+  "source_pr": 71,
   "source_main_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-  "source_v8_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+  "source_v8_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
   "branch": "codex/art-v7-endings",
-  "fallback_authorization": "pending user answer; generation must not start",
+  "portrait_adoption_confirmations": {
+    "pr": 71,
+    "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+    "issue": 68,
+    "choices": {
+      "jiangwei": "a",
+      "simayi": "b",
+      "weiyan": "a"
+    }
+  },
+  "fallback_authorization": "No replacement references authorized or used. Use adopted references from PR #71; missing scene references wait for adoption.",
   "items": [
     {
       "id": "scene-v8_hearse",
@@ -41,19 +49,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_dingjun.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "dba95352145cfa40a005a88e2c616bff8c21f91278663cf149e9241b4c537acb",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -99,13 +101,20 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/weiyan.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "257c97a6f9c71c96edc4a26d0a0b33f64fbf7208ca84a2d98a1be9027b6007db",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/weiyan.webp",
         "game/sanguo/art/scenes/v7_weiyan.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "conflicting_weiyan_identity_and_missing_reference",
       "target_dimensions": [
         1200,
         480
@@ -147,19 +156,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_dingjun.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "dba95352145cfa40a005a88e2c616bff8c21f91278663cf149e9241b4c537acb",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -205,11 +208,23 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_child.webp"
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/wenzhi.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+          "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_child.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "82b86a541ab38e2987ea6945a57d33db8912b5b8115acae8b1b8ecfdbaf5193a",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "proposed_references": [],
+      "missing_authored_ref_paths": [],
       "gate": "conflicting_wenzhi_age",
       "target_dimensions": [
         1200,
@@ -254,16 +269,22 @@
         "out": [
           1200,
           480
-        ],
-        "after": "姜维的插画头像（#68）采用后再画，ref_paths 换成新头像"
+        ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/jiangwei.webp",
         "game/sanguo/art/scenes/v7_jiangwei.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -305,19 +326,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -363,25 +378,24 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_child.webp"
-      ],
-      "proposed_references": [
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
         {
           "path": "game/sanguo/art/portraits/wenzhi.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
-          "role": "existing_authored_portrait"
+          "role": "authored_character_reference"
         },
         {
-          "path": "game/sanguo/art/scenes/v3_clinic.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "aa1042d0de5d76802bc0955f0da1c590eb33423744cf5473ae2ffddfe6aa848e",
-          "role": "proposed_adopted_style_fallback"
+          "path": "game/sanguo/art/scenes/v7_child.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "82b86a541ab38e2987ea6945a57d33db8912b5b8115acae8b1b8ecfdbaf5193a",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -423,19 +437,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_clinic.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "aa1042d0de5d76802bc0955f0da1c590eb33423744cf5473ae2ffddfe6aa848e",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -479,16 +487,22 @@
         "out": [
           1200,
           480
-        ],
-        "after": "姜维的插画头像（#68）采用后再画，ref_paths 换成新头像"
+        ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/jiangwei.webp",
         "game/sanguo/art/scenes/v7_jiangwei.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -532,16 +546,22 @@
         "out": [
           1200,
           480
-        ],
-        "after": "姜维的插画头像（#68）采用后再画，ref_paths 换成新头像"
+        ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/jiangwei.webp",
         "game/sanguo/art/scenes/v7_jiangwei.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "conflicting_blood_constraint",
       "target_dimensions": [
         1200,
         480
@@ -585,16 +605,22 @@
         "out": [
           1200,
           480
-        ],
-        "after": "姜维的插画头像（#68）采用后再画，ref_paths 换成新头像"
+        ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/jiangwei.webp",
         "game/sanguo/art/scenes/v7_jiangwei.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -636,19 +662,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_clinic.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "aa1042d0de5d76802bc0955f0da1c590eb33423744cf5473ae2ffddfe6aa848e",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -692,16 +712,22 @@
         "out": [
           1200,
           480
-        ],
-        "after": "姜维的插画头像（#68）采用后再画，ref_paths 换成新头像"
+        ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/jiangwei.webp",
         "game/sanguo/art/scenes/v7_jiangwei.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -745,16 +771,22 @@
         "out": [
           1200,
           480
-        ],
-        "after": "姜维的插画头像（#68）采用后再画，ref_paths 换成新头像"
+        ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/jiangwei.webp",
         "game/sanguo/art/scenes/v7_jiangwei.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -796,19 +828,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_dingjun.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "dba95352145cfa40a005a88e2c616bff8c21f91278663cf149e9241b4c537acb",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -850,19 +876,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_dingjun.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "dba95352145cfa40a005a88e2c616bff8c21f91278663cf149e9241b4c537acb",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -904,19 +924,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -958,19 +972,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -1014,16 +1022,22 @@
         "out": [
           1200,
           480
-        ],
-        "after": "姜维的插画头像（#68）采用后再画，ref_paths 换成新头像"
+        ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        }
+      ],
       "missing_authored_ref_paths": [
-        "game/sanguo/art/portraits/jiangwei.webp",
         "game/sanguo/art/scenes/v7_jiangwei.webp"
       ],
-      "proposed_references": [],
-      "gate": "awaiting_adopted_portrait_and_missing_references",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -1065,19 +1079,13 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [
-        {
-          "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
-          "source_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-          "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
-          "role": "proposed_adopted_style_fallback"
-        }
-      ],
-      "gate": "awaiting_user_authorized_style_fallback",
+      "gate": "missing_adopted_scene_reference",
       "target_dimensions": [
         1200,
         480
@@ -1119,11 +1127,12 @@
           480
         ]
       },
-      "source_commit": "28a2fe9fb5cf586c8bbba016424803b573afae24",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+      "references": [],
       "missing_authored_ref_paths": [
         "game/sanguo/art/scenes/v7_last.webp"
       ],
-      "proposed_references": [],
       "gate": "conflicting_successor_age",
       "target_dimensions": [
         1200,

@@ -1,0 +1,101 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "ending-v6_city",
+    "kind": "ending",
+    "name": "v6_city",
+    "batch": 8,
+    "status": "queued",
+    "refs": [
+      "zhuge"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/zhuge.webp",
+      "game/sanguo/art/ending/city.webp"
+    ],
+    "keep": [
+      "子衡（玩家）：只能背影或侧后方，不露脸"
+    ],
+    "composition": "成都城门外，南征的军队回来了，队伍里有南中的象和铜鼓；子衡和诸葛亮在门前，热闹但不庆功。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+    "accept": [
+      "汉服，画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后主体不被切掉",
+      "玩家不露脸"
+    ],
+    "prompt": "Outside a Chengdu gate the southern army returns with elephants and bronze drums from the south; Ziheng and Zhuge Liang wait at the gate, lively but not triumphant. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ],
+    "file": "ending/v6_city.webp"
+  },
+  "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
+  "adoption_confirmation": {
+    "pr": 71,
+    "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+  },
+  "full_generation_prompt": "Create ONE original standalone Chinese historical illustrated visual-novel ending. Native EXTRA-WIDE 2.5:1 cinematic banner, e.g. 2000x800; legacy requested size in the original JSON is provenance, final delivery 1200x480. Composition ALIGN WITH LAST ADOPTED ENDING REFERENCE: characters grouped at LEFT foreground/back or rear view, open sweeping city/river/mountain vista occupying centre and RIGHT, soft warm dawn or dusk, atmospheric distance, gentle rim light. Portrait references lock their character identity. Last image is COMPOSITION and STYLE ONLY: do NOT copy its characters or introduce Guan Yu/Zhang Fei/Liu Bei from it. Match original anime/webtoon linework and softly painted cel shading, not photo or oil painting.\n\nAUTHOR ORIGINAL ENDING JOB VERBATIM JSON (never draw these words):\n{\n  \"id\": \"ending-v6_city\",\n  \"kind\": \"ending\",\n  \"name\": \"v6_city\",\n  \"batch\": 8,\n  \"status\": \"queued\",\n  \"refs\": [\n    \"zhuge\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/zhuge.webp\",\n    \"game/sanguo/art/ending/city.webp\"\n  ],\n  \"keep\": [\n    \"子衡（玩家）：只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"成都城门外，南征的军队回来了，队伍里有南中的象和铜鼓；子衡和诸葛亮在门前，热闹但不庆功。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备\",\n  \"accept\": [\n    \"汉服，画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后主体不被切掉\",\n    \"玩家不露脸\"\n  ],\n  \"prompt\": \"Outside a Chengdu gate the southern army returns with elephants and bronze drums from the south; Ziheng and Zhuge Liang wait at the gate, lively but not triumphant. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ],\n  \"file\": \"ending/v6_city.webp\"\n}\n\nExecution: Exactly TWO named adults at LEFT foreground just outside Chengdu gate: Ziheng grey-white hair grey-blue plain robe fully BACK-facing, no eyes/nose/profile; Zhuge WHITE robe BLACK cap WHITE feather fan CLEAN-SHAVEN canonical mature face. Returning southern army passes in middle distance to RIGHT toward gate, ADULT soldiers, ONE or TWO clearly visible ELEPHANTS with simple harnesses and carried BRONZE DRUMS. Lively homecoming without cheering, confetti or triumphant parade. No Liu Bei, Guan Yu, Zhang Fei or extra named general. Golden dawn/dusk, safe whole animals inside native wide frame.\nAll people ADULTS, including every distant villager/soldier. Chinese Han clothing, not kimono. No text, glyphs, calligraphy, logos, watermark, inscriptions, fake lettering, labels or subtitles anywhere; flags plain. No gore, blood, wounds, nudity or explicit content. Entire principal heads, bodies and key objects stay well inside native wide frame, no aggressive later clipping. Candidate A: faithful clear staging.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/ending/city.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "intended_adoption_file": "ending/v6_city.webp",
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "南征归军带着象与铜鼓来到成都门外，子衡背身与诸葛亮在门前迎候，热闹而克制。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "ff24bdcd6f6c0954aa20dd7d61d09cf16f56307f94b0b63fb4ff5080af58ff7b",
+  "created_at": "2026-10-28T09:45:21.980344+00:00",
+  "bytes": 2783997,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/ending-v6_city/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "4e486126db5c447d41a79b8226d5e4952f03112d542b3df1a5ace7cff4270c18",
+    "original_sha256": "ff24bdcd6f6c0954aa20dd7d61d09cf16f56307f94b0b63fb4ff5080af58ff7b",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Two principal adults in left foreground, rear-view Ziheng, Zhuge canonical robe/cap/fan; elephants and bronze drums visible in returning adult army, no Liu Bei/Guan Yu/Zhang Fei."
+}

@@ -1701,7 +1701,18 @@
         "pr": 71,
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
-      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "additional_references_by_candidate": {
+        "a": [
+          {
+            "path": "game/sanguo/art/scenes/v7_biao.webp",
+            "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+            "role": "additional_adopted_character_age_reference",
+            "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+            "local_path": "/workspace/ocai-art-source-71/game/sanguo/art/scenes/v7_biao.webp"
+          }
+        ]
+      }
     },
     {
       "id": "ending-v5_city",

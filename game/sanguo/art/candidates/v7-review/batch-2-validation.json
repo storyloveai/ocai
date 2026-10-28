@@ -1,0 +1,14 @@
+{
+  "batch": 2,
+  "items": 7,
+  "original_candidates": 14,
+  "exact_1200x480_exports": 14,
+  "adopted_reference_hash_checks": 31,
+  "source_jobs": "edition-jobs-endings.jsonl at PR71 commit326e33f",
+  "authored_jobs_unchanged": true,
+  "original_bytes_unchanged": true,
+  "codex_visual_check": "pass",
+  "selection": "awaiting_claude",
+  "prohibited_cast_checked": "No Guan Yu/Zhang Fei; Liu Bei only v3; v8 successor full back and gender indeterminate",
+  "build_or_sync_run": false
+}

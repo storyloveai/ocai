@@ -16,7 +16,10 @@ REVIEW = CANDIDATES / 'v8-review'
 PUBLIC = ROOT / 'ooc-replica/dist/assets/art-v8'
 RAW = 'https://raw.githubusercontent.com/storyloveai/ocai/'
 GATES = {
-    'awaiting_adopted_portrait_and_missing_references': '等新头像采用、补齐正式参考',
+    None: '参考已齐，待生成',
+    'missing_adopted_scene_reference': '等卷七相应场景采用为正式参考',
+    'conflicting_weiyan_identity_and_missing_reference': '等 Claude 统一魏延相貌服色，并采用卷七参考',
+    'conflicting_blood_constraint': '等 Claude 统一血污与禁止血的矛盾',
     'conflicting_wenzhi_age': '等 Claude 统一温芷年龄',
     'conflicting_successor_age': '等 Claude 统一尾声接班人年龄',
     'awaiting_user_authorized_style_fallback': '等用户许可临时画风参考',
@@ -45,10 +48,9 @@ def main():
             c = json.loads(sidecar.read_text())
             if c.get('codex_visual_check') != 'pass':
                 continue
-            assert plan.get('fallback_authorization_confirmed') is True, 'User approval is required for missing-reference fallback'
-            assert item['gate'] == 'ready_with_authorized_style_fallback', 'Do not pass adoption or contradictory-brief gates'
+            assert not item['gate'] and not item['missing_authored_ref_paths'], 'Do not pass adoption, reference or contradictory-brief gates'
             assert c['authored_job'] == item['authored_job'], 'Do not change authored job'
-            assert c['reference_inputs_in_order'] == item['proposed_references'], 'Actual references must match authorized plan'
+            assert c['reference_inputs_in_order'] == item['references'], 'Use every authored adopted reference in original order'
             assert c['missing_authored_ref_paths'] == item['missing_authored_ref_paths']
             assert sha(path) == c['original_sha256'] and c['original_sha256'] not in hashes
             hashes.add(c['original_sha256'])
@@ -67,7 +69,7 @@ def main():
                                           'receipt_url': RAW + args.asset_ref + '/' + sidecar.relative_to(ROOT).as_posix()})
         current['status'] = 'awaiting_claude_review' if len(current['candidates']) == 2 else item['gate']
         items.append(current)
-    manifest = {'issue': 56, 'source_pr': 70, 'asset_ref': args.asset_ref,
+    manifest = {'issue': 68, 'source_pr': 71, 'existing_pr': 72, 'asset_ref': args.asset_ref,
                 'source_v8_commit': plan['source_v8_commit'],
                 'fallback_authorization': plan['fallback_authorization'],
                 'items': items, 'planned_items': len(items),
@@ -81,7 +83,7 @@ def main():
     render_page(manifest)
     lines = ['# 卷八《归晋》候选评审', '',
              f'已交 {manifest["completed_items"]}/21 项、{manifest["original_candidates"]} 张原图，每项目标 A/B 两张及相应 1200×480 导出。', '',
-             '来源：Claude 的 PR #70，清单提交 `' + plan['source_v8_commit'] + '`。原始清单未改，完整 prompt / negative_prompt 原文保存在生成记录。', '',
+             '来源：Claude 的 PR #71（叠在 #70 上），清单提交 `' + plan['source_v8_commit'] + '`。原始清单未改，完整 prompt / negative_prompt 原文保存在生成记录。', '',
              '参考处理：' + plan['fallback_authorization'], '',
              '模型：ChatGPT 自带 image_gen.imagegen，底层模型名称与 seed 未公开；没有调用按张付费图片 API。原图字节保留，ImageMagick 只做已获用户许可的几何裁切与缩放。最终采用请 Claude 审图。', '',
              '[卷七头像与场景评审](../v7-review/README.md) · [需要 Claude 处理的源清单问题](source-problems.md)', '',
@@ -91,9 +93,9 @@ def main():
         for letter in ['a', 'b']:
             c = next((v for v in item['candidates'] if v['candidate'] == letter), None)
             cols.append(f'<a href="{c["url"]}"><img src="{c["crop_url"]}" width="240" height="96" alt="{item["id"]} {letter.upper()}"></a><br>{c["description"]}' if c else '—')
-        status = '待 Claude 审图' if len(item['candidates']) == 2 else GATES[item['gate']]
+        status = '待 Claude 审图' if len(item['candidates']) == 2 else GATES.get(item['gate'], str(item['gate']))
         lines.append(f'| {item["id"]} | ' + ' | '.join(cols) + f' | {status} |')
-    lines.extend(['', '评审页路径：`/assets/art-v8/index.html`。当前环境仍对 GitHub API 返回代理 403；分支可推送，但 issue 留言、新 PR 和 Vercel Preview 均不能假定已创建。未合并或上线。', ''])
+    lines.extend(['', '评审页路径：`/assets/art-v8/index.html`。新候选推到现有草稿 [#72](https://github.com/storyloveai/ocai/pull/72)，不合并。当前环境仍对 GitHub API 返回代理 403，逐批 #68 留言不能自动提交，草稿随分支交付。', ''])
     (REVIEW / 'README.md').write_text('\n'.join(lines))
     print(json.dumps({k: manifest[k] for k in ['planned_items', 'completed_items', 'original_candidates']}))
 
@@ -112,10 +114,10 @@ body{margin:0;background:#111;color:#eee;font-family:system-ui,sans-serif}main{m
         for letter in ['a', 'b']:
             c = next((v for v in item['candidates'] if v['candidate'] == letter), None)
             if c is None:
-                parts.append('<div class="pending">' + letter.upper() + ' · ' + e(GATES[item['gate']]) + '</div>')
+                parts.append('<div class="pending">' + letter.upper() + ' · ' + e(GATES.get(item['gate'], str(item['gate']))) + '</div>')
                 continue
             parts.append(f'<figure><a href="{e(c["crop_url"])}"><img loading="lazy" src="{e(c["crop_url"])}" alt="{item["id"]} {letter.upper()} 1200×480"></a><figcaption><strong>{letter.upper()}</strong> · {e(c["description"])}<br><a href="{e(c["url"])}">未裁原图</a> · <a href="{e(c["receipt_url"])}">生成与参考记录</a></figcaption><details class="original"><summary>展开原图 · {c["actual_dimensions"][0]}×{c["actual_dimensions"][1]}</summary><img loading="lazy" src="{e(c["url"])}" alt="{item["id"]} {letter.upper()} 未裁原图"></details></figure>')
-        parts.append('</div><details><summary>作者原始清单与缺失参考</summary><pre>' + e(json.dumps({'authored_job': item['authored_job'], 'missing_authored_ref_paths': item['missing_authored_ref_paths'], 'actual_or_proposed_references': item['proposed_references']}, ensure_ascii=False, indent=2)) + '</pre></details></article>')
+        parts.append('</div><details><summary>作者原始清单与缺失参考</summary><pre>' + e(json.dumps({'authored_job': item['authored_job'], 'missing_authored_ref_paths': item['missing_authored_ref_paths'], 'adopted_references': item['references']}, ensure_ascii=False, indent=2)) + '</pre></details></article>')
     parts.append('''<script>const s=document.querySelector('#status');function filter(){let n=0;for(const a of document.querySelectorAll('article')){a.hidden=(s.value==='ready'&&a.dataset.ready!=='true')||(s.value==='waiting'&&a.dataset.ready==='true');if(!a.hidden)n++}document.querySelector('#count').textContent='显示 '+n+' 项'}s.addEventListener('change',filter);filter();</script></main></html>''')
     (PUBLIC / 'index.html').write_text(''.join(parts))
 

@@ -1,0 +1,92 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "ending-v8_city",
+    "kind": "ending",
+    "name": "v8_city",
+    "batch": 8,
+    "status": "queued",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/ending/city.webp"
+    ],
+    "keep": [
+      "接班人（玩家）：成年人，背影，看不出男女"
+    ],
+    "composition": "成都城，旗已换成晋的（旗上不写字）；接班人（背影，看不出男女）站在城楼上看着照常开市的街道，黄昏。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+    "accept": [
+      "汉服，画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后主体不被切掉",
+      "玩家不露脸"
+    ],
+    "prompt": "Chengdu at dusk under new Jin banners (plain, no writing); the player's heir (seen from behind, gender not discernible) watches from the wall as the streets go about their business. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ],
+    "file": "ending/v8_city.webp"
+  },
+  "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
+  "adoption_confirmation": {
+    "pr": 71,
+    "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+  },
+  "full_generation_prompt": "Create ONE original standalone Chinese historical illustrated visual-novel ending. Native EXTRA-WIDE 2.5:1 cinematic banner, e.g. 2000x800; legacy requested size in the original JSON is provenance, final delivery 1200x480. Composition ALIGN WITH LAST ADOPTED ENDING REFERENCE: characters grouped at LEFT foreground/back or rear view, open sweeping city/river/mountain vista occupying centre and RIGHT, soft warm dawn or dusk, atmospheric distance, gentle rim light. Portrait references lock their character identity. Last image is COMPOSITION and STYLE ONLY: do NOT copy its characters or introduce Guan Yu/Zhang Fei/Liu Bei from it. Match original anime/webtoon linework and softly painted cel shading, not photo or oil painting.\n\nAUTHOR ORIGINAL ENDING JOB VERBATIM JSON (never draw these words):\n{\n  \"id\": \"ending-v8_city\",\n  \"kind\": \"ending\",\n  \"name\": \"v8_city\",\n  \"batch\": 8,\n  \"status\": \"queued\",\n  \"refs\": [],\n  \"ref_paths\": [\n    \"game/sanguo/art/ending/city.webp\"\n  ],\n  \"keep\": [\n    \"接班人（玩家）：成年人，背影，看不出男女\"\n  ],\n  \"composition\": \"成都城，旗已换成晋的（旗上不写字）；接班人（背影，看不出男女）站在城楼上看着照常开市的街道，黄昏。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备\",\n  \"accept\": [\n    \"汉服，画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后主体不被切掉\",\n    \"玩家不露脸\"\n  ],\n  \"prompt\": \"Chengdu at dusk under new Jin banners (plain, no writing); the player's heir (seen from behind, gender not discernible) watches from the wall as the streets go about their business. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ],\n  \"file\": \"ending/v8_city.webp\"\n}\n\nExecution: Exactly ONE principal adult SUCCESSOR on LEFT foreground Chengdu wall: plain UNDYED Han robe with long loose sleeves and simple tied-up dark/greying hair, fully BACK-facing with NO eyes, nose or profile; neutral silhouette and no gender-identifying anatomical details, no facial hair visible. At RIGHT below citywall, ordinary street MARKET with small ADULT shoppers and stalls quietly continues under newly changed plain unlettered JIN banners. Warm dusk on tiled roofs, no conquest violence or triumphal army. No Zhuge, Liu Bei, Guan Yu, Zhang Fei or named generals, no child/baby, no writing on shop signs, papers or flags.\nAll people ADULTS, including every distant villager/soldier. Chinese Han clothing, not kimono. No text, glyphs, calligraphy, logos, watermark, inscriptions, fake lettering, labels or subtitles anywhere; flags plain. No gore, blood, wounds, nudity or explicit content. Entire principal heads, bodies and key objects stay well inside native wide frame, no aggressive later clipping. Candidate A: faithful clear staging.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/ending/city.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "intended_adoption_file": "ending/v8_city.webp",
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "换过无字晋旗的成都暮色中，接班人背影立在城头，街市照常开张。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "8400dbda5173fd091807e778fd0013195c849a607843d1e4e8bf7b28250f2f69",
+  "created_at": "2026-10-28T09:48:17.767061+00:00",
+  "bytes": 2689202,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/ending-v8_city/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "af68be4926d16d364fbec4d2cd482b2f346712509b02279b3e0cd0bbb38cc97b",
+    "original_sha256": "8400dbda5173fd091807e778fd0013195c849a607843d1e4e8bf7b28250f2f69",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Reviewed original and 1200x480 export: correct adult principal cast, hidden player face and neutral successor silhouette for v8, no prohibited late-volume heroes, blank flags, warm original-ending composition."
+}
