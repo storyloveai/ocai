@@ -687,6 +687,8 @@ import flare
 flare.extend(N, VARS, CHARS, SPEECH_ENDINGS)
 import asks
 asks.extend(N)
+import moves
+CAMP_MOVES = moves.extend(N, VARS)
 import values
 values.apply(N, CHARS, values.V1_TAGS)
 
@@ -905,7 +907,7 @@ CAMPAIGN = {
     "vars": VARS, "chars": CHARS, "dims": DIMS, "echoes": ECHOES, "debts": DEBTS,
     "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS,
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
-    "ending_art": ENDING_ART, "art_prompts": ART_PROMPTS, "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": CG_CAPTION, "realm": REALM, "react_patterns": reactions.PATTERNS, "commit_rules": speech.commit_rules(), "flash": flare.FLASH, "value_tags": values.TAGS, "witness": flare.WITNESS,
+    "ending_art": ENDING_ART, "art_prompts": ART_PROMPTS, "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": CG_CAPTION, "realm": REALM, "react_patterns": reactions.PATTERNS, "commit_rules": speech.commit_rules(), "flash": flare.FLASH, "moves": CAMP_MOVES, "value_tags": values.TAGS, "witness": flare.WITNESS,
     "sources": [{"what": "中文引文核对底本", "url": "https://www.ntdtv.com/gb/supplement/ancient-books/62", "checked": "2026-10-20",
                  "note": "第21、25、35、36、38、41、42、48、49、50回引文逐字核对；张飞桥上喝语、华容道问候两处据此修正"}],
     "end_note": T("卷一终。你在这一卷留下的一切，都会带进卷二《荆州与西川》。", "End of Volume I. Everything you leave behind here carries into Volume II, Jingzhou and the West."),

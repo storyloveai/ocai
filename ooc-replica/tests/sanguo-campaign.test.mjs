@@ -64,3 +64,12 @@ test('volume VIII hands the story to Ziheng\'s heir from chapter three', () => {
  assert.match(prompt('c3_jiangwei',{'flag.v7_child':true}),/The player is Chengzhi/);
  assert.match(prompt('c3_jiangwei',{'flag.v7_child':false}),/The player is Shouyan/);
 });
+
+test('scene prompts list the speech moves that can change the story', () => {
+ const g=CC.newGame(campaign);
+ const r=buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node:'c1_plum',text:'杀了他',target:'caocao',vars:g.v}});
+ const data=JSON.parse(r.prompt);
+ assert.deepEqual(data.moves.map(m=>m.id).sort(),['hero_liu','kill_liu','threat']);
+ assert.match(r.system,/moves lists things the player might SAY/);
+ assert.match(r.system,/at most 200 characters/);
+});

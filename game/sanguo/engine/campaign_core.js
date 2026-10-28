@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.2";
+  CC.VERSION = "0.4.3";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -406,6 +406,38 @@
     enterNode(camp, st, f.node);
     return "flash";
   }
+  /* ---------------- speech moves: words that move the story ----------------
+   * A scene (node.moves) or the whole book (camp.moves, filtered by nodes/except) lists things the player might SAY that
+   * change what happens: threaten someone, talk them round, let a secret slip. The model (or a keyword fallback) only says
+   * which move a free line is; the move's effects, its narration and where the story goes next are authored rules.
+   * A move: { id, to, means, match?, labels?, when?, out, effects?, echo?, goto?, resume?, ends?, nodes?, except? }
+   *   goto: a flash node the scene breaks into (resume: come back to the scene afterwards; otherwise the scene is over)
+   *   ends: the volume ends here (like an ending choice) */
+  CC.moves = function (camp, st) {
+    const n = camp.nodes[st.cur]; if (!n || st.phase !== "node" || (n.kind !== "main" && n.kind !== "side")) return []; // not in crises or confrontations
+    const cast = CC.castNow(camp, st), done = (st.moved || {})[n.id] || [];
+    const glob = (camp.moves || []).filter(m => (!m.nodes || m.nodes.includes(n.id)) && !(m.except || []).includes(n.id));
+    return (n.moves || []).concat(glob).filter(m => cast.includes(m.to) && !done.includes(m.id) && evalCond(st, m.when));
+  };
+  CC.findMove = (camp, nid, id) => ((camp.nodes[nid] || {}).moves || []).concat(camp.moves || []).find(m => m.id === id) || null;
+  // offline: a move's own pattern first, then the tone label the line was given (scene moves before book-wide ones)
+  CC.matchMove = function (camp, st, text, who, label) {
+    const ms = CC.moves(camp, st).filter(m => !who || m.to === who);
+    return ms.find(m => m.match && new RegExp(m.match, "i").test(text || "")) || (label ? ms.find(m => (m.labels || []).includes(label)) : null) || null;
+  };
+  CC.move = function (camp, st, id, said) {
+    const n = camp.nodes[st.cur], m = CC.moves(camp, st).find(x => x.id === id);
+    if (!m) throw new Error("move unavailable: " + id);
+    st.moved = st.moved || {}; (st.moved[n.id] = st.moved[n.id] || []).push(m.id);
+    const outIdx = idxWhere(st, m.out);
+    const e = ledgerPush(st, { kind: "move", node: n.id, choice: null, move: m.id, to: m.to, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
+    applyEffects(camp, st, m.effects || [], e);
+    (m.echo || []).forEach(x => { if (!st.echoes[x]) { st.echoes[x] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(x); } });
+    st.log.push({ k: "move", n: n.id, m: m.id, to: m.to, p: outIdx, seq: e.seq });
+    if (m.ends) { st.v.ended_early = true; st.done.push(n.id); st.cur = null; st.flash = null; enterChapter(camp, st, camp.chapters.length); }
+    else if (m.goto) { st.free = st.free || {}; st.free[n.id] = 0; st.flash = { from: n.id, who: m.to, resume: !!m.resume }; enterNode(camp, st, m.goto); }
+    return e;
+  };
   CC.castNow = function (camp, st, nid) {
     const n = camp.nodes[nid || st.cur]; if (!n) return [];
     if (n.talk) return [n.talk.char];
@@ -601,12 +633,30 @@
     const reqReads = new Set();
     Object.values(camp.nodes).forEach(n => n.choices.forEach(c => condVars(c.req).forEach(v => reqReads.add(v))));
     const echoReg = {}, echoPay = {}, debtOpen = {}, debtRes = {};
+    function checkMoves(ms, at, n) {
+      const ids = new Set();
+      (ms || []).forEach(m => {
+        const w = at + ".move." + m.id;
+        if (!m.id || ids.has(m.id)) E(`${w}: missing or duplicate move id`); ids.add(m.id);
+        if (!camp.chars[m.to]) E(`${w}: unknown character ${m.to}`);
+        else if (n && !(n.cast || []).some(c => c.id === m.to) && !(n.talk && n.talk.char === m.to)) E(`${w}: ${m.to} is not in the scene`);
+        if (!m.means) E(`${w}: no meaning (the model can't recognise it)`);
+        if (!(m.out || []).length) E(`${w}: no narration`);
+        if (m.match) { try { new RegExp(m.match); } catch { E(`${w}: bad match pattern`); } }
+        (m.labels || []).forEach(l => { if (!CC.LABELS.includes(l)) E(`${w}: unknown label ${l}`); });
+        if (m.goto && (!camp.nodes[m.goto] || camp.nodes[m.goto].kind !== "flash")) E(`${w}: goto ${m.goto} is not a flash node`);
+        (m.nodes || []).concat(m.except || []).forEach(x => { if (!camp.nodes[x]) E(`${w}: unknown node ${x}`); });
+        checkCond(m.when, w); (m.out || []).forEach(p => checkCond(p.when, w));
+        (m.effects || []).forEach(ef => { const v = ef.set || ef.add; if (!varOk(v)) E(`${w}: effect on unknown var ${v}`); writes.add(v); });
+        (m.echo || []).forEach(id => { if (!camp.echoes[id]) E(`${w}: unknown echo ${id}`); (echoReg[id] = echoReg[id] || []).push(n ? chIdx(n.chapter) : 0); });
+      });
+    }
     camp.chapters.forEach(ch => (ch.intro || []).forEach(p => checkCond(p.when, ch.id)));
     for (const n of Object.values(camp.nodes)) {
       const at = n.id;
       if (n.kind !== "interrupt" && n.kind !== "flash" && chIdx(n.chapter) < 0) E(`${at}: unknown chapter ${n.chapter}`);
       if (!["main", "side", "interrupt", "flash"].includes(n.kind)) E(`${at}: bad kind`);
-      if (n.kind === "flash" && !(camp.flash || []).some(f => f.node === n.id)) E(`${at}: flash node nothing can trigger`);
+      if (n.kind === "flash" && !(camp.flash || []).some(f => f.node === n.id) && !Object.values(camp.nodes).concat([{ moves: camp.moves }]).some(x => (x.moves || []).some(m => m.goto === n.id))) E(`${at}: flash node nothing can trigger`);
       if (n.kind === "interrupt" && !n.when) E(`${at}: interrupt without a trigger`);
       if (n.talk) {
         if (!camp.chars[n.talk.char]) E(`${at}: talk with unknown character ${n.talk.char}`);
@@ -621,6 +671,7 @@
       (n.on_enter || []).forEach(o => { checkCond(o.when, at); (o.effects || []).forEach(ef => writes.add(ef.set || ef.add)); (o.resolve || []).forEach(([d]) => (debtRes[d] = debtRes[d] || []).push(chIdx(n.chapter))); });
       (n.callbacks || []).forEach(cbk => { checkCond(cbk.when, at); if (!camp.echoes[cbk.pays]) E(`${at}: callback pays unknown echo ${cbk.pays}`); (echoPay[cbk.pays] = echoPay[cbk.pays] || []).push(chIdx(n.chapter)); });
       if (!n.choices.length) E(`${at}: no choices`);
+      checkMoves(n.moves, at, n);
       if (n.ask) {
         const a = n.ask, ids = a.answers.map(x => x.id);
         if (!camp.chars[a.who]) E(`${at}.ask: unknown character ${a.who}`);
@@ -656,6 +707,7 @@
         if (major && !(c.echo || []).length && !(c.resolve || []).length && !unlocks && !last && !c.ends && n.kind !== "interrupt" && n.kind !== "flash") W(`${w}: major choice registers no echo (consequence may stay invisible)`);
       }
     }
+    checkMoves(camp.moves, "moves", null);
     for (const id of Object.keys(camp.echoes)) {
       if (!echoReg[id]) W(`echo ${id}: never registered`);
       else if (!echoPay[id]) E(`echo ${id}: registered but no callback pays it`);
@@ -753,6 +805,12 @@
     }
     // random players also chat freely now and then, so speech consequences get exercised
     const cast = CC.castNow(camp, st);
+    const mv = CC.moves(camp, st);
+    if (mv.length && CC.freeLeft(camp, st) > 0) {
+      const hot = mv.filter(m => (m.labels || []).some(l => l === "threat" || l === "rude"));
+      if (w && w.provoke && hot.length) return ["move", hot[0].id];
+      if (!w && r() < .2) return ["move", mv[Math.floor(r() * mv.length)].id];
+    }
     if (w && w.provoke && cast.length && CC.freeLeft(camp, st) > 0) return ["speak", "rude", cast.includes("caocao") ? "caocao" : cast[0]];
     if (!w && cast.length && CC.freeLeft(camp, st) > 0 && r() < (n.talk ? .35 : .15)) {
       const x = r(); const lab = x < .4 ? "flat" : x < .6 ? "warm" : x < .7 ? "rude" : x < .8 ? "romantic" : x < .9 ? "flatter" : x < .95 ? "nonsense" : "threat";
@@ -775,7 +833,7 @@
   CC.playPolicy = function (camp, r, w) {
     const presets = camp.presets || [], pol = Object.keys(CC.policies).find(k => CC.policies[k] === w), pr = presets.find(p => p.id === pol) || (presets.length ? presets[Math.floor(r() * presets.length)] : null);
     const st = CC.newGame(camp, pr ? Object.assign({}, pr.carry, { preset: pr.id }) : null); let guard = 0;
-    while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
+    while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else if (k === "move") { CC.chat(camp, st); CC.move(camp, st, id, ""); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
     return st;
   };
   CC.simulate = function (camp, runs = 2000, seed = 7, policy = null, opts = {}) {
@@ -798,6 +856,7 @@
         if (k === "say") { inc(S.topics, nid + "." + id); CC.say(camp, st, id); continue; }
         if (k === "answer") { inc(S.answers, nid + "." + id); CC.answer(camp, st, id, ""); continue; }
         if (k === "speak") { inc(S.speech, id); CC.chat(camp, st); const se = CC.speak(camp, st, id, "", who); if (se && se.flare) inc(S.flares, nid + ":" + se.flare + ":" + who); continue; }
+        if (k === "move") { inc(S.moves = S.moves || {}, nid + "." + id); CC.chat(camp, st); CC.move(camp, st, id, ""); continue; }
         CC.choices(camp, st).forEach(o => { inc(S.choiceSeen, nid + "." + o.id); if (!o.locked) inc(S.choiceOpen, nid + "." + o.id); });
         inc(S.choicePick, nid + "." + id);
         const hot = Object.keys(camp.chars).filter(c => (st.v["heat." + c] || 0) >= 2);

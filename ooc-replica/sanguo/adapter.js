@@ -12,7 +12,7 @@ initRuntime=async()=>{
 useLocalServer=async()=>{};askRecall=async()=>{};renderSurvey=()=>h('span',{});
 function replyValid(value,lang){
  if(typeof value!=='string'||!value.trim())return null;const text=value.trim();
- if(lang==='zh'?(text.length>140||!/[\u4e00-\u9fff]/.test(text)):(text.split(/\s+/).length>80||/[\u4e00-\u9fff]/.test(text)))return null;
+ if(lang==='zh'?(text.length>260||!/[\u4e00-\u9fff]/.test(text)):(text.split(/\s+/).length>150||/[\u4e00-\u9fff]/.test(text)))return null;
  return CC.futureTerms(CAMP,G.ch).some(x=>text.includes(x.zh)||text.toLowerCase().includes(x.en.toLowerCase()))?null:text;
 }
 const nearBottom=()=>document.documentElement.scrollHeight-(window.scrollY+window.innerHeight)<180;
@@ -44,7 +44,7 @@ async function siteSample(task,text,n,target,lang){
  }catch(e){if(!signal?.aborted)siteNotice=lang==='zh'?'本次 AI 回复未完成，已使用规则与预设对白继续。':'AI unavailable this turn; rules and authored dialogue continue.';throw e;}
 }
 askAnswer=async(text,n,lang)=>{const out=await siteSample('answer',text,n,n.ask.who,lang);return n.ask.answers.some(a=>a.id===out.pick)?out.pick:null;};
-askScene=async(text,n,cid,options,lang)=>{const out=await siteSample('scene',text,n,cid,lang),c=CAMP.chars[cid];return {pick:options.some(o=>o.id===out.pick)?out.pick:null,reply:replyValid(out.reply,lang),tone:CC.LABELS.includes(out.tone)?out.tone:null,mood:['neutral','warm','cold','sad','surprised',...(c.romance?['shy']:[])].includes(out.mood)?out.mood:null,commit:out.commit&&['protect','loyalty','other'].includes(out.commit.kind)?{kind:out.commit.kind,text:String(out.commit.text||'').slice(0,40)}:null};};
+askScene=async(text,n,cid,options,lang)=>{const out=await siteSample('scene',text,n,cid,lang),c=CAMP.chars[cid];return {pick:options.some(o=>o.id===out.pick)?out.pick:null,move:CC.moves(CAMP,G).some(m=>m.id===out.move&&m.to===cid)?out.move:null,reply:replyValid(out.reply,lang),tone:CC.LABELS.includes(out.tone)?out.tone:null,mood:['neutral','warm','cold','sad','surprised',...(c.romance?['shy']:[])].includes(out.mood)?out.mood:null,commit:out.commit&&['protect','loyalty','other'].includes(out.commit.kind)?{kind:out.commit.kind,text:String(out.commit.text||'').slice(0,40)}:null};};
 askModel=async(text,opts,lang)=>{const out=await siteSample('action',text,N(G.cur),castNow(N(G.cur))[0],lang);return {choice:opts.some(o=>o.id===out.pick)?out.pick:null,reply:replyValid(out.reply,lang)};};
 const originalRender=render,originalStory=renderStory,originalAct=renderAct,seen=new Set();
 function finishTyping(){siteTyping?.abort();siteTyping=null;document.querySelectorAll('[data-site-full]').forEach(el=>{el.textContent=el.dataset.siteFull;delete el.dataset.siteFull;el.classList.remove('site-typing');});document.querySelector('[data-site-finish]')?.remove();}
