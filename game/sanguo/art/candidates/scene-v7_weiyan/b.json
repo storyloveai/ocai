@@ -1,0 +1,117 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "scene-v7_weiyan",
+    "kind": "scene",
+    "name": "v7_weiyan",
+    "batch": 6,
+    "status": "ready",
+    "refs": [
+      "weiyan"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/weiyan.webp",
+      "game/sanguo/art/scenes/v3_council.webp"
+    ],
+    "keep": [
+      "魏延：面如重枣、短黑须、钢盔暗红甲，和关羽明显不同（新头像出来前，按文字描写）"
+    ],
+    "composition": "军帐：魏延（面如重枣、短须、暗红甲）拍着山谷地图（无字）争辩；诸葛亮坐着摇头",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉"
+    ],
+    "prompt": "A war tent: Wei Yan, a tall general with a ruddy date-red face, short black beard, steel helmet and dark red armour, slaps a map of mountain valleys (no writing) on the table and argues; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits shaking his head. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "adoption_confirmation": {
+    "pr": 71,
+    "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+    "issue": 68,
+    "choices": {
+      "jiangwei": "a",
+      "simayi": "b",
+      "weiyan": "a"
+    }
+  },
+  "full_generation_prompt": "Generate ONE original standalone historical visual-novel scene, SAME Chinese anime/webtoon illustrated series as ALL attached adopted images. Native EXTRA-WIDE 2.5:1 landscape banner, e.g. 2000x800; legacy size in author JSON is provenance, current finished target is 1200x480. Pull camera back so every main head, hand, and key story gesture is INSIDE native-wide frame. Match illustrated fine lines, cel shading, softly painted cinematic light and hair rendering; not photorealism.\n\nAUTHOR ORIGINAL JOB, VERBATIM JSON (do not render these words):\n{\n  \"id\": \"scene-v7_weiyan\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_weiyan\",\n  \"batch\": 6,\n  \"status\": \"ready\",\n  \"refs\": [\n    \"weiyan\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/weiyan.webp\",\n    \"game/sanguo/art/scenes/v3_council.webp\"\n  ],\n  \"keep\": [\n    \"魏延：面如重枣、短黑须、钢盔暗红甲，和关羽明显不同（新头像出来前，按文字描写）\"\n  ],\n  \"composition\": \"军帐：魏延（面如重枣、短须、暗红甲）拍着山谷地图（无字）争辩；诸葛亮坐着摇头\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\"\n  ],\n  \"prompt\": \"A war tent: Wei Yan, a tall general with a ruddy date-red face, short black beard, steel helmet and dark red armour, slaps a map of mountain valleys (no writing) on the table and argues; Zhuge Liang, about fifty and visibly thin and tired, in white robes with a white feather fan and a black silk scholar's cap, sits shaking his head. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nReference instructions: Extra images FIRST, where present, are adopted Zhuge/Ziheng AGE/IDENTITY references from PR #71. Remaining authored references keep ORIGINAL ORDER: portraits lock face/hair/costume of each named person, final scene is STYLE ONLY. Never copy unrelated people or actions from style image. Exactly TWO principal ADULT men. Wei Yan MUST have the exact adopted RUDDY face, SHORT black beard, ornamented STEEL helmet with dark red plume and DARK RED armour from his portrait. He slaps a BLANK valley map with a broad hand while arguing across desk. Zhuge Liang white robe BLACK silk cap WHITE fan, CLEAN-SHAVEN, visibly lean/tired, sits shaking his head, not Fa Zheng from the style scene. Map only landforms, no text or fake writing. FULL helmet, map-slapping hand and both heads safely inside wide banner.\nGlobal: All people ADULTS, no children. Han/Three Kingdoms Chinese clothes, not kimono. No writing, lettering, Chinese characters, glyph-like scribbles, pseudo-text, labels, seals, logos, watermarks, subtitles or signatures on ANY object. Blank banners, maps with unlabelled landforms only, blank paper/book backs. No gore, blood, wounds or explicit content. Player only back view, face completely hidden.\nCandidate B: independent alternative, subtly different three-quarter camera/lighting, SAME faces costumes cast ages and all key actions.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/zhuge.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+      "role": "additional_adopted_character_age_reference"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v7_biao.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+      "role": "additional_adopted_character_age_reference"
+    },
+    {
+      "path": "game/sanguo/art/portraits/weiyan.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "257c97a6f9c71c96edc4a26d0a0b33f64fbf7208ca84a2d98a1be9027b6007db",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_council.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "近景突出魏延钢盔暗红甲与摊手动作，诸葛亮扶额摇头。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "0bdb4851f987497ade76a0cba19f7933bc1557960dfe6493234f5d4c3e7a6a84",
+  "created_at": "2026-10-28T09:37:29.697520+00:00",
+  "bytes": 2666335,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_weiyan/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "c7cea58e89ccc5726551d3f3bf7b879fd28400ffcf333430fd35e8c84503f40c",
+    "original_sha256": "0bdb4851f987497ade76a0cba19f7933bc1557960dfe6493234f5d4c3e7a6a84",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Matches adopted ruddy face, short beard, steel helmet/red plume and dark red armour; map has unlabelled terrain; principal gestures and both faces preserved in exact banner."
+}

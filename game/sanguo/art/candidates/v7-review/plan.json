@@ -4,8 +4,17 @@
   "source_main_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
   "source_v7_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
   "crop_delivery_authorized_by_user": true,
-  "portrait_adoption_confirmations": {},
-  "network_blocker": "api.github.com denied by current environment proxy (HTTP 403); issue claim and PR creation not submitted yet.",
+  "portrait_adoption_confirmations": {
+    "pr": 71,
+    "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+    "issue": 68,
+    "choices": {
+      "jiangwei": "a",
+      "simayi": "b",
+      "weiyan": "a"
+    }
+  },
+  "network_blocker": "GitHub API still 403. Existing Draft PR #72 created by Claude; branch push works. Issue progress comments pending delivery.",
   "items": [
     {
       "id": "portrait-jiangwei",
@@ -52,7 +61,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "portrait-simayi",
@@ -99,7 +110,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "b",
+      "adoption_pr": 71
     },
     {
       "id": "portrait-weiyan",
@@ -146,7 +159,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_biao",
@@ -208,7 +223,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_child",
@@ -270,7 +287,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_houzhu",
@@ -322,7 +341,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_weiyan",
@@ -332,11 +353,12 @@
         "kind": "scene",
         "name": "v7_weiyan",
         "batch": 6,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "weiyan"
         ],
         "ref_paths": [
+          "game/sanguo/art/portraits/weiyan.webp",
           "game/sanguo/art/scenes/v3_council.webp"
         ],
         "keep": [
@@ -355,27 +377,56 @@
         "out": [
           1200,
           480
-        ],
-        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+        ]
       },
-      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/weiyan.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "257c97a6f9c71c96edc4a26d0a0b33f64fbf7208ca84a2d98a1be9027b6007db",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/scenes/v3_council.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "ce700f7acaccd307d43cee09413e220c83e9d4cabacf1c3ae05c802828c0a1b5",
-          "role": "authored"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "awaiting_adopted_portraits",
+      "gate": null,
       "letters": [
         "a",
         "b"
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+        "issue": 68,
+        "choices": {
+          "jiangwei": "a",
+          "simayi": "b",
+          "weiyan": "a"
+        }
+      },
+      "additional_references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "additional_adopted_character_age_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_biao.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+          "role": "additional_adopted_character_age_reference"
+        }
       ]
     },
     {
@@ -386,12 +437,13 @@
         "kind": "scene",
         "name": "v7_jiangwei",
         "batch": 6,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei",
           "zhuge"
         ],
         "ref_paths": [
+          "game/sanguo/art/portraits/jiangwei.webp",
           "game/sanguo/art/portraits/zhuge.webp",
           "game/sanguo/art/scenes/v3_xiang.webp"
         ],
@@ -412,33 +464,56 @@
         "out": [
           1200,
           480
-        ],
-        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+        ]
       },
-      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/portraits/zhuge.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
-          "role": "authored"
+          "role": "authored_character_reference"
         },
         {
           "path": "game/sanguo/art/scenes/v3_xiang.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338",
-          "role": "authored"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "awaiting_adopted_portraits",
+      "gate": null,
       "letters": [
         "a",
         "b"
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+        "issue": 68,
+        "choices": {
+          "jiangwei": "a",
+          "simayi": "b",
+          "weiyan": "a"
+        }
+      },
+      "additional_references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_biao.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+          "role": "additional_adopted_character_age_reference"
+        }
       ]
     },
     {
@@ -499,7 +574,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_jieting",
@@ -559,7 +636,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_hill",
@@ -611,7 +690,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_kongcheng",
@@ -673,7 +754,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "b",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_masu",
@@ -733,7 +816,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_jiangwei_night",
@@ -743,11 +828,12 @@
         "kind": "scene",
         "name": "v7_jiangwei_night",
         "batch": 6,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
         "ref_paths": [
+          "game/sanguo/art/portraits/jiangwei.webp",
           "game/sanguo/art/scenes/v3_fazheng_night.webp"
         ],
         "keep": [
@@ -768,27 +854,50 @@
         "out": [
           1200,
           480
-        ],
-        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+        ]
       },
-      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/scenes/v3_fazheng_night.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "7543690a76e0557941319f52845478c6cc68b0410f4ca0ce67cca21f49d8f3a4",
-          "role": "authored"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "awaiting_adopted_portraits",
+      "gate": null,
       "letters": [
         "a",
         "b"
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+        "issue": 68,
+        "choices": {
+          "jiangwei": "a",
+          "simayi": "b",
+          "weiyan": "a"
+        }
+      },
+      "additional_references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_biao.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+          "role": "additional_adopted_character_age_reference"
+        }
       ]
     },
     {
@@ -851,7 +960,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_old",
@@ -903,7 +1014,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_feud",
@@ -913,11 +1026,12 @@
         "kind": "scene",
         "name": "v7_feud",
         "batch": 6,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "weiyan"
         ],
         "ref_paths": [
+          "game/sanguo/art/portraits/weiyan.webp",
           "game/sanguo/art/scenes/v3_feishi.webp"
         ],
         "keep": [
@@ -938,27 +1052,50 @@
         "out": [
           1200,
           480
-        ],
-        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+        ]
       },
-      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/weiyan.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "257c97a6f9c71c96edc4a26d0a0b33f64fbf7208ca84a2d98a1be9027b6007db",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/scenes/v3_feishi.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9",
-          "role": "authored"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "awaiting_adopted_portraits",
+      "gate": null,
       "letters": [
         "a",
         "b"
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+        "issue": 68,
+        "choices": {
+          "jiangwei": "a",
+          "simayi": "b",
+          "weiyan": "a"
+        }
+      },
+      "additional_references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_biao.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+          "role": "additional_adopted_character_age_reference"
+        }
       ]
     },
     {
@@ -1011,7 +1148,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "b",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_shangfang",
@@ -1071,7 +1210,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_envoy",
@@ -1081,11 +1222,12 @@
         "kind": "scene",
         "name": "v7_envoy",
         "batch": 6,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "simayi"
         ],
         "ref_paths": [
+          "game/sanguo/art/portraits/simayi.webp",
           "game/sanguo/art/scenes/v3_feishi.webp"
         ],
         "keep": [
@@ -1106,27 +1248,50 @@
         "out": [
           1200,
           480
-        ],
-        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+        ]
       },
-      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/simayi.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5fc322ff8a0cc113bf3faf1e3c84cd11c9cbc38c3831c2c8200a06d6aa3de1b8",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/scenes/v3_feishi.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9",
-          "role": "authored"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "awaiting_adopted_portraits",
+      "gate": null,
       "letters": [
         "a",
         "b"
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+        "issue": 68,
+        "choices": {
+          "jiangwei": "a",
+          "simayi": "b",
+          "weiyan": "a"
+        }
+      },
+      "additional_references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_biao.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+          "role": "additional_adopted_character_age_reference"
+        }
       ]
     },
     {
@@ -1187,7 +1352,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 71
     },
     {
       "id": "scene-v7_last",
@@ -1197,13 +1364,14 @@
         "kind": "scene",
         "name": "v7_last",
         "batch": 6,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "zhuge",
           "jiangwei"
         ],
         "ref_paths": [
           "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/portraits/jiangwei.webp",
           "game/sanguo/art/scenes/v3_xiang.webp"
         ],
         "keep": [
@@ -1223,33 +1391,56 @@
         "out": [
           1200,
           480
-        ],
-        "after": "等姜维、司马懿、魏延的插画头像采用后再画，ref_paths 补上头像"
+        ]
       },
-      "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/zhuge.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
-          "role": "authored"
+          "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
         },
         {
           "path": "game/sanguo/art/scenes/v3_xiang.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "431409a871a009db6650b8c45064b14b0ce961658231be79d78a82e455e56338",
-          "role": "authored"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "awaiting_adopted_portraits",
+      "gate": null,
       "letters": [
         "a",
         "b"
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+        "issue": 68,
+        "choices": {
+          "jiangwei": "a",
+          "simayi": "b",
+          "weiyan": "a"
+        }
+      },
+      "additional_references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_biao.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+          "role": "additional_adopted_character_age_reference"
+        }
       ]
     },
     {
@@ -1302,7 +1493,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "b",
+      "adoption_pr": 71
     },
     {
       "id": "ending-v2_city",
@@ -1311,42 +1504,64 @@
         "id": "ending-v2_city",
         "kind": "ending",
         "name": "v2_city",
-        "composition": "成都城头，刚换上刘字旗。子衡和诸葛亮并肩站着，远处是蜀中群山。",
-        "authored_by": "user",
-        "global_constraints": [
-          "1200×480，横幅，黄昏或清晨暖光",
-          "构图对齐 art/ending/city.webp",
-          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
-          "不要画关羽、张飞；卷五以后不要画刘备",
-          "所有图片不出现文字或水印，人物年龄和人数正确"
+        "batch": 8,
+        "status": "queued",
+        "refs": [
+          "zhuge"
         ],
-        "clarifications": [
-          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
-          "用户已确认同时交原图和裁切版"
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/ending/city.webp"
         ],
+        "keep": [
+          "子衡（玩家）：只能背影或侧后方，不露脸"
+        ],
+        "composition": "成都城头，刚换上刘字旗（旗上不写字，用纹样）。子衡和诸葛亮并肩站着，远处是蜀中群山。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+        "accept": [
+          "汉服，画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后主体不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "On the Chengdu city wall with newly raised banners (plain, no writing), Ziheng and Zhuge Liang stand side by side, the mountains of Shu in the distance. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
         "out": [
           1200,
           480
-        ]
+        ],
+        "file": "ending/v2_city.webp"
       },
-      "source_commit": null,
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/ending/city.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
-          "role": "authored_ending_composition_and_style"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "queued_until_batch2_complete",
+      "gate": null,
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+      },
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
     },
     {
       "id": "ending-v3_city",
@@ -1355,42 +1570,72 @@
         "id": "ending-v3_city",
         "kind": "ending",
         "name": "v3_city",
-        "composition": "汉中，沔阳筑起的高台上旌旗林立，台下是军阵。刘备背影立在台上，子衡和诸葛亮在台侧。",
-        "authored_by": "user",
-        "global_constraints": [
-          "1200×480，横幅，黄昏或清晨暖光",
-          "构图对齐 art/ending/city.webp",
-          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
-          "不要画关羽、张飞；卷五以后不要画刘备",
-          "所有图片不出现文字或水印，人物年龄和人数正确"
+        "batch": 8,
+        "status": "queued",
+        "refs": [
+          "liubei",
+          "zhuge"
         ],
-        "clarifications": [
-          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
-          "用户已确认同时交原图和裁切版"
+        "ref_paths": [
+          "game/sanguo/art/portraits/liubei.webp",
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/ending/city.webp"
         ],
+        "keep": [
+          "子衡（玩家）：只能背影或侧后方，不露脸"
+        ],
+        "composition": "汉中沔阳筑起的高台，旌旗林立，台下军阵；刘备背影立在台上，子衡和诸葛亮在台侧。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+        "accept": [
+          "汉服，画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后主体不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "A high ceremonial platform at Mianyang in Hanzhong with forests of banners and ranks of troops below; Liu Bei seen from behind atop it, Ziheng and Zhuge Liang at the side. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
         "out": [
           1200,
           480
-        ]
+        ],
+        "file": "ending/v3_city.webp"
       },
-      "source_commit": null,
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/liubei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "f499136e4f1cfdf50ff6f304f3560ce0539ed14e01c265e73bf461c31e645aa6",
+          "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/ending/city.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
-          "role": "authored_ending_composition_and_style"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "queued_until_batch2_complete",
+      "gate": null,
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+      },
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
     },
     {
       "id": "ending-v4_city",
@@ -1399,42 +1644,64 @@
         "id": "ending-v4_city",
         "kind": "ending",
         "name": "v4_city",
-        "composition": "成都城楼，秋天。子衡和诸葛亮朝东望着荆州方向，城下有一面素白的幡，气氛沉。",
-        "authored_by": "user",
-        "global_constraints": [
-          "1200×480，横幅，黄昏或清晨暖光",
-          "构图对齐 art/ending/city.webp",
-          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
-          "不要画关羽、张飞；卷五以后不要画刘备",
-          "所有图片不出现文字或水印，人物年龄和人数正确"
+        "batch": 8,
+        "status": "queued",
+        "refs": [
+          "zhuge"
         ],
-        "clarifications": [
-          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
-          "用户已确认同时交原图和裁切版"
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/ending/city.webp"
         ],
+        "keep": [
+          "子衡（玩家）：只能背影或侧后方，不露脸"
+        ],
+        "composition": "成都城楼，秋天，子衡和诸葛亮朝东望向荆州方向，城下一面素白的幡，气氛沉。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+        "accept": [
+          "汉服，画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后主体不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "A Chengdu gate tower in autumn, Ziheng and Zhuge Liang gazing east toward Jingzhou, a plain white mourning banner below, somber mood. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
         "out": [
           1200,
           480
-        ]
+        ],
+        "file": "ending/v4_city.webp"
       },
-      "source_commit": null,
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/ending/city.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
-          "role": "authored_ending_composition_and_style"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "queued_until_batch2_complete",
+      "gate": null,
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+      },
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
     },
     {
       "id": "ending-v5_city",
@@ -1443,42 +1710,64 @@
         "id": "ending-v5_city",
         "kind": "ending",
         "name": "v5_city",
-        "composition": "白帝城，江边山崖，长江三峡，清晨的雾。子衡和诸葛亮立在城头。没有刘备。",
-        "authored_by": "user",
-        "global_constraints": [
-          "1200×480，横幅，黄昏或清晨暖光",
-          "构图对齐 art/ending/city.webp",
-          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
-          "不要画关羽、张飞；卷五以后不要画刘备",
-          "所有图片不出现文字或水印，人物年龄和人数正确"
+        "batch": 8,
+        "status": "queued",
+        "refs": [
+          "zhuge"
         ],
-        "clarifications": [
-          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
-          "用户已确认同时交原图和裁切版"
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/ending/city.webp"
         ],
+        "keep": [
+          "子衡（玩家）：只能背影或侧后方，不露脸"
+        ],
+        "composition": "白帝城，江边山崖，长江三峡清晨的雾；子衡和诸葛亮立在城头，没有刘备。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+        "accept": [
+          "汉服，画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后主体不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Baidi City on a cliff above the Yangtze gorges in morning mist; Ziheng and Zhuge Liang stand on the wall. Liu Bei is not present. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
         "out": [
           1200,
           480
-        ]
+        ],
+        "file": "ending/v5_city.webp"
       },
-      "source_commit": null,
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/ending/city.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
-          "role": "authored_ending_composition_and_style"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "queued_until_batch2_complete",
+      "gate": null,
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+      },
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
     },
     {
       "id": "ending-v6_city",
@@ -1487,42 +1776,64 @@
         "id": "ending-v6_city",
         "kind": "ending",
         "name": "v6_city",
-        "composition": "成都城门外，南征的军队回来了。子衡和诸葛亮在门前，队伍里有南中的象和铜鼓，热闹但不庆功。",
-        "authored_by": "user",
-        "global_constraints": [
-          "1200×480，横幅，黄昏或清晨暖光",
-          "构图对齐 art/ending/city.webp",
-          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
-          "不要画关羽、张飞；卷五以后不要画刘备",
-          "所有图片不出现文字或水印，人物年龄和人数正确"
+        "batch": 8,
+        "status": "queued",
+        "refs": [
+          "zhuge"
         ],
-        "clarifications": [
-          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
-          "用户已确认同时交原图和裁切版"
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/ending/city.webp"
         ],
+        "keep": [
+          "子衡（玩家）：只能背影或侧后方，不露脸"
+        ],
+        "composition": "成都城门外，南征的军队回来了，队伍里有南中的象和铜鼓；子衡和诸葛亮在门前，热闹但不庆功。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+        "accept": [
+          "汉服，画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后主体不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Outside a Chengdu gate the southern army returns with elephants and bronze drums from the south; Ziheng and Zhuge Liang wait at the gate, lively but not triumphant. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
         "out": [
           1200,
           480
-        ]
+        ],
+        "file": "ending/v6_city.webp"
       },
-      "source_commit": null,
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/ending/city.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
-          "role": "authored_ending_composition_and_style"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "queued_until_batch2_complete",
+      "gate": null,
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+      },
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
     },
     {
       "id": "ending-v7_city",
@@ -1531,42 +1842,131 @@
         "id": "ending-v7_city",
         "kind": "ending",
         "name": "v7_city",
-        "composition": "汉中北边的山脊，望向远处有雪的祁山。子衡、诸葛亮（两鬓已白，羽扇）和姜维（年轻）并肩站着。这一张等第 1 批姜维头像采用后再画。",
-        "authored_by": "user",
-        "global_constraints": [
-          "1200×480，横幅，黄昏或清晨暖光",
-          "构图对齐 art/ending/city.webp",
-          "子衡的样子按已采用的场景图，只背影或侧后方不露脸",
-          "不要画关羽、张飞；卷五以后不要画刘备",
-          "所有图片不出现文字或水印，人物年龄和人数正确"
+        "batch": 8,
+        "status": "queued",
+        "refs": [
+          "zhuge",
+          "jiangwei"
         ],
-        "clarifications": [
-          "用户已确认 v2_city 用无字旗替代刘字旗，保持所有图片无文字",
-          "用户已确认同时交原图和裁切版"
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp",
+          "game/sanguo/art/portraits/jiangwei.webp",
+          "game/sanguo/art/ending/city.webp"
         ],
+        "keep": [
+          "子衡（玩家）：只能背影或侧后方，不露脸"
+        ],
+        "composition": "汉中北边的山脊，望向远处有雪的祁山；子衡、诸葛亮（两鬓已白，羽扇）和年轻的姜维并肩。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+        "accept": [
+          "汉服，画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后主体不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "A ridge north of Hanzhong looking toward snowy Qishan; Ziheng, a grey-templed Zhuge Liang with feather fan, and young Jiang Wei side by side. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
         "out": [
           1200,
           480
-        ]
+        ],
+        "file": "ending/v7_city.webp"
       },
-      "source_commit": null,
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
       "references": [
         {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "authored_character_reference"
+        },
+        {
           "path": "game/sanguo/art/ending/city.webp",
-          "source_commit": "7cf6f08863a42ace6e2a636b948f35643e5f6752",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
           "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
-          "role": "authored_ending_composition_and_style"
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
       "target_dimensions": [
         1200,
         480
       ],
-      "gate": "awaiting_adopted_jiangwei_and_batch2",
+      "gate": null,
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+      },
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+    },
+    {
+      "id": "ending-v8_city",
+      "group": "ending",
+      "authored_job": {
+        "id": "ending-v8_city",
+        "kind": "ending",
+        "name": "v8_city",
+        "batch": 8,
+        "status": "queued",
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/ending/city.webp"
+        ],
+        "keep": [
+          "接班人（玩家）：成年人，背影，看不出男女"
+        ],
+        "composition": "成都城，旗已换成晋的（旗上不写字）；接班人（背影，看不出男女）站在城楼上看着照常开市的街道，黄昏。横幅，黄昏或清晨的暖光，构图对齐 ending/city.webp；不画关羽、张飞，卷五以后不画刘备",
+        "accept": [
+          "汉服，画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后主体不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Chengdu at dusk under new Jin banners (plain, no writing); the player's heir (seen from behind, gender not discernible) watches from the wall as the streets go about their business. Warm dusk or dawn light, wide cinematic composition matching the existing ending image. Keep everything important inside the central horizontal band; it will be cropped to 2.5:1. All depicted people are adults. Characters follow the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, logos, watermark, frame, celebrity likeness, sexual content, gore, minors.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ],
+        "file": "ending/v8_city.webp"
+      },
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_jobs_path": "game/sanguo/art/edition-jobs-endings.jsonl",
+      "references": [
+        {
+          "path": "game/sanguo/art/ending/city.webp",
+          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "sha256": "cbb33b58a6ada4688e9954de855451dd114d5d1197e1b7d1a744cc68f3140548",
+          "role": "authored_adopted_scene_style_reference"
+        }
+      ],
+      "target_dimensions": [
+        1200,
+        480
+      ],
+      "gate": null,
+      "letters": [
+        "a",
+        "b"
+      ],
+      "adoption_confirmation": {
+        "pr": 71,
+        "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
+      },
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
     }
-  ]
+  ],
+  "existing_pr": 72,
+  "source_adoption_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
 }

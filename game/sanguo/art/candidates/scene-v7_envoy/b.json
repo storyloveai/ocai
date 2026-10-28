@@ -1,0 +1,113 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "scene-v7_envoy",
+    "kind": "scene",
+    "name": "v7_envoy",
+    "batch": 6,
+    "status": "ready",
+    "refs": [
+      "simayi"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/simayi.webp",
+      "game/sanguo/art/scenes/v3_feishi.webp"
+    ],
+    "keep": [
+      "司马懿：五十上下，长脸细眼，细长须，黑色高冠，深青魏服（新头像出来前，按文字描写）",
+      "子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸"
+    ],
+    "composition": "魏军帅帐：司马懿（长脸、细须、黑高冠）从打开的盒子里拎起一套女人衣裳，笑着；子衡背影坐在对面喝茶",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "子衡不露脸"
+    ],
+    "prompt": "A Wei commander's tent: Sima Yi, about fifty with a long narrow face, thin beard and tall black hat, holds up a set of women's clothes from an open box and smiles; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits opposite with tea. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v7.jsonl",
+  "adoption_confirmation": {
+    "pr": 71,
+    "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+    "issue": 68,
+    "choices": {
+      "jiangwei": "a",
+      "simayi": "b",
+      "weiyan": "a"
+    }
+  },
+  "full_generation_prompt": "Generate ONE original standalone historical visual-novel scene, SAME Chinese anime/webtoon illustrated series as ALL attached adopted images. Native EXTRA-WIDE 2.5:1 landscape banner, e.g. 2000x800; legacy size in author JSON is provenance, current finished target is 1200x480. Pull camera back so every main head, hand, and key story gesture is INSIDE native-wide frame. Match illustrated fine lines, cel shading, softly painted cinematic light and hair rendering; not photorealism.\n\nAUTHOR ORIGINAL JOB, VERBATIM JSON (do not render these words):\n{\n  \"id\": \"scene-v7_envoy\",\n  \"kind\": \"scene\",\n  \"name\": \"v7_envoy\",\n  \"batch\": 6,\n  \"status\": \"ready\",\n  \"refs\": [\n    \"simayi\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/simayi.webp\",\n    \"game/sanguo/art/scenes/v3_feishi.webp\"\n  ],\n  \"keep\": [\n    \"司马懿：五十上下，长脸细眼，细长须，黑色高冠，深青魏服（新头像出来前，按文字描写）\",\n    \"子衡（玩家）：灰白头发的书生，五十多岁，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"魏军帅帐：司马懿（长脸、细须、黑高冠）从打开的盒子里拎起一套女人衣裳，笑着；子衡背影坐在对面喝茶\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致（新人物头像未出时，按 keep 的文字描写）\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"子衡不露脸\"\n  ],\n  \"prompt\": \"A Wei commander's tent: Sima Yi, about fifty with a long narrow face, thin beard and tall black hat, holds up a set of women's clothes from an open box and smiles; Ziheng (the player, a grey-haired scholar in his late fifties in a plain grey-blue robe) seen from behind or three-quarter back view, face not visible sits opposite with tea. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, minors.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nReference instructions: Extra images FIRST, where present, are adopted Zhuge/Ziheng AGE/IDENTITY references from PR #71. Remaining authored references keep ORIGINAL ORDER: portraits lock face/hair/costume of each named person, final scene is STYLE ONLY. Never copy unrelated people or actions from style image. Exactly TWO principal ADULT MEN. Sima Yi about50 matches adopted long narrow face, thin long beard, TALL BLACK OFFICIAL HAT and DARK NAVY/TEAL Wei robe, mildly amused smile. He holds up an EMPTY MODEST HAN WOMAN'S LONG ROBE from an OPEN WOODEN BOX on desk, no woman wearing it, no third person. Opposite, grey-white-haired late-fifties Ziheng plain grey-blue robe fully BACK-facing, drinking from a TEACUP. Both complete heads, lifted robe, OPEN BOX and teacup must be visible in banner. No actual woman or nudity, no silk writing or printed designs resembling words.\nGlobal: All people ADULTS, no children. Han/Three Kingdoms Chinese clothes, not kimono. No writing, lettering, Chinese characters, glyph-like scribbles, pseudo-text, labels, seals, logos, watermarks, subtitles or signatures on ANY object. Blank banners, maps with unlabelled landforms only, blank paper/book backs. No gore, blood, wounds or explicit content. Player only back view, face completely hidden.\nCandidate B: independent alternative, subtly different three-quarter camera/lighting, SAME faces costumes cast ages and all key actions.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/v7_biao.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
+      "role": "additional_adopted_character_age_reference"
+    },
+    {
+      "path": "game/sanguo/art/portraits/simayi.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "5fc322ff8a0cc113bf3faf1e3c84cd11c9cbc38c3831c2c8200a06d6aa3de1b8",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v3_feishi.webp",
+      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "sha256": "2a76af50764750a8aa3d4c7998345bb588e13a82f6efd3e3feeb97b78a9f92f9",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "魏军帐内司马懿提起花纹女袍轻笑，敞开的木盒与子衡手中茶杯均在画内。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "91d792869d8d02f04a27c223f51ca4e70b143fd590ae0d8837b0c264c8cf7ee4",
+  "created_at": "2026-10-28T09:38:50.850306+00:00",
+  "bytes": 2402302,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v7_envoy/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "f00a67d01efb7c21b5ac412c2284e6b0ea4fe59361c69fbec65f1afa945e0a99",
+    "original_sha256": "91d792869d8d02f04a27c223f51ca4e70b143fd590ae0d8837b0c264c8cf7ee4",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Adopted portraits checked for canonical face/hair/costume; principal hands, heads, robe/box or cart/fan fit in native-wide exact export; no visible text, adults only."
+}

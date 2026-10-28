@@ -1,0 +1,13 @@
+{
+  "batch": 1,
+  "items": 6,
+  "original_candidates": 12,
+  "exact_1200x480_exports": 12,
+  "adopted_reference_hash_checks": 42,
+  "authored_jobs_unchanged": true,
+  "unique_originals": true,
+  "codex_visual_check": "pass",
+  "final_selection": "awaiting_claude",
+  "source_adoption_pr": 71,
+  "build_or_sync_run": false
+}
