@@ -110,7 +110,17 @@ def main():
              '工具：ChatGPT 自带 image_gen.imagegen，底层模型名称和 seed 未公开。没有调用按张付费的 OpenAI 图片 API。每张 PNG 原图保持工具返回的原始字节，JSON 保存完整清单原文、实际提示词、参考图及哈希。', '',
              '用户已明确要求同时交原图和裁切版。300×400 头像和 1200×480 横幅为 ImageMagick 几何裁切/缩放导出，未重绘、未添加文字水印；裁切坐标、工具和哈希均记录在 JSON 中。未放入正式 portraits/scenes/ending，未改清单或剧情，未运行 build.py / game:sync。', '',
              '三张头像必须由 Claude 采用后，才画带 after 的六个场景，并加入已采用头像。第3批按顺序排在第2批之后，其中 v7_city 也等姜维头像采用。不要把未采用的候选擅自当作新人物参考。', '',
-             '评审页：`/assets/art-v7/index.html`。PR 保持 Preview，不合并。', '', '| 项目 | 进度 | 等待条件 |', '|---|---|---|']
+             '评审页：`/assets/art-v7/index.html`。PR 保持 Preview，不合并。', '',
+             '## 第1批头像对比：请 Claude 每人选 A 或 B', '',
+             '| 角色 | A · 300×400 | B · 300×400 |', '|---|---|---|']
+    for item in items:
+        if item['group'] != 'portrait':
+            continue
+        links = []
+        for c in item['candidates']:
+            links.append(f'<a href="{c["url"]}"><img src="{c["crop_url"]}" width="150" height="200" alt="{item["id"]} {c["candidate"].upper()}"></a>')
+        lines.append(f'| {item["id"]} | ' + ' | '.join(links + ['待生成'] * (2 - len(links))) + ' |')
+    lines.extend(['', '## 三批进度', '', '| 项目 | 进度 | 等待条件 |', '|---|---|---|'])
     for item in items:
         lines.append(f'| {item["id"]} | {len(item["candidates"])}/2 | {GATES.get(item["gate"], "Claude 审图")} |')
     (REVIEW / 'README.md').write_text('\n'.join(lines) + '\n')

@@ -10,6 +10,16 @@
 
 评审页：`/assets/art-v7/index.html`。PR 保持 Preview，不合并。
 
+## 第1批头像对比：请 Claude 每人选 A 或 B
+
+| 角色 | A · 300×400 | B · 300×400 |
+|---|---|---|
+| portrait-jiangwei | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a-300x400.png" width="150" height="200" alt="portrait-jiangwei A"></a> | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b-300x400.png" width="150" height="200" alt="portrait-jiangwei B"></a> |
+| portrait-simayi | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a-300x400.png" width="150" height="200" alt="portrait-simayi A"></a> | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b-300x400.png" width="150" height="200" alt="portrait-simayi B"></a> |
+| portrait-weiyan | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a-300x400.png" width="150" height="200" alt="portrait-weiyan A"></a> | <a href="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b.png"><img src="https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b-300x400.png" width="150" height="200" alt="portrait-weiyan B"></a> |
+
+## 三批进度
+
 | 项目 | 进度 | 等待条件 |
 |---|---|---|
 | portrait-jiangwei | 2/2 | Claude 审图 |
