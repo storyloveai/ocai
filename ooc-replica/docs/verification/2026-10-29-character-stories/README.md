@@ -78,3 +78,12 @@ npm start
 本轮以 main 为 PR base，已包含上一轮尚未发布的三国角色接入；无需再依赖 `codex/38-chat`。只修改网站角色模块与新增配图，Claude 可以继续独立推进游戏；正式三国图、剧情、规则、引擎、同步生成目录和兰馨的 `content/**` 均未手改。
 
 GitHub issue 创建和 REST 读取都返回 403；`ISSUE-draft.md`、`CLAIM-draft.md`、`PR-draft.md` 保存待发布文本。拿到真实 issue 编号后补 `Closes #编号`。实际推送、PR 和 Vercel 部署状态会在交付时单独记录。未获得新的主干合并授权，不合并上线。
+
+## 交付状态
+
+- 已推送 `codex/character-stories`，功能提交 `7819454af240770dc6189d5661e61a0a607885ae`。推送前已再次核对 main，仍为 `d0f02a8`。
+- [查看本轮差异](https://github.com/storyloveai/ocai/compare/main...codex/character-stories)。相对 main 共 71 个文件，已程序核对，受保护的游戏/生成目录及 `content/**` 改动为零。
+- `gh pr create --base main --head codex/character-stories --draft` 返回 GraphQL 403；**issue、认领留言和 PR 均尚未创建/发布**。三份草稿在本目录，可供代建并补真实编号。
+- 本文、电脑角色页和手机分层阅读截图的 GitHub 原始文件均确认 HTTP 200。
+- Vercel `/api/config` 访问仍返回 `Tunnel connection failed: 403 Forbidden`；GitHub 的公开页面也未取得本提交的实际部署链接。预览状态未确认，不把猜测域名当作可用预览。
+- 正式网站未更新。真实模型对白体验和跨设备同步在可访问的 Preview 上继续验收。
