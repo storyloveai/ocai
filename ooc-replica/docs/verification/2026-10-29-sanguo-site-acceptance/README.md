@@ -58,3 +58,10 @@ SANGUO_ACCEPTANCE_ROOT=/absolute/path/to/eight-volume-checkout/ooc-replica \
 - #67 按卷加载仍待处理，涉及 Claude 当前 PR #73 正在修改的构建、适配器和游戏页面，本轮不同时改这些文件。
 - GitHub issue/PR API 仍 403。未创建 issue、未发布认领、未创建 PR；相关文字保存在本目录。拿到 issue 编号后，PR 说明须加实际的 `Closes #编号`，不能用虚构编号。
 - 停在分支和预览，不合并、不上线。
+
+## 交付状态
+
+- 代码和本报告已推送 `codex/sanguo-qa`；修复提交 `414bff3e90eb7f4df5a3d0fcd561b53eb7e2d803`，远端分支已核对。
+- 自动创建草稿 PR 同样返回 `Post "https://api.github.com/graphql": Forbidden`。可按本目录 issue / claim / PR 草稿由有 API 权限的助手代建，并补真实 issue 编号。
+- [查看分支差异](https://github.com/storyloveai/ocai/compare/main...codex/sanguo-qa)、[创建 PR 的入口](https://github.com/storyloveai/ocai/pull/new/codex/sanguo-qa)。这些是 GitHub 页面，不是已创建的 PR。
+- 当前网络访问 Vercel 候选预览域名返回 `Tunnel connection failed: 403 Forbidden`，GitHub 提交页面也未提供部署链接。因此未确认 Vercel 构建状态，没有把推测 URL 当成可用预览交付。
