@@ -188,7 +188,7 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .rtag b { color: var(--text); font-weight: 600 } .rtag.warm span:last-child { color: var(--accent-text) } .rtag.cold span:last-child { color: var(--rose) } .rtag .pt { width: 28px }
 .rrom { color: var(--rose); margin: 10px 0 } .rrisk { font-size: 13px; color: var(--rose); margin: 8px 0 }
 .rmore summary { cursor: pointer; font-size: 12.5px; color: var(--muted); margin-top: 8px } .rmore .rtags { margin-top: 8px }
-.fx .chip { white-space: normal; line-height: 1.4; padding-top: 4px; padding-bottom: 4px }
+.fx .chip { white-space: normal; line-height: 1.4; padding-top: 4px; padding-bottom: 4px; border-radius: 18px }
 .bar.moved i { animation: glow 2.4s ease-out 2 } @keyframes glow { 0%, 100% { box-shadow: none } 40% { box-shadow: 0 0 0 3px var(--accent-text) } }
 .talkhead { display: flex; gap: 14px; align-items: center; margin: 4px 0 12px }
 .talkhead .pt { width: 96px }
@@ -973,7 +973,7 @@ function relChips(seq) {
     const [kind, id, dim] = c.var.split(".");
     if (kind === "rel" && CAMP.chars[id]) {
       const good = dim === "wary" ? d < 0 : d > 0, crossed = CAMP.tiers && tierOf(c.to) !== tierOf(c.from);
-      const low = d < 0 && c.to <= 2 && ((c.var === "rel.liubei.trust" && G.v.track === "liu") || (c.var === "rel.caocao.esteem" && G.v.track === "cao"));
+      const low = d < 0 && c.to <= 1 && ((c.var === "rel.liubei.trust" && G.v.track === "liu") || (c.var === "rel.caocao.esteem" && G.v.track === "cao"));
       if (low) { note(id, false, l.fxLow(name(id), DL(id, dim), c.to, c.var === "rel.liubei.trust" ? l.meterTrust : l.meterRegard)); continue; }
       if (!crossed) continue;
       const g = gatesAhead(c.var), why = g ? l.fxGates(g) : endingReads(c.var) ? l.fxEnd : "";
@@ -998,10 +998,10 @@ function setLang(l) { settings.lang = l; store.set("settings", settings); docume
 const creatorAllowed = () => RT.canEdit || location.hash === "#creator";
 function setCreator(on) { if (on && !creatorAllowed()) return; settings.creator = on; store.set("settings", settings); if (on) V.tab = "creator"; else if (V.tab === "creator") V.tab = "people"; render(); }
 
-function render(scrollNew) {
+function render(scrollNew) { if (typeof requestAnimationFrame === "function") requestAnimationFrame(() => setTimeout(liftFab, 50));
   renderTop(); renderStory(); renderPanel();
   $("#fab").textContent = L().fab; $("#fab").onclick = () => { V.panelOpen = true; renderPanel(); };
-  $("#fab").hidden = !G;
+  $("#fab").hidden = !G; liftFab();
   if (scrollNew && V.firstNew >= 0) { const el = document.querySelector(`[data-li="${V.firstNew}"]`); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); }
 }
 function renderTop() {
@@ -1141,7 +1141,7 @@ function renderStory() {
         n.quote ? h("div", { class: "quote" }, h("span", { class: "ql" }, l.from + " · " + t(n.canon)), h("p", {}, t(n.quote))) : null,
         (e.cb || []).map(k => { const c = n.callbacks[k]; return h("div", { class: "echo" }, h("span", { class: "et" }, l.echo), h("p", {}, t(c.text)), h("div", { class: "why" }, l.because + t(CAMP.echoes[c.pays]))); }),
         recallEl(e),
-        (e.opener && n.talk && CAMP.chars[n.talk.char].openers) ? h("div", { class: "line" }, face(n.talk.char, e.opener), para(t(CAMP.chars[n.talk.char].openers[e.opener]), "reply")) : null));
+        (e.opener && n.talk && CAMP.chars[n.talk.char].openers) ? h("div", { class: "line" }, face(n.talk.char, e.opener), para(t(pickVariant(CAMP.chars[n.talk.char].openers[e.opener], n.id)), "reply")) : null));
       s.append(art); wrap = art;
     } else if (e.k === "choice") {
       const n = N(e.n), c = n.choices.find(x => x.id === e.c);
@@ -1245,6 +1245,14 @@ function directorTable(scores, offered) {
       h("td", {}, offered.includes(x.id) ? l.offered : (x.eligible ? "" : l.notElig)))))));
 }
 
+// how-to lines (talk first, foresight) are shown in the first few scenes that need them, then trusted to be known
+// a line written in several variants: each scene always gets the same one, different scenes get different ones
+function pickVariant(x, key) { if (!Array.isArray(x)) return x; let h = 0; for (const ch of String(key)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return x[h % x.length]; }
+function hintOK(key, max = 3) {
+  const hs = settings.hints || {}, ids = hs[key] || [];
+  if (ids.includes(G.cur)) return true; if (ids.length >= max) return false;
+  settings.hints = Object.assign({}, hs, { [key]: ids.concat(G.cur) }); store.set("settings", settings); return true;
+}
 function renderAct() {
   const box = $("#act"); if (!box) return; box.replaceChildren();
   const l = L(); const opts = CC.choices(CAMP, G);
@@ -1277,8 +1285,8 @@ function renderAct() {
       h("span", {}, t(o.c.label)),
       h("span", { class: "meta" }, h("span", { class: "tag" }, l.types[o.c.type]), o.c.foresight ? h("span", { class: "tag fs" }, "✦ " + l.fs) : null, o.locked ? h("span", {}, `${l.locked} · ${t(o.c.hint)}`) : null));
   })),
-  anyFs ? h("p", { class: "legend" }, l.fsLegend) : null,
-  sceneFree > 0 ? h("div", { class: "targets" }, h("span", { class: "muted" }, sceneFree === 1 ? l.sceneLast : l.sceneHint),
+  anyFs && hintOK("fs") ? h("p", { class: "legend" }, l.fsLegend) : null,
+  sceneFree > 0 ? h("div", { class: "targets" }, h("span", { class: "muted" }, sceneFree === 1 ? l.sceneLast : hintOK("talk") ? l.sceneHint : ""),
     cast.length > 1 ? h("div", { class: "pills" }, h("span", { class: "muted", style: "font-size:12.5px" }, l.toWho), cast.map(c => h("button", { type: "button", class: "pill tgt", "aria-pressed": String(V.target === c), onclick: () => { V.target = c; renderAct(); } }, face(c, levelMood(c), true), t(CAMP.chars[c].name)))) : null) : null,
   sealed ? h("p", { class: "muted sealed", style: "font-size:13px;margin:10px 0 0" }, l.sealedNote) : null,
   h("form", { class: "free" + (sealed ? " sealed" : ""), onsubmit: ev => { ev.preventDefault(); if (sealed) return; const i = ev.target.querySelector("input"); const v = i.value; i.value = ""; V.prefill = null; onFree(v); } },
@@ -1458,7 +1466,7 @@ const inVolume = () => { if (!V._cast || V._cast[0] !== CAMP.id) { const ids = n
 function personRow(cid, l) {
   const c = CAMP.chars[cid], open = V.openChar === cid, hd = relHead(cid);
   const dims = Object.keys(c.dims).filter(d => d !== "intimacy");
-  const low = (G.v.track === "liu" && cid === "liubei" && (G.v["rel.liubei.trust"] || 0) <= 2) ? l.meterTrust : (G.v.track === "cao" && cid === "caocao" && (G.v["rel.caocao.esteem"] || 0) <= 2) ? l.meterRegard : null;
+  const low = (G.v.track === "liu" && cid === "liubei" && (G.v["rel.liubei.trust"] || 0) <= 1) ? l.meterTrust : (G.v.track === "cao" && cid === "caocao" && (G.v["rel.caocao.esteem"] || 0) <= 1) ? l.meterRegard : null;
   const im = Object.keys(CAMP.vars).filter(k => k.startsWith(`imp.${cid}.`) && G.v[k] > 0);
   const sealEl = face(cid, levelMood(cid), true); sealEl.style.width = "36px";
   return h("div", { class: "ch pr" + (open ? " open" : "") },
@@ -1479,6 +1487,15 @@ function romanceCard(cid, l) {
     last ? h("p", { class: "rc-last" }, l.rcLast(l.chap(last.ch), entryLabel(last))) : h("p", { class: "rc-last" }, tierOf(x) >= 1 ? l.rcBefore : l.rcNone),
     open ? h("div", { class: "prmore", style: "padding-left:0" }, Object.keys(c.dims).map(d => barRow(`rel.${cid}.${d}`, V.open === `rel.${cid}.${d}`, d === "intimacy" ? "rose" : ""))) : null));
 }
+// on phones the floating People button must never cover the input you're typing into: lift it above any input
+// row that reaches the bottom of the screen
+function liftFab() {
+  const fab = $("#fab"); if (!fab) return;
+  if (typeof innerHeight === "undefined") return;
+  const rows = [...document.querySelectorAll("#act input[type=text], .ask input")].map(x => x.parentElement.getBoundingClientRect()).filter(r => r.height && r.top < innerHeight && r.bottom > innerHeight - 90);
+  fab.style.bottom = rows.length ? `${Math.round(innerHeight - Math.min(...rows.map(r => r.top)) + 12)}px` : "";
+}
+if (typeof window !== "undefined" && window.addEventListener) { window.addEventListener("scroll", liftFab, { passive: true }); window.addEventListener("resize", liftFab); }
 function renderPeople() {
   const l = L(); const box = h("div", {});
   const alive = Object.entries(CAMP.chars).filter(([, c]) => !(c.from_chapter && G.ch < chIndex(c.from_chapter))).map(([id]) => id);

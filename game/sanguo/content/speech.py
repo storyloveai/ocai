@@ -130,10 +130,20 @@ def commit_rules():
     return rules
 
 # when a talk opens, the character speaks first
-OPENERS = {
-  "guanyu": {"warm": T("关羽把酒囊推到你面前：『坐。』", "Guan Yu pushes the wine skin toward you. 'Sit.'"), "cold": T("关羽看见你来，手里的刀没有放下。", "Guan Yu sees you coming and doesn't put down his blade."), "neutral": T("关羽抬头看了你一眼，又低下头去。", "Guan Yu glances up at you, then down again.")},
-  "liubei": {"warm": T("刘备笑着招手：『子衡，来，陪我看看这夜色。』", "Liu Bei beckons with a smile. 'Ziheng, come—keep me company.'"), "cold": T("刘备听见脚步声，没有回头：『是子衡啊。』", "Liu Bei hears your footsteps and doesn't turn. 'Ah, Ziheng.'"), "neutral": T("刘备往旁边让了让，给你留出一个位子。", "Liu Bei moves over to make room for you.")},
-  "zhuge": {"warm": T("诸葛亮早就备好了两盏茶：『亮猜你今夜会来。』", "Zhuge Liang has already poured two cups of tea. 'I guessed you'd come tonight.'"), "cold": T("诸葛亮合上书：『子衡兄有事？』", "Zhuge Liang closes his book. 'Something you need, Ziheng?'"), "neutral": T("诸葛亮抬起头，扇子停了一停。", "Zhuge Liang looks up; his fan pauses.")},
-  "caocao": {"warm": T("曹操举杯：『来，今夜不谈公事。』", "Cao Cao raises his cup. 'Come—no business tonight.'"), "cold": T("曹操眯着眼看你：『你来做什么？』", "Cao Cao squints at you. 'What do you want?'"), "neutral": T("曹操指了指对面的席位。", "Cao Cao points to the seat across from him.")},
-  "wenzhi": {"warm": T("温芷听见你的脚步声，先笑了：『就知道是你。』", "Wen Zhi hears your footsteps and smiles first. 'I knew it was you.'"), "cold": T("温芷背对着你，手里的活没停：『有事？』", "Wen Zhi keeps her back to you, hands busy. 'Yes?'"), "neutral": T("温芷往旁边挪了挪，没说话。", "Wen Zhi shifts over without a word.")},
+OPENERS = {   # two variants each; a scene always gets the same one (play.src.html pickVariant). No props: talks happen in tents, on roads, on horseback
+  "guanyu": {"warm": [T("关羽看见你，捋了捋长髯：『来了。』", "Guan Yu sees you and strokes his long beard. 'You've come.'"), T("关羽朝你点点头，神色缓了些。", "Guan Yu nods to you, his face easing a little.")],
+             "cold": [T("关羽看见你来，手里的刀没有放下。", "Guan Yu sees you coming and doesn't put down his blade."), T("关羽的丹凤眼抬了一下，又垂了下去。", "Guan Yu's long eyes lift for a moment, then lower again.")],
+             "neutral": [T("关羽抬头看了你一眼，又低下头去。", "Guan Yu glances up at you, then looks down again."), T("关羽没说话，等你开口。", "Guan Yu says nothing and waits for you to speak.")]},
+  "liubei": {"warm": [T("刘备笑着招手：『子衡，来。』", "Liu Bei beckons with a smile. 'Ziheng, come.'"), T("刘备看见你，眉头松开了：『正想找你说说话。』", "Liu Bei sees you and his brow clears. 'I was just hoping to talk with you.'")],
+             "cold": [T("刘备听见脚步声，没有回头：『是子衡啊。』", "Liu Bei hears your footsteps and doesn't turn. 'Ah—Ziheng.'"), T("刘备看了你一眼，笑得有些勉强。", "Liu Bei glances at you; his smile is a little forced.")],
+             "neutral": [T("刘备往旁边让了让，给你留出一个位子。", "Liu Bei shifts aside to make room for you."), T("刘备朝你点点头，等你先说。", "Liu Bei nods to you and waits for you to speak first.")]},
+  "zhuge": {"warm": [T("诸葛亮摇着扇子笑了：『亮猜你会来。』", "Zhuge Liang smiles behind his fan. 'I guessed you'd come.'"), T("诸葛亮朝你一拱手：『子衡兄，来得正好。』", "Zhuge Liang cups his hands to you. 'Brother Ziheng—good timing.'")],
+            "cold": [T("诸葛亮合上书：『子衡兄有事？』", "Zhuge Liang closes his book. 'Something on your mind, Brother Ziheng?'"), T("诸葛亮的扇子停了：『请讲。』", "Zhuge Liang's fan stops. 'Go on.'")],
+            "neutral": [T("诸葛亮抬起头，扇子停了一停。", "Zhuge Liang looks up; his fan pauses."), T("诸葛亮看了你一眼，等你开口。", "Zhuge Liang glances at you and waits for you to speak.")]},
+  "caocao": {"warm": [T("曹操看见你，脸上松了下来：『是你。来，说说话。』", "Cao Cao sees you and his face relaxes. 'It's you. Come, let's talk.'"), T("曹操朝你招招手：『子衡，过来。』", "Cao Cao waves you over. 'Ziheng, come here.'")],
+             "cold": [T("曹操眯着眼看你：『你来做什么？』", "Cao Cao squints at you. 'What do you want?'"), T("曹操看了你一眼，没有开口，等你先说。", "Cao Cao looks at you and says nothing, waiting for you to speak first.")],
+             "neutral": [T("曹操朝你点了点头。", "Cao Cao gives you a nod."), T("曹操抬了抬下巴，示意你说。", "Cao Cao lifts his chin: speak.")]},
+  "wenzhi": {"warm": [T("温芷听见你的脚步声，先笑了：『就知道是你。』", "Wen Zhi hears your footsteps and smiles first. 'I knew it was you.'"), T("温芷抬头看见你，眼睛先弯了。", "Wen Zhi looks up, sees you, and her eyes smile before she does.")],
+             "cold": [T("温芷背对着你，手里的活没停：『有事？』", "Wen Zhi keeps her back to you, hands still busy. 'Something you need?'"), T("温芷看了你一眼，又低头忙自己的。", "Wen Zhi glances at you, then goes back to her work.")],
+             "neutral": [T("温芷往旁边挪了挪，没说话。", "Wen Zhi shifts aside and says nothing."), T("温芷朝你点点头。", "Wen Zhi nods to you.")]},
 }
