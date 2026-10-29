@@ -1,0 +1,96 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "scene-v8_lebu",
+    "kind": "scene",
+    "name": "v8_lebu",
+    "batch": 7,
+    "status": "ready",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/scenes/v7_last.webp"
+    ],
+    "keep": [
+      "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
+    ],
+    "composition": "洛阳宴席，台前蜀地歌舞；胖胖的老年安乐公（面目不细画）在笑，旁边的旧臣在哭",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人，画面里没有小孩",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "玩家不露脸；第三章以后的玩家看不出男女",
+      "没有伤口、血腥、自杀的画面"
+    ],
+    "prompt": "A banquet in Luoyang with Shu-style dancers before the tables; a stout old duke (face not detailed) smiles while former ministers beside him weep; the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+  "adoption_confirmation": {
+    "pr": 74,
+    "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+    "issue": 68
+  },
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical anime/webtoon visual-novel illustration, matching ALL attached ADOPTED series images. Native EXTRA-WIDE 2.5:1 BANNER (for example 2000x800), final export1200x480; legacy size field in original JSON stays as provenance. Wide camera with all principal heads/hands/props/gestures fully INSIDE native wide frame. Match expressive fine line art, cel shading and softly painted light, not photorealism/oil painting. Authored portrait references lock underlying face, hairstyle and clothing; final attached scene is STYLE ONLY, do NOT copy unrelated named people/actions. Current authored age overrides young portrait age while retaining facial proportions. Zhuge Liang is DECEASED throughout volume8: never add him alive from a style reference.\n\nAUTHOR ORIGINAL JOB VERBATIM JSON (do not draw these words):\n{\n  \"id\": \"scene-v8_lebu\",\n  \"kind\": \"scene\",\n  \"name\": \"v8_lebu\",\n  \"batch\": 7,\n  \"status\": \"ready\",\n  \"refs\": [],\n  \"ref_paths\": [\n    \"game/sanguo/art/scenes/v7_last.webp\"\n  ],\n  \"keep\": [\n    \"接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）\"\n  ],\n  \"composition\": \"洛阳宴席，台前蜀地歌舞；胖胖的老年安乐公（面目不细画）在笑，旁边的旧臣在哭\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人，画面里没有小孩\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"玩家不露脸；第三章以后的玩家看不出男女\",\n    \"没有伤口、血腥、自杀的画面\"\n  ],\n  \"prompt\": \"A banquet in Luoyang with Shu-style dancers before the tables; a stout old duke (face not detailed) smiles while former ministers beside him weep; the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nSCENE EXECUTION: Luoyang banquet, ALL dancers/guests ADULTS age25+, modest long Han dancer robes. A STOUT ELDERLY DUKE in rich sober robe SMILES with SMALL NOT DETAILED face; FORMER MINISTERS on either side WEEP or cover eyes. Adult successor THIRTY-FIFTY plain UNDYED neutral-gender robe, tied-up hair, FULL BACK in foreground, no eyes/nose/profile. Dancers at front of tables, show clear emotional contrast, not triumphant court wedding. No Sima Yi or live Zhuge copied from style reference. No words on banners/instruments/screens/paper, no children.\nGlobal: ALL people are ADULTS, NO child/baby/chibi background person. NO wounds, BLOOD, gore, suicide or explicit content. Han/Three Kingdoms Chinese clothes, not kimono. NO text, Chinese characters, letters, pseudo-writing, calligraphy, labels, seals, logos, watermarks, captions, signature or printed signs on ANY paper/book/banner/map/background. Blank banners and paper; maps unlabelled landforms only. ALL PLAYER VIEWS are full BACK or rear-quarter with NO EYES, NO NOSE, NO FACIAL PROFILE. Successor from chapter3 onward must have a plain undyed robe, tied-up hair and gender-indeterminate covered silhouette. Jiang Wei when present always SILVER ARMOUR, WHITE PLUME helmet, DEEP NAVY BLUE CLOAK, no red robe/cloak. Candidate B: independently generated alternative with subtly different three-quarter camera or light, preserving exact cast ages identities clothes and all key action.\nNO EXTRA NAMED HERO FROM THE FINAL STYLE REFERENCE: Jiang Wei and Zhuge Liang MUST NOT appear in this scene. In particular no silver-armoured general with white-plumed helmet and blue cloak may be added as an observer or bystander. The reference is drawing style only; draw exactly the cast and current clothes of this authored scene.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/v7_last.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "missing_authored_ref_paths": [],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "delivery_batch": 3,
+  "ready_order": 19,
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "另一角度的洛阳宴席里舞袖翻飞，安乐公含笑举杯，旧臣各自掩泪，接班人背身看着。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "bc8c6ec07e9d0fcdec61a4c0e81b234d82dc19a4619d9c53846ce6ef0a3dd946",
+  "created_at": "2026-10-29T02:10:38.229955+00:00",
+  "bytes": 2518525,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v8_lebu/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "8e07a068400095917497222d7c07b1aab46a42b0917722f9faefaf817e23085c",
+    "original_sha256": "bc8c6ec07e9d0fcdec61a4c0e81b234d82dc19a4619d9c53846ce6ef0a3dd946",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "All adult dancers/guests, elderly stout smiling duke and mourning ministers, neutral rear-view successor, no unrequested named hero, lettering or watermark."
+}

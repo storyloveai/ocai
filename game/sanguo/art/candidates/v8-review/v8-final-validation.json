@@ -1,0 +1,20 @@
+{
+  "ready_items_completed": 20,
+  "new_original_candidates": 40,
+  "new_exact_1200x480_exports": 40,
+  "batches": [
+    7,
+    7,
+    6
+  ],
+  "reference_hash_checks": 58,
+  "all_author_jobs_unchanged": true,
+  "all_references_from_pinned_adopted_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "all_originals_match_tool_outputs": true,
+  "previous_62_candidate_originals_exports_and_receipts_unchanged": true,
+  "protected_files_unchanged": true,
+  "unadopted_reference_used": false,
+  "paid_image_API_used": false,
+  "build_or_sync_run": false,
+  "final_selection": "awaiting_claude"
+}

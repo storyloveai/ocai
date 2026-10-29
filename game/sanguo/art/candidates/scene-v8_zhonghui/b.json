@@ -1,0 +1,106 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "scene-v8_zhonghui",
+    "kind": "scene",
+    "name": "v8_zhonghui",
+    "batch": 7,
+    "status": "ready",
+    "refs": [
+      "jiangwei"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/jiangwei.webp",
+      "game/sanguo/art/scenes/v7_jiangwei.webp"
+    ],
+    "keep": [
+      "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+      "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
+    ],
+    "composition": "成都宫中火光与乱兵，姜维仰天而立，手按长剑（不画伤口和血腥）；侧门边一个人影被推出门外",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人，画面里没有小孩",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "玩家不露脸；第三章以后的玩家看不出男女",
+      "没有伤口、血腥、自杀的画面"
+    ],
+    "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. Fire and mutinous soldiers in the Chengdu palace; Jiang Wei stands looking up to the sky, hand on his sword (no wounds or gore); at a side door a figure is being pushed out to safety. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+  "adoption_confirmation": {
+    "pr": 74,
+    "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+    "issue": 68
+  },
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical anime/webtoon visual-novel illustration, matching ALL attached ADOPTED series images. Native EXTRA-WIDE 2.5:1 BANNER (for example 2000x800), final export1200x480; legacy size field in original JSON stays as provenance. Wide camera with all principal heads/hands/props/gestures fully INSIDE native wide frame. Match expressive fine line art, cel shading and softly painted light, not photorealism/oil painting. Authored portrait references lock underlying face, hairstyle and clothing; final attached scene is STYLE ONLY, do NOT copy unrelated named people/actions. Current authored age overrides young portrait age while retaining facial proportions. Zhuge Liang is DECEASED throughout volume8: never add him alive from a style reference.\n\nAUTHOR ORIGINAL JOB VERBATIM JSON (do not draw these words):\n{\n  \"id\": \"scene-v8_zhonghui\",\n  \"kind\": \"scene\",\n  \"name\": \"v8_zhonghui\",\n  \"batch\": 7,\n  \"status\": \"ready\",\n  \"refs\": [\n    \"jiangwei\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/jiangwei.webp\",\n    \"game/sanguo/art/scenes/v7_jiangwei.webp\"\n  ],\n  \"keep\": [\n    \"姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白\",\n    \"接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）\"\n  ],\n  \"composition\": \"成都宫中火光与乱兵，姜维仰天而立，手按长剑（不画伤口和血腥）；侧门边一个人影被推出门外\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人，画面里没有小孩\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"玩家不露脸；第三章以后的玩家看不出男女\",\n    \"没有伤口、血腥、自杀的画面\"\n  ],\n  \"prompt\": \"Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. Fire and mutinous soldiers in the Chengdu palace; Jiang Wei stands looking up to the sky, hand on his sword (no wounds or gore); at a side door a figure is being pushed out to safety. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nSCENE EXECUTION: Chengdu palace lit by FIRE and adult mutinous soldiers, no graphic violence or bodies. Jiang Wei lateFIFTIES/earlySIXTIES, grey temples exact adopted underlying face, SILVER armour WHITE-PLUMED helmet DEEP NAVY BLUE CLOAK, STANDS LOOKING UP with ONE hand resting on SWORD HILT AT WAIST, blade SHEATHED, never stabbing himself or anyone. At separate SIDE DOOR one adult figure is gently PUSHED OUTWARD TO SAFETY, back view plain undyed neutral robe/tied hair if player, no face/gender details. Do not show Jiang Wei falling, pierced or wounded. Broad frame preserves upward gaze, sheathed hilt hand and safe side-door exit.\nGlobal: ALL people are ADULTS, NO child/baby/chibi background person. NO wounds, BLOOD, gore, suicide or explicit content. Han/Three Kingdoms Chinese clothes, not kimono. NO text, Chinese characters, letters, pseudo-writing, calligraphy, labels, seals, logos, watermarks, captions, signature or printed signs on ANY paper/book/banner/map/background. Blank banners and paper; maps unlabelled landforms only. ALL PLAYER VIEWS are full BACK or rear-quarter with NO EYES, NO NOSE, NO FACIAL PROFILE. Successor from chapter3 onward must have a plain undyed robe, tied-up hair and gender-indeterminate covered silhouette. Jiang Wei when present always SILVER ARMOUR, WHITE PLUME helmet, DEEP NAVY BLUE CLOAK, no red robe/cloak. Candidate B: independently generated alternative with subtly different three-quarter camera or light, preserving exact cast ages identities clothes and all key action.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/jiangwei.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "missing_authored_ref_paths": [],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "delivery_batch": 3,
+  "ready_order": 18,
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "低角度保留姜维银甲深蓝披风与按剑姿势，接班人背影被护着推向侧门外。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "c05cd0a231df4995acc8834b6da98ae6ec919c17b7b1b18cf123ae3368795ecd",
+  "created_at": "2026-10-29T02:08:30.509147+00:00",
+  "bytes": 2791953,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v8_zhonghui/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "dab1e9191aa8dc2df7b62228d11231f995acf45a13d15422a53f288ec37e549b",
+    "original_sha256": "c05cd0a231df4995acc8834b6da98ae6ec919c17b7b1b18cf123ae3368795ecd",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Jiang Wei upright looking up, hand on sheathed sword hilt, correct adopted helmet/armour/navy cloak; neutral rear-view player pushed safely out side door; no stabbing, wounds, blood, corpse or suicide depiction."
+}

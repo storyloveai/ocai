@@ -1,0 +1,22 @@
+{
+  "volume8_batch": 3,
+  "items": 6,
+  "ids": [
+    "scene-v8_mianzhu",
+    "scene-v8_beidi",
+    "scene-v8_temple",
+    "scene-v8_zhonghui",
+    "scene-v8_lebu",
+    "scene-v8_end"
+  ],
+  "original_candidates": 12,
+  "exact_1200x480_exports": 12,
+  "adopted_reference_hash_checks": 14,
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "authored_fields_unchanged": true,
+  "all_new_references_formally_adopted": true,
+  "original_hash_integrity": "pass",
+  "codex_visual_check": "pass; final selection by Claude",
+  "paid_image_API_used": false,
+  "build_or_sync_run": false
+}

@@ -1,0 +1,27 @@
+{
+  "scope": "Local Chromium using actual candidate files routed for raw GitHub URLs; not an external Vercel deployment check",
+  "pages": [
+    {
+      "page": "art-v7",
+      "items": 30,
+      "candidate_figures": 60,
+      "loaded_images": 126,
+      "filters": "pass",
+      "exact_export_dimensions": "pass",
+      "desktop_and_mobile_no_horizontal_overflow": true,
+      "expanded_original_aspect_preserved": true
+    },
+    {
+      "page": "art-v8",
+      "items": 21,
+      "candidate_figures": 42,
+      "loaded_images": 84,
+      "filters": "pass",
+      "exact_export_dimensions": "pass",
+      "desktop_and_mobile_no_horizontal_overflow": true,
+      "expanded_original_aspect_preserved": true
+    }
+  ],
+  "image_requests_served": 204,
+  "page_errors": []
+}

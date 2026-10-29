@@ -1,38 +1,58 @@
 {
-  "existing_draft_pr": 72,
-  "reference_adoption_pr": 71,
-  "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
-  "previously_adopted_items": 17,
-  "new_batches": [
+  "draft_pr": 72,
+  "source_adoption_pr": 74,
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "previously_adopted_items": 31,
+  "previously_adopted_original_candidates": 62,
+  "current_ready_items": 20,
+  "current_completed_items": 20,
+  "current_original_candidates": 40,
+  "current_exact_exports": 40,
+  "remaining_current_items": 0,
+  "batches": [
     {
       "batch": 1,
-      "planned": 6,
-      "completed": 6,
-      "originals": 12,
-      "exports": 12,
-      "status": "awaiting_claude_review"
+      "ids": [
+        "scene-v8_hearse",
+        "scene-v8_weiyan",
+        "scene-v8_return",
+        "scene-v8_gate",
+        "scene-v8_oldman",
+        "scene-v8_simayi_letter",
+        "scene-v8_heir"
+      ],
+      "planned_items": 7,
+      "completed_items": 7
     },
     {
       "batch": 2,
-      "planned": 7,
-      "completed": 7,
-      "originals": 14,
-      "exports": 14,
-      "status": "awaiting_claude_review"
+      "ids": [
+        "scene-v8_fan",
+        "scene-v8_duangu",
+        "scene-v8_jiangwei_night",
+        "scene-v8_healer",
+        "scene-v8_huanghao",
+        "scene-v8_jiange",
+        "scene-v8_yinping"
+      ],
+      "planned_items": 7,
+      "completed_items": 7
     },
     {
       "batch": 3,
-      "planned": 21,
-      "completed": 1,
-      "originals": 2,
-      "exports": 2,
-      "waiting": 20,
-      "status": "remaining_wait_for_adopted_scene_references_and_brief_corrections"
+      "ids": [
+        "scene-v8_mianzhu",
+        "scene-v8_beidi",
+        "scene-v8_temple",
+        "scene-v8_zhonghui",
+        "scene-v8_lebu",
+        "scene-v8_end"
+      ],
+      "planned_items": 6,
+      "completed_items": 6
     }
   ],
-  "new_originals": 28,
-  "new_exports": 28,
-  "all_originals": 62,
+  "total_PR_original_candidates": 102,
   "github_api_write_status": "403; progress comments and PR body not submitted",
   "merge_or_production_deploy_performed": false
 }
