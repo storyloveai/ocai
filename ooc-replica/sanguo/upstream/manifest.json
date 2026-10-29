@@ -1,8 +1,8 @@
 {
-  "commit": "2943b96b6ffe4eae8348ad0294ed0d7d8a0154f8",
+  "commit": "4e19a6e042fcd5026ec20399723be11ae02611c1",
   "blobs": {
-    "index.html": "c4ca7aeb4b1aaac1d677a51ee2ce67870093cf3f",
-    "illus.html": "378f64e8990b34e5eb6ce105b501f359b06d65df",
+    "index.html": "b3b3e2f7aecd60695c0f48c5f0d5669397e563d8",
+    "illus.html": "87df50156f9b8d09729f8df4951e3715a2c087df",
     "campaign.json": "1f2fb30793dd9b7212c77b5a29df441730a75362",
     "campaign_v2.json": "22edc922e6c8c371e3fc0b09a67e01383b26c74e",
     "campaign_v3.json": "4e0e7abbf322e70e41a6c3129e8dc1fc7b30940c",

@@ -24,6 +24,7 @@ async function page({snapshot={},model=false,api}={}){
 test('campaign prompt binds authored scene and legal options; rejects raw prompts and absent characters',()=>{
  const g=CC.newGame(campaign);const p=buildCampaignStage({phase:'express',task:'answer',lang:'zh',context:{node:'c1_plum',text:'英雄当为百姓谋生',vars:g.v,system:'attacker'}});const data=JSON.parse(p.prompt);
  assert.ok(p.system.includes('untrusted'));assert.equal(data.scene,'煮酒论英雄');assert.ok(data.options.length>2);assert.ok(!p.prompt.includes('attacker'));assert.equal(campaign.chapters.length,8);
+ assert.ok(data.options.every(o=>typeof o.then==='string'&&o.then.length>0));assert.ok(/immediate reaction/.test(p.system)&&/at most 50 characters/.test(p.system));
  assert.throws(()=>buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node:'c1_plum',text:'hi',target:'zhuge'}}));
  assert.throws(()=>buildCampaignStage({input:'arbitrary prompt'}));
 });

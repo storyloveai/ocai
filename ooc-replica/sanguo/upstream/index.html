@@ -2210,35 +2210,38 @@ const PN = chId => { const p = playerAt(chId); return p ? p.name.en : "Ziheng"; 
 const PWHO = () => { const p = playerAt(); return p ? p.who.en : "Ziheng, an original young strategist"; };
 
 /* free text: the model may only map words to an existing choice, or write a reaction that changes nothing */
-// an open question: the model (or keywords) only decides which kind of answer it was; the rules settle it
+// an open question: the model (or keywords) decides which kind of answer it was, and the asker reacts to the
+// exact words in one line; what that answer leads to is still the authored outcome, which follows the line
 async function askAnswer(text, n, lang) {
   const q = n.ask, who = CAMP.chars[q.who];
   const prompt = `You are sorting a player's free-text answer in an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}.
 ${t(who.name)} asked: ${JSON.stringify(t(q.q))}
 ${PN()} answered: ${JSON.stringify(text)}
-Which kind of answer is it? Kinds (id → meaning): ${JSON.stringify(q.answers.map(a => ({ id: a.id, means: t(a.means) })))}
+Which kind of answer is it? Kinds (id → meaning, and what is written to happen next): ${JSON.stringify(q.answers.map(a => ({ id: a.id, means: t(a.means), then: (a.out || []).map(o => t(o.text)).join(" ") })))}
 Judge what ${PN()} actually means, including sarcasm, evasion and mixed answers (pick the dominant intent). If none fits, use "${q.fallback}".
-Return only {"pick":"<id>"}.`;
+Then write ${t(who.name)}'s immediate reaction to the specific words ${PN()} used: one short line in ${lang === "zh" ? "Chinese, at most 50 characters" : "English, at most 35 words"}, in character, in the voice of the period. The "then" text of the kind you pick comes right after your line, so lead into it: don't repeat it, don't contradict it, decide nothing else, and don't mention anything that hasn't happened yet.
+Return only {"pick":"<id>","reply":"<the line>"}.`;
   const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
-  return out && q.answers.some(a => a.id === out.pick) ? out.pick : null;
+  const pick = out && q.answers.some(a => a.id === out.pick) ? out.pick : null;
+  return pick && { pick, reply: out && typeof out.reply === "string" ? out.reply.trim().slice(0, lang === "zh" ? 80 : 300) : null };
 }
 async function onAnswer(text) {
   text = text.trim(); if (!text || V.busy || !CC.ask(CAMP, G)) return;
   const lang = settings.lang, n = N(G.cur);
   const terms = CC.mentionsFuture(CAMP, G, text, lang); let fs = false;
   if (terms.length) fs = !!CC.foresight(CAMP, G, terms);
-  let pick = null, via = "matcher";
+  let pick = null, via = "matcher", reply = null;
   if (RT.sample && RT.ai !== "off") {
     V.busy = true; renderAct();
-    try { pick = await askAnswer(text, n, lang); if (pick) via = "model"; }
+    try { const r = await askAnswer(text, n, lang); if (r) { pick = typeof r === "string" ? r : r.pick; reply = r.reply || null; via = "model"; } }
     catch (e) { const c = e && e.code; if (["not_granted", "not_declared", "capability_disabled", "sampling_disabled"].includes(c)) RT.ai = "off"; }
     V.busy = false;
   }
   if (!pick) pick = CC.guessAnswer(CAMP, G, text);
   const at = G.log.length;
   CC.answer(CAMP, G, pick, text);
-  const le = G.log[at]; if (le && le.k === "ans" && fs) le.fs = true;
-  track("answer", { node: n.id, answer: pick, via, foresight: fs, len: text.length });
+  const le = G.log[at]; if (le && le.k === "ans") { if (fs) le.fs = true; if (reply && !fs) le.reply = { lang, text: reply }; }
+  track("answer", { node: n.id, answer: pick, via, foresight: fs, len: text.length, voiced: !!(reply && !fs) });
   V.firstNew = at; save(); render(true);
 }
 async function onFree(text) {
@@ -2352,7 +2355,7 @@ function talkHistory(nodeId, lang) {
   const n = N(nodeId), out = [];
   for (const e of G.log) {
     if (e.n !== nodeId) continue;
-    if (e.k === "ans") { out.push(`${t(CAMP.chars[n.ask.who].name)}: ${t(n.ask.q)}`, `${PN()}: ${e.said || "(no answer)"}`, `${t(CAMP.chars[n.ask.who].name)}: ${e.p.map(k => t(n.ask.answers.find(a => a.id === e.a).out[k].text)).join(" ")}`); }
+    if (e.k === "ans") { out.push(`${t(CAMP.chars[n.ask.who].name)}: ${t(n.ask.q)}`, `${PN()}: ${e.said || "(no answer)"}`, `${t(CAMP.chars[n.ask.who].name)}: ${e.reply && e.reply.lang === lang ? e.reply.text + " " : ""}${e.p.map(k => t(n.ask.answers.find(a => a.id === e.a).out[k].text)).join(" ")}`); }
     if (e.k === "say") { const tp = n.talk.topics.find(x => x.id === e.t); out.push(`${PN()}: ${t(tp.label)}`, `${t(CAMP.chars[n.talk.char].name)}: ${e.p.map(k => t(tp.reply[k].text)).join(" ")}`); }
     if (e.k === "move") { const m = CC.findMove(CAMP, e.n, e.m); if (m) out.push(`(What happened: ${e.p.map(k => t(m.out[k].text)).join(" ")})`); }
     if (e.k === "free" && (e.talk || e.to) && !e.matched) { const sp = e.to || (n.talk && n.talk.char); out.push(`${PN()}${e.to && !n.talk ? " (to " + t(CAMP.chars[e.to].name) + ")" : ""}: ${e.text}`); const rl = e.reply && e.reply.lang === lang ? e.reply.text : e.intent && sp ? t(reactLine(sp, e.intent, e.prior) || { zh: "", en: "" }) : ""; if (rl) out.push(`${t(CAMP.chars[sp].name)}: ${rl}`); }
@@ -2754,7 +2757,7 @@ function renderStory() {
       const n = N(e.n), q = n.ask, a = q.answers.find(x => x.id === e.a);
       wrap.append(mark(h("div", { class: "answered" }, h("div", { class: "line" }, face(q.who, "neutral"), h("div", {}, h("span", { class: "et" }, t(CAMP.chars[q.who].name) + " · " + l.askL), para(t(q.q), "reply"))),
         h("div", { class: "you" }, h("small", {}, l.youAns), e.said || l.noAns), e.fs ? para(l.foresightReply, "reply foresight") : null,
-        h("div", { class: "line" }, face(q.who, a.mood || deltaMood(q.who, e.seq) || "neutral"), h("div", {}, e.p.map(k => para(t(a.out[k].text), "reply")))), relChips(e.seq),
+        h("div", { class: "line" }, face(q.who, a.mood || deltaMood(q.who, e.seq) || "neutral"), h("div", {}, e.reply && e.reply.lang === settings.lang ? para(e.reply.text, "reply") : null, e.p.map(k => para(t(a.out[k].text), "reply")))), relChips(e.seq),
         dev ? h("div", { class: "dev" }, h("span", { class: "k" }, a.id), " · ", t(a.means)) : null)));
     } else if (e.k === "move") {
       const m = CC.findMove(CAMP, e.n, e.m);
