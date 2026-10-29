@@ -69,3 +69,10 @@ test('reentering credits follows the current deep link instead of a previous tab
 test('checkout retains immediate loading feedback and cannot redirect after leaving the page',async()=>{
  const f=setup();let finish;f.account.api=async(path)=>path==='checkout'?new Promise(r=>finish=r):{balance:100,ledger:[]};f.payments.sync();f.payments.mount(f.root);await tick();f.root.querySelector('[data-buy-selected]').click();assert.match(f.root.textContent,/Opening checkout/);assert.equal(f.root.querySelector('[name=credits-pack]').disabled,true);f.root.remove();finish({url:'https://checkout.stripe.com/c/pay/fixture',session_id:'cs_fixture'});await tick();assert.deepEqual(f.redirects,[]);
 });
+
+test('expired checkout is cleared without crediting or redirecting',async()=>{
+ const f=setup();f.storage.setItem('replica-payment:fixture:test:alice','cs_expired');
+ f.account.api=async path=>path.startsWith('checkout-status')?{paid:false,credited:false,status:'expired'}:{balance:0,ledger:[]};
+ f.payments.sync();f.payments.mount(f.root);await tick();
+ assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);assert.match(f.root.textContent,/checkout expired/);assert.deepEqual(f.redirects,[]);
+});

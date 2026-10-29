@@ -20,8 +20,11 @@ export function sameOrigin(req) {
     throw new HttpError(403, "不允许跨站请求。");
 }
 export function createPlatform({ env = process.env, fetchImpl = fetch, services = () => firebaseServices(env) } = {}) {
-  env = { ...env, STRIPE_SECRET_KEY: env.STRIPE_LIVE_SECRET_KEY || env.STRIPE_SECRET_KEY };
-  const configured = () => Boolean(firebaseConfig(env) && adminConfigured(env));
+  // A Preview must never select a Production-only override or use live wallet paths.
+  const preview = env.VERCEL_ENV === 'preview';
+  env = { ...env, STRIPE_SECRET_KEY: (!preview && env.STRIPE_LIVE_SECRET_KEY) || env.STRIPE_SECRET_KEY };
+  const modeAllowed = () => !preview || stripeMode(env) === 'test';
+  const configured = () => Boolean(modeAllowed() && firebaseConfig(env) && adminConfigured(env));
   const walletCompatible = configured;
   // Short-lived signed readiness receipt travels across separate Vercel functions.
   // It only skips a duplicate availability read; ownership and fulfillment are always verified.
@@ -72,6 +75,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
     }
   };
   async function stripe(path, params, idempotencyKey) {
+    if (!modeAllowed()) throw new HttpError(503, "预览环境仅支持测试付款。");
     if (!env.STRIPE_SECRET_KEY) throw new HttpError(503, "付款服务尚未配置。");
     if (stripeMode(env) === "live" && env.STRIPE_LIVE_ENABLED !== "true")
       throw new HttpError(503, "正式付款尚未启用。");
@@ -302,6 +306,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
     }),
     webhook: safely(async (req) => {
       if (req.method !== "POST") throw new HttpError(405, "只支持 POST。");
+      if (!modeAllowed()) throw new HttpError(503, "预览环境仅支持测试付款。");
       if (!webhookSecret()) throw new HttpError(503, "Webhook 尚未配置。");
       const raw = await readLimited(req, 262144);
       if (
@@ -312,7 +317,9 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
         )
       )
         throw new HttpError(400, "无效签名。");
-      const event = JSON.parse(raw);
+      let event;
+      try { event = JSON.parse(raw); } catch { throw new HttpError(400, "无效付款事件。"); }
+      if (!event || typeof event !== "object" || Array.isArray(event)) throw new HttpError(400, "无效付款事件。");
       if (event.livemode !== (stripeMode(env) === "live"))
         throw new HttpError(400, "付款环境不匹配。");
       if (
