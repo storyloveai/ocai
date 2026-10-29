@@ -37,3 +37,7 @@
 [data-control=model]>span{display:flex;align-items:center;gap:6px}[data-control=model] img{width:16px;height:16px}
 @media(max-width:767px){.session-message.user{margin-left:16px}#session-settings.session-open{top:0;bottom:0;height:100dvh;width:min(320px,calc(100vw - 48px));box-shadow:-20px 0 60px #0008}.session-suggestions{font-size:14px;line-height:21px}.session-messages{padding-bottom:16px}}
 .session-image-preview{display:block;max-width:100%;max-height:75dvh;margin:auto;object-fit:contain;border-radius:12px}.session-history-empty{padding:16px;color:#737373;font:12px/18px Inter,sans-serif}
+
+/* Session history state is semantic and stays stable when labels are translated. */
+.session-history-tab[aria-pressed="true"]{border-color:#999!important;color:#eee!important;background:transparent!important}
+.session-history-tab[aria-pressed="false"]{border-color:#ffffff10!important;color:#a0a0a0!important;background:transparent!important}

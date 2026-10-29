@@ -85,3 +85,20 @@ test('signed wallet readiness skips a duplicate read across Vercel instances and
  assert.equal((await second.checkout(request('checkout',payload,'bob'))).status,200);assert.ok(reads>before);
  const after=reads;await second.checkout(request('checkout',{...payload,checkoutReady:ready.checkoutReady.slice(0,-1)+'x'}));assert.ok(reads>after);
 });
+
+test('Preview never selects live overrides or reads/writes a live wallet',async()=>{
+ let touched=false;const live=createPlatform({env:{...env,VERCEL_ENV:'preview'},services:()=>{touched=true;throw Error('must not access live services');},fetchImpl:async()=>{touched=true;throw Error('must not charge');}});
+ const cfg=await(await live.config(request('config'))).json();assert.equal(cfg.payments,false);assert.equal(cfg.walletConfigured,false);
+ assert.equal((await live.wallet(request('wallet'))).status,503);
+ assert.equal((await live.checkout(request('checkout',{pack:200,request_id:'12345678-1234-1234-1234-123456789012'}))).status,503);
+ assert.equal((await live.webhook(fixture().event())).status,503);assert.equal(touched,false);
+ const testPlatform=fixture({VERCEL_ENV:'preview',STRIPE_SECRET_KEY:'sk_test_fixture',STRIPE_LIVE_SECRET_KEY:'sk_live_must_not_win',STRIPE_PUBLISHABLE_KEY:'pk_test_fixture'}).platform;
+ const testCfg=await(await testPlatform.config(request('config'))).json();assert.equal(testCfg.walletMode,'test');assert.equal(testCfg.payments,true);
+ assert.equal((await testPlatform.checkout(request('checkout',{pack:200,request_id:'12345678-1234-1234-1234-123456789012',ui_mode:'hosted'}))).status,200);
+});
+test('signed malformed webhook JSON is a client error and never calls Stripe',async()=>{
+ const f=fixture(),raw='{invalid',t=Math.floor(Date.now()/1000);
+ const sig=createHmac('sha256',env.STRIPE_WEBHOOK_SECRET).update(t+'.'+raw).digest('hex');
+ const result=await f.platform.webhook(new Request('https://replica.example/api/webhook',{method:'POST',headers:{'stripe-signature':`t=${t},v1=${sig}`},body:raw}));
+ assert.equal(result.status,400);assert.equal((await(await f.platform.wallet(request('wallet'))).json()).balance,0);
+});

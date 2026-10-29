@@ -19,7 +19,7 @@ const UI = [
   ['Home', '首页'], ['History', '历史'], ['My Titles', '我的作品'], ['My titles', '我的作品'], ['MY', '我的'], ['Search', '搜索'], ['Story', '故事'],
   ['Character', '角色'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
   ['Explore', '探索'], ['Previous slide', '上一张'], ['Next slide', '下一张'], ['Main', '精选'], ['New Ranking', '新作榜'], ['Rankings', '排行榜'], ['Today', '今日'],
-  ['Browse by genre','按题材浏览'],
+  ['Browse by genre','按题材浏览'], ['Start chatting','开始对话'],
   ['Fantasy', '奇幻'], ['Romance', '恋爱'], ['Sci-Fi', '科幻'], ['Girls Love', '百合'], ['Horror', '恐怖'], ['Oriental Fantasy', '东方奇幻'], ['Slice of Life', '日常'],
   ['Fan Fiction', '同人'], ['Utility', '工具'], ['Boys Love', '耽美'], ['Others', '其他'], ['Adventure', '冒险'], ['Action', '动作'], ['Comedy', '喜剧'], ['Thriller', '惊悚'],
   ['Top Ranked', '热门榜'], ['View All', '查看全部'], ['StoryDate Originals', 'StoryDate 原创', 'OOC Originals'], ['Trending Now', '当下热门'],

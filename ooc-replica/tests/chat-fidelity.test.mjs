@@ -9,7 +9,9 @@ const source=await readFile(new URL('../dist/assets/interaction.js',import.meta.
 test('captured chat shell keeps working suggestions, rich code copy, local history and accessible settings',async()=>{
  const {document,window}=parseHTML('<html><head></head><body></body></html>');
  const original={document:globalThis.document,fetch:globalThis.fetch,matchMedia:globalThis.matchMedia,navigator:Object.getOwnPropertyDescriptor(globalThis,'navigator')};
- let focused,copied,suggestionRequest;
+ let focused,copied,suggestionRequest,failNarration=false;
+ const configuration={configured:true,model:'gemini-test-flash'},narrationRequests=[];
+ const waitFor=async predicate=>{for(let i=0;i<200;i++){if(predicate())return;await new Promise(resolve=>setTimeout(resolve,10));}assert.fail('chat did not settle');};
  globalThis.document=document;globalThis.matchMedia=()=>({matches:false});
  Object.defineProperty(document,'activeElement',{get:()=>focused});
  window.HTMLElement.prototype.focus=function(){focused=this;};
@@ -19,9 +21,10 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
  const append=document.head.append.bind(document.head);document.head.append=(link)=>{append(link);queueMicrotask(()=>link.onload?.());};
  globalThis.fetch=async (url,options)=>{if(url==='/api/chat'){
    suggestionRequest=JSON.parse(options.body);
+   if(suggestionRequest.task!=='suggestions'){narrationRequests.push(suggestionRequest);if(failNarration)return new Response(JSON.stringify({error:'角色对话暂时无法连接，请稍后重试。',code:'AI_NOT_CONFIGURED'}),{status:503});return new Response(JSON.stringify({type:'text',text:'貂蝉听见你的问题，停下了脚步。'})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});}
    const text=JSON.stringify(['Read the letter on the desk.','Wait behind the shelves.','Ask who is approaching.']);
    return new Response(JSON.stringify({type:'text',text})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});
-  }return {ok:true,json:async()=>url.includes('interaction-pages')?pages:url.includes('scenarios')?{stories:{}}:{configured:true,model:'gemini-test-flash'}};};
+  }return {ok:true,json:async()=>url.includes('interaction-pages')?pages:url.includes('scenarios')?{stories:{}}:configuration};};
  try{
   const adapted=source.replace("import {mountInteraction} from './reference.js';",'const mountInteraction=html=>{document.body.innerHTML=html;return document.body;};').replace("'./analytics.js'",JSON.stringify(new URL('../dist/assets/analytics.js',import.meta.url).href)).replace("'./suggestions.js'",JSON.stringify(new URL('../dist/assets/suggestions.js',import.meta.url).href)).replace("'./stream.js'",JSON.stringify(new URL('../dist/assets/stream.js',import.meta.url).href)).replace("'./site-shell.js'",JSON.stringify(new URL('../dist/assets/site-shell.js',import.meta.url).href)).replace("'./history.js'",JSON.stringify(new URL('../dist/assets/history.js',import.meta.url).href)).replace("'./public-config.js'",JSON.stringify(new URL('../dist/assets/public-config.js',import.meta.url).href));
   const {show}=await import('data:text/javascript;base64,'+Buffer.from(adapted).toString('base64'));
@@ -65,6 +68,42 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.match(document.querySelector('[data-control=model]').textContent,/Gemini test Flash/);
   assert.match(document.querySelector('#session-messages').textContent,/A reply/);
   assert.deepEqual(routes,['/search'],'same-page mode switches do not rely on navigation');
+  // The active history category and its handlers survive translated labels and async saves.
+  const character={id:'sgc-007',title:'Diaochan',title_zh:'貂蝉',description:'Diaochan of the Three Kingdoms.',description_zh:'与貂蝉对话。',type:'character',image:'/assets/originals/sgc-007.webp'};
+  helpers.data.push(character);
+  values.set('ooc-custom',[{publishedId:'u-published',status:'published',type:'character',title:'Published character',image:'/character.webp'}]);
+  values.set('ooc-history',[id,other,'u-published','unknown-title']);
+  show('/play/'+character.id,helpers);await new Promise(resolve=>setImmediate(resolve));
+  const historyTab=kind=>document.querySelector(`[data-history-mode="${kind}"]`);
+  assert.equal(historyTab('character').getAttribute('aria-pressed'),'true');
+  assert.equal(historyTab('story').getAttribute('aria-pressed'),'false');
+  assert.equal(document.querySelectorAll('.session-history-item').length,2);
+  assert.ok(document.querySelector('.session-history-item a[href="/play/u-published"]'));
+  assert.equal(document.querySelector('.session-history-item a[href="/play/unknown-title"]'),null);
+  assert.doesNotMatch(document.querySelector('#session-messages').textContent,/Ashley|neighbour/);
+  historyTab('story').textContent='故事';historyTab('character').textContent='角色';historyTab('story').click();
+  assert.equal(historyTab('story').getAttribute('aria-pressed'),'true');
+  assert.equal(document.querySelectorAll('.session-history-item').length,2);
+  document.querySelector('#session-input').textContent='谁在听？';document.querySelector('[data-control=send]').click();
+  await waitFor(()=>values.get('ooc-session-v2-sgc-007')?.at(-1)?.text==='貂蝉听见你的问题，停下了脚步。'&&!values.get('ooc-session-v2-sgc-007').at(-1).streaming);
+  assert.equal(narrationRequests.at(-1).titleId,'sgc-007');
+  assert.equal(narrationRequests.at(-1).messages.at(-1).content,'谁在听？');
+  assert.equal(historyTab('story').getAttribute('aria-pressed'),'true','a completed reply keeps the manually selected history category');
+  assert.equal(document.querySelector('.session-history-item a[href="/play/sgc-007"]'),null);
+  historyTab('character').click();assert.ok(document.querySelector('.session-history-item a[href="/play/sgc-007"]'));
+  assert.equal(historyTab('character').getAttribute('aria-pressed'),'true');
+  // A missing model must report an error rather than send Ashley's canned response as Diaochan.
+  configuration.configured=false;failNarration=true;values.set('ooc-response-mode','demo');
+  const previous=structuredClone(values.get('ooc-session-v2-sgc-007'));
+  show('/play/sgc-007',helpers);assert.equal(document.querySelector('[data-mode]'),null);
+  assert.equal(document.querySelector('[data-control=model]').textContent.trim(),'AI');
+  document.querySelector('#session-input').textContent='你是谁？';document.querySelector('[data-control=send]').click();
+  await waitFor(()=>values.get('ooc-session-v2-sgc-007')?.at(-1)?.failed===true);
+  assert.equal(narrationRequests.at(-1).titleId,'sgc-007');
+  assert.deepEqual(values.get('ooc-session-v2-sgc-007').slice(0,previous.length),previous,'saved messages remain intact');
+  assert.doesNotMatch(document.querySelector('#session-messages').textContent,/Ashley|lovely café/);
+  assert.match(document.querySelector('.session-error').textContent,/角色对话暂时无法连接/);
+  configuration.configured=true;failNarration=false;
   // Profiles written through settings or migrated from older versions omit genres.
   for(const genres of [undefined,null,'Fantasy']){
    values.set('ooc-profile',{name:'Existing player',audience:'Female',...(genres===undefined?{}:{genres})});
