@@ -633,6 +633,9 @@ for n in N:
         pa = PLACE_AFTER.get((n["id"], c["id"])) or PLACE_AFTER.get((n["id"], "*"))
         if pa and pa != n.get("place"): c["place"] = pa
 
+import moves_v5
+CAMP_MOVES = moves_v5.extend(N, VARS)
+
 PLACES = {k: V4["places"][k] for k in ("chengdu", "zigui", "jiangling", "hanzhong")}
 PLACES.update({
     "langzhong": {"x": 190, "y": 220, "rx": 290, "ry": 450, "zh": "阆中", "en": "Langzhong"},
@@ -725,7 +728,7 @@ CAMPAIGN = {
     "rights": {"source": "《三国演义》（罗贯中，明代），公版", "quotes": "中文原文直接引用；英文为本项目自译", "original_characters": ["子衡（玩家）", "温芷"]},
     "player": {"name": T("子衡", "Ziheng")}, "side_prompt": SIDE_PROMPT,
     "vars": VARS, "chars": CHARS, "dims": DIMS, "echoes": ECHOES, "debts": DEBTS,
-    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS,
+    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS, "moves": CAMP_MOVES,
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
     "ending_art": ENDING_ART, "art_prompts": ART_PROMPTS, "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": V4["cg_captions"], "realm": REALM,
     "react_patterns": V4["react_patterns"], "value_tags": values.TAGS, "commit_rules": COMMIT_RULES,

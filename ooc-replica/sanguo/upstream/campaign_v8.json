@@ -1650,6 +1650,24 @@
     "en": "Branded a sorcerer for good"
    }
   },
+  "flag.v5_blamed_fei": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "阆中的消息传来时，说张飞是自己害死自己",
+    "en": "Said Zhang Fei brought his death on himself when the news came from Langzhong"
+   },
+   "carry": false
+  },
+  "flag.v5_asked_sun": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "在陛下面前提起孙夫人",
+    "en": "Spoke of Lady Sun to His Majesty"
+   },
+   "carry": false
+  },
   "flag.v6_came_back": {
    "type": "flag",
    "init": false,
@@ -1761,6 +1779,15 @@
     "zh": "妖人之名坐实",
     "en": "Branded a sorcerer for good"
    }
+  },
+  "flag.v6_said_killall": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "说过南人杀光了就不会再反",
+    "en": "Said the southerners wouldn't rebel if they were all killed"
+   },
+   "carry": false
   },
   "flag.v7_came_back": {
    "type": "flag",
@@ -2552,6 +2579,15 @@
     "zh": "魏延·火气",
     "en": "Wei Yan · Temper"
    }
+  },
+  "flag.v8_urged_kill_hh": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "劝姜维当场杀了黄皓",
+    "en": "Urged Jiang Wei to kill Huang Hao on the spot"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -5939,6 +5975,35 @@
     {
      "id": "jiangwei"
     }
+   ],
+   "moves": [
+    {
+     "id": "doubt_xhb",
+     "to": "jiangwei",
+     "means": {
+      "zh": "说夏侯霸是诈降，信不得",
+      "en": "says Xiahou Ba's surrender is a ruse and he can't be trusted"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "姜维摇头：『他父亲死在定军山，死在我们手里。他要是诈降，何必带着一家老小翻山过来？』他顿了顿，『先生，我当年也是降将。』",
+        "en": "Jiang Wei shakes his head. 'His father died at Mount Dingjun, at our hands. If this were a ruse, why bring his whole household over the mountains?' He pauses. 'Master, I was a surrendered general once too.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.jiangwei.warmth",
+       "by": -1
+      },
+      {
+       "add": "rel.jiangwei.esteem",
+       "by": -1
+      }
+     ],
+     "match": "(夏侯霸|他).{0,8}(诈降|有诈|是假|信不得|不可信|奸细|细作)|诈降|fake surrender|can't be trusted|a spy"
+    }
    ]
   },
   "c2_simayi": {
@@ -7396,6 +7461,39 @@
     {
      "id": "jiangwei"
     }
+   ],
+   "moves": [
+    {
+     "id": "kill_hh",
+     "to": "jiangwei",
+     "means": {
+      "zh": "劝姜维当场杀了黄皓",
+      "en": "urges Jiang Wei to kill Huang Hao on the spot"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "姜维的手按在了剑上。黄皓的脸一下子白了，往陛下身后躲。姜维的手停了很久，慢慢松开：『杀了他，明天跪在这里的，就是我。』他朝陛下叩了个头，退了出去。",
+        "en": "Jiang Wei's hand goes to his sword. Huang Hao's face turns white and he shrinks behind His Majesty. Jiang Wei's hand stays there a long time, then slowly lets go. 'Kill him, and tomorrow the one kneeling here will be me.' He bows to His Majesty and withdraws."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v8_urged_kill_hh",
+       "to": true
+      },
+      {
+       "add": "rel.jiangwei.trust",
+       "by": 1
+      },
+      {
+       "add": "renown.rash",
+       "by": 2
+      }
+     ],
+     "match": "杀了?(他|黄皓|这阉|阉(人|贼|狗))|斩(了)?黄皓|除掉黄皓|kill (him|huang hao)|cut him down"
+    }
    ]
   },
   "c4_houzhu": {
@@ -7513,6 +7611,17 @@
      },
      "when": {
       "v": "flag.v8_tazhong",
+      "op": "==",
+      "val": true
+     }
+    },
+    {
+     "text": {
+      "zh": "姜维看着地图，忽然说：『那天在宫里，你叫我杀了黄皓。我有时候想，要是那天杀了……』他摇摇头，没说下去。",
+      "en": "Jiang Wei studies the map and suddenly says, 'That day in the palace, you told me to kill Huang Hao. Sometimes I wonder, if I had…' He shakes his head and doesn't go on."
+     },
+     "when": {
+      "v": "flag.v8_urged_kill_hh",
       "op": "==",
       "val": true
      }
@@ -9879,6 +9988,42 @@
    ]
   }
  ],
+ "moves": [
+  {
+   "id": "jw_threat",
+   "to": "jiangwei",
+   "means": {
+    "zh": "当面威胁姜维、说要杀他",
+    "en": "threatens Jiang Wei to his face / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "姜维看了你很久，什么也没说，把枪靠回了架上。那天夜里，他的帐里没有再点灯。",
+      "en": "Jiang Wei looks at you for a long time, says nothing, and leans his spear back on the rack. That night no lamp is lit in his tent."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.jiangwei.trust",
+     "by": -2
+    },
+    {
+     "add": "rel.jiangwei.warmth",
+     "by": -1
+    },
+    {
+     "add": "renown.rash",
+     "by": 2
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ]
+  }
+ ],
  "future_terms": [
   {
    "term": {
@@ -11069,6 +11214,8 @@
      "flag.wz_wed": true,
      "flag.v5_left": false,
      "flag.v5_exposed": false,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false,
      "flag.v6_came_back": false,
      "flag.v6_hermit": false,
      "flag.v6_dengzhi": false,
@@ -11083,6 +11230,7 @@
      "flag.v6_officials": true,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
+     "flag.v6_said_killall": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": false,
@@ -11304,6 +11452,8 @@
      "flag.wz_wed": false,
      "flag.v5_left": false,
      "flag.v5_exposed": false,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false,
      "flag.v6_came_back": false,
      "flag.v6_hermit": false,
      "flag.v6_dengzhi": false,
@@ -11318,6 +11468,7 @@
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
+     "flag.v6_said_killall": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
@@ -11539,6 +11690,8 @@
      "flag.wz_wed": false,
      "flag.v5_left": false,
      "flag.v5_exposed": false,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false,
      "flag.v6_came_back": false,
      "flag.v6_hermit": false,
      "flag.v6_dengzhi": false,
@@ -11553,6 +11706,7 @@
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
+     "flag.v6_said_killall": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
@@ -11774,6 +11928,8 @@
      "flag.wz_wed": false,
      "flag.v5_left": false,
      "flag.v5_exposed": false,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false,
      "flag.v6_came_back": false,
      "flag.v6_hermit": false,
      "flag.v6_dengzhi": false,
@@ -11788,6 +11944,7 @@
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
+     "flag.v6_said_killall": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
@@ -11854,48 +12011,48 @@
    "carry": {
     "vol": "sanguo_strategist_v7",
     "v": {
-     "track": "cao",
-     "renown.loyal": 3,
-     "renown.cunning": 5,
-     "uncanny": 0,
-     "deviation": 1,
+     "track": "liu",
+     "renown.loyal": 10,
+     "renown.cunning": 2,
+     "uncanny": 4,
+     "deviation": 5,
      "prev.ended_early": true,
-     "renown.rash": 2,
-     "flag.mi_saved": false,
-     "flag.wenzhi_with_you": false,
-     "flag.confessed": false,
+     "renown.rash": 7,
+     "flag.mi_saved": true,
+     "flag.wenzhi_with_you": true,
+     "flag.confessed": true,
      "flag.vouched_guan": false,
      "flag.pleaded_guan": false,
      "flag.promised_return": false,
      "flag.liuqi_pretext": false,
-     "flag.pleaded_weiyan": false,
+     "flag.pleaded_weiyan": true,
      "flag.foresaw_weiyan": false,
-     "flag.zy_refused": false,
+     "flag.zy_refused": true,
      "flag.adou_kept": false,
      "flag.wz_west": false,
-     "flag.wz_jingzhou": false,
-     "flag.wz_child": false,
+     "flag.wz_jingzhou": true,
+     "flag.wz_child": true,
      "flag.pt_alive": false,
      "flag.post_chengdu": false,
      "flag.post_jingzhou": false,
-     "flag.post_none": false,
-     "flag.guan_charge": false,
+     "flag.post_none": true,
+     "flag.guan_charge": true,
      "flag.v3_came_back": false,
-     "flag.v3_hermit": true,
+     "flag.v3_hermit": false,
      "flag.dd_guard": false,
      "flag.dd_lusu": false,
      "flag.jin_trick": false,
-     "flag.jin_honest": false,
+     "flag.jin_honest": true,
      "flag.xiang_envoy": false,
      "flag.xiang_hold": false,
      "flag.xiang_obey": false,
      "flag.xiang_bargain": false,
      "flag.xiang_letter": false,
-     "flag.wakou_go": false,
+     "flag.wakou_go": true,
      "flag.hz_goaded": false,
-     "flag.hz_backed": false,
+     "flag.hz_backed": true,
      "flag.dj_flags": false,
-     "flag.dj_charge": false,
+     "flag.dj_charge": true,
      "flag.fed_pride": false,
      "flag.praised_hz": false,
      "flag.hs_open": false,
@@ -11905,60 +12062,60 @@
      "flag.mf_warned": false,
      "flag.mf_told": false,
      "flag.wh_ask": false,
-     "flag.v3_to_jing": false,
+     "flag.v3_to_jing": true,
      "flag.fs_helped": false,
      "flag.fs_private": false,
      "flag.fs_pushed": false,
      "flag.hn_soft": false,
-     "flag.hn_canon": false,
+     "flag.hn_canon": true,
      "flag.hn_apology": false,
-     "flag.fire_spared": false,
+     "flag.fire_spared": true,
      "flag.warned_jing": false,
      "flag.v3_left": false,
      "flag.v3_exposed": false,
-     "flag.sidelined": false,
-     "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 0,
-     "rel.liubei.esteem": 2,
+     "flag.sidelined": true,
+     "rel.liubei.warmth": 5,
+     "rel.liubei.trust": 1,
+     "rel.liubei.esteem": 6,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
-     "rel.caocao.esteem": 5,
-     "rel.guanyu.warmth": 1,
-     "rel.guanyu.trust": 2,
-     "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 1,
+     "rel.caocao.esteem": 1,
+     "rel.guanyu.warmth": 5,
+     "rel.guanyu.trust": 5,
+     "rel.guanyu.esteem": 5,
+     "rel.zhuge.warmth": 3,
      "rel.zhuge.trust": 5,
-     "rel.zhuge.esteem": 0,
-     "rel.wenzhi.warmth": 3,
-     "rel.wenzhi.trust": 2,
+     "rel.zhuge.esteem": 5,
+     "rel.wenzhi.warmth": 5,
+     "rel.wenzhi.trust": 5,
      "rel.wenzhi.esteem": 2,
-     "rel.wenzhi.intimacy": 1,
-     "rel.zhaoyun.warmth": 2,
-     "rel.zhaoyun.trust": 3,
-     "rel.zhaoyun.esteem": 1,
+     "rel.wenzhi.intimacy": 6,
+     "rel.zhaoyun.warmth": 5,
+     "rel.zhaoyun.trust": 5,
+     "rel.zhaoyun.esteem": 0,
      "rel.lusu.warmth": 2,
-     "rel.lusu.trust": 3,
+     "rel.lusu.trust": 5,
      "rel.lusu.esteem": 1,
-     "rel.pangtong.warmth": 1,
+     "rel.pangtong.warmth": 5,
      "rel.pangtong.trust": 1,
      "rel.pangtong.esteem": 1,
-     "rel.fazheng.warmth": 1,
+     "rel.fazheng.warmth": 2,
      "rel.fazheng.trust": 1,
-     "rel.fazheng.esteem": 1,
-     "rel.huangzhong.warmth": 2,
-     "rel.huangzhong.trust": 2,
-     "rel.huangzhong.esteem": 1,
+     "rel.fazheng.esteem": 4,
+     "rel.huangzhong.warmth": 5,
+     "rel.huangzhong.trust": 4,
+     "rel.huangzhong.esteem": 4,
      "imp.guanyu.offended": 0,
      "imp.liubei.offended": 0,
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,
      "flag.v4_came_back": false,
-     "flag.v4_hermit": true,
-     "flag.pd_guard": false,
+     "flag.v4_hermit": false,
+     "flag.pd_guard": true,
      "flag.pd_bow": false,
      "flag.flood_plan": false,
-     "flag.flood_people": false,
+     "flag.flood_people": true,
      "flag.pd_spare": false,
      "flag.pow_home": false,
      "flag.bone_rest": false,
@@ -11968,27 +12125,27 @@
      "flag.v4_early_sy": false,
      "flag.lx_warned": false,
      "flag.v4_kept_rear": false,
-     "flag.mf_kind": false,
+     "flag.mf_kind": true,
      "flag.mf_pressed": false,
-     "flag.v4_mf_path": false,
+     "flag.v4_mf_path": true,
      "flag.v4_early_call": false,
      "flag.v4_relief": false,
      "flag.v4_ride": false,
      "flag.guan_alive": false,
      "flag.v4_with_guan": false,
-     "flag.v4_letter": false,
+     "flag.v4_letter": true,
      "flag.v4_counsel_wait": false,
-     "flag.v4_vow": false,
-     "flag.v4_wz_letter": false,
+     "flag.v4_vow": true,
+     "flag.v4_wz_letter": true,
      "flag.v4_left": false,
      "flag.v4_exposed": false,
      "flag.v5_came_back": false,
-     "flag.v5_hermit": true,
+     "flag.v5_hermit": false,
      "flag.v5_north": false,
      "flag.wz_qingnang": false,
      "flag.liufeng_spared": false,
      "flag.v5_mengda": false,
-     "flag.v5_fei_letter": false,
+     "flag.v5_fei_letter": true,
      "flag.v5_fei_vow": false,
      "flag.v5_zhaoyun": false,
      "flag.v5_nearly": false,
@@ -11996,19 +12153,21 @@
      "flag.v5_fei_warned": false,
      "flag.fei_alive": false,
      "flag.v5_fei_night": false,
-     "flag.v5_peace": false,
+     "flag.v5_peace": true,
      "flag.v5_hz_ride": false,
      "flag.v5_hz_word": false,
      "flag.v5_firebreak": false,
-     "flag.v5_map": false,
+     "flag.v5_map": true,
      "flag.v5_rear": false,
      "flag.v5_guard": false,
      "flag.v5_guan_last": false,
      "flag.v5_entrusted": false,
      "flag.v5_masu": false,
      "flag.wz_wed": false,
-     "flag.v5_left": false,
+     "flag.v5_left": true,
      "flag.v5_exposed": false,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false,
      "flag.v6_came_back": false,
      "flag.v6_hermit": true,
      "flag.v6_dengzhi": false,
@@ -12023,6 +12182,7 @@
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
+     "flag.v6_said_killall": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": true,
      "flag.v7_biao": false,
