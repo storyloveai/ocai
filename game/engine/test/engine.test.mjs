@@ -143,3 +143,17 @@ test("speech moves: words change the story by rule, and the validator checks the
   const v = CC.validate(c);
   assert.ok(has(v.errors, /goto x_seen is not a flash node/)); assert.ok(has(v.errors, /unknown character nobody/));
 });
+
+test("speech values: what a line shows moves people by their own values, capped per scene", () => {
+  const c = as04(tiny("x"));
+  c.value_tags = { zhi: { zh: "智", en: "cleverness" }, li: { zh: "利", en: "self-interest" } };
+  c.chars.tao.values = { zhi: ["esteem", 1], li: ["trust", -1] };
+  const st = CC.newGame(c);
+  assert.equal(CC.speak(c, st, "flat", "……", "tao", []), null, "a flat line that shows nothing changes nothing");
+  const e = CC.speak(c, st, "flat", "此计可行", "tao", ["zhi"]);
+  assert.deepEqual(e.values, ["zhi"]); assert.equal(st.v["rel.tao.esteem"], 3);
+  CC.speak(c, st, "flat", "", "tao", ["zhi"]); CC.speak(c, st, "flat", "", "tao", ["zhi"]);
+  assert.equal(st.v["rel.tao.esteem"], 4, "at most +2 on one axis in one scene");
+  CC.speak(c, st, "flat", "", "tao", ["li", "nonsense-tag"]);
+  assert.equal(st.v["rel.tao.trust"], 1, "unknown tags are ignored");
+});

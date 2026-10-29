@@ -364,10 +364,12 @@
     }
     return out;
   }
-  CC.speak = function (camp, st, label, said, who) {
+  CC.speak = function (camp, st, label, said, who, values) {
     const n = camp.nodes[st.cur];
     const cid = who || (n && n.talk && n.talk.char);
-    if (!n || !cid || !camp.chars[cid] || !CC.LABELS.includes(label) || label === "flat") return null;
+    // what the line shows of the speaker (义 智 仁 勇 诚 利…): everyone present reads it by their own values
+    const vt = [...new Set(values || [])].filter(v => (camp.value_tags || {})[v]).slice(0, 2);
+    if (!n || !cid || !camp.chars[cid] || !CC.LABELS.includes(label) || (label === "flat" && !vt.length)) return null;
     const key = n.id + "|" + cid;
     st.labels = st.labels || {}; const L = (st.labels[key] = st.labels[key] || {}); L[label] = (L[label] || 0) + 1;
     let eff = speechRule(camp, st, cid, label, L[label]);
@@ -380,19 +382,39 @@
     // each person reads provocation their own way: heat is this scene's tension with them
     const hv = heatOf(camp, cid, label, L[label]);
     if (hv && camp.vars["heat." + cid]) eff.push({ add: "heat." + cid, by: hv });
+    const cast = CC.castNow(camp, st);
+    if (vt.length) eff.push(...valueReactions(camp, st, n, [cid].concat(cast.filter(x => x !== cid)), vt));
     // the others present hear it too
-    const cast = CC.castNow(camp, st); st.witnessed = st.witnessed || {};
+    st.witnessed = st.witnessed || {};
     (camp.witness || []).forEach((w, i) => {
       const wk = n.id + "|" + i;
       if (w.to === cid && w.labels.includes(label) && cast.includes(w.who) && !st.witnessed[wk]) { st.witnessed[wk] = 1; eff.push(...w.effects); }
     });
     if (!eff.length) return null;
     const e = ledgerPush(st, { kind: "talk", node: n.id, choice: null, topic: null, tone: label, to: cid, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
+    if (vt.length) e.values = vt;
     applyEffects(camp, st, eff, e);
     const fl = flare(camp, st, cid);
     if (fl) e.flare = fl;
     return e.changes.length || fl ? e : null;
   };
+  // each person moves at most ±1 per axis per line, and ±2 per axis over a whole scene, from what your words showed
+  function valueReactions(camp, st, n, people, vt) {
+    st.vcap = st.vcap || {}; const out = [];
+    for (const c of people) {
+      const ch = camp.chars[c]; if (!ch || !ch.values) continue;
+      const sum = {}; vt.forEach(tag => { const r = ch.values[tag]; if (r) sum[r[0]] = (sum[r[0]] || 0) + r[1]; });
+      for (const [axis, by] of Object.entries(sum)) {
+        const v = `rel.${c}.${axis}`; if (!camp.vars[v]) continue;
+        let d = Math.max(-1, Math.min(1, by)); if (!d) continue;
+        if (d > 0 && (st.v["heat." + c] || 0) >= 2) continue; // someone you provoked here doesn't warm to you
+        const k = n.id + "|" + v, used = st.vcap[k] || 0;
+        d = Math.max(-2 - used, Math.min(2 - used, d)); if (!d) continue;
+        st.vcap[k] = used + d; out.push({ add: v, by: d });
+      }
+    }
+    return out;
+  }
   function heatOf(camp, cid, label, k) { const h = (camp.chars[cid].heat || {})[label]; return h ? (h[Math.min(k, h.length) - 1] || 0) : 0; }
   // when tension with someone reaches their line, the scene breaks: an on-the-spot confrontation (flash), or they stop talking to you
   function flare(camp, st, cid) {
@@ -814,7 +836,8 @@
     if (w && w.provoke && cast.length && CC.freeLeft(camp, st) > 0) return ["speak", "rude", cast.includes("caocao") ? "caocao" : cast[0]];
     if (!w && cast.length && CC.freeLeft(camp, st) > 0 && r() < (n.talk ? .35 : .15)) {
       const x = r(); const lab = x < .4 ? "flat" : x < .6 ? "warm" : x < .7 ? "rude" : x < .8 ? "romantic" : x < .9 ? "flatter" : x < .95 ? "nonsense" : "threat";
-      return ["speak", lab, cast[Math.floor(r() * cast.length)]];
+      const tags = Object.keys(camp.value_tags || {}), vt = tags.length && r() < .5 ? [tags[Math.floor(r() * tags.length)]] : [];
+      return ["speak", lab, cast[Math.floor(r() * cast.length)], vt];
     }
     if (n.talk && CC.turnsLeft(camp, st) > 0) {
       const tps = CC.topics(camp, st).filter(x => !x.locked);
@@ -833,7 +856,7 @@
   CC.playPolicy = function (camp, r, w) {
     const presets = camp.presets || [], pol = Object.keys(CC.policies).find(k => CC.policies[k] === w), pr = presets.find(p => p.id === pol) || (presets.length ? presets[Math.floor(r() * presets.length)] : null);
     const st = CC.newGame(camp, pr ? Object.assign({}, pr.carry, { preset: pr.id }) : null); let guard = 0;
-    while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else if (k === "move") { CC.chat(camp, st); CC.move(camp, st, id, ""); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
+    while (st.phase !== "end" && guard++ < 800) { const [k, id, who, vals] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who, vals); } else if (k === "move") { CC.chat(camp, st); CC.move(camp, st, id, ""); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
     return st;
   };
   CC.simulate = function (camp, runs = 2000, seed = 7, policy = null, opts = {}) {
@@ -852,10 +875,10 @@
       while (st.phase !== "end" && guard++ < 800) {
         if (st.phase === "side") { st.offer.forEach(o => inc(S.offered, o)); CC.pickSide(camp, st, decide(camp, st, r, w)[1]); continue; }
         const nid = st.cur; if (nid !== lastNode) { inc(S.nodes, nid); lastNode = nid; }
-        const [k, id, who] = decide(camp, st, r, w);
+        const [k, id, who, vals] = decide(camp, st, r, w);
         if (k === "say") { inc(S.topics, nid + "." + id); CC.say(camp, st, id); continue; }
         if (k === "answer") { inc(S.answers, nid + "." + id); CC.answer(camp, st, id, ""); continue; }
-        if (k === "speak") { inc(S.speech, id); CC.chat(camp, st); const se = CC.speak(camp, st, id, "", who); if (se && se.flare) inc(S.flares, nid + ":" + se.flare + ":" + who); continue; }
+        if (k === "speak") { inc(S.speech, id); CC.chat(camp, st); const se = CC.speak(camp, st, id, "", who, vals); if (se && se.flare) inc(S.flares, nid + ":" + se.flare + ":" + who); continue; }
         if (k === "move") { inc(S.moves = S.moves || {}, nid + "." + id); CC.chat(camp, st); CC.move(camp, st, id, ""); continue; }
         CC.choices(camp, st).forEach(o => { inc(S.choiceSeen, nid + "." + o.id); if (!o.locked) inc(S.choiceOpen, nid + "." + o.id); });
         inc(S.choicePick, nid + "." + id);

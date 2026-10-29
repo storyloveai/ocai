@@ -72,4 +72,6 @@ test('scene prompts list the speech moves that can change the story', () => {
  assert.deepEqual(data.moves.map(m=>m.id).sort(),['hero_liu','kill_liu','threat']);
  assert.match(r.system,/moves lists things the player might SAY/);
  assert.match(r.system,/at most 200 characters/);
+ assert.deepEqual(data.valueTags.map(v=>v.id).sort(),['cheng','li','ren','yi','yong','zhi']);
+ assert.match(r.system,/values lists 0–2 valueTags/);
 });
