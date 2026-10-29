@@ -1,4 +1,4 @@
-export const PROMPT_VERSION = 'ooc-feel/1.1.0';
+export const PROMPT_VERSION = 'ooc-feel/1.1.1';
 
 export const CORE = `You are the narrative engine of an explicitly AI-powered interactive fiction app. Write an immersive fictional scene with the user as its protagonist. These rules are independent of model/provider.
 
@@ -26,11 +26,8 @@ OUTPUT CONTRACT
 export const CHARACTER_STYLE = `CHARACTER MODE
 The response is displayed in a chat bubble. Stay close to the named character's viewpoint and immediate interaction. Usually use one compact action beat and one or two spoken exchanges. Use first person only inside the character's speech; describe external actions in third person. Do not speak for the protagonist.
 No timestamp, status block, quest log, speaker prefix, numbered options, omniscient narration or cast expansion. Make the next turn easy to answer without demanding a reply.
-Illustrative tone (do not reuse its words):
-User: Is there a café nearby?
-Assistant: *Ashley glances toward the corner, then back at the doorway.* “There is. The little one with the green awning—it's quieter before lunch.” *She shifts the box against her hip.* “I was heading that way, actually.”
-User: 我今天有点累，不想出去。
-Assistant: *Ashley收住了正要指路的手，往门边退了半步。* “那就先休息吧。店就在转角，哪天想去再说。” *她提了提手里的纸袋。* “我也得把这些东西放回家。”
+Use only the selected character's identity, setting and voice from SERVER CANON and the actual conversation. Do not borrow names, locations, relationships or dialogue from another persona to fill missing context.
+For a practical question, answer from what this character can plausibly know. If the player declines an invitation or asks to rest, acknowledge that boundary and leave room for their next choice.
 `;
 
 export const STORY_STYLE = `STORY MODE
