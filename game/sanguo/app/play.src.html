@@ -330,7 +330,7 @@ const UI = {
     noReply: "（没有人接这句话。）", lockedReply: h => `（现在还做不到：${h}）`, foresightReply: "旁人愣了一下：『此话从何说起？』你意识到自己说了还没发生的事。",
     noMatch: "（没听懂你要做什么。可以点上面的选项。）",
     endTitle: v => `${v}终`, endSub: "你的结局由下面几段拼成。每一段都可以追问：为什么会这样？", whyQ: "为什么？", noWhy: "这是默认走向：你没有做出改变它的选择。",
-    chose: (ch, node, label) => [ch, node, `你选择了「${label}」`], freeSaid: t => `你说出了「${t}」`, again: "再玩一次", toCreator: "看看创作者视图",
+    chose: (ch, node, label) => [ch, node, `你选择了「${label}」`], freeSaid: t => `你说出了「${t}」`, again: "再玩一次", share: "分享这个结局", shareDone: { copied: "已复制，粘贴给朋友吧", shared: "已分享" }, shareLine: (vol, end) => `我在《三国·谋士》${vol}走到了这样的结局：${end}`, toCreator: "看看创作者视图",
     tabs: { people: "人物", ledger: "记事", map: "舆图", gallery: "图鉴", creator: "创作者" }, fab: "人物 · 记事 · 舆图", close: "关闭",
     artChanged: "画面随你的选择变了", youTo: w => `你对${w}说`, commitNote: (w, x) => `承诺已记下：你答应了${w}「${x}」。后面的剧情会记着。`,
     unlockedNote: x => `因为你刚才的话，${x} 现在可以选了。`, closedNote: x => `因为你刚才的话，${x} 选不了了。`, commitKept: "承诺·兑现", commitBroken: "承诺·落空", commitWas: x => `你说过「${x}」`,
@@ -375,7 +375,7 @@ const UI = {
     noReply: "(No one answers that.)", lockedReply: h => `(You can't do that yet: ${h})`, foresightReply: "People stare. 'What makes you say that?' You realize you've spoken of something that hasn't happened yet.",
     noMatch: "(It isn't clear what you want to do. Try one of the options above.)",
     endTitle: v => `End of ${v}`, endSub: "Your ending is made of the pieces below. Each one can answer the question: why did this happen?", whyQ: "Why?", noWhy: "This is the default course: you made no choice that changed it.",
-    chose: (ch, node, label) => [ch, node, `you chose "${label}"`], freeSaid: t => `you said "${t}"`, again: "Play again", toCreator: "Open the creator view",
+    chose: (ch, node, label) => [ch, node, `you chose "${label}"`], freeSaid: t => `you said "${t}"`, again: "Play again", share: "Share this ending", shareDone: { copied: "Copied — paste it to a friend", shared: "Shared" }, shareLine: (vol, end) => `My ending for ${vol} of The Strategist (Three Kingdoms): ${end}`, toCreator: "Open the creator view",
     tabs: { people: "People", ledger: "Record", map: "Map", gallery: "Gallery", creator: "Creator" }, fab: "People · Record · Map", close: "Close",
     artChanged: "The picture changed with your choice", youTo: w => `You, to ${w}`, commitNote: (w, x) => `Promise noted: you told ${w} "${x}". The story will remember.`,
     unlockedNote: x => `Because of what you just said, ${x} is now open.`, closedNote: x => `Because of what you just said, ${x} is no longer possible.`, commitKept: "Promise kept", commitBroken: "Promise broken", commitWas: x => `you said "${x}"`,
@@ -503,6 +503,19 @@ async function useLocalServer() {
   RT.canEdit = !!health.creator; // the server decides who sees the creator view; never on by default
 }
 const EVENTS = "playtest_events";
+// sharing an ending. Standalone it shares or copies this page's link; the website replaces it to share the site's own link.
+let shareOut = async text => {
+  const url = location.href.split("#")[0];
+  try { if (navigator.share) { await navigator.share({ text, url }); return "shared"; } } catch { return null; }
+  try { await navigator.clipboard.writeText(text + " " + url); return "copied"; } catch { return null; }
+};
+async function shareEnd(btn, title) {
+  const l = L(), first = CC.endings(CAMP, G)[0], g = first && CAMP.endings.find(x => x.id === first.group);
+  const f = g && g.fragments.find(x => x.id === first.frag), line = f ? t(f.text) : title;
+  const how = await shareOut(l.shareLine(l.volTag(volIndex(G.vol)), line.length > 80 ? line.slice(0, 78) + "……" : line));
+  track("share", { where: "ending", how: how || "none" });
+  if (how && l.shareDone[how]) btn.textContent = l.shareDone[how];
+}
 function track(name, fields) {
   const doc = Object.assign({ event: name, ts: Date.now(), player: RT.uid || anon, build: BUILD, campaign: CAMP.id, lang: settings.lang, ai: RT.ai, run: G && G.run }, fields);
   if (!RT.db) return;
@@ -651,6 +664,8 @@ function settleSpeech(entry, text, cid, res, intent, prior) {
   const mv = (res.move && CC.moves(CAMP, G).find(m => m.id === res.move && m.to === cid)) || (res.move === undefined || !res.reply ? CC.matchMove(CAMP, G, text, cid, tone) : null);
   if (mv) { const me = CC.move(CAMP, G, mv.id, text); entry.move = mv.id; entry.toneSeq = me.seq; track("speech_move", { node: here, move: mv.id, to: cid }); }
   else { const te = CC.speak(CAMP, G, tone, text, cid, res.values); if (te) { entry.toneSeq = te.seq; if (te.values) entry.values = te.values; } }
+  // what a free line was like (never its words): tone, the speaker's mood, the values it showed, whether it moved the story
+  track("speech", { node: here, to: cid, tone, mood: res.mood || null, values: entry.values || [], move: entry.move || null, voiced: !!res.reply, len: text.length });
   const kind = res.commit && ["protect", "loyalty", "other"].includes(res.commit.kind) ? res.commit.kind : (res.reply ? null : CC.guessPromise(text));
   if (kind) {
     const k = CC.commit(CAMP, G, { kind, char: cid, text: (res.commit && res.commit.text) || text.slice(0, 40) });
@@ -1236,6 +1251,7 @@ function renderEnding() {
     h("p", { class: "muted", style: "margin-top:16px" }, t(CAMP.end_note)),
     (location.hash === "#playtest" || creatorAllowed()) ? renderSurvey() : null,
     h("div", { class: "btns", style: "margin-top:16px" }, (() => { const next = BOOK.volumes[volIndex(G.vol) + 1]; return next && next.camp ? h("button", { class: "btn", type: "button", onclick: () => newGame(next.id, Object.assign(CC.carryOut(G), { run: G.run }), { from: G.run }) }, l.nextVol(l.volTag(volIndex(next.id)))) : null; })(),
+      h("button", { class: "btn ghost", type: "button", onclick: e => shareEnd(e.currentTarget, title) }, l.share),
       h("button", { class: "btn ghost", type: "button", onclick: () => branchFrom(G.run, 0) }, l.again),
       h("button", { class: "btn ghost", type: "button", onclick: goHome }, l.toc),
       creatorAllowed() ? h("button", { class: "btn ghost", type: "button", onclick: () => { setCreator(true); V.panelOpen = true; renderPanel(); } }, l.toCreator) : null));

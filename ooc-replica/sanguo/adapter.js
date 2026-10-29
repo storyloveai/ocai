@@ -76,3 +76,21 @@ choose=clearDraft(explicitActions.choose);pickSide=clearDraft(explicitActions.pi
 const originalPanel=renderPanel;
 renderPanel=function(){const y=window.scrollY||0,x=window.scrollX||0;originalPanel();const panel=$('#panel');if(V.panelOpen){panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-label',L().fab);}else{panel.removeAttribute('role');panel.removeAttribute('aria-modal');}if(!V.panelOpen)window.scrollTo?.({top:y,left:x,behavior:'instant'});};
 document.addEventListener('keydown',event=>{if(event.key==='Escape'&&V.panelOpen){V.panelOpen=false;renderPanel();$('#fab')?.focus();}});
+// Usage events go to the page around the game (which sends them to PostHog). Only these fields, and never the
+// player's words: free text is reported by its length, tone and the values it showed.
+const TRACK_FIELDS={run_start:['from','preset'],run_branch:['chapter'],chapter:['chapter'],choice:['node','choice','via'],side_pick:['node'],
+ answer:['node','answer','via','len'],free_text:['node','matched','via','intent','to','len'],talk:['node','topic','via'],talk_free:['node','matched','via','intent','len'],
+ speech:['node','to','tone','mood','values','move','voiced','len'],speech_move:['node','move','to'],ending:['frags','deviation','uncanny'],share:['where','how'],tab:['tab'],map_view:['view','where']};
+track=(name,fields={})=>{
+ const keep=TRACK_FIELDS[name];if(!keep||parent===window)return;
+ const props={vol:G?.vol||null,ch:G?.ch??null,run:G?.run||null,n:G?.n??null,lang:settings.lang,ai:RT.ai==='ready'};
+ for(const k of keep)if(fields[k]!==undefined)props[k]=fields[k];
+ try{parent.postMessage({type:'sg2-track',name,props},location.origin);}catch{}
+};
+// the site shares its own link (/play/three-kingdoms), and tells the game whether it was shared or copied
+shareOut=text=>new Promise(done=>{
+ const id=Math.random().toString(36).slice(2),wait=setTimeout(()=>finish(null),15000);
+ function finish(how){clearTimeout(wait);window.removeEventListener('message',hear);done(how);}
+ function hear(event){if(event.source===parent&&event.origin===location.origin&&event.data?.type==='sg2-shared'&&event.data.id===id)finish(event.data.how||null);}
+ window.addEventListener('message',hear);parent.postMessage({type:'sg2-share',id,text},location.origin);
+});
