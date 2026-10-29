@@ -2,7 +2,7 @@
   "issue": 68,
   "source_pr": 74,
   "existing_pr": 72,
-  "asset_ref": "codex/art-v7-endings",
+  "asset_ref": "cdd256d6323ad12f23b694dff7641dd1c6041ca8",
   "source_v8_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
   "fallback_authorization": "All authored references have been formally adopted in PR #74 and pinned to 6f359c96d3dd717dc74fbf4fd9ca43838edca364; no substitute or unadopted reference is used.",
   "items": [
@@ -162,9 +162,9 @@
           },
           "visual_review_notes": "One closed black coffin/cart, blank white mourning flags, adult procession, white-haired Ziheng rear view on old horse and mountain plank road; no text or injuries.",
           "path": "game/sanguo/art/candidates/scene-v8_hearse/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_hearse/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_hearse/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_hearse/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_hearse/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_hearse/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_hearse/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -262,9 +262,9 @@
           },
           "visual_review_notes": "One closed black coffin/cart, blank white mourning flags, adult procession, white-haired Ziheng rear view on old horse and mountain plank road; no text or injuries.",
           "path": "game/sanguo/art/candidates/scene-v8_hearse/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_hearse/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_hearse/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_hearse/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_hearse/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_hearse/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_hearse/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -445,9 +445,9 @@
           },
           "visual_review_notes": "Authored principal action and props preserved in native wide export; player fully rear-facing, blank letter, no blood/children/text, adopted costume where relevant.",
           "path": "game/sanguo/art/candidates/scene-v8_weiyan/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_weiyan/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_weiyan/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_weiyan/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_weiyan/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_weiyan/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_weiyan/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -555,9 +555,9 @@
           },
           "visual_review_notes": "Correct adult principal cast and authored gesture/props, no open coffin or wounds, full-back player, no writing; canonical Wei Yan helmet/red plume/dark red armour/short beard where present.",
           "path": "game/sanguo/art/candidates/scene-v8_weiyan/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_weiyan/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_weiyan/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_weiyan/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_weiyan/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_weiyan/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_weiyan/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -718,9 +718,9 @@
           },
           "visual_review_notes": "Correct adult principal cast and authored gesture/props, no open coffin or wounds, full-back player, no writing; canonical Wei Yan helmet/red plume/dark red armour/short beard where present.",
           "path": "game/sanguo/art/candidates/scene-v8_return/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_return/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_return/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_return/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_return/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_return/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_return/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -818,9 +818,9 @@
           },
           "visual_review_notes": "Reviewed unlettered paper/banners, closed coffin where present, adult cast, rear-facing grey-white-haired player, no injuries, and key props/actions inside final banner.",
           "path": "game/sanguo/art/candidates/scene-v8_return/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_return/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_return/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_return/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_return/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_return/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_return/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -1001,9 +1001,9 @@
           },
           "visual_review_notes": "Retook to make grey temple patches visible on otherwise dark high bun, preserving canonical face/gold pin/white plum/pale blue-grey dress; two principal adults, full-back white-haired Ziheng, no child/text.",
           "path": "game/sanguo/art/candidates/scene-v8_gate/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_gate/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_gate/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_gate/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_gate/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_gate/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_gate/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -1111,9 +1111,9 @@
           },
           "visual_review_notes": "Retook to make grey temple patches visible on otherwise dark high bun, preserving canonical face/gold pin/white plum/pale blue-grey dress; two principal adults, full-back white-haired Ziheng, no child/text.",
           "path": "game/sanguo/art/candidates/scene-v8_gate/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_gate/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_gate/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_gate/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_gate/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_gate/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_gate/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -1294,9 +1294,9 @@
           },
           "visual_review_notes": "Two adults, adopted Jiang Wei face/silver armour/white plume/navy cloak and bedside spear; elderly rear-facing Ziheng in bed. Age lines on Jiang Wei are subtle in this series style; final age fit for Claude review.",
           "path": "game/sanguo/art/candidates/scene-v8_oldman/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_oldman/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_oldman/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_oldman/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_oldman/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_oldman/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_oldman/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -1404,9 +1404,9 @@
           },
           "visual_review_notes": "Two adults, adopted Jiang Wei face/silver armour/white plume/navy cloak and bedside spear; elderly rear-facing Ziheng in bed. Age lines on Jiang Wei are subtle in this series style; final age fit for Claude review.",
           "path": "game/sanguo/art/candidates/scene-v8_oldman/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_oldman/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_oldman/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_oldman/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_oldman/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_oldman/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_oldman/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -1567,9 +1567,9 @@
           },
           "visual_review_notes": "Authored principal action and props preserved in native wide export; player fully rear-facing, blank letter, no blood/children/text, adopted costume where relevant.",
           "path": "game/sanguo/art/candidates/scene-v8_simayi_letter/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_simayi_letter/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_simayi_letter/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_simayi_letter/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_simayi_letter/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_simayi_letter/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_simayi_letter/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -1667,9 +1667,9 @@
           },
           "visual_review_notes": "Reviewed unlettered paper/banners, closed coffin where present, adult cast, rear-facing grey-white-haired player, no injuries, and key props/actions inside final banner.",
           "path": "game/sanguo/art/candidates/scene-v8_simayi_letter/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_simayi_letter/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_simayi_letter/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_simayi_letter/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_simayi_letter/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_simayi_letter/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_simayi_letter/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -1842,9 +1842,9 @@
           },
           "visual_review_notes": "Two elderly adults with white hair/visible age lines; Wen Zhi canonical eyes/face, high bun/gold pin/one white plum/pale blue-grey dress; needle/thread and cloth visible; Ziheng full rear view in bed, no children or text.",
           "path": "game/sanguo/art/candidates/scene-v8_wz_last/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_wz_last/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_wz_last/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_wz_last/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -1949,9 +1949,9 @@
           },
           "visual_review_notes": "Two elderly adults with white hair/visible age lines; Wen Zhi canonical eyes/face, high bun/gold pin/one white plum/pale blue-grey dress; needle/thread and cloth visible; Ziheng full rear view in bed, no children or text.",
           "path": "game/sanguo/art/candidates/scene-v8_wz_last/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_wz_last/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_wz_last/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_wz_last/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_wz_last/b.json"
         }
       ],
       "status": "adopted"
@@ -2112,9 +2112,9 @@
           },
           "visual_review_notes": "Exactly two adults, rear-facing white-haired Ziheng in sickbed and plain-robed neutral successor with blank notebook; winter setting, hanging white fan and steaming medicine stove visible.",
           "path": "game/sanguo/art/candidates/scene-v8_heir/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_heir/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_heir/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_heir/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_heir/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_heir/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_heir/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -2212,9 +2212,9 @@
           },
           "visual_review_notes": "Exactly two adults, rear-facing white-haired Ziheng in sickbed and plain-robed neutral successor with blank notebook; winter setting, hanging white fan and steaming medicine stove visible.",
           "path": "game/sanguo/art/candidates/scene-v8_heir/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_heir/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_heir/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_heir/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_heir/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_heir/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_heir/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -2395,9 +2395,9 @@
           },
           "visual_review_notes": "Two principal adults; canonical Jiang Wei face/silver armour/white plume/navy cloak, hand touches white fan protruding from cloth bundle; plain-robed rear-facing neutral successor. Age lines remain subtle for Claude review.",
           "path": "game/sanguo/art/candidates/scene-v8_fan/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_fan/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_fan/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_fan/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_fan/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_fan/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_fan/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -2505,9 +2505,9 @@
           },
           "visual_review_notes": "Two principal adults; canonical Jiang Wei face/silver armour/white plume/navy cloak, hand touches white fan protruding from cloth bundle; plain-robed rear-facing neutral successor. Age lines remain subtle for Claude review.",
           "path": "game/sanguo/art/candidates/scene-v8_fan/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_fan/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_fan/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_fan/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_fan/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_fan/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_fan/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -2688,9 +2688,9 @@
           },
           "visual_review_notes": "Dust/torn navy cloak without blood/wounds, canonical silver armour/white plume, reining horse and backwards glance, ambushers on both sides and ridge reinforcements; rear-view neutral successor.",
           "path": "game/sanguo/art/candidates/scene-v8_duangu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_duangu/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_duangu/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_duangu/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_duangu/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_duangu/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_duangu/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -2798,9 +2798,9 @@
           },
           "visual_review_notes": "Dust/torn navy cloak without blood/wounds, canonical silver armour/white plume, reining horse and backwards glance, ambushers on both sides and ridge reinforcements; rear-view neutral successor.",
           "path": "game/sanguo/art/candidates/scene-v8_duangu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_duangu/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_duangu/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_duangu/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_duangu/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_duangu/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_duangu/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -2981,9 +2981,9 @@
           },
           "visual_review_notes": "Retaken to remove all book marks: both cream pages visibly blank; canonical silver armour/white plume/navy cloak, two adult principals, neutral rear-view successor and weary lamp-lit posture.",
           "path": "game/sanguo/art/candidates/scene-v8_jiangwei_night/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiangwei_night/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiangwei_night/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiangwei_night/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiangwei_night/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiangwei_night/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiangwei_night/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -3091,9 +3091,9 @@
           },
           "visual_review_notes": "Retaken to remove all book marks: both cream pages visibly blank; canonical silver armour/white plume/navy cloak, two adult principals, neutral rear-view successor and weary lamp-lit posture.",
           "path": "game/sanguo/art/candidates/scene-v8_jiangwei_night/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiangwei_night/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiangwei_night/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiangwei_night/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiangwei_night/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiangwei_night/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiangwei_night/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -3254,9 +3254,9 @@
           },
           "visual_review_notes": "Retaken to remove unrequested general: exactly four adults, successor rear/plain robe and three resting patients, clean bandages, no armour/helmet/white plume, open medicine chest and completely blank medical book.",
           "path": "game/sanguo/art/candidates/scene-v8_healer/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_healer/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_healer/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_healer/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_healer/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_healer/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_healer/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -3354,9 +3354,9 @@
           },
           "visual_review_notes": "Retaken to remove unrequested general: exactly four adults, successor rear/plain robe and three resting patients, clean bandages, no armour/helmet/white plume, open medicine chest and completely blank medical book.",
           "path": "game/sanguo/art/candidates/scene-v8_healer/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_healer/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_healer/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_healer/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_healer/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_healer/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_healer/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -3537,9 +3537,9 @@
           },
           "visual_review_notes": "Adult emperor smiling, adult eunuch kowtowing, canonical Jiang Wei silver armour/white plume/navy cloak kneeling with angry/downcast face; optional player rear/plain neutral robe, no wounds/text.",
           "path": "game/sanguo/art/candidates/scene-v8_huanghao/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_huanghao/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_huanghao/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_huanghao/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_huanghao/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_huanghao/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_huanghao/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -3647,9 +3647,9 @@
           },
           "visual_review_notes": "Adult emperor smiling, adult eunuch kowtowing, canonical Jiang Wei silver armour/white plume/navy cloak kneeling with angry/downcast face; optional player rear/plain neutral robe, no wounds/text.",
           "path": "game/sanguo/art/candidates/scene-v8_huanghao/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_huanghao/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_huanghao/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_huanghao/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_huanghao/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_huanghao/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_huanghao/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -3830,9 +3830,9 @@
           },
           "visual_review_notes": "Two principal adults on Jiange fortifications between cliffs, hand points at unlabelled terrain/path map under night lamps, canonical silver/white-plume/navy Jiang Wei, neutral plain-robed rear-view successor.",
           "path": "game/sanguo/art/candidates/scene-v8_jiange/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiange/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiange/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiange/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiange/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiange/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiange/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -3940,9 +3940,9 @@
           },
           "visual_review_notes": "Two principal adults on Jiange fortifications between cliffs, hand points at unlabelled terrain/path map under night lamps, canonical silver/white-plume/navy Jiang Wei, neutral plain-robed rear-view successor.",
           "path": "game/sanguo/art/candidates/scene-v8_jiange/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiange/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiange/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_jiange/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiange/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiange/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_jiange/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -4103,9 +4103,9 @@
           },
           "visual_review_notes": "Retaken to remove unrequested named observer: anonymous adult troops only, felt-wrapped feet-first sliding, ropes visibly anchored to trees, separate small Shu force below; no freefall bodies, blood or injuries.",
           "path": "game/sanguo/art/candidates/scene-v8_yinping/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_yinping/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_yinping/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_yinping/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_yinping/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_yinping/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_yinping/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4203,9 +4203,9 @@
           },
           "visual_review_notes": "Retaken to remove unrequested named observer: anonymous adult troops only, felt-wrapped feet-first sliding, ropes visibly anchored to trees, separate small Shu force below; no freefall bodies, blood or injuries.",
           "path": "game/sanguo/art/candidates/scene-v8_yinping/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_yinping/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_yinping/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_yinping/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_yinping/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_yinping/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_yinping/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -4366,9 +4366,9 @@
           },
           "visual_review_notes": "Adult white-robed Zhuge Zhan leads outward charge separately from adult evacuation; no scholar cap/fan/live Zhuge Liang or unrequested Jiang Wei, clean bandages, no blood or children, neutral rear-view successor.",
           "path": "game/sanguo/art/candidates/scene-v8_mianzhu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_mianzhu/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_mianzhu/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_mianzhu/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_mianzhu/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_mianzhu/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_mianzhu/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4466,9 +4466,9 @@
           },
           "visual_review_notes": "Adult white-robed Zhuge Zhan leads outward charge separately from adult evacuation; no scholar cap/fan/live Zhuge Liang or unrequested Jiang Wei, clean bandages, no blood or children, neutral rear-view successor.",
           "path": "game/sanguo/art/candidates/scene-v8_mianzhu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_mianzhu/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_mianzhu/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_mianzhu/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_mianzhu/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_mianzhu/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_mianzhu/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -4629,9 +4629,9 @@
           },
           "visual_review_notes": "Adult prince protests, ministers bow heads, middle-aged plump emperor covers face; neutral rear-view successor, no weapons/self-harm/children/text.",
           "path": "game/sanguo/art/candidates/scene-v8_beidi/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_beidi/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_beidi/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_beidi/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_beidi/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_beidi/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_beidi/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4729,9 +4729,9 @@
           },
           "visual_review_notes": "Adult prince and court/emperor reactions preserved, neutral rear-view successor, no violence/self-harm/children/text.",
           "path": "game/sanguo/art/candidates/scene-v8_beidi/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_beidi/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_beidi/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_beidi/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_beidi/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_beidi/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_beidi/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -4892,9 +4892,9 @@
           },
           "visual_review_notes": "Exactly one adult successor in plain undyed robe, neutral fully rear-facing kneeling silhouette, closed shrine doors with thin light gap at night; no other people, injuries, suicide or text.",
           "path": "game/sanguo/art/candidates/scene-v8_temple/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_temple/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_temple/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_temple/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_temple/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_temple/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_temple/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4992,9 +4992,9 @@
           },
           "visual_review_notes": "Exactly one adult successor in plain undyed robe, neutral fully rear-facing kneeling silhouette, closed shrine doors with thin light gap at night; no other people, injuries, suicide or text.",
           "path": "game/sanguo/art/candidates/scene-v8_temple/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_temple/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_temple/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_temple/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_temple/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_temple/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_temple/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -5175,9 +5175,9 @@
           },
           "visual_review_notes": "Jiang Wei upright looking up, hand on sheathed sword hilt, correct adopted helmet/armour/navy cloak; neutral rear-view player pushed safely out side door; no stabbing, wounds, blood, corpse or suicide depiction.",
           "path": "game/sanguo/art/candidates/scene-v8_zhonghui/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_zhonghui/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_zhonghui/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_zhonghui/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_zhonghui/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_zhonghui/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_zhonghui/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -5285,9 +5285,9 @@
           },
           "visual_review_notes": "Jiang Wei upright looking up, hand on sheathed sword hilt, correct adopted helmet/armour/navy cloak; neutral rear-view player pushed safely out side door; no stabbing, wounds, blood, corpse or suicide depiction.",
           "path": "game/sanguo/art/candidates/scene-v8_zhonghui/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_zhonghui/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_zhonghui/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_zhonghui/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_zhonghui/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_zhonghui/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_zhonghui/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -5448,9 +5448,9 @@
           },
           "visual_review_notes": "Adult dancers/guests, elderly stout duke smiling versus weeping former ministers, no unrequested Jiang Wei/Zhuge, rear plain-robed neutral successor, no text/watermark.",
           "path": "game/sanguo/art/candidates/scene-v8_lebu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_lebu/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_lebu/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_lebu/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_lebu/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_lebu/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_lebu/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -5548,9 +5548,9 @@
           },
           "visual_review_notes": "All adult dancers/guests, elderly stout smiling duke and mourning ministers, neutral rear-view successor, no unrequested named hero, lettering or watermark.",
           "path": "game/sanguo/art/candidates/scene-v8_lebu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_lebu/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_lebu/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_lebu/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_lebu/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_lebu/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_lebu/b.json"
         }
       ],
       "status": "awaiting_claude_review"
@@ -5711,9 +5711,9 @@
           },
           "visual_review_notes": "Exactly one elderly white/grey-haired neutral rear-view successor seated on river rock, old medicine chest and worn blank notebooks, inherited white feather fan visible in house hall; no extra named hero, text, injury or child.",
           "path": "game/sanguo/art/candidates/scene-v8_end/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_end/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_end/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_end/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_end/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_end/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_end/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -5811,9 +5811,9 @@
           },
           "visual_review_notes": "Exactly one elderly white/grey-haired neutral rear-view successor seated on river rock, old medicine chest and worn blank notebooks, inherited white feather fan visible in house hall; no extra named hero, text, injury or child.",
           "path": "game/sanguo/art/candidates/scene-v8_end/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_end/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_end/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v8_end/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_end/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_end/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/cdd256d6323ad12f23b694dff7641dd1c6041ca8/game/sanguo/art/candidates/scene-v8_end/b.json"
         }
       ],
       "status": "awaiting_claude_review"
