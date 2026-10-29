@@ -13,7 +13,8 @@ export function mountThreeKingdoms(path,{reference,account,helpers}){
  let siteLang=null;try{siteLang=localStorage.getItem('sd.lang');}catch{}
  const lang=params.get('lang')||siteLang||(/^zh/i.test(globalThis.navigator?.language||'')?'zh':'en');
  // the game starts in the site language; the setting is saved the next time the game itself saves its settings
- if(['zh','en'].includes(lang))snapshot['campaign.settings']={...(snapshot['campaign.settings']||{}),lang};
+ const settingsKey=classic?'settings':'campaign.settings';
+ if(['zh','en'].includes(lang))snapshot[settingsKey]={...(snapshot[settingsKey]||{}),lang};
  const page=classic?'three-kingdoms':ink?'sanguo-campaign':'sanguo-campaign-illus';
  // a choice or words from the home banner are handed to the game, which plays them into chapter 1's opening scene
  const pass=new URLSearchParams();for(const k of ['choice','say']){const v=params.get(k);if(v)pass.set(k,v.slice(0,200));}const entry=!classic&&[...pass].length?'?'+pass:'';

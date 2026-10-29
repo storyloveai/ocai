@@ -1,0 +1,135 @@
+{
+  "websiteBase": "24cde5d",
+  "contentEight": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "model": "disabled / authored offline fallback",
+  "results": [
+    {
+      "case": "classic URL language",
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "classic inherited site language",
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "banner choice, browser refresh, real edition link preserve progress",
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 1,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 2,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 3,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 4,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 5,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 6,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 7,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 8,
+      "viewport": "desktop",
+      "result": "pass"
+    },
+    {
+      "case": "classic URL language",
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "classic inherited site language",
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "banner choice, browser refresh, real edition link preserve progress",
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 1,
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 2,
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 3,
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 4,
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 5,
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 6,
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 7,
+      "viewport": "mobile",
+      "result": "pass"
+    },
+    {
+      "case": "eight-volume content: resume and no horizontal overflow",
+      "volume": 8,
+      "viewport": "mobile",
+      "result": "pass"
+    }
+  ],
+  "errors": [],
+  "missing": []
+}
