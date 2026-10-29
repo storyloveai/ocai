@@ -8,7 +8,7 @@ export function buildPrompt(body){
  if(body?.task==='author')return authorPrompt(body);
  if(body?.task==='suggestions')return suggestionPrompt(body);
  if(!body||typeof body!=='object'||Array.isArray(body))throw new Error('Invalid request');
- const role=isCustomId(body.titleId)?customRole(body.custom):roleFor(text(body.titleId,64));
+ const role=isCustomId(body.titleId)?customRole(body.custom):roleFor(text(body.titleId,64),{sceneId:text(body.characterScene,64)||undefined});
  if(!Array.isArray(body.messages)||body.messages.length===0||body.messages.length>80)throw new Error('Invalid conversation');
  const raw=body.messages.map(m=>{if(!m||!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim()||m.content.length>4000)throw new Error('Invalid message');return {role:m.role,content:m.content};});
  if(raw.at(-1).role!=='user')throw new Error('The last message must be from the user');

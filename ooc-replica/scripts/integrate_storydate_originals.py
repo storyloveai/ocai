@@ -55,6 +55,6 @@ for slot, s in zip(cslots, tk):
         description=f"{s['character_brief'].split(',')[0]} of the Three Kingdoms. {s['summary']}", description_zh=s['summary_zh'], character_brief=s['character_brief']))
     sc['stories'][cid] = dict(title=name,
         opening=f"> {name}\n\n*{s['character_brief']}.*\n\n💬{name} | {openings[s['id']]}")
-(root/'dist/assets/storydate-originals.js').write_text("import {mergeSanguoCharacters} from './sanguo-characters.js';\n"+'export const storydateOriginals='+json.dumps(entries, ensure_ascii=False)+';\nconst baseCharacters='+json.dumps(chars, ensure_ascii=False)+';\nexport const storydateCharacters=mergeSanguoCharacters(baseCharacters);\n')
+(root/'dist/assets/storydate-originals.js').write_text("import {originalCharacters} from './original-characters.js';\nimport {mergeSanguoCharacters} from './sanguo-characters.js';\n"+'export const storydateOriginals='+json.dumps(entries, ensure_ascii=False)+';\nconst baseCharacters='+json.dumps(chars, ensure_ascii=False)+';\nexport const storydateCharacters=[...mergeSanguoCharacters(baseCharacters),...originalCharacters];\n')
 json.dump(sc, open(root/'dist/assets/scenarios.json','w'), ensure_ascii=False)
 print(len(entries), 'entries; replaced', len(set(slots)), 'old titles')

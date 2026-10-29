@@ -1,0 +1,22 @@
+{
+  "model": "local verification stub, not live model quality",
+  "results": [
+    {
+      "case": "pending user turn survives reload; branch controls stay disabled during generation",
+      "result": "pass"
+    },
+    {
+      "case": "resume reply sends the existing user turn without duplication",
+      "result": "pass"
+    },
+    {
+      "case": "rewrite a visitor line prefills its text and preserves the original conversation",
+      "result": "pass"
+    },
+    {
+      "case": "remove a remembered line through the memory dialog",
+      "result": "pass"
+    }
+  ],
+  "errors": []
+}

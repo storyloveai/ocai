@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-29",
+  "external_paid_image_api_used": false,
+  "images": [
+    {
+      "character": "shen-yanzhou",
+      "age": 31,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "reference_images": [],
+      "original": "character-art/source/shen-yanzhou.png",
+      "web_asset": "dist/assets/characters/shen-yanzhou.webp",
+      "original_sha256": "73e48c7f6e0372d24754c7af87a99fa8b7d83018364ff13192f1c75658ba93fc",
+      "web_sha256": "cd4b4a753b689ce7463a2f5c52780ed3c8d8946e22e004c5255eded216581382",
+      "dimensions": "1086x1448",
+      "web_bytes": 209392,
+      "processing": "WebP encoding at quality 88 only; no crop, resize, retouch or content edits",
+      "prompt_summary": "Original mature male investigator at a rainy station café, navy coat, sealed unlettered envelope; restrained concern, amber and teal light."
+    },
+    {
+      "character": "lu-wensheng",
+      "age": 28,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "reference_images": [],
+      "original": "character-art/source/lu-wensheng.png",
+      "web_asset": "dist/assets/characters/lu-wensheng.webp",
+      "original_sha256": "8d8d6bbd9e05127c125689723b2ce6490ab08acb6f2563721eb84472e352a589",
+      "web_sha256": "c74242134ed535f89a966b59543188b3125b316ee6c5852e4824f845a51b33b8",
+      "dimensions": "1086x1448",
+      "web_bytes": 177734,
+      "processing": "WebP encoding at quality 88 only; no crop, resize, retouch or content edits",
+      "prompt_summary": "Original adult male theater composer at an upright piano after rehearsal, chestnut hair, burgundy knit and cream jacket, warm theater lighting."
+    },
+    {
+      "character": "lin-zhaowan",
+      "age": 29,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "reference_images": [],
+      "original": "character-art/source/lin-zhaowan.png",
+      "web_asset": "dist/assets/characters/lin-zhaowan.webp",
+      "original_sha256": "893cfc41b6719d9a285987f9b31fde0fcfb7221aefdf97ee6de0a7e2ebc28250",
+      "web_sha256": "9d900ecd90f570670be09837dc88aca9ca1e4fc40a54e2f71771747c62294f6f",
+      "dimensions": "1086x1448",
+      "web_bytes": 254552,
+      "processing": "WebP encoding at quality 88 only; no crop, resize, retouch or content edits",
+      "prompt_summary": "Original adult female photograph conservator in a lamplit studio, indigo shirt and pale apron, blank-backed photograph, warm confident expression."
+    }
+  ]
+}

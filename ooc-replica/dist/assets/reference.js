@@ -12,7 +12,7 @@ import {threeKingdoms,threeKingdomsInk} from './three-kingdoms.js';
 import {storydateOriginals,storydateCharacters} from './storydate-originals.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
-import {characterById} from './sanguo-characters.js';
+import {characterById} from './character-profiles.js';
 import {mountCharacterPage,characterPreview} from './sanguo-character-hub.js';
 import {getLang} from './site-i18n.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
