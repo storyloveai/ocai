@@ -29,7 +29,10 @@ test('character extraction keeps the eight existing IDs and adds Wen Zhi exactly
 
 for (const c of sanguoCharacters) test(`${c.title}: server canon uses the adopted persona and a distinct conversation opening`, async () => {
   const role = roleFor(c.id);
-  const source = JSON.parse(await readFile(new URL('../../' + role.source.file, import.meta.url), 'utf8'));
+  // Vercel may build only ooc-replica/. Its checksum-verified upstream copy is
+  // the deployed canon; the original game source path remains provenance only.
+  const campaignFile = role.source.file.split('/').at(-1);
+  const source = JSON.parse(await readFile(new URL('../sanguo/upstream/' + campaignFile, import.meta.url), 'utf8'));
   assert.deepEqual(role.character.persona, source.chars[c.key].persona);
   assert.equal(role.character.romanceEnabled, source.chars[c.key].romance);
   assert.equal(role.mode, 'character');

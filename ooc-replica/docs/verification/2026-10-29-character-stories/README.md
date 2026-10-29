@@ -87,3 +87,9 @@ GitHub issue 创建和 REST 读取都返回 403；`ISSUE-draft.md`、`CLAIM-draf
 - 本文、电脑角色页和手机分层阅读截图的 GitHub 原始文件均确认 HTTP 200。
 - Vercel `/api/config` 访问仍返回 `Tunnel connection failed: 403 Forbidden`；GitHub 的公开页面也未取得本提交的实际部署链接。预览状态未确认，不把猜测域名当作可用预览。
 - 正式网站未更新。真实模型对白体验和跨设备同步在可访问的 Preview 上继续验收。
+
+### Preview 独立目录构建补充
+
+用户要求可试玩的预览后，另将 `ooc-replica/` 单独复制到临时目录，模拟不包含仓库上层 `game/` 的构建环境。复现六项人物测试因读取目录外原始游戏文件而失败；测试现改为对照网站随部署提供、构建时已校验哈希的 `sanguo/upstream/` 内容。原始路径继续保留作人设出处。
+
+修复后，独立目录的 `npm run build && npm run check` 全部通过，175/175 项 PASS。修复推送同一个 `codex/character-stories` 分支。实际 Vercel Ready 状态仍需在部署列表确认：<https://vercel.com/zhou-zeyas-projects/storydate-zhou/deployments>。
