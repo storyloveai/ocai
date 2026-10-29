@@ -168,6 +168,28 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .chip b { color: var(--text); font-weight: 600 }
 .chip .up { color: var(--accent-text) } .chip .down { color: var(--rose) }
 .chip .pt { width: 30px }
+.prgroup { font-size: 11.5px; letter-spacing: .08em; color: var(--muted); margin: 12px 0 2px }
+.ch.pr { padding: 6px 0 }
+.prhead { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 10px; row-gap: 4px; align-items: center; width: 100%; background: none; border: 0; padding: 4px 0; text-align: left; color: inherit; cursor: pointer; font: inherit }
+.prhead .pt { grid-row: 1 / 3 }
+.prname { display: flex; align-items: baseline; gap: 8px; min-width: 0; flex-wrap: wrap }
+.prname b { font: 600 15px/1.3 var(--display) } .prname small { font-size: 11px; color: var(--muted) }
+.prhd { font-size: 12.5px; color: var(--muted) } .prhd.warm { color: var(--accent-text) } .prhd.cold { color: var(--rose) }
+.prdims { display: flex; flex-wrap: wrap; gap: 4px 12px } .prdim { display: inline-flex; align-items: center; gap: 5px } .prdim small { font-size: 11px; color: var(--muted) }
+.pips { display: inline-flex; gap: 3px } .pips i { width: 6px; height: 6px; border-radius: 50%; background: var(--surface-2); display: block }
+.pips i.on { background: var(--accent) } .pips.neg i.on { background: var(--rose) } .pips.rose i.on { background: var(--rose) }
+.prmore { padding: 4px 0 2px 46px } .hintline.warn { color: var(--rose); padding-left: 46px }
+.prrest summary { cursor: pointer; font-size: 12.5px; color: var(--muted); padding: 10px 0 }
+.romance-card { cursor: pointer; display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; padding: 12px; margin: 4px 0 6px; border: 1px solid color-mix(in srgb, var(--rose) 45%, transparent); border-radius: 12px; background: color-mix(in srgb, var(--rose) 7%, transparent) }
+.romance-card b { font: 600 16px/1.3 var(--display) } .rc-tier { color: var(--rose); font-size: 13px }
+.romance-card .pips { margin: 4px 0 } .rc-last { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); line-height: 1.5 }
+.rline { display: grid; gap: 6px; margin: 10px 0 } .rline small { font-size: 11.5px; letter-spacing: .08em; color: var(--muted) }
+.rtags { display: flex; flex-wrap: wrap; gap: 8px } .rtag { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px; padding: 2px 12px 2px 2px; font-size: 13px; color: var(--muted) }
+.rtag b { color: var(--text); font-weight: 600 } .rtag.warm span:last-child { color: var(--accent-text) } .rtag.cold span:last-child { color: var(--rose) } .rtag .pt { width: 28px }
+.rrom { color: var(--rose); margin: 10px 0 } .rrisk { font-size: 13px; color: var(--rose); margin: 8px 0 }
+.rmore summary { cursor: pointer; font-size: 12.5px; color: var(--muted); margin-top: 8px } .rmore .rtags { margin-top: 8px }
+.fx .chip { white-space: normal; line-height: 1.4; padding-top: 4px; padding-bottom: 4px }
+.bar.moved i { animation: glow 2.4s ease-out 2 } @keyframes glow { 0%, 100% { box-shadow: none } 40% { box-shadow: 0 0 0 3px var(--accent-text) } }
 .talkhead { display: flex; gap: 14px; align-items: center; margin: 4px 0 12px }
 .talkhead .pt { width: 96px }
 .talkhead b { font: 600 18px/1.3 var(--display); display: block }
@@ -1963,7 +1985,9 @@ const UI = {
     artChanged: "画面随你的选择变了", youTo: w => `你对${w}说`, commitNote: (w, x) => `承诺已记下：你答应了${w}「${x}」。后面的剧情会记着。`,
     unlockedNote: x => `因为你刚才的话，${x} 现在可以选了。`, closedNote: x => `因为你刚才的话，${x} 选不了了。`, commitKept: "承诺·兑现", commitBroken: "承诺·落空", commitWas: x => `你说过「${x}」`,
     recallL: "记得", recallPromise: (w, x) => `${w}看着你：『你答应过我——“${x}”。』`, recallLove: w => `${w}的目光在你身上停了一下，像是想起了你上回说的话。`, recallRude: w => `${w}淡淡地看了你一眼。你上回那句话，显然还没忘。`, recallSaid: w => `${w}看了你一眼：『你上回说的话，我还记着。』`, valuesL: "话里见：",
-    youSaid: (w, x) => `你在「${w}」说过「${x}」`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", moveL: "你的话改变了局势", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", askHint: "这个问题没有选项。用你自己的话回答——说什么，决定接下来发生什么。", askPh: "用你自己的话回答……", youAns: "你答", noAns: "（你没有回答。）", askL: "问", recapH: c => `${c}小结 · 你改变了什么`, recapEcho: n => `埋下 ${n} 处伏笔，后面会被提起`, recapDebt: x => `还欠着：${x}`, recapCommit: n => `许下 ${n} 个承诺`, benchH: "AI 试调台", benchNote: "用一组典型的话测试当前模型：语气标签、回答归类、承诺识别是否符合预期。会用掉若干次模型调用。", benchRun: "运行测试", benchRunning: "测试中……", benchNoAI: "当前没有可用的 AI（需要在 claude.ai 打开并允许调用，或接上服务端）。下面只显示关键词兜底的结果。", benchCols: ["输入", "对象", "期望", "关键词兜底", "模型", "回复"], benchSum: (a, b) => `模型与期望一致 ${a}/${b}`, sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
+    youSaid: (w, x) => `你在「${w}」说过「${x}」`, prHere: "此刻在场", prVol: "这一卷的人", prRest: n => `这一卷不出场的 ${n} 人`, rcLast: (c, x) => `你们最近的一段：${c} · ${x}`, rcNone: "你们之间，还没有发生什么。", rcBefore: "这份情分，是前几卷里攒下的。",
+    rcClose: "最亲近的人", rcWary: "对你有戒心的人", rcRom: (w, x) => `${w}与你，${x}。`, rcMore: n => `其余 ${n} 人`, fxSep: "——", fxTier: (w, d, a, b) => `${w}对你的${d}：${a} → ${b}`, fxGates: n => `后面有 ${n} 处选择要看这一点`, fxEnd: "结局也会看这一点",
+    fxLow: (w, d, x, txt) => `${w}对你的${d}只剩 ${x}，${txt}`, fxHeat: (w, x, line) => `${w}的火气 ${x}/${line}`, fxHeatFlash: (w, line) => `到 ${line}，${w}会当场发作`, fxHeatWalk: (w, line) => `到 ${line}，这一场${w}就不再理你`, fxImp: (w, x) => `${w}记下了：${x}`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", moveL: "你的话改变了局势", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", askHint: "这个问题没有选项。用你自己的话回答——说什么，决定接下来发生什么。", askPh: "用你自己的话回答……", youAns: "你答", noAns: "（你没有回答。）", askL: "问", recapH: c => `${c}小结 · 你改变了什么`, recapEcho: n => `埋下 ${n} 处伏笔，后面会被提起`, recapDebt: x => `还欠着：${x}`, recapCommit: n => `许下 ${n} 个承诺`, benchH: "AI 试调台", benchNote: "用一组典型的话测试当前模型：语气标签、回答归类、承诺识别是否符合预期。会用掉若干次模型调用。", benchRun: "运行测试", benchRunning: "测试中……", benchNoAI: "当前没有可用的 AI（需要在 claude.ai 打开并允许调用，或接上服务端）。下面只显示关键词兜底的结果。", benchCols: ["输入", "对象", "期望", "关键词兜底", "模型", "回复"], benchSum: (a, b) => `模型与期望一致 ${a}/${b}`, sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
     gal: { title: "图鉴", runs: n => `已玩 ${n} 局`, frags: (a, b) => `结局片段 ${a}/${b}`, nodes: (a, b) => `场景 ${a}/${b}`, choices: (a, b) => `选择 ${a}/${b}`, cgs: (a, b) => `高光 ${a}/${b}`,
       ends: "结局", branches: "分支", unseenChoices: n => `还有 ${n} 个选择没试过`, allTried: "所有选择都试过了", locked: "？？？", lockedRomance: "？？？ ♥", cgH: "高光时刻", reset: "清空图鉴", resetSure: "确定清空？" },
     turns: n => `今晚还能说 ${n} 句`, turns2: (a, b) => (a ? `话题还能聊 ${a} 个 · ` : "") + `闲聊还能说 ${b} 句`, remembers: (who, where) => `${who}还记得你在「${where}」时说过的话。`, turnsOut: "夜深了，该告辞了。", topicsH: "可以聊的", talkPh: "想说什么都可以……", silent: name => `（${name}没有接这句话。）`, toneWarm: name => `（${name}没有说话，神色却缓和了些。）`, toneRude: name => `（${name}的脸色沉了下来。）`,
@@ -2008,7 +2032,9 @@ const UI = {
     artChanged: "The picture changed with your choice", youTo: w => `You, to ${w}`, commitNote: (w, x) => `Promise noted: you told ${w} "${x}". The story will remember.`,
     unlockedNote: x => `Because of what you just said, ${x} is now open.`, closedNote: x => `Because of what you just said, ${x} is no longer possible.`, commitKept: "Promise kept", commitBroken: "Promise broken", commitWas: x => `you said "${x}"`,
     recallL: "Remembered", recallPromise: (w, x) => `${w} looks at you. "You promised me: '${x}'."`, recallLove: w => `${w}'s eyes rest on you a moment, as if remembering what you said last time.`, recallRude: w => `${w} gives you a flat look. Clearly your last words haven't been forgotten.`, recallSaid: w => `${w} glances at you. "I remember what you said last time."`, valuesL: "Your words showed: ",
-    youSaid: (w, x) => `in "${w}" you said "${x}"`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", moveL: "Your words changed things", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", askHint: "There are no options for this. Answer in your own words—what you say decides what happens next.", askPh: "Answer in your own words…", youAns: "You answer", noAns: "(You don't answer.)", askL: "Asks", recapH: c => `${c} recap · what you changed`, recapEcho: n => `${n} thread${n > 1 ? "s" : ""} laid down—they'll come back`, recapDebt: x => `Still owed: ${x}`, recapCommit: n => `${n} promise${n > 1 ? "s" : ""} made`, benchH: "AI test bench", benchNote: "Run a set of typical lines against the current model: do tone labels, answer sorting and promise detection match what we expect? Uses several model calls.", benchRun: "Run tests", benchRunning: "Testing…", benchNoAI: "No AI available (open in claude.ai and allow it, or connect the server). Showing keyword-fallback results only.", benchCols: ["Line", "To", "Expected", "Keywords", "Model", "Reply"], benchSum: (a, b) => `Model matches expectation ${a}/${b}`, sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
+    youSaid: (w, x) => `in "${w}" you said "${x}"`, prHere: "Here now", prVol: "In this volume", prRest: n => `${n} not in this volume`, rcLast: (c, x) => `Your latest moment: ${c} · ${x}`, rcNone: "Nothing has happened between you yet.", rcBefore: "What you have was built in earlier volumes.",
+    rcClose: "Closest to you", rcWary: "Wary of you", rcRom: (w, x) => `${w} and you: ${x}.`, rcMore: n => `${n} others`, fxSep: " — ", fxTier: (w, d, a, b) => `${w}'s ${d.toLowerCase()} toward you: ${a} → ${b}`, fxGates: n => `${n} choice${n > 1 ? "s" : ""} ahead depend on this`, fxEnd: "your ending looks at this too",
+    fxLow: (w, d, x, txt) => `${w}'s ${d.toLowerCase()} is down to ${x}. ${txt}`, fxHeat: (w, x, line) => `${w}'s temper ${x}/${line}`, fxHeatFlash: (w, line) => `at ${line}, ${w} acts on it right there`, fxHeatWalk: (w, line) => `at ${line}, ${w} stops talking to you for this scene`, fxImp: (w, x) => `${w} remembers: ${x}`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", moveL: "Your words changed things", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", askHint: "There are no options for this. Answer in your own words—what you say decides what happens next.", askPh: "Answer in your own words…", youAns: "You answer", noAns: "(You don't answer.)", askL: "Asks", recapH: c => `${c} recap · what you changed`, recapEcho: n => `${n} thread${n > 1 ? "s" : ""} laid down—they'll come back`, recapDebt: x => `Still owed: ${x}`, recapCommit: n => `${n} promise${n > 1 ? "s" : ""} made`, benchH: "AI test bench", benchNote: "Run a set of typical lines against the current model: do tone labels, answer sorting and promise detection match what we expect? Uses several model calls.", benchRun: "Run tests", benchRunning: "Testing…", benchNoAI: "No AI available (open in claude.ai and allow it, or connect the server). Showing keyword-fallback results only.", benchCols: ["Line", "To", "Expected", "Keywords", "Model", "Reply"], benchSum: (a, b) => `Model matches expectation ${a}/${b}`, sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
     gal: { title: "Gallery", runs: n => `${n} ${n === 1 ? "run" : "runs"} played`, frags: (a, b) => `Ending pieces ${a}/${b}`, nodes: (a, b) => `Scenes ${a}/${b}`, choices: (a, b) => `Choices ${a}/${b}`, cgs: (a, b) => `Key moments ${a}/${b}`,
       ends: "Endings", branches: "Branches", unseenChoices: n => `${n} ${n === 1 ? "choice" : "choices"} not yet tried`, allTried: "Every choice tried", locked: "???", lockedRomance: "??? ♥", cgH: "Key moments", reset: "Clear gallery", resetSure: "Really clear it?" },
     turns: n => `${n} more ${n === 1 ? "line" : "lines"} tonight`, turns2: (a, b) => (a ? `${a} ${a === 1 ? "topic" : "topics"} left · ` : "") + `${b} more ${b === 1 ? "line" : "lines"} of chat`, remembers: (who, where) => `${who} remembers what you said during "${where}".`, turnsOut: "It's late. Time to say goodnight.", topicsH: "Things to talk about", talkPh: "Say whatever you like…", silent: name => `(${name} lets that pass.)`, toneWarm: name => `(${name} says nothing, but softens a little.)`, toneRude: name => `(${name}'s face darkens.)`,
@@ -2549,17 +2575,48 @@ function deltaMood(id, seq) {
   const intim = e.changes.find(c => c.var === "rel.wenzhi.intimacy");
   return id === "wenzhi" && intim && tierOf(intim.to) >= 2 ? "shy" : "warm";
 }
+// v2.17: what a change means, shown in the story only when it matters: a relationship crossing into another tier,
+// a temper or a meter getting near its line, an impression someone keeps. Small moves that cross nothing stay quiet;
+// the side panel's bars glow for them instead (see barRow).
+const GATES = new Map();
+function gatesAhead(v) { // choices still ahead in this volume whose availability reads this value
+  const k = CAMP.id + "|" + v + "|" + G.cur + "|" + (G.done || []).length; if (GATES.has(k)) return GATES.get(k);
+  const q = `"${v}"`; let n = 0;
+  for (const nd of Object.values(CAMP.nodes)) { if (nd.id === G.cur || (G.done || []).includes(nd.id)) continue;
+    for (const c of nd.choices) if (JSON.stringify(c.req || null).includes(q) || JSON.stringify(c.when || null).includes(q)) n++; }
+  GATES.set(k, n); return n;
+}
+const endingReads = v => JSON.stringify(CAMP.endings).includes(`"${v}"`);
+function meterLine(v) { // [threshold, text] for the uncanny / rash meters
+  const m = CAMP.meters ? CAMP.meters[v === "uncanny" ? "uncanny" : "rash"] : null; const txt = m ? t(m) : (v === "uncanny" ? L().meterUncanny : L().meterRash);
+  const ns = (txt.match(/\d+/g) || []).map(Number); return ns.length ? [Math.max(...ns), txt] : null;
+}
 function relChips(seq) {
   const e = G.ledger.find(x => x.seq === seq); if (!e) return null;
-  const by = {};
-  e.changes.filter(c => c.var.startsWith("rel.") || c.var.startsWith("imp.") || c.var.startsWith("heat.")).forEach(c => { const [kind, id, dim] = c.var.split("."); (by[id] = by[id] || []).push([kind, dim, c.to - c.from, c.to, c.from]); });
-  const rash = e.changes.find(c => c.var === "renown.rash");
-  const ids = Object.keys(by); if (!ids.length && !rash) return null;
-  const lab = (kind, dim, id) => kind === "heat" ? L().heatL : kind === "imp" ? L().impL + t(CAMP.vars[`imp.${id}.${dim}`].label).split(settings.lang === "zh" ? "·" : " · ").pop() : DL(id, dim);
-  const good = (kind, dim, d) => kind === "imp" || kind === "heat" ? d < 0 : (dim === "wary" ? d < 0 : d > 0);
-  return h("div", { class: "chips" }, ids.map(id => h("span", { class: "chip" }, face(id, deltaMood(id, seq) || (by[id].some(x => x[0] === "imp" && x[2] > 0) ? "cold" : "neutral"), true), h("b", {}, t(CAMP.chars[id].name)),
-    by[id].map(([kind, dim, d, to, from]) => h("span", { class: good(kind, dim, d) ? "up" : "down" }, kind === "heat" ? `${lab(kind, dim, id)} ${to}/${CAMP.chars[id].heat.line}` : `${lab(kind, dim, id)} ${d > 0 ? "+" : ""}${d}` + (kind === "rel" && CAMP.tiers && tierOf(to) !== tierOf(from) ? ` → ${tierName(dim, to)}` : ""))))),
-    rash ? h("span", { class: "chip", style: "padding-left:12px" }, h("span", { class: rash.to > rash.from ? "down" : "up" }, `${t(CAMP.vars["renown.rash"].label)} ${rash.to > rash.from ? "+" : ""}${rash.to - rash.from}`)) : null);
+  const l = L(), out = [];
+  const name = id => t(CAMP.chars[id].name);
+  const note = (id, up, text) => out.push(h("span", { class: "chip" }, id ? face(id, up ? "warm" : "cold", true) : null, h("span", { class: up ? "up" : "down" }, text)));
+  for (const c of e.changes) {
+    const d = c.to - c.from; if (!d) continue;
+    const [kind, id, dim] = c.var.split(".");
+    if (kind === "rel" && CAMP.chars[id]) {
+      const good = dim === "wary" ? d < 0 : d > 0, crossed = CAMP.tiers && tierOf(c.to) !== tierOf(c.from);
+      const low = d < 0 && c.to <= 2 && ((c.var === "rel.liubei.trust" && G.v.track === "liu") || (c.var === "rel.caocao.esteem" && G.v.track === "cao"));
+      if (low) { note(id, false, l.fxLow(name(id), DL(id, dim), c.to, c.var === "rel.liubei.trust" ? l.meterTrust : l.meterRegard)); continue; }
+      if (!crossed) continue;
+      const g = gatesAhead(c.var), why = g ? l.fxGates(g) : endingReads(c.var) ? l.fxEnd : "";
+      note(id, good, l.fxTier(name(id), DL(id, dim), tierName(dim, c.from), tierName(dim, c.to)) + (why ? l.fxSep + why : ""));
+    } else if (kind === "heat" && d > 0 && CAMP.chars[id] && CAMP.chars[id].heat) {
+      const line = CAMP.chars[id].heat.line; if (c.to >= line) continue; // the outburst itself is shown in the story
+      const flash = (CAMP.flash || []).some(f => f.char === id);
+      note(id, false, l.fxHeat(name(id), c.to, line) + l.fxSep + (flash ? l.fxHeatFlash(name(id), line) : l.fxHeatWalk(name(id), line)));
+    } else if (kind === "imp" && d > 0 && CAMP.vars[c.var]) {
+      note(id, false, l.fxImp(name(id), t(CAMP.vars[c.var].label).split(settings.lang === "zh" ? "·" : " · ").pop()));
+    } else if ((c.var === "renown.rash" || c.var === "uncanny") && d > 0) {
+      const m = meterLine(c.var); if (m && c.to >= m[0] - 2) note(null, false, `${t(CAMP.vars[c.var].label)} ${c.to}${l.fxSep}${m[1]}`);
+    }
+  }
+  return out.length ? h("div", { class: "chips fx" }, out) : null;
 }
 const SEAL_TEXT = { liubei: "刘", caocao: "曹", guanyu: "关", zhuge: "诸葛", wenzhi: "温" };
 
@@ -2684,7 +2741,7 @@ function renderStory() {
     } else if (e.k === "carry") {
       const p = e.preset && (CAMP.presets || []).find(x => x.id === e.preset);
       const from = G.from && runsList().find(m => m.id === G.from);
-      s.append(mark(h("div", { class: "recap carry" }, h("b", {}, l.carryH), h("p", {}, p ? l.carryPreset(t(p.desc)) : l.carryRun(from ? from.n : "?")), relChips(e.seq), (G.ledger.find(x => x.seq === e.seq) || {}).compressed ? h("p", { class: "muted", style: "font-size:12.5px" }, l.carryFade) : null)));
+      s.append(mark(h("div", { class: "recap carry" }, h("b", {}, l.carryH), h("p", {}, p ? l.carryPreset(t(p.desc)) : l.carryRun(from ? from.n : "?")), carryRecap(e.seq), (G.ledger.find(x => x.seq === e.seq) || {}).compressed ? h("p", { class: "muted", style: "font-size:12.5px" }, l.carryFade) : null)));
     } else if (e.k === "offer") {
       if (G.phase === "side" && i === G.log.length - 1) s.append(mark(renderOffer(e)));
     } else if (e.k === "pick") {
@@ -2992,32 +3049,98 @@ function mapEl(where = "panel") {
   }
   return wrap;
 }
+function entryLabel(e) { // what the player did in a ledger entry, in a few words
+  const n = e.node && N(e.node), c = e.choice && n && n.choices.find(x => x.id === e.choice), tp = e.topic && n && n.talk && n.talk.topics.find(x => x.id === e.topic);
+  return c ? t(c.label) : tp ? L().freeSaid(t(tp.label)) : e.said ? L().saidL(e.said) : (e.terms ? L().freeSaid(e.terms.map(x => t(x)).join(" / ")) : t(n && n.title));
+}
 function evidence(v) {
   const es = G.ledger.filter(e => e.changes.some(c => c.var === v));
   if (!es.length) return h("div", { class: "ev" }, L().noEv);
   return h("div", { class: "ev" }, es.map(e => { const c = e.changes.find(x => x.var === v); const n = e.node && N(e.node);
-    const label = e.choice ? t(n.choices.find(x => x.id === e.choice).label) : e.topic ? L().freeSaid(t(n.talk.topics.find(x => x.id === e.topic).label)) : e.said ? L().saidL(e.said) : (e.terms ? L().freeSaid(e.terms.map(x => t(x)).join(" / ")) : t(n && n.title));
+    const label = entryLabel(e);
     return h("div", {}, `${L().chap(e.ch)} · ${label} `, h("b", { style: "color:var(--text)" }, `${c.to - c.from > 0 ? "+" : ""}${c.to - c.from}`)); }));
 }
 function barRow(v, open, cls = "") {
   const d = CAMP.vars[v], x = G.v[v] || 0, w = Math.round(100 * (x - d.min) / (d.max - d.min));
   const lab = d.dim ? DL(d.char, d.dim) : t(d.label);
-  const b = h("button", { type: "button", class: "bar " + cls, style: `--w:${w}%`, "aria-expanded": String(open), onclick: () => { V.open = V.open === v ? null : v; renderPanel(); } }, h("span", {}, lab), h("i", {}), h("em", {}, d.dim && CAMP.tiers ? `${tierName(d.dim, x)} ${x}` : String(x)));
+  const last = G.ledger && G.ledger[G.ledger.length - 1], moved = last && last.kind !== "carry" && last.changes.some(c => c.var === v && c.to !== c.from);
+  const b = h("button", { type: "button", class: "bar " + cls + (moved ? " moved" : ""), style: `--w:${w}%`, "aria-expanded": String(open), onclick: () => { V.open = V.open === v ? null : v; renderPanel(); } }, h("span", {}, lab), h("i", {}), h("em", {}, d.dim && CAMP.tiers ? `${tierName(d.dim, x)} ${x}` : String(x)));
   return [b, open ? evidence(v) : null];
+}
+// v2.18 people panel: one line per person (who they are to you, in the tiers' own words, plus five-dot tiers), the
+// people in this scene first, people this volume never shows folded away, and the romance on top with your latest
+// moment together. Numbers and the evidence behind them are one tap away.
+function relHead(cid, val = v => G.v[v] || 0) {
+  const c = CAMP.chars[cid], ds = Object.keys(c.dims || {}).filter(d => d !== "intimacy" && d !== "wary");
+  if (!ds.length) return { text: "", tone: "" };
+  const ts = ds.map(d => [d, val(`rel.${cid}.${d}`)]).map(([d, x]) => [d, x, tierOf(x)]).sort((a, b) => b[2] - a[2]);
+  const top = ts.filter(x => x[2] >= 2).slice(0, 2), low = ts.filter(x => x[2] === 0);
+  const words = (top.length ? top : [ts[0]]).map(([d, x]) => tierName(d, x));
+  return { text: [...new Set(words)].join(settings.lang === "zh" ? "·" : " · "), tone: low.length && !top.length ? "cold" : top.length ? "warm" : "" };
+}
+const pips = (k, cls = "") => h("span", { class: "pips " + cls }, [0, 1, 2, 3, 4].map(i => h("i", { class: i <= k ? "on" : "" })));
+const inVolume = () => { if (!V._cast || V._cast[0] !== CAMP.id) { const ids = new Set(); Object.values(CAMP.nodes).forEach(n => (n.cast || []).forEach(x => ids.add(x.id)));
+  Object.values(CAMP.nodes).forEach(n => n.talk && n.talk.char && ids.add(n.talk.char));
+  const all = JSON.stringify(CAMP.nodes); Object.keys(CAMP.chars).forEach(id => { if (all.includes(`"rel.${id}.`)) ids.add(id); }); // people the volume's choices still touch
+  V._cast = [CAMP.id, ids]; } return V._cast[1]; };
+function personRow(cid, l) {
+  const c = CAMP.chars[cid], open = V.openChar === cid, hd = relHead(cid);
+  const dims = Object.keys(c.dims).filter(d => d !== "intimacy");
+  const low = (G.v.track === "liu" && cid === "liubei" && (G.v["rel.liubei.trust"] || 0) <= 2) ? l.meterTrust : (G.v.track === "cao" && cid === "caocao" && (G.v["rel.caocao.esteem"] || 0) <= 2) ? l.meterRegard : null;
+  const im = Object.keys(CAMP.vars).filter(k => k.startsWith(`imp.${cid}.`) && G.v[k] > 0);
+  const sealEl = face(cid, levelMood(cid), true); sealEl.style.width = "36px";
+  return h("div", { class: "ch pr" + (open ? " open" : "") },
+    h("button", { type: "button", class: "prhead", "aria-expanded": String(open), onclick: () => { V.openChar = open ? null : cid; V.open = null; renderPanel(); } },
+      sealEl, h("span", { class: "prname" }, h("b", {}, t(c.name)), c.original ? h("small", {}, l.original) : null, h("span", { class: "prhd " + hd.tone }, hd.text)),
+      h("span", { class: "prdims" }, dims.map(d => h("span", { class: "prdim" }, h("small", {}, DL(cid, d)), pips(tierOf(G.v[`rel.${cid}.${d}`] || 0), d === "wary" ? "neg" : ""))))),
+    low ? h("div", { class: "hintline warn" }, low) : null,
+    im.length ? h("div", { class: "pills" }, im.map(k => h("span", { class: "pill no", style: "color:var(--rose);border-color:var(--rose)" }, `${t(CAMP.vars[k].label).split(settings.lang === "zh" ? "·" : " · ").pop()} ${G.v[k]}`))) : null,
+    open ? h("div", { class: "prmore" }, Object.keys(c.dims).map(d => barRow(`rel.${cid}.${d}`, V.open === `rel.${cid}.${d}`, d === "intimacy" ? "rose" : d === "wary" ? "neg" : ""))) : null);
+}
+function romanceCard(cid, l) {
+  const v = `rel.${cid}.intimacy`, x = G.v[v] || 0, c = CAMP.chars[cid];
+  const last = G.ledger.slice().reverse().find(e => e.node && e.kind !== "carry" && e.changes.some(ch => (ch.var === v || ch.var === `rel.${cid}.warmth`) && ch.to > ch.from));
+  const sealEl = face(cid, levelMood(cid), true); sealEl.style.width = "52px";
+  const open = V.openChar === cid;
+  return h("div", { class: "romance-card" + (open ? " open" : ""), role: "button", tabindex: "0", "aria-expanded": String(open), onclick: ev => { if (ev.target.closest(".bar,.ev")) return; V.openChar = open ? null : cid; V.open = null; renderPanel(); } }, sealEl, h("div", {},
+    h("div", {}, h("b", {}, t(c.name)), " ", h("span", { class: "rc-tier" }, tierName("intimacy", x))), pips(tierOf(x), "rose"),
+    last ? h("p", { class: "rc-last" }, l.rcLast(l.chap(last.ch), entryLabel(last))) : h("p", { class: "rc-last" }, tierOf(x) >= 1 ? l.rcBefore : l.rcNone),
+    open ? h("div", { class: "prmore", style: "padding-left:0" }, Object.keys(c.dims).map(d => barRow(`rel.${cid}.${d}`, V.open === `rel.${cid}.${d}`, d === "intimacy" ? "rose" : ""))) : null));
 }
 function renderPeople() {
   const l = L(); const box = h("div", {});
-  for (const [cid, c] of Object.entries(CAMP.chars)) {
-    if (c.from_chapter && G.ch < chIndex(c.from_chapter)) continue;
-    const sealEl = face(cid, levelMood(cid), true); sealEl.style.width = "40px";
-    box.append(h("div", { class: "ch" }, h("h5", {}, sealEl, t(c.name), c.original ? h("small", {}, l.original) : null),
-      Object.keys(c.dims).map(dim => { const v = `rel.${cid}.${dim}`; return [barRow(v, V.open === v, dim === "intimacy" ? "rose" : (dim === "wary" ? "neg" : "")),
-        (v === "rel.liubei.trust" && G.v.track === "liu") ? h("div", { class: "hintline" }, l.meterTrust) : (v === "rel.caocao.esteem" && G.v.track === "cao") ? h("div", { class: "hintline" }, l.meterRegard) : null]; }),
-      (() => { const im = Object.keys(CAMP.vars).filter(k => k.startsWith(`imp.${cid}.`) && G.v[k] > 0); return im.length ? h("div", { class: "pills" }, im.map(k => h("span", { class: "pill no", style: "color:var(--rose);border-color:var(--rose)" }, `${t(CAMP.vars[k].label).split(settings.lang === "zh" ? "·" : " · ").pop()} ${G.v[k]}`))) : null; })()));
-  }
+  const alive = Object.entries(CAMP.chars).filter(([, c]) => !(c.from_chapter && G.ch < chIndex(c.from_chapter))).map(([id]) => id);
+  const here = new Set(G.phase === "node" ? castNow(N(G.cur)) : []), vol = inVolume();
+  const rom = alive.filter(id => CAMP.chars[id].romance && CAMP.chars[id].dims.intimacy && vol.has(id) && (tierOf(G.v[`rel.${id}.intimacy`] || 0) >= 1 || G.ledger.some(e => e.node && e.changes.some(c => c.var.startsWith(`rel.${id}.`))))); // once the story has brought you together
+  rom.forEach(id => box.append(romanceCard(id, l)));
+  const rank = id => (here.has(id) ? 0 : 1);
+  const main = alive.filter(id => (vol.has(id) || here.has(id)) && !rom.includes(id)).sort((a, b) => rank(a) - rank(b));
+  const rest = alive.filter(id => !main.includes(id));
+  if (here.size) box.append(h("div", { class: "prgroup" }, l.prHere));
+  main.forEach((id, i) => { if (here.size && i === [...main].filter(x => here.has(x)).length) box.append(h("div", { class: "prgroup" }, l.prVol)); box.append(personRow(id, l)); });
+  if (rest.length) box.append(h("details", { class: "prrest" }, h("summary", {}, l.prRest(rest.length)), rest.map(id => personRow(id, l))));
   box.append(h("div", { class: "ch" }, h("h5", {}, l.renown), ["renown.loyal", "renown.cunning", "uncanny"].map(v => barRow(v, V.open === v, v === "uncanny" ? "neg" : "")), h("div", { class: "hintline" }, CAMP.meters ? t(CAMP.meters.uncanny) : l.meterUncanny),
     barRow("renown.rash", V.open === "renown.rash", "neg"), h("div", { class: "hintline" }, CAMP.meters ? t(CAMP.meters.rash) : l.meterRash)));
   return box;
+}
+// the backstory a volume opens with: who you are to the people who matter, in a few lines; everyone else folded away
+function carryRecap(seq) {
+  const e = G.ledger.find(x => x.seq === seq); if (!e) return null;
+  const l = L(), val = v => { const c = e.changes.find(x => x.var === v); return c ? c.to : (G.v[v] || 0); };
+  const vol = inVolume(), ids = Object.keys(CAMP.chars).filter(id => vol.has(id) && !CAMP.chars[id].romance && Object.keys(CAMP.chars[id].dims || {}).length);
+  const score = id => Math.max(...Object.keys(CAMP.chars[id].dims).filter(d => d !== "wary").map(d => tierOf(val(`rel.${id}.${d}`))));
+  const close = ids.filter(id => score(id) >= 3).sort((a, b) => score(b) - score(a));
+  const wary = ids.filter(id => relHead(id, val).tone === "cold");
+  const tag = id => { const hd = relHead(id, val), f = face(id, levelMood(id), true); f.style.width = "28px"; return h("span", { class: "rtag " + hd.tone }, f, h("b", {}, t(CAMP.chars[id].name)), h("span", {}, hd.text)); };
+  const rom = Object.keys(CAMP.chars).filter(id => CAMP.chars[id].romance && CAMP.chars[id].dims.intimacy && vol.has(id) && tierOf(val(`rel.${id}.intimacy`)) >= 1);
+  const risks = ["renown.rash", "uncanny"].map(v => { const m = meterLine(v), x = val(v); return m && x >= m[0] - 2 ? h("p", { class: "rrisk" }, `${t(CAMP.vars[v].label)} ${x}${l.fxSep}${m[1]}`) : null; });
+  const others = ids.filter(id => !close.includes(id) && !wary.includes(id));
+  return [
+    close.length ? h("div", { class: "rline" }, h("small", {}, l.rcClose), h("div", { class: "rtags" }, close.slice(0, 4).map(tag))) : null,
+    rom.map(id => h("p", { class: "rrom" }, l.rcRom(t(CAMP.chars[id].name), tierName("intimacy", val(`rel.${id}.intimacy`))))),
+    wary.length ? h("div", { class: "rline" }, h("small", {}, l.rcWary), h("div", { class: "rtags" }, wary.map(tag))) : null,
+    risks,
+    (others.length || close.length > 4) ? h("details", { class: "rmore" }, h("summary", {}, l.rcMore(others.length + Math.max(0, close.length - 4))), h("div", { class: "rtags" }, close.slice(4).concat(others).map(tag))) : null];
 }
 function renderLedger() {
   const l = L();
