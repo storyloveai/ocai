@@ -1,0 +1,96 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v8_hearse",
+    "kind": "scene",
+    "name": "v8_hearse",
+    "batch": 7,
+    "status": "ready",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/scenes/v7_last.webp"
+    ],
+    "keep": [
+      "子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸"
+    ],
+    "composition": "栈道上的灵车：白幡、黑漆灵柩，大军沉默地走；子衡骑一匹老马追上来，背影",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人，画面里没有小孩",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "玩家不露脸；第三章以后的玩家看不出男女",
+      "没有伤口、血腥、自杀的画面"
+    ],
+    "prompt": "A funeral cart with a black lacquered coffin and white mourning banners moving along a mountain plank road, a silent army behind it; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible rides up on an old horse. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+  "adoption_confirmation": {
+    "pr": 74,
+    "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+    "issue": 68
+  },
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical anime/webtoon visual-novel illustration, matching ALL attached ADOPTED series images. Native EXTRA-WIDE 2.5:1 BANNER (for example 2000x800), final export1200x480; legacy size field in original JSON stays as provenance. Wide camera with all principal heads/hands/props/gestures fully INSIDE native wide frame. Match expressive fine line art, cel shading and softly painted light, not photorealism/oil painting. Authored portrait references lock underlying face, hairstyle and clothing; final attached scene is STYLE ONLY, do NOT copy unrelated named people/actions. Current authored age overrides young portrait age while retaining facial proportions. Zhuge Liang is DECEASED throughout volume8: never add him alive from a style reference.\n\nAUTHOR ORIGINAL JOB VERBATIM JSON (do not draw these words):\n{\n  \"id\": \"scene-v8_hearse\",\n  \"kind\": \"scene\",\n  \"name\": \"v8_hearse\",\n  \"batch\": 7,\n  \"status\": \"ready\",\n  \"refs\": [],\n  \"ref_paths\": [\n    \"game/sanguo/art/scenes/v7_last.webp\"\n  ],\n  \"keep\": [\n    \"子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"栈道上的灵车：白幡、黑漆灵柩，大军沉默地走；子衡骑一匹老马追上来，背影\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人，画面里没有小孩\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"玩家不露脸；第三章以后的玩家看不出男女\",\n    \"没有伤口、血腥、自杀的画面\"\n  ],\n  \"prompt\": \"A funeral cart with a black lacquered coffin and white mourning banners moving along a mountain plank road, a silent army behind it; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible rides up on an old horse. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nSCENE EXECUTION: One CLOSED BLACK LACQUERED COFFIN on ONE funeral cart moving along a mountain PLANK ROAD, plain WHITE mourning banners and silent ADULT troops behind. Elderly white-haired Ziheng in plain GREY-BLUE robe rides an OLD HORSE toward cart, fully BACK to viewer. Keep coffin, cart, old horse and rider complete in wide shot. No open coffin/body, no living Zhuge or Jiang Wei, no face on Ziheng. No words on white banners.\nGlobal: ALL people are ADULTS, NO child/baby/chibi background person. NO wounds, BLOOD, gore, suicide or explicit content. Han/Three Kingdoms Chinese clothes, not kimono. NO text, Chinese characters, letters, pseudo-writing, calligraphy, labels, seals, logos, watermarks, captions, signature or printed signs on ANY paper/book/banner/map/background. Blank banners and paper; maps unlabelled landforms only. ALL PLAYER VIEWS are full BACK or rear-quarter with NO EYES, NO NOSE, NO FACIAL PROFILE. Successor from chapter3 onward must have a plain undyed robe, tied-up hair and gender-indeterminate covered silhouette. Jiang Wei when present always SILVER ARMOUR, WHITE PLUME helmet, DEEP NAVY BLUE CLOAK, no red robe/cloak. Candidate A: clear staging closely following authored composition.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/v7_last.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "missing_authored_ref_paths": [],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "delivery_batch": 1,
+  "ready_order": 1,
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "栈道上黑漆灵柩随白幡前行，白发子衡骑老马从后方追上。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "7de828b77c2a1aa2fd5f6327b0c8c1fd3b2963ae536c6eab0be04fb3b95b3870",
+  "created_at": "2026-10-29T01:39:19.785920+00:00",
+  "bytes": 2980419,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v8_hearse/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "7559d782fcb2bc2b5c12ab003c416c5ded4c60c4cd1cf39a98a3b286d8079243",
+    "original_sha256": "7de828b77c2a1aa2fd5f6327b0c8c1fd3b2963ae536c6eab0be04fb3b95b3870",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "One closed black coffin/cart, blank white mourning flags, adult procession, white-haired Ziheng rear view on old horse and mountain plank road; no text or injuries."
+}

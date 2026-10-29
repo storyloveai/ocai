@@ -1,39 +1,11 @@
-# 卷八清单与参考状态（更新至 PR #71）
+# 卷八清单问题已解决
 
-上一批17项已由 Claude 在 #71 采用，新头像已齐。不再等待用户许可临时参考；本轮不用替代参考，不用尚未采用的候选。温芷补衣 v8_wz_last 已交 A/B 原图与1200×480导出，其余20项等待条件如下。
+Claude 已在 #74 的 6f359c96d3dd717dc74fbf4fd9ca43838edca364 修好四处矛盾，并正式采用上一轮14项。
 
-## 仍需 Claude 处理
+- v8_gate：温芷五十多岁，鬓发初白。
+- v8_weiyan：钢盔红缨、暗红甲、短须，和正式头像一致。
+- v8_duangu：战袍撕破、满身尘土，不画血和伤口。
+- v8_end：五十多岁到七十岁的老人，花白或白发，只背影，不辨男女。
+- 姜维统一银甲、白缨头盔、深蓝披风，卷八年龄按单条清单，保留正式头像底层脸型。
 
-- 卷七本轮候选 v7_last、v7_jiangwei、v7_weiyan 尚待 Claude 采用；卷八多数任务引用这三张正式场景，不能直接拿未采用候选替换。
-- scene-v8_gate：keep 与 prompt 开头为六十多岁，composition 与 prompt 后半为五十多岁；请统一单场景年龄。
-- scene-v8_weiyan：清单的 heavily bearded / 浓须、black/dark armor 与已采用魏延短须暗红甲有冲突。请明确与正式头像如何对齐。
-- scene-v8_duangu：composition / prompt 仍写血污 / blood-stained，negative_prompt 禁 blood；用户明确要求不画伤口、血腥、自杀。请统一清单。
-- scene-v8_end：keep 仍为接班人30–50岁，prompt/composition要老人；剧情 c8_end 为53岁或近70岁。请统一单场景年龄。
-
-## 每条状态
-
-| id | 缺失正式参考 | 等待条件 |
-|---|---|---|
-| scene-v8_hearse | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_weiyan | game/sanguo/art/scenes/v7_weiyan.webp | conflicting_weiyan_identity_and_missing_reference |
-| scene-v8_return | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_gate | 无 | conflicting_wenzhi_age |
-| scene-v8_oldman | game/sanguo/art/scenes/v7_jiangwei.webp | missing_adopted_scene_reference |
-| scene-v8_simayi_letter | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_wz_last | 无 | 参考已齐，可在前两批完成后生成 |
-| scene-v8_heir | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_fan | game/sanguo/art/scenes/v7_jiangwei.webp | missing_adopted_scene_reference |
-| scene-v8_duangu | game/sanguo/art/scenes/v7_jiangwei.webp | conflicting_blood_constraint |
-| scene-v8_jiangwei_night | game/sanguo/art/scenes/v7_jiangwei.webp | missing_adopted_scene_reference |
-| scene-v8_healer | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_huanghao | game/sanguo/art/scenes/v7_jiangwei.webp | missing_adopted_scene_reference |
-| scene-v8_jiange | game/sanguo/art/scenes/v7_jiangwei.webp | missing_adopted_scene_reference |
-| scene-v8_yinping | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_mianzhu | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_beidi | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_temple | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_zhonghui | game/sanguo/art/scenes/v7_jiangwei.webp | missing_adopted_scene_reference |
-| scene-v8_lebu | game/sanguo/art/scenes/v7_last.webp | missing_adopted_scene_reference |
-| scene-v8_end | game/sanguo/art/scenes/v7_last.webp | conflicting_successor_age |
-
-上述问题已保存在分支供 Claude review；GitHub API 仍403，尚未作为 #68 留言提交。原始清单没有改。
+本轮20条ready与全部ref_paths均已验证存在于同一提交。没有使用候选或临时替代图，没有修改原始清单。按原顺序分7+7+6三批交付。

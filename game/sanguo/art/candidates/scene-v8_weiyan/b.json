@@ -1,0 +1,106 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "scene-v8_weiyan",
+    "kind": "scene",
+    "name": "v8_weiyan",
+    "batch": 7,
+    "status": "ready",
+    "refs": [
+      "weiyan"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/weiyan.webp",
+      "game/sanguo/art/scenes/v7_weiyan.webp"
+    ],
+    "keep": [
+      "魏延：与已采用头像一致——钢盔红缨、暗红战袍与甲、短须、黝黑面庞，五十多岁",
+      "子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸"
+    ],
+    "composition": "南谷口两军对阵之间，魏延下马，手里拿着一封信，刀插在地上；子衡背影站在他面前",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人，画面里没有小孩",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "玩家不露脸；第三章以后的玩家看不出男女",
+      "没有伤口、血腥、自杀的画面"
+    ],
+    "prompt": "Wei Yan, matching his adopted portrait: steel helmet with red plume, dark red war robe and armor, short beard, swarthy face, in his fifties. Between two facing armies at a valley mouth, Wei Yan has dismounted holding an unrolled letter (no visible writing), his blade planted in the ground; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible stands before him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+  "adoption_confirmation": {
+    "pr": 74,
+    "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+    "issue": 68
+  },
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical anime/webtoon visual-novel illustration, matching ALL attached ADOPTED series images. Native EXTRA-WIDE 2.5:1 BANNER (for example 2000x800), final export1200x480; legacy size field in original JSON stays as provenance. Wide camera with all principal heads/hands/props/gestures fully INSIDE native wide frame. Match expressive fine line art, cel shading and softly painted light, not photorealism/oil painting. Authored portrait references lock underlying face, hairstyle and clothing; final attached scene is STYLE ONLY, do NOT copy unrelated named people/actions. Current authored age overrides young portrait age while retaining facial proportions. Zhuge Liang is DECEASED throughout volume8: never add him alive from a style reference.\n\nAUTHOR ORIGINAL JOB VERBATIM JSON (do not draw these words):\n{\n  \"id\": \"scene-v8_weiyan\",\n  \"kind\": \"scene\",\n  \"name\": \"v8_weiyan\",\n  \"batch\": 7,\n  \"status\": \"ready\",\n  \"refs\": [\n    \"weiyan\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/weiyan.webp\",\n    \"game/sanguo/art/scenes/v7_weiyan.webp\"\n  ],\n  \"keep\": [\n    \"魏延：与已采用头像一致——钢盔红缨、暗红战袍与甲、短须、黝黑面庞，五十多岁\",\n    \"子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"南谷口两军对阵之间，魏延下马，手里拿着一封信，刀插在地上；子衡背影站在他面前\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人，画面里没有小孩\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"玩家不露脸；第三章以后的玩家看不出男女\",\n    \"没有伤口、血腥、自杀的画面\"\n  ],\n  \"prompt\": \"Wei Yan, matching his adopted portrait: steel helmet with red plume, dark red war robe and armor, short beard, swarthy face, in his fifties. Between two facing armies at a valley mouth, Wei Yan has dismounted holding an unrolled letter (no visible writing), his blade planted in the ground; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible stands before him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nSCENE EXECUTION: Two principal ADULTS at valley mouth BETWEEN two distant facing armies. Wei Yan has DISMOUNTED, exact adopted face/SHORT beard, steel HELMET WITH RED PLUME, DARK RED ROBE/ARMOUR, ageFIFTIES, holds unrolled BLANK LETTER. A GREAT BLADE is firmly PLANTED IN GROUND beside him, not swung at anyone. Elderly WHITE-haired Ziheng GREY-BLUE robe fully BACK-facing stands in front of him. Keep both complete heads, letter, planted blade and dismounted horse visible. No black/green robe, no long beard or Guan Yu.\nGlobal: ALL people are ADULTS, NO child/baby/chibi background person. NO wounds, BLOOD, gore, suicide or explicit content. Han/Three Kingdoms Chinese clothes, not kimono. NO text, Chinese characters, letters, pseudo-writing, calligraphy, labels, seals, logos, watermarks, captions, signature or printed signs on ANY paper/book/banner/map/background. Blank banners and paper; maps unlabelled landforms only. ALL PLAYER VIEWS are full BACK or rear-quarter with NO EYES, NO NOSE, NO FACIAL PROFILE. Successor from chapter3 onward must have a plain undyed robe, tied-up hair and gender-indeterminate covered silhouette. Jiang Wei when present always SILVER ARMOUR, WHITE PLUME helmet, DEEP NAVY BLUE CLOAK, no red robe/cloak. Candidate B: independently generated alternative with subtly different three-quarter camera or light, preserving exact cast ages identities clothes and all key action.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/weiyan.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "257c97a6f9c71c96edc4a26d0a0b33f64fbf7208ca84a2d98a1be9027b6007db",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v7_weiyan.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "b267edadd2f4149d004e436b6c0fc855b319268689351f805a5376d2bbe1af32",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "missing_authored_ref_paths": [],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "delivery_batch": 1,
+  "ready_order": 2,
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "山谷口魏延展开无字信，刀插地、马在身后，子衡背影与两军阵列形成对照。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "49a5308b733aeda242dd5b9e4e44d6da54758b1671e374e0b9dfbf71aa285bff",
+  "created_at": "2026-10-29T01:42:01.165564+00:00",
+  "bytes": 2806669,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v8_weiyan/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "aeb911ab1bd061cec92c6bb2a67693f849f722d56474d3db4380f7a98af5f131",
+    "original_sha256": "49a5308b733aeda242dd5b9e4e44d6da54758b1671e374e0b9dfbf71aa285bff",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Correct adult principal cast and authored gesture/props, no open coffin or wounds, full-back player, no writing; canonical Wei Yan helmet/red plume/dark red armour/short beard where present."
+}

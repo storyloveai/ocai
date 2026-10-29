@@ -1,0 +1,96 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "a",
+  "authored_job": {
+    "id": "scene-v8_simayi_letter",
+    "kind": "scene",
+    "name": "v8_simayi_letter",
+    "batch": 7,
+    "status": "ready",
+    "refs": [],
+    "ref_paths": [
+      "game/sanguo/art/scenes/v7_last.webp"
+    ],
+    "keep": [
+      "子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸"
+    ],
+    "composition": "书房窗下，一双老人的手拿着一封没有落款的信（看不见字），旁边火盆",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人，画面里没有小孩",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "玩家不露脸；第三章以后的玩家看不出男女",
+      "没有伤口、血腥、自杀的画面"
+    ],
+    "prompt": "By a study window, an old man's hands hold an unsigned letter (no visible writing), a brazier beside him; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+  "adoption_confirmation": {
+    "pr": 74,
+    "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+    "issue": 68
+  },
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical anime/webtoon visual-novel illustration, matching ALL attached ADOPTED series images. Native EXTRA-WIDE 2.5:1 BANNER (for example 2000x800), final export1200x480; legacy size field in original JSON stays as provenance. Wide camera with all principal heads/hands/props/gestures fully INSIDE native wide frame. Match expressive fine line art, cel shading and softly painted light, not photorealism/oil painting. Authored portrait references lock underlying face, hairstyle and clothing; final attached scene is STYLE ONLY, do NOT copy unrelated named people/actions. Current authored age overrides young portrait age while retaining facial proportions. Zhuge Liang is DECEASED throughout volume8: never add him alive from a style reference.\n\nAUTHOR ORIGINAL JOB VERBATIM JSON (do not draw these words):\n{\n  \"id\": \"scene-v8_simayi_letter\",\n  \"kind\": \"scene\",\n  \"name\": \"v8_simayi_letter\",\n  \"batch\": 7,\n  \"status\": \"ready\",\n  \"refs\": [],\n  \"ref_paths\": [\n    \"game/sanguo/art/scenes/v7_last.webp\"\n  ],\n  \"keep\": [\n    \"子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸\"\n  ],\n  \"composition\": \"书房窗下，一双老人的手拿着一封没有落款的信（看不见字），旁边火盆\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人，画面里没有小孩\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"玩家不露脸；第三章以后的玩家看不出男女\",\n    \"没有伤口、血腥、自杀的画面\"\n  ],\n  \"prompt\": \"By a study window, an old man's hands hold an unsigned letter (no visible writing), a brazier beside him; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nSCENE EXECUTION: Exactly ONE visible adult, elderly WHITE-haired Ziheng GREY-BLUE robe full REAR three-quarter shoulder/back view, his WRINKLED HANDS hold one BLANK unsigned letter near study WINDOW. A BRAZIER glows beside desk. Focus hands, blank paper, window and brazier, no other person or Sima Yi portrait, no face/profile on player. Paper/book spines/map/background completely without writing or fake glyphs.\nGlobal: ALL people are ADULTS, NO child/baby/chibi background person. NO wounds, BLOOD, gore, suicide or explicit content. Han/Three Kingdoms Chinese clothes, not kimono. NO text, Chinese characters, letters, pseudo-writing, calligraphy, labels, seals, logos, watermarks, captions, signature or printed signs on ANY paper/book/banner/map/background. Blank banners and paper; maps unlabelled landforms only. ALL PLAYER VIEWS are full BACK or rear-quarter with NO EYES, NO NOSE, NO FACIAL PROFILE. Successor from chapter3 onward must have a plain undyed robe, tied-up hair and gender-indeterminate covered silhouette. Jiang Wei when present always SILVER ARMOUR, WHITE PLUME helmet, DEEP NAVY BLUE CLOAK, no red robe/cloak. Candidate A: clear staging closely following authored composition.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/scenes/v7_last.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "missing_authored_ref_paths": [],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "delivery_batch": 1,
+  "ready_order": 6,
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "书房窗下白发子衡背身读无字来信，老人的双手与旁边火盆在同一横幅内。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "fb2bce415c312dabc61235ed4d8948fcf5901cd4326d50d60133d59e4d571709",
+  "created_at": "2026-10-29T01:41:06.472359+00:00",
+  "bytes": 2305798,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v8_simayi_letter/a-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "07cc8237e0bd4d3905486027bf5bb4e9d9aeb301ffc5e29a3f7d1c66309e53d4",
+    "original_sha256": "fb2bce415c312dabc61235ed4d8948fcf5901cd4326d50d60133d59e4d571709",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Authored principal action and props preserved in native wide export; player fully rear-facing, blank letter, no blood/children/text, adopted costume where relevant."
+}

@@ -1,7 +1,7 @@
 {
   "issue": 68,
   "branch": "codex/art-v7-endings",
-  "asset_ref": "5b29ce47aa465f95bce255a5565387c7b79b187b",
+  "asset_ref": "codex/art-v7-endings",
   "items": [
     {
       "id": "portrait-jiangwei",
@@ -127,9 +127,9 @@
           },
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/portrait-jiangwei/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-jiangwei/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-jiangwei/a-300x400.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-jiangwei/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -206,9 +206,9 @@
           },
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/portrait-jiangwei/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-jiangwei/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-jiangwei/b-300x400.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-jiangwei/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-jiangwei/b.json"
         }
       ],
       "status": "adopted"
@@ -337,9 +337,9 @@
           },
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/portrait-simayi/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-simayi/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-simayi/a-300x400.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-simayi/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -416,9 +416,9 @@
           },
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/portrait-simayi/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-simayi/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-simayi/b-300x400.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-simayi/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-simayi/b.json"
         }
       ],
       "status": "adopted"
@@ -547,9 +547,9 @@
           },
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/portrait-weiyan/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-weiyan/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-weiyan/a-300x400.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-weiyan/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -626,9 +626,9 @@
           },
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/portrait-weiyan/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-weiyan/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-weiyan/b-300x400.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/portrait-weiyan/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b-300x400.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/portrait-weiyan/b.json"
         }
       ],
       "status": "adopted"
@@ -794,9 +794,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_biao/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_biao/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_biao/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_biao/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_biao/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_biao/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_biao/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -895,9 +895,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_biao/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_biao/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_biao/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_biao/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_biao/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_biao/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_biao/b.json"
         }
       ],
       "status": "adopted"
@@ -1063,9 +1063,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_child/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_child/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_child/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_child/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_child/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_child/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_child/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -1164,9 +1164,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_child/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_child/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_child/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_child/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_child/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_child/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_child/b.json"
         }
       ],
       "status": "adopted"
@@ -1312,9 +1312,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_houzhu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_houzhu/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_houzhu/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_houzhu/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_houzhu/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_houzhu/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_houzhu/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -1403,9 +1403,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_houzhu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_houzhu/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_houzhu/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_houzhu/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_houzhu/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_houzhu/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_houzhu/b.json"
         }
       ],
       "status": "adopted"
@@ -1493,6 +1493,8 @@
           "role": "additional_adopted_character_age_reference"
         }
       ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -1611,9 +1613,9 @@
           },
           "visual_review_notes": "Matches adopted ruddy face, short beard, steel helmet/red plume and dark red armour; map has unlabelled terrain; principal gestures and both faces preserved in exact banner.",
           "path": "game/sanguo/art/candidates/scene-v7_weiyan/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_weiyan/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_weiyan/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_weiyan/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_weiyan/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_weiyan/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_weiyan/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -1732,12 +1734,12 @@
           },
           "visual_review_notes": "Matches adopted ruddy face, short beard, steel helmet/red plume and dark red armour; map has unlabelled terrain; principal gestures and both faces preserved in exact banner.",
           "path": "game/sanguo/art/candidates/scene-v7_weiyan/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_weiyan/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_weiyan/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_weiyan/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_weiyan/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_weiyan/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_weiyan/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "scene-v7_jiangwei",
@@ -1825,6 +1827,8 @@
           "role": "additional_adopted_character_age_reference"
         }
       ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -1946,9 +1950,9 @@
           },
           "visual_review_notes": "Adopted portrait identity/costume and principal action reviewed in native wide exact-size export; adults only, no visible writing; player rear view where present.",
           "path": "game/sanguo/art/candidates/scene-v7_jiangwei/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -2070,12 +2074,12 @@
           },
           "visual_review_notes": "Exact adopted Jiang Wei clean-shaven face, silver-blue armour/helmet/blue cloak; both knees or spear and rolled book visible, principal gestures preserved; all adults.",
           "path": "game/sanguo/art/candidates/scene-v7_jiangwei/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "scene-v7_wanglang",
@@ -2240,9 +2244,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Native wide framing reviewed: principal heads and story action inside frame; adult cast; no visible lettering or watermark.",
           "path": "game/sanguo/art/candidates/scene-v7_wanglang/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_wanglang/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_wanglang/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_wanglang/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -2345,9 +2349,9 @@
             "authorization": "User explicitly requested both original and cropped exports in this chat."
           },
           "path": "game/sanguo/art/candidates/scene-v7_wanglang/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_wanglang/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_wanglang/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_wanglang/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_wanglang/b.json"
         }
       ],
       "status": "adopted"
@@ -2521,9 +2525,9 @@
             "authorization": "User explicitly requested both original and cropped exports in this chat."
           },
           "path": "game/sanguo/art/candidates/scene-v7_jieting/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jieting/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jieting/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jieting/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -2631,9 +2635,9 @@
           },
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/scene-v7_jieting/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jieting/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jieting/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jieting/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jieting/b.json"
         }
       ],
       "status": "adopted"
@@ -2779,9 +2783,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_hill/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_hill/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_hill/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_hill/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_hill/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_hill/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_hill/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -2870,9 +2874,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_hill/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_hill/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_hill/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_hill/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_hill/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_hill/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_hill/b.json"
         }
       ],
       "status": "adopted"
@@ -3043,9 +3047,9 @@
           ],
           "codex_visual_check": "pass",
           "path": "game/sanguo/art/candidates/scene-v7_kongcheng/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_kongcheng/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_kongcheng/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_kongcheng/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -3150,9 +3154,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Exactly four adults on tower: Zhuge, rear-facing grey-haired Ziheng, two adult attendants; guqin played with both hands, fan resting, incense, open gate and halted distant army.",
           "path": "game/sanguo/art/candidates/scene-v7_kongcheng/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_kongcheng/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_kongcheng/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_kongcheng/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_kongcheng/b.json"
         }
       ],
       "status": "adopted"
@@ -3326,9 +3330,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_masu/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_masu/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_masu/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_masu/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_masu/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_masu/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_masu/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -3437,9 +3441,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_masu/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_masu/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_masu/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_masu/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_masu/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_masu/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_masu/b.json"
         }
       ],
       "status": "adopted"
@@ -3523,6 +3527,8 @@
           "role": "additional_adopted_character_age_reference"
         }
       ],
+      "adopted_candidate": "b",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -3637,9 +3643,9 @@
           },
           "visual_review_notes": "Exact adopted Jiang Wei clean-shaven face, silver-blue armour/helmet/blue cloak; both knees or spear and rolled book visible, principal gestures preserved; all adults.",
           "path": "game/sanguo/art/candidates/scene-v7_jiangwei_night/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei_night/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei_night/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei_night/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei_night/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei_night/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei_night/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -3754,12 +3760,12 @@
           },
           "visual_review_notes": "Adopted Jiang Wei face/hair/helmet/silver-blue armour/blue cloak matches; full principal heads, fan/cart or spear/rolled book preserved in 1200x480, no text, all adults.",
           "path": "game/sanguo/art/candidates/scene-v7_jiangwei_night/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei_night/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei_night/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_jiangwei_night/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei_night/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei_night/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_jiangwei_night/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "scene-v7_zilong",
@@ -3922,9 +3928,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_zilong/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_zilong/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_zilong/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_zilong/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_zilong/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_zilong/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_zilong/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4023,9 +4029,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_zilong/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_zilong/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_zilong/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_zilong/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_zilong/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_zilong/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_zilong/b.json"
         }
       ],
       "status": "adopted"
@@ -4171,9 +4177,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_old/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_old/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_old/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_old/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_old/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_old/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_old/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4262,9 +4268,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_old/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_old/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_old/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_old/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_old/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_old/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_old/b.json"
         }
       ],
       "status": "adopted"
@@ -4348,6 +4354,8 @@
           "role": "additional_adopted_character_age_reference"
         }
       ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -4462,9 +4470,9 @@
           },
           "visual_review_notes": "Three principal adults: adopted Wei Yan ruddy face short beard/helmet/red armour, thin civilian Yang Yi recoiling, grey-haired Ziheng full back with both hands raised; no violence/blood.",
           "path": "game/sanguo/art/candidates/scene-v7_feud/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_feud/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_feud/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_feud/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_feud/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_feud/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_feud/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4579,12 +4587,12 @@
           },
           "visual_review_notes": "Three principal adults: adopted Wei Yan ruddy face short beard/helmet/red armour, thin civilian Yang Yi recoiling, grey-haired Ziheng full back with both hands raised; no violence/blood.",
           "path": "game/sanguo/art/candidates/scene-v7_feud/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_feud/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_feud/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_feud/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_feud/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_feud/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_feud/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "scene-v7_student",
@@ -4727,9 +4735,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_student/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_student/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_student/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_student/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_student/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_student/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_student/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -4818,9 +4826,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_student/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_student/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_student/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_student/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_student/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_student/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_student/b.json"
         }
       ],
       "status": "adopted"
@@ -4988,9 +4996,9 @@
             "authorization": "User explicitly requested both original and cropped exports in this chat."
           },
           "path": "game/sanguo/art/candidates/scene-v7_shangfang/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_shangfang/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_shangfang/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_shangfang/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -5093,9 +5101,9 @@
             "authorization": "User explicitly requested both original and cropped exports in this chat."
           },
           "path": "game/sanguo/art/candidates/scene-v7_shangfang/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_shangfang/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_shangfang/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_shangfang/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_shangfang/b.json"
         }
       ],
       "status": "adopted"
@@ -5179,6 +5187,8 @@
           "role": "additional_adopted_character_age_reference"
         }
       ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -5293,9 +5303,9 @@
           },
           "visual_review_notes": "Adopted portrait identity/costume and principal action reviewed in native wide exact-size export; adults only, no visible writing; player rear view where present.",
           "path": "game/sanguo/art/candidates/scene-v7_envoy/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_envoy/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_envoy/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_envoy/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_envoy/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_envoy/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_envoy/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -5410,12 +5420,12 @@
           },
           "visual_review_notes": "Adopted portraits checked for canonical face/hair/costume; principal hands, heads, robe/box or cart/fan fit in native-wide exact export; no visible text, adults only.",
           "path": "game/sanguo/art/candidates/scene-v7_envoy/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_envoy/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_envoy/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_envoy/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_envoy/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_envoy/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_envoy/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "scene-v7_lamp",
@@ -5580,9 +5590,9 @@
             793
           ],
           "path": "game/sanguo/art/candidates/scene-v7_lamp/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_lamp/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_lamp/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_lamp/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -5685,9 +5695,9 @@
             "authorization": "User explicitly requested both original and cropped exports in this chat."
           },
           "path": "game/sanguo/art/candidates/scene-v7_lamp/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_lamp/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_lamp/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_lamp/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_lamp/b.json"
         }
       ],
       "status": "adopted"
@@ -5778,6 +5788,8 @@
           "role": "additional_adopted_character_age_reference"
         }
       ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -5899,9 +5911,9 @@
           },
           "visual_review_notes": "Adopted portraits checked for canonical face/hair/costume; principal hands, heads, robe/box or cart/fan fit in native-wide exact export; no visible text, adults only.",
           "path": "game/sanguo/art/candidates/scene-v7_last/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_last/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_last/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_last/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -6023,12 +6035,12 @@
           },
           "visual_review_notes": "Adopted Jiang Wei face/hair/helmet/silver-blue armour/blue cloak matches; full principal heads, fan/cart or spear/rolled book preserved in 1200x480, no text, all adults.",
           "path": "game/sanguo/art/candidates/scene-v7_last/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_last/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_last/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_last/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_last/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "scene-v7_home",
@@ -6171,9 +6183,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_home/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_home/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_home/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_home/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -6262,9 +6274,9 @@
           "codex_visual_check": "pass",
           "visual_review_notes": "Reviewed original and exact-size banner for adult cast, identity cues, no visible text, rear-facing Ziheng where present, and preservation of principal story action.",
           "path": "game/sanguo/art/candidates/scene-v7_home/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_home/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_home/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/scene-v7_home/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/scene-v7_home/b.json"
         }
       ],
       "status": "adopted"
@@ -6334,6 +6346,8 @@
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
       "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -6436,9 +6450,9 @@
           },
           "visual_review_notes": "Two principal adults; player face hidden, Zhuge canonical cap/white robe/fan, plain banners, no Guan Yu/Zhang Fei/Liu Bei; left foreground and open warm panorama align ending/city.",
           "path": "game/sanguo/art/candidates/ending-v2_city/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v2_city/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v2_city/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v2_city/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -6541,12 +6555,12 @@
           },
           "visual_review_notes": "Two principal adults; player face hidden, Zhuge canonical cap/white robe/fan, plain banners, no Guan Yu/Zhang Fei/Liu Bei; left foreground and open warm panorama align ending/city.",
           "path": "game/sanguo/art/candidates/ending-v2_city/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v2_city/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v2_city/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v2_city/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v2_city/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "ending-v3_city",
@@ -6621,6 +6635,8 @@
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
       "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -6731,9 +6747,9 @@
           },
           "visual_review_notes": "Three named adults only: back-facing Liu Bei atop platform and rear-view Ziheng with Zhuge at side, adult troop ranks and blank flags; no Guan Yu or Zhang Fei, warm wide vista.",
           "path": "game/sanguo/art/candidates/ending-v3_city/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v3_city/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v3_city/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v3_city/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -6844,12 +6860,12 @@
           },
           "visual_review_notes": "Three named adults only: back-facing Liu Bei atop platform and rear-view Ziheng with Zhuge at side, adult troop ranks and blank flags; no Guan Yu or Zhang Fei, warm wide vista.",
           "path": "game/sanguo/art/candidates/ending-v3_city/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v3_city/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v3_city/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v3_city/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v3_city/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "ending-v4_city",
@@ -6927,6 +6943,8 @@
           }
         ]
       },
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -7035,9 +7053,9 @@
           },
           "visual_review_notes": "Reviewed original and 1200x480 export: correct adult principal cast, hidden player face and neutral successor silhouette for v8, no prohibited late-volume heroes, blank flags, warm original-ending composition.",
           "path": "game/sanguo/art/candidates/ending-v4_city/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v4_city/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v4_city/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v4_city/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -7140,12 +7158,12 @@
           },
           "visual_review_notes": "Reviewed required principal cast/identity, hidden player face, blank banners and correct scene-specific objects; no Guan Yu/Zhang Fei or Liu Bei in late volumes.",
           "path": "game/sanguo/art/candidates/ending-v4_city/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v4_city/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v4_city/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v4_city/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v4_city/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "ending-v5_city",
@@ -7212,6 +7230,8 @@
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
       "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -7314,9 +7334,9 @@
           },
           "visual_review_notes": "Baidi cliff wall above Yangtze gorges in warm morning mist; exactly two principal adults, rear-view player, no Liu Bei/Guan Yu/Zhang Fei; original city composition preserved.",
           "path": "game/sanguo/art/candidates/ending-v5_city/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v5_city/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v5_city/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v5_city/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -7419,12 +7439,12 @@
           },
           "visual_review_notes": "Baidi cliff wall above Yangtze gorges in warm morning mist; exactly two principal adults, rear-view player, no Liu Bei/Guan Yu/Zhang Fei; original city composition preserved.",
           "path": "game/sanguo/art/candidates/ending-v5_city/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v5_city/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v5_city/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v5_city/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v5_city/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "ending-v6_city",
@@ -7491,6 +7511,8 @@
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
       "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -7593,9 +7615,9 @@
           },
           "visual_review_notes": "Two principal adults in left foreground, rear-view Ziheng, Zhuge canonical robe/cap/fan; elephants and bronze drums visible in returning adult army, no Liu Bei/Guan Yu/Zhang Fei.",
           "path": "game/sanguo/art/candidates/ending-v6_city/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v6_city/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v6_city/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v6_city/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -7698,12 +7720,12 @@
           },
           "visual_review_notes": "Reviewed required principal cast/identity, hidden player face, blank banners and correct scene-specific objects; no Guan Yu/Zhang Fei or Liu Bei in late volumes.",
           "path": "game/sanguo/art/candidates/ending-v6_city/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v6_city/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v6_city/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v6_city/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v6_city/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "ending-v7_city",
@@ -7778,6 +7800,8 @@
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
       "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -7888,9 +7912,9 @@
           },
           "visual_review_notes": "Reviewed required principal cast/identity, hidden player face, blank banners and correct scene-specific objects; no Guan Yu/Zhang Fei or Liu Bei in late volumes.",
           "path": "game/sanguo/art/candidates/ending-v7_city/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v7_city/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v7_city/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v7_city/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -8001,12 +8025,12 @@
           },
           "visual_review_notes": "Reviewed original and 1200x480 export: correct adult principal cast, hidden player face and neutral successor silhouette for v8, no prohibited late-volume heroes, blank flags, warm original-ending composition.",
           "path": "game/sanguo/art/candidates/ending-v7_city/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v7_city/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v7_city/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v7_city/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v7_city/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     },
     {
       "id": "ending-v8_city",
@@ -8064,6 +8088,8 @@
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
       "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74,
       "candidates": [
         {
           "tool": "image_gen.imagegen",
@@ -8157,9 +8183,9 @@
           },
           "visual_review_notes": "Reviewed original and 1200x480 export: correct adult principal cast, hidden player face and neutral successor silhouette for v8, no prohibited late-volume heroes, blank flags, warm original-ending composition.",
           "path": "game/sanguo/art/candidates/ending-v8_city/a.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v8_city/a.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v8_city/a-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v8_city/a.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/a.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/a-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/a.json"
         },
         {
           "tool": "image_gen.imagegen",
@@ -8253,12 +8279,12 @@
           },
           "visual_review_notes": "Reviewed original and 1200x480 export: correct adult principal cast, hidden player face and neutral successor silhouette for v8, no prohibited late-volume heroes, blank flags, warm original-ending composition.",
           "path": "game/sanguo/art/candidates/ending-v8_city/b.png",
-          "url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v8_city/b.png",
-          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v8_city/b-1200x480.png",
-          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/5b29ce47aa465f95bce255a5565387c7b79b187b/game/sanguo/art/candidates/ending-v8_city/b.json"
+          "url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/b.png",
+          "crop_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/b-1200x480.png",
+          "receipt_url": "https://raw.githubusercontent.com/storyloveai/ocai/codex/art-v7-endings/game/sanguo/art/candidates/ending-v8_city/b.json"
         }
       ],
-      "status": "awaiting_claude_review"
+      "status": "adopted"
     }
   ],
   "planned_items": 30,
@@ -8276,7 +8302,7 @@
     }
   },
   "existing_pr": 72,
-  "adopted_items": 17,
+  "adopted_items": 30,
   "crop_exports_authorized": true,
   "art_adopted_by_codex": false
 }

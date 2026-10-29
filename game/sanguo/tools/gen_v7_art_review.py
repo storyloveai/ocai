@@ -112,7 +112,7 @@ def main():
     lines = ['# 卷七及留任结局 · 候选评审', '', f'已交 {manifest["completed_items"]}/{len(items)} 项、{manifest["original_candidates"]} 张原图，每项目标两张。', '',
              '工具：ChatGPT 自带 image_gen.imagegen，底层模型名称和 seed 未公开。没有调用按张付费的 OpenAI 图片 API。每张 PNG 原图保持工具返回的原始字节，JSON 保存完整清单原文、实际提示词、参考图及哈希。', '',
              '用户已明确要求同时交原图和裁切版。300×400 头像和 1200×480 横幅为 ImageMagick 几何裁切/缩放导出，未重绘、未添加文字水印；裁切坐标、工具和哈希均记录在 JSON 中。未放入正式 portraits/scenes/ending，未改清单或剧情，未运行 build.py / game:sync。', '',
-             'Claude 已在 #68 记录采用上一批 17 项（PR #71）：姜维 A、司马懿 B、魏延 A；卷七其余六场景已放行。结局任务现以 edition-jobs-endings.jsonl 的七条（卷二至卷八）为准，替换先前口头六条。新候选都等 Claude 审图，不用尚未采用的候选充当参考。', '',
+             '本页30项已由 Claude 在 #71 / #74 采用：头像、卷七20场景与七张分卷留任结局。卷八继续交候选，见下方链接；不要重复采用本页历史候选。', '',
              '评审页：`/assets/art-v7/index.html`。现有草稿 PR #72 保持 Preview，不合并。', '',
              '## 已采用头像对比：姜维 A · 司马懿 B · 魏延 A', '',
              '| 角色 | A · 300×400 | B · 300×400 |', '|---|---|---|']
@@ -125,7 +125,7 @@ def main():
         lines.append(f'| {item["id"]} | ' + ' | '.join(links + ['待生成'] * (2 - len(links))) + ' |')
     lines.extend(['', '## 三批进度', '', '| 项目 | 进度 | 等待条件 |', '|---|---|---|'])
     for item in items:
-        state = '已采用 ' + item['adopted_candidate'].upper() + '（#71）' if item.get('adopted_candidate') else GATES.get(item['gate'], 'Claude 审图' if item['candidates'] else '已放行，待生成')
+        state = '已采用 ' + item['adopted_candidate'].upper() + '（#' + str(item['adoption_pr']) + '）' if item.get('adopted_candidate') else GATES.get(item['gate'], 'Claude 审图' if item['candidates'] else '已放行，待生成')
         lines.append(f'| {item["id"]} | {len(item["candidates"])}/2 | {state} |')
     lines.extend(['', '## 卷七场景和留任结局 A/B 对照', '', '缩略图链接到未裁原图；精确尺寸导出和生成记录见评审页。', '',
                   '| 场景 | A · 1200×480 | B · 1200×480 |', '|---|---|---|'])
@@ -148,14 +148,14 @@ def render_page(m):
     parts = ['''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>三国 · 卷七与留任结局候选</title><style>
 :root{color-scheme:dark;font-family:system-ui,sans-serif;background:#111;color:#eee}body{margin:0}main{max-width:1400px;margin:auto;padding:28px 20px}h1{font-size:clamp(24px,4vw,38px)}p,li{color:#bbb;line-height:1.7}a{color:#e3bd75;overflow-wrap:anywhere}article{margin:28px 0;padding:24px;background:#1b1b1b;border-radius:14px;scroll-margin-top:20px}h2,figcaption{overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0;min-width:0}figure img{display:block;width:100%;height:auto;border-radius:8px}.avatar img{max-width:300px}.tiny{width:48px!important;height:64px!important;border-radius:4px}.original img{max-width:100%}figcaption{padding:12px 0;line-height:1.7}details{margin:16px 0}summary{cursor:pointer;color:#e3bd75}pre{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.7;font-size:12px}.badge{color:#dfb564}.pending{background:#141414;border-radius:8px;padding:24px;color:#aaa}.filters{display:flex;flex-wrap:wrap;gap:20px;margin:24px 0}select{max-width:100%;padding:8px;background:#222;color:white;border:1px solid #666;border-radius:6px}label{display:flex;align-items:center;gap:8px}@media(max-width:700px){main{padding:20px 12px}article{padding:16px}.grid{grid-template-columns:1fr}}
 </style><main><header><small>STORYDATE · ISSUE #68 · 候选原图与裁切版</small>''',
-             f'<h1>{m["completed_items"]}/{m["planned_items"]} 项已备好两张候选</h1><p>已交 {m["original_candidates"]} 张原图和相应尺寸导出。上一批 {m["adopted_items"]} 项已由 Claude 在 #71 采用；新候选仍待审图。当前按卷七六场景、七张留任结局、卷八的顺序推进。</p>',
+             f'<h1>{m["completed_items"]}/{m["planned_items"]} 项已备好两张候选</h1><p>已交 {m["original_candidates"]} 张原图和相应尺寸导出。上一批 {m["adopted_items"]} 项已由 Claude 在 #71 / #74 采用。本页保留历史对照，新一轮卷八候选见卷八评审。</p>',
              '<p>点击裁切图查看精确尺寸版本，展开“原图”检查完整构图。原图字节保留；裁切版只做用户要求的几何裁切和缩放。工具为 ChatGPT 自带出图，底层模型名称未公开；未调用按张付费图片 API。</p>',
              '<p><a href="manifest.json">完整记录</a> · <a href="https://github.com/storyloveai/ocai/issues/68">Issue #68</a> · <a href="https://github.com/storyloveai/ocai/pull/72">Draft PR #72</a> · <a href="../art-v8/index.html">卷八评审</a> · <a href="https://github.com/storyloveai/ocai/tree/codex/art-v7-endings/game/sanguo/art/candidates">GitHub 原图目录</a></p>',
              '<div class="filters"><label>批次 <select id="group"><option value="all">全部三批</option><option value="portrait">第1批 · 头像</option><option value="scene">第2批 · 卷七场景</option><option value="ending">第3批 · 留任结局</option></select></label><label>进度 <select id="status"><option value="all">全部</option><option value="ready">已有候选</option><option value="review">本轮待审</option><option value="gated">等待采用或前一批</option></select></label><span id="count" aria-live="polite"></span></div></header>']
     for item in m['items']:
         candidates = item['candidates']
         parts.append(f'<article id="{item["id"]}" data-group="{item["group"]}" data-ready="{bool(candidates).__str__().lower()}" data-adopted="{bool(item.get('adopted_candidate')).__str__().lower()}" data-gated="{bool(item["gate"]).__str__().lower()}"><span class="badge">{LABELS[item["group"]]} · {len(candidates)}/2</span><h2>{e(item["id"])}</h2>')
-        adopted = ('<p>Claude 已采用 ' + item['adopted_candidate'].upper() + '（PR #71）</p>') if item.get('adopted_candidate') else ''
+        adopted = ('<p>Claude 已采用 ' + item['adopted_candidate'].upper() + '（PR #' + str(item['adoption_pr']) + '）</p>') if item.get('adopted_candidate') else ''
         parts.append(adopted + '<p>' + e(item['authored_job'].get('composition', item['authored_job'].get('prompt', ''))) + '</p><div class="grid">')
         for letter in item['letters']:
             c = next((x for x in candidates if x['candidate'] == letter), None)

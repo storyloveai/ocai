@@ -67,14 +67,21 @@ def main():
                                           'url': RAW + args.asset_ref + '/' + rel,
                                           'crop_url': RAW + args.asset_ref + '/' + c['crop_export']['path'],
                                           'receipt_url': RAW + args.asset_ref + '/' + sidecar.relative_to(ROOT).as_posix()})
-        current['status'] = 'awaiting_claude_review' if len(current['candidates']) == 2 else item['gate']
+        current['status'] = 'adopted' if item.get('adopted_candidate') else ('awaiting_claude_review' if len(current['candidates']) == 2 else item['gate'])
         items.append(current)
-    manifest = {'issue': 68, 'source_pr': 71, 'existing_pr': 72, 'asset_ref': args.asset_ref,
+    batches = [{'batch': b['batch'], 'ids': b['ids'], 'planned_items': len(b['ids']),
+                'completed_items': sum(len(i['candidates']) == 2 for i in items if i['id'] in b['ids'])}
+               for b in plan.get('delivery_batches', [])]
+    manifest = {'issue': 68, 'source_pr': plan['source_pr'], 'existing_pr': 72, 'asset_ref': args.asset_ref,
                 'source_v8_commit': plan['source_v8_commit'],
                 'fallback_authorization': plan['fallback_authorization'],
                 'items': items, 'planned_items': len(items),
                 'completed_items': sum(len(i['candidates']) == 2 for i in items),
                 'original_candidates': sum(len(i['candidates']) for i in items),
+                'new_planned_items': sum(not bool(i.get('adopted_candidate')) for i in items),
+                'new_completed_items': sum(len(i['candidates']) == 2 and not i.get('adopted_candidate') for i in items),
+                'new_original_candidates': sum(len(i['candidates']) for i in items if not i.get('adopted_candidate')),
+                'delivery_batches': batches,
                 'adopted_by_codex': False}
     PUBLIC.mkdir(parents=True, exist_ok=True)
     data = json.dumps(manifest, ensure_ascii=False, indent=2) + '\n'
@@ -83,19 +90,28 @@ def main():
     render_page(manifest)
     lines = ['# 卷八《归晋》候选评审', '',
              f'已交 {manifest["completed_items"]}/21 项、{manifest["original_candidates"]} 张原图，每项目标 A/B 两张及相应 1200×480 导出。', '',
-             '来源：Claude 的 PR #71（叠在 #70 上），清单提交 `' + plan['source_v8_commit'] + '`。原始清单未改，完整 prompt / negative_prompt 原文保存在生成记录。', '',
+             f'本轮新交 {manifest["new_completed_items"]}/{manifest["new_planned_items"]} 项、{manifest["new_original_candidates"]} 张候选。温芷补衣 A 已在 #74 采用，保留历史对照；其原始生成记录没有改。', '',
+             '来源：Claude 的 PR #74，当前20条 ready 清单与全部参考固定在 `' + plan['source_v8_commit'] + '`。原始清单未改，完整 prompt / negative_prompt 原文保存在生成记录。', '',
              '参考处理：' + plan['fallback_authorization'], '',
              '模型：ChatGPT 自带 image_gen.imagegen，底层模型名称与 seed 未公开；没有调用按张付费图片 API。原图字节保留，ImageMagick 只做已获用户许可的几何裁切与缩放。最终采用请 Claude 审图。', '',
-             '[卷七头像与场景评审](../v7-review/README.md) · [需要 Claude 处理的源清单问题](source-problems.md)', '',
-             '## A/B 对比', '', '| id | A | B | 进度 |', '|---|---|---|---|']
+             '[卷七头像与场景评审](../v7-review/README.md) · [清单问题修复记录](source-problems.md)', '',
+             '## 本轮批次', '', '| 批次 | 进度 | 留言与验证 |', '|---|---|---|']
+    for b in batches:
+        n = b['batch']
+        published = (REVIEW / f'v8-batch-{n}-validation.json').exists()
+        links = f'[留言草稿](v8-batch-{n}-comment.md) · [验证](v8-batch-{n}-validation.json)' if published else '尚未交付'
+        lines.append(f'| 卷八第{n}批 | {b["completed_items"]}/{b["planned_items"]} 项 | {links} |')
+    lines.extend(['', '## A/B 对比', '', '| id | A | B | 进度 |', '|---|---|---|---|'])
     for item in items:
         cols = []
         for letter in ['a', 'b']:
             c = next((v for v in item['candidates'] if v['candidate'] == letter), None)
             cols.append(f'<a href="{c["url"]}"><img src="{c["crop_url"]}" width="240" height="96" alt="{item["id"]} {letter.upper()}"></a><br>{c["description"]}' if c else '—')
-        status = '待 Claude 审图' if len(item['candidates']) == 2 else GATES.get(item['gate'], str(item['gate']))
+        status = ('已采用 ' + item['adopted_candidate'].upper() + '（#' + str(item['adoption_pr']) + '）') if item.get('adopted_candidate') else ('待 Claude 审图' if len(item['candidates']) == 2 else GATES.get(item['gate'], str(item['gate'])))
+        if item.get('delivery_batch'):
+            status = f'第{item["delivery_batch"]}批 · ' + status
         lines.append(f'| {item["id"]} | ' + ' | '.join(cols) + f' | {status} |')
-    lines.extend(['', '评审页路径：`/assets/art-v8/index.html`。新候选推到现有草稿 [#72](https://github.com/storyloveai/ocai/pull/72)，不合并。当前环境仍对 GitHub API 返回代理 403，逐批 #68 留言不能自动提交，草稿随分支交付。', ''])
+    lines.extend(['', '评审页路径：`/assets/art-v8/index.html`。新候选推到现有草稿 [#72](https://github.com/storyloveai/ocai/pull/72)，不合并。当前环境仍对 GitHub API 返回代理 403，逐批留言草稿随分支交付，不代表已经发出 GitHub 评论。', ''])
     (REVIEW / 'README.md').write_text('\n'.join(lines))
     print(json.dumps({k: manifest[k] for k in ['planned_items', 'completed_items', 'original_candidates']}))
 
@@ -105,12 +121,13 @@ def render_page(m):
     parts = ['''<!doctype html><html lang="zh-CN"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>三国·归晋候选评审</title><style>
 body{margin:0;background:#111;color:#eee;font-family:system-ui,sans-serif}main{max-width:1400px;margin:auto;padding:28px 20px}p{color:#bbb;line-height:1.7}a{color:#e3bd75;overflow-wrap:anywhere}article{background:#1b1b1b;border-radius:14px;padding:24px;margin:28px 0}h2,figcaption{overflow-wrap:anywhere}.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}figure{margin:0;min-width:0}img{display:block;width:100%;height:auto;border-radius:8px}figcaption{padding:12px 0;line-height:1.7}details{margin:16px 0}summary{cursor:pointer;color:#e3bd75}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;line-height:1.7}.pending{padding:24px;background:#141414;border-radius:8px;color:#bbb}.filter{display:flex;flex-wrap:wrap;gap:20px;align-items:center}select{padding:10px;background:#222;color:#eee;border:1px solid #777;border-radius:6px}@media(max-width:700px){main{padding:20px 12px}article{padding:16px}.grid{grid-template-columns:1fr}}
 </style><main>''', f'<h1>卷八《归晋》· {m["completed_items"]}/21 项备好两张候选</h1>',
-             '<p>仅供 Claude 审图，尚未采用进游戏。每张保留未裁原图与 1200×480 导出。缺失参考的处理与生成记录均公开，作者清单没有改写。</p>',
+             f'<p>本轮新交 {m["new_completed_items"]}/20 项、{m["new_original_candidates"]} 张候选，分7＋7＋6三批。温芷补衣 A 已由 Claude 在 #74 采用，其余新候选等审。每张保留未裁原图与1200×480导出，作者清单没有改写。</p>',
              '<p>' + e(m['fallback_authorization']) + '</p>',
              '<p><a href="../art-v7/index.html">卷七头像与场景评审</a> · <a href="manifest.json">完整生成记录</a></p>',
-             '<div class="filter"><label>进度 <select id="status"><option value="all">全部</option><option value="ready">已有候选</option><option value="waiting">等待条件</option></select></label><span id="count" aria-live="polite"></span></div>']
+             '<div class="filter"><label>批次 <select id="batch"><option value="all">全部</option><option value="1">本轮第1批</option><option value="2">本轮第2批</option><option value="3">本轮第3批</option><option value="0">上一批已采用</option></select></label><label>进度 <select id="status"><option value="all">全部</option><option value="ready">已有候选</option><option value="review">本轮待审</option><option value="waiting">尚未生成</option></select></label><span id="count" aria-live="polite"></span></div>']
     for item in m['items']:
-        parts.append(f'<article data-ready="{str(bool(item["candidates"])).lower()}" id="{item["id"]}"><h2>{e(item["id"])}</h2><p>{e(item["authored_job"]["composition"])}</p><div class="grid">')
+        label = ('已采用 ' + item['adopted_candidate'].upper() + '（#' + str(item['adoption_pr']) + '）') if item.get('adopted_candidate') else ('本轮第' + str(item['delivery_batch']) + '批 · 待 Claude 审图')
+        parts.append(f'<article data-ready="{str(bool(item["candidates"])).lower()}" data-adopted="{str(bool(item.get("adopted_candidate"))).lower()}" data-batch="{item.get("delivery_batch",0)}" id="{item["id"]}"><small>{e(label)}</small><h2>{e(item["id"])}</h2><p>{e(item["authored_job"]["composition"])}</p><div class="grid">')
         for letter in ['a', 'b']:
             c = next((v for v in item['candidates'] if v['candidate'] == letter), None)
             if c is None:
@@ -118,7 +135,7 @@ body{margin:0;background:#111;color:#eee;font-family:system-ui,sans-serif}main{m
                 continue
             parts.append(f'<figure><a href="{e(c["crop_url"])}"><img loading="lazy" src="{e(c["crop_url"])}" alt="{item["id"]} {letter.upper()} 1200×480"></a><figcaption><strong>{letter.upper()}</strong> · {e(c["description"])}<br><a href="{e(c["url"])}">未裁原图</a> · <a href="{e(c["receipt_url"])}">生成与参考记录</a></figcaption><details class="original"><summary>展开原图 · {c["actual_dimensions"][0]}×{c["actual_dimensions"][1]}</summary><img loading="lazy" src="{e(c["url"])}" alt="{item["id"]} {letter.upper()} 未裁原图"></details></figure>')
         parts.append('</div><details><summary>作者原始清单与缺失参考</summary><pre>' + e(json.dumps({'authored_job': item['authored_job'], 'missing_authored_ref_paths': item['missing_authored_ref_paths'], 'adopted_references': item['references']}, ensure_ascii=False, indent=2)) + '</pre></details></article>')
-    parts.append('''<script>const s=document.querySelector('#status');function filter(){let n=0;for(const a of document.querySelectorAll('article')){a.hidden=(s.value==='ready'&&a.dataset.ready!=='true')||(s.value==='waiting'&&a.dataset.ready==='true');if(!a.hidden)n++}document.querySelector('#count').textContent='显示 '+n+' 项'}s.addEventListener('change',filter);filter();</script></main></html>''')
+    parts.append('''<script>const s=document.querySelector('#status'),b=document.querySelector('#batch');function filter(){let n=0;for(const a of document.querySelectorAll('article')){a.hidden=(b.value!=='all'&&a.dataset.batch!==b.value)||(s.value==='ready'&&a.dataset.ready!=='true')||(s.value==='review'&&(a.dataset.ready!=='true'||a.dataset.adopted==='true'))||(s.value==='waiting'&&a.dataset.ready==='true');if(!a.hidden)n++}document.querySelector('#count').textContent='显示 '+n+' 项'}s.addEventListener('change',filter);b.addEventListener('change',filter);filter();</script></main></html>''')
     (PUBLIC / 'index.html').write_text(''.join(parts))
 
 

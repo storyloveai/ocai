@@ -427,7 +427,9 @@
           "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
           "role": "additional_adopted_character_age_reference"
         }
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "scene-v7_jiangwei",
@@ -514,7 +516,9 @@
           "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
           "role": "additional_adopted_character_age_reference"
         }
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "scene-v7_wanglang",
@@ -898,7 +902,9 @@
           "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
           "role": "additional_adopted_character_age_reference"
         }
-      ]
+      ],
+      "adopted_candidate": "b",
+      "adoption_pr": 74
     },
     {
       "id": "scene-v7_zilong",
@@ -1096,7 +1102,9 @@
           "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
           "role": "additional_adopted_character_age_reference"
         }
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "scene-v7_student",
@@ -1292,7 +1300,9 @@
           "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
           "role": "additional_adopted_character_age_reference"
         }
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "scene-v7_lamp",
@@ -1441,7 +1451,9 @@
           "sha256": "3c10279f587a752c4d8b6f2245c4b610f9c8d9e0e2bc7985b125bf19da8669dc",
           "role": "additional_adopted_character_age_reference"
         }
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "scene-v7_home",
@@ -1561,7 +1573,9 @@
         "pr": 71,
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
-      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "ending-v3_city",
@@ -1635,7 +1649,9 @@
         "pr": 71,
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
-      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "ending-v4_city",
@@ -1712,7 +1728,9 @@
             "local_path": "/workspace/ocai-art-source-71/game/sanguo/art/scenes/v7_biao.webp"
           }
         ]
-      }
+      },
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "ending-v5_city",
@@ -1778,7 +1796,9 @@
         "pr": 71,
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
-      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "ending-v6_city",
@@ -1844,7 +1864,9 @@
         "pr": 71,
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
-      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "ending-v7_city",
@@ -1918,7 +1940,9 @@
         "pr": 71,
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
-      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "ending-v8_city",
@@ -1975,7 +1999,9 @@
         "pr": 71,
         "commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424"
       },
-      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL."
+      "delivery_note": "User replaced previous spoken six-ending brief with this authored seven-item JSONL.",
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     }
   ],
   "existing_pr": 72,

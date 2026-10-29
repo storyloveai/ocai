@@ -1,9 +1,9 @@
 {
   "issue": 68,
   "existing_pr": 72,
-  "source_pr": 71,
+  "source_pr": 74,
   "source_main_commit": "24cde5d07fd16bb20f516deb52815b46002cbb07",
-  "source_v8_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+  "source_v8_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
   "branch": "codex/art-v7-endings",
   "portrait_adoption_confirmations": {
     "pr": 71,
@@ -15,7 +15,7 @@
       "weiyan": "a"
     }
   },
-  "fallback_authorization": "No replacement references authorized or used. Use adopted references from PR #71; missing scene references wait for adoption.",
+  "fallback_authorization": "All authored references have been formally adopted in PR #74 and pinned to 6f359c96d3dd717dc74fbf4fd9ca43838edca364; no substitute or unadopted reference is used.",
   "items": [
     {
       "id": "scene-v8_hearse",
@@ -24,7 +24,7 @@
         "kind": "scene",
         "name": "v8_hearse",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
@@ -34,7 +34,7 @@
         ],
         "composition": "栈道上的灵车：白幡、黑漆灵柩，大军沉默地走；子衡骑一匹老马追上来，背影",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -49,13 +49,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -63,7 +68,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 1,
+      "delivery_batch": 1,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_weiyan",
@@ -72,7 +84,7 @@
         "kind": "scene",
         "name": "v8_weiyan",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "weiyan"
         ],
@@ -81,19 +93,19 @@
           "game/sanguo/art/scenes/v7_weiyan.webp"
         ],
         "keep": [
-          "魏延：红脸浓须的猛将，五十多岁，黑甲，大刀",
+          "魏延：与已采用头像一致——钢盔红缨、暗红战袍与甲、短须、黝黑面庞，五十多岁",
           "子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸"
         ],
         "composition": "南谷口两军对阵之间，魏延下马，手里拿着一封信，刀插在地上；子衡背影站在他面前",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Wei Yan, a fierce red-faced heavily bearded general in his fifties, dark armor, a great blade. Between two facing armies at a valley mouth, Wei Yan has dismounted holding an unrolled letter (no visible writing), his blade planted in the ground; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible stands before him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Wei Yan, matching his adopted portrait: steel helmet with red plume, dark red war robe and armor, short beard, swarthy face, in his fifties. Between two facing armies at a valley mouth, Wei Yan has dismounted holding an unrolled letter (no visible writing), his blade planted in the ground; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible stands before him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -101,20 +113,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/weiyan.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "257c97a6f9c71c96edc4a26d0a0b33f64fbf7208ca84a2d98a1be9027b6007db",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_weiyan.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "b267edadd2f4149d004e436b6c0fc855b319268689351f805a5376d2bbe1af32",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_weiyan.webp"
-      ],
-      "gate": "conflicting_weiyan_identity_and_missing_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -122,7 +138,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 2,
+      "delivery_batch": 1,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_return",
@@ -131,7 +154,7 @@
         "kind": "scene",
         "name": "v8_return",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
@@ -141,7 +164,7 @@
         ],
         "composition": "成都城外二十里，穿白孝服的皇帝（后主，二十多岁，身形微胖，面目不细画）迎灵柩，群臣跪着；子衡背影在人群里",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -156,13 +179,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -170,7 +198,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 3,
+      "delivery_batch": 1,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_gate",
@@ -179,7 +214,7 @@
         "kind": "scene",
         "name": "v8_gate",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "wenzhi"
         ],
@@ -188,19 +223,19 @@
           "game/sanguo/art/scenes/v7_child.webp"
         ],
         "keep": [
-          "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙，六十多岁的老妇人，白发",
+          "温芷：高髻、金簪、一朵白梅花、浅蓝灰衣裙，五十多岁，鬓发初白，成年女子",
           "子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸"
         ],
-        "composition": "成都城门口，温芷（五十多岁）站着等人；只画温芷和子衡的背影，不画小孩",
+        "composition": "成都城门口，温芷（五十多岁，鬓发初白）站着等人；只画温芷和子衡的背影，不画小孩",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Wen Zhi, a white-haired woman in her sixties, high hair bun with a gold pin and a white plum blossom, pale blue-grey robes. At the Chengdu city gate, Wen Zhi (in her fifties here) waits; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible walks toward her. No children in the picture. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Wen Zhi, a woman in her fifties with greying hair, high hair bun with a gold pin and a white plum blossom, pale blue-grey robes. At the Chengdu city gate, Wen Zhi waits; Ziheng (the player, a white-haired old scholar in his sixties or seventies in a plain grey-blue robe) seen from behind, face not visible walks toward her. No children in the picture. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -208,24 +243,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/wenzhi.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
           "role": "authored_character_reference"
         },
         {
           "path": "game/sanguo/art/scenes/v7_child.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "82b86a541ab38e2987ea6945a57d33db8912b5b8115acae8b1b8ecfdbaf5193a",
           "role": "authored_adopted_scene_style_reference"
         }
       ],
       "missing_authored_ref_paths": [],
-      "gate": "conflicting_wenzhi_age",
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -233,7 +268,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 4,
+      "delivery_batch": 1,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_oldman",
@@ -242,7 +284,7 @@
         "kind": "scene",
         "name": "v8_oldman",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
@@ -251,19 +293,19 @@
           "game/sanguo/art/scenes/v7_jiangwei.webp"
         ],
         "keep": [
-          "姜维：英武的将军，五十多岁到六十岁，银甲红袍，长枪",
+          "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
           "子衡（玩家）：白发老书生，六七十岁，灰蓝布袍，只能背影或侧后方，不露脸"
         ],
         "composition": "夜里卧室，老子衡靠在床上，姜维坐在床边，灯下",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Jiang Wei, a soldierly general in his fifties, silver armor and red cloak, with a long spear. At night in a bedroom, the aged Ziheng propped up in bed (seen from behind) and Jiang Wei sitting at the bedside by lamplight. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. At night in a bedroom, the aged Ziheng propped up in bed (seen from behind) and Jiang Wei sitting at the bedside by lamplight. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -271,20 +313,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/jiangwei.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_jiangwei.webp"
-      ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -292,7 +338,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 5,
+      "delivery_batch": 1,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_simayi_letter",
@@ -301,7 +354,7 @@
         "kind": "scene",
         "name": "v8_simayi_letter",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
@@ -311,7 +364,7 @@
         ],
         "composition": "书房窗下，一双老人的手拿着一封没有落款的信（看不见字），旁边火盆",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -326,13 +379,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -340,7 +398,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 6,
+      "delivery_batch": 1,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_wz_last",
@@ -403,7 +468,9 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "adopted_candidate": "a",
+      "adoption_pr": 74
     },
     {
       "id": "scene-v8_heir",
@@ -412,7 +479,7 @@
         "kind": "scene",
         "name": "v8_heir",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
@@ -422,7 +489,7 @@
         ],
         "composition": "冬天病床边，药炉冒着热气，床头挂一把白羽扇；床边坐着一个成年人背影，只露背和手里的本子",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -437,13 +504,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -451,7 +523,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 7,
+      "delivery_batch": 1,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_fan",
@@ -460,7 +539,7 @@
         "kind": "scene",
         "name": "v8_fan",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
@@ -469,19 +548,19 @@
           "game/sanguo/art/scenes/v7_jiangwei.webp"
         ],
         "keep": [
-          "姜维：英武的将军，五十多岁到六十岁，银甲红袍，长枪",
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "汉中营门，姜维伸手去摸接班人背上布包里露出的白羽扇",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Jiang Wei, a soldierly general in his fifties, silver armor and red cloak, with a long spear. At the Hanzhong camp gate, Jiang Wei reaches toward a white feather fan peeking from a cloth bundle on the back of the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. At the Hanzhong camp gate, Jiang Wei reaches toward a white feather fan peeking from a cloth bundle on the back of the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -489,20 +568,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/jiangwei.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_jiangwei.webp"
-      ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -510,7 +593,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 8,
+      "delivery_batch": 2,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_duangu",
@@ -519,7 +609,7 @@
         "kind": "scene",
         "name": "v8_duangu",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
@@ -528,19 +618,19 @@
           "game/sanguo/art/scenes/v7_jiangwei.webp"
         ],
         "keep": [
-          "姜维：英武的将军，五十多岁到六十岁，银甲红袍，长枪",
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
-        "composition": "段谷：山谷里伏兵四起，姜维浑身血污勒马回望；远处一骑带着援兵从山梁上冲下来",
+        "composition": "段谷：山谷里伏兵四起，姜维战袍撕破、满身尘土，勒马回望（不画血、伤口）；远处一骑带着援兵从山梁上冲下来",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Jiang Wei, a soldierly general in his fifties, silver armor and red cloak, with a long spear. Duan Valley: ambush troops rising on all sides of a ravine, Jiang Wei blood-stained reining in and looking back; in the distance a rider leads reinforcements down a ridge. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. Duan Valley: ambush troops rising on all sides of a ravine, Jiang Wei, cloak torn and covered in dust (no blood, no wounds), reining in and looking back; in the distance a rider leads reinforcements down a ridge. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -548,20 +638,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/jiangwei.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_jiangwei.webp"
-      ],
-      "gate": "conflicting_blood_constraint",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -569,7 +663,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 9,
+      "delivery_batch": 2,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_jiangwei_night",
@@ -578,7 +679,7 @@
         "kind": "scene",
         "name": "v8_jiangwei_night",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
@@ -587,19 +688,19 @@
           "game/sanguo/art/scenes/v7_jiangwei.webp"
         ],
         "keep": [
-          "姜维：英武的将军，五十多岁到六十岁，银甲红袍，长枪",
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "军帐里，姜维对着摊开的兵书独坐，灯下疲惫；接班人背影坐在对面",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Jiang Wei, a soldierly general in his fifties, silver armor and red cloak, with a long spear. In a command tent, Jiang Wei sits alone over open books of war, weary in lamplight; the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) sits across from him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. In a command tent, Jiang Wei sits alone over open books of war, weary in lamplight; the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) sits across from him. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -607,20 +708,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/jiangwei.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_jiangwei.webp"
-      ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -628,7 +733,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 10,
+      "delivery_batch": 2,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_healer",
@@ -637,17 +749,17 @@
         "kind": "scene",
         "name": "v8_healer",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
         ],
         "keep": [
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "伤兵营里，接班人背影蹲在伤兵前，打开药箱，一本旧医书摊开（看不见字）",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -662,13 +774,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -676,7 +793,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 11,
+      "delivery_batch": 2,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_huanghao",
@@ -685,7 +809,7 @@
         "kind": "scene",
         "name": "v8_huanghao",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
@@ -694,19 +818,19 @@
           "game/sanguo/art/scenes/v7_jiangwei.webp"
         ],
         "keep": [
-          "姜维：英武的将军，五十多岁到六十岁，银甲红袍，长枪",
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "宫殿里：胖胖的中年皇帝（面目不细画）坐在上面笑，一个宦官跪着磕头；姜维跪着，脸色铁青",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Jiang Wei, a soldierly general in his fifties, silver armor and red cloak, with a long spear. In a palace hall, a stout middle-aged emperor (face not detailed) smiles from the throne while a eunuch kowtows; Jiang Wei kneels grim-faced; the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) at the side. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. In a palace hall, a stout middle-aged emperor (face not detailed) smiles from the throne while a eunuch kowtows; Jiang Wei kneels grim-faced; the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) at the side. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -714,20 +838,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/jiangwei.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_jiangwei.webp"
-      ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -735,7 +863,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 12,
+      "delivery_batch": 2,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_jiange",
@@ -744,7 +879,7 @@
         "kind": "scene",
         "name": "v8_jiange",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
@@ -753,19 +888,19 @@
           "game/sanguo/art/scenes/v7_jiangwei.webp"
         ],
         "keep": [
-          "姜维：英武的将军，五十多岁到六十岁，银甲红袍，长枪",
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "剑阁：两崖夹一关，关上姜维守着；夜里，灯下摊着地图，接班人背影指着西边一条小路",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Jiang Wei, a soldierly general in his fifties, silver armor and red cloak, with a long spear. Jiange pass between two sheer cliffs, Jiang Wei on the walls; at night, the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) points at a narrow road on a spread map by lamplight. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. Jiange pass between two sheer cliffs, Jiang Wei on the walls; at night, the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) points at a narrow road on a spread map by lamplight. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -773,20 +908,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/jiangwei.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_jiangwei.webp"
-      ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -794,7 +933,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 13,
+      "delivery_batch": 2,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_yinping",
@@ -803,17 +949,17 @@
         "kind": "scene",
         "name": "v8_yinping",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
         ],
         "keep": [
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "摩天岭悬崖：魏兵裹着毡子一个接一个滚下山坡，有人拽着绳索攀树而下；岭下一小队蜀兵",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -828,13 +974,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -842,7 +993,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 14,
+      "delivery_batch": 2,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_mianzhu",
@@ -851,17 +1009,17 @@
         "kind": "scene",
         "name": "v8_mianzhu",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
         ],
         "keep": [
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "绵竹城外火光，一位三十多岁的白袍将军（诸葛瞻）带兵出城冲阵；城门边百姓扶着伤兵往外撤",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -876,13 +1034,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -890,7 +1053,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 15,
+      "delivery_batch": 3,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_beidi",
@@ -899,17 +1069,17 @@
         "kind": "scene",
         "name": "v8_beidi",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
         ],
         "keep": [
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "朝堂：一个年轻王爷（刘谌，成年）站出来厉声谏言，群臣低头，皇帝掩面",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -924,13 +1094,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -938,7 +1113,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 16,
+      "delivery_batch": 3,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_temple",
@@ -947,17 +1129,17 @@
         "kind": "scene",
         "name": "v8_temple",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
         ],
         "keep": [
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "夜里，昭烈庙紧闭的大门，门缝透出灯光；接班人背影跪在门外台阶上",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -972,13 +1154,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -986,7 +1173,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 17,
+      "delivery_batch": 3,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_zhonghui",
@@ -995,7 +1189,7 @@
         "kind": "scene",
         "name": "v8_zhonghui",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [
           "jiangwei"
         ],
@@ -1004,19 +1198,19 @@
           "game/sanguo/art/scenes/v7_jiangwei.webp"
         ],
         "keep": [
-          "姜维：英武的将军，五十多岁到六十岁，银甲红袍，长枪",
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "成都宫中火光与乱兵，姜维仰天而立，手按长剑（不画伤口和血腥）；侧门边一个人影被推出门外",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "Jiang Wei, a soldierly general in his fifties, silver armor and red cloak, with a long spear. Fire and mutinous soldiers in the Chengdu palace; Jiang Wei stands looking up to the sky, hand on his sword (no wounds or gore); at a side door a figure is being pushed out to safety. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. Fire and mutinous soldiers in the Chengdu palace; Jiang Wei stands looking up to the sky, hand on his sword (no wounds or gore); at a side door a figure is being pushed out to safety. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -1024,20 +1218,24 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
       "references": [
         {
           "path": "game/sanguo/art/portraits/jiangwei.webp",
-          "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
           "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
           "role": "authored_character_reference"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+          "role": "authored_adopted_scene_style_reference"
         }
       ],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_jiangwei.webp"
-      ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -1045,7 +1243,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 18,
+      "delivery_batch": 3,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_lebu",
@@ -1054,17 +1259,17 @@
         "kind": "scene",
         "name": "v8_lebu",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
         ],
         "keep": [
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
         ],
         "composition": "洛阳宴席，台前蜀地歌舞；胖胖的老年安乐公（面目不细画）在笑，旁边的旧臣在哭",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
@@ -1079,13 +1284,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "missing_adopted_scene_reference",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -1093,7 +1303,14 @@
       "letters": [
         "a",
         "b"
-      ]
+      ],
+      "ready_order": 19,
+      "delivery_batch": 3,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
     },
     {
       "id": "scene-v8_end",
@@ -1102,24 +1319,24 @@
         "kind": "scene",
         "name": "v8_end",
         "batch": 7,
-        "status": "queued",
+        "status": "ready",
         "refs": [],
         "ref_paths": [
           "game/sanguo/art/scenes/v7_last.webp"
         ],
         "keep": [
-          "接班人（玩家）：三十到五十岁的成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女"
+          "接班人（玩家）：老人，五十多岁到七十岁，花白或满头白发，素色布袍，背影，不露脸，看不出男女"
         ],
-        "composition": "江边黄昏，一个老人背影坐在石上，身边放着旧药箱或一摞旧本子，堂上挂的白羽扇在远处屋里；江水东流",
+        "composition": "江边黄昏，一个老人背影（五十多岁到七十岁，花白或白发，看不出男女）坐在石上，身边放着旧药箱或一摞旧本子，堂上挂的白羽扇在远处屋里；江水东流",
         "accept": [
-          "和 ref_paths 里的头像比，脸、发型、服色一致（姜维的插画头像未出时，按 keep 的文字描写）",
+          "和 ref_paths 里的头像比，脸、发型、服色一致",
           "汉服，不是和服；画面里没有任何文字",
           "人物都是成年人，画面里没有小孩",
           "裁成 2.5:1 横条后，主要人物和动作不被切掉",
           "玩家不露脸；第三章以后的玩家看不出男女",
           "没有伤口、血腥、自杀的画面"
         ],
-        "prompt": "A riverbank at dusk, an elderly figure seen from behind sits on a rock beside an old medicine chest and a stack of worn notebooks; the river flows east. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "prompt": "A riverbank at dusk, an elderly figure in their fifties to seventies with grey or white hair, seen from behind, face not visible, gender not discernible sits on a rock beside an old medicine chest and a stack of worn notebooks; the river flows east. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
         "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
         "size": "1536x1024",
         "out": [
@@ -1127,13 +1344,18 @@
           480
         ]
       },
-      "source_commit": "326e33f0f33e0df0e5e8477a54bc2de4376b9424",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
       "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
-      "references": [],
-      "missing_authored_ref_paths": [
-        "game/sanguo/art/scenes/v7_last.webp"
+      "references": [
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "authored_adopted_scene_style_reference"
+        }
       ],
-      "gate": "conflicting_successor_age",
+      "missing_authored_ref_paths": [],
+      "gate": null,
       "target_dimensions": [
         1200,
         480
@@ -1141,6 +1363,51 @@
       "letters": [
         "a",
         "b"
+      ],
+      "ready_order": 20,
+      "delivery_batch": 3,
+      "adoption_confirmation": {
+        "pr": 74,
+        "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+        "issue": 68
+      }
+    }
+  ],
+  "reference_adoption_pr": 74,
+  "delivery_batches": [
+    {
+      "batch": 1,
+      "ids": [
+        "scene-v8_hearse",
+        "scene-v8_weiyan",
+        "scene-v8_return",
+        "scene-v8_gate",
+        "scene-v8_oldman",
+        "scene-v8_simayi_letter",
+        "scene-v8_heir"
+      ]
+    },
+    {
+      "batch": 2,
+      "ids": [
+        "scene-v8_fan",
+        "scene-v8_duangu",
+        "scene-v8_jiangwei_night",
+        "scene-v8_healer",
+        "scene-v8_huanghao",
+        "scene-v8_jiange",
+        "scene-v8_yinping"
+      ]
+    },
+    {
+      "batch": 3,
+      "ids": [
+        "scene-v8_mianzhu",
+        "scene-v8_beidi",
+        "scene-v8_temple",
+        "scene-v8_zhonghui",
+        "scene-v8_lebu",
+        "scene-v8_end"
       ]
     }
   ]
