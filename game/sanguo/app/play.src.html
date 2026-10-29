@@ -205,6 +205,14 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .epi h2 { font: 600 28px/1.2 var(--display); margin: 0 0 4px }
 .epi .sub { color: var(--muted); margin: 0 0 18px }
 .frag { padding: 14px 0; border-top: 1px solid var(--line) }
+.move-out { margin: 10px 0 14px; padding: 10px 14px; border-left: 3px solid var(--accent, #b0503a); background: var(--surface) }
+.note-values { font-size: 13px; opacity: .75; margin: 4px 0 }
+.move-tag { display: block; font-weight: 600; letter-spacing: .04em; opacity: .75; margin-bottom: 4px }
+.life { margin-top: 28px; padding-top: 20px; border-top: 2px solid var(--line) }
+.life h2 { font: 600 24px/1.2 var(--display); margin: 0 0 4px }
+.life h3 { font: 600 16px/1.3 var(--display); margin: 18px 0 6px }
+.life ul { margin: 0; padding-left: 20px } .life li { margin: 4px 0 }
+.life-saved { padding: 12px 14px; margin: 12px 0; border: 1px solid var(--line); border-radius: 12px } .life-saved p { margin: 4px 0 0 }
 .frag .gt { font-size: 12px; color: var(--accent-text); letter-spacing: .06em }
 .frag.romance .gt { color: var(--rose) }
 .frag p { font: 17px/1.8 var(--serif); margin: 4px 0 }
@@ -322,12 +330,12 @@ const UI = {
     noReply: "（没有人接这句话。）", lockedReply: h => `（现在还做不到：${h}）`, foresightReply: "旁人愣了一下：『此话从何说起？』你意识到自己说了还没发生的事。",
     noMatch: "（没听懂你要做什么。可以点上面的选项。）",
     endTitle: v => `${v}终`, endSub: "你的结局由下面几段拼成。每一段都可以追问：为什么会这样？", whyQ: "为什么？", noWhy: "这是默认走向：你没有做出改变它的选择。",
-    chose: (ch, node, label) => [ch, node, `你选择了「${label}」`], freeSaid: t => `你说出了「${t}」`, again: "再玩一次", toCreator: "看看创作者视图",
+    chose: (ch, node, label) => [ch, node, `你选择了「${label}」`], freeSaid: t => `你说出了「${t}」`, again: "再玩一次", share: "分享这个结局", shareDone: { copied: "已复制，粘贴给朋友吧", shared: "已分享" }, shareLine: (vol, end) => `我在《三国·谋士》${vol}走到了这样的结局：${end}`, toCreator: "看看创作者视图",
     tabs: { people: "人物", ledger: "记事", map: "舆图", gallery: "图鉴", creator: "创作者" }, fab: "人物 · 记事 · 舆图", close: "关闭",
     artChanged: "画面随你的选择变了", youTo: w => `你对${w}说`, commitNote: (w, x) => `承诺已记下：你答应了${w}「${x}」。后面的剧情会记着。`,
     unlockedNote: x => `因为你刚才的话，${x} 现在可以选了。`, closedNote: x => `因为你刚才的话，${x} 选不了了。`, commitKept: "承诺·兑现", commitBroken: "承诺·落空", commitWas: x => `你说过「${x}」`,
-    recallL: "记得", recallPromise: (w, x) => `${w}看着你：『你答应过我——“${x}”。』`, recallLove: w => `${w}的目光在你身上停了一下，像是想起了你上回说的话。`, recallRude: w => `${w}淡淡地看了你一眼。你上回那句话，显然还没忘。`,
-    youSaid: (w, x) => `你在「${w}」说过「${x}」`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", askHint: "这个问题没有选项。用你自己的话回答——说什么，决定接下来发生什么。", askPh: "用你自己的话回答……", youAns: "你答", noAns: "（你没有回答。）", askL: "问", recapH: c => `${c}小结 · 你改变了什么`, recapEcho: n => `埋下 ${n} 处伏笔，后面会被提起`, recapDebt: x => `还欠着：${x}`, recapCommit: n => `许下 ${n} 个承诺`, benchH: "AI 试调台", benchNote: "用一组典型的话测试当前模型：语气标签、回答归类、承诺识别是否符合预期。会用掉若干次模型调用。", benchRun: "运行测试", benchRunning: "测试中……", benchNoAI: "当前没有可用的 AI（需要在 claude.ai 打开并允许调用，或接上服务端）。下面只显示关键词兜底的结果。", benchCols: ["输入", "对象", "期望", "关键词兜底", "模型", "回复"], benchSum: (a, b) => `模型与期望一致 ${a}/${b}`, sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
+    recallL: "记得", recallPromise: (w, x) => `${w}看着你：『你答应过我——“${x}”。』`, recallLove: w => `${w}的目光在你身上停了一下，像是想起了你上回说的话。`, recallRude: w => `${w}淡淡地看了你一眼。你上回那句话，显然还没忘。`, recallSaid: w => `${w}看了你一眼：『你上回说的话，我还记着。』`, valuesL: "话里见：",
+    youSaid: (w, x) => `你在「${w}」说过「${x}」`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", moveL: "你的话改变了局势", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", askHint: "这个问题没有选项。用你自己的话回答——说什么，决定接下来发生什么。", askPh: "用你自己的话回答……", youAns: "你答", noAns: "（你没有回答。）", askL: "问", recapH: c => `${c}小结 · 你改变了什么`, recapEcho: n => `埋下 ${n} 处伏笔，后面会被提起`, recapDebt: x => `还欠着：${x}`, recapCommit: n => `许下 ${n} 个承诺`, benchH: "AI 试调台", benchNote: "用一组典型的话测试当前模型：语气标签、回答归类、承诺识别是否符合预期。会用掉若干次模型调用。", benchRun: "运行测试", benchRunning: "测试中……", benchNoAI: "当前没有可用的 AI（需要在 claude.ai 打开并允许调用，或接上服务端）。下面只显示关键词兜底的结果。", benchCols: ["输入", "对象", "期望", "关键词兜底", "模型", "回复"], benchSum: (a, b) => `模型与期望一致 ${a}/${b}`, sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
     gal: { title: "图鉴", runs: n => `已玩 ${n} 局`, frags: (a, b) => `结局片段 ${a}/${b}`, nodes: (a, b) => `场景 ${a}/${b}`, choices: (a, b) => `选择 ${a}/${b}`, cgs: (a, b) => `高光 ${a}/${b}`,
       ends: "结局", branches: "分支", unseenChoices: n => `还有 ${n} 个选择没试过`, allTried: "所有选择都试过了", locked: "？？？", lockedRomance: "？？？ ♥", cgH: "高光时刻", reset: "清空图鉴", resetSure: "确定清空？" },
     turns: n => `今晚还能说 ${n} 句`, turns2: (a, b) => (a ? `话题还能聊 ${a} 个 · ` : "") + `闲聊还能说 ${b} 句`, remembers: (who, where) => `${who}还记得你在「${where}」时说过的话。`, turnsOut: "夜深了，该告辞了。", topicsH: "可以聊的", talkPh: "想说什么都可以……", silent: name => `（${name}没有接这句话。）`, toneWarm: name => `（${name}没有说话，神色却缓和了些。）`, toneRude: name => `（${name}的脸色沉了下来。）`,
@@ -367,12 +375,12 @@ const UI = {
     noReply: "(No one answers that.)", lockedReply: h => `(You can't do that yet: ${h})`, foresightReply: "People stare. 'What makes you say that?' You realize you've spoken of something that hasn't happened yet.",
     noMatch: "(It isn't clear what you want to do. Try one of the options above.)",
     endTitle: v => `End of ${v}`, endSub: "Your ending is made of the pieces below. Each one can answer the question: why did this happen?", whyQ: "Why?", noWhy: "This is the default course: you made no choice that changed it.",
-    chose: (ch, node, label) => [ch, node, `you chose "${label}"`], freeSaid: t => `you said "${t}"`, again: "Play again", toCreator: "Open the creator view",
+    chose: (ch, node, label) => [ch, node, `you chose "${label}"`], freeSaid: t => `you said "${t}"`, again: "Play again", share: "Share this ending", shareDone: { copied: "Copied — paste it to a friend", shared: "Shared" }, shareLine: (vol, end) => `My ending for ${vol} of The Strategist (Three Kingdoms): ${end}`, toCreator: "Open the creator view",
     tabs: { people: "People", ledger: "Record", map: "Map", gallery: "Gallery", creator: "Creator" }, fab: "People · Record · Map", close: "Close",
     artChanged: "The picture changed with your choice", youTo: w => `You, to ${w}`, commitNote: (w, x) => `Promise noted: you told ${w} "${x}". The story will remember.`,
     unlockedNote: x => `Because of what you just said, ${x} is now open.`, closedNote: x => `Because of what you just said, ${x} is no longer possible.`, commitKept: "Promise kept", commitBroken: "Promise broken", commitWas: x => `you said "${x}"`,
-    recallL: "Remembered", recallPromise: (w, x) => `${w} looks at you. "You promised me: '${x}'."`, recallLove: w => `${w}'s eyes rest on you a moment, as if remembering what you said last time.`, recallRude: w => `${w} gives you a flat look. Clearly your last words haven't been forgotten.`,
-    youSaid: (w, x) => `in "${w}" you said "${x}"`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", askHint: "There are no options for this. Answer in your own words—what you say decides what happens next.", askPh: "Answer in your own words…", youAns: "You answer", noAns: "(You don't answer.)", askL: "Asks", recapH: c => `${c} recap · what you changed`, recapEcho: n => `${n} thread${n > 1 ? "s" : ""} laid down—they'll come back`, recapDebt: x => `Still owed: ${x}`, recapCommit: n => `${n} promise${n > 1 ? "s" : ""} made`, benchH: "AI test bench", benchNote: "Run a set of typical lines against the current model: do tone labels, answer sorting and promise detection match what we expect? Uses several model calls.", benchRun: "Run tests", benchRunning: "Testing…", benchNoAI: "No AI available (open in claude.ai and allow it, or connect the server). Showing keyword-fallback results only.", benchCols: ["Line", "To", "Expected", "Keywords", "Model", "Reply"], benchSum: (a, b) => `Model matches expectation ${a}/${b}`, sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
+    recallL: "Remembered", recallPromise: (w, x) => `${w} looks at you. "You promised me: '${x}'."`, recallLove: w => `${w}'s eyes rest on you a moment, as if remembering what you said last time.`, recallRude: w => `${w} gives you a flat look. Clearly your last words haven't been forgotten.`, recallSaid: w => `${w} glances at you. "I remember what you said last time."`, valuesL: "Your words showed: ",
+    youSaid: (w, x) => `in "${w}" you said "${x}"`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", moveL: "Your words changed things", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", askHint: "There are no options for this. Answer in your own words—what you say decides what happens next.", askPh: "Answer in your own words…", youAns: "You answer", noAns: "(You don't answer.)", askL: "Asks", recapH: c => `${c} recap · what you changed`, recapEcho: n => `${n} thread${n > 1 ? "s" : ""} laid down—they'll come back`, recapDebt: x => `Still owed: ${x}`, recapCommit: n => `${n} promise${n > 1 ? "s" : ""} made`, benchH: "AI test bench", benchNote: "Run a set of typical lines against the current model: do tone labels, answer sorting and promise detection match what we expect? Uses several model calls.", benchRun: "Run tests", benchRunning: "Testing…", benchNoAI: "No AI available (open in claude.ai and allow it, or connect the server). Showing keyword-fallback results only.", benchCols: ["Line", "To", "Expected", "Keywords", "Model", "Reply"], benchSum: (a, b) => `Model matches expectation ${a}/${b}`, sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
     gal: { title: "Gallery", runs: n => `${n} ${n === 1 ? "run" : "runs"} played`, frags: (a, b) => `Ending pieces ${a}/${b}`, nodes: (a, b) => `Scenes ${a}/${b}`, choices: (a, b) => `Choices ${a}/${b}`, cgs: (a, b) => `Key moments ${a}/${b}`,
       ends: "Endings", branches: "Branches", unseenChoices: n => `${n} ${n === 1 ? "choice" : "choices"} not yet tried`, allTried: "Every choice tried", locked: "???", lockedRomance: "??? ♥", cgH: "Key moments", reset: "Clear gallery", resetSure: "Really clear it?" },
     turns: n => `${n} more ${n === 1 ? "line" : "lines"} tonight`, turns2: (a, b) => (a ? `${a} ${a === 1 ? "topic" : "topics"} left · ` : "") + `${b} more ${b === 1 ? "line" : "lines"} of chat`, remembers: (who, where) => `${who} remembers what you said during "${where}".`, turnsOut: "It's late. Time to say goodnight.", topicsH: "Things to talk about", talkPh: "Say whatever you like…", silent: name => `(${name} lets that pass.)`, toneWarm: name => `(${name} says nothing, but softens a little.)`, toneRude: name => `(${name}'s face darkens.)`,
@@ -495,6 +503,19 @@ async function useLocalServer() {
   RT.canEdit = !!health.creator; // the server decides who sees the creator view; never on by default
 }
 const EVENTS = "playtest_events";
+// sharing an ending. Standalone it shares or copies this page's link; the website replaces it to share the site's own link.
+let shareOut = async text => {
+  const url = location.href.split("#")[0];
+  try { if (navigator.share) { await navigator.share({ text, url }); return "shared"; } } catch { return null; }
+  try { await navigator.clipboard.writeText(text + " " + url); return "copied"; } catch { return null; }
+};
+async function shareEnd(btn, title) {
+  const l = L(), first = CC.endings(CAMP, G)[0], g = first && CAMP.endings.find(x => x.id === first.group);
+  const f = g && g.fragments.find(x => x.id === first.frag), line = f ? t(f.text) : title;
+  const how = await shareOut(l.shareLine(l.volTag(volIndex(G.vol)), line.length > 80 ? line.slice(0, 78) + "……" : line));
+  track("share", { where: "ending", how: how || "none" });
+  if (how && l.shareDone[how]) btn.textContent = l.shareDone[how];
+}
 function track(name, fields) {
   const doc = Object.assign({ event: name, ts: Date.now(), player: RT.uid || anon, build: BUILD, campaign: CAMP.id, lang: settings.lang, ai: RT.ai, run: G && G.run }, fields);
   if (!RT.db) return;
@@ -553,36 +574,46 @@ function choose(id, via = "button") {
   save(); render(true);
 }
 
+// the value tags a free line can show (义 智 仁 勇 诚 利…), for the model
+const VTAGS = (long) => Object.entries(CAMP.value_tags || {}).map(([k, v]) => long ? `${k} (${v.en})` : k).join(long ? ", " : "|");
+// who the player is in a chapter: a volume can hand the story to someone else partway (vol. VIII: from Ziheng to his heir)
+function playerAt(chId) { const ch = (chId && CAMP.chapters.find(c => c.id === chId)) || CAMP.chapters[G.ch]; return (ch && ch.player || []).find(x => !x.when || CC.evalCond(G, x.when)) || null; }
+const PN = chId => { const p = playerAt(chId); return p ? p.name.en : "Ziheng"; };
+const PWHO = () => { const p = playerAt(); return p ? p.who.en : "Ziheng, an original young strategist"; };
+
 /* free text: the model may only map words to an existing choice, or write a reaction that changes nothing */
-// an open question: the model (or keywords) only decides which kind of answer it was; the rules settle it
+// an open question: the model (or keywords) decides which kind of answer it was, and the asker reacts to the
+// exact words in one line; what that answer leads to is still the authored outcome, which follows the line
 async function askAnswer(text, n, lang) {
   const q = n.ask, who = CAMP.chars[q.who];
-  const prompt = `You are sorting a player's free-text answer in an interactive adaptation of Romance of the Three Kingdoms. The player is Ziheng, an original young strategist.
+  const prompt = `You are sorting a player's free-text answer in an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}.
 ${t(who.name)} asked: ${JSON.stringify(t(q.q))}
-Ziheng answered: ${JSON.stringify(text)}
-Which kind of answer is it? Kinds (id → meaning): ${JSON.stringify(q.answers.map(a => ({ id: a.id, means: t(a.means) })))}
-Judge what Ziheng actually means, including sarcasm, evasion and mixed answers (pick the dominant intent). If none fits, use "${q.fallback}".
-Return only {"pick":"<id>"}.`;
+${PN()} answered: ${JSON.stringify(text)}
+Which kind of answer is it? Kinds (id → meaning, and what is written to happen next): ${JSON.stringify(q.answers.map(a => ({ id: a.id, means: t(a.means), then: (a.out || []).map(o => t(o.text)).join(" ") })))}
+Judge what ${PN()} actually means, including sarcasm, evasion and mixed answers (pick the dominant intent). If none fits, use "${q.fallback}".
+Then write ${t(who.name)}'s immediate reaction to the specific words ${PN()} used: one short line in ${lang === "zh" ? "Chinese, at most 50 characters" : "English, at most 35 words"}, in character, in the voice of the period. The "then" text of the kind you pick comes right after your line, so lead into it: don't repeat it, don't contradict it, decide nothing else, and don't mention anything that hasn't happened yet.
+Return only {"pick":"<id>","reply":"<the line>"}.`;
   const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
-  return out && q.answers.some(a => a.id === out.pick) ? out.pick : null;
+  const pick = out && q.answers.some(a => a.id === out.pick) ? out.pick : null;
+  return pick && { pick, reply: out && typeof out.reply === "string" ? out.reply.trim().slice(0, lang === "zh" ? 80 : 300) : null };
 }
 async function onAnswer(text) {
   text = text.trim(); if (!text || V.busy || !CC.ask(CAMP, G)) return;
   const lang = settings.lang, n = N(G.cur);
   const terms = CC.mentionsFuture(CAMP, G, text, lang); let fs = false;
   if (terms.length) fs = !!CC.foresight(CAMP, G, terms);
-  let pick = null, via = "matcher";
+  let pick = null, via = "matcher", reply = null;
   if (RT.sample && RT.ai !== "off") {
     V.busy = true; renderAct();
-    try { pick = await askAnswer(text, n, lang); if (pick) via = "model"; }
+    try { const r = await askAnswer(text, n, lang); if (r) { pick = typeof r === "string" ? r : r.pick; reply = r.reply || null; via = "model"; } }
     catch (e) { const c = e && e.code; if (["not_granted", "not_declared", "capability_disabled", "sampling_disabled"].includes(c)) RT.ai = "off"; }
     V.busy = false;
   }
   if (!pick) pick = CC.guessAnswer(CAMP, G, text);
   const at = G.log.length;
   CC.answer(CAMP, G, pick, text);
-  const le = G.log[at]; if (le && le.k === "ans" && fs) le.fs = true;
-  track("answer", { node: n.id, answer: pick, via, foresight: fs, len: text.length });
+  const le = G.log[at]; if (le && le.k === "ans") { if (fs) le.fs = true; if (reply && !fs) le.reply = { lang, text: reply }; }
+  track("answer", { node: n.id, answer: pick, via, foresight: fs, len: text.length, voiced: !!(reply && !fs) });
   V.firstNew = at; save(); render(true);
 }
 async function onFree(text) {
@@ -631,12 +662,19 @@ function settleSpeech(entry, text, cid, res, intent, prior) {
   CC.chat(CAMP, G);
   const before = lockState();
   const tone = CC.LABELS.includes(res.tone) ? res.tone : ({ love: "romantic", insult: "rude", praise: "flatter", threat: "threat", nonsense: "nonsense" }[intent] || CC.guessTone(text));
-  entry.tone = tone; const te = CC.speak(CAMP, G, tone, text, cid); if (te) entry.toneSeq = te.seq;
+  entry.tone = tone;
+  // words that move the story: the model's call, or (offline) the move's own pattern or the line's tone
+  const mv = (res.move && CC.moves(CAMP, G).find(m => m.id === res.move && m.to === cid)) || (res.move === undefined || !res.reply ? CC.matchMove(CAMP, G, text, cid, tone) : null);
+  if (mv) { const me = CC.move(CAMP, G, mv.id, text); entry.move = mv.id; entry.toneSeq = me.seq; track("speech_move", { node: here, move: mv.id, to: cid }); }
+  else { const te = CC.speak(CAMP, G, tone, text, cid, res.values); if (te) { entry.toneSeq = te.seq; if (te.values) entry.values = te.values; } }
+  // what a free line was like (never its words): tone, the speaker's mood, the values it showed, whether it moved the story
+  track("speech", { node: here, to: cid, tone, mood: res.mood || null, values: entry.values || [], move: entry.move || null, voiced: !!res.reply, len: text.length });
   const kind = res.commit && ["protect", "loyalty", "other"].includes(res.commit.kind) ? res.commit.kind : (res.reply ? null : CC.guessPromise(text));
   if (kind) {
     const k = CC.commit(CAMP, G, { kind, char: cid, text: (res.commit && res.commit.text) || text.slice(0, 40) });
     entry.commit = k.id; CC.remember(CAMP, G, cid, { intent: "promise", text: text.slice(0, 60), commit: k.id });
   } else if (["love", "insult", "threat"].includes(intent) || ["romantic", "rude", "threat"].includes(tone)) CC.remember(CAMP, G, cid, { intent: tone, text: text.slice(0, 60) });
+  else if (entry.move || (entry.values || []).length) CC.remember(CAMP, G, cid, { intent: entry.move ? "move" : "values", text: text.slice(0, 60), values: entry.values || [] });
   if (G.cur !== here) { entry.unlocked = []; entry.closed = []; return; } // the scene broke off (an on-the-spot confrontation)
   const after = lockState();
   entry.unlocked = after.open.filter(x => !before.open.includes(x) && before.all.includes(x));
@@ -689,9 +727,10 @@ function talkHistory(nodeId, lang) {
   const n = N(nodeId), out = [];
   for (const e of G.log) {
     if (e.n !== nodeId) continue;
-    if (e.k === "ans") { out.push(`${t(CAMP.chars[n.ask.who].name)}: ${t(n.ask.q)}`, `Ziheng: ${e.said || "(no answer)"}`, `${t(CAMP.chars[n.ask.who].name)}: ${e.p.map(k => t(n.ask.answers.find(a => a.id === e.a).out[k].text)).join(" ")}`); }
-    if (e.k === "say") { const tp = n.talk.topics.find(x => x.id === e.t); out.push(`Ziheng: ${t(tp.label)}`, `${t(CAMP.chars[n.talk.char].name)}: ${e.p.map(k => t(tp.reply[k].text)).join(" ")}`); }
-    if (e.k === "free" && (e.talk || e.to) && !e.matched) { const sp = e.to || (n.talk && n.talk.char); out.push(`Ziheng${e.to && !n.talk ? " (to " + t(CAMP.chars[e.to].name) + ")" : ""}: ${e.text}`); const rl = e.reply && e.reply.lang === lang ? e.reply.text : e.intent && sp ? t(reactLine(sp, e.intent, e.prior) || { zh: "", en: "" }) : ""; if (rl) out.push(`${t(CAMP.chars[sp].name)}: ${rl}`); }
+    if (e.k === "ans") { out.push(`${t(CAMP.chars[n.ask.who].name)}: ${t(n.ask.q)}`, `${PN()}: ${e.said || "(no answer)"}`, `${t(CAMP.chars[n.ask.who].name)}: ${e.reply && e.reply.lang === lang ? e.reply.text + " " : ""}${e.p.map(k => t(n.ask.answers.find(a => a.id === e.a).out[k].text)).join(" ")}`); }
+    if (e.k === "say") { const tp = n.talk.topics.find(x => x.id === e.t); out.push(`${PN()}: ${t(tp.label)}`, `${t(CAMP.chars[n.talk.char].name)}: ${e.p.map(k => t(tp.reply[k].text)).join(" ")}`); }
+    if (e.k === "move") { const m = CC.findMove(CAMP, e.n, e.m); if (m) out.push(`(What happened: ${e.p.map(k => t(m.out[k].text)).join(" ")})`); }
+    if (e.k === "free" && (e.talk || e.to) && !e.matched) { const sp = e.to || (n.talk && n.talk.char); out.push(`${PN()}${e.to && !n.talk ? " (to " + t(CAMP.chars[e.to].name) + ")" : ""}: ${e.text}`); const rl = e.reply && e.reply.lang === lang ? e.reply.text : e.intent && sp ? t(reactLine(sp, e.intent, e.prior) || { zh: "", en: "" }) : ""; if (rl) out.push(`${t(CAMP.chars[sp].name)}: ${rl}`); }
   }
   return out.slice(-10);
 }
@@ -706,39 +745,42 @@ async function askScene(text, n, cid, options, lang, intent, prior, mode) {
   const imp = Object.keys(CAMP.vars).filter(k => k.startsWith("imp." + cid + ".") && G.v[k] > 0).map(k => `${CAMP.vars[k].imp} ${G.v[k]}/5`);
   const forbid = CC.futureTerms(CAMP, G.ch).map(x => x[lang]);
   const hist = talkHistory(n.id, lang);
-  const mem = ((G.mem || {})[cid] || []).filter(m => m.node !== n.id).slice(-3).map(m => `In "${t(N(m.node).title)}" Ziheng said to you: "${m.text}" (${m.intent})`);
+  const moves = CC.moves(CAMP, G).filter(m => m.to === cid).map(m => ({ id: m.id, means: t(m.means) }));
+  const mem = ((G.mem || {})[cid] || []).filter(m => m.node !== n.id).slice(-3).map(m => `In "${t(N(m.node).title)}" ${PN(N(m.node).chapter)} said to you: "${m.text}" (${m.intent})`);
   const open = (G.commits || []).filter(k => k.char === cid && k.status === "open").map(k => `"${k.text}" (${k.kind})`);
   const others = castNow(n).filter(x => x !== cid).map(x => t(CAMP.chars[x].name));
   const romance = c.romance
     ? `This character can, over time, return romantic feelings. Closeness is ${G.v["rel." + cid + "." + (c.main || "intimacy")]}/10: below 3 startled or guarded, 3–5 flustered but pleased, 6+ openly tender. Never sexual.`
-    : `This character is not a romantic partner in this story. If Ziheng declares love or flirts, react truthfully in character—surprise, awkwardness, a firm but humane deflection, humor or reproach—never accepting, never cruel.`;
-  const prompt = `You voice one character in an interactive adaptation of Romance of the Three Kingdoms. The player is Ziheng, an original young strategist.
-Character Ziheng is speaking to: ${t(c.persona)}${others.length ? `\nAlso present: ${others.join(", ")}.` : ""}
-Relationship with Ziheng (0–10): ${rel}${c.heat && c.heat.line ? `\nTemper in this scene: ${G.v["heat." + cid] || 0}/${c.heat.line}. At ${c.heat.line} ${cid === "caocao" ? "he acts against Ziheng on the spot" : "they stop talking to him"}; if Ziheng is provoking, let the reply show the temper rising (a warning, a hand on the sword, a cold silence), never laughing it off.` : ""}${imp.length ? `\nLasting impressions of Ziheng: ${imp.join(", ")} — let them color your attitude.` : ""}
+    : `This character is not a romantic partner in this story. If ${PN()} declares love or flirts, react truthfully in character—surprise, awkwardness, a firm but humane deflection, humor or reproach—never accepting, never cruel.`;
+  const prompt = `You voice one character in an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}.
+Character ${PN()} is speaking to: ${t(c.persona)}${others.length ? `\nAlso present: ${others.join(", ")}.` : ""}
+Relationship with ${PN()} (0–10): ${rel}${c.heat && c.heat.line ? `\nTemper in this scene: ${G.v["heat." + cid] || 0}/${c.heat.line}. At ${c.heat.line} ${cid === "caocao" ? "he acts against " + PN() + " on the spot" : "they stop talking to him"}; if ${PN()} is provoking, let the reply show the temper rising (a warning, a hand on the sword, a cold silence), never laughing it off.` : ""}${imp.length ? `\nLasting impressions of ${PN()}: ${imp.join(", ")} — let them color your attitude.` : ""}
 ${romance}
 Scene: ${t(n.title)}. ${(n.intro || []).map(p => t(p.text)).join(" ")}
-${mem.length ? "Memories:\n" + mem.join("\n") + "\n" : ""}${open.length ? "Promises Ziheng has made you and not yet kept: " + open.join("; ") + "\n" : ""}What has been said here so far:
+${mem.length ? "Memories:\n" + mem.join("\n") + "\n" : ""}${open.length ? "Promises ${PN()} has made you and not yet kept: " + open.join("; ") + "\n" : ""}What has been said here so far:
 ${hist.length ? hist.join("\n") : "(nothing yet)"}
-${mode === "scene" ? "Actions Ziheng can take in this scene" : "Topics that carry story weight"} (id → meaning; locked ones are not possible yet): ${JSON.stringify(options)}
-Ziheng now says: ${JSON.stringify(text)}${prior ? `\n(Ziheng has said something like this ${prior} time(s) already here—the character notices and reacts differently.)` : ""}
-If Ziheng's words clearly mean one of the ${mode === "scene" ? "actions" : "topics"}, reply {"pick":"<id>","reply":null,"tone":"flat","mood":"neutral","commit":null}.
-Otherwise reply {"pick":null,"reply":"<the character's answer>","tone":"<warm|rude|romantic|flatter|nonsense|threat|flat>","mood":"<neutral|warm|cold|sad|surprised${c.romance ? "|shy" : ""}>","commit":<null or {"kind":"protect|loyalty|other","text":"<the promise in a few words>"}>}.
-How to answer: react genuinely to whatever Ziheng says, including bold, strange or extreme statements, as this person really would given the relationship, the memories and what has been said here; if Ziheng owes you a promise, you may bring it up. Mostly dialogue, at most one short action beat; never reuse an earlier reply or gesture. "tone" has real consequences, so judge fairly and use "flat" when unsure: warm (sincere, caring), flatter (excessive or self-serving praise), rude (insulting, mocking), threat (threatening harm), romantic (declaring love, flirting), nonsense (gibberish, wildly out of place), flat (anything else). "commit" only when Ziheng clearly makes a promise to you: protect (to protect, rescue or come back for you), loyalty (to stay loyal, never betray or leave), other.
-Limits: ${lang === "zh" ? "Chinese, at most 100 characters" : "English, at most 60 words"}; reveal no secrets or future events; invent no deaths, betrothals or changes to the situation; never mention: ${forbid.join(", ")}; no sexual content.
+${mode === "scene" ? "Actions ${PN()} can take in this scene" : "Topics that carry story weight"} (id → meaning; locked ones are not possible yet): ${JSON.stringify(options)}
+${PN()} now says: ${JSON.stringify(text)}${prior ? `\n(${PN()} has said something like this ${prior} time(s) already here—the character notices and reacts differently.)` : ""}
+${moves.length ? `Things ${PN()} might SAY here that change the story (id → meaning): ${JSON.stringify(moves)}. If ${PN()}'s words clearly amount to one of them—including indirect or third-person phrasing—set "move" to its id and write the reply reacting to exactly that; the rules decide what happens next.\n` : ""}If ${PN()}'s words clearly mean one of the ${mode === "scene" ? "actions" : "topics"}, reply {"pick":"<id>","move":null,"reply":null,"tone":"flat","mood":"neutral","commit":null}.
+Otherwise reply {"pick":null,"move":<null or a move id>,"values":<0–2 of ${VTAGS()}>,"reply":"<the character's answer>","tone":"<warm|rude|romantic|flatter|nonsense|threat|flat>","mood":"<neutral|warm|cold|sad|surprised${c.romance ? "|shy" : ""}>","commit":<null or {"kind":"protect|loyalty|other","text":"<the promise in a few words>"}>}.
+How to answer: react genuinely to whatever ${PN()} says, including bold, strange or extreme statements, as this person really would given the relationship, the memories and what has been said here; if ${PN()} owes you a promise, you may bring it up. Voice the character vividly and in period—words a late-Han figure of this rank and temper would use, no modern words or ideas—and answer what was said with the full weight it would carry in that world: a threat on a warlord's life meets guards, cold fury or dangerous laughter; an insult to a proud general meets steel; a confession meets real surprise; never a vague or neutral brush-off. Mostly dialogue, one or two concrete action beats; show only the immediate reaction, never narrate what happens next; never reuse an earlier reply or gesture. "values" are what ${PN()}'s words reveal about them, judged as people of that age would (they move each listener by that listener's own values, so judge fairly and leave it [] for small talk): ${VTAGS(true)}. "tone" judges ${PN()}'s words (not the character's feelings—that is mood) and has real consequences, so judge fairly and use "flat" when unsure: warm (sincere, caring), flatter (excessive or self-serving praise), rude (insulting, mocking), threat (threatening harm), romantic (declaring love, flirting), nonsense (gibberish, wildly out of place), flat (anything else). "commit" only when ${PN()} clearly makes a promise to you: protect (to protect, rescue or come back for you), loyalty (to stay loyal, never betray or leave), other.
+Limits: ${lang === "zh" ? "Chinese, at most 200 characters" : "English, at most 120 words"}; reveal no secrets or future events; invent no deaths, betrothals or changes to the situation; never mention: ${forbid.join(", ")}; no sexual content.
 Return only the JSON object.`;
   const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
   if (!out || typeof out !== "object") throw { code: "invalid_json" };
   const pick = options.some(x => x.id === out.pick) ? out.pick : null;
   let reply = typeof out.reply === "string" ? out.reply.trim() : null;
   if (reply) {
-    const tooLong = lang === "zh" ? reply.length > 140 : reply.split(/\s+/).length > 80;
+    const tooLong = lang === "zh" ? reply.length > 260 : reply.split(/\s+/).length > 150;
     const leaks = CC.futureTerms(CAMP, G.ch).some(x => reply.includes(x.zh) || reply.toLowerCase().includes(x.en.toLowerCase()));
     const wrongLang = lang === "zh" ? !/[\u4e00-\u9fff]/.test(reply) : /[\u4e00-\u9fff]/.test(reply);
     if (tooLong || leaks || wrongLang) reply = null;
   }
   const moods = ["neutral", "warm", "cold", "sad", "surprised"].concat(c.romance ? ["shy"] : []);
   const commit = out.commit && typeof out.commit === "object" && ["protect", "loyalty", "other"].includes(out.commit.kind) ? { kind: out.commit.kind, text: String(out.commit.text || "").slice(0, 40) } : null;
-  return { pick, reply, tone: CC.LABELS.includes(out.tone) ? out.tone : null, mood: reply && moods.includes(out.mood) ? out.mood : null, commit };
+  const move = moves.some(m => m.id === out.move) ? out.move : null;
+  const values = Array.isArray(out.values) ? out.values.filter(v => (CAMP.value_tags || {})[v]).slice(0, 2) : [];
+  return { pick, move, values, reply, tone: CC.LABELS.includes(out.tone) ? out.tone : null, mood: reply && moods.includes(out.mood) ? out.mood : null, commit };
 }
 // a character brings up something you said earlier, in their own words (stored once, so the transcript stays stable)
 async function askRecall(entry) {
@@ -746,8 +788,8 @@ async function askRecall(entry) {
   const lang = settings.lang;
   const prompt = `You voice ${t(c.persona)} in an interactive adaptation of Romance of the Three Kingdoms.
 Scene now: ${t(N(entry.n).title)}. ${(N(entry.n).intro || []).map(p => t(p.text)).join(" ")}
-Earlier, in "${t(N(m.node).title)}", Ziheng said to you: "${m.text}" (${m.intent}).
-Write ONE short line in which you bring this up naturally, in character, given the relationship (${Object.keys(c.dims).map(d => `${d} ${G.v["rel." + r.c + "." + d]}/10`).join(", ")}). Quote or paraphrase what Ziheng said; add nothing that didn't happen; no future events; no sexual content.
+Earlier, in "${t(N(m.node).title)}", ${PN(N(m.node).chapter)} said to you: "${m.text}" (${m.intent}).
+Write ONE short line in which you bring this up naturally, in character, given the relationship (${Object.keys(c.dims).map(d => `${d} ${G.v["rel." + r.c + "." + d]}/10`).join(", ")}). Quote or paraphrase what ${PN()} said; add nothing that didn't happen; no future events; no sexual content.
 ${lang === "zh" ? "Chinese, at most 60 characters" : "English, at most 35 words"}. Return only {"line":"..."}.`;
   try {
     const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
@@ -762,7 +804,7 @@ function recallEl(e) {
   const l = L(), c = e.recall.c, m = ((G.mem || {})[c] || [])[e.recall.i]; if (!m) return null;
   const who = t(CAMP.chars[c].name);
   const text = e.recallAI && e.recallAI.lang === settings.lang ? e.recallAI.text
-    : m.intent === "promise" ? l.recallPromise(who, m.text) : (m.intent === "romantic" || m.intent === "love") ? l.recallLove(who) : l.recallRude(who);
+    : m.intent === "promise" ? l.recallPromise(who, m.text) : (m.intent === "romantic" || m.intent === "love") ? l.recallLove(who) : (m.intent === "move" || m.intent === "values") ? l.recallSaid(who) : l.recallRude(who);
   const mood = m.intent === "promise" ? (CAMP.chars[c].romance ? "shy" : "neutral") : (m.intent === "romantic" || m.intent === "love") ? (CAMP.chars[c].romance ? "shy" : "surprised") : "cold";
   return h("div", { class: "echo recall" }, h("div", { class: "line" }, face(c, mood), h("div", {}, h("span", { class: "et" }, l.recallL), h("p", {}, text), h("div", { class: "why" }, l.because + l.youSaid(t(N(m.node).title), m.text)))));
 }
@@ -785,7 +827,7 @@ async function askModel(text, opts, lang) {
   const n = N(G.cur);
   const forbid = CC.futureTerms(CAMP, G.ch).map(x => x[lang]);
   const scene = { title: t(n.title), situation: (n.intro || []).map(p => t(p.text)).join(" "), options: opts.filter(o => !o.locked).map(o => ({ id: o.id, means: t(o.c.label) })) };
-  const prompt = `You interpret a player's typed words in an interactive adaptation of Romance of the Three Kingdoms. The player is Ziheng, an original young strategist. Only the listed options can change the story.
+  const prompt = `You interpret a player's typed words in an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}. Only the listed options can change the story.
 Scene JSON: ${JSON.stringify(scene)}
 Player wrote: ${JSON.stringify(text)}
 If the words clearly mean one option, reply {"choice":"<id>","reply":null}.
@@ -819,7 +861,7 @@ function lazyFigure(cls, label, key, draw) {
 // a node may name its own illustration (art.illus); the generic scene pictures were drawn for Volume I's scenes,
 // so later volumes use them only for endings and otherwise fall back to the ink drawing
 function painting(scene, layers, label, illus) {
-  const src = scene === "ending" ? artUrl(`ending/${ENDING_VARIANTS.find(v => layers.includes(v)) || "lone"}.webp`)
+  const src = scene === "ending" ? endingUrl(ENDING_VARIANTS.find(v => layers.includes(v)) || "lone")
     : illus ? artUrl(`scenes/${illus}.webp`) : CAMP === BOOK.volumes[0].camp ? artUrl(`scenes/${scene}.webp`) : null;
   if (src) return imgFigure("art", label, src);
   return lazyFigure("art", label, scene + "|" + layers.join(","), () => ART.scene(scene, layers, { label }));
@@ -837,6 +879,8 @@ const EDITION = "__EDITION__" === "illus" ? "illus" : "ink";
 const ART_BASE = "__ART_BASE__";
 const ART_FILES = new Set(/*__ART_FILES__*/[]);
 const artUrl = p => EDITION === "illus" && ART_FILES.has(p) ? ART_BASE + p : null;
+// a volume may have its own picture for an ending (ending/v5_city.webp); otherwise the book-wide one (ending/city.webp)
+const endingUrl = v => { const vol = (CAMP.id.match(/_(v\d+)$/) || [])[1]; return (vol && artUrl(`ending/${vol}_${v}.webp`)) || artUrl(`ending/${v}.webp`); };
 // where the face sits in each illustration (object-position), so round avatars stay centred on it
 const PORTRAIT_FOCUS = { liubei: "50% 34%", caocao: "50% 48%", guanyu: "50% 45%", zhuge: "50% 34%", zhouyu: "50% 25%", zhaoyun: "50% 20%", wenzhi: "50% 30%", lusu: "50% 28%", sunfuren: "50% 28%", pangtong: "50% 30%", zhangsong: "50% 30%", fazheng: "50% 34%", huangzhong: "50% 30%" };
 const ENDING_VARIANTS = ["two_boat", "home", "city", "lone"];
@@ -1062,9 +1106,10 @@ function renderStory() {
         const rx = e.intent ? reactLine(cid, e.intent, e.prior || 0) : null;
         const fm = e.foresight ? "surprised" : e.mood || (e.intent ? reactMood(cid, e.intent, e.prior || 0) : e.toneSeq ? (deltaMood(cid, e.toneSeq) || "neutral") : "neutral");
         const fallback = e.tone === "warm" ? l.toneWarm(who) : e.tone === "rude" ? l.toneRude(who) : l.silent(who);
-        const txt = (e.reply && e.reply.lang === settings.lang) ? para(e.reply.text, "reply") : rx ? para(t(rx), "reply") : para(fallback, "reply sys");
-        box.append(h("div", { class: "line" }, face(cid, fm), txt));
-        if (e.toneSeq) box.append(relChips(e.toneSeq));
+        const txt = (e.reply && e.reply.lang === settings.lang) ? para(e.reply.text, "reply") : e.move ? null : rx ? para(t(rx), "reply") : para(fallback, "reply sys");
+        if (txt) box.append(h("div", { class: "line" }, face(cid, fm), txt));
+        if ((e.values || []).length) box.append(h("div", { class: "note-values" }, l.valuesL + e.values.map(v => t(CAMP.value_tags[v])).join(settings.lang === "zh" ? "、" : ", ")));
+        if (e.toneSeq && !e.move) box.append(relChips(e.toneSeq));
         if (e.commit) { const k = (G.commits || []).find(x => x.id === e.commit); if (k) box.append(h("div", { class: "note-commit" }, l.commitNote(who, k.text))); }
         const labOf = x => { const [kind, id] = x.split(":"); const it = kind === "t" ? n.talk.topics.find(y => y.id === id) : n.choices.find(y => y.id === id); return it ? "「" + t(it.label) + "」" : ""; };
         if ((e.unlocked || []).length) box.append(h("div", { class: "note-unlock" }, l.unlockedNote(e.unlocked.map(labOf).join(" "))));
@@ -1084,8 +1129,11 @@ function renderStory() {
       const n = N(e.n), q = n.ask, a = q.answers.find(x => x.id === e.a);
       wrap.append(mark(h("div", { class: "answered" }, h("div", { class: "line" }, face(q.who, "neutral"), h("div", {}, h("span", { class: "et" }, t(CAMP.chars[q.who].name) + " · " + l.askL), para(t(q.q), "reply"))),
         h("div", { class: "you" }, h("small", {}, l.youAns), e.said || l.noAns), e.fs ? para(l.foresightReply, "reply foresight") : null,
-        h("div", { class: "line" }, face(q.who, a.mood || deltaMood(q.who, e.seq) || "neutral"), h("div", {}, e.p.map(k => para(t(a.out[k].text), "reply")))), relChips(e.seq),
+        h("div", { class: "line" }, face(q.who, a.mood || deltaMood(q.who, e.seq) || "neutral"), h("div", {}, e.reply && e.reply.lang === settings.lang ? para(e.reply.text, "reply") : null, e.p.map(k => para(t(a.out[k].text), "reply")))), relChips(e.seq),
         dev ? h("div", { class: "dev" }, h("span", { class: "k" }, a.id), " · ", t(a.means)) : null)));
+    } else if (e.k === "move") {
+      const m = CC.findMove(CAMP, e.n, e.m);
+      if (m) wrap.append(mark(h("div", { class: "move-out" }, h("small", { class: "move-tag" }, l.moveL), e.p.map(k => para(t(m.out[k].text), "prose")), relChips(e.seq))));
     } else if (e.k === "flare") {
       wrap.append(mark(h("div", { class: "flare line" }, face(e.who, "cold"), h("b", {}, l.flareL(t(CAMP.chars[e.who].name))))));
     } else if (e.k === "walkout") {
@@ -1202,12 +1250,38 @@ function renderEnding() {
         h("details", {}, h("summary", {}, l.whyQ), e.why.length ? h("ol", { class: "chain" }, e.why.map(whyItem)) : h("p", { class: "muted", style: "font-size:13px" }, l.noWhy))];
       return ff ? h("div", { class: "frag face" + (f.mood === "romance" ? " romance" : "") }, face(ff[0], ff[1]), h("div", {}, body)) : h("div", { class: "frag" + (f.mood === "romance" ? " romance" : "") }, body); })),
     h("div", { style: "margin-top:20px" }, mapEl("ending")),
+    CAMP.life ? renderLife() : null,
     h("p", { class: "muted", style: "margin-top:16px" }, t(CAMP.end_note)),
     (location.hash === "#playtest" || creatorAllowed()) ? renderSurvey() : null,
     h("div", { class: "btns", style: "margin-top:16px" }, (() => { const next = BOOK.volumes[volIndex(G.vol) + 1]; return next && next.camp ? h("button", { class: "btn", type: "button", onclick: () => newGame(next.id, Object.assign(CC.carryOut(G), { run: G.run }), { from: G.run }) }, l.nextVol(l.volTag(volIndex(next.id)))) : null; })(),
+      h("button", { class: "btn ghost", type: "button", onclick: e => shareEnd(e.currentTarget, title) }, l.share),
       h("button", { class: "btn ghost", type: "button", onclick: () => branchFrom(G.run, 0) }, l.again),
       h("button", { class: "btn ghost", type: "button", onclick: goHome }, l.toc),
       creatorAllowed() ? h("button", { class: "btn ghost", type: "button", onclick: () => { setCreator(true); V.panelOpen = true; renderPanel(); } }, l.toCreator) : null));
+}
+
+// 这一生: the book's last page. Follows "continue with the next volume" back through the saves to find each volume's
+// run, and checks that volume's items against the state that run ended with. A volume the player began from a backstory
+// has no run; its items are checked against what the current run still carries, and anything it can't tell is left out.
+function lifeRuns() {
+  const runs = { [G.vol]: G }; let g = G;
+  for (let i = 0; i < 20 && g && g.from; i++) { g = loadRun(g.from); if (g && !runs[g.vol]) runs[g.vol] = g; }
+  return runs;
+}
+const condVars = c => !c ? [] : c.v ? [c.v] : [...(c.all || []), ...(c.any || [])].flatMap(condVars);
+function renderLife() {
+  const life = CAMP.life, runs = lifeRuns(), saved = [];
+  const vols = life.vols.map(vol => {
+    const run = runs[vol.vol];
+    const items = vol.items.filter(it => run ? CC.evalCond(run, it.when) : condVars(it.when).every(k => k in G.v) && CC.evalCond(G, it.when));
+    items.forEach(it => { if (it.saved && !saved.some(x => x.zh === it.saved.zh)) saved.push(it.saved); });
+    return h("div", { class: "life-vol" }, h("h3", {}, t(vol.title)),
+      items.length ? h("ul", {}, items.map(it => h("li", {}, t(it.text)))) : null,
+      !run ? h("p", { class: "muted" }, t(items.length ? life.from_preset : life.not_played)) : !items.length ? h("p", { class: "muted" }, t(life.nothing)) : null);
+  });
+  return h("section", { class: "life" }, h("h2", {}, t(life.title)), h("p", { class: "sub" }, t(life.sub)),
+    h("div", { class: "life-saved" }, h("b", {}, t(life.saved_title)), h("p", {}, saved.length ? saved.map(x => t(x)).join(settings.lang === "zh" ? "、" : ", ") : t(life.none_saved))),
+    vols, h("p", { class: "muted" }, `${t(life.deviation)}${settings.lang === "zh" ? "：" : ": "}${G.v.deviation || 0}`));
 }
 
 function renderSurvey() {

@@ -6,6 +6,27 @@ export const threeKingdoms={id:'three-kingdoms',title:'三国演义 · 谋士',a
 export const threeKingdomsInk={...threeKingdoms,id:'three-kingdoms-ink',title:'三国演义 · 谋士（水墨版）',plays:'八章连续旅程 · 水墨版',image:'/assets/three-kingdoms-cover.svg',description:'同一个故事的水墨版：画面全部是水墨淡彩。进度与插画版共用。',href:'/story/three-kingdoms-ink'};
 const EDITION_PATHS=['/story/three-kingdoms','/play/three-kingdoms','/story/three-kingdoms-ink','/play/three-kingdoms-ink'];
 export const isThreeKingdomsPath=path=>EDITION_PATHS.includes(path);
+// The game's own usage events (choices, free lines by tone and length, endings, shares), renamed sg_<name>.
+// Only short ids, numbers and flags pass; anything longer is dropped, so no story or chat text can leave.
+const okValue=v=>v===null||typeof v==='boolean'||(typeof v==='number'&&Number.isFinite(v))||(typeof v==='string'&&v.length<=60);
+export function gameEvent(data,base,send=track){
+ const name=data?.name;if(typeof name!=='string'||!/^[a-z_]{1,24}$/.test(name))return false;
+ const props={...base};
+ for(const [k,v] of Object.entries(data.props||{}).slice(0,16)){
+  if(!/^[a-z_]{1,20}$/.test(k))continue;
+  if(okValue(v))props[k]=v;else if(Array.isArray(v)&&v.length<=24&&v.every(x=>typeof x==='string'&&x.length<=60))props[k]=v;
+ }
+ send('sg_'+name,props);return true;
+}
+// Sharing an ending from inside the game: share (or copy) the site's link to the game, then tell the game how it went
+export async function shareGame(data,frame,base,send=track){
+ const text=typeof data?.text==='string'?data.text.slice(0,200):'',url=location.origin+'/play/three-kingdoms';
+ let how=null;
+ try{if(navigator.share){await navigator.share({title:'三国演义 · 谋士',text,url});how='shared';}}catch(e){if(e?.name==='AbortError')how='cancelled';}
+ if(!how){try{await navigator.clipboard.writeText(text+' '+url);how='copied';}catch{}}
+ send('game_shared',{...base,how:how||'failed'});
+ try{frame.contentWindow.postMessage({type:'sg2-shared',id:data?.id,how:how==='cancelled'?null:how},location.origin);}catch{}
+}
 export function mountThreeKingdoms(path,{reference,account,helpers}){
  if(!isThreeKingdomsPath(path))return false;
  const params=new URLSearchParams(location.search||''),classic=params.get('edition')==='classic',ink=!classic&&path.endsWith('-ink');
@@ -28,6 +49,8 @@ export function mountThreeKingdoms(path,{reference,account,helpers}){
   if(event.origin!==location.origin||event.source!==frame.contentWindow)return;
   if(event.data?.type==='sg2-ready')frame.contentWindow.postMessage({type:'sg2-init',snapshot},location.origin);
   if(event.data?.type==='tk3-ready')frame.contentWindow.postMessage({type:'tk3-init',snapshot},location.origin);
+  if(event.data?.type==='sg2-track')gameEvent(event.data,{game:'three-kingdoms',edition});
+  if(event.data?.type==='sg2-share')shareGame(event.data,frame,{game:'three-kingdoms',edition});
   if(['tk3-save','sg2-save'].includes(event.data?.type)){
    const {key,value}=event.data;
    if(typeof key!=='string'||!/^(campaign\.(?:save|settings|anon|cur|runs|runN|collection(?:\.[\w-]{1,60})?|run\.[\w.-]{1,60}|ckpt\.[\w.-]{1,60})|settings|anon|game\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road)|endings\.sg(?:03_heroes_over_plums|08_arrows_from_fog|09_huarong_road))$/.test(key)||JSON.stringify(value)?.length>(key.startsWith('campaign.')?500000:160000))return;

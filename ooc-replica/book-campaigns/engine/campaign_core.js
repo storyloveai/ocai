@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.2";
+  CC.VERSION = "0.4.3";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -364,10 +364,12 @@
     }
     return out;
   }
-  CC.speak = function (camp, st, label, said, who) {
+  CC.speak = function (camp, st, label, said, who, values) {
     const n = camp.nodes[st.cur];
     const cid = who || (n && n.talk && n.talk.char);
-    if (!n || !cid || !camp.chars[cid] || !CC.LABELS.includes(label) || label === "flat") return null;
+    // what the line shows of the speaker (义 智 仁 勇 诚 利…): everyone present reads it by their own values
+    const vt = [...new Set(values || [])].filter(v => (camp.value_tags || {})[v]).slice(0, 2);
+    if (!n || !cid || !camp.chars[cid] || !CC.LABELS.includes(label) || (label === "flat" && !vt.length)) return null;
     const key = n.id + "|" + cid;
     st.labels = st.labels || {}; const L = (st.labels[key] = st.labels[key] || {}); L[label] = (L[label] || 0) + 1;
     let eff = speechRule(camp, st, cid, label, L[label]);
@@ -380,19 +382,39 @@
     // each person reads provocation their own way: heat is this scene's tension with them
     const hv = heatOf(camp, cid, label, L[label]);
     if (hv && camp.vars["heat." + cid]) eff.push({ add: "heat." + cid, by: hv });
+    const cast = CC.castNow(camp, st);
+    if (vt.length) eff.push(...valueReactions(camp, st, n, [cid].concat(cast.filter(x => x !== cid)), vt));
     // the others present hear it too
-    const cast = CC.castNow(camp, st); st.witnessed = st.witnessed || {};
+    st.witnessed = st.witnessed || {};
     (camp.witness || []).forEach((w, i) => {
       const wk = n.id + "|" + i;
       if (w.to === cid && w.labels.includes(label) && cast.includes(w.who) && !st.witnessed[wk]) { st.witnessed[wk] = 1; eff.push(...w.effects); }
     });
     if (!eff.length) return null;
     const e = ledgerPush(st, { kind: "talk", node: n.id, choice: null, topic: null, tone: label, to: cid, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
+    if (vt.length) e.values = vt;
     applyEffects(camp, st, eff, e);
     const fl = flare(camp, st, cid);
     if (fl) e.flare = fl;
     return e.changes.length || fl ? e : null;
   };
+  // each person moves at most ±1 per axis per line, and ±2 per axis over a whole scene, from what your words showed
+  function valueReactions(camp, st, n, people, vt) {
+    st.vcap = st.vcap || {}; const out = [];
+    for (const c of people) {
+      const ch = camp.chars[c]; if (!ch || !ch.values) continue;
+      const sum = {}; vt.forEach(tag => { const r = ch.values[tag]; if (r) sum[r[0]] = (sum[r[0]] || 0) + r[1]; });
+      for (const [axis, by] of Object.entries(sum)) {
+        const v = `rel.${c}.${axis}`; if (!camp.vars[v]) continue;
+        let d = Math.max(-1, Math.min(1, by)); if (!d) continue;
+        if (d > 0 && (st.v["heat." + c] || 0) >= 2) continue; // someone you provoked here doesn't warm to you
+        const k = n.id + "|" + v, used = st.vcap[k] || 0;
+        d = Math.max(-2 - used, Math.min(2 - used, d)); if (!d) continue;
+        st.vcap[k] = used + d; out.push({ add: v, by: d });
+      }
+    }
+    return out;
+  }
   function heatOf(camp, cid, label, k) { const h = (camp.chars[cid].heat || {})[label]; return h ? (h[Math.min(k, h.length) - 1] || 0) : 0; }
   // when tension with someone reaches their line, the scene breaks: an on-the-spot confrontation (flash), or they stop talking to you
   function flare(camp, st, cid) {
@@ -406,6 +428,38 @@
     enterNode(camp, st, f.node);
     return "flash";
   }
+  /* ---------------- speech moves: words that move the story ----------------
+   * A scene (node.moves) or the whole book (camp.moves, filtered by nodes/except) lists things the player might SAY that
+   * change what happens: threaten someone, talk them round, let a secret slip. The model (or a keyword fallback) only says
+   * which move a free line is; the move's effects, its narration and where the story goes next are authored rules.
+   * A move: { id, to, means, match?, labels?, when?, out, effects?, echo?, goto?, resume?, ends?, nodes?, except? }
+   *   goto: a flash node the scene breaks into (resume: come back to the scene afterwards; otherwise the scene is over)
+   *   ends: the volume ends here (like an ending choice) */
+  CC.moves = function (camp, st) {
+    const n = camp.nodes[st.cur]; if (!n || st.phase !== "node" || (n.kind !== "main" && n.kind !== "side")) return []; // not in crises or confrontations
+    const cast = CC.castNow(camp, st), done = (st.moved || {})[n.id] || [];
+    const glob = (camp.moves || []).filter(m => (!m.nodes || m.nodes.includes(n.id)) && !(m.except || []).includes(n.id));
+    return (n.moves || []).concat(glob).filter(m => cast.includes(m.to) && !done.includes(m.id) && evalCond(st, m.when));
+  };
+  CC.findMove = (camp, nid, id) => ((camp.nodes[nid] || {}).moves || []).concat(camp.moves || []).find(m => m.id === id) || null;
+  // offline: a move's own pattern first, then the tone label the line was given (scene moves before book-wide ones)
+  CC.matchMove = function (camp, st, text, who, label) {
+    const ms = CC.moves(camp, st).filter(m => !who || m.to === who);
+    return ms.find(m => m.match && new RegExp(m.match, "i").test(text || "")) || (label ? ms.find(m => (m.labels || []).includes(label)) : null) || null;
+  };
+  CC.move = function (camp, st, id, said) {
+    const n = camp.nodes[st.cur], m = CC.moves(camp, st).find(x => x.id === id);
+    if (!m) throw new Error("move unavailable: " + id);
+    st.moved = st.moved || {}; (st.moved[n.id] = st.moved[n.id] || []).push(m.id);
+    const outIdx = idxWhere(st, m.out);
+    const e = ledgerPush(st, { kind: "move", node: n.id, choice: null, move: m.id, to: m.to, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
+    applyEffects(camp, st, m.effects || [], e);
+    (m.echo || []).forEach(x => { if (!st.echoes[x]) { st.echoes[x] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(x); } });
+    st.log.push({ k: "move", n: n.id, m: m.id, to: m.to, p: outIdx, seq: e.seq });
+    if (m.ends) { st.v.ended_early = true; st.done.push(n.id); st.cur = null; st.flash = null; enterChapter(camp, st, camp.chapters.length); }
+    else if (m.goto) { st.free = st.free || {}; st.free[n.id] = 0; st.flash = { from: n.id, who: m.to, resume: !!m.resume }; enterNode(camp, st, m.goto); }
+    return e;
+  };
   CC.castNow = function (camp, st, nid) {
     const n = camp.nodes[nid || st.cur]; if (!n) return [];
     if (n.talk) return [n.talk.char];
@@ -601,12 +655,30 @@
     const reqReads = new Set();
     Object.values(camp.nodes).forEach(n => n.choices.forEach(c => condVars(c.req).forEach(v => reqReads.add(v))));
     const echoReg = {}, echoPay = {}, debtOpen = {}, debtRes = {};
+    function checkMoves(ms, at, n) {
+      const ids = new Set();
+      (ms || []).forEach(m => {
+        const w = at + ".move." + m.id;
+        if (!m.id || ids.has(m.id)) E(`${w}: missing or duplicate move id`); ids.add(m.id);
+        if (!camp.chars[m.to]) E(`${w}: unknown character ${m.to}`);
+        else if (n && !(n.cast || []).some(c => c.id === m.to) && !(n.talk && n.talk.char === m.to)) E(`${w}: ${m.to} is not in the scene`);
+        if (!m.means) E(`${w}: no meaning (the model can't recognise it)`);
+        if (!(m.out || []).length) E(`${w}: no narration`);
+        if (m.match) { try { new RegExp(m.match); } catch { E(`${w}: bad match pattern`); } }
+        (m.labels || []).forEach(l => { if (!CC.LABELS.includes(l)) E(`${w}: unknown label ${l}`); });
+        if (m.goto && (!camp.nodes[m.goto] || camp.nodes[m.goto].kind !== "flash")) E(`${w}: goto ${m.goto} is not a flash node`);
+        (m.nodes || []).concat(m.except || []).forEach(x => { if (!camp.nodes[x]) E(`${w}: unknown node ${x}`); });
+        checkCond(m.when, w); (m.out || []).forEach(p => checkCond(p.when, w));
+        (m.effects || []).forEach(ef => { const v = ef.set || ef.add; if (!varOk(v)) E(`${w}: effect on unknown var ${v}`); writes.add(v); });
+        (m.echo || []).forEach(id => { if (!camp.echoes[id]) E(`${w}: unknown echo ${id}`); (echoReg[id] = echoReg[id] || []).push(n ? chIdx(n.chapter) : 0); });
+      });
+    }
     camp.chapters.forEach(ch => (ch.intro || []).forEach(p => checkCond(p.when, ch.id)));
     for (const n of Object.values(camp.nodes)) {
       const at = n.id;
       if (n.kind !== "interrupt" && n.kind !== "flash" && chIdx(n.chapter) < 0) E(`${at}: unknown chapter ${n.chapter}`);
       if (!["main", "side", "interrupt", "flash"].includes(n.kind)) E(`${at}: bad kind`);
-      if (n.kind === "flash" && !(camp.flash || []).some(f => f.node === n.id)) E(`${at}: flash node nothing can trigger`);
+      if (n.kind === "flash" && !(camp.flash || []).some(f => f.node === n.id) && !Object.values(camp.nodes).concat([{ moves: camp.moves }]).some(x => (x.moves || []).some(m => m.goto === n.id))) E(`${at}: flash node nothing can trigger`);
       if (n.kind === "interrupt" && !n.when) E(`${at}: interrupt without a trigger`);
       if (n.talk) {
         if (!camp.chars[n.talk.char]) E(`${at}: talk with unknown character ${n.talk.char}`);
@@ -621,6 +693,7 @@
       (n.on_enter || []).forEach(o => { checkCond(o.when, at); (o.effects || []).forEach(ef => writes.add(ef.set || ef.add)); (o.resolve || []).forEach(([d]) => (debtRes[d] = debtRes[d] || []).push(chIdx(n.chapter))); });
       (n.callbacks || []).forEach(cbk => { checkCond(cbk.when, at); if (!camp.echoes[cbk.pays]) E(`${at}: callback pays unknown echo ${cbk.pays}`); (echoPay[cbk.pays] = echoPay[cbk.pays] || []).push(chIdx(n.chapter)); });
       if (!n.choices.length) E(`${at}: no choices`);
+      checkMoves(n.moves, at, n);
       if (n.ask) {
         const a = n.ask, ids = a.answers.map(x => x.id);
         if (!camp.chars[a.who]) E(`${at}.ask: unknown character ${a.who}`);
@@ -656,6 +729,7 @@
         if (major && !(c.echo || []).length && !(c.resolve || []).length && !unlocks && !last && !c.ends && n.kind !== "interrupt" && n.kind !== "flash") W(`${w}: major choice registers no echo (consequence may stay invisible)`);
       }
     }
+    checkMoves(camp.moves, "moves", null);
     for (const id of Object.keys(camp.echoes)) {
       if (!echoReg[id]) W(`echo ${id}: never registered`);
       else if (!echoPay[id]) E(`echo ${id}: registered but no callback pays it`);
@@ -753,10 +827,17 @@
     }
     // random players also chat freely now and then, so speech consequences get exercised
     const cast = CC.castNow(camp, st);
+    const mv = CC.moves(camp, st);
+    if (mv.length && CC.freeLeft(camp, st) > 0) {
+      const hot = mv.filter(m => (m.labels || []).some(l => l === "threat" || l === "rude"));
+      if (w && w.provoke && hot.length) return ["move", hot[0].id];
+      if (!w && r() < .2) return ["move", mv[Math.floor(r() * mv.length)].id];
+    }
     if (w && w.provoke && cast.length && CC.freeLeft(camp, st) > 0) return ["speak", "rude", cast.includes("caocao") ? "caocao" : cast[0]];
     if (!w && cast.length && CC.freeLeft(camp, st) > 0 && r() < (n.talk ? .35 : .15)) {
       const x = r(); const lab = x < .4 ? "flat" : x < .6 ? "warm" : x < .7 ? "rude" : x < .8 ? "romantic" : x < .9 ? "flatter" : x < .95 ? "nonsense" : "threat";
-      return ["speak", lab, cast[Math.floor(r() * cast.length)]];
+      const tags = Object.keys(camp.value_tags || {}), vt = tags.length && r() < .5 ? [tags[Math.floor(r() * tags.length)]] : [];
+      return ["speak", lab, cast[Math.floor(r() * cast.length)], vt];
     }
     if (n.talk && CC.turnsLeft(camp, st) > 0) {
       const tps = CC.topics(camp, st).filter(x => !x.locked);
@@ -775,7 +856,7 @@
   CC.playPolicy = function (camp, r, w) {
     const presets = camp.presets || [], pol = Object.keys(CC.policies).find(k => CC.policies[k] === w), pr = presets.find(p => p.id === pol) || (presets.length ? presets[Math.floor(r() * presets.length)] : null);
     const st = CC.newGame(camp, pr ? Object.assign({}, pr.carry, { preset: pr.id }) : null); let guard = 0;
-    while (st.phase !== "end" && guard++ < 800) { const [k, id, who] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
+    while (st.phase !== "end" && guard++ < 800) { const [k, id, who, vals] = decide(camp, st, r, w); if (k === "side") CC.pickSide(camp, st, id); else if (k === "say") CC.say(camp, st, id); else if (k === "speak") { CC.chat(camp, st); CC.speak(camp, st, id, "", who, vals); } else if (k === "move") { CC.chat(camp, st); CC.move(camp, st, id, ""); } else if (k === "answer") CC.answer(camp, st, id, ""); else CC.choose(camp, st, id); }
     return st;
   };
   CC.simulate = function (camp, runs = 2000, seed = 7, policy = null, opts = {}) {
@@ -794,10 +875,11 @@
       while (st.phase !== "end" && guard++ < 800) {
         if (st.phase === "side") { st.offer.forEach(o => inc(S.offered, o)); CC.pickSide(camp, st, decide(camp, st, r, w)[1]); continue; }
         const nid = st.cur; if (nid !== lastNode) { inc(S.nodes, nid); lastNode = nid; }
-        const [k, id, who] = decide(camp, st, r, w);
+        const [k, id, who, vals] = decide(camp, st, r, w);
         if (k === "say") { inc(S.topics, nid + "." + id); CC.say(camp, st, id); continue; }
         if (k === "answer") { inc(S.answers, nid + "." + id); CC.answer(camp, st, id, ""); continue; }
-        if (k === "speak") { inc(S.speech, id); CC.chat(camp, st); const se = CC.speak(camp, st, id, "", who); if (se && se.flare) inc(S.flares, nid + ":" + se.flare + ":" + who); continue; }
+        if (k === "speak") { inc(S.speech, id); CC.chat(camp, st); const se = CC.speak(camp, st, id, "", who, vals); if (se && se.flare) inc(S.flares, nid + ":" + se.flare + ":" + who); continue; }
+        if (k === "move") { inc(S.moves = S.moves || {}, nid + "." + id); CC.chat(camp, st); CC.move(camp, st, id, ""); continue; }
         CC.choices(camp, st).forEach(o => { inc(S.choiceSeen, nid + "." + o.id); if (!o.locked) inc(S.choiceOpen, nid + "." + o.id); });
         inc(S.choicePick, nid + "." + id);
         const hot = Object.keys(camp.chars).filter(c => (st.v["heat." + c] || 0) >= 2);

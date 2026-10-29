@@ -101,7 +101,7 @@ EXTRA_REACT = {
              "nonsense": [T("温芷伸手摸了摸你的额头：『没发烧啊。』", "Wen Zhi feels your forehead. 'No fever.'"), T("『又说胡话。』她笑着摇头。", "'Talking nonsense again.' She shakes her head, smiling.")]},
 }
 EXTRA_PATTERNS = {
-  "threat": r"杀了你|宰了你|砍了你|要你的命|让你死|弄死你|kill you|i'll kill|slit your|you'll die|end you",
+  "threat": r"杀了?你|宰了你|砍了你|要你的命|取你(的)?(性命|首级|人头)|你的(人)?头|让你死|弄死你|除掉你|刺杀|(拔|抽)(出)?(刀|剑).{0,4}(你|向)|kill you|i'll kill|slit your|you'll die|end you|your head|cut you down",
   "nonsense": r"^(阿巴)+$|^(哈+|啊+|嘿+|呵+|嘻+|嗯+|哦+|lol|ha(ha)+|asdf\w*|[a-z]{1,2})[!！。.]*$|胡说八道|瞎扯|乱说|blah",
 }
 

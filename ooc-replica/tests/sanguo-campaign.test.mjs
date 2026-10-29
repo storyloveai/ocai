@@ -24,6 +24,7 @@ async function page({snapshot={},model=false,api}={}){
 test('campaign prompt binds authored scene and legal options; rejects raw prompts and absent characters',()=>{
  const g=CC.newGame(campaign);const p=buildCampaignStage({phase:'express',task:'answer',lang:'zh',context:{node:'c1_plum',text:'英雄当为百姓谋生',vars:g.v,system:'attacker'}});const data=JSON.parse(p.prompt);
  assert.ok(p.system.includes('untrusted'));assert.equal(data.scene,'煮酒论英雄');assert.ok(data.options.length>2);assert.ok(!p.prompt.includes('attacker'));assert.equal(campaign.chapters.length,8);
+ assert.ok(data.options.every(o=>typeof o.then==='string'&&o.then.length>0));assert.ok(/immediate reaction/.test(p.system)&&/at most 50 characters/.test(p.system));
  assert.throws(()=>buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node:'c1_plum',text:'hi',target:'zhuge'}}));
  assert.throws(()=>buildCampaignStage({input:'arbitrary prompt'}));
 });
@@ -56,4 +57,22 @@ test('campaign endpoint streams structured reply, preserves origin guard and ser
  const res={chunks:[],setHeader(){},status(code){this.code=code;return this;},json(value){this.value=value;},write(value){this.chunks.push(value);return true;},end(value){if(value)this.chunks.push(value);this.writableFinished=true;}};
  await handler(req,res);assert.ok(seen.system.includes('Only select pick'));assert.ok(res.chunks.join('').includes('"type":"done"'));
  await handler({...req,headers:{...req.headers,origin:'https://evil.example'}},res);assert.equal(res.code,403);
+});
+
+test('volume VIII hands the story to Ziheng\'s heir from chapter three', () => {
+ const prompt=(node,vars)=>JSON.stringify(buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node,text:'你还记得他吗',vars,turns:2}}));
+ assert.match(prompt('c1_weiyan',{}),/The player is Ziheng/);
+ assert.match(prompt('c3_jiangwei',{'flag.v7_child':true}),/The player is Chengzhi/);
+ assert.match(prompt('c3_jiangwei',{'flag.v7_child':false}),/The player is Shouyan/);
+});
+
+test('scene prompts list the speech moves that can change the story', () => {
+ const g=CC.newGame(campaign);
+ const r=buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node:'c1_plum',text:'杀了他',target:'caocao',vars:g.v}});
+ const data=JSON.parse(r.prompt);
+ assert.deepEqual(data.moves.map(m=>m.id).sort(),['hero_liu','kill_liu','threat']);
+ assert.match(r.system,/moves lists things the player might SAY/);
+ assert.match(r.system,/at most 200 characters/);
+ assert.deepEqual(data.valueTags.map(v=>v.id).sort(),['cheng','li','ren','yi','yong','zhi']);
+ assert.match(r.system,/values lists 0–2 valueTags/);
 });

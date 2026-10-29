@@ -1096,6 +1096,30 @@
     "zh": "刘备出城时你还在牢里",
     "en": "Still in jail when Liu Bei left"
    }
+  },
+  "flag.urged_kill_liu": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "梅园里劝曹操杀刘备",
+    "en": "Urged Cao Cao to kill Liu Bei in the plum garden"
+   }
+  },
+  "flag.named_liu_hero": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "梅园里当着曹操说刘备是英雄",
+    "en": "Told Cao Cao in the plum garden that Liu Bei was the hero"
+   }
+  },
+  "flag.urged_stop_guan": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "劝曹操拦下关羽",
+    "en": "Urged Cao Cao to stop Guan Yu"
+   }
   }
  },
  "chars": {
@@ -1174,16 +1198,16 @@
     ],
     "small": [
      {
-      "zh": "刘备望着城下的灯火，嗯了一声。",
-      "en": "Liu Bei gazes at the lights below and murmurs agreement."
+      "zh": "刘备点点头，没有接话，像是在等你把话说完。",
+      "en": "Liu Bei nods without answering, as if waiting for you to finish."
      },
      {
-      "zh": "『难得有这样安静的夜。』他说。",
-      "en": "'It's rare to have a night this quiet,' he says."
+      "zh": "『先生说的是。』他应了一句，心思却像在别处。",
+      "en": "'Quite so, sir,' he says, though his mind seems elsewhere."
      },
      {
-      "zh": "他给你倒了一杯酒，什么也没说。",
-      "en": "He pours you a cup of wine and says nothing."
+      "zh": "他看了你一眼，温和地笑了笑。",
+      "en": "He glances at you and smiles mildly."
      }
     ],
     "threat": [
@@ -1335,16 +1359,16 @@
     ],
     "small": [
      {
-      "zh": "曹操嗯了一声，又喝了一口酒。",
-      "en": "Cao grunts and drinks again."
+      "zh": "曹操嗯了一声，眯着眼打量你。",
+      "en": "Cao grunts and studies you through narrowed eyes."
      },
      {
-      "zh": "『月明星稀……』他低声念了半句，没有念完。",
-      "en": "'The moon is bright, the stars are few…' he murmurs, and doesn't finish."
+      "zh": "『哦？』他似笑非笑，『接着说。』",
+      "en": "'Oh?' He half smiles. 'Go on.'"
      },
      {
-      "zh": "他望着廊外，好一会儿没说话。",
-      "en": "He looks out past the veranda and says nothing for a while."
+      "zh": "曹操没有接话，手指在案上轻轻敲了两下。",
+      "en": "Cao doesn't answer; his fingers tap the table twice."
      }
     ],
     "threat": [
@@ -1499,16 +1523,16 @@
     ],
     "small": [
      {
-      "zh": "关羽嗯了一声，继续擦刀。",
-      "en": "Guan Yu grunts and goes on cleaning the blade."
+      "zh": "关羽嗯了一声，丹凤眼半闭着。",
+      "en": "Guan Yu grunts, his eyes half closed."
      },
      {
-      "zh": "『明日要赶早路，你也早些歇着。』",
-      "en": "'We start early tomorrow. Get some rest.'"
+      "zh": "关羽抚着长髯，看了你一眼，没有说话。",
+      "en": "Guan Yu strokes his long beard, glances at you, and says nothing."
      },
      {
-      "zh": "火光照着他半边脸。他没有接话，却也没有赶你走。",
-      "en": "The firelight catches half his face. He doesn't answer, but he doesn't send you away either."
+      "zh": "他没有接话，却也没有转身走开。",
+      "en": "He doesn't answer, but he doesn't turn away either."
      }
     ],
     "threat": [
@@ -1664,12 +1688,12 @@
     ],
     "small": [
      {
-      "zh": "诸葛亮点点头，在灯下翻了一页书。",
-      "en": "Zhuge Liang nods and turns a page by the lamp."
+      "zh": "诸葛亮点点头，羽扇轻轻摇了两下。",
+      "en": "Zhuge Liang nods, his feather fan stirring twice."
      },
      {
-      "zh": "『夜里风凉。』他把窗关上了一半。",
-      "en": "'The night air is cold.' He half closes the window."
+      "zh": "『哦？』他看了你一眼，没有追问。",
+      "en": "'Oh?' He glances at you and doesn't press."
      },
      {
       "zh": "他嗯了一声，像是在听，又像是在想别的事。",
@@ -1833,8 +1857,8 @@
       "en": "'You haven't changed,' she says. 'Few words, restless eyes.'"
      },
      {
-      "zh": "江风吹过来，她把披风往你这边拉了拉。",
-      "en": "The river wind blows in. She pulls the edge of her cloak over toward you."
+      "zh": "她抬眼看了看你：『嗯，我听着呢。』",
+      "en": "She looks up at you. 'Mm. I'm listening.'"
      }
     ],
     "threat": [
@@ -3089,6 +3113,151 @@
      }
     ]
    },
+   "moves": [
+    {
+     "id": "threat",
+     "to": "caocao",
+     "means": {
+      "zh": "当面威胁曹操、说要杀他",
+      "en": "threatens Cao Cao to his face / says they will kill him"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "话还没落地，廊下的甲士已经齐齐转过身来。刘备手里的筷子掉在了地上。",
+        "en": "The words are barely out before every guard on the veranda has turned. Liu Bei's chopsticks fall to the floor."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.caocao.esteem",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 2
+      },
+      {
+       "set": "flag.cao_wary",
+       "to": true
+      }
+     ],
+     "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die|杀曹|诛曹|曹贼",
+     "labels": [
+      "threat"
+     ],
+     "goto": "x_plum_rage",
+     "resume": false
+    },
+    {
+     "id": "kill_liu",
+     "to": "caocao",
+     "means": {
+      "zh": "劝曹操杀了刘备、除掉刘备",
+      "en": "urges Cao Cao to kill Liu Bei / get rid of him"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "梅园里一下子静了。刘备端着酒，没有动。曹操看看你，又看看刘备，忽然大笑：『子衡这话，是替孤试玄德，还是替玄德试孤？』他笑够了，摆摆手：『孤若杀英雄，天下谁还敢来投孤？』",
+        "en": "The garden goes silent. Liu Bei holds his cup and doesn't move. Cao Cao looks at you, then at Liu Bei, and bursts out laughing. 'Ziheng—are you testing Xuande for me, or testing me for Xuande?' When he's done laughing he waves a hand. 'If I killed heroes, who in the realm would dare come to me?'"
+       }
+      },
+      {
+       "text": {
+        "zh": "刘备放下酒杯，从这一刻起，再没有看你一眼。",
+        "en": "Liu Bei sets down his cup, and from this moment on he doesn't look at you once."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.urged_kill_liu",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -3
+      },
+      {
+       "add": "rel.liubei.warmth",
+       "by": -2
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": 1
+      },
+      {
+       "add": "renown.cunning",
+       "by": 1
+      }
+     ],
+     "match": "杀了?(他|刘备|玄德|刘使君)|除掉(他|刘备)|刘备(不可|留不得)|此人(当|必|不可不)除|留(他|此人)不得|kill (him|liu bei)|get rid of (him|liu bei)"
+    },
+    {
+     "id": "hero_liu",
+     "to": "caocao",
+     "means": {
+      "zh": "对曹操说刘备才是真英雄",
+      "en": "tells Cao Cao that Liu Bei is the true hero"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操拊掌：『子衡与孤，所见略同。』他笑着给刘备斟满酒，眼睛却一直没离开刘备的脸。刘备在桌下踩了你一脚。",
+        "en": "Cao Cao claps his hands. 'Ziheng and I see alike.' Smiling, he fills Liu Bei's cup, but his eyes never leave Liu Bei's face. Under the table Liu Bei steps on your foot."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.named_liu_hero",
+       "to": true
+      },
+      {
+       "set": "flag.cao_wary",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -2
+      }
+     ],
+     "match": "(刘(备|使君|皇叔)|玄德).{0,6}(才|就|乃)?是.{0,4}英雄|英雄.{0,6}(刘(备|使君|皇叔)|玄德)|liu bei is the (true |real )?hero"
+    },
+    {
+     "id": "warn_liu",
+     "to": "liubei",
+     "means": {
+      "zh": "悄悄提醒刘备：曹操起疑了，早点离开许都",
+      "en": "quietly warns Liu Bei that Cao suspects him and he should leave Xuchang"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备在桌下按住你的手，面上照旧笑着给曹操斟酒。曹操的目光在你们两人之间转了一圈。",
+        "en": "Under the table Liu Bei presses your hand, still smiling as he pours for Cao Cao. Cao Cao's gaze travels once between the two of you."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.trust",
+       "by": 1
+      },
+      {
+       "add": "heat.caocao",
+       "by": 1
+      }
+     ],
+     "match": "快走|离开许都|早(点|些)?(走|离开)|出城|小心曹操|曹操(要|想)杀你|leave xuchang|get out|be careful of cao"
+    }
+   ],
    "art": {
     "scene": "garden",
     "layers": [
@@ -4390,6 +4559,74 @@
      }
     }
    ],
+   "moves": [
+    {
+     "id": "stop_guan",
+     "to": "caocao",
+     "means": {
+      "zh": "劝曹操拦下、截杀关羽",
+      "en": "urges Cao Cao to stop or kill Guan Yu before he leaves"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操摆摆手：『各为其主，由他去吧。』关羽已经走到门口，回头看了你一眼。那一眼，你记了很多年。",
+        "en": "Cao Cao waves it away. 'Each serves his own lord. Let him go.' Guan Yu, already at the door, looks back at you once. You remember that look for many years."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.urged_stop_guan",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": -3
+      },
+      {
+       "add": "rel.guanyu.trust",
+       "by": -2
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": 1
+      },
+      {
+       "add": "renown.cunning",
+       "by": 1
+      }
+     ],
+     "match": "截杀|追杀|杀了?(他|关羽|云长)|别放(他|关羽)|不能放|拦住(他|关羽)|kill guan|stop (him|guan yu)|don't let him go"
+    },
+    {
+     "id": "stay_guan",
+     "to": "guanyu",
+     "means": {
+      "zh": "求关羽留下，别走",
+      "en": "begs Guan Yu to stay with Cao Cao"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽抚着长髯：『关某之心，你知道。』他把印绶的结又系紧了一些。",
+        "en": "Guan Yu strokes his long beard. 'You know my heart.' He ties the cord of the seal a little tighter."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -1
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": 1
+      }
+     ],
+     "match": "留下|别走|不要走|投(曹|丞相)|stay|don't go"
+    }
+   ],
    "art": {
     "scene": "hall",
     "layers": [
@@ -5379,6 +5616,43 @@
      }
     ]
    },
+   "moves": [
+    {
+     "id": "three",
+     "to": "zhuge",
+     "means": {
+      "zh": "抢在诸葛亮之前说出三分天下的大势（取荆州、益州，联合东吴）",
+      "en": "lays out the three-way division before Zhuge Liang can (take Jing and Yi, ally with Wu)"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "诸葛亮手里的扇子停了。他看了你很久，才笑着对刘备说：『主公帐下有此人，何必三顾亮的草庐？』笑意没到眼底。",
+        "en": "The fan in Zhuge Liang's hand stops. He looks at you a long time before smiling at Liu Bei. 'With such a man in your service, my lord, why come three times to my cottage?' The smile doesn't reach his eyes."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.zhuge_tested",
+       "to": true
+      },
+      {
+       "add": "uncanny",
+       "by": 2
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 2
+      },
+      {
+       "add": "rel.zhuge.trust",
+       "by": -1
+      }
+     ],
+     "match": "三分|荆州.{0,8}益州|益州.{0,8}荆州|联(吴|孙)|three kingdoms|divide the realm|jingzhou.{0,20}yizhou"
+    }
+   ],
    "art": {
     "scene": "snow",
     "layers": [
@@ -7563,6 +7837,35 @@
      }
     }
    ],
+   "moves": [
+    {
+     "id": "kill_cao",
+     "to": "guanyu",
+     "means": {
+      "zh": "劝关羽见到曹操就杀，别念旧恩",
+      "en": "urges Guan Yu to kill Cao Cao on sight and forget old kindness"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽丹凤眼一睁：『关某立了军令状，用不着你来提醒。』诸葛亮在一旁摇着扇子，像是什么都没听见。",
+        "en": "Guan Yu's eyes snap open. 'I have signed the pledge. I don't need you to remind me.' Beside him Zhuge Liang fans himself as though he heard nothing."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.guanyu.warmth",
+       "by": -1
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 1
+      }
+     ],
+     "match": "杀了?曹(操|贼)|斩(了)?曹|别放(过)?曹|不要放|kill cao|don't (let|spare)"
+    }
+   ],
    "art": {
     "scene": "huarong",
     "layers": [
@@ -8064,6 +8367,28 @@
      "text": {
       "zh": "古城重聚的那一夜，刘备把你叫到城楼上。三兄弟终于又在一起了，他却没有喝醉。",
       "en": "The night the brothers reunite at Gucheng, Liu Bei calls you up onto the wall. The three of them are together at last, yet he hasn't let himself get drunk."
+     }
+    },
+    {
+     "text": {
+      "zh": "刘备没有提梅园那天你说的话。可他给你倒酒的时候，手停了一下。",
+      "en": "Liu Bei doesn't mention what you said in the plum garden. But as he pours your wine, his hand pauses."
+     },
+     "when": {
+      "v": "flag.urged_kill_liu",
+      "op": "==",
+      "val": true
+     }
+    },
+    {
+     "text": {
+      "zh": "刘备笑着说：『梅园那天，你差点把我的命说没了。』他说完，自己先笑了。",
+      "en": "Liu Bei says with a smile, 'That day in the plum garden, you nearly talked me out of my life.' He laughs first."
+     },
+     "when": {
+      "v": "flag.named_liu_hero",
+      "op": "==",
+      "val": true
      }
     }
    ],
@@ -8948,6 +9273,17 @@
       "v": "imp.guanyu.flattery",
       "op": ">=",
       "val": 1
+     }
+    },
+    {
+     "text": {
+      "zh": "关羽看着火，忽然说：『许都那天，劝曹操拦我的，是你。』",
+      "en": "Guan Yu watches the fire and suddenly says, 'That day in Xuchang, the one who urged Cao Cao to stop me—that was you.'"
+     },
+     "when": {
+      "v": "flag.urged_stop_guan",
+      "op": "==",
+      "val": true
      }
     }
    ],
@@ -10614,6 +10950,129 @@
      "id": "caocao"
     }
    ]
+  },
+  "x_liu_break": {
+   "id": "x_liu_break",
+   "chapter": "*",
+   "kind": "flash",
+   "title": {
+    "zh": "覆水",
+    "en": "Spilled Water"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "刘备慢慢放下手里的东西，看着你，很久没有说话。门外，张飞的影子停住了。刘备终于开口，声音很轻：『先生跟了备这些年。这句话，备想听你再说一遍——是醉话，还是真话？』",
+      "en": "Liu Bei slowly sets down what he's holding and looks at you for a long time without a word. Outside the door, Zhang Fei's shadow stops. At last Liu Bei speaks, very quietly. 'You've followed me all these years, sir. I want to hear you say it once more—was that drink talking, or the truth?'"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "drunk",
+     "type": "expression",
+     "label": {
+      "zh": "跪下：是醉话，是失心疯。",
+      "en": "Kneel: it was drink talking—madness."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备扶你起来，拍了拍你的肩：『那就当没说过。』可从那天起，议事的时候，他不再先问你。",
+        "en": "Liu Bei helps you up and pats your shoulder. 'Then it was never said.' But from that day on, in council, he no longer asks you first."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      },
+      {
+       "set": "flag.sidelined",
+       "to": true
+      }
+     ]
+    },
+    {
+     "id": "explain",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话——可我想杀的不是你，是那个寄人篱下、什么都不敢做的你。",
+      "en": "Say: it was the truth—but what I want to kill isn't you, it's the you who lives under other men's roofs and dares nothing."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备愣住了。半晌，他笑了，眼眶却是红的：『先生这一刀，备受了。』",
+        "en": "Liu Bei is stunned. After a long moment he laughs, though his eyes are red. 'I'll take that cut, sir.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.esteem",
+       "by": 2
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "true",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话。",
+      "en": "Say: it was the truth."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备点点头，没有叫张飞进来。他让人给你备了一匹马、一袋盘缠：『先生另择明主吧。备不送了。』那天夜里，你出了城。",
+        "en": "Liu Bei nods and does not call Zhang Fei in. He has a horse and a purse of travel money made ready for you. 'Choose a better lord, sir. I won't see you off.' That night you leave the city."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.exiled",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -3
+      }
+     ],
+     "ends": true
+    }
+   ],
+   "salience": 0,
+   "order": 0,
+   "cast": [
+    {
+     "id": "liubei"
+    }
+   ],
+   "art": {
+    "scene": "hall",
+    "layers": [],
+    "illus": "g_cold"
+   }
   }
  },
  "endings": [
@@ -12067,7 +12526,7 @@
   "insult": "奸贼|国贼|老贼|篡|蠢|笨|废物|滚|闭嘴|可笑|懦夫|活该|无能|伪君子|stupid|idiot|fool|shut up|coward|pathetic|useless|get lost|hypocrite",
   "praise": "佩服|厉害|雄才|无人能及|天下无双|英明|了不起|仰慕|英雄|敬佩|admire|amazing|impressive|great man|hero|brilliant",
   "ask": "[?？]|吗$|呢$|什么|为什么|怎么|如何|\\bhow\\b|\\bwhy\\b|\\bwhat\\b|\\bwho\\b",
-  "threat": "杀了你|宰了你|砍了你|要你的命|让你死|弄死你|kill you|i'll kill|slit your|you'll die|end you",
+  "threat": "杀了?你|宰了你|砍了你|要你的命|取你(的)?(性命|首级|人头)|你的(人)?头|让你死|弄死你|除掉你|刺杀|(拔|抽)(出)?(刀|剑).{0,4}(你|向)|kill you|i'll kill|slit your|you'll die|end you|your head|cut you down",
   "nonsense": "^(阿巴)+$|^(哈+|啊+|嘿+|呵+|嘻+|嗯+|哦+|lol|ha(ha)+|asdf\\w*|[a-z]{1,2})[!！。.]*$|胡说八道|瞎扯|乱说|blah"
  },
  "commit_rules": [
@@ -12302,6 +12761,75 @@
     "c6_pursuit",
     "c8_cao"
    ],
+   "resume": true
+  }
+ ],
+ "moves": [
+  {
+   "id": "cao_threat",
+   "to": "caocao",
+   "means": {
+    "zh": "当面威胁曹操、说要杀他",
+    "en": "threatens Cao Cao to his face / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "你说出那句话的时候，整个屋子都静了。",
+      "en": "When you say it, the whole room goes still."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.caocao.esteem",
+     "by": -1
+    },
+    {
+     "add": "renown.rash",
+     "by": 1
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die|曹贼",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_cao_rage",
+   "resume": true,
+   "except": [
+    "c1_plum"
+   ]
+  },
+  {
+   "id": "liu_threat",
+   "to": "liubei",
+   "means": {
+    "zh": "当面威胁刘备、说想杀他",
+    "en": "threatens Liu Bei to his face / says they want to kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "这句话说出口，屋里的人都愣住了。",
+      "en": "When the words are out, everyone in the room goes still."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.liubei.trust",
+     "by": -2
+    },
+    {
+     "add": "renown.rash",
+     "by": 2
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_liu_break",
    "resume": true
   }
  ],

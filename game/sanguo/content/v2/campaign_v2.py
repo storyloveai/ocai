@@ -731,6 +731,9 @@ for n in N:
         pa = PLACE_AFTER.get((n["id"], c["id"])) or PLACE_AFTER.get((n["id"], "*"))
         if pa and pa != n.get("place"): c["place"] = pa
 
+import moves_v2
+CAMP_MOVES = moves_v2.extend(N)
+
 PLACES = {
     "xuchang": {"x": 760, "y": 70, "rx": 612, "ry": 392, "zh": "许都", "en": "Xuchang"}, "tongguan": {"x": 520, "y": 50, "rx": 440, "ry": 300, "zh": "潼关", "en": "Tongguan"},
     "jiameng": {"x": 250, "y": 110, "rx": 330, "ry": 380, "zh": "葭萌", "en": "Jiameng"}, "luofeng": {"x": 175, "y": 225, "rx": 285, "ry": 455, "zh": "落凤坡", "en": "Fallen Phoenix"},
@@ -883,7 +886,7 @@ CAMPAIGN = {
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
     "ending_art": ENDING_ART, "art_prompts": ART_PROMPTS, "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": V1["cg_captions"], "realm": REALM,
     "react_patterns": V1["react_patterns"], "value_tags": values.TAGS, "commit_rules": COMMIT_RULES,
-    "flash": [{"char": "zhouyu", "node": "x_zhouyu_rage", "resume": True}],
+    "flash": [{"char": "zhouyu", "node": "x_zhouyu_rage", "resume": True}], "moves": CAMP_MOVES,
     "witness": [{"who": "liubei", "to": "zhouyu", "labels": ["rude", "threat"], "effects": [rel("liubei", "trust", -1)]},
                 {"who": "lusu", "to": "zhouyu", "labels": ["rude", "threat"], "effects": [rel("lusu", "trust", -1)]},
                 {"who": "zhaoyun", "to": "sunfuren", "labels": ["rude", "threat"], "effects": [rel("zhaoyun", "trust", -1)]}],

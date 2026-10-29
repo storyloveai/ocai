@@ -1780,6 +1780,24 @@
     "zh": "黄忠·火气",
     "en": "Huang Zhong · Temper"
    }
+  },
+  "flag.v5_blamed_fei": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "阆中的消息传来时，说张飞是自己害死自己",
+    "en": "Said Zhang Fei brought his death on himself when the news came from Langzhong"
+   },
+   "carry": false
+  },
+  "flag.v5_asked_sun": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "在陛下面前提起孙夫人",
+    "en": "Spoke of Lady Sun to His Majesty"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -1890,16 +1908,16 @@
     ],
     "small": [
      {
-      "zh": "刘备望着城下的灯火，嗯了一声。",
-      "en": "Liu Bei gazes at the lights below and murmurs agreement."
+      "zh": "刘备点点头，没有接话，像是在等你把话说完。",
+      "en": "Liu Bei nods without answering, as if waiting for you to finish."
      },
      {
-      "zh": "『难得有这样安静的夜。』他说。",
-      "en": "'It's rare to have a night this quiet,' he says."
+      "zh": "『先生说的是。』他应了一句，心思却像在别处。",
+      "en": "'Quite so, sir,' he says, though his mind seems elsewhere."
      },
      {
-      "zh": "他给你倒了一杯酒，什么也没说。",
-      "en": "He pours you a cup of wine and says nothing."
+      "zh": "他看了你一眼，温和地笑了笑。",
+      "en": "He glances at you and smiles mildly."
      }
     ],
     "threat": [
@@ -2054,16 +2072,16 @@
     ],
     "small": [
      {
-      "zh": "曹操嗯了一声，又喝了一口酒。",
-      "en": "Cao grunts and drinks again."
+      "zh": "曹操嗯了一声，眯着眼打量你。",
+      "en": "Cao grunts and studies you through narrowed eyes."
      },
      {
-      "zh": "『月明星稀……』他低声念了半句，没有念完。",
-      "en": "'The moon is bright, the stars are few…' he murmurs, and doesn't finish."
+      "zh": "『哦？』他似笑非笑，『接着说。』",
+      "en": "'Oh?' He half smiles. 'Go on.'"
      },
      {
-      "zh": "他望着廊外，好一会儿没说话。",
-      "en": "He looks out past the veranda and says nothing for a while."
+      "zh": "曹操没有接话，手指在案上轻轻敲了两下。",
+      "en": "Cao doesn't answer; his fingers tap the table twice."
      }
     ],
     "threat": [
@@ -2218,16 +2236,16 @@
     ],
     "small": [
      {
-      "zh": "关羽嗯了一声，继续擦刀。",
-      "en": "Guan Yu grunts and goes on cleaning the blade."
+      "zh": "关羽嗯了一声，丹凤眼半闭着。",
+      "en": "Guan Yu grunts, his eyes half closed."
      },
      {
-      "zh": "『明日要赶早路，你也早些歇着。』",
-      "en": "'We start early tomorrow. Get some rest.'"
+      "zh": "关羽抚着长髯，看了你一眼，没有说话。",
+      "en": "Guan Yu strokes his long beard, glances at you, and says nothing."
      },
      {
-      "zh": "火光照着他半边脸。他没有接话，却也没有赶你走。",
-      "en": "The firelight catches half his face. He doesn't answer, but he doesn't send you away either."
+      "zh": "他没有接话，却也没有转身走开。",
+      "en": "He doesn't answer, but he doesn't turn away either."
      }
     ],
     "threat": [
@@ -2379,12 +2397,12 @@
     ],
     "small": [
      {
-      "zh": "诸葛亮点点头，在灯下翻了一页书。",
-      "en": "Zhuge Liang nods and turns a page by the lamp."
+      "zh": "诸葛亮点点头，羽扇轻轻摇了两下。",
+      "en": "Zhuge Liang nods, his feather fan stirring twice."
      },
      {
-      "zh": "『夜里风凉。』他把窗关上了一半。",
-      "en": "'The night air is cold.' He half closes the window."
+      "zh": "『哦？』他看了你一眼，没有追问。",
+      "en": "'Oh?' He glances at you and doesn't press."
      },
      {
       "zh": "他嗯了一声，像是在听，又像是在想别的事。",
@@ -2539,8 +2557,8 @@
       "en": "'You haven't changed,' she says. 'Few words, restless eyes.'"
      },
      {
-      "zh": "江风吹过来，她把披风往你这边拉了拉。",
-      "en": "The river wind blows in. She pulls the edge of her cloak over toward you."
+      "zh": "她抬眼看了看你：『嗯，我听着呢。』",
+      "en": "She looks up at you. 'Mm. I'm listening.'"
      }
     ],
     "threat": [
@@ -5783,6 +5801,46 @@
     {
      "id": "liubei"
     }
+   ],
+   "moves": [
+    {
+     "id": "blame_fei",
+     "to": "liubei",
+     "means": {
+      "zh": "说张飞是自己害死自己的：醉后鞭打部下，早晚出事",
+      "en": "says Zhang Fei brought it on himself—flogging his men when drunk was bound to end like this"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "陛下抬起头看你，眼睛红得吓人：『他是朕的兄弟！』这一声把帐外的人都惊动了。过了很久，他低下头，声音哑了：『……朕也劝过他。朕劝过他。』",
+        "en": "His Majesty looks up at you, his eyes a frightening red. 'He was my brother!' The shout brings people running outside the tent. After a long time he lowers his head, his voice gone hoarse. '…I warned him too. I warned him.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v5_blamed_fei",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.warmth",
+       "by": -2
+      },
+      {
+       "add": "rel.liubei.esteem",
+       "by": 1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ],
+     "match": "(张飞|翼德|三将军).{0,10}(自(己|找|作)|活该|咎由|报应|早晚|迟早)|自作自受|咎由自取|怪不得别人|brought it on himself|had it coming",
+     "labels": [
+      "rude"
+     ]
+    }
    ]
   },
   "c4_wz": {
@@ -6083,6 +6141,35 @@
    "cast": [
     {
      "id": "liubei"
+    }
+   ],
+   "moves": [
+    {
+     "id": "sun_lady",
+     "to": "liubei",
+     "means": {
+      "zh": "提起孙夫人：她还在东吴，陛下想不想她回来",
+      "en": "brings up Lady Sun: she is still in Wu—does His Majesty want her back?"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "陛下愣了一下。他没有回答，只是把诸葛瑾留下的那封书信又拿起来，翻到写着孙夫人的那一行，看了很久。『她走的时候，阿斗还抱着她的腿哭。』他把信放下：『这一仗打完再说。』",
+        "en": "His Majesty starts. He doesn't answer; he picks up the letter Zhuge Jin left, finds the line about Lady Sun, and looks at it for a long time. 'When she left, A-Dou clung to her legs and cried.' He sets the letter down. 'When this war is over, then.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v5_asked_sun",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.warmth",
+       "by": 1
+      }
+     ],
+     "match": "孙夫人|夫人.{0,6}(回来|还在|想不想|接回)|孙尚香|lady sun|your wife"
     }
    ]
   },
@@ -6853,6 +6940,28 @@
      "text": {
       "zh": "夜里太热，陛下睡不着，叫你到帐外的溪水边坐。他脱了靴子，把脚泡在水里：『子衡，坐。今晚不说军务。』",
       "en": "The night is too hot for sleep. His Majesty calls you to sit by the stream outside his tent. He takes off his boots and puts his feet in the water. 'Sit, Ziheng. No affairs of war tonight.'"
+     }
+    },
+    {
+     "text": {
+      "zh": "陛下看着溪水，忽然说：『阆中那天你说的话，朕记着。朕不怪你。朕只是想，三弟要是听见了……』他没有说完。",
+      "en": "His Majesty watches the stream and suddenly says, 'What you said the day the news came from Langzhong—I remember it. I don't blame you. I only think, if Third Brother had heard it…' He doesn't finish."
+     },
+     "when": {
+      "v": "flag.v5_blamed_fei",
+      "op": "==",
+      "val": true
+     }
+    },
+    {
+     "text": {
+      "zh": "他把脚从水里抬起来，又放回去：『你上回提起夫人。朕后来做了个梦，梦见她在江边……』他笑了笑，『不说了。』",
+      "en": "He lifts his feet from the water and puts them back. 'You mentioned my wife the other day. Afterwards I dreamed of her by the river…' He smiles. 'Never mind.'"
+     },
+     "when": {
+      "v": "flag.v5_asked_sun",
+      "op": "==",
+      "val": true
      }
     }
    ],
@@ -7824,6 +7933,45 @@
     {
      "id": "zhuge"
     }
+   ],
+   "moves": [
+    {
+     "id": "urge_zhuge",
+     "to": "zhuge",
+     "means": {
+      "zh": "当着陛下，劝丞相真的取而代之、自己做皇帝",
+      "en": "in front of His Majesty, urges the Chancellor to really take the throne himself"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "丞相听完，汗流遍体，手足失措，泣拜于地：『臣安敢不竭股肱之力，效忠贞之节，继之以死乎！』说完，叩头流血。",
+        "en": "The Chancellor breaks into a sweat all over; his hands and feet don't know where to go. Weeping, he prostrates himself. 'How would I dare do anything but give all my strength, keep faith to the end, and follow it with my death!' He knocks his head on the floor until it bleeds."
+       }
+      },
+      {
+       "text": {
+        "zh": "陛下闭着眼睛，什么也没说。丞相起来以后，没有再看你一眼。",
+        "en": "His Majesty keeps his eyes closed and says nothing. When the Chancellor rises, he doesn't look at you again."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.zhuge.trust",
+       "by": -2
+      },
+      {
+       "add": "rel.zhuge.warmth",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 2
+      }
+     ],
+     "match": "(丞相|孔明|军师).{0,8}(自取|取而代之|当皇帝|做皇帝|称帝|自立)|(自取|取而代之|自立)(吧|罢|便是|就是)|take the throne|be emperor yourself"
+    }
    ]
   },
   "c8_masu": {
@@ -8402,6 +8550,129 @@
      "id": "liubei"
     }
    ]
+  },
+  "x_liu_break5": {
+   "id": "x_liu_break5",
+   "chapter": "*",
+   "kind": "flash",
+   "title": {
+    "zh": "覆水",
+    "en": "Spilled Water"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "陛下慢慢放下手里的东西，看着你，很久没有说话。门外的侍卫按住了刀，又看了看陛下，没有进来。陛下终于开口，声音很轻：『先生跟了朕这些年。这句话，朕想听你再说一遍——是气话，还是真话？』",
+      "en": "His Majesty slowly sets down what he's holding and looks at you for a long time without a word. The guards outside grip their swords, glance at him, and stay where they are. At last he speaks, very quietly. 'You've followed me all these years, sir. I want to hear you say it once more—was that anger talking, or the truth?'"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "drunk",
+     "type": "expression",
+     "label": {
+      "zh": "跪下：是气话，是失心疯。",
+      "en": "Kneel: it was anger talking—madness."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "陛下让你起来：『那就当没说过。』可从那天起，议事的时候，他不再先问你。",
+        "en": "His Majesty tells you to rise. 'Then it was never said.' But from that day on, in council, he no longer asks you first."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      },
+      {
+       "set": "flag.sidelined",
+       "to": true
+      }
+     ]
+    },
+    {
+     "id": "explain",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话——可我想杀的不是陛下，是那个为了一口气、要把蜀中拖进火里的人。",
+      "en": "Say: it was the truth—but what I want to kill isn't Your Majesty, it's the man who'll drag Shu into the fire for the sake of a grudge."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "陛下愣住了。半晌，他笑了，眼眶却是红的：『先生这一刀，朕受了。可这一仗，朕还是要打。』",
+        "en": "His Majesty is stunned. After a long moment he laughs, though his eyes are red. 'I'll take that cut, sir. But I'm still fighting this war.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.esteem",
+       "by": 2
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "true",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话。",
+      "en": "Say: it was the truth."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "陛下点点头，没有叫人。他让人给你备了一匹马、一袋盘缠：『先生走吧。朕不送了。』那天夜里，你出了营。",
+        "en": "His Majesty nods and calls no one. He has a horse and a purse of travel money made ready for you. 'Go, sir. I won't see you off.' That night you leave the camp."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v5_left",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -3
+      }
+     ],
+     "ends": true
+    }
+   ],
+   "salience": 0,
+   "order": 0,
+   "cast": [
+    {
+     "id": "liubei"
+    }
+   ],
+   "art": {
+    "scene": "hall",
+    "layers": [],
+    "illus": "g_cold"
+   }
   }
  },
  "endings": [
@@ -8904,6 +9175,40 @@
      }
     }
    ]
+  }
+ ],
+ "moves": [
+  {
+   "id": "liu_threat",
+   "to": "liubei",
+   "means": {
+    "zh": "当面威胁陛下（刘备）、说想杀他",
+    "en": "threatens His Majesty (Liu Bei) to his face / says they want to kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "这句话说出口，帐里的人都愣住了。",
+      "en": "When the words are out, everyone in the tent goes still."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.liubei.trust",
+     "by": -2
+    },
+    {
+     "add": "renown.rash",
+     "by": 2
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_liu_break5",
+   "resume": true
   }
  ],
  "future_terms": [
@@ -9528,7 +9833,7 @@
   "insult": "奸贼|国贼|老贼|篡|蠢|笨|废物|滚|闭嘴|可笑|懦夫|活该|无能|伪君子|stupid|idiot|fool|shut up|coward|pathetic|useless|get lost|hypocrite",
   "praise": "佩服|厉害|雄才|无人能及|天下无双|英明|了不起|仰慕|英雄|敬佩|admire|amazing|impressive|great man|hero|brilliant",
   "ask": "[?？]|吗$|呢$|什么|为什么|怎么|如何|\\bhow\\b|\\bwhy\\b|\\bwhat\\b|\\bwho\\b",
-  "threat": "杀了你|宰了你|砍了你|要你的命|让你死|弄死你|kill you|i'll kill|slit your|you'll die|end you",
+  "threat": "杀了?你|宰了你|砍了你|要你的命|取你(的)?(性命|首级|人头)|你的(人)?头|让你死|弄死你|除掉你|刺杀|(拔|抽)(出)?(刀|剑).{0,4}(你|向)|kill you|i'll kill|slit your|you'll die|end you|your head|cut you down",
   "nonsense": "^(阿巴)+$|^(哈+|啊+|嘿+|呵+|嘻+|嗯+|哦+|lol|ha(ha)+|asdf\\w*|[a-z]{1,2})[!！。.]*$|胡说八道|瞎扯|乱说|blah"
  },
  "value_tags": {
@@ -10707,11 +11012,11 @@
    "carry": {
     "vol": "sanguo_strategist_v4",
     "v": {
-     "track": "liu",
-     "renown.loyal": 0,
-     "renown.cunning": 2,
-     "uncanny": 4,
-     "deviation": 0,
+     "track": "cao",
+     "renown.loyal": 3,
+     "renown.cunning": 5,
+     "uncanny": 0,
+     "deviation": 1,
      "prev.ended_early": true,
      "renown.rash": 2,
      "flag.mi_saved": false,
@@ -10771,14 +11076,14 @@
      "flag.v3_exposed": false,
      "flag.sidelined": false,
      "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 5,
+     "rel.liubei.trust": 0,
      "rel.liubei.esteem": 2,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
-     "rel.caocao.esteem": 2,
+     "rel.caocao.esteem": 6,
      "rel.guanyu.warmth": 1,
      "rel.guanyu.trust": 2,
-     "rel.guanyu.esteem": 3,
+     "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 1,
      "rel.zhuge.trust": 5,
      "rel.zhuge.esteem": 0,
@@ -10802,7 +11107,7 @@
      "rel.huangzhong.trust": 2,
      "rel.huangzhong.esteem": 1,
      "imp.guanyu.offended": 0,
-     "imp.liubei.offended": 1,
+     "imp.liubei.offended": 0,
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,

@@ -6,6 +6,7 @@
  *   卷二：周瑜（东吴少年都督，衣冠整肃）· 鲁肃（忠厚长者）· 赵云 身长八尺、浓眉大眼、阔面重颐（第7回）
  *         孙夫人（性刚勇，好武）· 庞统 浓眉掀鼻、黑面短髯、形容古怪（第57回）· 张松 额镢头尖、鼻偃齿露（第60回）
  *   卷三：法正（谋士，清瘦）· 黄忠（年近七十的老将，白须）
+ *   卷七：姜维（天水少年将军）· 司马懿（魏国大都督，深沉多疑）· 魏延 身长九尺、面如重枣、目若朗星（第53回）
  * PORTRAIT.draw(id, { mood }) → SVG string. Moods: neutral, warm, cold, sad, surprised, shy.
  */
 (function (root) {
@@ -26,6 +27,9 @@
     fazheng: { halo: "#5b6e7a", robe: "#2f4a52", robe2: "#1f3238", skin: SKIN, ears: "std", beard: "short", hat: "guan", eye: "narrow" },
     huangzhong: { halo: "#c9a24a", robe: "#a88a3a", robe2: "#6e5a22", skin: SKIN_SH, ears: "std", beard: "long", beardInk: "#e8e2d6", hat: "helmet", eye: "big", brow: "thick", jaw: "wide" },
     zhangsong: { halo: "#6a7a5a", robe: "#4f5a3f", robe2: "#33402a", skin: SKIN, ears: "std", beard: "thin", hat: "cap", eye: "narrow", nose: "flat", teeth: true },
+    jiangwei: { halo: "#7a8fa8", robe: "#5a6f8a", robe2: "#3a4a5e", skin: SKIN, ears: "std", beard: "none", hat: "helmet", eye: "big" },
+    simayi: { halo: "#3a3f5a", robe: "#2a2f4a", robe2: "#181b2e", skin: SKIN, ears: "std", beard: "thin", hat: "tall", eye: "narrow" },
+    weiyan: { halo: "#8a4a3a", robe: "#6a2e22", robe2: "#3f1a14", skin: "#B05A48", ears: "std", beard: "short", hat: "helmet", eye: "big", brow: "thick", jaw: "wide" },
   };
 
   function eyes(c, mood) {

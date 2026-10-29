@@ -899,6 +899,9 @@ for n in N:
         pa = PLACE_AFTER.get((n["id"], c["id"])) or PLACE_AFTER.get((n["id"], "*"))
         if pa and pa != n.get("place"): c["place"] = pa
 
+import moves_v3
+CAMP_MOVES = moves_v3.extend(N)
+
 PLACES = {
     "chengdu": {"x": 85, "y": 310, "rx": 238, "ry": 492, "zh": "成都", "en": "Chengdu"}, "jiameng": {"x": 250, "y": 110, "rx": 330, "ry": 380, "zh": "葭萌", "en": "Jiameng"},
     "wakou": {"x": 215, "y": 175, "rx": 300, "ry": 425, "zh": "瓦口", "en": "Wakou"}, "dingjun": {"x": 300, "y": 60, "rx": 342, "ry": 352, "zh": "定军山", "en": "Mount Dingjun"},
@@ -1026,7 +1029,7 @@ CAMPAIGN = {
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
     "ending_art": ENDING_ART, "art_prompts": ART_PROMPTS, "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": V2["cg_captions"], "realm": REALM,
     "react_patterns": V2["react_patterns"], "value_tags": values.TAGS, "commit_rules": COMMIT_RULES,
-    "flash": [{"char": "guanyu", "node": "x_guan_rage", "resume": True}],
+    "flash": [{"char": "guanyu", "node": "x_guan_rage", "resume": True}], "moves": CAMP_MOVES,
     "witness": [{"who": "zhuge", "to": "liubei", "labels": ["rude", "threat"], "effects": [rel("zhuge", "trust", -1)]},
                 {"who": "huangzhong", "to": "fazheng", "labels": ["rude", "threat"], "effects": [rel("huangzhong", "trust", -1)]}],
     "places": PLACES, "rivers": RIVERS,

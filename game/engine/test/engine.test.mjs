@@ -117,3 +117,43 @@ test("main_first: a chapter can open on its main scene and offer its sides after
   CC.pickSide(c, st, "c1_s1"); CC.choose(c, st, "go");
   assert.equal(st.cur, "c2_m1");                                           // then the next chapter, which runs as usual
 });
+
+test("speech moves: words change the story by rule, and the validator checks them", () => {
+  const c = as04(tiny("x"));
+  c.nodes.x_rage = { id: "x_rage", chapter: "*", kind: "flash", lock: "free", order: 0, title: "翻脸", intro: [], cast: [{ id: "tao" }],
+    choices: [{ id: "bow", type: "expression", label: "认错", out: [], effects: [] }] };
+  c.nodes.c1_m1.moves = [
+    { id: "threat", to: "tao", means: "threatens Tao", match: "杀了你", labels: ["threat"], out: [{ text: "陶岑拔剑。" }], effects: [{ add: "rel.tao.trust", by: -2 }], goto: "x_rage" },
+    { id: "praise", to: "tao", means: "praises Tao's sect", match: "好门派", out: [{ text: "陶岑笑了。" }], effects: [{ add: "rel.tao.warmth", by: 1 }] }];
+  assert.deepEqual(CC.validate(c).errors, []);
+  const st = CC.newGame(c);
+  assert.equal(st.cur, "c1_m1");
+  assert.deepEqual(CC.moves(c, st).map(m => m.id), ["threat", "praise"]);
+  assert.equal(CC.matchMove(c, st, "你们真是好门派", "tao", "flat").id, "praise");
+  assert.equal(CC.matchMove(c, st, "……", "tao", "threat").id, "threat");   // the model's tone label counts too
+  CC.move(c, st, "praise", "你们真是好门派");
+  assert.equal(st.cur, "c1_m1"); assert.equal(st.v["rel.tao.warmth"], 3);
+  assert.ok(!CC.moves(c, st).some(m => m.id === "praise"), "a move happens once per scene");
+  CC.move(c, st, "threat", "我杀了你");
+  assert.equal(st.cur, "x_rage"); assert.equal(st.v["rel.tao.trust"], 0);
+  CC.choose(c, st, "bow");
+  assert.ok(st.done.includes("c1_m1"), "a move without resume ends the scene it broke");
+  // the validator: a move must name someone in the scene and go to a flash node
+  c.nodes.c1_m1.moves[0].goto = "x_seen"; c.nodes.c1_m1.moves[1].to = "nobody";
+  const v = CC.validate(c);
+  assert.ok(has(v.errors, /goto x_seen is not a flash node/)); assert.ok(has(v.errors, /unknown character nobody/));
+});
+
+test("speech values: what a line shows moves people by their own values, capped per scene", () => {
+  const c = as04(tiny("x"));
+  c.value_tags = { zhi: { zh: "智", en: "cleverness" }, li: { zh: "利", en: "self-interest" } };
+  c.chars.tao.values = { zhi: ["esteem", 1], li: ["trust", -1] };
+  const st = CC.newGame(c);
+  assert.equal(CC.speak(c, st, "flat", "……", "tao", []), null, "a flat line that shows nothing changes nothing");
+  const e = CC.speak(c, st, "flat", "此计可行", "tao", ["zhi"]);
+  assert.deepEqual(e.values, ["zhi"]); assert.equal(st.v["rel.tao.esteem"], 3);
+  CC.speak(c, st, "flat", "", "tao", ["zhi"]); CC.speak(c, st, "flat", "", "tao", ["zhi"]);
+  assert.equal(st.v["rel.tao.esteem"], 4, "at most +2 on one axis in one scene");
+  CC.speak(c, st, "flat", "", "tao", ["li", "nonsense-tag"]);
+  assert.equal(st.v["rel.tao.trust"], 1, "unknown tags are ignored");
+});

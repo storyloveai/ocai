@@ -1648,6 +1648,24 @@
     "en": "Branded a sorcerer for good"
    }
   },
+  "flag.v5_blamed_fei": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "阆中的消息传来时，说张飞是自己害死自己",
+    "en": "Said Zhang Fei brought his death on himself when the news came from Langzhong"
+   },
+   "carry": false
+  },
+  "flag.v5_asked_sun": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "在陛下面前提起孙夫人",
+    "en": "Spoke of Lady Sun to His Majesty"
+   },
+   "carry": false
+  },
   "flag.v6_came_back": {
    "type": "flag",
    "init": false,
@@ -1889,6 +1907,15 @@
     "zh": "黄忠·火气",
     "en": "Huang Zhong · Temper"
    }
+  },
+  "flag.v6_said_killall": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "说过南人杀光了就不会再反",
+    "en": "Said the southerners wouldn't rebel if they were all killed"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -1999,16 +2026,16 @@
     ],
     "small": [
      {
-      "zh": "刘备望着城下的灯火，嗯了一声。",
-      "en": "Liu Bei gazes at the lights below and murmurs agreement."
+      "zh": "刘备点点头，没有接话，像是在等你把话说完。",
+      "en": "Liu Bei nods without answering, as if waiting for you to finish."
      },
      {
-      "zh": "『难得有这样安静的夜。』他说。",
-      "en": "'It's rare to have a night this quiet,' he says."
+      "zh": "『先生说的是。』他应了一句，心思却像在别处。",
+      "en": "'Quite so, sir,' he says, though his mind seems elsewhere."
      },
      {
-      "zh": "他给你倒了一杯酒，什么也没说。",
-      "en": "He pours you a cup of wine and says nothing."
+      "zh": "他看了你一眼，温和地笑了笑。",
+      "en": "He glances at you and smiles mildly."
      }
     ],
     "threat": [
@@ -2163,16 +2190,16 @@
     ],
     "small": [
      {
-      "zh": "曹操嗯了一声，又喝了一口酒。",
-      "en": "Cao grunts and drinks again."
+      "zh": "曹操嗯了一声，眯着眼打量你。",
+      "en": "Cao grunts and studies you through narrowed eyes."
      },
      {
-      "zh": "『月明星稀……』他低声念了半句，没有念完。",
-      "en": "'The moon is bright, the stars are few…' he murmurs, and doesn't finish."
+      "zh": "『哦？』他似笑非笑，『接着说。』",
+      "en": "'Oh?' He half smiles. 'Go on.'"
      },
      {
-      "zh": "他望着廊外，好一会儿没说话。",
-      "en": "He looks out past the veranda and says nothing for a while."
+      "zh": "曹操没有接话，手指在案上轻轻敲了两下。",
+      "en": "Cao doesn't answer; his fingers tap the table twice."
      }
     ],
     "threat": [
@@ -2327,16 +2354,16 @@
     ],
     "small": [
      {
-      "zh": "关羽嗯了一声，继续擦刀。",
-      "en": "Guan Yu grunts and goes on cleaning the blade."
+      "zh": "关羽嗯了一声，丹凤眼半闭着。",
+      "en": "Guan Yu grunts, his eyes half closed."
      },
      {
-      "zh": "『明日要赶早路，你也早些歇着。』",
-      "en": "'We start early tomorrow. Get some rest.'"
+      "zh": "关羽抚着长髯，看了你一眼，没有说话。",
+      "en": "Guan Yu strokes his long beard, glances at you, and says nothing."
      },
      {
-      "zh": "火光照着他半边脸。他没有接话，却也没有赶你走。",
-      "en": "The firelight catches half his face. He doesn't answer, but he doesn't send you away either."
+      "zh": "他没有接话，却也没有转身走开。",
+      "en": "He doesn't answer, but he doesn't turn away either."
      }
     ],
     "threat": [
@@ -2488,12 +2515,12 @@
     ],
     "small": [
      {
-      "zh": "诸葛亮点点头，在灯下翻了一页书。",
-      "en": "Zhuge Liang nods and turns a page by the lamp."
+      "zh": "诸葛亮点点头，羽扇轻轻摇了两下。",
+      "en": "Zhuge Liang nods, his feather fan stirring twice."
      },
      {
-      "zh": "『夜里风凉。』他把窗关上了一半。",
-      "en": "'The night air is cold.' He half closes the window."
+      "zh": "『哦？』他看了你一眼，没有追问。",
+      "en": "'Oh?' He glances at you and doesn't press."
      },
      {
       "zh": "他嗯了一声，像是在听，又像是在想别的事。",
@@ -2648,8 +2675,8 @@
       "en": "'You haven't changed,' she says. 'Few words, restless eyes.'"
      },
      {
-      "zh": "江风吹过来，她把披风往你这边拉了拉。",
-      "en": "The river wind blows in. She pulls the edge of her cloak over toward you."
+      "zh": "她抬眼看了看你：『嗯，我听着呢。』",
+      "en": "She looks up at you. 'Mm. I'm listening.'"
      }
     ],
     "threat": [
@@ -4508,6 +4535,47 @@
     {
      "id": "zhuge"
     }
+   ],
+   "moves": [
+    {
+     "id": "kill_all",
+     "to": "zhuge",
+     "means": {
+      "zh": "说南人杀光了就不会再反",
+      "en": "says that if the southerners are all killed, they can't rebel again"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "马谡笑出了声，又赶紧收住。丞相没有笑。他看了你很久：『子衡兄，南中有多少人，你知道吗？』他没等你回答，转身上了马。",
+        "en": "Ma Su laughs out loud, then quickly stops. The Chancellor doesn't laugh. He looks at you for a long time. 'Brother Ziheng, do you know how many people live in the south?' He doesn't wait for an answer; he turns and mounts his horse."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v6_said_killall",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.warmth",
+       "by": -2
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ],
+     "match": "杀光|杀尽|斩尽杀绝|赶尽杀绝|一个不留|鸡犬不留|屠(了|城|尽)|kill (them )?all|wipe them out",
+     "labels": [
+      "threat",
+      "rude"
+     ]
+    }
    ]
   },
   "c2_first": {
@@ -4790,6 +4858,17 @@
      "when": {
       "v": "flag.v5_entrusted",
       "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "text": {
+      "zh": "丞相给你倒了一杯茶：『那天子衡兄说杀光，亮知道是气话。可这样的话，别让南人听见。』",
+      "en": "The Chancellor pours you a cup of tea. 'That day you said to kill them all, I know it was anger talking. But don't let the southerners hear words like that.'"
+     },
+     "when": {
+      "v": "flag.v6_said_killall",
+      "op": "==",
       "val": true
      }
     }
@@ -5197,6 +5276,35 @@
    "cast": [
     {
      "id": "zhuge"
+    }
+   ],
+   "moves": [
+    {
+     "id": "drug",
+     "to": "zhuge",
+     "means": {
+      "zh": "出主意：在给孟优一行的酒里下药，把他们灌倒",
+      "en": "suggests drugging the wine served to Meng You's party"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "丞相摇着扇子笑了：『子衡兄与亮，想到一处去了。』他叫人去取药，又补了一句：『只叫他们睡，不叫他们死。』",
+        "en": "The Chancellor smiles behind his fan. 'Brother Ziheng and I have had the same thought.' He sends for the drug, then adds: 'Only to make them sleep, not to kill them.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 1
+      },
+      {
+       "add": "renown.cunning",
+       "by": 1
+      }
+     ],
+     "match": "(酒|饭|水).{0,8}(下药|下毒|放药|蒙汗)|(下药|蒙汗药|迷药)|灌(醉|倒)|drug (the|their) wine|get them drunk"
     }
    ]
   },
@@ -7206,6 +7314,7 @@
    ]
   }
  ],
+ "moves": [],
  "future_terms": [
   {
    "term": {
@@ -7748,7 +7857,7 @@
   "insult": "奸贼|国贼|老贼|篡|蠢|笨|废物|滚|闭嘴|可笑|懦夫|活该|无能|伪君子|stupid|idiot|fool|shut up|coward|pathetic|useless|get lost|hypocrite",
   "praise": "佩服|厉害|雄才|无人能及|天下无双|英明|了不起|仰慕|英雄|敬佩|admire|amazing|impressive|great man|hero|brilliant",
   "ask": "[?？]|吗$|呢$|什么|为什么|怎么|如何|\\bhow\\b|\\bwhy\\b|\\bwhat\\b|\\bwho\\b",
-  "threat": "杀了你|宰了你|砍了你|要你的命|让你死|弄死你|kill you|i'll kill|slit your|you'll die|end you",
+  "threat": "杀了?你|宰了你|砍了你|要你的命|取你(的)?(性命|首级|人头)|你的(人)?头|让你死|弄死你|除掉你|刺杀|(拔|抽)(出)?(刀|剑).{0,4}(你|向)|kill you|i'll kill|slit your|you'll die|end you|your head|cut you down",
   "nonsense": "^(阿巴)+$|^(哈+|啊+|嘿+|呵+|嘻+|嗯+|哦+|lol|ha(ha)+|asdf\\w*|[a-z]{1,2})[!！。.]*$|胡说八道|瞎扯|乱说|blah"
  },
  "value_tags": {
@@ -8279,7 +8388,9 @@
      "heat.lusu": 0,
      "heat.pangtong": 0,
      "heat.fazheng": 0,
-     "heat.huangzhong": 0
+     "heat.huangzhong": 0,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false
     },
     "ended_early": false,
     "mem": {},
@@ -8464,7 +8575,9 @@
      "heat.lusu": 0,
      "heat.pangtong": 0,
      "heat.fazheng": 0,
-     "heat.huangzhong": 0
+     "heat.huangzhong": 0,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false
     },
     "ended_early": false,
     "mem": {},
@@ -8649,7 +8762,9 @@
      "heat.lusu": 0,
      "heat.pangtong": 0,
      "heat.fazheng": 0,
-     "heat.huangzhong": 0
+     "heat.huangzhong": 0,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false
     },
     "ended_early": false,
     "mem": {},
@@ -8834,7 +8949,9 @@
      "heat.lusu": 0,
      "heat.pangtong": 0,
      "heat.fazheng": 0,
-     "heat.huangzhong": 0
+     "heat.huangzhong": 0,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false
     },
     "ended_early": false,
     "mem": {},
@@ -8856,47 +8973,47 @@
     "vol": "sanguo_strategist_v5",
     "v": {
      "track": "liu",
-     "renown.loyal": 0,
+     "renown.loyal": 10,
      "renown.cunning": 2,
      "uncanny": 4,
-     "deviation": 0,
+     "deviation": 5,
      "prev.ended_early": true,
-     "renown.rash": 2,
-     "flag.mi_saved": false,
-     "flag.wenzhi_with_you": false,
-     "flag.confessed": false,
+     "renown.rash": 7,
+     "flag.mi_saved": true,
+     "flag.wenzhi_with_you": true,
+     "flag.confessed": true,
      "flag.vouched_guan": false,
      "flag.pleaded_guan": false,
      "flag.promised_return": false,
      "flag.liuqi_pretext": false,
-     "flag.pleaded_weiyan": false,
+     "flag.pleaded_weiyan": true,
      "flag.foresaw_weiyan": false,
-     "flag.zy_refused": false,
+     "flag.zy_refused": true,
      "flag.adou_kept": false,
      "flag.wz_west": false,
-     "flag.wz_jingzhou": false,
-     "flag.wz_child": false,
+     "flag.wz_jingzhou": true,
+     "flag.wz_child": true,
      "flag.pt_alive": false,
      "flag.post_chengdu": false,
      "flag.post_jingzhou": false,
-     "flag.post_none": false,
-     "flag.guan_charge": false,
+     "flag.post_none": true,
+     "flag.guan_charge": true,
      "flag.v3_came_back": false,
-     "flag.v3_hermit": true,
+     "flag.v3_hermit": false,
      "flag.dd_guard": false,
      "flag.dd_lusu": false,
      "flag.jin_trick": false,
-     "flag.jin_honest": false,
+     "flag.jin_honest": true,
      "flag.xiang_envoy": false,
      "flag.xiang_hold": false,
      "flag.xiang_obey": false,
      "flag.xiang_bargain": false,
      "flag.xiang_letter": false,
-     "flag.wakou_go": false,
+     "flag.wakou_go": true,
      "flag.hz_goaded": false,
-     "flag.hz_backed": false,
+     "flag.hz_backed": true,
      "flag.dj_flags": false,
-     "flag.dj_charge": false,
+     "flag.dj_charge": true,
      "flag.fed_pride": false,
      "flag.praised_hz": false,
      "flag.hs_open": false,
@@ -8906,60 +9023,60 @@
      "flag.mf_warned": false,
      "flag.mf_told": false,
      "flag.wh_ask": false,
-     "flag.v3_to_jing": false,
+     "flag.v3_to_jing": true,
      "flag.fs_helped": false,
      "flag.fs_private": false,
      "flag.fs_pushed": false,
      "flag.hn_soft": false,
-     "flag.hn_canon": false,
+     "flag.hn_canon": true,
      "flag.hn_apology": false,
-     "flag.fire_spared": false,
+     "flag.fire_spared": true,
      "flag.warned_jing": false,
      "flag.v3_left": false,
      "flag.v3_exposed": false,
-     "flag.sidelined": false,
-     "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 5,
-     "rel.liubei.esteem": 2,
+     "flag.sidelined": true,
+     "rel.liubei.warmth": 6,
+     "rel.liubei.trust": 1,
+     "rel.liubei.esteem": 9,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
-     "rel.caocao.esteem": 2,
-     "rel.guanyu.warmth": 1,
-     "rel.guanyu.trust": 2,
-     "rel.guanyu.esteem": 3,
-     "rel.zhuge.warmth": 1,
-     "rel.zhuge.trust": 5,
-     "rel.zhuge.esteem": 0,
-     "rel.wenzhi.warmth": 3,
-     "rel.wenzhi.trust": 2,
+     "rel.caocao.esteem": 1,
+     "rel.guanyu.warmth": 7,
+     "rel.guanyu.trust": 5,
+     "rel.guanyu.esteem": 5,
+     "rel.zhuge.warmth": 3,
+     "rel.zhuge.trust": 6,
+     "rel.zhuge.esteem": 7,
+     "rel.wenzhi.warmth": 6,
+     "rel.wenzhi.trust": 7,
      "rel.wenzhi.esteem": 2,
-     "rel.wenzhi.intimacy": 1,
-     "rel.zhaoyun.warmth": 2,
-     "rel.zhaoyun.trust": 3,
-     "rel.zhaoyun.esteem": 1,
+     "rel.wenzhi.intimacy": 9,
+     "rel.zhaoyun.warmth": 5,
+     "rel.zhaoyun.trust": 6,
+     "rel.zhaoyun.esteem": 0,
      "rel.lusu.warmth": 2,
-     "rel.lusu.trust": 3,
+     "rel.lusu.trust": 5,
      "rel.lusu.esteem": 1,
-     "rel.pangtong.warmth": 1,
+     "rel.pangtong.warmth": 5,
      "rel.pangtong.trust": 1,
      "rel.pangtong.esteem": 1,
-     "rel.fazheng.warmth": 1,
+     "rel.fazheng.warmth": 2,
      "rel.fazheng.trust": 1,
-     "rel.fazheng.esteem": 1,
-     "rel.huangzhong.warmth": 2,
-     "rel.huangzhong.trust": 2,
-     "rel.huangzhong.esteem": 1,
+     "rel.fazheng.esteem": 4,
+     "rel.huangzhong.warmth": 7,
+     "rel.huangzhong.trust": 4,
+     "rel.huangzhong.esteem": 4,
      "imp.guanyu.offended": 0,
-     "imp.liubei.offended": 1,
+     "imp.liubei.offended": 0,
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,
      "flag.v4_came_back": false,
-     "flag.v4_hermit": true,
-     "flag.pd_guard": false,
+     "flag.v4_hermit": false,
+     "flag.pd_guard": true,
      "flag.pd_bow": false,
      "flag.flood_plan": false,
-     "flag.flood_people": false,
+     "flag.flood_people": true,
      "flag.pd_spare": false,
      "flag.pow_home": false,
      "flag.bone_rest": false,
@@ -8969,27 +9086,27 @@
      "flag.v4_early_sy": false,
      "flag.lx_warned": false,
      "flag.v4_kept_rear": false,
-     "flag.mf_kind": false,
+     "flag.mf_kind": true,
      "flag.mf_pressed": false,
-     "flag.v4_mf_path": false,
+     "flag.v4_mf_path": true,
      "flag.v4_early_call": false,
      "flag.v4_relief": false,
      "flag.v4_ride": false,
      "flag.guan_alive": false,
      "flag.v4_with_guan": false,
-     "flag.v4_letter": false,
+     "flag.v4_letter": true,
      "flag.v4_counsel_wait": false,
-     "flag.v4_vow": false,
-     "flag.v4_wz_letter": false,
+     "flag.v4_vow": true,
+     "flag.v4_wz_letter": true,
      "flag.v4_left": false,
      "flag.v4_exposed": false,
      "flag.v5_came_back": false,
-     "flag.v5_hermit": true,
+     "flag.v5_hermit": false,
      "flag.v5_north": false,
      "flag.wz_qingnang": false,
      "flag.liufeng_spared": false,
      "flag.v5_mengda": false,
-     "flag.v5_fei_letter": false,
+     "flag.v5_fei_letter": true,
      "flag.v5_fei_vow": false,
      "flag.v5_zhaoyun": false,
      "flag.v5_nearly": false,
@@ -8997,18 +9114,18 @@
      "flag.v5_fei_warned": false,
      "flag.fei_alive": false,
      "flag.v5_fei_night": false,
-     "flag.v5_peace": false,
+     "flag.v5_peace": true,
      "flag.v5_hz_ride": false,
      "flag.v5_hz_word": false,
      "flag.v5_firebreak": false,
-     "flag.v5_map": false,
+     "flag.v5_map": true,
      "flag.v5_rear": false,
      "flag.v5_guard": false,
      "flag.v5_guan_last": false,
      "flag.v5_entrusted": false,
      "flag.v5_masu": false,
      "flag.wz_wed": false,
-     "flag.v5_left": false,
+     "flag.v5_left": true,
      "flag.v5_exposed": false,
      "heat.liubei": 0,
      "heat.caocao": 0,
@@ -9020,6 +9137,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false,
      "ended_early": true
     },
     "ended_early": true,

@@ -31,3 +31,13 @@ test('game progress events come from the saved run list', () => {
   assert.deepEqual(sent.map(([n])=>n),['game_run_started','game_chapter_reached']);
   assert.equal(sent[0][1].vol,'v2'); assert.equal(sent[0][1].chapter,1);
 });
+
+test('game events pass only short ids, numbers and flags, renamed sg_<name>',async()=>{
+  const {gameEvent}=await import('../dist/assets/three-kingdoms.js');
+  const sent=[];const send=(n,p)=>sent.push([n,p]);
+  assert.equal(gameEvent({name:'speech',props:{tone:'threat',values:['yi'],len:12,voiced:true,said:'x'.repeat(61),deep:{a:1}}},{game:'three-kingdoms'},send),true);
+  assert.deepEqual(sent[0],['sg_speech',{game:'three-kingdoms',tone:'threat',values:['yi'],len:12,voiced:true}]);
+  assert.equal(gameEvent({name:'Bad Name',props:{}},{},send),false);
+  assert.equal(gameEvent({name:'x',props:{'Bad Key':1,ok:NaN}},{},send),true);
+  assert.deepEqual(sent[1],['sg_x',{}]);
+});
