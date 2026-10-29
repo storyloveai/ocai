@@ -13,6 +13,9 @@
     },
     "api/image.js": {
       "maxDuration": 120
+    },
+    "api/sanguo.js": {
+      "includeFiles": "server/sanguo-*"
     }
   },
   "buildCommand": "npm run build && npm run check",
