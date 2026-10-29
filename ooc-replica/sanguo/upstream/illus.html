@@ -2223,7 +2223,8 @@ Then write ${t(who.name)}'s immediate reaction to the specific words ${PN()} use
 Return only {"pick":"<id>","reply":"<the line>"}.`;
   const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
   const pick = out && q.answers.some(a => a.id === out.pick) ? out.pick : null;
-  return pick && { pick, reply: out && typeof out.reply === "string" ? out.reply.trim().slice(0, lang === "zh" ? 80 : 300) : null };
+  const reply = out && typeof out.reply === "string" && out.reply.trim() ? out.reply.trim().slice(0, lang === "zh" ? 80 : 300) : null;
+  return (pick || reply) ? { pick, reply } : null; // a line without a valid kind still plays; keywords then pick the kind
 }
 async function onAnswer(text) {
   text = text.trim(); if (!text || V.busy || !CC.ask(CAMP, G)) return;
@@ -2233,7 +2234,7 @@ async function onAnswer(text) {
   let pick = null, via = "matcher", reply = null;
   if (RT.sample && RT.ai !== "off") {
     V.busy = true; renderAct();
-    try { const r = await askAnswer(text, n, lang); if (r) { pick = typeof r === "string" ? r : r.pick; reply = r.reply || null; via = "model"; } }
+    try { const r = await askAnswer(text, n, lang); if (r) { pick = typeof r === "string" ? r : r.pick; reply = r.reply || null; if (pick) via = "model"; } }
     catch (e) { const c = e && e.code; if (["not_granted", "not_declared", "capability_disabled", "sampling_disabled"].includes(c)) RT.ai = "off"; }
     V.busy = false;
   }
