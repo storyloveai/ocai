@@ -1,0 +1,13 @@
+{
+  "checks": [
+    {
+      "case": "live chat language switch updates opening and authored starters",
+      "result": "pass"
+    },
+    {
+      "case": "switching language keeps existing user and assistant messages unchanged",
+      "result": "pass"
+    }
+  ],
+  "model": "local verification stub; not live model quality"
+}

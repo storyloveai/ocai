@@ -12,6 +12,9 @@ import {threeKingdoms,threeKingdomsInk} from './three-kingdoms.js';
 import {storydateOriginals,storydateCharacters} from './storydate-originals.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
+import {characterById} from './sanguo-characters.js';
+import {mountCharacterPage,characterPreview} from './sanguo-character-hub.js';
+import {getLang} from './site-i18n.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
@@ -55,7 +58,7 @@ const characterMap=new Map(storydateCharacters.map(d=>[d.replaces,d]));
 // Only StoryDate's own titles are listed. Captured OOC titles and characters that no original replaces are dropped,
 // along with their cards, banners and detail pages (2026-10-22).
 evidence.catalog=evidence.catalog.filter(d=>replaceMap.has(d.id)).map(d=>replaceMap.get(d.id));
-evidence.characters=(evidence.characters||[]).filter(d=>characterMap.has(d.id)).map(d=>characterMap.get(d.id));
+evidence.characters=[...storydateCharacters];
 const OURS=new Set([threeKingdoms.id,threeKingdomsInk.id,...bookMetadata.map(d=>d.id),...storydateOriginals.map(d=>d.id),...storydateCharacters.map(d=>d.id)]);
 // drop a card for a captured title that is not ours, with any wrapper that held only that card; empty rows go too
 // clear image sources before removing, or the browser still fetches pictures from the original site
@@ -370,6 +373,13 @@ function bindSearch() {
 }
 
 export function show(path, helpers) {
+  const characterId=/^\/character\/([^/?]+)$/.exec(path)?.[1];
+  if(path==='/character'||characterById.has(characterId)){
+    mountShell('',helpers,'character');
+    const content=q('[data-shrink]')?.nextElementSibling;
+    if(content)mountCharacterPage(content,{...helpers,characters:storydateCharacters},characterId);
+    document.title=(characterById.get(characterId)?.title||'Characters')+' · StoryDate';return true;
+  }
   if(path==='/search'){show('/',helpers);openSearch(helpers,new URLSearchParams(location.search).get('q')||'');return true;}
   closeTitlePreview();
   clearInterval(carousel);context=helpers;
@@ -442,7 +452,7 @@ export function mountInteraction(html,helpers){closeTitlePreview();clearInterval
 export function preview(path,helpers){
  const match=/^\/(story|character)\/([^/?]+)$/.exec(path);if(!match)return false;
  const id=match[2],d=catalog.find(d=>d.id===id);if(!d)return false;
- const record=titlePreviews.titles[id]||capturedPreview(d)||fallbackPreview(d);
+ const record=characterById.has(id)?characterPreview(characterById.get(id),getLang()):titlePreviews.titles[id]||capturedPreview(d)||fallbackPreview(d);
  const dialog=openTitlePreview(record,id,{...helpers,assets});
  dialog.setAttribute('aria-label',match[1]==='character'?'Character Information':'Story Information');
  dialog.querySelector('[data-preview-close]')?.setAttribute('aria-label',match[1]==='character'?'Close Character Information':'Close Story Information');

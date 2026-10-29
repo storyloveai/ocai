@@ -1,0 +1,313 @@
+{
+  "model": "local verification stub; transport/canon wiring only, not live model quality",
+  "websiteBase": "main + PR #47 (including #44)",
+  "results": [
+    {
+      "case": "nine characters; six adopted profiles; language and viewport",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "bookmark persists after refresh",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-004",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-009",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-001",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-003",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-008",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "live language switch updates character hub",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass",
+      "renderedLang": "en"
+    },
+    {
+      "case": "direct character information route",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass",
+      "renderedLang": "en"
+    },
+    {
+      "case": "information dialog continues existing chat without resetting it",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass",
+      "renderedLang": "en"
+    },
+    {
+      "case": "nine characters; six adopted profiles; language and viewport",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "bookmark persists after refresh",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-004",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-009",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-001",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-003",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-008",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "live language switch updates character hub",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass",
+      "renderedLang": "zh"
+    },
+    {
+      "case": "direct character information route",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass",
+      "renderedLang": "zh"
+    },
+    {
+      "case": "information dialog continues existing chat without resetting it",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass",
+      "renderedLang": "zh"
+    },
+    {
+      "case": "nine characters; six adopted profiles; language and viewport",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "bookmark persists after refresh",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-004",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-009",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-001",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-003",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-008",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "live language switch updates character hub",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass",
+      "renderedLang": "en"
+    },
+    {
+      "case": "direct character information route",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass",
+      "renderedLang": "en"
+    },
+    {
+      "case": "information dialog continues existing chat without resetting it",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass",
+      "renderedLang": "en"
+    },
+    {
+      "case": "nine characters; six adopted profiles; language and viewport",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "bookmark persists after refresh",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-004",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-009",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-001",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-003",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "character selection, authored opening, send, refresh, character history and isolated campaign save",
+      "id": "sgc-008",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "live language switch updates character hub",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass",
+      "renderedLang": "zh"
+    },
+    {
+      "case": "direct character information route",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass",
+      "renderedLang": "zh"
+    },
+    {
+      "case": "information dialog continues existing chat without resetting it",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass",
+      "renderedLang": "zh"
+    }
+  ],
+  "requestSummary": {
+    "conversations": 24,
+    "allUseCharacterMode": true,
+    "allUseAdoptedPersona": true
+  },
+  "errors": [],
+  "missing": []
+}
