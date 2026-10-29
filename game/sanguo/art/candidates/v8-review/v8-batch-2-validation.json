@@ -1,0 +1,23 @@
+{
+  "volume8_batch": 2,
+  "items": 7,
+  "ids": [
+    "scene-v8_fan",
+    "scene-v8_duangu",
+    "scene-v8_jiangwei_night",
+    "scene-v8_healer",
+    "scene-v8_huanghao",
+    "scene-v8_jiange",
+    "scene-v8_yinping"
+  ],
+  "original_candidates": 14,
+  "exact_1200x480_exports": 14,
+  "adopted_reference_hash_checks": 24,
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "authored_fields_unchanged": true,
+  "all_new_references_formally_adopted": true,
+  "original_hash_integrity": "pass",
+  "codex_visual_check": "pass; final selection by Claude",
+  "paid_image_API_used": false,
+  "build_or_sync_run": false
+}

@@ -1,0 +1,106 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "ChatGPT built-in image generation; underlying model name not exposed by tool",
+  "seed": null,
+  "candidate": "b",
+  "authored_job": {
+    "id": "scene-v8_jiange",
+    "kind": "scene",
+    "name": "v8_jiange",
+    "batch": 7,
+    "status": "ready",
+    "refs": [
+      "jiangwei"
+    ],
+    "ref_paths": [
+      "game/sanguo/art/portraits/jiangwei.webp",
+      "game/sanguo/art/scenes/v7_jiangwei.webp"
+    ],
+    "keep": [
+      "姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白",
+      "接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）"
+    ],
+    "composition": "剑阁：两崖夹一关，关上姜维守着；夜里，灯下摊着地图，接班人背影指着西边一条小路",
+    "accept": [
+      "和 ref_paths 里的头像比，脸、发型、服色一致",
+      "汉服，不是和服；画面里没有任何文字",
+      "人物都是成年人，画面里没有小孩",
+      "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+      "玩家不露脸；第三章以后的玩家看不出男女",
+      "没有伤口、血腥、自杀的画面"
+    ],
+    "prompt": "Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. Jiange pass between two sheer cliffs, Jiang Wei on the walls; at night, the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) points at a narrow road on a spread map by lamplight. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+    "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+    "size": "1536x1024",
+    "out": [
+      1200,
+      480
+    ]
+  },
+  "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+  "source_jobs_path": "game/sanguo/art/edition-jobs-v8.jsonl",
+  "adoption_confirmation": {
+    "pr": 74,
+    "commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+    "issue": 68
+  },
+  "full_generation_prompt": "Generate ONE original standalone Chinese historical anime/webtoon visual-novel illustration, matching ALL attached ADOPTED series images. Native EXTRA-WIDE 2.5:1 BANNER (for example 2000x800), final export1200x480; legacy size field in original JSON stays as provenance. Wide camera with all principal heads/hands/props/gestures fully INSIDE native wide frame. Match expressive fine line art, cel shading and softly painted light, not photorealism/oil painting. Authored portrait references lock underlying face, hairstyle and clothing; final attached scene is STYLE ONLY, do NOT copy unrelated named people/actions. Current authored age overrides young portrait age while retaining facial proportions. Zhuge Liang is DECEASED throughout volume8: never add him alive from a style reference.\n\nAUTHOR ORIGINAL JOB VERBATIM JSON (do not draw these words):\n{\n  \"id\": \"scene-v8_jiange\",\n  \"kind\": \"scene\",\n  \"name\": \"v8_jiange\",\n  \"batch\": 7,\n  \"status\": \"ready\",\n  \"refs\": [\n    \"jiangwei\"\n  ],\n  \"ref_paths\": [\n    \"game/sanguo/art/portraits/jiangwei.webp\",\n    \"game/sanguo/art/scenes/v7_jiangwei.webp\"\n  ],\n  \"keep\": [\n    \"姜维：与已采用头像一致——银甲、白缨头盔、深蓝披风、长枪；卷八里五十岁上下到六十出头，鬓角渐白\",\n    \"接班人（玩家）：成年人，素色布袍，束发，背影或侧后方，不露脸，看不出男女（第三至第八章：三十岁上下到五十岁上下）\"\n  ],\n  \"composition\": \"剑阁：两崖夹一关，关上姜维守着；夜里，灯下摊着地图，接班人背影指着西边一条小路\",\n  \"accept\": [\n    \"和 ref_paths 里的头像比，脸、发型、服色一致\",\n    \"汉服，不是和服；画面里没有任何文字\",\n    \"人物都是成年人，画面里没有小孩\",\n    \"裁成 2.5:1 横条后，主要人物和动作不被切掉\",\n    \"玩家不露脸；第三章以后的玩家看不出男女\",\n    \"没有伤口、血腥、自杀的画面\"\n  ],\n  \"prompt\": \"Jiang Wei, matching his adopted portrait: silver armor, white-plumed helmet, deep blue cloak, long spear; in his fifties, temples turning grey. Jiange pass between two sheer cliffs, Jiang Wei on the walls; at night, the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible) points at a narrow road on a spread map by lamplight. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\",\n  \"negative_prompt\": \"No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\",\n  \"size\": \"1536x1024\",\n  \"out\": [\n    1200,\n    480\n  ]\n}\n\nSCENE EXECUTION: Night on JIANGE fortress between TWO TOWERING CLIFFS, lamp-lit guardroom or open battlement. Exactly TWO main ADULTS: Jiang Wei FIFTIES/earlySIXTIES grey temples exact adopted face, SILVER armour WHITE-PLUMED helmet DEEP NAVY BLUE CLOAK stands guard by parapet and desk. Successor THIRTY-FIFTY plain UNDYED neutral robe/tied hair FULL BACK with no face/profile POINTS AT A NARROW WESTERN PATH on an OPEN MAP. Map shows ONLY unlabelled landforms/one narrow route, absolutely no text or compass letters. Wide establishing view makes flanking cliffs/gate and map-pointing gesture both readable. No red cloak or live Zhuge.\nGlobal: ALL people are ADULTS, NO child/baby/chibi background person. NO wounds, BLOOD, gore, suicide or explicit content. Han/Three Kingdoms Chinese clothes, not kimono. NO text, Chinese characters, letters, pseudo-writing, calligraphy, labels, seals, logos, watermarks, captions, signature or printed signs on ANY paper/book/banner/map/background. Blank banners and paper; maps unlabelled landforms only. ALL PLAYER VIEWS are full BACK or rear-quarter with NO EYES, NO NOSE, NO FACIAL PROFILE. Successor from chapter3 onward must have a plain undyed robe, tied-up hair and gender-indeterminate covered silhouette. Jiang Wei when present always SILVER ARMOUR, WHITE PLUME helmet, DEEP NAVY BLUE CLOAK, no red robe/cloak. Candidate B: independently generated alternative with subtly different three-quarter camera or light, preserving exact cast ages identities clothes and all key action.",
+  "reference_inputs_in_order": [
+    {
+      "path": "game/sanguo/art/portraits/jiangwei.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+      "role": "authored_character_reference"
+    },
+    {
+      "path": "game/sanguo/art/scenes/v7_jiangwei.webp",
+      "source_commit": "6f359c96d3dd717dc74fbf4fd9ca43838edca364",
+      "sha256": "783ebf70d18edc920ea1f5a3c4a38f80ba0ba29c038ac5c35ad41ad2a9473a97",
+      "role": "authored_adopted_scene_style_reference"
+    }
+  ],
+  "missing_authored_ref_paths": [],
+  "raw_original_unchanged": true,
+  "cropped": false,
+  "final_target_dimensions": [
+    1200,
+    480
+  ],
+  "delivery_batch": 2,
+  "ready_order": 13,
+  "review_status": "awaiting_claude",
+  "codex_visual_check": "pass",
+  "description": "关隘、夹峙悬崖和夜灯共同入画，接班人手指图上路线，姜维银甲深蓝披风沉思。",
+  "actual_dimensions": [
+    1983,
+    793
+  ],
+  "original_sha256": "35714deed0e49b3cb24fcbf7ec3e3a955fe5e180775aad8e53c08f2fe95941b2",
+  "created_at": "2026-10-29T01:54:35.992440+00:00",
+  "bytes": 2896668,
+  "review_crop_box": [
+    0,
+    0,
+    1983,
+    793
+  ],
+  "crop_export": {
+    "path": "game/sanguo/art/candidates/scene-v8_jiange/b-1200x480.png",
+    "dimensions": [
+      1200,
+      480
+    ],
+    "box": [
+      0,
+      0,
+      1983,
+      793
+    ],
+    "sha256": "9bb5e195ac95314629d6921673f3d81d403f4220936b86a1026a4848dc5a7442",
+    "original_sha256": "35714deed0e49b3cb24fcbf7ec3e3a955fe5e180775aad8e53c08f2fe95941b2",
+    "tool": "ImageMagick magick",
+    "operation": "geometric crop and Lanczos resize only; original unchanged",
+    "authorization": "User explicitly requested both original and cropped exports in this chat."
+  },
+  "visual_review_notes": "Two principal adults on Jiange fortifications between cliffs, hand points at unlabelled terrain/path map under night lamps, canonical silver/white-plume/navy Jiang Wei, neutral plain-robed rear-view successor."
+}

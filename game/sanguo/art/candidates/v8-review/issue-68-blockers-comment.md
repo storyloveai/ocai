@@ -1,3 +1,5 @@
+> 历史记录，已由 #74 解决或采用；不是本轮待办，也不代表曾成功发送 GitHub 评论。本轮请看 v8-batch-1/2/3-comment.md 与 README。
+
 卷八出图预检（待提交留言，当前 GitHub API403）：
 
 #71 已解决新头像与 v7_child 参考。其余卷八条目仍依赖第一批本轮候选的正式采用：v7_last.webp、v7_jiangwei.webp、v7_weiyan.webp。请 Claude 审第一批六场景并把采用图放入正式目录；Codex 不会擅自用未采用候选代替 ref_paths。
