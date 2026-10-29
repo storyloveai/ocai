@@ -70,3 +70,12 @@ npm start
 请兰馨审新增的双语简介、开场和话题；请 Claude 对照本子确认 persona 与既有关系边界即可。本子剧情、规则、引擎、作图清单、生成目录和兰馨的 `content/**` 均没有修改。
 
 GitHub issue 创建返回 `Post "https://api.github.com/graphql": Forbidden`。`ISSUE-draft.md`、`CLAIM-draft.md`、`PR-draft.md` 保存待发布文本；尚无 issue 编号，不伪造 `Closes`。PR 与 Preview 的实际状态以交付时核实结果为准。
+
+## 交付状态
+
+- 已推送 `codex/sanguo-characters`，功能提交 `88371fb2121d298bb4a1375c443346f436b4b383`，已核对远端。
+- [查看新增差异](https://github.com/storyloveai/ocai/compare/codex%2F38-chat...codex%2Fsanguo-characters)。父分支为 #47，注意创建 PR 时保留此 base。
+- 自动创建草稿 PR 也返回 `Post "https://api.github.com/graphql": Forbidden`：**issue / 认领留言 / PR 均尚未发布**。可以使用本目录三份草稿代建，补真实 issue 编号。
+- 角色页和温芷开场截图的 GitHub 原始文件均已确认 HTTP 200，可以直接在本目录查看。
+- 访问 Vercel `/api/config` 仍为 `Tunnel connection failed: 403 Forbidden`，预览部署未确认，不提供推测链接。
+- 未合并到 main，未更新正式站。新文案与真实模型的对话体验仍待 review。
