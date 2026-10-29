@@ -998,7 +998,7 @@ function setLang(l) { settings.lang = l; store.set("settings", settings); docume
 const creatorAllowed = () => RT.canEdit || location.hash === "#creator";
 function setCreator(on) { if (on && !creatorAllowed()) return; settings.creator = on; store.set("settings", settings); if (on) V.tab = "creator"; else if (V.tab === "creator") V.tab = "people"; render(); }
 
-function render(scrollNew) { requestAnimationFrame(() => setTimeout(liftFab, 50));
+function render(scrollNew) { if (typeof requestAnimationFrame === "function") requestAnimationFrame(() => setTimeout(liftFab, 50));
   renderTop(); renderStory(); renderPanel();
   $("#fab").textContent = L().fab; $("#fab").onclick = () => { V.panelOpen = true; renderPanel(); };
   $("#fab").hidden = !G; liftFab();
@@ -1491,10 +1491,11 @@ function romanceCard(cid, l) {
 // row that reaches the bottom of the screen
 function liftFab() {
   const fab = $("#fab"); if (!fab) return;
+  if (typeof innerHeight === "undefined") return;
   const rows = [...document.querySelectorAll("#act input[type=text], .ask input")].map(x => x.parentElement.getBoundingClientRect()).filter(r => r.height && r.top < innerHeight && r.bottom > innerHeight - 90);
   fab.style.bottom = rows.length ? `${Math.round(innerHeight - Math.min(...rows.map(r => r.top)) + 12)}px` : "";
 }
-addEventListener("scroll", liftFab, { passive: true }); addEventListener("resize", liftFab);
+if (typeof window !== "undefined" && window.addEventListener) { window.addEventListener("scroll", liftFab, { passive: true }); window.addEventListener("resize", liftFab); }
 function renderPeople() {
   const l = L(); const box = h("div", {});
   const alive = Object.entries(CAMP.chars).filter(([, c]) => !(c.from_chapter && G.ch < chIndex(c.from_chapter))).map(([id]) => id);
