@@ -10073,6 +10073,129 @@
      "id": "guanyu"
     }
    ]
+  },
+  "x_liu_break4": {
+   "id": "x_liu_break4",
+   "chapter": "*",
+   "kind": "flash",
+   "title": {
+    "zh": "覆水",
+    "en": "Spilled Water"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "刘备慢慢放下手里的东西，看着你，很久没有说话。门外，张飞的影子停住了。刘备终于开口，声音很轻：『先生跟了备这些年。这句话，备想听你再说一遍——是醉话，还是真话？』",
+      "en": "Liu Bei slowly sets down what he's holding and looks at you for a long time without a word. Outside the door, Zhang Fei's shadow stops. At last Liu Bei speaks, very quietly. 'You've followed me all these years, sir. I want to hear you say it once more—was that drink talking, or the truth?'"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "drunk",
+     "type": "expression",
+     "label": {
+      "zh": "跪下：是醉话，是失心疯。",
+      "en": "Kneel: it was drink talking—madness."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备扶你起来，拍了拍你的肩：『那就当没说过。』可从那天起，议事的时候，他不再先问你。",
+        "en": "Liu Bei helps you up and pats your shoulder. 'Then it was never said.' But from that day on, in council, he no longer asks you first."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      },
+      {
+       "set": "flag.sidelined",
+       "to": true
+      }
+     ]
+    },
+    {
+     "id": "explain",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话——可我想杀的不是你，是那个寄人篱下、什么都不敢做的你。",
+      "en": "Say: it was the truth—but what I want to kill isn't you, it's the you who lives under other men's roofs and dares nothing."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备愣住了。半晌，他笑了，眼眶却是红的：『先生这一刀，备受了。』",
+        "en": "Liu Bei is stunned. After a long moment he laughs, though his eyes are red. 'I'll take that cut, sir.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.esteem",
+       "by": 2
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "true",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话。",
+      "en": "Say: it was the truth."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备点点头，没有叫张飞进来。他让人给你备了一匹马、一袋盘缠：『先生另择明主吧。备不送了。』那天夜里，你出了城。",
+        "en": "Liu Bei nods and does not call Zhang Fei in. He has a horse and a purse of travel money made ready for you. 'Choose a better lord, sir. I won't see you off.' That night you leave the city."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v4_left",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -3
+      }
+     ],
+     "ends": true
+    }
+   ],
+   "salience": 0,
+   "order": 0,
+   "cast": [
+    {
+     "id": "liubei"
+    }
+   ],
+   "art": {
+    "scene": "hall",
+    "layers": [],
+    "illus": "g_cold"
+   }
   }
  },
  "endings": [
@@ -11712,6 +11835,72 @@
    "resume": true
   }
  ],
+ "moves": [
+  {
+   "id": "guan_threat",
+   "to": "guanyu",
+   "means": {
+    "zh": "当面威胁关羽、说要杀他",
+    "en": "threatens Guan Yu to his face / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "话音未落，关羽的丹凤眼已经睁开了。",
+      "en": "Before the words have died away, Guan Yu's eyes have opened."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.guanyu.esteem",
+     "by": -1
+    },
+    {
+     "add": "renown.rash",
+     "by": 1
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_guan_rage4",
+   "resume": true
+  },
+  {
+   "id": "liu_threat",
+   "to": "liubei",
+   "means": {
+    "zh": "当面威胁刘备、说想杀他",
+    "en": "threatens Liu Bei to his face / says they want to kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "这句话说出口，屋里的人都愣住了。",
+      "en": "When the words are out, everyone in the room goes still."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.liubei.trust",
+     "by": -2
+    },
+    {
+     "add": "renown.rash",
+     "by": 2
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_liu_break4",
+   "resume": true
+  }
+ ],
  "witness": [
   {
    "who": "zhuge",
@@ -12382,13 +12571,13 @@
    "carry": {
     "vol": "sanguo_strategist_v3",
     "v": {
-     "track": "liu",
-     "renown.loyal": 0,
-     "renown.cunning": 3,
-     "uncanny": 1,
-     "deviation": 0,
+     "track": "cao",
+     "renown.loyal": 3,
+     "renown.cunning": 5,
+     "uncanny": 0,
+     "deviation": 1,
      "prev.ended_early": true,
-     "renown.rash": 3,
+     "renown.rash": 2,
      "flag.mi_saved": false,
      "flag.wenzhi_with_you": false,
      "flag.confessed": false,
@@ -12446,14 +12635,14 @@
      "flag.v3_exposed": false,
      "flag.sidelined": false,
      "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 1,
-     "rel.liubei.esteem": 3,
+     "rel.liubei.trust": 0,
+     "rel.liubei.esteem": 2,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
-     "rel.caocao.esteem": 4,
+     "rel.caocao.esteem": 7,
      "rel.guanyu.warmth": 1,
      "rel.guanyu.trust": 2,
-     "rel.guanyu.esteem": 3,
+     "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 1,
      "rel.zhuge.trust": 5,
      "rel.zhuge.esteem": 0,
@@ -12476,7 +12665,7 @@
      "rel.huangzhong.warmth": 2,
      "rel.huangzhong.trust": 2,
      "rel.huangzhong.esteem": 1,
-     "imp.guanyu.offended": 1,
+     "imp.guanyu.offended": 0,
      "imp.liubei.offended": 0,
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,

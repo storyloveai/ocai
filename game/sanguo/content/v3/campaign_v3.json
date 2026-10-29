@@ -4087,6 +4087,46 @@
     {
      "id": "lusu"
     }
+   ],
+   "moves": [
+    {
+     "id": "threat_lusu",
+     "to": "lusu",
+     "means": {
+      "zh": "当面威胁鲁肃：敢动关将军，就别想活着离开",
+      "en": "threatens Lu Su to his face: lay a finger on General Guan and you won't leave alive"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "鲁肃的笑僵在脸上，手里的酒洒了半杯。关羽抚着长髯，看了你一眼，嘴角像是动了一下。",
+        "en": "Lu Su's smile freezes and half his wine spills. Guan Yu strokes his long beard and glances at you; the corner of his mouth seems to move."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.lusu.trust",
+       "by": -2
+      },
+      {
+       "add": "rel.lusu.warmth",
+       "by": -1
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": 1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ],
+     "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die|敢动.{0,6}(关|将军)|别想活着|走不出",
+     "labels": [
+      "threat"
+     ]
+    }
    ]
   },
   "c1_clinic": {
@@ -6349,6 +6389,66 @@
    "cast": [
     {
      "id": "guanyu"
+    }
+   ],
+   "moves": [
+    {
+     "id": "praise_hz",
+     "to": "guanyu",
+     "means": {
+      "zh": "当着关羽夸黄忠斩夏侯渊确实了得",
+      "en": "praises Huang Zhong's victory over Xiahou Yuan in front of Guan Yu"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽放下的酒杯又端了起来，一口喝干：『子衡倒是会替老卒说话。』满座的人都不敢出声。",
+        "en": "Guan Yu picks the cup back up and drains it. 'Ziheng knows how to speak up for an old soldier.' No one at the table dares make a sound."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.praised_hz",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": -1
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": 1
+      }
+     ],
+     "match": "黄(忠|将军|老将军).{0,8}(了得|厉害|英勇|老当益壮|勇|功劳)|老当益壮|huang zhong.{0,20}(impressive|brave|great)"
+    },
+    {
+     "id": "fed_pride",
+     "to": "guanyu",
+     "means": {
+      "zh": "附和关羽：黄忠一个老卒，不过碰巧",
+      "en": "agrees with Guan Yu that Huang Zhong is just an old soldier who got lucky"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽哈哈大笑，满座跟着笑起来。只有你知道，这笑声传到成都会是什么样子。",
+        "en": "Guan Yu roars with laughter and the whole table laughs with him. Only you know how that laughter will sound by the time it reaches Chengdu."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fed_pride",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": 1
+      }
+     ],
+     "match": "(黄忠|老卒|老头|老将).{0,8}(碰巧|侥幸|运气|不过如此|算什么)|一个老卒|got lucky|just an old"
     }
    ]
   },
@@ -9091,6 +9191,39 @@
     {
      "id": "guanyu"
     }
+   ],
+   "moves": [
+    {
+     "id": "spare",
+     "to": "guanyu",
+     "means": {
+      "zh": "求关羽饶糜芳、傅士仁一命",
+      "en": "begs Guan Yu to spare Mi Fang and Fu Shiren"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽的刀停在半空。他看了你很久，把刀插回鞘里：『看在子衡的面上，各打四十，留在后方。』糜芳磕头的时候，没有看关羽，只看你。",
+        "en": "Guan Yu's blade stops in midair. He looks at you a long time, then sheathes it. 'For Ziheng's sake: forty strokes each, and they stay behind.' As Mi Fang knocks his head on the ground he doesn't look at Guan Yu—only at you."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fire_spared",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -1
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      }
+     ],
+     "match": "(饶|留|放).{0,6}(糜芳|傅士仁|他们|一命)|从轻|不吉|刀下留人|spare (them|mi fang)"
+    }
    ]
   },
   "c8_far": {
@@ -9930,6 +10063,129 @@
      "id": "guanyu"
     }
    ]
+  },
+  "x_liu_break3": {
+   "id": "x_liu_break3",
+   "chapter": "*",
+   "kind": "flash",
+   "title": {
+    "zh": "覆水",
+    "en": "Spilled Water"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "刘备慢慢放下手里的东西，看着你，很久没有说话。门外，张飞的影子停住了。刘备终于开口，声音很轻：『先生跟了备这些年。这句话，备想听你再说一遍——是醉话，还是真话？』",
+      "en": "Liu Bei slowly sets down what he's holding and looks at you for a long time without a word. Outside the door, Zhang Fei's shadow stops. At last Liu Bei speaks, very quietly. 'You've followed me all these years, sir. I want to hear you say it once more—was that drink talking, or the truth?'"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "drunk",
+     "type": "expression",
+     "label": {
+      "zh": "跪下：是醉话，是失心疯。",
+      "en": "Kneel: it was drink talking—madness."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备扶你起来，拍了拍你的肩：『那就当没说过。』可从那天起，议事的时候，他不再先问你。",
+        "en": "Liu Bei helps you up and pats your shoulder. 'Then it was never said.' But from that day on, in council, he no longer asks you first."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      },
+      {
+       "set": "flag.sidelined",
+       "to": true
+      }
+     ]
+    },
+    {
+     "id": "explain",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话——可我想杀的不是你，是那个寄人篱下、什么都不敢做的你。",
+      "en": "Say: it was the truth—but what I want to kill isn't you, it's the you who lives under other men's roofs and dares nothing."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备愣住了。半晌，他笑了，眼眶却是红的：『先生这一刀，备受了。』",
+        "en": "Liu Bei is stunned. After a long moment he laughs, though his eyes are red. 'I'll take that cut, sir.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.esteem",
+       "by": 2
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "true",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：是真话。",
+      "en": "Say: it was the truth."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备点点头，没有叫张飞进来。他让人给你备了一匹马、一袋盘缠：『先生另择明主吧。备不送了。』那天夜里，你出了城。",
+        "en": "Liu Bei nods and does not call Zhang Fei in. He has a horse and a purse of travel money made ready for you. 'Choose a better lord, sir. I won't see you off.' That night you leave the city."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v3_left",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -3
+      }
+     ],
+     "ends": true
+    }
+   ],
+   "salience": 0,
+   "order": 0,
+   "cast": [
+    {
+     "id": "liubei"
+    }
+   ],
+   "art": {
+    "scene": "hall",
+    "layers": [],
+    "illus": "g_cold"
+   }
   }
  },
  "endings": [
@@ -11766,6 +12022,72 @@
    "resume": true
   }
  ],
+ "moves": [
+  {
+   "id": "guan_threat",
+   "to": "guanyu",
+   "means": {
+    "zh": "当面威胁关羽、说要杀他",
+    "en": "threatens Guan Yu to his face / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "话音未落，关羽的丹凤眼已经睁开了。",
+      "en": "Before the words have died away, Guan Yu's eyes have opened."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.guanyu.esteem",
+     "by": -1
+    },
+    {
+     "add": "renown.rash",
+     "by": 1
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_guan_rage",
+   "resume": true
+  },
+  {
+   "id": "liu_threat",
+   "to": "liubei",
+   "means": {
+    "zh": "当面威胁刘备、说想杀他",
+    "en": "threatens Liu Bei to his face / says they want to kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "这句话说出口，屋里的人都愣住了。",
+      "en": "When the words are out, everyone in the room goes still."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.liubei.trust",
+     "by": -2
+    },
+    {
+     "add": "renown.rash",
+     "by": 2
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_liu_break3",
+   "resume": true
+  }
+ ],
  "witness": [
   {
    "who": "zhuge",
@@ -12462,11 +12784,11 @@
    "carry": {
     "vol": "sanguo_strategist_v2",
     "v": {
-     "track": "liu",
-     "renown.loyal": 0,
-     "renown.cunning": 3,
-     "uncanny": 1,
-     "deviation": 0,
+     "track": "cao",
+     "renown.loyal": 3,
+     "renown.cunning": 5,
+     "uncanny": 0,
+     "deviation": 1,
      "prev.ended_early": true,
      "flag.mi_saved": false,
      "flag.pangtong_joined": false,
@@ -12481,14 +12803,14 @@
      "flag.exposed": false,
      "flag.mi_heng": false,
      "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 1,
-     "rel.liubei.esteem": 3,
+     "rel.liubei.trust": 0,
+     "rel.liubei.esteem": 2,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
-     "rel.caocao.esteem": 4,
+     "rel.caocao.esteem": 10,
      "rel.guanyu.warmth": 1,
      "rel.guanyu.trust": 2,
-     "rel.guanyu.esteem": 3,
+     "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 1,
      "rel.zhuge.trust": 5,
      "rel.zhuge.esteem": 0,
@@ -12514,13 +12836,13 @@
      "rel.zhangsong.warmth": 0,
      "rel.zhangsong.trust": 0,
      "rel.zhangsong.esteem": 0,
-     "imp.guanyu.offended": 1,
+     "imp.guanyu.offended": 0,
      "imp.liubei.offended": 0,
      "imp.zhouyu.offended": 0,
      "imp.sunfuren.offended": 0,
      "imp.zhangsong.offended": 0,
      "imp.pangtong.flattery": 0,
-     "renown.rash": 3,
+     "renown.rash": 2,
      "heat.caocao": 0,
      "heat.guanyu": 0,
      "heat.liubei": 0,
@@ -12533,9 +12855,9 @@
      "heat.pangtong": 0,
      "heat.zhangsong": 0,
      "flag.v2_returned": false,
-     "flag.cao_stay": false,
+     "flag.cao_stay": true,
      "flag.came_back": false,
-     "flag.v2_hermit": true,
+     "flag.v2_hermit": false,
      "flag.took_nanjun": false,
      "flag.yielded_nanjun": false,
      "flag.warned_zhouyu": false,
@@ -12552,10 +12874,10 @@
      "flag.zhouyu_lives": false,
      "flag.met_pangtong": false,
      "flag.vouched_pangtong": false,
-     "flag.tongque": false,
-     "flag.saved_cao": false,
+     "flag.tongque": true,
+     "flag.saved_cao": true,
      "flag.defected": false,
-     "flag.cao_forever": false,
+     "flag.cao_forever": true,
      "flag.honored_zs": false,
      "flag.adou_kept": false,
      "flag.sun_parted": false,

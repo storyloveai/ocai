@@ -86,27 +86,30 @@ CAMP_MOVES = [
        match=KILL_YOU + r"|曹贼", labels=["threat"], goto="x_cao_rage", resume=True, except_=["c1_plum"]),
 ]
 
-# 威胁刘备：刘备不发火，可话说出口就收不回来了
-LIU_BREAK = node("x_liu_break", "*", "flash", T("覆水", "Spilled Water"), "free", T("原创", "original"),
-    T("刘备慢慢放下手里的东西，看着你，很久没有说话。门外，张飞的影子停住了。刘备终于开口，声音很轻：『先生跟了备这些年。这句话，备想听你再说一遍——是醉话，还是真话？』",
-      "Liu Bei slowly sets down what he's holding and looks at you for a long time without a word. Outside the door, Zhang Fei's shadow stops. At last Liu Bei speaks, very quietly. 'You've followed me all these years, sir. I want to hear you say it once more—was that drink talking, or the truth?'"),
-    [choice("drunk", "expression", T("跪下：是醉话，是失心疯。", "Kneel: it was drink talking—madness."),
-            T("刘备扶你起来，拍了拍你的肩：『那就当没说过。』可从那天起，议事的时候，他不再先问你。", "Liu Bei helps you up and pats your shoulder. 'Then it was never said.' But from that day on, in council, he no longer asks you first."),
-            [rel("liubei", "trust", -1), add("renown.rash"), setv("flag.sidelined")]),
-     choice("explain", "dilemma", T("说：是真话——可我想杀的不是你，是那个寄人篱下、什么都不敢做的你。", "Say: it was the truth—but what I want to kill isn't you, it's the you who lives under other men's roofs and dares nothing."),
-            T("刘备愣住了。半晌，他笑了，眼眶却是红的：『先生这一刀，备受了。』", "Liu Bei is stunned. After a long moment he laughs, though his eyes are red. 'I'll take that cut, sir.'"),
-            [rel("liubei", "esteem", 2), rel("liubei", "trust", -1), add("renown.rash")]),
-     choice("true", "dilemma", T("说：是真话。", "Say: it was the truth."),
-            T("刘备点点头，没有叫张飞进来。他让人给你备了一匹马、一袋盘缠：『先生另择明主吧。备不送了。』那天夜里，你出了城。", "Liu Bei nods and does not call Zhang Fei in. He has a horse and a purse of travel money made ready for you. 'Choose a better lord, sir. I won't see you off.' That night you leave the city."),
-            [setv("flag.exiled"), rel("liubei", "trust", -3)])])
-LIU_BREAK["choices"][2]["ends"] = True
-LIU_BREAK["cast"] = [{"id": "liubei"}]
-LIU_BREAK["art"] = {"scene": "hall", "layers": []}
-LIU_BREAK["art"]["illus"] = "g_cold"
-CAMP_MOVES.append(mv("liu_threat", "liubei", T("当面威胁刘备、说想杀他", "threatens Liu Bei to his face / says they want to kill him"),
-    T("这句话说出口，屋里的人都愣住了。", "When the words are out, everyone in the room goes still."),
-    [rel("liubei", "trust", -2), add("renown.rash", 2)],
-    match=KILL_YOU, labels=["threat"], goto="x_liu_break", resume=True))
+# 威胁刘备：刘备不发火，可话说出口就收不回来了。各卷共用，场景编号按卷区分（服务端靠编号找卷）
+def liu_break(nid, left_flag):
+    n = node(nid, "*", "flash", T("覆水", "Spilled Water"), "free", T("原创", "original"),
+        T("刘备慢慢放下手里的东西，看着你，很久没有说话。门外，张飞的影子停住了。刘备终于开口，声音很轻：『先生跟了备这些年。这句话，备想听你再说一遍——是醉话，还是真话？』",
+          "Liu Bei slowly sets down what he's holding and looks at you for a long time without a word. Outside the door, Zhang Fei's shadow stops. At last Liu Bei speaks, very quietly. 'You've followed me all these years, sir. I want to hear you say it once more—was that drink talking, or the truth?'"),
+        [choice("drunk", "expression", T("跪下：是醉话，是失心疯。", "Kneel: it was drink talking—madness."),
+                T("刘备扶你起来，拍了拍你的肩：『那就当没说过。』可从那天起，议事的时候，他不再先问你。", "Liu Bei helps you up and pats your shoulder. 'Then it was never said.' But from that day on, in council, he no longer asks you first."),
+                [rel("liubei", "trust", -1), add("renown.rash"), setv("flag.sidelined")]),
+         choice("explain", "dilemma", T("说：是真话——可我想杀的不是你，是那个寄人篱下、什么都不敢做的你。", "Say: it was the truth—but what I want to kill isn't you, it's the you who lives under other men's roofs and dares nothing."),
+                T("刘备愣住了。半晌，他笑了，眼眶却是红的：『先生这一刀，备受了。』", "Liu Bei is stunned. After a long moment he laughs, though his eyes are red. 'I'll take that cut, sir.'"),
+                [rel("liubei", "esteem", 2), rel("liubei", "trust", -1), add("renown.rash")]),
+         choice("true", "dilemma", T("说：是真话。", "Say: it was the truth."),
+                T("刘备点点头，没有叫张飞进来。他让人给你备了一匹马、一袋盘缠：『先生另择明主吧。备不送了。』那天夜里，你出了城。", "Liu Bei nods and does not call Zhang Fei in. He has a horse and a purse of travel money made ready for you. 'Choose a better lord, sir. I won't see you off.' That night you leave the city."),
+                [setv(left_flag), rel("liubei", "trust", -3)])])
+    n["choices"][2]["ends"] = True
+    n["cast"] = [{"id": "liubei"}]
+    n["art"] = {"scene": "hall", "layers": [], "illus": "g_cold"}
+    m = mv("liu_threat", "liubei", T("当面威胁刘备、说想杀他", "threatens Liu Bei to his face / says they want to kill him"),
+           T("这句话说出口，屋里的人都愣住了。", "When the words are out, everyone in the room goes still."),
+           [rel("liubei", "trust", -2), add("renown.rash", 2)],
+           match=KILL_YOU, labels=["threat"], goto=nid, resume=True)
+    return n, m
+LIU_BREAK, _m = liu_break("x_liu_break", "flag.exiled")
+CAMP_MOVES.append(_m)
 
 READS = {   # 说过的话，后面要有人记得
     "c4_gucheng": [P(T("刘备没有提梅园那天你说的话。可他给你倒酒的时候，手停了一下。", "Liu Bei doesn't mention what you said in the plum garden. But as he pours your wine, his hand pauses."), F("flag.urged_kill_liu")),

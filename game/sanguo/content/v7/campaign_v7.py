@@ -578,6 +578,9 @@ for n in N:
         pa = PLACE_AFTER.get((n["id"], c["id"])) or PLACE_AFTER.get((n["id"], "*"))
         if pa and pa != n.get("place"): c["place"] = pa
 
+import moves_v7
+CAMP_MOVES = moves_v7.extend(N)
+
 PLACES = {"chengdu": V6["places"]["chengdu"], "hanzhong": {"x": 375, "y": 50, "rx": 372, "ry": 346, "zh": "汉中", "en": "Hanzhong"}}
 PLACES.update({
     "qishan": {"x": 300, "y": 25, "rx": 345, "ry": 330, "zh": "祁山", "en": "Qishan"},
@@ -667,7 +670,7 @@ CAMPAIGN = {
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
     "ending_art": ENDING_ART, "art_prompts": dict(V6["art_prompts"]), "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": V6["cg_captions"], "realm": REALM,
     "react_patterns": V6["react_patterns"], "value_tags": values.TAGS, "commit_rules": COMMIT_RULES,
-    "flash": [{"char": "weiyan", "node": "x_weiyan_rage", "resume": True}],
+    "flash": [{"char": "weiyan", "node": "x_weiyan_rage", "resume": True}], "moves": CAMP_MOVES,
     "witness": [{"who": "jiangwei", "to": "zhuge", "labels": ["rude", "threat"], "effects": [rel("jiangwei", "trust", -1)]}],
     "places": PLACES, "rivers": RIVERS,
     "meters": {"uncanny": T("到 8：被当作妖人", "At 8: branded a sorcerer"), "rash": T("到 6：有人会把你的话报上去", "At 6: someone reports what you've said")},

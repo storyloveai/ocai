@@ -10000,6 +10000,40 @@
    "resume": true
   }
  ],
+ "moves": [
+  {
+   "id": "weiyan_threat",
+   "to": "weiyan",
+   "means": {
+    "zh": "当面威胁魏延、说要杀他",
+    "en": "threatens Wei Yan to his face / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "魏延的手已经按在了刀柄上。",
+      "en": "Wei Yan's hand is already on his hilt."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.weiyan.trust",
+     "by": -1
+    },
+    {
+     "add": "renown.rash",
+     "by": 1
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_weiyan_rage",
+   "resume": true
+  }
+ ],
  "witness": [
   {
    "who": "jiangwei",
@@ -11141,13 +11175,13 @@
    "carry": {
     "vol": "sanguo_strategist_v6",
     "v": {
-     "track": "liu",
-     "renown.loyal": 0,
-     "renown.cunning": 3,
-     "uncanny": 1,
-     "deviation": 0,
+     "track": "cao",
+     "renown.loyal": 3,
+     "renown.cunning": 5,
+     "uncanny": 0,
+     "deviation": 1,
      "prev.ended_early": true,
-     "renown.rash": 3,
+     "renown.rash": 2,
      "flag.mi_saved": false,
      "flag.wenzhi_with_you": false,
      "flag.confessed": false,
@@ -11205,14 +11239,14 @@
      "flag.v3_exposed": false,
      "flag.sidelined": false,
      "rel.liubei.warmth": 3,
-     "rel.liubei.trust": 1,
-     "rel.liubei.esteem": 3,
+     "rel.liubei.trust": 0,
+     "rel.liubei.esteem": 2,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
-     "rel.caocao.esteem": 4,
+     "rel.caocao.esteem": 5,
      "rel.guanyu.warmth": 1,
      "rel.guanyu.trust": 2,
-     "rel.guanyu.esteem": 3,
+     "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 1,
      "rel.zhuge.trust": 5,
      "rel.zhuge.esteem": 0,
@@ -11235,7 +11269,7 @@
      "rel.huangzhong.warmth": 2,
      "rel.huangzhong.trust": 2,
      "rel.huangzhong.esteem": 1,
-     "imp.guanyu.offended": 1,
+     "imp.guanyu.offended": 0,
      "imp.liubei.offended": 0,
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
