@@ -12106,6 +12106,47 @@
        "by": -1
       }
      ]
+    },
+    {
+     "id": "unbowed",
+     "type": "dilemma",
+     "label": {
+      "zh": "不认错。托狱卒给曹操带一句话：那天的话，我没说错。",
+      "en": "Don't recant. Send word to Cao Cao through the jailer: what I said that day, I meant."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "狱卒看了你一眼，什么也没说。第三天，没有人送饭来。来的是两个甲士。",
+        "en": "The jailer gives you a look and says nothing. On the third day no one brings food. Two armored men come instead."
+       }
+      },
+      {
+       "text": {
+        "zh": "他们把你带到城外的时候，天刚亮。监刑的人念了一句：『丞相说，既然不服，就成全他。』",
+        "en": "It is just dawn when they bring you outside the walls. The officer in charge reads one line: 'The Chancellor says: since he won't yield, let him have his way.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
+     ],
+     "ends": true,
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     }
     }
    ],
    "salience": 0,

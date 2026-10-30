@@ -52,6 +52,14 @@ def extend(N, VARS, ENDINGS, CAMP_MOVES):
     # 梅园里梗着脖子：下狱（AI 演这一段）
     for c in byid["x_plum_rage"]["choices"]:
         if c["id"] == "defy": fate(c, "jail", "caocao")
+    # 牢里还是不服：曹操不会关你一辈子（决策记录 v2.28）
+    jail = byid["x_jail"]
+    unbowed = choice("unbowed", "dilemma", T("不认错。托狱卒给曹操带一句话：那天的话，我没说错。", "Don't recant. Send word to Cao Cao through the jailer: what I said that day, I meant."),
+        [P(T("狱卒看了你一眼，什么也没说。第三天，没有人送饭来。来的是两个甲士。", "The jailer gives you a look and says nothing. On the third day no one brings food. Two armored men come instead.")),
+         P(T("他们把你带到城外的时候，天刚亮。监刑的人念了一句：『丞相说，既然不服，就成全他。』", "It is just dawn when they bring you outside the walls. The officer in charge reads one line: 'The Chancellor says: since he won't yield, let him have his way.'"))],
+        [setv("flag.fate_dead"), rel("caocao", "esteem", -3)])
+    unbowed["ends"] = True
+    jail["choices"].append(fate(unbowed, "execute", "caocao"))
     # 刘备：说“是真话”，被送出城
     for c in byid["x_liu_break"]["choices"]:
         if c["id"] == "true": fate(c, "exile", "liubei")
