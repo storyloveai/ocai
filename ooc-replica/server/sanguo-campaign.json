@@ -1147,6 +1147,48 @@
     "zh": "劝曹操拦下关羽",
     "en": "Urged Cao Cao to stop Guan Yu"
    }
+  },
+  "grudge.caocao": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "曹操·记仇",
+    "en": "Cao Cao · grudge"
+   },
+   "carry": false
+  },
+  "grudge.liubei": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "刘备·记仇",
+    "en": "Liu Bei · grudge"
+   },
+   "carry": false
+  },
+  "grudge.guanyu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·记仇",
+    "en": "Guan Yu · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -11638,7 +11680,98 @@
      ],
      "values": [
       "yong"
-     ]
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": "<=",
+      "val": 2
+     },
+     "fate": {
+      "kind": "jail",
+      "who": "caocao",
+      "label": {
+       "zh": "下狱",
+       "en": "imprisoned"
+      }
+     }
+    },
+    {
+     "id": "defy_dead",
+     "type": "dilemma",
+     "label": {
+      "zh": "梗着脖子，把话说完。",
+      "en": "Lift your chin and finish what you were saying."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操脸上的笑一点一点收了：『推出去。』廊下的甲士把你从席上拖起来。刘备扑过来，被许褚一把按住。雨落下来的时候，刀也落了下来。",
+        "en": "The smile drains from Cao Cao's face. 'Take him out.' The guards haul you from your seat. Liu Bei lunges forward and Xu Chu pins him. As the rain comes down, so does the blade."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
+     ],
+     "values": [
+      "yong"
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": ">=",
+      "val": 3
+     },
+     "ends": true,
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     }
+    },
+    {
+     "id": "repeat",
+     "type": "dilemma",
+     "label": {
+      "zh": "盯着曹操，把那句话再说一遍。",
+      "en": "Look Cao Cao in the eye and say it again."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操脸上的笑一点一点收了：『推出去。』廊下的甲士把你从席上拖起来。刘备扑过来，被许褚一把按住。雨落下来的时候，刀也落了下来。",
+        "en": "The smile drains from Cao Cao's face. 'Take him out.' The guards haul you from your seat. Liu Bei lunges forward and Xu Chu pins him. As the rain comes down, so does the blade."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
+     ],
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -11946,13 +12079,74 @@
       }
      ],
      "when": {
-      "v": "track",
-      "op": "!=",
-      "val": "cao"
+      "all": [
+       {
+        "v": "track",
+        "op": "!=",
+        "val": "cao"
+       },
+       {
+        "v": "grudge.caocao",
+        "op": "<=",
+        "val": 2
+       }
+      ]
      },
      "values": [
       "yong"
      ]
+    },
+    {
+     "id": "defy_dead",
+     "type": "dilemma",
+     "label": {
+      "zh": "不跪。",
+      "en": "Refuse to kneel."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操没有再问第二遍，只抬了抬手。你被拖出门的时候，听见他在身后说：『可惜了。』",
+        "en": "Cao Cao doesn't ask twice; he only lifts his hand. As you're dragged out you hear him behind you: 'A pity.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
+     ],
+     "when": {
+      "all": [
+       {
+        "v": "track",
+        "op": "!=",
+        "val": "cao"
+       },
+       {
+        "v": "grudge.caocao",
+        "op": ">=",
+        "val": 3
+       }
+      ]
+     },
+     "values": [
+      "yong"
+     ],
+     "ends": true,
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     }
     },
     {
      "id": "defy_cao",
@@ -11984,9 +12178,102 @@
       }
      ],
      "when": {
-      "v": "track",
-      "op": "==",
-      "val": "cao"
+      "all": [
+       {
+        "v": "track",
+        "op": "==",
+        "val": "cao"
+       },
+       {
+        "v": "grudge.caocao",
+        "op": "<=",
+        "val": 2
+       }
+      ]
+     },
+     "ends": true
+    },
+    {
+     "id": "defy_cao_dead",
+     "type": "dilemma",
+     "label": {
+      "zh": "不跪。",
+      "en": "Refuse to kneel."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操没有再问第二遍，只抬了抬手。你被拖出门的时候，听见他在身后说：『可惜了。』",
+        "en": "Cao Cao doesn't ask twice; he only lifts his hand. As you're dragged out you hear him behind you: 'A pity.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
+     ],
+     "when": {
+      "all": [
+       {
+        "v": "track",
+        "op": "==",
+        "val": "cao"
+       },
+       {
+        "v": "grudge.caocao",
+        "op": ">=",
+        "val": 3
+       }
+      ]
+     },
+     "ends": true,
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     }
+    },
+    {
+     "id": "repeat",
+     "type": "dilemma",
+     "label": {
+      "zh": "盯着曹操，把那句话再说一遍。",
+      "en": "Look Cao Cao in the eye and say it again."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操没有再问第二遍，只抬了抬手。你被拖出门的时候，听见他在身后说：『可惜了。』",
+        "en": "Cao Cao doesn't ask twice; he only lifts his hand. As you're dragged out you hear him behind you: 'A pity.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
+     ],
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
      },
      "ends": true
     }
@@ -12111,7 +12398,15 @@
        "by": -3
       }
      ],
-     "ends": true
+     "ends": true,
+     "fate": {
+      "kind": "exile",
+      "who": "liubei",
+      "label": {
+       "zh": "被逐出",
+       "en": "sent away"
+      }
+     }
     }
    ],
    "salience": 0,
@@ -12126,6 +12421,149 @@
     "layers": [],
     "illus": "g_cold"
    }
+  },
+  "x_guan_rage1": {
+   "id": "x_guan_rage1",
+   "chapter": "*",
+   "kind": "flash",
+   "title": {
+    "zh": "关羽拔刀",
+    "en": "Guan Yu Draws"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "关羽的丹凤眼睁开了。他没有拍案，只是把青龙刀从架上取了下来，刀尖点地：『你再说一遍。』",
+      "en": "Guan Yu's long eyes open. He doesn't slam the table; he simply lifts the Green Dragon blade from its rack and sets its point to the floor. 'Say that again.'"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "bow",
+     "type": "expression",
+     "label": {
+      "zh": "收回这句话，向关羽赔罪。",
+      "en": "Take it back and apologize to Guan Yu."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽看了你很久，把刀放回了架上：『下不为例。』",
+        "en": "Guan Yu looks at you a long while, then sets the blade back on its rack. 'Never again.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -1
+      }
+     ]
+    },
+    {
+     "id": "stand",
+     "type": "dilemma",
+     "label": {
+      "zh": "不退，手按在剑柄上。",
+      "en": "Don't back down; put your hand on your sword hilt."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽的刀背砸在你肩上，你整个人撞翻了案几。张飞冲进来把你拖了出去，一路骂着。那天夜里，刘备来给你上药，一句话也没说。",
+        "en": "The back of Guan Yu's blade slams into your shoulder and sends you crashing over the table. Zhang Fei storms in and drags you out, cursing all the way. That night Liu Bei comes to dress your wound and says nothing at all."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.wounded",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -2
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -1
+      },
+      {
+       "add": "renown.rash",
+       "by": 1
+      }
+     ],
+     "fate": {
+      "kind": "wounded",
+      "who": "guanyu",
+      "label": {
+       "zh": "负伤",
+       "en": "wounded"
+      }
+     }
+    },
+    {
+     "id": "draw",
+     "type": "dilemma",
+     "label": {
+      "zh": "拔剑。",
+      "en": "Draw your sword."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你的剑还没出鞘，就被张飞一把夺了过去。第二天一早，刘备让人牵来一匹马：『先生走吧。我兄弟的刀，我拦得住一次。』",
+        "en": "Before your sword clears the scabbard Zhang Fei has wrenched it away. At dawn Liu Bei has a horse brought round. 'Go, sir. I can stop my brother's blade once.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.exiled",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -3
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -3
+      }
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": ">=",
+      "val": 3
+     },
+     "fate": {
+      "kind": "exile",
+      "who": "guanyu",
+      "label": {
+       "zh": "被逐出",
+       "en": "sent away"
+      }
+     },
+     "ends": true
+    }
+   ],
+   "salience": 0,
+   "order": 0,
+   "cast": [
+    {
+     "id": "guanyu"
+    }
+   ],
+   "art": {
+    "scene": "hall",
+    "layers": []
+   }
   }
  },
  "endings": [
@@ -12136,6 +12574,18 @@
     "en": "Allegiance"
    },
    "fragments": [
+    {
+     "id": "dead",
+     "text": {
+      "zh": "你没有走出许都。那年的梅子，后来是别人摘的。",
+      "en": "You never left Xuchang. Someone else picked the plums that year."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "==",
+      "val": true
+     }
+    },
     {
      "id": "miheng",
      "text": {
@@ -12223,14 +12673,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.liubei.trust",
-        "op": ">=",
-        "val": 8
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "liu"
+         },
+         {
+          "v": "rel.liubei.trust",
+          "op": ">=",
+          "val": 8
+         }
+        ]
        }
       ]
      }
@@ -12244,14 +12703,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.liubei.trust",
-        "op": ">=",
-        "val": 6
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "liu"
+         },
+         {
+          "v": "rel.liubei.trust",
+          "op": ">=",
+          "val": 6
+         }
+        ]
        }
       ]
      }
@@ -12263,9 +12731,18 @@
       "en": "Liu Bei is always courteous to you. Courtesy is a kind of distance."
      },
      "when": {
-      "v": "track",
-      "op": "==",
-      "val": "liu"
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "track",
+        "op": "==",
+        "val": "liu"
+       }
+      ]
      }
     },
     {
@@ -12277,14 +12754,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "cao"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.caocao.esteem",
-        "op": ">=",
-        "val": 8
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "cao"
+         },
+         {
+          "v": "rel.caocao.esteem",
+          "op": ">=",
+          "val": 8
+         }
+        ]
        }
       ]
      }
@@ -12296,9 +12782,18 @@
       "en": "Cao Cao uses you, and watches you. He never forgets you came from Liu Bei."
      },
      "when": {
-      "v": "track",
-      "op": "==",
-      "val": "cao"
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "track",
+        "op": "==",
+        "val": "cao"
+       }
+      ]
      }
     }
    ]
@@ -12381,9 +12876,18 @@
       "en": "After Huarong, whenever Guan Yu drinks, he raises the first cup to you. 'I remember that you knelt.'"
      },
      "when": {
-      "v": "flag.vouched_guan",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.vouched_guan",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -12393,9 +12897,18 @@
       "en": "Cao Cao credits you with the road Guan Yu opened at Huarong."
      },
      "when": {
-      "v": "flag.pleaded_guan",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.pleaded_guan",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -12405,21 +12918,30 @@
       "en": "Guan Yu never forgets what he owes you. He rarely mentions it, but whenever someone talks about you behind your back, he sets his blade on the table."
      },
      "when": {
-      "any": [
+      "all": [
        {
-        "v": "flag.vouched_guan",
-        "op": "==",
+        "v": "flag.fate_dead",
+        "op": "!=",
         "val": true
        },
        {
-        "v": "flag.at_huarong",
-        "op": "==",
-        "val": true
-       },
-       {
-        "v": "flag.guan_fear",
-        "op": "==",
-        "val": true
+        "any": [
+         {
+          "v": "flag.vouched_guan",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "flag.at_huarong",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "flag.guan_fear",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      }
@@ -12431,9 +12953,18 @@
       "en": "Guan Yu respects you. With him, that is much harder to earn than liking."
      },
      "when": {
-      "v": "rel.guanyu.esteem",
-      "op": ">=",
-      "val": 6
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "rel.guanyu.esteem",
+        "op": ">=",
+        "val": 6
+       }
+      ]
      }
     },
     {
@@ -12443,9 +12974,18 @@
       "en": "When Guan Yu speaks of you, it's one word: 'Pity.'"
      },
      "when": {
-      "v": "rel.guanyu.esteem",
-      "op": "<=",
-      "val": 1
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "rel.guanyu.esteem",
+        "op": "<=",
+        "val": 1
+       }
+      ]
      }
     },
     {
@@ -12453,6 +12993,11 @@
      "text": {
       "zh": "你和关羽，始终是点头之交。",
       "en": "You and Guan Yu remain nodding acquaintances."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "!=",
+      "val": true
      }
     }
    ]
@@ -12473,14 +13018,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "flag.at_huarong",
-        "op": "==",
-        "val": true
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "liu"
+         },
+         {
+          "v": "flag.at_huarong",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      }
@@ -12494,14 +13048,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.zhuge.trust",
-        "op": "<=",
-        "val": 3
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "liu"
+         },
+         {
+          "v": "rel.zhuge.trust",
+          "op": "<=",
+          "val": 3
+         }
+        ]
        }
       ]
      }
@@ -12515,14 +13078,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.zhuge.esteem",
-        "op": ">=",
-        "val": 4
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "liu"
+         },
+         {
+          "v": "rel.zhuge.esteem",
+          "op": ">=",
+          "val": 4
+         }
+        ]
        }
       ]
      }
@@ -12534,9 +13106,18 @@
       "en": "You and Zhuge Liang get along, but never grow close."
      },
      "when": {
-      "v": "track",
-      "op": "==",
-      "val": "liu"
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "track",
+        "op": "==",
+        "val": "liu"
+       }
+      ]
      }
     }
    ]
@@ -12557,14 +13138,23 @@
      "when": {
       "all": [
        {
-        "v": "flag.wenzhi_with_you",
-        "op": "==",
+        "v": "flag.fate_dead",
+        "op": "!=",
         "val": true
        },
        {
-        "v": "flag.confessed",
-        "op": "==",
-        "val": true
+        "all": [
+         {
+          "v": "flag.wenzhi_with_you",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "flag.confessed",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      },
@@ -12577,9 +13167,18 @@
       "en": "Wen Zhi comes back to the south bank with you. The scars on her hands never fade. Later the two of you open an apothecary outside Gong'an, and you turn the drying trays."
      },
      "when": {
-      "v": "flag.wenzhi_with_you",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wenzhi_with_you",
+        "op": "==",
+        "val": true
+       }
+      ]
      },
      "mood": "romance"
     },
@@ -12592,14 +13191,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "cao"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "flag.wenzhi_together",
-        "op": "==",
-        "val": true
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "cao"
+         },
+         {
+          "v": "flag.wenzhi_together",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      },
@@ -12614,14 +13222,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "cao"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "flag.wenzhi_warned",
-        "op": "==",
-        "val": true
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "cao"
+         },
+         {
+          "v": "flag.wenzhi_warned",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      }
@@ -12633,9 +13250,18 @@
       "en": "Wen Zhi never writes again. Only later do you understand: what she risked her life to write, you treated as military intelligence."
      },
      "when": {
-      "v": "flag.wenzhi_used",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wenzhi_used",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -12645,16 +13271,25 @@
       "en": "Wen Zhi goes north with Cao's army. Every year at the solstice a packet of wound powder arrives for you, with no letter."
      },
      "when": {
-      "any": [
+      "all": [
        {
-        "v": "flag.wenzhi_safe",
-        "op": "==",
+        "v": "flag.fate_dead",
+        "op": "!=",
         "val": true
        },
        {
-        "v": "flag.wenzhi_warned",
-        "op": "==",
-        "val": true
+        "any": [
+         {
+          "v": "flag.wenzhi_safe",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "flag.wenzhi_warned",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      }
@@ -12664,6 +13299,11 @@
      "text": {
       "zh": "你很久没有温芷的消息了。",
       "en": "You haven't heard from Wen Zhi in a long time."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "!=",
+      "val": true
      }
     }
    ]
@@ -13883,6 +14523,38 @@
     "threat"
    ],
    "goto": "x_liu_break",
+   "resume": true
+  },
+  {
+   "id": "guan_threat1",
+   "to": "guanyu",
+   "means": {
+    "zh": "当面威胁关羽、说要杀他",
+    "en": "threatens Guan Yu to his face / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "话音没落，屋里的人都不说话了。",
+      "en": "Before the words have died away, the whole room has gone silent."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.guanyu.esteem",
+     "by": -1
+    },
+    {
+     "add": "renown.rash",
+     "by": 1
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "goto": "x_guan_rage1",
    "resume": true
   }
  ],

@@ -893,6 +893,9 @@ CAST["x_miheng"] = cast("caocao"); CAST["x_loose"] = cast("liubei", when=LIU) + 
 CAST["x_plum_rage"] = cast("caocao", "liubei"); CAST["x_cao_rage"] = cast("caocao")
 for _nid in ("x_miheng", "x_loose", "x_plum_rage", "x_cao_rage"): next(n for n in N if n["id"] == _nid)["cast"] = CAST[_nid]
 
+import fates
+fates.extend(N, VARS, ENDINGS, CAMP_MOVES)
+
 CAMPAIGN = {
     "spec": SPEC,
     "tiers": TIERS(),

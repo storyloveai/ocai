@@ -24,6 +24,7 @@
 
 - `portrait-jobs.jsonl`：人物头像。
 - `edition-jobs.jsonl`：卷一的场景、结局、高光、封面。
+- `fate-jobs.jsonl`：命运分支的“命运图”（被斩、下狱、被逐出、负伤），采用后裁成 1200×480 放进 `fate/<kind>.webp`（新目录）。八卷通用，画面不要认得出具体年份和人物；不画伤口、血腥和行刑瞬间。没画之前游戏只显示场景图，缺图检查把它们列为“待画”，不报错。
 - `edition-jobs-endings.jsonl`：卷二至卷八各自的“留任”结局图（`ending/v2_city.webp` … `v8_city.webp`）。有本卷的结局图就用本卷的，没有就用 `ending/city.webp`。
 - `edition-jobs-v8.jsonl`：卷八的场景图（21 张，`v8_` 开头），参考图都已是正式采用的文件，可以直接画；第三章以后的玩家是接班人，画面里只画背影、看不出男女。
 - `edition-jobs-v7.jsonl`：卷七的场景图（20 张，`v7_` 开头），有姜维、司马懿、魏延的几张要等他们的插画头像（`portrait-jobs.jsonl` 新增的三条）采用后再画。
