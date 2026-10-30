@@ -22,7 +22,7 @@
 
 这些是模型输入改进，仍受实际模型和上下文覆盖影响，并不保证每次都正确执行。没有新增自动好感打分或假定角色已兑现承诺。重要的早期对话仍需要「记住」来带入后续请求。
 
-提示词版本 `storydate/2.1.0`；角色建议 `storydate-character-actions-v1`。故事建议仍使用原版本。
+提示词版本 `storydate/2.1.0`；角色建议 `storydate-character-actions-v2`。故事建议仍使用原版本。
 
 ## 记忆来源修复
 
@@ -50,3 +50,15 @@ Claude 无需跟改游戏。这里的角色对话和回顾不读取三国存档�
 用户保存环境配置后，GitHub API 与 Vercel API 均已确认 HTTP 200，Vercel Token 的安全绑定可用。项目确认为 `storydate-zhou`，Root Directory 是 `ooc-replica`。只读取环境变量名称、适用环境和状态；Preview 已包含 DeepSeek 密钥配置，未读取或复制其值，没有把生产支付或 Firebase 密钥扩展到 Preview。
 
 项目预览启用 Vercel 登录保护，正式站和保护设置保持原样。最新部署与访问验证见 [PR #88](https://github.com/storyloveai/ocai/pull/88) 的检查及交付评论，真实模型与跨设备同步只在实际通过后标记已验收。
+
+### 真实 Preview 小样验收
+
+部署 `684fe74` 已实际进入页面，目录十二位人物，线上回顾模块与仓库原文一致。三位原创人物共完成 4 次真实角色回复和 4 次真实建议请求，均 HTTP 200，模型为 `deepseek-flash`。检查了肖像、记事、来源定位、回顾、手机布局及刷新恢复，无脚本异常或资源 404。没有登录账号、支付或读取已有用户聊天。
+
+[真实调用记录与生成文本](live-preview/live-results.json) · [真实角色页](live-preview/characters-live-desktop-zh.png) · [真实手机回顾](live-preview/recap-live-mobile-zh.png)
+
+云端 Chromium 不信任本环境代理的根证书，因此浏览器请求通过 Playwright `route.fetch` 和系统 CA 证书链验证后回填。没有关闭 TLS 验证；请求由实际 Preview 处理，没有模拟模型。这个方式会缓冲响应，所以没有验证线上逐块到达的时序。
+
+试玩也暴露了建议质量问题：一组全在追问，另一组替玩家编造旧房子已拆除的过去。角色建议 v2 明确三种不同意图（提问、当下行动、边界或转向），要求第一人称，并禁止填补未提供的个人经历。历史回复中已缓存的建议保留，新生成建议采用新规则。修正后的真实请求结果单独记录，不把一次小样当成全面质量保证。
+
+分享入口使用 Vercel 针对单次 Preview 的 24 小时分享授权；完整授权链接只交给用户，不写入仓库或公开 PR。项目登录保护和正式站配置未修改。
