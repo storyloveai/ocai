@@ -168,6 +168,8 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .chip b { color: var(--text); font-weight: 600 }
 .chip .up { color: var(--accent-text) } .chip .down { color: var(--rose) }
 .chip .pt { width: 30px }
+.because { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--accent-text); margin: 2px 0 8px }
+.because .pt { width: 20px } .choice .because { display: block; margin: 4px 0 0 } .relpara > p { margin-bottom: 2px }
 .act-where { font: 500 19px/1.7 var(--display); margin: 6px 0 22px }
 .epi .act { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 8px }
 .epi .act h3 { font-size: 12px; letter-spacing: .12em; color: var(--muted); font-weight: 600; margin: 0 0 12px }
@@ -373,7 +375,7 @@ const UI = {
     artChanged: "画面随你的选择变了", youTo: w => `你对${w}说`, commitNote: (w, x) => `承诺已记下：你答应了${w}「${x}」。后面的剧情会记着。`,
     unlockedNote: x => `因为你刚才的话，${x} 现在可以选了。`, closedNote: x => `因为你刚才的话，${x} 选不了了。`, commitKept: "承诺·兑现", commitBroken: "承诺·落空", commitWas: x => `你说过「${x}」`,
     recallL: "记得", recallPromise: (w, x) => `${w}看着你：『你答应过我——“${x}”。』`, recallLove: w => `${w}的目光在你身上停了一下，像是想起了你上回说的话。`, recallRude: w => `${w}淡淡地看了你一眼。你上回那句话，显然还没忘。`, recallSaid: w => `${w}看了你一眼：『你上回说的话，我还记着。』`, valuesL: "话里见：",
-    youSaid: (w, x) => `你在「${w}」说过「${x}」`, actWho: "谁与你走到了这里", actLeft: "你留下了什么", actMore: x => `还有：${x}`, allEnds: "全部结局片段，和每一条的来由", endBecause: (c, x) => `因为${c}，你「${x}」`, prHere: "此刻在场", prVol: "这一卷的人", prRest: n => `这一卷不出场的 ${n} 人`, rcLast: (c, x) => `你们最近的一段：${c} · ${x}`, rcNone: "你们之间，还没有发生什么。", rcBefore: "这份情分，是前几卷里攒下的。",
+    youSaid: (w, x) => `你在「${w}」说过「${x}」`, relUp: (w, d, x) => `因为${w}对你的${d}已到「${x}」`, relDown: (w, d, x) => `因为${w}对你的${d}落到了「${x}」`, actWho: "谁与你走到了这里", actLeft: "你留下了什么", actMore: x => `还有：${x}`, allEnds: "全部结局片段，和每一条的来由", endBecause: (c, x) => `因为${c}，你「${x}」`, prHere: "此刻在场", prVol: "这一卷的人", prRest: n => `这一卷不出场的 ${n} 人`, rcLast: (c, x) => `你们最近的一段：${c} · ${x}`, rcNone: "你们之间，还没有发生什么。", rcBefore: "这份情分，是前几卷里攒下的。",
     rcClose: "最亲近的人", rcWary: "对你有戒心的人", rcRom: (w, x) => `${w}与你，${x}。`, rcMore: n => `其余 ${n} 人`, fxSep: "——", fxTier: (w, d, a, b) => `${w}对你的${d}：${a} → ${b}`, fxGates: n => `后面有 ${n} 处选择要看这一点`, fxEnd: "结局也会看这一点",
     fxLow: (w, d, x, txt) => `${w}对你的${d}只剩 ${x}，${txt}`, fxHeat: (w, x, line) => `${w}的火气 ${x}/${line}`, fxHeatFlash: (w, line) => `到 ${line}，${w}会当场发作`, fxHeatWalk: (w, line) => `到 ${line}，这一场${w}就不再理你`, fxImp: (w, x) => `${w}记下了：${x}`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", moveL: "你的话改变了局势", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", askHint: "这个问题没有选项。用你自己的话回答——说什么，决定接下来发生什么。", askPh: "用你自己的话回答……", youAns: "你答", noAns: "（你没有回答。）", askL: "问", recapH: c => `${c}小结 · 你改变了什么`, recapEcho: n => `埋下 ${n} 处伏笔，后面会被提起`, recapDebt: x => `还欠着：${x}`, recapCommit: n => `许下 ${n} 个承诺`, benchH: "AI 试调台", benchNote: "用一组典型的话测试当前模型：语气标签、回答归类、承诺识别是否符合预期。会用掉若干次模型调用。", benchRun: "运行测试", benchRunning: "测试中……", benchNoAI: "当前没有可用的 AI（需要在 claude.ai 打开并允许调用，或接上服务端）。下面只显示关键词兜底的结果。", benchCols: ["输入", "对象", "期望", "关键词兜底", "模型", "回复"], benchSum: (a, b) => `模型与期望一致 ${a}/${b}`, sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
     gal: { title: "图鉴", runs: n => `已玩 ${n} 局`, frags: (a, b) => `结局片段 ${a}/${b}`, nodes: (a, b) => `场景 ${a}/${b}`, choices: (a, b) => `选择 ${a}/${b}`, cgs: (a, b) => `高光 ${a}/${b}`,
@@ -420,7 +422,7 @@ const UI = {
     artChanged: "The picture changed with your choice", youTo: w => `You, to ${w}`, commitNote: (w, x) => `Promise noted: you told ${w} "${x}". The story will remember.`,
     unlockedNote: x => `Because of what you just said, ${x} is now open.`, closedNote: x => `Because of what you just said, ${x} is no longer possible.`, commitKept: "Promise kept", commitBroken: "Promise broken", commitWas: x => `you said "${x}"`,
     recallL: "Remembered", recallPromise: (w, x) => `${w} looks at you. "You promised me: '${x}'."`, recallLove: w => `${w}'s eyes rest on you a moment, as if remembering what you said last time.`, recallRude: w => `${w} gives you a flat look. Clearly your last words haven't been forgotten.`, recallSaid: w => `${w} glances at you. "I remember what you said last time."`, valuesL: "Your words showed: ",
-    youSaid: (w, x) => `in "${w}" you said "${x}"`, actWho: "Who walked here with you", actLeft: "What you left behind", actMore: x => `Also: ${x}`, allEnds: "Every ending fragment, and why", endBecause: (c, x) => `Because in ${c} you chose: "${x}"`, prHere: "Here now", prVol: "In this volume", prRest: n => `${n} not in this volume`, rcLast: (c, x) => `Your latest moment: ${c} · ${x}`, rcNone: "Nothing has happened between you yet.", rcBefore: "What you have was built in earlier volumes.",
+    youSaid: (w, x) => `in "${w}" you said "${x}"`, relUp: (w, d, x) => `Because ${w}'s ${d.toLowerCase()} toward you has reached ${x}`, relDown: (w, d, x) => `Because ${w}'s ${d.toLowerCase()} toward you has fallen to ${x}`, actWho: "Who walked here with you", actLeft: "What you left behind", actMore: x => `Also: ${x}`, allEnds: "Every ending fragment, and why", endBecause: (c, x) => `Because in ${c} you chose: "${x}"`, prHere: "Here now", prVol: "In this volume", prRest: n => `${n} not in this volume`, rcLast: (c, x) => `Your latest moment: ${c} · ${x}`, rcNone: "Nothing has happened between you yet.", rcBefore: "What you have was built in earlier volumes.",
     rcClose: "Closest to you", rcWary: "Wary of you", rcRom: (w, x) => `${w} and you: ${x}.`, rcMore: n => `${n} others`, fxSep: " — ", fxTier: (w, d, a, b) => `${w}'s ${d.toLowerCase()} toward you: ${a} → ${b}`, fxGates: n => `${n} choice${n > 1 ? "s" : ""} ahead depend on this`, fxEnd: "your ending looks at this too",
     fxLow: (w, d, x, txt) => `${w}'s ${d.toLowerCase()} is down to ${x}. ${txt}`, fxHeat: (w, x, line) => `${w}'s temper ${x}/${line}`, fxHeatFlash: (w, line) => `at ${line}, ${w} acts on it right there`, fxHeatWalk: (w, line) => `at ${line}, ${w} stops talking to you for this scene`, fxImp: (w, x) => `${w} remembers: ${x}`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", moveL: "Your words changed things", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", askHint: "There are no options for this. Answer in your own words—what you say decides what happens next.", askPh: "Answer in your own words…", youAns: "You answer", noAns: "(You don't answer.)", askL: "Asks", recapH: c => `${c} recap · what you changed`, recapEcho: n => `${n} thread${n > 1 ? "s" : ""} laid down—they'll come back`, recapDebt: x => `Still owed: ${x}`, recapCommit: n => `${n} promise${n > 1 ? "s" : ""} made`, benchH: "AI test bench", benchNote: "Run a set of typical lines against the current model: do tone labels, answer sorting and promise detection match what we expect? Uses several model calls.", benchRun: "Run tests", benchRunning: "Testing…", benchNoAI: "No AI available (open in claude.ai and allow it, or connect the server). Showing keyword-fallback results only.", benchCols: ["Line", "To", "Expected", "Keywords", "Model", "Reply"], benchSum: (a, b) => `Model matches expectation ${a}/${b}`, sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
     gal: { title: "Gallery", runs: n => `${n} ${n === 1 ? "run" : "runs"} played`, frags: (a, b) => `Ending pieces ${a}/${b}`, nodes: (a, b) => `Scenes ${a}/${b}`, choices: (a, b) => `Choices ${a}/${b}`, cgs: (a, b) => `Key moments ${a}/${b}`,
@@ -1153,7 +1155,7 @@ function renderStory() {
               const m = (after && deltaMood(c.id, after.seq)) || (ch && ch.foresight ? "surprised" : null) || levelMood(c.id, e.rel);
               return h("figure", {}, face(c.id, m), h("figcaption", {}, t(CAMP.chars[c.id].name))); })) : null),
         (e.oe || []).map(k => para(t(n.on_enter[k].text))),
-        e.p.map(k => para(t(n.intro[k].text))),
+        e.p.map(k => introPara(n.intro[k])),
         n.quote ? h("div", { class: "quote" }, h("span", { class: "ql" }, l.from + " · " + t(n.canon)), h("p", {}, t(n.quote))) : null,
         (e.cb || []).map(k => { const c = n.callbacks[k]; return h("div", { class: "echo" }, h("span", { class: "et" }, l.echo), h("p", {}, t(c.text)), h("div", { class: "why" }, l.because + t(CAMP.echoes[c.pays]))); }),
         recallEl(e),
@@ -1162,7 +1164,7 @@ function renderStory() {
     } else if (e.k === "choice") {
       const n = N(e.n), c = n.choices.find(x => x.id === e.c);
       const le = G.ledger.find(x => x.seq === e.seq);
-      wrap.append(mark(h("div", {}, h("div", { class: "picked" }, t(c.label)), c.cg ? cgEl(c.cg) : null, e.p.map(k => para(t(c.out[k].text))), relChips(e.seq),
+      wrap.append(mark(h("div", {}, h("div", { class: "picked" }, t(c.label)), c.cg ? cgEl(c.cg) : null, e.p.map(k => para(t(c.out[k].text))), c.because ? h("div", { class: "because" }, t(c.because)) : null, relChips(e.seq),
         le && le.cooled ? h("div", { class: "note-unlock closed" }, l.cooledNote(le.cooled.map(x => t(CAMP.chars[x].name)).join(settings.lang === "zh" ? "、" : ", "))) : null, dev ? devChanges(e.seq) : null)));
     } else if (e.k === "say") {
       const n = N(e.n), tp = n.talk.topics.find(x => x.id === e.t);
@@ -1264,6 +1266,12 @@ function directorTable(scores, offered) {
 // how-to lines (talk first, foresight) are shown in the first few scenes that need them, then trusted to be known
 // a line written in several variants: each scene always gets the same one, different scenes get different ones
 function pickVariant(x, key) { if (!Array.isArray(x)) return x; let h = 0; for (const ch of String(key)) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return x[h % x.length]; }
+// a paragraph that is there because of where a relationship stands says so, quietly, beside it (v2.21)
+function introPara(p) {
+  if (!p.rel) return para(t(p.text));
+  const [cid, dim, k = 2] = p.rel, name = CAMP.tiers && CAMP.tiers.names[dim] ? t(CAMP.tiers.names[dim][k]) : "";
+  return h("div", { class: "relpara" }, para(t(p.text)), h("span", { class: "because" }, face(cid, k ? "warm" : "cold", true), (k ? L().relUp : L().relDown)(t(CAMP.chars[cid].name), DL(cid, dim), name)));
+}
 function hintOK(key, max = 3) {
   const hs = settings.hints || {}, ids = hs[key] || [];
   if (ids.includes(G.cur)) return true; if (ids.length >= max) return false;
@@ -1298,7 +1306,7 @@ function renderAct() {
   box.append(h("div", { class: "act" }, h("div", { class: "choices" }, opts.map(o => {
     if (o.c.foresight) anyFs = true;
     return h("button", { type: "button", class: "choice", disabled: o.locked || V.busy, onclick: () => choose(o.id) },
-      h("span", {}, t(o.c.label)),
+      h("span", {}, t(o.c.label)), o.c.because && !o.locked ? h("span", { class: "because" }, t(o.c.because)) : null,
       h("span", { class: "meta" }, h("span", { class: "tag" }, l.types[o.c.type]), o.c.foresight ? h("span", { class: "tag fs" }, "✦ " + l.fs) : null, o.locked ? h("span", {}, `${l.locked} · ${t(o.c.hint)}`) : null));
   })),
   anyFs && hintOK("fs") ? h("p", { class: "legend" }, l.fsLegend) : null,
