@@ -1189,6 +1189,15 @@
     "en": "Died before the volume's end"
    },
    "carry": false
+  },
+  "flag.beaten": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "挨了关羽一刀背",
+    "en": "Struck by Guan Yu's blade"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -2868,6 +2877,9 @@
        "add": "renown.loyal",
        "by": 1
       }
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -2894,6 +2906,9 @@
        "add": "renown.cunning",
        "by": 1
       }
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -3503,6 +3518,9 @@
      ],
      "echo": [
       "e_fast"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -3624,6 +3642,9 @@
        "add": "rel.liubei.trust",
        "by": 1
       }
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -3829,6 +3850,9 @@
      },
      "values": [
       "yi"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -3916,6 +3940,37 @@
       "v": "flag.fast_departure",
       "op": "==",
       "val": true
+     }
+    },
+    {
+     "id": "watch",
+     "type": "expression",
+     "label": {
+      "zh": "站在队伍后面，看主公自己怎么打发许褚。",
+      "en": "Stand at the back of the column and watch your lord deal with Xu Chu himself."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备自己迎上去：『将在外，君命有所不受。』许褚是个直人，竟无话可说，回去复命了。从头到尾，没有人回头看你一眼。",
+        "en": "Liu Bei rides out to meet him himself. 'A general in the field need not obey every order.' Xu Chu is a plain man and has no answer; he goes back to report. From start to finish, no one turns to look at you."
+       }
+      }
+     ],
+     "effects": [],
+     "when": {
+      "all": [
+       {
+        "v": "flag.fast_departure",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.sidelined",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     }
    ],
@@ -4980,7 +5035,10 @@
        "by": 1
       }
      ],
-     "place": "gucheng"
+     "place": "gucheng",
+     "tags": [
+      "advice"
+     ]
     },
     {
      "id": "leave",
@@ -5007,7 +5065,10 @@
        "by": 1
       }
      ],
-     "place": "gucheng"
+     "place": "gucheng",
+     "tags": [
+      "advice"
+     ]
     },
     {
      "id": "guard",
@@ -6435,6 +6496,9 @@
      ],
      "values": [
       "li"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -6604,7 +6668,10 @@
      "because": {
       "zh": "因为刘备还不够信你，耽误了半刻",
       "en": "Because Liu Bei doesn't trust you enough yet, a moment is lost"
-     }
+     },
+     "tags": [
+      "advice"
+     ]
     },
     {
      "id": "dust_r",
@@ -6649,7 +6716,10 @@
      "because": {
       "zh": "因为刘备信你，你的话当场就用上了",
       "en": "Because Liu Bei trusts you, your plan is used on the spot"
-     }
+     },
+     "tags": [
+      "advice"
+     ]
     },
     {
      "id": "guard_family",
@@ -6696,7 +6766,32 @@
        "d_mi",
        "transform"
       ]
+     ],
+     "tags": [
+      "advice"
      ]
+    },
+    {
+     "id": "watch",
+     "type": "expression",
+     "label": {
+      "zh": "挤不进去。跟着百姓往南走。",
+      "en": "You can't get through. Go south with the refugees."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备没有扔下百姓。张飞在长坂桥上一声大喝，喝退了曹军；赵云怀抱阿斗冲了出来，糜夫人没能回来。乱军里，没有人想起问你一句。",
+        "en": "Liu Bei doesn't abandon the people. Zhang Fei's roar on the Changban bridge turns Cao's army back; Zhao Yun breaks out with A-Dou in his arms, and Lady Mi doesn't come back. In all that chaos, no one thinks to ask you anything."
+       }
+      }
+     ],
+     "effects": [],
+     "when": {
+      "v": "flag.sidelined",
+      "op": "==",
+      "val": true
+     }
     }
    ],
    "salience": 0,
@@ -12615,7 +12710,7 @@
      ],
      "effects": [
       {
-       "set": "flag.wounded",
+       "set": "flag.beaten",
        "to": true
       },
       {
@@ -13597,6 +13692,84 @@
      }
     }
    ]
+  }
+ ],
+ "situations": [
+  {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
+  {
+   "id": "jail",
+   "kind": "absent",
+   "flag": "flag.jailed",
+   "label": {
+    "zh": "关在许都大牢里",
+    "en": "locked in the Xuchang jail"
+   }
+  },
+  {
+   "id": "beaten",
+   "kind": "hurt",
+   "flag": "flag.beaten",
+   "label": {
+    "zh": "肩上挨了关羽一刀背，伤还没好",
+    "en": "your shoulder still hurts from the back of Guan Yu's blade"
+   },
+   "lock": {
+    "zh": "肩上的伤还没好，动不了手",
+    "en": "your shoulder hasn't healed; you can't fight"
+   },
+   "locks": {
+    "choices": [
+     "c3_terms.carry",
+     "c6_slope.search",
+     "c6_slope.search_pouch",
+     "c8_cao.draw"
+    ]
+   },
+   "lasts": 1,
+   "back": {
+    "zh": "肩上的伤好了。抬手的时候，已经不疼了。",
+    "en": "Your shoulder has healed. It no longer hurts to raise your arm."
+   }
+  },
+  {
+   "id": "wounded",
+   "kind": "hurt",
+   "flag": "flag.wounded",
+   "label": {
+    "zh": "长坂中了一箭，伤还没好",
+    "en": "still healing from the arrow at Changban"
+   }
+  },
+  {
+   "id": "sidelined",
+   "kind": "sidelined",
+   "flag": "flag.sidelined",
+   "label": {
+    "zh": "被冷落了，议事时没人问你的主意",
+    "en": "sidelined: no one asks your advice in council"
+   },
+   "lock": {
+    "zh": "你被冷落了，议事时没人问你的主意",
+    "en": "you've been sidelined; no one asks your advice"
+   },
+   "locks": {
+    "tags": [
+     "advice"
+    ]
+   },
+   "lasts": 1,
+   "back": {
+    "zh": "冷了一阵子。这天议事，主公忽然转过头来：『子衡怎么看？』满屋的人都看向你。",
+    "en": "A cold spell. Then one day in council your lord suddenly turns: 'What does Ziheng think?' Every eye in the room is on you."
+   }
   }
  ],
  "future_terms": [

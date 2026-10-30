@@ -28,6 +28,7 @@ test('campaign prompt binds authored scene and legal options; rejects raw prompt
  const fp=buildCampaignStage({phase:'express',task:'fate',lang:'zh',context:{node:'x_plum_rage',text:'再说一遍',choice:'repeat',vars:g.v}});const fd=JSON.parse(fp.prompt);assert.equal(fd.fate.outcome,'被斩');assert.equal(fd.options.length,0);assert.ok(/already decided/.test(fp.system));
  assert.throws(()=>buildCampaignStage({phase:'express',task:'fate',lang:'zh',context:{node:'x_plum_rage',text:'x',choice:'turn',vars:g.v}}),/No fate/);assert.ok(/immediate reaction/.test(p.system)&&/at most 50 characters/.test(p.system));
  assert.throws(()=>buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node:'c1_plum',text:'hi',target:'zhuge'}}));
+ {const v={...g.v,'flag.sidelined':true};const sp=buildCampaignStage({phase:'express',task:'scene',lang:'zh',context:{node:'c1_plum',text:'主公听我一句',target:'liubei',vars:v}});assert.deepEqual(JSON.parse(sp.prompt).yourSituation,['被冷落了，议事时没人问你的主意']);assert.ok(/yourSituation lists/.test(sp.system));}
  assert.throws(()=>buildCampaignStage({input:'arbitrary prompt'}));
 });
 test('embedded v2 waits for a trusted snapshot, starts, saves, keeps sidebar tabs local and resumes',async()=>{

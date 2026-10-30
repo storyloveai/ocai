@@ -190,3 +190,42 @@ test("grudges gate what choices earn: words nothing, deeds half, no higher tier;
   for (let i = 0; i < 3; i++) CC.speak(c, st3, "rude", "蠢材", "tao", []);
   assert.ok(st3.v["rel.tao.trust"] <= 3, "three insults in one scene cost more than 2");
 });
+
+test("situations: dead ends the run, absent skips side scenes, locks close choices, lasts heals with a line", () => {
+  const flag = l => ({ type: "flag", init: false, label: l });
+  const ch = (id, a, b) => ({ id: "c" + id, title: id, intro: [], offer: 2, main_first: true });
+  const pick = (id, type, effects = [], extra = {}) => ({ id, type, label: id, out: [], effects, ...extra });
+  const camp = {
+    spec: "storydate.campaign/0.4", id: "sit", title: "t", volume: "v", echoes: {}, debts: {}, dims: {},
+    vars: { "flag.dead": flag("死"), "flag.jail": flag("牢"), "flag.cold": flag("冷"), "flag.x": flag("x"), "rel.a.trust": num("信", 2) },
+    chars: { a: { name: "a", main: "trust", dims: { trust: { label: "信" } } } },
+    chapters: [ch(1), ch(2), ch(3)],
+    situations: [
+      { id: "dead", kind: "dead", flag: "flag.dead", label: "死" },
+      { id: "jail", kind: "absent", flag: "flag.jail", label: "在牢里" },
+      { id: "cold", kind: "sidelined", flag: "flag.cold", label: "冷落", lock: "没人问你", locks: { tags: ["advice"] }, lasts: 1, back: "又有人问你了" }],
+    nodes: {
+      c1_m: { id: "c1_m", chapter: "c1", kind: "main", lock: "free", order: 1, title: "m", intro: [], cast: [],
+        choices: [pick("die", "dilemma", [{ set: "flag.dead", to: true }]), pick("jail", "dilemma", [{ set: "flag.jail", to: true }]),
+                  pick("cold", "dilemma", [{ set: "flag.cold", to: true }])] },
+      c1_s: { id: "c1_s", chapter: "c1", kind: "side", lock: "free", order: 2, title: "s", intro: [], cast: [], choices: [pick("ok", "expression")] },
+      c2_m: { id: "c2_m", chapter: "c2", kind: "main", lock: "free", order: 1, title: "m2", intro: [], cast: [],
+        choices: [pick("advise", "strategy", [{ set: "flag.x", to: true }], { tags: ["advice"] }), pick("watch", "expression", [{ set: "flag.jail", to: false }])] },
+      c3_m: { id: "c3_m", chapter: "c3", kind: "main", lock: "free", order: 1, title: "m3", intro: [], cast: [], choices: [pick("advise", "strategy", [{ set: "flag.x", to: true }], { tags: ["advice"] }), pick("go", "expression")] } },
+    endings: [{ id: "g", fragments: [{ id: "f", text: "end", when: { v: "flag.x", op: "==", val: true } }] }]
+  };
+  const sitErr = c => CC.validate(c).errors.filter(e => /situations/.test(e));
+  assert.deepEqual(sitErr(camp), []);
+  let st = CC.newGame(camp); CC.choose(camp, st, "die");
+  assert.equal(st.phase, "end"); assert.ok(st.v.ended_early && CC.isDead(camp, st), "a death ends the volume even without `ends`");
+  st = CC.newGame(camp); CC.choose(camp, st, "jail");
+  assert.equal(st.cur, "c2_m"); assert.ok(st.log.some(e => e.k === "sys" && e.key === "away" && e.sit === "jail"), "no side scenes while in jail");
+  st = CC.newGame(camp); CC.choose(camp, st, "cold"); CC.pickSide(camp, st, "c1_s"); CC.choose(camp, st, "ok");
+  const o = CC.choices(camp, st).find(x => x.id === "advise"); assert.ok(o.locked && o.sit === "cold", "no one asks a sidelined man's advice");
+  CC.choose(camp, st, "watch");
+  assert.equal(st.v["flag.cold"], false); assert.ok(st.log.some(e => e.k === "sit_end" && e.sit === "cold"), "after a chapter someone asks again");
+  assert.ok(!CC.choices(camp, st).find(x => x.id === "advise").locked);
+  // a situation that would leave a scene with no way forward is caught
+  const bad = JSON.parse(JSON.stringify(camp)); bad.nodes.c2_m.choices[1].tags = ["advice"];
+  assert.ok(sitErr(bad).some(e => /c2_m with no choice/.test(e)));
+});

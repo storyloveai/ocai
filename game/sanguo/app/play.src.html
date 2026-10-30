@@ -186,6 +186,10 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .allends { margin-top: 10px } .allends > summary { cursor: pointer; color: var(--muted); font-size: 13px; padding: 8px 0 }
 @media (max-width: 560px) { .left { grid-template-columns: minmax(0, 1fr) } .who { grid-template-columns: 64px minmax(0, 1fr) } .who .pt { width: 64px } }
 .map-wait svg * { animation-play-state: paused !important }
+.sitbox { border: 1px dashed var(--rose); border-radius: 8px; padding: 8px 10px; margin: 4px 0 10px; display: grid; gap: 4px; font-size: 13px }
+.sitbox b { font-size: 11.5px; letter-spacing: .08em; color: var(--rose); font-weight: 600 }
+.sitrow { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap }
+.sitback { font-style: italic }
 .prgroup { font-size: 11.5px; letter-spacing: .08em; color: var(--muted); margin: 12px 0 2px }
 .ch.pr { padding: 6px 0 }
 .prhead { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 10px; row-gap: 4px; align-items: center; width: 100%; background: none; border: 0; padding: 4px 0; text-align: left; color: inherit; cursor: pointer; font: inherit }
@@ -362,7 +366,7 @@ const UI = {
     branchedFrom: (n, c) => `从第${n}局的${c}重新开始`, carriedFrom: n => `接着第${n}局`, presetFrom: x => `前情：${x}`, noSaves: "还没有存档。开始一卷，进度会自动保存。", incompatible: "这一局来自旧版本，内容已经变了，无法继续，只能删除。",
     replayCh: "从这一章重新玩", replaySure: "另开一局，从这一章重新玩？这一局会原样保留。", replayVol: "重新玩这一卷", yes: "确定", carryH: "前情", carryFade: "几年过去，再近的人也会生分一点：最高的那几档关系往回收了些，还要你再去挣。", carryPreset: x => `你选了这样一段前情：${x}`, carryRun: n => `接着你的第${n}局。上一卷留下的这些，都还在：`, endsWith: "结局：",
     chap: i => `第${"一二三四五六七八九十"[i]}章`, canonRef: r => `原著${r}`,
-    sidePrompt: null, pickedSide: "你选择了：", missed: "错过：", quiet: "这段日子平平静静地过去了。", quietJail: "煮酒之后的那些天，你在许都大牢里，什么也做不了。",
+    sidePrompt: null, pickedSide: "你选择了：", missed: "错过：", quiet: "这段日子平平静静地过去了。", away: x => `这些天，你${x}，外面的事什么也做不了。`, sitH: "你的处境", sitLeft: n => n > 0 ? `还要 ${n} 章` : "这一章过去就好",
     from: "原著", echo: "回响", because: "因为：", types: { dilemma: "两难", strategy: "策略", expression: "表达" },
     fs: "先见", fsLegend: "标「先见」的选项用到了你对原著的了解，身边的人会察觉。", locked: "未解锁",
     ph: "也可以用自己的话说……", send: "说", you: "你说", youTalk: "你", read: "理解为：",
@@ -409,7 +413,7 @@ const UI = {
     branchedFrom: (n, c) => `Replayed from ${c} of playthrough ${n}`, carriedFrom: n => `Continues playthrough ${n}`, presetFrom: x => `Backstory: ${x}`, noSaves: "No saves yet. Start a volume and your progress saves itself.", incompatible: "This playthrough is from an older version whose content has changed. It can't be continued, only deleted.",
     replayCh: "Replay from this chapter", replaySure: "Start a new playthrough from this chapter? This one stays exactly as it is.", replayVol: "Replay this volume", yes: "Yes", carryH: "Backstory", carryFade: "Years have passed, and even the closest ties loosen a little: the very highest relationships have slipped back a step, and you'll have to earn them again.", carryPreset: x => `You chose this backstory: ${x}`, carryRun: n => `Continuing your playthrough ${n}. What the last volume left you with:`, endsWith: "Ending: ",
     chap: i => `Chapter ${i + 1}`, canonRef: r => `Novel ${r}`,
-    sidePrompt: null, pickedSide: "You chose: ", missed: "Missed: ", quiet: "These days pass quietly.", quietJail: "In the days after the plum wine, you sit in the Xuchang jail and can do nothing at all.",
+    sidePrompt: null, pickedSide: "You chose: ", missed: "Missed: ", quiet: "These days pass quietly.", away: x => `These days you are ${x}; whatever happens outside, you can do nothing about it.`, sitH: "Your situation", sitLeft: n => n > 0 ? `${n} more chapter${n > 1 ? "s" : ""}` : "until this chapter is over",
     from: "From the novel", echo: "Echo", because: "Because: ", types: { dilemma: "Dilemma", strategy: "Strategy", expression: "Expression" },
     fs: "Foresight", fsLegend: "Foresight choices use what you know from the novel. People around you will notice.", locked: "Locked",
     ph: "Or say it in your own words…", send: "Say", you: "You said", youTalk: "You", read: "Read as: ",
@@ -481,7 +485,7 @@ function runCompatible(g) {
 }
 function putMeta(g) {
   const c = VOL(g.vol).camp, chap = c.chapters[Math.max(0, Math.min(g.ch, c.chapters.length - 1))];
-  const m = { id: g.run, vol: g.vol, n: g.n, created: g.created || Date.now(), updated: Date.now(), status: g.phase === "end" ? "end" : "play", early: !!g.v.ended_early, dead: !!g.v["flag.fate_dead"],
+  const m = { id: g.run, vol: g.vol, n: g.n, created: g.created || Date.now(), updated: Date.now(), status: g.phase === "end" ? "end" : "play", early: !!g.v.ended_early, dead: CC.isDead ? CC.isDead(VOL(g.vol).camp, g) : !!g.v["flag.fate_dead"],
     ch: g.ch, chap: chap.id, node: g.cur, from: g.from || null, preset: g.preset || null, branch: g.branch || null,
     frags: g.phase === "end" ? CC.endings(c, g).map(e => e.group + "." + e.frag) : null };
   const xs = runsList().filter(x => x.id !== m.id); xs.unshift(m); store.set("runs", xs);
@@ -708,7 +712,7 @@ async function onFree(text) {
   const opt = res.pick && opts.find(o => o.id === res.pick);
   track("free_text", { node: G.cur, matched: opt ? opt.id : null, via, intent, to: cid || null, foresight: !!entry.foresight, len: text.length });
   if (opt && !opt.locked) { entry.matched = opt.id; G.log.push(entry); return choose(opt.id, "text_" + via); }
-  if (opt && opt.locked) { entry.lockedHint = opt.id; G.log.push(entry); V.firstNew = G.log.length - 1; save(); return render(true); }
+  if (opt && opt.locked) { entry.lockedHint = opt.id; if (opt.sit) entry.lockedSit = opt.sit; G.log.push(entry); V.firstNew = G.log.length - 1; save(); return render(true); }
   if (canTalk) { G.log.push(entry); const at = G.log.length - 1; settleSpeech(entry, text, cid, res, intent, prior); V.firstNew = at; save(); return render(true); }
   if (cid) entry.decide = true; // lines that would get a reply but count for nothing are gone: once the talking is done, only actions
   else if (res.reply) entry.reply = { lang, text: res.reply };
@@ -1163,7 +1167,9 @@ function renderStory() {
     } else if (e.k === "pick") {
       s.append(mark(h("div", {}, h("div", { class: "picked" }, l.pickedSide + t(N(e.n).title)), e.missed.length ? h("div", { class: "missed" }, l.missed + e.missed.map(m => t(N(m).title)).join(" / ")) : null)));
     } else if (e.k === "sys") {
-      s.append(mark(para(e.key === "quiet" && G.log.slice(i + 1, i + 4).some(x => x.k === "node" && x.n === "x_jail") ? l.quietJail : (l[e.key] || e.key), "sys")));
+      s.append(mark(para(e.key === "away" ? l.away(t((sitById(e.sit) || {}).label || "")) : (l[e.key] || e.key), "sys")));
+    } else if (e.k === "sit_end") {
+      const x = sitById(e.sit); if (x && x.back) s.append(mark(para(t(x.back), "prose sitback")));
     } else if (e.k === "node") {
       const n = N(e.n);
       const after = G.log.slice(i + 1).find(x => x.k === "choice" && x.n === e.n);
@@ -1224,7 +1230,7 @@ function renderStory() {
       const box = mark(h("div", {}, h("div", { class: "you" }, h("small", {}, l.you), e.text)));
       if (e.foresight) box.append(para(l.foresightReply, "reply foresight"));
       if (e.matched) box.append(h("div", { class: "missed" }, l.read + t(N(e.n).choices.find(c => c.id === e.matched).label)));
-      else if (e.lockedHint) { const c = N(e.n).choices.find(c => c.id === e.lockedHint); box.append(para(l.lockedReply(t(c.hint)), "reply")); }
+      else if (e.lockedHint) { const c = N(e.n).choices.find(c => c.id === e.lockedHint); box.append(para(l.lockedReply(e.lockedSit ? t((sitById(e.lockedSit) || {}).lock || (sitById(e.lockedSit) || {}).label) : t(c.hint)), "reply")); }
       else if (e.decide) box.append(para(l.decideNow, "reply sys"));
       else if (e.reply && e.reply.lang === settings.lang) box.append(para(e.reply.text, "reply"));
       else if (!e.foresight) box.append(para(e.reply ? l.noReply : l.noMatch, "reply sys"));
@@ -1335,7 +1341,7 @@ function renderAct() {
     if (o.c.foresight) anyFs = true;
     return h("button", { type: "button", class: "choice", disabled: o.locked || V.busy, onclick: () => choose(o.id) },
       h("span", {}, t(o.c.label)), o.c.because && !o.locked ? h("span", { class: "because" }, t(o.c.because)) : null,
-      h("span", { class: "meta" }, h("span", { class: "tag" }, l.types[o.c.type]), o.c.foresight ? h("span", { class: "tag fs" }, "✦ " + l.fs) : null, o.locked ? h("span", {}, `${l.locked} · ${t(o.c.hint)}`) : null));
+      h("span", { class: "meta" }, h("span", { class: "tag" }, l.types[o.c.type]), o.c.foresight ? h("span", { class: "tag fs" }, "✦ " + l.fs) : null, o.locked ? h("span", {}, `${l.locked} · ${lockWhy(o)}`) : null));
   })),
   anyFs && hintOK("fs") ? h("p", { class: "legend" }, l.fsLegend) : null,
   sceneFree > 0 ? h("div", { class: "targets" }, h("span", { class: "muted" }, sceneFree === 1 ? l.sceneLast : hintOK("talk") ? l.sceneHint : ""),
@@ -1388,7 +1394,7 @@ function endingActs(l) {
 }
 function renderEnding() {
   const l = L();
-  const dead = !!G.v["flag.fate_dead"];
+  const dead = CC.isDead ? CC.isDead(CAMP, G) : !!G.v["flag.fate_dead"];
   const title = dead ? l.endDead(l.volTag(volIndex(G.vol))) : G.v.ended_early ? l.endEarly(l.volTag(volIndex(G.vol))) : l.endTitle(l.volTag(volIndex(G.vol)));
   return h("section", { class: "epi" }, painting("ending", CC.layers(CAMP, G, CAMP.ending_art.layers), title), h("h2", {}, title),
     endingActs(l),
@@ -1579,11 +1585,16 @@ function liftFab() {
   fab.style.bottom = rows.length ? `${Math.round(innerHeight - Math.min(...rows.map(r => r.top)) + 12)}px` : "";
 }
 if (typeof window !== "undefined" && window.addEventListener) { window.addEventListener("scroll", liftFab, { passive: true }); window.addEventListener("resize", liftFab); }
+function sitById(id) { return (CAMP.situations || []).find(x => x.id === id); }
+function lockWhy(o) { const x = o.sit && sitById(o.sit); return x ? t(x.lock || x.label) : t(o.c.hint); }
 function renderPeople() {
   const l = L(); const box = h("div", {});
   const alive = Object.entries(CAMP.chars).filter(([, c]) => !(c.from_chapter && G.ch < chIndex(c.from_chapter))).map(([id]) => id);
   const here = new Set(G.phase === "node" ? castNow(N(G.cur)) : []), vol = inVolume();
   const rom = alive.filter(id => CAMP.chars[id].romance && CAMP.chars[id].dims.intimacy && vol.has(id) && (tierOf(G.v[`rel.${id}.intimacy`] || 0) >= 1 || G.ledger.some(e => e.node && e.changes.some(c => c.var.startsWith(`rel.${id}.`))))); // once the story has brought you together
+  const sits = CC.situations ? CC.situations(CAMP, G).filter(x => x.kind !== "dead") : [];
+  if (sits.length) box.append(h("div", { class: "sitbox" }, h("b", {}, l.sitH), sits.map(x => h("div", { class: "sitrow" }, h("span", {}, t(x.label).replace(/^./, m => m.toUpperCase())),
+    x.lasts != null ? h("span", { class: "muted" }, l.sitLeft(x.lasts - ((G.sitAge || {})[x.id] || 0))) : null))));
   rom.forEach(id => box.append(romanceCard(id, l)));
   const rank = id => (here.has(id) ? 0 : 1);
   const main = alive.filter(id => (vol.has(id) || here.has(id)) && !rom.includes(id)).sort((a, b) => rank(a) - rank(b));

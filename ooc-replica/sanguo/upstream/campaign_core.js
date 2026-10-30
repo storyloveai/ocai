@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.5";
+  CC.VERSION = "0.4.6";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -184,7 +184,9 @@
       out.push({ id: n.id, eligible, base: n.salience || 0, spec, due, score: (n.salience || 0) + 2 * spec + 3 * due });
     }
     const ranked = out.filter(x => x.eligible).sort((a, b) => b.score - a.score || camp.nodes[a.id].order - camp.nodes[b.id].order);
-    const n = Math.max(1, (chap.offer || 2) - (st.v["flag.sidelined"] ? 1 : 0));
+    const sits = CC.situations(camp, st), kinds = sits.map(x => x.kind);
+    if (kinds.includes("absent") || kinds.includes("dead")) return { all: out, offer: [], absent: sits.find(x => x.kind === "absent" || x.kind === "dead").id };
+    const n = Math.max(1, (chap.offer || 2) - (kinds.includes("sidelined") || (!camp.situations && st.v["flag.sidelined"]) ? 1 : 0));
     return { all: out, offer: ranked.slice(0, n).map(x => x.id) };
   };
 
@@ -193,6 +195,7 @@
     st.ch = i; st.lastOrder = -1;
     const chap = chapterOf(camp, st);
     st.log.push({ k: "ch", c: chap.id, p: idxWhere(st, chap.intro) });
+    tickSituations(camp, st);
     checkCommits(camp, st, false);
     // interrupts: crises that pre-empt a chapter when a meter crosses its line (disfavor, exposure)
     const intr = Object.values(camp.nodes).filter(n => n.kind === "interrupt" && !st.done.includes(n.id) && evalCond(st, n.when)).sort((a, b) => a.order - b.order)[0];
@@ -215,7 +218,7 @@
       st.log.push({ k: "offer", c: chap.id, ids: d.offer, scores: d.all });
       return;
     }
-    if (hasSides) st.log.push({ k: "sys", key: "quiet" });
+    if (hasSides) st.log.push(d.absent ? { k: "sys", key: "away", sit: d.absent } : { k: "sys", key: "quiet" });
     nextMain(camp, st);
   }
   function idxWhere(st, paras) { const r = []; (paras || []).forEach((p, i) => { if (evalCond(st, p.when)) r.push(i); }); return r; }
@@ -259,8 +262,35 @@
 
   CC.choices = function (camp, st, nodeId) {
     const n = camp.nodes[nodeId || st.cur];
-    return n.choices.map(c => ({ id: c.id, c, visible: evalCond(st, c.when), locked: !!c.req && !evalCond(st, c.req) })).filter(x => x.visible);
+    const sits = CC.situations(camp, st);
+    return n.choices.map(c => {
+      const o = { id: c.id, c, visible: evalCond(st, c.when), locked: !!c.req && !evalCond(st, c.req) };
+      const by = !o.locked && n.kind !== "flash" && n.kind !== "interrupt" && sits.find(x => sitLocks(x, n, c));
+      if (by) { o.locked = true; o.sit = by.id; }
+      return o;
+    }).filter(x => x.visible);
   };
+  /* ---------------- situations: what has happened to you, and what it stops you doing ----------------
+   * camp.situations: [{ id, kind, flag, label, lock?, locks?: {types?, choices?}, lasts?, back? }]
+   *   dead      — the run is over: a choice that kills you ends the volume, and there is no next volume
+   *   absent    — you are not there (jail, sent away): no side scenes until it clears
+   *   hurt      — the choices in locks are closed until it heals
+   *   sidelined — no one asks your advice: the choices in locks closed (types / tags / choices), one fewer side scene offered
+   * lasts: chapters it holds after the one it began in; then the flag clears and `back` is told.
+   * Flash and interrupt scenes are never locked: they are what happens to you. */
+  function sitLocks(x, n, c) { const L = x.locks; return !!L && ((L.types || []).includes(c.type) || (L.tags || []).some(t => (c.tags || []).includes(t)) || (L.choices || []).includes(n.id + "." + c.id)); }
+  CC.situations = function (camp, st) { return (camp.situations || []).filter(x => st.v[x.flag]); };
+  CC.isDead = (camp, st) => CC.situations(camp, st).some(x => x.kind === "dead");
+  function tickSituations(camp, st) {
+    st.sitAge = st.sitAge || {};
+    for (const x of camp.situations || []) {
+      if (!st.v[x.flag]) { delete st.sitAge[x.id]; continue; }
+      if (x.lasts == null) continue;
+      const age = (st.sitAge[x.id] || 0) + 1;
+      if (age > x.lasts) { st.v[x.flag] = false; delete st.sitAge[x.id]; st.log.push({ k: "sit_end", sit: x.id }); }
+      else st.sitAge[x.id] = age;
+    }
+  }
 
   /* ---------------- open questions ----------------
    * A scene can open with someone asking you something there is no button for. You answer in your own words;
@@ -319,7 +349,7 @@
     st.log.push({ k: "choice", n: n.id, c: c.id, p: outIdx, seq: e.seq, al: n.art ? CC.layers(camp, st, n.art.layers, c.id) : [] });
     st.done.push(n.id);
     st.cur = null;
-    if (c.ends) { st.v.ended_early = true; st.flash = null; enterChapter(camp, st, camp.chapters.length); }
+    if (c.ends || CC.isDead(camp, st)) { st.v.ended_early = true; st.flash = null; enterChapter(camp, st, camp.chapters.length); }
     else if (n.kind === "flash") {
       const f = st.flash || {}; st.flash = null;
       if (f.resume) { st.cur = f.from; st.phase = "node"; st.log.push({ k: "resume", n: f.from }); }
@@ -790,6 +820,26 @@
     for (const n of Object.values(camp.nodes)) for (const c of n.choices) (c.values || []).forEach(tag => { if (!VT[tag]) E(`${n.id}.${c.id}: unknown value ${tag}`); });
     if (strict && !Object.values(camp.chars).some(ch => ch.values && Object.keys(ch.values).length)) W("no character has values: choices will never draw automatic reactions");
 
+    // situations: a known flag, a known kind; a scene must keep at least one way forward whatever has happened to you
+    (camp.situations || []).forEach((x, i) => {
+      const at = `situations[${i}] ${x.id}`;
+      if (!["dead", "absent", "hurt", "sidelined"].includes(x.kind)) E(`${at}: unknown kind ${x.kind}`);
+      if (!camp.vars[x.flag] || camp.vars[x.flag].type !== "flag") E(`${at}: ${x.flag} is not a flag var`);
+      if (x.locks) {
+        (x.locks.choices || []).forEach(k => { const [nid, cid] = k.split("."); if (!camp.nodes[nid] || !camp.nodes[nid].choices.some(c => c.id === cid)) E(`${at}: locks unknown choice ${k}`); });
+        for (const n of Object.values(camp.nodes)) {
+          if (n.kind === "flash" || n.kind === "interrupt") continue;
+          if (!n.choices.some(c => sitLocks(x, n, c))) continue;
+          const open = n.choices.filter(c => !c.req && !sitLocks(x, n, c));
+          // whichever way the scene's own conditions fall, one choice stays open (a choice shown only in this situation counts)
+          const key = c => JSON.stringify(c.when || null), mine = c => key(c).includes(`"${x.flag}"`);
+          const stuck = [...new Set(n.choices.map(key))].filter(w => w !== "null").some(w => !open.some(c => !c.when || mine(c) || key(c) === w));
+          if (!open.length || stuck) E(`${at}: leaves ${n.id} with no choice that is always open`);
+        }
+      }
+      if (x.lasts != null && !x.back) W(`${at}: lasts but has no back text`);
+    });
+
     // genre pack (题材包): every resource role the pack requires is mapped to the book's own variables, and the pack's rules hold
     if (camp.pack) {
       const P = camp.pack, roles = P.roles || {}, res = camp.resources || {};
@@ -817,7 +867,7 @@
       checkCond(f.when, `ending ${g.id}.${f.id}`);
       if (f.when && !condVars(f.when).some(v => writes.has(v))) E(`ending ${g.id}.${f.id}: depends on nothing a choice can change (untraceable)`);
     }
-    ["flag.sidelined"].forEach(v => reads.add(v)); // read by the director in code
+    ["flag.sidelined"].concat((camp.situations || []).map(x => x.flag)).forEach(v => reads.add(v)); // read by the engine in code
     // relationship axes are always on screen and carry into later volumes, so an axis no condition reads still matters
     for (const v of writes) if (!reads.has(v) && !v.startsWith("debt.") && !(v.startsWith("rel.") && CC.AXES.concat("intimacy").includes(v.split(".")[2]))) W(`var ${v}: written but never read (drop it, or make it matter)`);
     for (const v of reads) if (!writes.has(v) && !v.startsWith("debt.")) W(`var ${v}: read but never written`);
