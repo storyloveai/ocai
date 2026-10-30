@@ -358,7 +358,7 @@ const UI = {
     rightsNote: "原著《三国演义》为公版作品，引文取自原文；子衡、温芷为原创人物。", trackNote: "为了把故事做得更好，我们会匿名记录游玩中的选择。",
     autoSaved: "已自动保存", noSave: "这个浏览器不允许保存进度（可能是无痕模式或关闭了网站数据），关掉页面后进度会丢失。", noSaveShort: "不能保存", resumeH: "继续上次", savesNote: "每走一步都会自动保存在这台设备的浏览器里，不用手动存。每章开头还会留一个存档点，可以从任何一章重新玩。",
     toc: "目录", volTag: i => `卷${"一二三四五六七八九十"[i]}`, startVol: "开始这一卷", soon: "待续", fromRun: "接着哪一局往下玩？", presetsH: "没玩过上一卷？选一段前情开始：", noPrev: "还没有玩完的上一卷。",
-    mySaves: "我的存档", runName: n => `第${n}局`, atChapter: (c, x) => `进行到${c}《${x}》`, statusEnd: "已完结", statusEarly: "提前收场", contRun: "继续", viewRun: "回看", delRun: "删除", delSure: "确定删除这一局？", nextVol: v => `接着玩${v}`,
+    mySaves: "我的存档", runName: n => `第${n}局`, atChapter: (c, x) => `进行到${c}《${x}》`, statusEnd: "已完结", statusEarly: "提前收场", statusDead: "身死", contRun: "继续", viewRun: "回看", delRun: "删除", delSure: "确定删除这一局？", nextVol: v => `接着玩${v}`,
     branchedFrom: (n, c) => `从第${n}局的${c}重新开始`, carriedFrom: n => `接着第${n}局`, presetFrom: x => `前情：${x}`, noSaves: "还没有存档。开始一卷，进度会自动保存。", incompatible: "这一局来自旧版本，内容已经变了，无法继续，只能删除。",
     replayCh: "从这一章重新玩", replaySure: "另开一局，从这一章重新玩？这一局会原样保留。", replayVol: "重新玩这一卷", yes: "确定", carryH: "前情", carryFade: "几年过去，再近的人也会生分一点：最高的那几档关系往回收了些，还要你再去挣。", carryPreset: x => `你选了这样一段前情：${x}`, carryRun: n => `接着你的第${n}局。上一卷留下的这些，都还在：`, endsWith: "结局：",
     chap: i => `第${"一二三四五六七八九十"[i]}章`, canonRef: r => `原著${r}`,
@@ -381,7 +381,7 @@ const UI = {
     gal: { title: "图鉴", runs: n => `已玩 ${n} 局`, frags: (a, b) => `结局片段 ${a}/${b}`, nodes: (a, b) => `场景 ${a}/${b}`, choices: (a, b) => `选择 ${a}/${b}`, cgs: (a, b) => `高光 ${a}/${b}`,
       ends: "结局", branches: "分支", unseenChoices: n => `还有 ${n} 个选择没试过`, allTried: "所有选择都试过了", locked: "？？？", lockedRomance: "？？？ ♥", cgH: "高光时刻", reset: "清空图鉴", resetSure: "确定清空？" },
     turns: n => `今晚还能说 ${n} 句`, turns2: (a, b) => (a ? `话题还能聊 ${a} 个 · ` : "") + `闲聊还能说 ${b} 句`, remembers: (who, where) => `${who}还记得你在「${where}」时说过的话。`, turnsOut: "夜深了，该告辞了。", topicsH: "可以聊的", talkPh: "想说什么都可以……", silent: name => `（${name}没有接这句话。）`, toneWarm: name => `（${name}没有说话，神色却缓和了些。）`, toneRude: name => `（${name}的脸色沉了下来。）`,
-    crisis: "危机", endEarly: v => `${v} · 未竟`, meterUncanny: "到 3：坊间流言 · 到 4：被当作妖人", meterTrust: "降到 1 以下会被冷落", meterRegard: "降到 1 以下会被冷落",
+    crisis: "危机", endEarly: v => `${v} · 未竟`, endDead: v => `${v} · 身死`, retryCh: c => `回到${c}开头，重新来过`, deadNote: "人死了，就没有下一卷。", meterUncanny: "到 3：坊间流言 · 到 4：被当作妖人", meterTrust: "降到 1 以下会被冷落", meterRegard: "降到 1 以下会被冷落",
     survey: "试玩小问卷（10 秒）", q1: "你注意到“回响”了吗？", q1o: ["注意到，喜欢", "注意到，没感觉", "没注意到"], q2: "你想再玩一次吗？", q2o: ["想，换一条路", "也许", "不想"],
     q3: "最记得哪一刻？（可不填）", submit: "提交", thanks: "谢谢！你的回答会帮我们改进下一版。", simAs: "模拟玩家类型", pols: { random: "乱点", romance: "感情型", loyal: "忠义型", schemer: "权谋型", seer: "先知型", provoker: "挑衅型" }, mapNote: "红线是你走过的路；亮点是你现在的位置。", artPrompt: "替换用的生图提示词", layersL: "图层",
     renown: "名声", original: "原创人物", noEv: "还没有变化。", ledgerEmpty: "还没有记事。", missedL: "错过", entered: "进入",
@@ -405,7 +405,7 @@ const UI = {
     rightsNote: "Romance of the Three Kingdoms is in the public domain; Chinese quotations are from the original, English renderings are our own. Ziheng and Wen Zhi are original characters.", trackNote: "To make the story better, we anonymously record the choices made in play.",
     autoSaved: "Saved", noSave: "This browser won't let the page save (private mode, or site data is blocked). Your progress will be lost when you close it.", noSaveShort: "Not saving", resumeH: "Pick up where you left off", savesNote: "Every step saves itself in this browser on this device—no need to save by hand. Each chapter also leaves a checkpoint you can replay from.",
     toc: "Contents", volTag: i => `Volume ${["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"][i]}`, startVol: "Start this volume", soon: "Coming later", fromRun: "Carry on from which playthrough?", presetsH: "Haven't played the previous volume? Pick a backstory:", noPrev: "No finished playthrough of the previous volume yet.",
-    mySaves: "My saves", runName: n => `Playthrough ${n}`, atChapter: (c, x) => `${c}: ${x}`, statusEnd: "Finished", statusEarly: "Ended early", contRun: "Continue", viewRun: "Look back", delRun: "Delete", delSure: "Delete this playthrough?", nextVol: v => `Go on to ${v}`,
+    mySaves: "My saves", runName: n => `Playthrough ${n}`, atChapter: (c, x) => `${c}: ${x}`, statusEnd: "Finished", statusEarly: "Ended early", statusDead: "Died", contRun: "Continue", viewRun: "Look back", delRun: "Delete", delSure: "Delete this playthrough?", nextVol: v => `Go on to ${v}`,
     branchedFrom: (n, c) => `Replayed from ${c} of playthrough ${n}`, carriedFrom: n => `Continues playthrough ${n}`, presetFrom: x => `Backstory: ${x}`, noSaves: "No saves yet. Start a volume and your progress saves itself.", incompatible: "This playthrough is from an older version whose content has changed. It can't be continued, only deleted.",
     replayCh: "Replay from this chapter", replaySure: "Start a new playthrough from this chapter? This one stays exactly as it is.", replayVol: "Replay this volume", yes: "Yes", carryH: "Backstory", carryFade: "Years have passed, and even the closest ties loosen a little: the very highest relationships have slipped back a step, and you'll have to earn them again.", carryPreset: x => `You chose this backstory: ${x}`, carryRun: n => `Continuing your playthrough ${n}. What the last volume left you with:`, endsWith: "Ending: ",
     chap: i => `Chapter ${i + 1}`, canonRef: r => `Novel ${r}`,
@@ -428,7 +428,7 @@ const UI = {
     gal: { title: "Gallery", runs: n => `${n} ${n === 1 ? "run" : "runs"} played`, frags: (a, b) => `Ending pieces ${a}/${b}`, nodes: (a, b) => `Scenes ${a}/${b}`, choices: (a, b) => `Choices ${a}/${b}`, cgs: (a, b) => `Key moments ${a}/${b}`,
       ends: "Endings", branches: "Branches", unseenChoices: n => `${n} ${n === 1 ? "choice" : "choices"} not yet tried`, allTried: "Every choice tried", locked: "???", lockedRomance: "??? ♥", cgH: "Key moments", reset: "Clear gallery", resetSure: "Really clear it?" },
     turns: n => `${n} more ${n === 1 ? "line" : "lines"} tonight`, turns2: (a, b) => (a ? `${a} ${a === 1 ? "topic" : "topics"} left · ` : "") + `${b} more ${b === 1 ? "line" : "lines"} of chat`, remembers: (who, where) => `${who} remembers what you said during "${where}".`, turnsOut: "It's late. Time to say goodnight.", topicsH: "Things to talk about", talkPh: "Say whatever you like…", silent: name => `(${name} lets that pass.)`, toneWarm: name => `(${name} says nothing, but softens a little.)`, toneRude: name => `(${name}'s face darkens.)`,
-    crisis: "Crisis", endEarly: v => `${v} · Unfinished`, meterUncanny: "3: rumors spread · 4: branded a sorcerer", meterTrust: "At 1 or below you're sidelined", meterRegard: "At 1 or below you're sidelined",
+    crisis: "Crisis", endEarly: v => `${v} · Unfinished`, endDead: v => `${v} · Dead`, retryCh: c => `Go back to the start of ${c}`, deadNote: "The dead don't get a next volume.", meterUncanny: "3: rumors spread · 4: branded a sorcerer", meterTrust: "At 1 or below you're sidelined", meterRegard: "At 1 or below you're sidelined",
     survey: "Playtest questions (10 seconds)", q1: "Did you notice the Echoes?", q1o: ["Yes, and I liked them", "Yes, didn't care", "Didn't notice"], q2: "Would you play again?", q2o: ["Yes, a different path", "Maybe", "No"],
     q3: "Which moment do you remember most? (optional)", submit: "Submit", thanks: "Thank you! Your answers will shape the next version.", simAs: "Simulated player type", pols: { random: "Random", romance: "Romantic", loyal: "Loyalist", schemer: "Schemer", seer: "Seer", provoker: "Provoker" }, mapNote: "The red line is the road you've taken; the glow is where you are now.", artPrompt: "Prompt for replacement art", layersL: "Layers",
     renown: "Reputation", original: "original character", noEv: "No changes yet.", ledgerEmpty: "Nothing recorded yet.", missedL: "Missed", entered: "Entered",
@@ -481,7 +481,7 @@ function runCompatible(g) {
 }
 function putMeta(g) {
   const c = VOL(g.vol).camp, chap = c.chapters[Math.max(0, Math.min(g.ch, c.chapters.length - 1))];
-  const m = { id: g.run, vol: g.vol, n: g.n, created: g.created || Date.now(), updated: Date.now(), status: g.phase === "end" ? "end" : "play", early: !!g.v.ended_early,
+  const m = { id: g.run, vol: g.vol, n: g.n, created: g.created || Date.now(), updated: Date.now(), status: g.phase === "end" ? "end" : "play", early: !!g.v.ended_early, dead: !!g.v["flag.fate_dead"],
     ch: g.ch, chap: chap.id, node: g.cur, from: g.from || null, preset: g.preset || null, branch: g.branch || null,
     frags: g.phase === "end" ? CC.endings(c, g).map(e => e.group + "." + e.frag) : null };
   const xs = runsList().filter(x => x.id !== m.id); xs.unshift(m); store.set("runs", xs);
@@ -1063,7 +1063,7 @@ function renderTop() {
 function renderStart() { return renderHome(); }
 function runLabel(m) {
   const l = L(), v = VOL(m.vol), c = v && v.camp, chap = c && c.chapters.find(x => x.id === m.chap);
-  const status = m.status === "end" ? (m.early ? l.statusEarly : l.statusEnd) : chap ? l.atChapter(l.chap(c.chapters.indexOf(chap)), t(chap.title)) : "";
+  const status = m.status === "end" ? (m.dead ? l.statusDead : m.early ? l.statusEarly : l.statusEnd) : chap ? l.atChapter(l.chap(c.chapters.indexOf(chap)), t(chap.title)) : "";
   return [l.runName(m.n), l.volTag(volIndex(m.vol)), status].filter(Boolean).join(" · ");
 }
 function runOrigin(m) {
@@ -1089,7 +1089,7 @@ function renderHome() {
   const fmt = ts => new Date(ts).toLocaleString(settings.lang === "zh" ? "zh-CN" : "en-GB", { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
   const volCard = (v, i) => {
     const ready = !!v.camp, prev = i > 0 ? BOOK.volumes[i - 1] : null;
-    const prevDone = prev ? runs.filter(m => m.vol === prev.id && m.status === "end") : [];
+    const prevDone = prev ? runs.filter(m => m.vol === prev.id && m.status === "end" && !m.dead) : [];
     const open = H.pick === v.id;
     return h("div", { class: "volcard" + (ready ? "" : " soon") },
       h("div", { class: "kicker" }, `${l.volTag(i)} · ${t(v.canon)} · ${t(v.years)}`),
@@ -1104,7 +1104,7 @@ function renderHome() {
   const runRow = m => {
     const asking = H.del === m.id;
     const x = loadRun(m.id), ok = !!x && runCompatible(x);
-    const next = m.status === "end" ? BOOK.volumes[volIndex(m.vol) + 1] : null;
+    const next = m.status === "end" && !m.dead ? BOOK.volumes[volIndex(m.vol) + 1] : null;
     return h("div", { class: "saverow" }, h("div", {}, h("b", {}, runLabel(m)), h("div", { class: "muted" }, [runOrigin(m), fmt(m.updated)].filter(Boolean).join(" · ")),
         m.status === "end" ? h("div", { class: "muted endline" }, endingLine(m)) : null, ok ? null : h("div", { class: "muted" }, l.incompatible)),
       h("div", { class: "btns" },
@@ -1388,14 +1388,16 @@ function endingActs(l) {
 }
 function renderEnding() {
   const l = L();
-  const title = G.v.ended_early ? l.endEarly(l.volTag(volIndex(G.vol))) : l.endTitle(l.volTag(volIndex(G.vol)));
+  const dead = !!G.v["flag.fate_dead"];
+  const title = dead ? l.endDead(l.volTag(volIndex(G.vol))) : G.v.ended_early ? l.endEarly(l.volTag(volIndex(G.vol))) : l.endTitle(l.volTag(volIndex(G.vol)));
   return h("section", { class: "epi" }, painting("ending", CC.layers(CAMP, G, CAMP.ending_art.layers), title), h("h2", {}, title),
     endingActs(l),
+    dead ? h("p", { class: "muted", style: "margin-top:12px" }, l.deadNote) : null,
     h("div", { style: "margin-top:20px" }, mapEl("ending")),
     CAMP.life ? renderLife() : null,
-    h("p", { class: "muted", style: "margin-top:16px" }, t(CAMP.end_note)),
+    dead ? null : h("p", { class: "muted", style: "margin-top:16px" }, t(CAMP.end_note)),
     (location.hash === "#playtest" || creatorAllowed()) ? renderSurvey() : null,
-    h("div", { class: "btns", style: "margin-top:16px" }, (() => { const next = BOOK.volumes[volIndex(G.vol) + 1]; return next && next.camp ? h("button", { class: "btn", type: "button", onclick: () => newGame(next.id, Object.assign(CC.carryOut(G), { run: G.run }), { from: G.run }) }, l.nextVol(l.volTag(volIndex(next.id)))) : null; })(),
+    h("div", { class: "btns", style: "margin-top:16px" }, (() => { if (dead) { const ck = store.get("ckpt." + G.run, []).filter(x => x.ch < CAMP.chapters.length).sort((a, b) => b.ch - a.ch)[0]; return ck ? h("button", { class: "btn", type: "button", onclick: () => branchFrom(G.run, ck.ch) }, l.retryCh(l.chap(ck.ch))) : null; } const next = BOOK.volumes[volIndex(G.vol) + 1]; return next && next.camp ? h("button", { class: "btn", type: "button", onclick: () => newGame(next.id, Object.assign(CC.carryOut(G), { run: G.run }), { from: G.run }) }, l.nextVol(l.volTag(volIndex(next.id)))) : null; })(),
       h("button", { class: "btn ghost", type: "button", onclick: e => shareEnd(e.currentTarget, title) }, l.share),
       h("button", { class: "btn ghost", type: "button", onclick: () => branchFrom(G.run, 0) }, l.again),
       h("button", { class: "btn ghost", type: "button", onclick: goHome }, l.toc),

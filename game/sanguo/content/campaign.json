@@ -11567,7 +11567,12 @@
      "values": [
       "yi",
       "yong"
-     ]
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "beg",
@@ -11597,7 +11602,12 @@
        "add": "rel.caocao.esteem",
        "by": -1
       }
-     ]
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "turn",
@@ -11643,7 +11653,12 @@
      },
      "values": [
       "zhi"
-     ]
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "defy",
@@ -11722,6 +11737,52 @@
      ],
      "values": [
       "yong"
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": ">=",
+      "val": 3
+     },
+     "ends": true,
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     }
+    },
+    {
+     "id": "plead",
+     "type": "expression",
+     "label": {
+      "zh": "伏地求饶。",
+      "en": "Fall to the floor and beg for your life."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操低头看了你一眼：『同样的话，孤不听第二遍。』",
+        "en": "Cao Cao glances down at you. 'I don't hear the same words twice.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "曹操脸上的笑一点一点收了：『推出去。』廊下的甲士把你从席上拖起来。刘备扑过来，被许褚一把按住。雨落下来的时候，刀也落了下来。",
+        "en": "The smile drains from Cao Cao's face. 'Take him out.' The guards haul you from your seat. Liu Bei lunges forward and Xu Chu pins him. As the rain comes down, so does the blade."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
      ],
      "when": {
       "v": "grudge.caocao",
@@ -12012,7 +12073,12 @@
        "add": "renown.rash",
        "by": 1
       }
-     ]
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "turn",
@@ -12043,6 +12109,11 @@
      "hint": {
       "zh": "需要曹操的赏识在「推崇」以上，他才肯听你圆",
       "en": "Needs Cao's regard at Admired or above for him to let you talk your way out"
+     },
+     "when": {
+      "v": "grudge.caocao",
+      "op": "<=",
+      "val": 2
      }
     },
     {
@@ -12231,6 +12302,52 @@
         "val": 3
        }
       ]
+     },
+     "ends": true,
+     "fate": {
+      "kind": "execute",
+      "who": "caocao",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     }
+    },
+    {
+     "id": "plead",
+     "type": "expression",
+     "label": {
+      "zh": "伏地求饶。",
+      "en": "Fall to the floor and beg for your life."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操低头看了你一眼：『同样的话，孤不听第二遍。』",
+        "en": "Cao Cao glances down at you. 'I don't hear the same words twice.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "曹操没有再问第二遍，只抬了抬手。你被拖出门的时候，听见他在身后说：『可惜了。』",
+        "en": "Cao Cao doesn't ask twice; he only lifts his hand. As you're dragged out you hear him behind you: 'A pity.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -3
+      }
+     ],
+     "when": {
+      "v": "grudge.caocao",
+      "op": ">=",
+      "val": 3
      },
      "ends": true,
      "fate": {
