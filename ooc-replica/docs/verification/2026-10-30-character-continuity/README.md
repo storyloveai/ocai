@@ -39,8 +39,8 @@
 
 ## 交付与协作
 
-新增 issue 和 PR 的 GitHub API 调用仍返回 `Post "https://api.github.com/graphql": Forbidden`。本目录保存未发布的 [issue 与认领稿](ISSUE-draft.md)；完整 PR 稿在 [上一轮评审目录](../2026-10-29-character-stories/PR-draft.md)。文件存在不代表已经发表。
+2026-10-30 用户调整网络设置后，GitHub API 已恢复。已创建 [issue #87](https://github.com/storyloveai/ocai/issues/87)、发布 [Codex 认领留言](https://github.com/storyloveai/ocai/issues/87#issuecomment-6513821262)，并创建 [Draft PR #88](https://github.com/storyloveai/ocai/pull/88)，含 `Closes #87`。此前的 [issue 与认领稿](ISSUE-draft.md) 和 [PR 稿](../2026-10-29-character-stories/PR-draft.md) 保留为历史。
 
-推送分支：`codex/character-stories`。Vercel 实际部署链接与 Ready 状态仍未核实；没有用推测地址作为验收证据。停止在分支 / Preview 阶段，不合并 main。
+推送分支：`codex/character-stories`。GitHub 对功能提交 `f235360` 返回 `Vercel – storydate-zhou` success 状态，[部署详情](https://vercel.com/zhou-zeyas-projects/storydate-zhou/5w29ZehvAtL9SFy3iFSxRjJSJd3y)。分支预览的 `/character` 和 `/assets/character-recap.js` 均转到 Vercel 登录页，因此尚未对远端页面完成浏览器验收。登录该 Vercel 账号后从部署详情点 Visit，进入 `/character`。保持 Draft / Preview，不合并 main。
 
 Claude 无需跟改游戏。这里的角色对话和回顾不读取三国存档、不替换三国结局；三国关系后果和结局演出仍按用户与 Claude 的内容工作流推进。
