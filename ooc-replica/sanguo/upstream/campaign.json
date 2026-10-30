@@ -2692,6 +2692,11 @@
    ],
    "salience": 1,
    "order": 1,
+   "when": {
+    "v": "flag.jailed",
+    "op": "!=",
+    "val": true
+   },
    "art": {
     "scene": "lamp",
     "layers": []
@@ -2801,6 +2806,11 @@
    ],
    "salience": 2,
    "order": 2,
+   "when": {
+    "v": "flag.jailed",
+    "op": "!=",
+    "val": true
+   },
    "art": {
     "scene": "herbs",
     "layers": []
@@ -2923,6 +2933,11 @@
    ],
    "salience": 0,
    "order": 3,
+   "when": {
+    "v": "flag.jailed",
+    "op": "!=",
+    "val": true
+   },
    "art": {
     "scene": "lamp",
     "layers": [
