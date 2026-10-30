@@ -1,6 +1,6 @@
 # Character：延续相处经历与图文回顾
 
-本轮延续 `codex/character-stories`，已合入截至 2026-10-30 的 main `b48727a`。用户授权 Codex 独立推进 Character，Claude 同时负责三国合并与正式配图。这里没有修改游戏剧情、机制或正式图片。
+本轮延续 `codex/character-stories`，已合入截至 2026-10-30 的 main `2d0c8cd`，包含 Claude 已合入的卷八完整插画、关系试点和结局演出。同步后网站构建和 182 项检查再次通过。用户授权 Codex 独立推进 Character，Claude 同时负责三国合并与正式配图。这里没有修改游戏剧情、机制或正式图片。
 
 [手机中文](recap-mobile-zh.png) · [电脑中文](recap-desktop-zh.png) · [手机英文](recap-mobile-en.png) · [电脑英文](recap-desktop-en.png)
 
@@ -44,3 +44,9 @@
 推送分支：`codex/character-stories`。GitHub 对功能提交 `f235360` 返回 `Vercel – storydate-zhou` success 状态，[部署详情](https://vercel.com/zhou-zeyas-projects/storydate-zhou/5w29ZehvAtL9SFy3iFSxRjJSJd3y)。分支预览的 `/character` 和 `/assets/character-recap.js` 均转到 Vercel 登录页，因此尚未对远端页面完成浏览器验收。登录该 Vercel 账号后从部署详情点 Visit，进入 `/character`。保持 Draft / Preview，不合并 main。
 
 Claude 无需跟改游戏。这里的角色对话和回顾不读取三国存档、不替换三国结局；三国关系后果和结局演出仍按用户与 Claude 的内容工作流推进。
+
+### 环境与部署配置复核
+
+用户保存环境配置后，GitHub API 与 Vercel API 均已确认 HTTP 200，Vercel Token 的安全绑定可用。项目确认为 `storydate-zhou`，Root Directory 是 `ooc-replica`。只读取环境变量名称、适用环境和状态；Preview 已包含 DeepSeek 密钥配置，未读取或复制其值，没有把生产支付或 Firebase 密钥扩展到 Preview。
+
+项目预览启用 Vercel 登录保护，正式站和保护设置保持原样。最新部署与访问验证见 [PR #88](https://github.com/storyloveai/ocai/pull/88) 的检查及交付评论，真实模型与跨设备同步只在实际通过后标记已验收。
