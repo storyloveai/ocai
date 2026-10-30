@@ -646,13 +646,13 @@ CAMP_MOVES = moves_v8.extend(N, VARS)
 
 PLACES = {k: V7["places"][k] for k in ("chengdu", "hanzhong", "qishan", "tianshui")}
 PLACES.update({
-    "nangu": {"x": 360, "y": 80, "rx": 366, "ry": 360, "zh": "南谷口", "en": "South Valley Mouth"},
-    "duangu": {"x": 265, "y": 22, "rx": 330, "ry": 326, "zh": "段谷", "en": "Duan Valley"},
-    "tazhong": {"x": 215, "y": 60, "rx": 302, "ry": 345, "zh": "沓中", "en": "Tazhong"},
-    "jiange": {"x": 235, "y": 140, "rx": 315, "ry": 395, "zh": "剑阁", "en": "Jiange"},
-    "yinping": {"x": 175, "y": 100, "rx": 290, "ry": 368, "zh": "阴平", "en": "Yinping"},
-    "mianzhu": {"x": 125, "y": 255, "rx": 256, "ry": 466, "zh": "绵竹", "en": "Mianzhu"},
-    "luoyang": {"x": 690, "y": 40, "rx": 565, "ry": 362, "zh": "洛阳", "en": "Luoyang"},
+    "nangu": {"x": 390, "y": 95, "rx": 366, "ry": 360, "zh": "南谷口", "en": "South Valley Mouth"},
+    "duangu": {"x": 185, "y": 92, "rx": 330, "ry": 326, "zh": "段谷", "en": "Duan Valley"},
+    "tazhong": {"x": 100, "y": 100, "rx": 302, "ry": 345, "zh": "沓中", "en": "Tazhong"},
+    "jiange": {"x": 245, "y": 190, "rx": 315, "ry": 395, "zh": "剑阁", "en": "Jiange"},
+    "yinping": {"x": 135, "y": 160, "rx": 290, "ry": 368, "zh": "阴平", "en": "Yinping"},
+    "mianzhu": {"x": 160, "y": 250, "rx": 256, "ry": 466, "zh": "绵竹", "en": "Mianzhu"},
+    "luoyang": {"x": 820, "y": 60, "rx": 565, "ry": 362, "zh": "洛阳", "en": "Luoyang"},
 })
 RIVERS = V7["rivers"]
 

@@ -482,20 +482,51 @@
   const RIVERS_V1 = [{ d: "M80 150 C250 120 400 170 560 140 C700 115 820 150 980 120", w: 10, label: [860, 108, { zh: "黄河", en: "Yellow River" }] },
     { d: "M60 440 C200 400 330 470 470 470 C600 470 700 430 820 450 C900 465 960 440 1000 430", w: 14, label: [860, 490, { zh: "长江", en: "Yangtze" }] },
     { d: "M380 260 C400 300 420 360 440 420", w: 6, op: .35 }];
-  function journeyMap(stops, { lang = "zh", current, places: PLACES_ = null, rivers = null } = {}) {
+  // The journey map (v2.19). A route walked again is drawn once, so a campaign that goes back and forth stays one
+  // clean line; the last few legs are strong and older ones fade. Legs walked since the map was last shown draw in one
+  // after another (animateFrom = how many legs were already on show; -1 = no animation), then the current place glows.
+  // Only places you have been get a name, placed where it doesn't collide with another name or dot.
+  function journeyMap(stops, { lang = "zh", current, places: PLACES_ = null, rivers = null, animateFrom = -1 } = {}) {
     const PLACES = PLACES_ || PLACES_V1;
     const p = "m" + (++uid) + "_";
     const r = rng(7);
-    const seen = new Set(stops);
-    const pts = stops.map(s => PLACES[s]).filter(Boolean);
-    let path = ""; pts.forEach((pt, i) => { if (!i) path = `M${pt.x} ${pt.y}`; else { const a = pts[i - 1]; const mx = (a.x + pt.x) / 2 + (r() - .5) * 60, my = (a.y + pt.y) / 2 + (r() - .5) * 40; path += ` Q${f1(mx)} ${f1(my)} ${pt.x} ${pt.y}`; } });
-    const places = Object.entries(PLACES).map(([k, v]) => { const on = seen.has(k), cur = k === current;
-      return `<g opacity="${on ? 1 : .45}">${cur ? `<circle cx="${v.x}" cy="${v.y}" r="22" fill="${LAMP}" opacity=".45" filter="url(#${p}wash)"/>` : ""}<circle cx="${v.x}" cy="${v.y}" r="${on ? 7 : 5}" fill="${on ? VERM : INK}"/><text x="${v.x + 12}" y="${v.y + 6}" font-size="${lang === "zh" ? 20 : 17}" fill="${INK}" font-family="'Noto Serif SC','Fraunces',serif">${v[lang]}</text></g>`; }).join("");
-    return `<svg viewBox="0 0 1000 540" role="img" aria-label="${lang === "zh" ? "舆图：你走过的路" : "Map of your journey"}">${defs(p, 0)}<rect width="1000" height="540" fill="url(#${p}paper)"/>
+    const walk = stops.filter(s => PLACES[s]).filter((s, i, a) => !i || a[i - 1] !== s);
+    const seen = new Set(walk);
+    const hash = k => { let h = 7; for (const ch of k) h = (h * 31 + ch.charCodeAt(0)) >>> 0; return h; };
+    const curve = (a, b) => { // the same bend whichever way the leg is walked
+      const [u, v] = [a, b].sort(), A = PLACES[u], B = PLACES[v], dx = B.x - A.x, dy = B.y - A.y, len = Math.hypot(dx, dy) || 1;
+      const bend = ((hash(u + v) % 100) / 100 - .5) * Math.min(80, len * .35) + (len > 120 ? 18 : 8);
+      const cx = (A.x + B.x) / 2 - dy / len * bend, cy = (A.y + B.y) / 2 + dx / len * bend;
+      return a === u ? `M${A.x} ${A.y} Q${f1(cx)} ${f1(cy)} ${B.x} ${B.y}` : `M${B.x} ${B.y} Q${f1(cx)} ${f1(cy)} ${A.x} ${A.y}`;
+    };
+    const steps = []; for (let i = 1; i < walk.length; i++) steps.push([walk[i - 1], walk[i]]);
+    const legs = new Map(); steps.forEach(([a, b], i) => { const k = [a, b].sort().join("|"); const L = legs.get(k) || { a, b, n: 0, last: 0 }; L.n++; L.last = i; legs.set(k, L); });
+    const recent = Math.max(0, steps.length - 3);
+    const base = [...legs.values()].map(L => { const strong = L.last >= recent;
+      return `<path d="${curve(L.a, L.b)}" stroke="${VERM}" stroke-width="${strong ? 4 : 2.5 + Math.min(2, L.n - 1) * .6}" fill="none" stroke-dasharray="10 7" stroke-linecap="round" opacity="${strong ? .9 : .38}"/>`; }).join("");
+    const from = animateFrom < 0 ? steps.length : Math.min(animateFrom, steps.length), fresh = steps.slice(from), per = fresh.length ? Math.min(.7, 3.2 / fresh.length) : 0;
+    const draws = fresh.map(([a, b], i) => `<path class="${p}${from + i >= recent ? "draw" : "dfade"}" style="animation-delay:${f1(i * per)}s;animation-duration:${f1(Math.max(.35, per * 1.2))}s" pathLength="1" d="${curve(a, b)}" stroke="${VERM}" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/>`).join("");
+    const glowAt = f1(fresh.length * per);
+    // names: current first, then the places in the order you reached them; each tries right, left, above, below
+    const ys = walk.concat(current ? [current] : []).filter(k => PLACES[k]).map(k => PLACES[k].y);
+    let y0 = ys.length ? Math.max(0, Math.min(...ys) - 70) : 0, y1 = ys.length ? Math.min(540, Math.max(...ys) + 70) : 540;
+    if (y1 - y0 < 320) { const grow = (320 - (y1 - y0)) / 2; y0 = Math.max(0, y0 - grow); y1 = Math.min(540, y0 + 320); y0 = Math.max(0, y1 - 320); }
+    const fs = lang === "zh" ? 20 : 17, boxes = [];
+    walk.forEach(k => { const v = PLACES[k]; boxes.push([v.x - 9, v.y - 9, v.x + 9, v.y + 9]); });
+    const hit = b => b[0] < 4 || b[2] > 996 || b[1] < y0 + 2 || b[3] > y1 - 2 || boxes.some(o => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
+    const order = [...new Set([current, ...walk])].filter(k => k && PLACES[k]);
+    const labels = order.map(k => { const v = PLACES[k], name = v[lang] || v.zh, w = name.length * fs * (lang === "zh" ? 1.02 : .52), hgt = fs * 1.15;
+      const cands = [[v.x + 12, v.y + fs * .3, "start"], [v.x - 12, v.y + fs * .3, "end"], [v.x, v.y - 14, "middle"], [v.x, v.y + fs + 10, "middle"]];
+      const box = ([x, y, anc]) => { const x0 = anc === "start" ? x : anc === "end" ? x - w : x - w / 2; return [x0 - 2, y - hgt * .85, x0 + w + 2, y + hgt * .25]; };
+      const pick = cands.find(c => !hit(box(c))) || cands[0]; boxes.push(box(pick));
+      return `<text x="${f1(pick[0])}" y="${f1(pick[1])}" text-anchor="${pick[2]}" font-size="${fs}" fill="${INK}" font-weight="${k === current ? 700 : 400}" font-family="'Noto Serif SC','Fraunces',serif" paint-order="stroke" stroke="${PAPER}" stroke-width="4" stroke-linejoin="round">${name}</text>`; }).join("");
+    const dots = Object.entries(PLACES).map(([k, v]) => { const on = seen.has(k), cur = k === current;
+      return `${cur ? `<circle class="${p}glow" style="animation-delay:${glowAt}s,${f1(+glowAt + .5)}s" cx="${v.x}" cy="${v.y}" r="22" fill="${LAMP}" opacity=".45" filter="url(#${p}wash)"/>` : ""}<circle cx="${v.x}" cy="${v.y}" r="${on ? 7 : 4}" fill="${on ? VERM : INK}" opacity="${on ? 1 : .3}"/>`; }).join("");
+    const css = `<style>.${p}draw{stroke-dasharray:1;stroke-dashoffset:1;animation:${p}d .6s ease-out forwards}@keyframes ${p}d{to{stroke-dashoffset:0}}.${p}dfade{stroke-dasharray:1;stroke-dashoffset:1;animation:${p}df .6s ease-out forwards}@keyframes ${p}df{0%{stroke-dashoffset:1;opacity:.85}55%{stroke-dashoffset:0;opacity:.85}100%{stroke-dashoffset:0;opacity:0}}.${p}glow{transform-box:fill-box;transform-origin:center;animation:${p}in .5s ease-out both,${p}g 2.4s ease-in-out infinite}@keyframes ${p}in{from{opacity:0;transform:scale(.4)}to{opacity:.45;transform:scale(1)}}@keyframes ${p}g{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:.6;transform:scale(1.15)}}@media (prefers-reduced-motion: reduce){.${p}draw{animation:none;stroke-dashoffset:0}.${p}dfade{display:none}.${p}glow{animation:none}}</style>`;
+    return `<svg viewBox="0 ${f1(y0)} 1000 ${f1(y1 - y0)}" role="img" aria-label="${lang === "zh" ? "舆图：你走过的路" : "Map of your journey"}">${css}${defs(p, 0)}<rect width="1000" height="540" fill="url(#${p}paper)"/>
 ${mountains(p, r, { base: 140, height: 90, opacity: .18, blur: 8, peaks: 3 }).replace(/url\(#__/g, `url(#${p}`)}
 ${(rivers || RIVERS_V1).map(v => `<path d="${v.d}" stroke="#6d86a0" stroke-width="${v.w}" fill="none" opacity="${v.op || .45}" filter="url(#${p}soft)"/>` + (v.label ? `<text x="${v.label[0]}" y="${v.label[1]}" font-size="15" fill="#4a6178" opacity=".8" font-family="'Noto Serif SC',serif">${v.label[2][lang] || v.label[2].zh}</text>` : "")).join("")}
-${path ? `<path d="${path}" stroke="${VERM}" stroke-width="4" fill="none" stroke-dasharray="10 7" stroke-linecap="round" opacity=".9"/>` : ""}
-${places}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8"/></svg>`;
+${base}${draws}${dots}${labels}<rect width="1000" height="540" filter="url(#${p}grain)" opacity=".8" pointer-events="none"/></svg>`;
   }
 
   /* ---------- realm map: stylized provinces of the late Eastern Han (schematic, not cartographic) ---------- */
