@@ -38,6 +38,7 @@ node tools/check.js content/v5/campaign_v5.json 5000   # 卷五，同上
 node tools/check.js content/v6/campaign_v6.json 5000   # 卷六，同上
 node tools/check.js content/v7/campaign_v7.json 5000   # 卷七，同上
 node tools/check.js content/v8/campaign_v8.json 5000   # 卷八，同上
+python3 tools/art_audit.py --strict                     # 插画版不能有退回水墨的画面；有缺口会列出来，交给 Codex 补画
 cd ../../ooc-replica && npm run game:sync                  # 把引擎和三国的新版本复制给网站（CI 会检查）
 ```
 
