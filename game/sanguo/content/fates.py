@@ -31,6 +31,16 @@ def extend(N, VARS, ENDINGS, CAMP_MOVES):
                                          "The smile drains from Cao Cao's face. 'Take him out.' The guards haul you from your seat. Liu Bei lunges forward and Xu Chu pins him. As the rain comes down, so does the blade.")),
                       ("x_cao_rage", T("曹操没有再问第二遍，只抬了抬手。你被拖出门的时候，听见他在身后说：『可惜了。』", "Cao Cao doesn't ask twice; he only lifts his hand. As you're dragged out you hear him behind you: 'A pity.'"))):
         n = byid[nid]
+        # 第二次冒犯（记仇 ≥ 3，一次威胁记 2）：活路全部关掉，只剩怎么死（决策记录 v2.25）
+        for c in n["choices"]:
+            if c["id"] not in ("defy", "defy_cao"):
+                c["when"] = ALL(c["when"], GL("caocao", 2)) if c.get("when") else GL("caocao", 2)
+        plead = choice("plead", "expression", T("伏地求饶。", "Fall to the floor and beg for your life."),
+                       T("曹操低头看了你一眼：『同样的话，孤不听第二遍。』", "Cao Cao glances down at you. 'I don't hear the same words twice.'"),
+                       [setv("flag.fate_dead"), rel("caocao", "esteem", -3)], when=G("caocao", 3))
+        plead["out"] = plead["out"] + [P(line)]
+        plead["ends"] = True
+        n["choices"].append(fate(plead, "execute", "caocao"))
         n["choices"].append(fate(choice("repeat", "dilemma", T("盯着曹操，把那句话再说一遍。", "Look Cao Cao in the eye and say it again."), line,
                                         [setv("flag.fate_dead"), rel("caocao", "esteem", -3)]), "execute", "caocao"))
         n["choices"][-1]["ends"] = True
@@ -42,6 +52,14 @@ def extend(N, VARS, ENDINGS, CAMP_MOVES):
     # 梅园里梗着脖子：下狱（AI 演这一段）
     for c in byid["x_plum_rage"]["choices"]:
         if c["id"] == "defy": fate(c, "jail", "caocao")
+    # 牢里还是不服：曹操不会关你一辈子（决策记录 v2.28）
+    jail = byid["x_jail"]
+    unbowed = choice("unbowed", "dilemma", T("不认错。托狱卒给曹操带一句话：那天的话，我没说错。", "Don't recant. Send word to Cao Cao through the jailer: what I said that day, I meant."),
+        [P(T("狱卒看了你一眼，什么也没说。第三天，没有人送饭来。来的是两个甲士。", "The jailer gives you a look and says nothing. On the third day no one brings food. Two armored men come instead.")),
+         P(T("他们把你带到城外的时候，天刚亮。监刑的人念了一句：『丞相说，既然不服，就成全他。』", "It is just dawn when they bring you outside the walls. The officer in charge reads one line: 'The Chancellor says: since he won't yield, let him have his way.'"))],
+        [setv("flag.fate_dead"), rel("caocao", "esteem", -3)])
+    unbowed["ends"] = True
+    jail["choices"].append(fate(unbowed, "execute", "caocao"))
     # 刘备：说“是真话”，被送出城
     for c in byid["x_liu_break"]["choices"]:
         if c["id"] == "true": fate(c, "exile", "liubei")

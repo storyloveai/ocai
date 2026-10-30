@@ -78,6 +78,10 @@ def extend(N, VARS, CHARS, ENDINGS_ADD):
                 [setv("flag.jailed", False), setv("flag.was_jailed"), rel("caocao", "esteem", 1), rel("liubei", "trust", -1)])],
         when=F("flag.jailed"), order=-1))
 
+    # in jail now: the rest of this chapter's side scenes don't happen (决策记录 v2.26); the jail scene opens the next chapter
+    for nd in N:
+        if nd.get("chapter") == "c1" and nd.get("kind") == "side":
+            nd["when"] = ALL(nd["when"], NF("flag.jailed")) if nd.get("when") else NF("flag.jailed")
     # the departure happens without you
     for nid in ("c2_note", "c2_pretext", "c2_xuchu"):
         nd = byid[nid]; nd["when"] = ALL(nd["when"], NF("flag.left_behind")) if nd.get("when") else NF("flag.left_behind")
