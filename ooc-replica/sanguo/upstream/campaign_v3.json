@@ -3654,6 +3654,9 @@
      "values": [
       "cheng",
       "yi"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -4600,6 +4603,9 @@
      ],
      "values": [
       "yong"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -4629,6 +4635,9 @@
      ],
      "values": [
       "zhi"
+     ],
+     "tags": [
+      "advice"
      ]
     }
    ],
@@ -4934,6 +4943,9 @@
        "add": "rel.zhuge.trust",
        "by": 1
       }
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -5336,6 +5348,9 @@
      ],
      "values": [
       "zhi"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -6869,6 +6884,9 @@
      "values": [
       "zhi",
       "yong"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -7443,6 +7461,9 @@
      ],
      "values": [
       "zhi"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -7502,6 +7523,9 @@
        "add": "rel.liubei.trust",
        "by": 0
       }
+     ],
+     "tags": [
+      "advice"
      ]
     }
    ],
@@ -7644,6 +7668,9 @@
        "add": "renown.loyal",
        "by": 1
       }
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -7869,6 +7896,9 @@
      ],
      "values": [
       "cheng"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -7916,6 +7946,9 @@
      ],
      "values": [
       "zhi"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -8438,6 +8471,9 @@
        "add": "rel.wenzhi.trust",
        "by": 1
       }
+     ],
+     "tags": [
+      "advice"
      ]
     }
    ],
@@ -9201,7 +9237,10 @@
      "values": [
       "zhi"
      ],
-     "place": "fancheng"
+     "place": "fancheng",
+     "tags": [
+      "advice"
+     ]
     }
    ],
    "salience": 0,
@@ -9375,6 +9414,9 @@
      "values": [
       "zhi",
       "cheng"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -11086,6 +11128,31 @@
    ]
   }
  ],
+ "situations": [
+  {
+   "id": "sidelined",
+   "kind": "sidelined",
+   "flag": "flag.sidelined",
+   "label": {
+    "zh": "被冷落了，议事时没人问你的主意",
+    "en": "sidelined: no one asks your advice in council"
+   },
+   "lock": {
+    "zh": "你被冷落了，议事时没人问你的主意",
+    "en": "you've been sidelined; no one asks your advice"
+   },
+   "locks": {
+    "tags": [
+     "advice"
+    ]
+   },
+   "lasts": 1,
+   "back": {
+    "zh": "冷了一阵子。这天议事，上首的人忽然转过头来：『先生怎么看？』满屋的人都看向你。",
+    "en": "A cold spell. Then one day in council the man at the head of the table suddenly turns to you: 'And what do you think, sir?' Every eye in the room is on you."
+   }
+  }
+ ],
  "future_terms": [
   {
    "term": {
@@ -12480,7 +12547,7 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 6,
+     "renown.cunning": 5,
      "uncanny": 0,
      "deviation": 2,
      "prev.ended_early": false,
@@ -12498,7 +12565,7 @@
      "flag.mi_heng": false,
      "rel.liubei.warmth": 3,
      "rel.liubei.trust": 7,
-     "rel.liubei.esteem": 2,
+     "rel.liubei.esteem": 4,
      "rel.caocao.warmth": 0,
      "rel.caocao.trust": 1,
      "rel.caocao.esteem": 4,
@@ -12513,20 +12580,20 @@
      "rel.wenzhi.esteem": 2,
      "rel.wenzhi.intimacy": 1,
      "rel.zhouyu.warmth": 1,
-     "rel.zhouyu.trust": 3,
-     "rel.zhouyu.esteem": 2,
+     "rel.zhouyu.trust": 2,
+     "rel.zhouyu.esteem": 3,
      "rel.lusu.warmth": 2,
      "rel.lusu.trust": 7,
      "rel.lusu.esteem": 1,
      "rel.zhaoyun.warmth": 5,
-     "rel.zhaoyun.trust": 8,
+     "rel.zhaoyun.trust": 9,
      "rel.zhaoyun.esteem": 1,
      "rel.sunfuren.warmth": 1,
-     "rel.sunfuren.trust": 2,
+     "rel.sunfuren.trust": 1,
      "rel.sunfuren.esteem": 0,
      "rel.pangtong.warmth": 6,
      "rel.pangtong.trust": 1,
-     "rel.pangtong.esteem": 1,
+     "rel.pangtong.esteem": 4,
      "rel.zhangsong.warmth": 0,
      "rel.zhangsong.trust": 0,
      "rel.zhangsong.esteem": 3,
@@ -12536,7 +12603,7 @@
      "imp.sunfuren.offended": 0,
      "imp.zhangsong.offended": 0,
      "imp.pangtong.flattery": 0,
-     "renown.rash": 1,
+     "renown.rash": 2,
      "heat.caocao": 0,
      "heat.guanyu": 0,
      "heat.liubei": 0,
@@ -12562,12 +12629,12 @@
      "flag.zy_refused": true,
      "flag.pleaded_weiyan": true,
      "flag.foresaw_weiyan": false,
-     "flag.ganlu_exposed": false,
+     "flag.ganlu_exposed": true,
      "flag.rearguard": true,
      "flag.left_sun": false,
      "flag.zhouyu_lives": false,
      "flag.met_pangtong": false,
-     "flag.vouched_pangtong": false,
+     "flag.vouched_pangtong": true,
      "flag.tongque": false,
      "flag.saved_cao": false,
      "flag.defected": false,
@@ -12585,7 +12652,7 @@
      "flag.post_none": false,
      "flag.v2_left": false,
      "flag.v2_exposed": false,
-     "flag.sidelined": true,
+     "flag.sidelined": false,
      "flag.guan_charge": true,
      "debt.d_base": "reroute",
      "debt.d_zhouyu": "none",
