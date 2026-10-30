@@ -1,0 +1,142 @@
+{
+  "deploymentId": "dpl_FRnnBud8XzxvzasgxTiT4fLB53zK",
+  "sha": "684fe74e8e7750bb25ca75c5b795b7e41f5437ca",
+  "base": "https://storydate-zhou-n6xvlcqls-zhou-zeyas-projects.vercel.app",
+  "configuration": {
+    "status": 200,
+    "configured": true,
+    "model": "deepseek-flash",
+    "promptVersion": "storydate/2.1.0"
+  },
+  "recapSha256": "4beedaa1fb725f0a1eb9fa34abd1ebadc184e2e9b67e9d87e6637485d576a301",
+  "model": "Actual Preview provider, no local mock",
+  "results": [
+    {
+      "case": "actual protected Preview opens through a 24-hour share link, has 12 characters and exact current recap code",
+      "result": "pass"
+    },
+    {
+      "case": "real model reply, distinct suggestions, source memories and illustrated recap",
+      "id": "oc-shen-yanzhou",
+      "result": "pass"
+    },
+    {
+      "case": "real model reply, distinct suggestions, source memories and illustrated recap",
+      "id": "oc-lu-wensheng",
+      "result": "pass"
+    },
+    {
+      "case": "real model reply, distinct suggestions, source memories and illustrated recap",
+      "id": "oc-lin-zhaowan",
+      "result": "pass"
+    }
+  ],
+  "api": [
+    {
+      "task": "conversation",
+      "titleId": "oc-shen-yanzhou",
+      "scene": "last-train",
+      "status": 200,
+      "promptVersion": "storydate/2.1.0"
+    },
+    {
+      "task": "suggestions",
+      "titleId": "oc-shen-yanzhou",
+      "scene": "last-train",
+      "status": 200,
+      "promptVersion": "storydate-character-actions-v1"
+    },
+    {
+      "task": "conversation",
+      "titleId": "oc-shen-yanzhou",
+      "scene": "last-train",
+      "status": 200,
+      "promptVersion": "storydate/2.1.0"
+    },
+    {
+      "task": "suggestions",
+      "titleId": "oc-shen-yanzhou",
+      "scene": "last-train",
+      "status": 200,
+      "promptVersion": "storydate-character-actions-v1"
+    },
+    {
+      "task": "conversation",
+      "titleId": "oc-lu-wensheng",
+      "scene": "unfinished-song",
+      "status": 200,
+      "promptVersion": "storydate/2.1.0"
+    },
+    {
+      "task": "suggestions",
+      "titleId": "oc-lu-wensheng",
+      "scene": "unfinished-song",
+      "status": 200,
+      "promptVersion": "storydate-character-actions-v1"
+    },
+    {
+      "task": "conversation",
+      "titleId": "oc-lin-zhaowan",
+      "scene": "old-photo",
+      "status": 200,
+      "promptVersion": "storydate/2.1.0"
+    },
+    {
+      "task": "suggestions",
+      "titleId": "oc-lin-zhaowan",
+      "scene": "old-photo",
+      "status": 200,
+      "promptVersion": "storydate-character-actions-v1"
+    }
+  ],
+  "replies": [
+    {
+      "id": "oc-shen-yanzhou",
+      "input": "今晚先不拆信。我不喝酒，喝茶就好。我想先听你把当年离开的事解释清楚。",
+      "reply": "*沈砚舟的目光在信封上停了停，随即把杯子往你那边推了推，自己端起了另一杯。*\n\n“信留着，不催你。”*他抿了一口，茶有点凉了，他也没有皱眉，只是放下杯子。*“当年我接了雾港一桩失踪案，查到一半，有人盯上了我身边的人。我没跟你商量，就把你从那摊烂事里划出去，连夜走的。走之前连句交代都没留——这一点，我不找借口。”\n\n*窗外一辆车进站，玻璃上映出他半张脸。*\n\n“我以为是护着你。后来才明白，那叫替我自己的选择，替你把话说完了。”",
+      "suggestions": [
+        "当年那桩失踪案后来结了吗？我想知道你把什么人从我身边划了出去。",
+        "既然你明白那是替我把话说完了，今晚你能把没说完的部分说清楚吗？",
+        "先不说当年。你这次回雾港，是案子又有了动静，还是只为送这封信？"
+      ]
+    },
+    {
+      "id": "oc-shen-yanzhou",
+      "input": "谢谢你把原因说清楚。信还是先不拆，明天见面的事我也还没有答应。现在我们把茶喝完就好。",
+      "reply": "*他点了点头，没有把那句“还没答应”往回劝。*\n\n“行。茶喝完，各走各的。”\n\n*他把桌上的信封收进内袋，动作不快，像在给你时间改口。然后他真的不再说话，端着杯子看向窗口，雨顺着玻璃往下淌，站台上的灯被拉成一条条黄线。*\n\n*过了一会儿，他才像想起什么，声音放得很平。*\n\n“明天的事你不答应，我也不会再问第二遍。不过有一样——那案子早就结了，可卷宗里有些东西我一直没弄明白。你要是哪天想听，我可以只说案子，不谈旧账。”",
+      "suggestions": [
+        "你提到卷宗里有没弄明白的东西，那是什么？只说案子。",
+        "把茶喝完吧，剩下的时间我们安安静静坐着，不谈旧账。",
+        "明天的事我还没答应，但你可以告诉我，你说只谈案子，是为了什么？"
+      ]
+    },
+    {
+      "id": "oc-lu-wensheng",
+      "input": "我觉得最后一个和弦太急，听起来像急着替故事下结论。我想试试停在前一个音上。你认同吗？",
+      "reply": "*陆闻笙的手指在那枚和弦上轻轻一压，又抬起来，像在掂量它的重量。*\n\n“急。”他把这个词重复了一遍，没有反驳，反倒侧过头，“我承认。我是怕停在半路，观众以为我们忘了写结尾——那种空，很容易被听成没本事。”\n\n*他伸手把琴盖上的一张谱纸抽过来，铅笔在倒数第二小节的边角画了个圈。*\n\n“但你说得对，结论太早，前面全白铺了。这个音，我倒想听它自己撑多久。”",
+      "suggestions": [
+        "问他在那个悬着的音上具体怕观众听到什么",
+        "坐到他旁边的椅子上，让他把那版停在前一个音的谱子弹一遍",
+        "提议你们先记下两个结尾，等明天头脑清醒再定"
+      ]
+    },
+    {
+      "id": "oc-lin-zhaowan",
+      "input": "我决定保留照片上的裂痕。照片里只是以前住过的房子，不是什么悲伤的往事。我想先保留原样。",
+      "reply": "*林照晚点点头，把照片往垫纸中央挪了挪，像在给一件还没决定处置的东西找更稳的位置。*\n\n“那就先不碰它。”\n\n*她伸手把工作灯调暗了一档，光变成暖黄色。*\n\n“裂痕留在上面，等于这张片子自己记着一段路。修掉它不算错，只是会变成另一件事了。”*她顿了顿，视线落在照片边缘，没有追着问房子的来历。*“你想把它收起来，还是就放在这儿，让它先待一会儿？”",
+      "suggestions": [
+        "先让它待在这儿。我想问问你，不修的时候你通常会怎么替人收着这样的照片？",
+        "房子后来拆了，我一直没回去过。你能帮我看看裂痕的位置，但先不动手吗？",
+        "我把照片留在这儿一晚，明晚再来取——这样可以吗？"
+      ]
+    }
+  ],
+  "errors": [],
+  "missing": [],
+  "limits": [
+    "Eight real text requests: four replies and four next-action calls.",
+    "TLS-verified Node route.fetch relay with the system CA bundle; wire streaming timing not tested.",
+    "No sign-in, payments, private existing conversations, or cross-device acceptance.",
+    "Share-link token intentionally excluded from report."
+  ]
+}

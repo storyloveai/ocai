@@ -1,0 +1,118 @@
+{
+  "model": "local bilingual verification stub; actual catalogue and scenarios files",
+  "checks": [
+    {
+      "id": "sgc-007",
+      "size": "desktop",
+      "lang": "zh",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-005",
+      "size": "desktop",
+      "lang": "zh",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-006",
+      "size": "desktop",
+      "lang": "zh",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-007",
+      "size": "desktop",
+      "lang": "zh",
+      "case": "original banner entry, persisted conversation refresh, language switch and unchanged portrait",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-007",
+      "size": "desktop",
+      "lang": "en",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-005",
+      "size": "desktop",
+      "lang": "en",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-006",
+      "size": "desktop",
+      "lang": "en",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-007",
+      "size": "desktop",
+      "lang": "en",
+      "case": "original banner entry, persisted conversation refresh, language switch and unchanged portrait",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-007",
+      "size": "mobile",
+      "lang": "zh",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-005",
+      "size": "mobile",
+      "lang": "zh",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-006",
+      "size": "mobile",
+      "lang": "zh",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-007",
+      "size": "mobile",
+      "lang": "zh",
+      "case": "original banner entry, persisted conversation refresh, language switch and unchanged portrait",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-007",
+      "size": "mobile",
+      "lang": "en",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-005",
+      "size": "mobile",
+      "lang": "en",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-006",
+      "size": "mobile",
+      "lang": "en",
+      "case": "first visit and refresh use the selected bilingual catalogue description despite real English scenarios",
+      "result": "pass"
+    },
+    {
+      "id": "sgc-007",
+      "size": "mobile",
+      "lang": "en",
+      "case": "original banner entry, persisted conversation refresh, language switch and unchanged portrait",
+      "result": "pass"
+    }
+  ],
+  "errors": []
+}

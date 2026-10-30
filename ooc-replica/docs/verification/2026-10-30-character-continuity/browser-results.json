@@ -1,0 +1,515 @@
+{
+  "model": "local verification-stub; no live model call; no dialogue-quality claim",
+  "results": [
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "sgc-002",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "sgc-002",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-shen-yanzhou",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-shen-yanzhou",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-shen-yanzhou",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lu-wensheng",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lu-wensheng",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lu-wensheng",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lin-zhaowan",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lin-zhaowan",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lin-zhaowan",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "sgc-002",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "sgc-002",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "sgc-002",
+      "size": "narrow",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-shen-yanzhou",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-shen-yanzhou",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-shen-yanzhou",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lu-wensheng",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lu-wensheng",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lu-wensheng",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "oc-lin-zhaowan",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "oc-lin-zhaowan",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "oc-lin-zhaowan",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "attributed recap with portrait; no save, extra request or horizontal overflow",
+      "id": "sgc-002",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap and memories locate original lines and return to composer",
+      "id": "sgc-002",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "recap follows branch prefix, fresh encounter, original restoration and reload",
+      "id": "sgc-002",
+      "size": "narrow",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "long conversation source focus and native Escape dismissal",
+      "result": "pass"
+    }
+  ],
+  "errors": [],
+  "missing": []
+}

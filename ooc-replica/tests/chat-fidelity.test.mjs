@@ -2,9 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {parseHTML} from 'linkedom';
+import {sanguoCharacters} from '../dist/assets/sanguo-characters.js';
+import {storydateCharacters} from '../dist/assets/storydate-originals.js';
 
 const pages=JSON.parse(await readFile(new URL('../dist/assets/interaction-pages.json',import.meta.url),'utf8'));
 const source=await readFile(new URL('../dist/assets/interaction.js',import.meta.url),'utf8');
+const scenarios=JSON.parse(await readFile(new URL('../dist/assets/scenarios.json',import.meta.url),'utf8'));
 
 test('captured chat shell keeps working suggestions, rich code copy, local history and accessible settings',async()=>{
  const {document,window}=parseHTML('<html><head></head><body></body></html>');
@@ -24,9 +27,9 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
    if(suggestionRequest.task!=='suggestions'){narrationRequests.push(suggestionRequest);if(failNarration)return new Response(JSON.stringify({error:'角色对话暂时无法连接，请稍后重试。',code:'AI_NOT_CONFIGURED'}),{status:503});return new Response(JSON.stringify({type:'text',text:'貂蝉听见你的问题，停下了脚步。'})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});}
    const text=JSON.stringify(['Read the letter on the desk.','Wait behind the shelves.','Ask who is approaching.']);
    return new Response(JSON.stringify({type:'text',text})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});
-  }return {ok:true,json:async()=>url.includes('interaction-pages')?pages:url.includes('scenarios')?{stories:{}}:configuration};};
+  }return {ok:true,json:async()=>url.includes('interaction-pages')?pages:url.includes('scenarios')?scenarios:configuration};};
  try{
-  const adapted=source.replace("import {mountInteraction} from './reference.js';",'const mountInteraction=html=>{document.body.innerHTML=html;return document.body;};').replace("'./analytics.js'",JSON.stringify(new URL('../dist/assets/analytics.js',import.meta.url).href)).replace("'./suggestions.js'",JSON.stringify(new URL('../dist/assets/suggestions.js',import.meta.url).href)).replace("'./stream.js'",JSON.stringify(new URL('../dist/assets/stream.js',import.meta.url).href)).replace("'./site-shell.js'",JSON.stringify(new URL('../dist/assets/site-shell.js',import.meta.url).href)).replace("'./history.js'",JSON.stringify(new URL('../dist/assets/history.js',import.meta.url).href)).replace("'./public-config.js'",JSON.stringify(new URL('../dist/assets/public-config.js',import.meta.url).href));
+  const adapted=source.replace("import {mountInteraction} from './reference.js';",'const mountInteraction=html=>{document.body.innerHTML=html;return document.body;};').replace(/from '(\.\/[^']+)'/g,(_match,path)=>'from '+JSON.stringify(new URL('../dist/assets/'+path.slice(2),import.meta.url).href));
   const {show}=await import('data:text/javascript;base64,'+Buffer.from(adapted).toString('base64'));
   const id='69f414d90abbab6f6a2c8131',other='6aaad8746c080a5d3ff0402a';
   const values=new Map([['ooc-session-v2-'+id,[{role:'user',text:'Hello'},{role:'assistant',text:'A reply\n\n```info\nTier: Beginner\n```',suggestions:['Inspect the academy guide.','Ask about the hall.','Listen for the courtyard bell.']}]],['ooc-session-v2-'+other,[{role:'user',text:'A second story'}]]]);
@@ -102,7 +105,36 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.equal(narrationRequests.at(-1).titleId,'sgc-007');
   assert.deepEqual(values.get('ooc-session-v2-sgc-007').slice(0,previous.length),previous,'saved messages remain intact');
   assert.doesNotMatch(document.querySelector('#session-messages').textContent,/Ashley|lovely café/);
-  assert.match(document.querySelector('.session-error').textContent,/角色对话暂时无法连接/);
+  assert.match(document.querySelector('.session-error').textContent,/Character replies are temporarily unavailable/);
+  // Real scenarios.json still contains English-only previews for these older
+  // characters. They must not override their bilingual catalogue introduction.
+  for(const lang of ['zh','en'])for(const id of ['sgc-007','sgc-005','sgc-006']){
+   const existing=storydateCharacters.find(c=>c.id===id);
+   if(!helpers.data.some(c=>c.id===id))helpers.data.push(existing);
+   const selected=helpers.data.find(c=>c.id===id),before=structuredClone(values.get('ooc-session-v2-'+id));
+   assert.ok(scenarios.stories[id].opening.length>40);
+   document.documentElement.lang=lang;
+   for(let visit=0;visit<2;visit++){
+    show('/play/'+id,helpers);
+    assert.equal(document.querySelector('#session-messages>.session-message').textContent,lang==='zh'?selected.description_zh:selected.description);
+    assert.equal(document.querySelector('.session-empty-preview').getAttribute('src'),selected.image);
+    assert.equal(document.querySelector('[data-onboard]').lastChild.nodeValue,lang==='zh'?'你':'You');
+   }
+   assert.deepEqual(values.get('ooc-session-v2-'+id),before,'opening localization never rewrites the saved conversation');
+  }
+  // These six openings and first moves do not depend on a model being online.
+  // They stay attached to the selected person rather than a captured demo shell.
+  helpers.data.push(...sanguoCharacters.map(c=>({...c,type:'character'})));
+  const lastSuggestionRequest=suggestionRequest;
+  for(const lang of ['zh','en'])for(const c of sanguoCharacters){
+   document.documentElement.lang=lang;
+   show('/play/'+c.id,helpers);
+   assert.equal(document.querySelector('.sg-chat-intro h2').textContent,lang==='zh'?c.title_zh:c.title);
+   assert.equal(document.querySelector('.sg-chat-intro img').getAttribute('src'),c.image);
+   assert.equal(document.querySelector('.session-empty-preview'),null);
+   assert.deepEqual([...document.querySelectorAll('.suggestion-content')].map(el=>el.textContent),c.starters[lang]);
+   assert.equal(suggestionRequest,lastSuggestionRequest,'authored first moves make no model request');
+  }
   configuration.configured=true;failNarration=false;
   // Profiles written through settings or migrated from older versions omit genres.
   for(const genres of [undefined,null,'Fantasy']){

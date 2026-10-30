@@ -34,7 +34,14 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.ok(noticeSlots.every(slot=>!slot.isConnected),'dismiss removes the complete desktop and mobile notice slots');
  assert.equal(values.get('ooc-notice-dismissed'),'1');
  const navigate=path=>{const event=new window.Event('click',{bubbles:true,cancelable:true});event.button=0;document.querySelector(`a[href="${path}"]`).dispatchEvent(event);};
- navigate('/character');navigate('/');
+ navigate('/character');
+ assert.ok(document.querySelector('[data-sd-hero=character]'),'character landing retains the established scene banner');
+ assert.equal(document.querySelector('[data-sd-hero=character] .sd-hero-figure').getAttribute('src'),'/assets/originals/sg-007.webp');
+ const explore=[...document.querySelectorAll('h2')].find(h=>['Explore','探索'].includes(h.textContent.trim())).closest('section');
+ assert.equal(explore.querySelectorAll('a[href^="/character/"]').length,12);
+ assert.ok(explore.querySelector('a[href="/character/oc-shen-yanzhou"] [data-radix-aspect-ratio-wrapper]'),'new people use the existing character card design');
+ assert.ok(document.querySelector('[data-category-label="Main"]'),'original browsing controls stay mounted');
+ navigate('/');
  assert.equal(location.pathname,'/');
  assert.equal(document.querySelectorAll('button[aria-label="Dismiss"]').length,0);
  assert.equal(document.querySelector('[class~="tl:min-h-[52px]"]'),null,'returning home must not retain the empty desktop notice spacer');

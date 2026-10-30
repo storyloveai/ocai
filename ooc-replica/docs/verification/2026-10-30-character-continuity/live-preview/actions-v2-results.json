@@ -1,0 +1,48 @@
+{
+  "deploymentId": "dpl_4h2TfKbryNsxE3F76BZfE6URcjrN",
+  "sha": "4e30b747612405c1bd2f5b98eae380721353d908",
+  "base": "https://storydate-zhou-bexb8080f-zhou-zeyas-projects.vercel.app",
+  "method": "Actual deployed frontend, real model suggestions, TLS-verified Node route.fetch relay",
+  "fixture": "Our own prior Preview QA turns only; old suggestions omitted",
+  "calls": [
+    {
+      "titleId": "oc-shen-yanzhou",
+      "task": "suggestions",
+      "status": 200,
+      "promptVersion": "storydate-character-actions-v2"
+    },
+    {
+      "titleId": "oc-lin-zhaowan",
+      "task": "suggestions",
+      "status": 200,
+      "promptVersion": "storydate-character-actions-v2"
+    }
+  ],
+  "cases": [
+    {
+      "id": "oc-shen-yanzhou",
+      "input": "今晚先不拆信。我不喝酒，喝茶就好。我想先听你把当年离开的事解释清楚。",
+      "reply": "*沈砚舟的目光在信封上停了停，随即把杯子往你那边推了推，自己端起了另一杯。*\n\n“信留着，不催你。”*他抿了一口，茶有点凉了，他也没有皱眉，只是放下杯子。*“当年我接了雾港一桩失踪案，查到一半，有人盯上了我身边的人。我没跟你商量，就把你从那摊烂事里划出去，连夜走的。走之前连句交代都没留——这一点，我不找借口。”\n\n*窗外一辆车进站，玻璃上映出他半张脸。*\n\n“我以为是护着你。后来才明白，那叫替我自己的选择，替你把话说完了。”",
+      "options": [
+        "你查到一半的失踪案，后来是怎么了结的？",
+        "茶凉了，我帮你换一壶，你接着说。",
+        "护着我不该是替我作决定——这话你当年为什么不对我说？"
+      ]
+    },
+    {
+      "id": "oc-lin-zhaowan",
+      "input": "我决定保留照片上的裂痕。照片里只是以前住过的房子，不是什么悲伤的往事。我想先保留原样。",
+      "reply": "*林照晚点点头，把照片往垫纸中央挪了挪，像在给一件还没决定处置的东西找更稳的位置。*\n\n“那就先不碰它。”\n\n*她伸手把工作灯调暗了一档，光变成暖黄色。*\n\n“裂痕留在上面，等于这张片子自己记着一段路。修掉它不算错，只是会变成另一件事了。”*她顿了顿，视线落在照片边缘，没有追着问房子的来历。*“你想把它收起来，还是就放在这儿，让它先待一会儿？”",
+      "options": [
+        "你说它自己记着一段路——那裂痕大概是在照片哪一侧？我看看是不是刚好压着房子。",
+        "要不我先不急着收，就把它留在垫纸上；你去忙你的，我在这儿坐一会儿。",
+        "谢谢你不追问房子的事。裂痕我确实想留着，但我们能聊点别的吗？"
+      ]
+    }
+  ],
+  "errors": [],
+  "limits": [
+    "Two requests are a quality sample, not a semantic guarantee.",
+    "No credentials or share-link token included."
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "model": "local bilingual verification stub, no live model claim",
+  "checks": [
+    {
+      "case": "original Diaochan hero and browsing layout with twelve characters in the original shelf",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "original filters, character preview and bookmark behavior",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "selected request language, monolingual suggestions and controls, switch-back cache and unchanged original messages",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "translated settings remain clickable, Diaochan keeps her large opening image, continue uses the selected language",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "original Diaochan hero and browsing layout with twelve characters in the original shelf",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "original filters, character preview and bookmark behavior",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "selected request language, monolingual suggestions and controls, switch-back cache and unchanged original messages",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "translated settings remain clickable, Diaochan keeps her large opening image, continue uses the selected language",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "original Diaochan hero and browsing layout with twelve characters in the original shelf",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "original filters, character preview and bookmark behavior",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "selected request language, monolingual suggestions and controls, switch-back cache and unchanged original messages",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "translated settings remain clickable, Diaochan keeps her large opening image, continue uses the selected language",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "original Diaochan hero and browsing layout with twelve characters in the original shelf",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "original filters, character preview and bookmark behavior",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "selected request language, monolingual suggestions and controls, switch-back cache and unchanged original messages",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "translated settings remain clickable, Diaochan keeps her large opening image, continue uses the selected language",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    }
+  ],
+  "errors": [],
+  "missing": []
+}

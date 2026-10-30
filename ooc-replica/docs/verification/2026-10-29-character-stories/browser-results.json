@@ -1,0 +1,569 @@
+{
+  "model": "Local verification stub; UI, persistence and server-canon wiring only. Live model quality not tested.",
+  "base": "main d0f02a8 plus independent character changes",
+  "results": [
+    {
+      "case": "original and campaign characters appear together with their own images",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "existing campaign character remains usable with layered reading",
+      "size": "desktop",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "original and campaign characters appear together with their own images",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-shen-yanzhou",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lu-wensheng",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lin-zhaowan",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "existing campaign character remains usable with layered reading",
+      "size": "desktop",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "original and campaign characters appear together with their own images",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "existing campaign character remains usable with layered reading",
+      "size": "mobile",
+      "lang": "zh",
+      "result": "pass"
+    },
+    {
+      "case": "original and campaign characters appear together with their own images",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-shen-yanzhou",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lu-wensheng",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "spoken/action reading layers, contrast and three authored opening moves",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remember visitor and character lines with visible speaker attribution",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "remembered quotations reach the model continuity context",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "branch from an earlier reply, exclude future memories, return to intact original",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "second encounter gets a clean timeline and the matching server scene",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "delete another branch, refresh, resume and keep book progress unchanged",
+      "id": "oc-lin-zhaowan",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "existing campaign character remains usable with layered reading",
+      "size": "mobile",
+      "lang": "en",
+      "result": "pass"
+    },
+    {
+      "case": "direct encounter plus first-line link preserves the right scene and sends once",
+      "result": "pass"
+    }
+  ],
+  "requestSummary": {
+    "conversationCalls": 49,
+    "allCharacterMode": true,
+    "allUseServerCanon": true
+  },
+  "errors": [],
+  "missing": []
+}
