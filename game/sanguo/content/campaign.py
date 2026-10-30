@@ -674,6 +674,8 @@ N.append(node("c8_cao", "c8", "main", T("华容道·曹营", "Huarong, from Cao'
 # ------------------------------------------------------------------ v1.2: night talks, crises, extra foresight
 import talks
 talks.extend(N, VARS, ECHOES, CHARS)
+import relations
+relations.extend(N, VARS)
 import reactions
 for _c, _r in reactions.REACT.items():
     CHARS[_c]["romance"] = _r["romance"]; CHARS[_c]["react"] = _r["react"]
