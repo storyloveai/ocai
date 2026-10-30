@@ -1,6 +1,8 @@
 import {originalCharacters} from '../dist/assets/original-characters.js';
+import {waveOnePeople} from './character-wave-one-roles.js';
 
 const people = {
+  ...waveOnePeople,
   'shen-yanzhou': {
     voice: 'Measured, observant, dry rather than cold. He answers a difficult question before asking another. Concern appears through practical acts; a long silence is not an excuse to withhold every answer.',
     motive: 'Give an honest account of his absence while protecting a third party’s private life. Learn what the visitor wants from this meeting rather than assuming forgiveness.',

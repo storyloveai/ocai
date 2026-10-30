@@ -4,6 +4,7 @@ import {readFile, access} from 'node:fs/promises';
 import {parseHTML} from 'linkedom';
 import {sanguoCharacters, characterById, mergeSanguoCharacters} from '../dist/assets/sanguo-characters.js';
 import {storydateCharacters} from '../dist/assets/storydate-originals.js';
+import {originalCharacters} from '../dist/assets/original-characters.js';
 import {characterHubMarkup, characterDetailMarkup} from '../dist/assets/sanguo-character-hub.js';
 import {roleFor, siteTitles} from '../server/roles.js';
 import {buildPrompt} from '../server/prompt-engine.js';
@@ -11,7 +12,7 @@ import {suggestionPrompt} from '../server/suggestion-prompt.js';
 
 const readFrom = values => (key, fallback) => values.get(key) ?? fallback;
 test('character extraction keeps the eight existing IDs and adds Wen Zhi exactly once', async () => {
-  assert.equal(storydateCharacters.length, 12);
+  assert.equal(storydateCharacters.length, 9 + originalCharacters.length);
   for (let i = 1; i <= 9; i++) assert.ok(storydateCharacters.some(c => c.id === 'sgc-' + String(i).padStart(3, '0')));
   assert.equal(new Set(siteTitles.map(c => c.id)).size, siteTitles.length);
   for (const c of sanguoCharacters) {
@@ -67,7 +68,7 @@ test('character hub lists six adopted profiles, preserves other characters, and 
   ]);
   const html = characterHubMarkup(storydateCharacters, {lang: 'zh', read: readFrom(values)});
   const {document} = parseHTML(html);
-  assert.equal(document.querySelectorAll('[data-character-id]').length, 12);
+  assert.equal(document.querySelectorAll('[data-character-id]').length, storydateCharacters.length);
   assert.equal(document.querySelectorAll('.sg-character-recent a').length, 1);
   assert.equal(document.querySelector('.sg-character-recent a').getAttribute('href'), '/play/sgc-009');
   assert.equal(document.querySelector('[data-character-bookmark="sgc-009"]').getAttribute('aria-pressed'), 'true');

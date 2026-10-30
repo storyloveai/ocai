@@ -1,6 +1,7 @@
 // Original adults and independent encounters, authored for the Character area.
 // Neither these scenes nor their conversations modify a book campaign.
 const pair = (zh, en) => ({zh, en});
+import {waveOneCharacters} from './character-wave-one.js';
 const characters = [
   {
     id: 'oc-shen-yanzhou', key: 'shen-yanzhou', title: 'Shen Yanzhou', title_zh: '沈砚舟',
@@ -82,7 +83,8 @@ const characters = [
         starters: pair(['我把外套搭好，问她那幅画卡在了哪里。', '好，这五分钟我们都不谈工作。', '我问她，是不是每次都这样忙到很晚。'],
           ['I hang up my coat and ask where the work has become difficult.', 'All right. For these five minutes, neither of us talks about work.', 'I ask whether she always works this late.'])}
     ]
-  }
+  },
+  ...waveOneCharacters
 ];
 
 export const originalCharacters = characters.map(c => {
