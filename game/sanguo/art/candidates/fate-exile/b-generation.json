@@ -1,0 +1,47 @@
+{
+  "id": "fate-exile",
+  "candidate": "B",
+  "status": "candidate-not-adopted",
+  "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+  "model": "not exposed by tool",
+  "original_prompt": "Early morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+  "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+  "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nEarly morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n清晨的城门外，你牵着一匹马、背着一个包袱独自离开，城楼上有一个人影在看（面目不细画）\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+  "final_generation_prompt": "Correct the FIRST supplied candidate illustration against the unchanged source brief below. The SECOND image is only the adopted painted illustration style reference. Keep the gray-blue scholar seen from behind with a cloth hair tie and bundle, the single led horse, ancient Chinese city gate and mist. IMPORTANT correction: exactly TWO adults total: (1) the departing scholar and (2) ONE distant anonymous watcher on the city wall. Remove every extra tiny human silhouette inside/below the open arch and anywhere on the road. No other rider, guard, crowd or person. Recompose as a substantially MORE DISTANT panoramic wide shot: foreground scholar and entire horse (including legs/hooves and leading hand/rein) should occupy no more than 35 percent of total image height and be entirely inside the middle 60 percent horizontal crop band. Put the watcher's balcony low enough to also remain in this band. A final 1200x480 crop must retain the scholar's hair tie, leading hand, complete horse and wall watcher. Use a cooler, mistier dawn palette with restrained pale morning light, not blazing saturated sunset. One single full illustration, no panels, no words or numbers. Preserve the following original prompt and requirements:\n\nCreate a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nEarly morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n清晨的城门外，你牵着一匹马、背着一个包袱独自离开，城楼上有一个人影在看（面目不细画）\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+  "original": "game/sanguo/art/candidates/fate-exile/b.png",
+  "original_dimensions": [
+    1536,
+    1024
+  ],
+  "original_sha256": "bcab4e94f141862069b916d95fc1f4dfa54574e2b3723f89ace55d0a397fb120",
+  "crop": {
+    "x": 0,
+    "y": 250,
+    "width": 1535,
+    "height": 614,
+    "export_width": 1200,
+    "export_height": 480
+  },
+  "export": "game/sanguo/art/candidates/fate-exile/b-1200x480.webp",
+  "export_sha256": "458614f29554c097820171624bc9fc302a5b51dbb58920bd64023764186c7fd9",
+  "web_export": "ooc-replica/dist/assets/candidates/fates/fate-exile-b-1200x480.webp",
+  "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-exile-b-full.webp",
+  "full_frame_preview_sha256": "dedf5bfc20294ef8d27fa72aefe1879e1103e066c07e489581555f5fa842b726",
+  "reference_paths": [
+    "game/sanguo/art/scenes/road.webp"
+  ],
+  "reference_sha256": {
+    "game/sanguo/art/scenes/road.webp": "ea79d6ed1b6aaa03789c5cfa51180e9ec8a59849d6fc7f92b77f1cd86e9a135a"
+  },
+  "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+  "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+  "review_note": {
+    "zh": "右侧城门与守望者，背影牵马离开。",
+    "en": "A wall-top watcher remains behind the departing traveler and horse."
+  },
+  "revision": 2,
+  "previous_candidate": "game/sanguo/art/candidates/fate-exile/superseded/b-first.png",
+  "previous_sha256": "4723ff3e8087ce8353d5397427e20ef05c94012dd6a99986b3574459bedda1d5",
+  "additional_revision_reference": "game/sanguo/art/candidates/fate-exile/superseded/b-first.png",
+  "revision_reason": "First departure candidate had an extra distant silhouette and foreground figures too large for the banner."
+}
