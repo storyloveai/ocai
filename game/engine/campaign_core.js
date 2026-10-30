@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.3";
+  CC.VERSION = "0.4.4";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -263,6 +263,7 @@
     st.asked = st.asked || {}; st.asked[n.id] = ans.id;
     const e = ledgerPush(st, { kind: "answer", node: n.id, choice: null, answer: ans.id, to: a.who, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
     applyEffects(camp, st, ans.effects, e);
+    if (ans.id === "rude") { st.grudge = st.grudge || {}; st.grudge[a.who] = (st.grudge[a.who] || 0) + 1; e.offend = a.who; } // answering with an insult is an insult
     (ans.echo || []).forEach(id => { if (!st.echoes[id]) { st.echoes[id] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(id); } });
     st.log.push({ k: "ans", n: n.id, a: ans.id, said: (said || "").slice(0, 120), p: idxWhere(st, ans.out), seq: e.seq });
     const fl = flare(camp, st, a.who); if (fl) e.flare = fl;
@@ -373,6 +374,14 @@
     const key = n.id + "|" + cid;
     st.labels = st.labels || {}; const L = (st.labels[key] = st.labels[key] || {}); L[label] = (L[label] || 0) + 1;
     let eff = speechRule(camp, st, cid, label, L[label]);
+    // a grudge (0.4.4): insults and threats are remembered for the rest of the volume. While someone holds one, kind or
+    // admiring words don't move them; sincere warmth first works the grudge off, one line at a time. Actions still count.
+    st.grudge = st.grudge || {}; const held = st.grudge[cid] || 0; let mend = false, offend = 0;
+    if (label === "rude" || label === "threat") { offend = label === "threat" ? 2 : 1; st.grudge[cid] = held + offend; }
+    else if (held > 0 && ["warm", "flatter", "romantic"].includes(label)) {
+      eff = eff.filter(ef => !(ef.by > 0 && ef.add.startsWith(`rel.${cid}.`)));
+      if (label === "warm") { st.grudge[cid] = held - 1; mend = true; }
+    }
     // cap: the main bond moves at most ±2 per night with one person
     st.night = st.night || {}; const used = st.night[key] || 0;
     const ch = camp.chars[cid], main = `rel.${cid}.${ch.main || Object.keys(ch.dims)[0]}`;
@@ -382,24 +391,26 @@
     // each person reads provocation their own way: heat is this scene's tension with them
     const hv = heatOf(camp, cid, label, L[label]);
     if (hv && camp.vars["heat." + cid]) eff.push({ add: "heat." + cid, by: hv });
-    const cast = CC.castNow(camp, st);
-    if (vt.length) eff.push(...valueReactions(camp, st, n, [cid].concat(cast.filter(x => x !== cid)), vt));
+    const cast = CC.castNow(camp, st), blocked = [];
+    if (vt.length) eff.push(...valueReactions(camp, st, n, [cid].concat(cast.filter(x => x !== cid)), vt, { hostile: offend ? cid : null, heatNow: { [cid]: (st.v["heat." + cid] || 0) + hv }, blocked }));
     // the others present hear it too
     st.witnessed = st.witnessed || {};
     (camp.witness || []).forEach((w, i) => {
       const wk = n.id + "|" + i;
       if (w.to === cid && w.labels.includes(label) && cast.includes(w.who) && !st.witnessed[wk]) { st.witnessed[wk] = 1; eff.push(...w.effects); }
     });
-    if (!eff.length) return null;
+    if (held > 0 && !offend && !mend && ["flatter", "romantic"].includes(label)) blocked.push(cid);
+    if (!eff.length && !mend && !offend && !blocked.length) return null;
     const e = ledgerPush(st, { kind: "talk", node: n.id, choice: null, topic: null, tone: label, to: cid, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
     if (vt.length) e.values = vt;
+    if (offend) e.offend = cid; if (mend) e.mend = cid; if (blocked.length) e.grudge = [...new Set(blocked)];
     applyEffects(camp, st, eff, e);
     const fl = flare(camp, st, cid);
     if (fl) e.flare = fl;
-    return e.changes.length || fl ? e : null;
+    return e.changes.length || fl || e.offend || e.mend || e.grudge ? e : null;
   };
   // each person moves at most ±1 per axis per line, and ±2 per axis over a whole scene, from what your words showed
-  function valueReactions(camp, st, n, people, vt) {
+  function valueReactions(camp, st, n, people, vt, o = {}) {
     st.vcap = st.vcap || {}; const out = [];
     for (const c of people) {
       const ch = camp.chars[c]; if (!ch || !ch.values) continue;
@@ -407,7 +418,8 @@
       for (const [axis, by] of Object.entries(sum)) {
         const v = `rel.${c}.${axis}`; if (!camp.vars[v]) continue;
         let d = Math.max(-1, Math.min(1, by)); if (!d) continue;
-        if (d > 0 && (st.v["heat." + c] || 0) >= 2) continue; // someone you provoked here doesn't warm to you
+        // no one warms to you from a line that insults them, from someone you provoked here, or while they hold a grudge
+        if (d > 0 && (c === o.hostile || ((o.heatNow || {})[c] ?? (st.v["heat." + c] || 0)) >= 2 || ((st.grudge || {})[c] || 0) > 0)) { if (o.blocked && c !== o.hostile) o.blocked.push(c); continue; }
         const k = n.id + "|" + v, used = st.vcap[k] || 0;
         d = Math.max(-2 - used, Math.min(2 - used, d)); if (!d) continue;
         st.vcap[k] = used + d; out.push({ add: v, by: d });
@@ -454,6 +466,8 @@
     const outIdx = idxWhere(st, m.out);
     const e = ledgerPush(st, { kind: "move", node: n.id, choice: null, move: m.id, to: m.to, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
     applyEffects(camp, st, m.effects || [], e);
+    const hurt = (m.labels || []).includes("threat") ? 2 : (m.labels || []).includes("rude") ? 1 : 0; // a threat that changes the story is still a threat
+    if (hurt && m.to) { st.grudge = st.grudge || {}; st.grudge[m.to] = (st.grudge[m.to] || 0) + hurt; e.offend = m.to; }
     (m.echo || []).forEach(x => { if (!st.echoes[x]) { st.echoes[x] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(x); } });
     st.log.push({ k: "move", n: n.id, m: m.id, to: m.to, p: outIdx, seq: e.seq });
     if (m.ends) { st.v.ended_early = true; st.done.push(n.id); st.cur = null; st.flash = null; enterChapter(camp, st, camp.chapters.length); }

@@ -157,3 +157,22 @@ test("speech values: what a line shows moves people by their own values, capped 
   CC.speak(c, st, "flat", "", "tao", ["li", "nonsense-tag"]);
   assert.equal(st.v["rel.tao.trust"], 1, "unknown tags are ignored");
 });
+
+test("grudges: an insult is remembered; kind or clever words don't move them until sincere warmth works it off", () => {
+  const c = as04(tiny("x"));
+  c.value_tags = { zhi: { zh: "智", en: "cleverness" } };
+  c.chars.tao.values = { zhi: ["esteem", 1] };
+  const st = CC.newGame(c), es = () => st.v["rel.tao.esteem"];
+  const e0 = es();
+  const r = CC.speak(c, st, "rude", "蠢材", "tao", ["zhi"]);
+  assert.equal(r.offend, "tao"); assert.ok(es() <= e0, "a clever insult doesn't raise their respect");
+  const after = es();
+  const f = CC.speak(c, st, "flatter", "先生高明", "tao", ["zhi"]);
+  assert.deepEqual(f.grudge, ["tao"]); assert.equal(es(), after, "flattery doesn't move someone who holds a grudge");
+  const w = CC.speak(c, st, "warm", "方才是我失言了", "tao", []);
+  assert.equal(w.mend, "tao"); assert.equal(st.grudge.tao, 0, "sincere warmth works the grudge off first");
+  CC.speak(c, st, "flat", "", "tao", ["zhi"]);
+  assert.ok(es() > after, "once mended, what you show moves them again");
+  const st2 = CC.newGame(c); st2.grudge = {};
+  assert.equal(CC.speak(c, st2, "threat", "杀了你", "tao", []).offend, "tao"); assert.equal(st2.grudge.tao, 2, "a threat counts double");
+});

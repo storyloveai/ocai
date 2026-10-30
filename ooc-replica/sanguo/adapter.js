@@ -24,7 +24,7 @@ function siteLive(){
 }
 async function siteSample(task,text,n,target,lang){
  const turn=siteTurn,signal=turn?.controller.signal;
- const context={node:n.id,text,target,vars:G.v,used:(G.used||{})[n.id]||[],turns:(G.turns||{})[n.id]||0,recent:talkHistory(n.id,lang).slice(-8),memories:((G.mem||{})[target]||[]).filter(x=>x.node!==n.id).slice(-3),promises:(G.commits||[]).filter(x=>x.char===target&&x.status==='open').slice(-4)};
+ const context={node:n.id,text,target,vars:G.v,used:(G.used||{})[n.id]||[],turns:(G.turns||{})[n.id]||0,recent:talkHistory(n.id,lang).slice(-8),memories:((G.mem||{})[target]||[]).filter(x=>x.node!==n.id).slice(-3),grudge:(G.grudge||{})[target]||0,promises:(G.commits||[]).filter(x=>x.char===target&&x.status==='open').slice(-4)};
  const live=siteLive(),line=live.querySelector('p');let final=null;
  try{
   const response=await fetch('/api/sanguo',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/x-ndjson'},body:JSON.stringify({phase:'express',task,lang,context}),signal});
