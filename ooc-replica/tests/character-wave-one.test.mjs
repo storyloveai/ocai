@@ -24,6 +24,7 @@ test('wave one has ten discoverable adults with distinct images, voices and exis
       const packet = buildPrompt({titleId:c.id, characterScene:profile.selectedScene, language:lang, messages:[{role:'user',content:'I changed my mind. Let’s discuss something else.'}]});
       assert.ok(packet.system.includes(JSON.stringify(c.scenes[1].opening[lang])));
       assert.ok(packet.system.includes(lang === 'zh' ? 'visitor selected Simplified Chinese' : 'visitor selected English'));
+      assert.match(packet.system, /Only without that selection, use the language/);
       assert.doesNotMatch([c.title,c.description,...c.tags.en,...c.scenes.map(s=>s.opening.en)].join(' '), /[\u3400-\u9fff]/);
     }
   }
