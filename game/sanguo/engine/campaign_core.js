@@ -111,6 +111,12 @@
   };
   // while someone holds a grudge (0.4.5): words toward them earn nothing, deeds earn half, key moments count in full,
   // and nothing short of a key moment lifts them into a higher tier with you
+  // a book that wants its story to turn on a grudge declares a var "grudge.<who>"; the count is mirrored there so
+  // conditions can read it (a third threat to Cao Cao is not the first)
+  function setGrudge(camp, st, cid, n) {
+    st.grudge = st.grudge || {}; st.grudge[cid] = Math.max(0, n);
+    const v = "grudge." + cid, d = camp.vars[v]; if (d) st.v[v] = Math.max(d.min, Math.min(d.max, st.grudge[cid]));
+  }
   function grudgeGate(camp, st, effs, words, e) {
     const g = st.grudge || {}, held = [], T = camp.tiers;
     const out = (effs || []).map(ef => {
@@ -277,7 +283,7 @@
     st.asked = st.asked || {}; st.asked[n.id] = ans.id;
     const e = ledgerPush(st, { kind: "answer", node: n.id, choice: null, answer: ans.id, to: a.who, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
     applyEffects(camp, st, grudgeGate(camp, st, ans.effects, true, e), e);
-    if (ans.id === "rude") { st.grudge = st.grudge || {}; st.grudge[a.who] = (st.grudge[a.who] || 0) + 1; e.offend = a.who; } // answering with an insult is an insult
+    if (ans.id === "rude") { setGrudge(camp, st, a.who, ((st.grudge || {})[a.who] || 0) + 1); e.offend = a.who; } // answering with an insult is an insult
     (ans.echo || []).forEach(id => { if (!st.echoes[id]) { st.echoes[id] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(id); } });
     st.log.push({ k: "ans", n: n.id, a: ans.id, said: (said || "").slice(0, 120), p: idxWhere(st, ans.out), seq: e.seq });
     const fl = flare(camp, st, a.who); if (fl) e.flare = fl;
@@ -392,10 +398,10 @@
     // a grudge (0.4.4): insults and threats are remembered for the rest of the volume. While someone holds one, kind or
     // admiring words don't move them; sincere warmth first works the grudge off, one line at a time. Actions still count.
     st.grudge = st.grudge || {}; const held = st.grudge[cid] || 0; let mend = false, offend = 0;
-    if (label === "rude" || label === "threat") { offend = label === "threat" ? 2 : 1; st.grudge[cid] = held + offend; }
+    if (label === "rude" || label === "threat") { offend = label === "threat" ? 2 : 1; setGrudge(camp, st, cid, held + offend); }
     else if (held > 0 && ["warm", "flatter", "romantic"].includes(label)) {
       eff = eff.filter(ef => !(ef.by > 0 && ef.add.startsWith(`rel.${cid}.`)));
-      if (label === "warm") { st.grudge[cid] = held - 1; mend = true; }
+      if (label === "warm") { setGrudge(camp, st, cid, held - 1); mend = true; }
     }
     // cap: the main bond moves at most ±2 per night with one person
     st.night = st.night || {}; const used = st.night[key] || 0;
@@ -483,7 +489,7 @@
     const e = ledgerPush(st, { kind: "move", node: n.id, choice: null, move: m.id, to: m.to, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
     applyEffects(camp, st, m.effects || [], e);
     const hurt = (m.labels || []).includes("threat") ? 2 : (m.labels || []).includes("rude") ? 1 : 0; // a threat that changes the story is still a threat
-    if (hurt && m.to) { st.grudge = st.grudge || {}; st.grudge[m.to] = (st.grudge[m.to] || 0) + hurt; e.offend = m.to; }
+    if (hurt && m.to) { setGrudge(camp, st, m.to, ((st.grudge || {})[m.to] || 0) + hurt); e.offend = m.to; }
     (m.echo || []).forEach(x => { if (!st.echoes[x]) { st.echoes[x] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(x); } });
     st.log.push({ k: "move", n: n.id, m: m.id, to: m.to, p: outIdx, seq: e.seq });
     if (m.ends) { st.v.ended_early = true; st.done.push(n.id); st.cur = null; st.flash = null; enterChapter(camp, st, camp.chapters.length); }

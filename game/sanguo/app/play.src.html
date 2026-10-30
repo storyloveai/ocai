@@ -616,6 +616,28 @@ function choose(id, via = "button") {
   if (G.ch !== ch0 && G.phase !== "end") track("chapter", { chapter: CAMP.chapters[G.ch].id });
   if (G.phase === "end") track("ending", { frags: CC.endings(CAMP, G).map(e => e.group + "." + e.frag), deviation: G.v.deviation, uncanny: G.v.uncanny, track: G.v.track });
   save(); render(true);
+  const fc = N(node) && N(node).choices.find(x => x.id === id);
+  if (fc && fc.fate) voiceFate(node, fc, G.log.findIndex((x, i) => i >= before && x.k === "choice" && x.c === id));
+}
+// v2.24 fates: the rules decided what happens to you (executed, jailed, sent away, wounded); the model plays the scene
+// out from what you said and who you said it to. Without a model the written scene stands.
+async function voiceFate(nodeId, c, at) {
+  if (at < 0 || !RT.sample || RT.ai === "off") return;
+  const lang = settings.lang, e = G.log[at];
+  try { const text = await askFate(N(nodeId), c, lang); if (text && G.log[at] === e) { e.fate = { lang, text }; save(); render(); } } catch {}
+}
+async function askFate(n, c, lang) {
+  const who = CAMP.chars[c.fate.who];
+  const prompt = `You write one scene of an interactive adaptation of Romance of the Three Kingdoms. The player is ${PWHO()}.
+Scene: ${t(n.title)}. ${(n.intro || []).filter(p => !p.when || CC.evalCond(G, p.when)).map(p => t(p.text)).join(" ")}
+${t(who.name)}: ${t(who.persona || "")}
+What was said here: ${JSON.stringify(talkHistory(n.id, lang).slice(-6))}
+${PN()} chose: ${JSON.stringify(t(c.label))}
+The rules have decided the outcome: ${t(c.fate.label)}. Exactly this happens: ${JSON.stringify((c.out || []).map(o => t(o.text)).join(" "))}
+Write that outcome as a vivid scene in ${lang === "zh" ? "Chinese, 2–4 sentences, at most 200 characters" : "English, 2–4 sentences, at most 120 words"}, in the voice of the period, second person ("you"). Let ${t(who.name)} act and speak in character, and tie it to what ${PN()} actually said. Keep every fact of the outcome (who lives, who dies, where ${PN()} ends up); add nothing that changes it; mention nothing that hasn't happened yet; no gore.
+Return only {"reply":"<the scene>"}.`;
+  const out = await RT.sample.json(prompt, { modelTier: "quick", cache: false });
+  return out && typeof out.reply === "string" ? out.reply.trim().slice(0, lang === "zh" ? 260 : 900) : null;
 }
 
 // the value tags a free line can show (义 智 仁 勇 诚 利…), for the model
@@ -1168,7 +1190,9 @@ function renderStory() {
     } else if (e.k === "choice") {
       const n = N(e.n), c = n.choices.find(x => x.id === e.c);
       const le = G.ledger.find(x => x.seq === e.seq);
-      wrap.append(mark(h("div", {}, h("div", { class: "picked" }, t(c.label)), c.cg ? cgEl(c.cg) : null, e.p.map(k => para(t(c.out[k].text))), c.because ? h("div", { class: "because" }, t(c.because)) : null, relChips(e.seq),
+      const fateImg = c.fate && ART_FILES.has(`fate/${c.fate.kind}.webp`) ? imgFigure("art", t(c.fate.label), artUrl(`fate/${c.fate.kind}.webp`)) : null;
+      const fateText = c.fate && e.fate && e.fate.lang === settings.lang ? e.fate.text : null;
+      wrap.append(mark(h("div", {}, h("div", { class: "picked" }, t(c.label)), c.cg ? cgEl(c.cg) : null, fateImg, fateText ? para(fateText) : e.p.map(k => para(t(c.out[k].text))), c.because ? h("div", { class: "because" }, t(c.because)) : null, relChips(e.seq),
         le && le.cooled ? h("div", { class: "note-unlock closed" }, l.cooledNote(le.cooled.map(x => t(CAMP.chars[x].name)).join(settings.lang === "zh" ? "、" : ", "))) : null, dev ? devChanges(e.seq) : null)));
     } else if (e.k === "say") {
       const n = N(e.n), tp = n.talk.topics.find(x => x.id === e.t);

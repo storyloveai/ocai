@@ -21,7 +21,15 @@ for vi, f in enumerate(files):
         if not have(f"cg/{cg}.webp"): missing.append({"vol": vol, "kind": "cg", "id": cg})
 for v in ["two_boat", "home", "city", "lone"]:
     if not have(f"ending/{v}.webp"): missing.append({"kind": "ending", "id": v})
-json.dump(missing, open(os.path.join(A, "missing.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+# fate pictures (art/fate-jobs.jsonl) are planned, not required: until one is drawn the scene picture stands
+planned = []
+fj = os.path.join(A, "fate-jobs.jsonl")
+if os.path.exists(fj):
+    for line in open(fj, encoding="utf-8"):
+        j = json.loads(line)
+        if not have(f"fate/{j['name']}.webp"): planned.append({"kind": "fate", "id": j["name"], "title": j.get("title")})
+json.dump({"missing": missing, "planned": planned} if planned else missing, open(os.path.join(A, "missing.json"), "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 for m in missing: print("缺图", json.dumps(m, ensure_ascii=False))
-print(f"插画版缺图：{len(missing)} 处（{len(files)} 卷）")
+for m in planned: print("待画", json.dumps(m, ensure_ascii=False))
+print(f"插画版缺图：{len(missing)} 处（{len(files)} 卷）" + (f"；待画的命运图 {len(planned)} 张（不影响检查）" if planned else ""))
 if "--strict" in sys.argv and missing: sys.exit(1)

@@ -41,7 +41,7 @@ base = src.replace("/*__BOOK__*/null", data).replace("/*__ENGINE__*/", engine).r
 # Two editions of the same book: "ink" (pictures drawn in code) and "illus" (the illustrations in art/).
 # The illustrated page links to the image files instead of embedding them; web/illus.html finds them at ../art/,
 # and the website rewrites ART_BASE to where it serves them.
-ART_DIRS = ("portraits", "scenes", "cg", "ending")
+ART_DIRS = ("portraits", "scenes", "cg", "ending", "fate")
 files = sorted(f"{d}/{f.name}" for d in ART_DIRS for f in (R / "art" / d).glob("*.webp")) if (R / "art").exists() else []
 def edition(name, art_base=""):
     return base.replace('"__EDITION__"', json.dumps(name)).replace('"__ART_BASE__"', json.dumps(art_base)).replace("/*__ART_FILES__*/[]", json.dumps(files if name == "illus" else []))
