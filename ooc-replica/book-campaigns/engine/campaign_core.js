@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.4";
+  CC.VERSION = "0.4.5";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -109,6 +109,20 @@
     if (hard === undefined || !ef.add || !(ef.by > 0) || ef.key) return false;
     const t = CC.tierOf(camp, from || 0); return t !== null && t >= hard;
   };
+  // while someone holds a grudge (0.4.5): words toward them earn nothing, deeds earn half, key moments count in full,
+  // and nothing short of a key moment lifts them into a higher tier with you
+  function grudgeGate(camp, st, effs, words, e) {
+    const g = st.grudge || {}, held = [], T = camp.tiers;
+    const out = (effs || []).map(ef => {
+      const m = /^rel\.(\w+)\.(\w+)$/.exec(ef.add || ""); if (!m || !(ef.by > 0) || !((g[m[1]] || 0) > 0)) return ef;
+      let by = ef.key ? ef.by : words ? 0 : Math.floor(ef.by / 2);
+      if (T && by > 0 && !ef.key) { const from = st.v[ef.add] || 0, k = T.start.reduce((a, s, i) => (from >= s ? i : a), 0); by = Math.min(by, T.end[k] - from); }
+      if (by !== ef.by) held.push(m[1]);
+      return by > 0 ? Object.assign({}, ef, { by }) : null;
+    }).filter(Boolean);
+    if (held.length) e.grudge = [...new Set((e.grudge || []).concat(held))];
+    return out;
+  }
   function applyEffects(camp, st, effects, entry) {
     for (const ef of effects || []) {
       const name = ef.set || ef.add;
@@ -262,7 +276,7 @@
     const ans = a.answers.find(x => x.id === aid) || a.answers.find(x => x.id === a.fallback);
     st.asked = st.asked || {}; st.asked[n.id] = ans.id;
     const e = ledgerPush(st, { kind: "answer", node: n.id, choice: null, answer: ans.id, to: a.who, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
-    applyEffects(camp, st, ans.effects, e);
+    applyEffects(camp, st, grudgeGate(camp, st, ans.effects, true, e), e);
     if (ans.id === "rude") { st.grudge = st.grudge || {}; st.grudge[a.who] = (st.grudge[a.who] || 0) + 1; e.offend = a.who; } // answering with an insult is an insult
     (ans.echo || []).forEach(id => { if (!st.echoes[id]) { st.echoes[id] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(id); } });
     st.log.push({ k: "ans", n: n.id, a: ans.id, said: (said || "").slice(0, 120), p: idxWhere(st, ans.out), seq: e.seq });
@@ -284,12 +298,13 @@
     if (alt) e.alt = (c.alt || []).indexOf(alt);
     // someone you provoked in this scene doesn't warm to you from the choice that follows
     const cooled = [];
-    const effs = (alt ? alt.effects : c.effects).filter(ef => {
+    let effs = (alt ? alt.effects : c.effects).filter(ef => {
       const m = /^rel\.(\w+)\.(\w+)$/.exec(ef.add || ""); if (!m || ef.by <= 0) return true;
       const ch = camp.chars[m[1]]; if (!ch || (ch.main || Object.keys(ch.dims)[0]) !== m[2] || (st.v["heat." + m[1]] || 0) < 2) return true;
       cooled.push(m[1]); return false; });
     if (cooled.length) e.cooled = cooled;
     const present = CC.castNow(camp, st);
+    effs = grudgeGate(camp, st, effs, c.type === "expression", e);
     applyEffects(camp, st, effs, e);
     react(camp, st, c, effs, present, e);
     (c.debt || []).forEach(d => openDebt(st, d, e));
@@ -322,7 +337,7 @@
       for (const [axis, by] of Object.entries(sum)) {
         const d = Math.max(-1, Math.min(1, by)), v = `rel.${cid}.${axis}`;
         if (!d || !camp.vars[v]) continue;
-        if (d > 0 && (st.v["heat." + cid] || 0) >= 2) continue;
+        if (d > 0 && ((st.v["heat." + cid] || 0) >= 2 || ((st.grudge || {})[cid] || 0) > 0)) continue;
         out.push({ add: v, by: d });
       }
     }
@@ -385,8 +400,9 @@
     // cap: the main bond moves at most ±2 per night with one person
     st.night = st.night || {}; const used = st.night[key] || 0;
     const ch = camp.chars[cid], main = `rel.${cid}.${ch.main || Object.keys(ch.dims)[0]}`;
-    eff = eff.map(ef => { if (ef.add !== main) return ef; const by = Math.max(-2 - used, Math.min(2 - used, ef.by)); return { add: ef.add, by }; }).filter(ef => ef.by);
-    const mainBy = eff.filter(ef => ef.add === main).reduce((a, ef) => a + ef.by, 0);
+    if (offend && held > 0) eff.push({ add: main, by: -1 });
+    eff = eff.map(ef => { if (ef.add !== main || ef.by <= 0) return ef; return { add: ef.add, by: Math.min(Math.max(0, 2 - used), ef.by) }; }).filter(ef => ef.by);
+    const mainBy = eff.filter(ef => ef.add === main && ef.by > 0).reduce((a, ef) => a + ef.by, 0);
     st.night[key] = used + mainBy;
     // each person reads provocation their own way: heat is this scene's tension with them
     const hv = heatOf(camp, cid, label, L[label]);
@@ -542,7 +558,7 @@
     if (!tp || tp.locked) throw new Error("topic unavailable: " + topicId);
     st.used = st.used || {}; (st.used[n.id] = st.used[n.id] || []).push(topicId);
     const e = ledgerPush(st, { kind: "talk", node: n.id, choice: null, topic: topicId, changes: [], debts: [], echo: [] });
-    applyEffects(camp, st, tp.t.effects, e);
+    applyEffects(camp, st, grudgeGate(camp, st, tp.t.effects, true, e), e);
     (tp.t.echo || []).forEach(id => { if (!st.echoes[id]) { st.echoes[id] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(id); } });
     st.log.push({ k: "say", n: n.id, t: topicId, p: idxWhere(st, tp.t.reply), seq: e.seq });
     return e;
