@@ -1,16 +1,16 @@
 {
-  "commit": "7a0b3f121f9ac793dba029cc3529110d0372e600",
+  "commit": "46c096c2284fd3c7304e1c532b4901fc0cf167a3",
   "blobs": {
-    "index.html": "05c37c44d0e58f916812ff9e40269f4f76ddac35",
-    "illus.html": "f263dc7f9c1beebebabe0afc8ace8f150927fcf5",
-    "campaign.json": "4a4993175a55d8038e1acd3a983805b6ec4faf56",
-    "campaign_v2.json": "9b95cf1477a8d1ab2ac8bddfb6bf93fb5065f5b1",
-    "campaign_v3.json": "d9258ca91cb68811b361a2f9dd3eacc1d5f42cd2",
-    "campaign_v4.json": "73b88b531b52736e8da1cf2d8e047ec3798b6473",
-    "campaign_v5.json": "f7cade18d99dcde3dac1fbab20e74fab7f506678",
-    "campaign_v6.json": "5cdc027c7125c210b0a7c3c4c7cb436833ca361f",
-    "campaign_v7.json": "04ab5bbc75c871cf6a80a5d991945fe5e52a0b32",
-    "campaign_v8.json": "6f708e7858bc08ff57768daf53ad83fa45f8ab40",
-    "campaign_core.js": "8656c67cdb5ecac9f49e297614283ec2f65c9d6f"
+    "index.html": "3e289b7e422e341609572e9d89fb91bceba86897",
+    "illus.html": "a33bc79269a3fecea712917639771c567690b405",
+    "campaign.json": "e12bb8473a923c60855200893f5e4efe28cc8f0f",
+    "campaign_v2.json": "b281c9ac90f309aa5f9296384a00dc7e4e74b292",
+    "campaign_v3.json": "146ee9fbb4be327b500d7c99bf913102e03b18fb",
+    "campaign_v4.json": "9f374bbe91dc9aeedf4fe098fed334e569200efe",
+    "campaign_v5.json": "72b6d8618402a31bcae413f2a978b0e9aec3414c",
+    "campaign_v6.json": "6639d85c833688f2397def70d9ea1897f0b79e68",
+    "campaign_v7.json": "d67f370d69114ba86b22883d67bfafdceb725634",
+    "campaign_v8.json": "0228a1aaab53bbe155c1770c3625ef3d68a3276f",
+    "campaign_core.js": "ac90dee0ab893c3e1858bb8df5272170f2ee9e9e"
   }
 }

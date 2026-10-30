@@ -22,9 +22,9 @@ function siteLive(){
  live=h('section',{id:'site-live',class:'site-live','aria-label':settings.lang==='zh'?'正在回复':'Reply in progress'},h('small',{},settings.lang==='zh'?'正在理解你的话……':'Reading your words…'),h('p',{}),h('button',{type:'button','data-site-stop':'',onclick:()=>{if(siteTurn){siteTurn.cancelled=true;siteTurn.controller.abort();}}},settings.lang==='zh'?'停止':'Stop'));
  const act=$('#act');if(act)act.after(live);else $('#story').append(live);if(follow)live.scrollIntoView({block:'nearest'});return live;
 }
-async function siteSample(task,text,n,target,lang){
- const turn=siteTurn,signal=turn?.controller.signal;
- const context={node:n.id,text,target,vars:G.v,used:(G.used||{})[n.id]||[],turns:(G.turns||{})[n.id]||0,recent:talkHistory(n.id,lang).slice(-8),memories:((G.mem||{})[target]||[]).filter(x=>x.node!==n.id).slice(-3),grudge:(G.grudge||{})[target]||0,promises:(G.commits||[]).filter(x=>x.char===target&&x.status==='open').slice(-4)};
+async function siteSample(task,text,n,target,lang,extra={}){
+ const turn=siteTurn,signal=turn?.controller.signal||new AbortController().signal;
+ const context={node:n.id,text,target,vars:G.v,used:(G.used||{})[n.id]||[],turns:(G.turns||{})[n.id]||0,recent:talkHistory(n.id,lang).slice(-8),memories:((G.mem||{})[target]||[]).filter(x=>x.node!==n.id).slice(-3),grudge:(G.grudge||{})[target]||0,promises:(G.commits||[]).filter(x=>x.char===target&&x.status==='open').slice(-4),...extra};
  const live=siteLive(),line=live.querySelector('p');let final=null;
  try{
   const response=await fetch('/api/sanguo',{method:'POST',headers:{'Content-Type':'application/json',Accept:'application/x-ndjson'},body:JSON.stringify({phase:'express',task,lang,context}),signal});
@@ -43,6 +43,7 @@ async function siteSample(task,text,n,target,lang){
   if(turn)turn.streamedReply=final.reply||'';return final;
  }catch(e){if(!signal?.aborted)siteNotice=lang==='zh'?'本次 AI 回复未完成，已使用规则与预设对白继续。':'AI unavailable this turn; rules and authored dialogue continue.';throw e;}
 }
+askFate=async(n,c,lang)=>{const out=await siteSample('fate',t(c.label).slice(0,200),n,c.fate.who,lang,{choice:c.id});return typeof out.reply==='string'?replyValid(out.reply,lang):null;};
 askAnswer=async(text,n,lang)=>{const out=await siteSample('answer',text,n,n.ask.who,lang);const pick=n.ask.answers.some(a=>a.id===out.pick)?out.pick:null;let reply=typeof out.reply==='string'?replyValid(out.reply,lang):null;if(reply&&(lang==='zh'?reply.length>80:reply.split(/\s+/).length>60))reply=null;return pick||reply?{pick,reply}:null;};
 askScene=async(text,n,cid,options,lang)=>{const out=await siteSample('scene',text,n,cid,lang),c=CAMP.chars[cid];return {pick:options.some(o=>o.id===out.pick)?out.pick:null,move:CC.moves(CAMP,G).some(m=>m.id===out.move&&m.to===cid)?out.move:null,values:Array.isArray(out.values)?out.values.filter(v=>(CAMP.value_tags||{})[v]).slice(0,2):[],reply:replyValid(out.reply,lang),tone:CC.LABELS.includes(out.tone)?out.tone:({insult:'rude',mock:'rude',mocking:'rude',hostile:'rude',flirt:'romantic',flirting:'romantic',love:'romantic',praise:'flatter',flattery:'flatter',kind:'warm',sincere:'warm',caring:'warm',threatening:'threat'}[String(out.tone||'').toLowerCase()]||null),mood:['neutral','warm','cold','sad','surprised',...(c.romance?['shy']:[])].includes(out.mood)?out.mood:null,commit:out.commit&&['protect','loyalty','other'].includes(out.commit.kind)?{kind:out.commit.kind,text:String(out.commit.text||'').slice(0,40)}:null};};
 askModel=async(text,opts,lang)=>{const out=await siteSample('action',text,N(G.cur),castNow(N(G.cur))[0],lang);return {choice:opts.some(o=>o.id===out.pick)?out.pick:null,reply:replyValid(out.reply,lang)};};

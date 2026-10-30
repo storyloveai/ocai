@@ -24,7 +24,7 @@ const FILES = [
   ['game/engine/campaign_core.js', 'book-campaigns/engine/campaign_core.js'],
 ];
 // The illustrated edition's pictures, served to the site at /assets/sanguo-art/.
-for (const dir of ['portraits', 'scenes', 'cg', 'ending']) {
+for (const dir of ['portraits', 'scenes', 'cg', 'ending', 'fate']) {
   const names = await readdir(new URL(`game/sanguo/art/${dir}/`, repo)).catch(() => []);
   for (const name of names.filter(n => n.endsWith('.webp')).sort()) FILES.push([`game/sanguo/art/${dir}/${name}`, `dist/assets/sanguo-art/${dir}/${name}`]);
 }
