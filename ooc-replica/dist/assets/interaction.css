@@ -41,3 +41,5 @@
 /* Session history state is semantic and stays stable when labels are translated. */
 .session-history-tab[aria-pressed="true"]{border-color:#999!important;color:#eee!important;background:transparent!important}
 .session-history-tab[aria-pressed="false"]{border-color:#ffffff10!important;color:#a0a0a0!important;background:transparent!important}
+
+.session-settings-close{min-width:44px;min-height:44px;margin-left:12px;border:0;background:transparent;color:#bbb;font:24px/1 system-ui;cursor:pointer}.session-settings-close:focus-visible{outline:2px solid #c5a46c;outline-offset:2px}

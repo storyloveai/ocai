@@ -1,5 +1,7 @@
 # Character：延续相处经历与图文回顾
 
+**当前验收版已按用户反馈恢复貂蝉首屏与原有浏览交互，并修正中英文混显。** 请先看 [恢复记录与当前截图](../2026-10-30-character-restoration/README.md)。以下为之前各阶段的记录，旧人物列表页截图不代表当前入口。
+
 本轮延续 `codex/character-stories`，已合入截至 2026-10-30 的 main `2d0c8cd`，包含 Claude 已合入的卷八完整插画、关系试点和结局演出。同步后网站构建和 182 项检查再次通过。用户授权 Codex 独立推进 Character，Claude 同时负责三国合并与正式配图。这里没有修改游戏剧情、机制或正式图片。
 
 [手机中文](recap-mobile-zh.png) · [电脑中文](recap-desktop-zh.png) · [手机英文](recap-mobile-en.png) · [电脑英文](recap-desktop-en.png)

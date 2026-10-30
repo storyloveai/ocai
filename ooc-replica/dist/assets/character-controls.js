@@ -23,6 +23,7 @@ export function attachCharacterControls({root, body, profile, manager, getMessag
   const message = error => error?.code === 'CHARACTER_MEMORY_LIMIT' ? l().memoryLimit : error?.code === 'CHARACTER_BRANCH_LIMIT' ? l().branchLimit : l().failure;
   function guarded(action) {try {action();} catch (error) {modal(l().error, `<p>${safe(message(error))}</p>`);}}
   const sceneName = thread => profile.scenes?.find(s => s.id === thread.sceneId)?.title[lang()] || profile.scene[lang()];
+  const threadLabel = thread => profile.scenes?.find(s => Object.values(s.title).includes(thread.label))?.title[lang()] || thread.label || sceneName(thread);
   const dialog = (title, html) => {const d = modal(title, html); d.classList.add('character-dialog'); return d;};
   function locate(turn, d) {
     if (!Number.isInteger(turn) || turn < 0) return;
@@ -37,7 +38,7 @@ export function attachCharacterControls({root, body, profile, manager, getMessag
     const line = p => `<article><p class="character-memory-source">${p.role === 'user' ? labels.saidYou : safe(name)}${recap.remembered.some(pin => pin.turn === p.turn) ? `<span class="character-recap-kept">◆ ${labels.kept}</span>` : ''}</p><blockquote>${characterReadingHTML(markdown(balanceCharacterAction(p.text)), p.text)}</blockquote><button type="button" data-recap-source="${p.turn}">${labels.locate} ↗</button></article>`;
     const earlier = recap.remembered.filter(p => !recap.recent.some(r => r.turn === p.turn));
     const kept = earlier.length ? `<section class="character-recap-section"><h3>${labels.remembered}</h3>${earlier.map(line).join('')}</section>` : '';
-    const d = dialog(labels.recapTitle, `<div class="character-recap-hero"><img src="${safe(profile.image)}" alt="${safe(name)}"><div><p class="character-recap-eyebrow">${safe(sceneName(state.thread))}</p><h3>${safe(name)}</h3><p>${safe(state.thread.label || profile.scene[lang()])}</p></div></div>${kept}<section class="character-recap-section"><h3>${labels.recent}</h3>${recap.recent.map(line).join('')}</section><p class="character-dialog-note">${labels.recapNote}</p><div class="character-dialog-actions"><button type="button" data-recap-continue>${labels.continue}</button></div>`);
+    const d = dialog(labels.recapTitle, `<div class="character-recap-hero"><img src="${safe(profile.image)}" alt="${safe(name)}"><div><p class="character-recap-eyebrow">${safe(sceneName(state.thread))}</p><h3>${safe(name)}</h3><p>${safe(state.thread.label ? threadLabel(state.thread) : profile.scene[lang()])}</p></div></div>${kept}<section class="character-recap-section"><h3>${labels.recent}</h3>${recap.recent.map(line).join('')}</section><p class="character-dialog-note">${labels.recapNote}</p><div class="character-dialog-actions"><button type="button" data-recap-continue>${labels.continue}</button></div>`);
     d.classList.add('character-recap-dialog');
     d.onclick = event => {
       const source = event.target.closest('[data-recap-source]');
@@ -57,7 +58,7 @@ export function attachCharacterControls({root, body, profile, manager, getMessag
   }
   function showBranches() {
     const state = manager.metadata(), labels = l();
-    const d = dialog(labels.branches, `<p class="character-dialog-note">${labels.original}</p><div class="character-branch-list">${state.threads.map(t => `<div><button type="button" data-select-branch="${safe(t.id)}" ${t.id === state.active ? 'aria-current="true"' : ''}><strong>${safe(t.label || sceneName(t) || labels.initial)}</strong><span>${safe(sceneName(t))}${t.id === state.active ? ' · ' + labels.active : ''}</span></button>${t.id !== state.active ? `<button type="button" data-delete-branch="${safe(t.id)}" aria-label="${labels.delete}">×</button>` : ''}</div>`).join('')}</div>`);
+    const d = dialog(labels.branches, `<p class="character-dialog-note">${labels.original}</p><div class="character-branch-list">${state.threads.map(t => `<div><button type="button" data-select-branch="${safe(t.id)}" ${t.id === state.active ? 'aria-current="true"' : ''}><strong>${safe(threadLabel(t) || labels.initial)}</strong><span>${safe(sceneName(t))}${t.id === state.active ? ' · ' + labels.active : ''}</span></button>${t.id !== state.active ? `<button type="button" data-delete-branch="${safe(t.id)}" aria-label="${labels.delete}">×</button>` : ''}</div>`).join('')}</div>`);
     d.onclick = event => {
       const choose = event.target.closest('[data-select-branch]'), remove = event.target.closest('[data-delete-branch]');
       if (choose) guarded(() => {if (choose.dataset.selectBranch === state.active) {d.close(); return;} const changed=manager.select(choose.dataset.selectBranch,getMessages());d.close();if(changed)reopen();else throw Error('Branch unavailable');});

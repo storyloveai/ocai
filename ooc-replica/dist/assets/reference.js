@@ -98,7 +98,7 @@ function patchOriginals(root,keep){
 }
 const catalog = [threeKingdoms,threeKingdomsInk,...bookMetadata,...evidence.catalog,...(evidence.characters||[])];
 evidence.features=[{...threeKingdoms},...storydateOriginals.slice(0,5).map(d=>({...d,href:'/story/'+d.id}))];
-evidence.characterFeatures=storydateCharacters.slice(0,3).map(d=>({...d,href:'/character/'+d.id}));
+evidence.characterFeatures=['sgc-007','sgc-002','sgc-004'].map(id=>storydateCharacters.find(d=>d.id===id)).filter(Boolean).map(d=>({...d,href:'/character/'+d.id}));
 for(const f of evidence.characterFeatures||[]){const id=f.href.split('/').pop();if(!catalog.some(d=>d.id===id))catalog.push({...f,id,type:'character',author:'',plays:'',genre:'Others',original:false});}
 // Category tabs are loose: every tab always has titles. Tags come from keywords, then a deterministic fill.
 const GENRES=['Fantasy','Romance','Sci-Fi','History','Girls Love','Horror','Oriental Fantasy','Slice of Life','Fan Fiction','Utility','Boys Love','Others'];
@@ -128,6 +128,7 @@ templateDocument.querySelectorAll('a[href^="/story/"]').forEach(a => {
   if (a.querySelector('[data-name]')) cardMarkup.set(a.getAttribute('href').split('/').pop(),a.outerHTML);
 });
 const characterDocument=new DOMParser().parseFromString(evidence.pages.character,'text/html');
+patchOriginals(characterDocument);
 characterDocument.querySelectorAll('a[href^="/character/"]').forEach(a=>{if(a.querySelector('[data-radix-aspect-ratio-wrapper]')&&a.querySelector('p'))cardMarkup.set(a.getAttribute('href').split('/').pop(),a.outerHTML);});
 const collections=new Map();
 for(const [kind,doc]of [['story',templateDocument],['character',characterDocument]]){
@@ -355,6 +356,21 @@ function grid(items,ranked=false){
   return anchor.outerHTML;
  }).join('')}</div>`;
 }
+// Keep the established character landing page, hero, filters and card design.
+// Additional people join its existing Explore shelf rather than replacing it.
+function extendCharacterShelf(){
+ const section=all('h2').find(h=>text(h)==='Explore')?.closest('section'),container=section?.children[1];
+ const template=container?.firstElementChild;
+ if(!template?.querySelector('a[href^="/character/"]'))return;
+ for(const d of storydateCharacters){
+  if(container.querySelector(`a[href="/character/${d.id}"]`))continue;
+  const node=template.cloneNode(true),anchor=node.querySelector('a');anchor.href='/character/'+d.id;
+  node.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  anchor.querySelectorAll('img.object-cover').forEach(img=>{img.src=source(d);img.alt=d.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');img.style.visibility='';});
+  const ps=anchor.querySelectorAll('p');if(ps[0])ps[0].textContent=d.title;if(ps[1])ps[1].textContent=d.description;if(ps[2])ps[2].textContent=d.author;
+  container.append(node);cardMarkup.set(d.id,anchor.outerHTML);
+ }
+}
 function bindSearch() {
   const inputs=all('input');
   inputs.forEach(i=>{i.setAttribute('aria-label','Search stories and characters');i.oninput=()=>{
@@ -374,7 +390,7 @@ function bindSearch() {
 
 export function show(path, helpers) {
   const characterId=/^\/character\/([^/?]+)$/.exec(path)?.[1];
-  if(path==='/character'||characterById.has(characterId)){
+  if(characterById.get(characterId)?.scenes){
     mountShell('',helpers,'character');
     const content=q('[data-shrink]')?.nextElementSibling;
     if(content)mountCharacterPage(content,{...helpers,characters:storydateCharacters},characterId);
@@ -431,6 +447,7 @@ export function show(path, helpers) {
     }
   }
   if(page==='home')pinThreeKingdoms();
+  if(page==='character')extendCharacterShelf();
   hydrate();
   if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);bindCarousels(host,updateHero);}
   bindDisclosures(host);
@@ -452,7 +469,7 @@ export function mountInteraction(html,helpers){closeTitlePreview();clearInterval
 export function preview(path,helpers){
  const match=/^\/(story|character)\/([^/?]+)$/.exec(path);if(!match)return false;
  const id=match[2],d=catalog.find(d=>d.id===id);if(!d)return false;
- const record=characterById.has(id)?characterPreview(characterById.get(id),getLang()):titlePreviews.titles[id]||capturedPreview(d)||fallbackPreview(d);
+ const record=characterById.get(id)?.scenes?characterPreview(characterById.get(id),getLang()):titlePreviews.titles[id]||capturedPreview(d)||fallbackPreview(d);
  const dialog=openTitlePreview(record,id,{...helpers,assets});
  dialog.setAttribute('aria-label',match[1]==='character'?'Character Information':'Story Information');
  dialog.querySelector('[data-preview-close]')?.setAttribute('aria-label',match[1]==='character'?'Close Character Information':'Close Story Information');

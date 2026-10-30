@@ -103,7 +103,7 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.equal(narrationRequests.at(-1).titleId,'sgc-007');
   assert.deepEqual(values.get('ooc-session-v2-sgc-007').slice(0,previous.length),previous,'saved messages remain intact');
   assert.doesNotMatch(document.querySelector('#session-messages').textContent,/Ashley|lovely café/);
-  assert.match(document.querySelector('.session-error').textContent,/角色对话暂时无法连接/);
+  assert.match(document.querySelector('.session-error').textContent,/Character replies are temporarily unavailable/);
   // These six openings and first moves do not depend on a model being online.
   // They stay attached to the selected person rather than a captured demo shell.
   helpers.data.push(...sanguoCharacters.map(c=>({...c,type:'character'})));

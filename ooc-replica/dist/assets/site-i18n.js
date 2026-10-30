@@ -20,6 +20,23 @@ const UI = [
   ['Character', '角色'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
   ['Explore', '探索'], ['Previous slide', '上一张'], ['Next slide', '下一张'], ['Main', '精选'], ['New Ranking', '新作榜'], ['Rankings', '排行榜'], ['Today', '今日'],
   ['Browse by genre','按题材浏览'], ['Start chatting','开始对话'],
+  ['Send a message','发送消息'], ['Continue the scene.','继续当前对话。'], ['Continue the conversation','继续对话'],
+  ['Copy response','复制回复'], ['Copied','已复制'], ['Retry response','重试回复'], ['Regenerate response','重新生成回复'], ['Edit response','编辑回复'], ['Message options','消息选项'], ['Edit message','编辑消息'], ['Copy text','复制文字'], ['Stopped','已停止'],
+  ['Copy code','复制代码'], ['Model comes from the server configuration','模型由服务端配置确定'], ['Close information','关闭资料'],
+  ['Edit suggested response','编辑推荐回复'], ['Send suggested response','发送推荐回复'], ['Character Information','角色信息'], ['Close Character Information','关闭角色信息'], ['Bookmark character','收藏角色'],
+  ['Stop generating','停止生成'], ['Cancel request','取消请求'], ['Send message','发送消息'], ['Close','关闭'], ['Save','保存'], ['Add','添加'],
+  ['Response unavailable','暂时无法回复'], ['AI model','AI 模型'], ['Not configured','尚未配置'], ['Image preview','图片预览'], ['Character image','角色图片'], ['Close session settings','关闭会话设置'],
+  ['Connecting to the model. You can cancel at any time.','正在连接模型，可随时取消。'],
+  ['Connecting to the model','正在连接模型'], ['Waiting for the reply','正在等待回复'], ['Preparing the reply','正在准备回复'],
+  ['Panels','面板'], ['Toggle Side Navigation','切换侧栏'], ['Toggle Session Settings','切换会话设置'], ['Toggle User Notes','切换用户备注'], ['Toggle Memories','切换记忆'], ['Input Field','输入框'], ['Focus Input Field','聚焦输入框'], ['Unfocus Input Field','离开输入框'], ['Autosuggestion','推荐回复'], ['Show Autosuggestion','显示推荐回复'], ['Select Suggested Response','选择推荐回复'], ['Play Actions','对话操作'], ['Start New Session','开始新会话'], ['Add Situation','补充情景'], ['Regenerate','重新生成'],
+  ['Your recent sessions will appear here.','最近的对话会显示在这里。'], ['Keyboard shortcuts','快捷键'],
+  ['Used as context for this story. Saved on this device.','为当前对话补充背景。'],
+  ['The same role and style prompts apply when the server model changes.','切换服务端模型时，人物设定与对话风格保持一致。'],
+  ['The initial scene is read-only in this demo.','开场内容暂不支持直接修改。'],
+  ['Your message is saved. Retry the reply without sending it again.','消息已保留，可重试回复，不用重复发送。'],
+  ['Character replies are temporarily unavailable. Please try again.','角色对话暂时无法连接，请稍后重试。'],
+  ['The model is taking too long. Please try again.','模型响应超时，请重试。'], ['The model service is busy. Please try again shortly.','模型服务暂时繁忙，请稍后重试。'],
+  ['The model service is unavailable. Please try again later.','模型服务暂不可用，请稍后重试。'], ['The reply was interrupted. The text already shown is kept.','回复连接已中断，已显示的内容会保留。'],
   ['Fantasy', '奇幻'], ['Romance', '恋爱'], ['Sci-Fi', '科幻'], ['Girls Love', '百合'], ['Horror', '恐怖'], ['Oriental Fantasy', '东方奇幻'], ['Slice of Life', '日常'],
   ['Fan Fiction', '同人'], ['Utility', '工具'], ['Boys Love', '耽美'], ['Others', '其他'], ['Adventure', '冒险'], ['Action', '动作'], ['Comedy', '喜剧'], ['Thriller', '惊悚'],
   ['Top Ranked', '热门榜'], ['View All', '查看全部'], ['StoryDate Originals', 'StoryDate 原创', 'OOC Originals'], ['Trending Now', '当下热门'],
@@ -121,6 +138,8 @@ const CSS = `.sd-lang{display:inline-flex;border:1px solid #3a3a3a;border-radius
 .sd-language-label svg{width:16px;height:16px;flex:none}
 .sd-lang-side,.sd-lang-top,.sd-lang-legacy{margin:0;flex:none;width:max-content;border-color:#ffffff1a;border-radius:7px}
 .sd-lang-top{margin-left:0}.sd-lang-top button{padding:8px;min-height:32px}
+.sd-lang-chat{display:none}
+@media(max-width:1023px){.sd-lang-chat{display:inline-flex}#interaction-root [data-control=model]{max-width:96px;min-width:0}#interaction-root [data-control=model]>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 .signin .sd-lang-legacy{justify-self:center;margin-bottom:6px}
 [data-shrink=true] .sd-language-slot{padding:8px 5px 16px}
 [data-shrink=true] .sd-language-label{display:none}
@@ -141,6 +160,8 @@ function placeToggles(doc, lang) {
   if(languageLabel&&languageLabel.textContent!==label)languageLabel.textContent=label;
   const search = [...doc.querySelectorAll('a[href="/search"]')].find(a => a.closest('[class*="tl:hidden"]'));
   if (search && !search.parentElement.querySelector('.sd-lang-top')) search.insertAdjacentHTML('afterend', toggleMarkup(lang, 'sd-lang-top'));
+  const chatSettings=doc.querySelector('#interaction-root [data-control=settings]');
+  if(chatSettings&&!chatSettings.parentElement.querySelector('.sd-lang-chat'))chatSettings.insertAdjacentHTML('afterend',toggleMarkup(lang,'sd-lang-top sd-lang-chat'));
   const aside = doc.querySelector('body > aside .signin');
   if (aside && !aside.querySelector('.sd-lang')) aside.insertAdjacentHTML('afterbegin', toggleMarkup(lang, 'sd-lang-legacy'));
   doc.querySelectorAll('.sd-lang').forEach(group=>{if(group.getAttribute('aria-label')!==label)group.setAttribute('aria-label',label);});

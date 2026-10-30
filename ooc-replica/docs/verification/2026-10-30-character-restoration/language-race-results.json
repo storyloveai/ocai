@@ -1,0 +1,5 @@
+{
+  "model": "local verification stub",
+  "case": "an English suggestion arriving after the visitor switches back to Chinese cannot overwrite the Chinese options or original messages",
+  "result": "pass"
+}
