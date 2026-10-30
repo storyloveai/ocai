@@ -40,3 +40,20 @@ test('one request cannot mutate another request’s original character canon', (
   const id=originalCharacters[0].id,role=roleFor(id);role.scene.opening.zh='mutated by a caller';
   assert.equal(roleFor(id).scene.opening.zh,originalCharacters[0].scenes[0].opening.zh);
 });
+test('reply and suggestion requests carry the same ongoing events while retaining separate encounter canon', () => {
+  const titleId = originalCharacters[0].id, characterScene = 'missed-call';
+  const history = [
+    {role: 'user', content: '我不想进事务所，就在门口说吧。'},
+    {role: 'assistant', content: '*沈砚舟拿起外套，走到门外。*\n\n“好，就在这里。”'},
+    {role: 'user', content: '我已经听完你刚才的解释了。明天见面的事，我还没有答应。'}
+  ];
+  const memory = 'Visitor previously said: 我不喝酒。';
+  const reply = buildPrompt({titleId, characterScene, memory, messages: history});
+  const next = suggestionPrompt({titleId, characterScene, memory, messages: [...history, {role: 'assistant', content: '“知道了。我不会把沉默当成答应。”'}]});
+  const nextContext = JSON.parse(next.messages[0].content);
+  assert.deepEqual(reply.messages, history); assert.deepEqual(nextContext.recentConversation.slice(0, 3), history);
+  assert.equal(nextContext.canon.scene.id, characterScene); assert.equal(nextContext.continuityNotes, memory);
+  assert.match(reply.system, /CHARACTER CONTINUITY/); assert.match(next.system, /CHARACTER CONTINUITY/);
+  assert.doesNotMatch(buildPrompt({titleId: 'story-005', messages: history}).system, /CHARACTER CONTINUITY/);
+  assert.doesNotMatch(suggestionPrompt({titleId: 'story-005', messages: history.slice(0, 2)}).system, /CHARACTER OPTIONS/);
+});

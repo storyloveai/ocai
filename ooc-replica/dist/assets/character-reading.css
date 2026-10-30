@@ -18,7 +18,7 @@
 .character-message-tools button:hover{color:#e8d7b8}
 .character-message-tools button:disabled{opacity:.45;cursor:default}
 .character-conversation-tools{position:sticky;top:0;z-index:4;display:flex;align-items:center;justify-content:space-between;gap:8px;width:min(100%,720px);padding:10px 12px;margin:0 auto;background:#111110f5;border-bottom:1px solid #ffffff08;font:11px/1.5 Inter,system-ui,sans-serif;color:#aaa497}
-.character-conversation-tools>button,.character-conversation-tools>span{min-width:0;max-width:52%}
+.character-conversation-tools>button,.character-conversation-tools>span{min-width:0;max-width:52%;flex:1}
 .character-conversation-tools>button span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .character-conversation-tools>div{display:flex;align-items:center;gap:6px;flex:none}
 .character-conversation-tools button{display:flex;align-items:center;justify-content:center;gap:10px;min-height:36px;padding:7px 10px;border:1px solid #ffffff0c;border-radius:7px;background:#1c1c19;color:#c0b7a8;cursor:pointer;font:inherit}
@@ -46,3 +46,16 @@
 .character-message-tools button:focus-visible,.character-conversation-tools button:focus-visible,.character-dialog button:focus-visible,.character-encounters>a:focus-visible{outline:2px solid #c6a46a;outline-offset:4px}
 @media(max-width:767px){.character-reading .session-messages{font-size:15px;padding:20px 20px 24px;line-height:1.95}.character-reading .session-message:not(.user){margin-bottom:26px}.character-reading .session-message.user{max-width:90%;padding:10px 14px}.character-conversation-tools{padding:8px 16px;font-size:10px}.character-conversation-tools button{padding:7px 8px;min-height:36px}.character-message-tools{gap:14px;font-size:10px}.character-encounters{grid-template-columns:1fr}.character-dialog{padding:24px 20px}.character-prose p{margin-bottom:15px}}
 .character-pending-reply{display:flex;justify-content:flex-end;margin:8px 0 24px}.character-pending-reply button{min-height:40px;padding:8px 16px;border:1px solid #8a7148;border-radius:8px;background:#29251e;color:#e7d4b1;font:12px/1.5 Inter,system-ui,sans-serif;cursor:pointer}
+.character-recap-dialog{max-height:calc(100dvh - 40px);overflow-y:auto;overscroll-behavior:contain}
+body[data-reference=true] dialog.character-dialog{width:min(680px,calc(100vw - 32px))}
+.character-recap-hero{display:grid;grid-template-columns:132px minmax(0,1fr);gap:24px;align-items:center;margin-bottom:28px;background:linear-gradient(110deg,#29271f,#1a1a18);border-radius:10px;overflow:hidden}
+.character-recap-hero img{width:132px;height:176px;object-fit:cover;display:block}
+.character-recap-hero>div{padding:18px 20px 18px 0;min-width:0}.character-recap-hero h3{font-size:24px;font-weight:500;margin:0 0 12px;color:#f5f1e8}
+.character-recap-hero p{font-size:12px;color:#b9b2a6;overflow-wrap:anywhere}.character-recap-hero .character-recap-eyebrow{color:#cfac72;font-size:11px;margin-bottom:10px}
+.character-recap-section{margin:24px 0}.character-recap-section>h3{font-size:12px;color:#cfac72;font-weight:500;margin-bottom:16px}
+.character-recap-section>article{margin-bottom:20px;padding-left:16px;border-left:1px solid #ffffff14}.character-recap-section .character-prose{font-size:14px}
+.character-recap-section button,.character-memory-actions button{min-height:36px;color:#c1b7a5;background:transparent;border:0;padding:6px 0;font:11px/1.5 Inter,system-ui,sans-serif;cursor:pointer}
+.character-memory-actions{display:flex;gap:24px;align-items:center}.character-recap-dialog .character-dialog-note{font-size:11px;line-height:1.8}
+.character-recap-kept{margin-left:12px;font-size:10px;color:#bda475}.character-recap-dialog .character-dialog-actions{position:sticky;bottom:-28px;background:#1a1a18;padding:12px 0 4px;margin-top:16px}.character-recap-dialog .character-dialog-actions button{width:100%}
+.character-reading [data-index]:focus{outline:1px solid #b8955b;outline-offset:8px;border-radius:4px}
+@media(max-width:767px){.character-recap-hero{grid-template-columns:104px minmax(0,1fr);gap:16px}.character-recap-hero img{width:104px;height:156px}.character-recap-hero h3{font-size:22px}.character-recap-hero>div{padding:12px 12px 12px 0}.character-conversation-tools>button,.character-conversation-tools>span{max-width:none}.character-conversation-tools>button{justify-content:space-between}}

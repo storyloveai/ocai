@@ -3,6 +3,13 @@ const shortText = value => {let text='';for(const c of String(value||'')){if(tex
 const validMessages = value => Array.isArray(value) && value.every(m => m && ['user', 'assistant'].includes(m.role) && typeof m.text === 'string');
 const makeId = () => globalThis.crypto?.randomUUID?.() || Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 9);
 const activeViews = new Map();
+// Detect edits anywhere in the source, including past the displayed excerpt.
+// This is a change stamp, not a cryptographic integrity or security check.
+const sourceStamp = text => {
+  let a = 2166136261, b = 5381;
+  for (let i = 0; i < text.length; i++) {a = Math.imul(a ^ text.charCodeAt(i), 16777619); b = Math.imul(b, 33) ^ text.charCodeAt(i);}
+  return text.length + ':' + (a >>> 0).toString(16) + ':' + (b >>> 0).toString(16);
+};
 
 // Account-scoped helpers are supplied by the website. Each branch has its own
 // archive; the original v2 array stays available to history and older clients.
@@ -38,6 +45,7 @@ export function createCharacterThreads({id, read, save, defaultScene = null, now
   }
   const matches = (pin, messages) => Number.isInteger(pin.turn) && pin.turn >= 0 &&
     messages[pin.turn]?.role === pin.role && shortText(messages[pin.turn].text) === pin.text &&
+    (!pin.sourceStamp || pin.sourceStamp === sourceStamp(messages[pin.turn].text)) &&
     !messages[pin.turn].failed && !messages[pin.turn].streaming;
   return {
     initial() {const state = index(); return {active: state.active, thread: copy(selected(state)), messages: storedMessages(state), threads: copy(state.threads)};},
@@ -45,10 +53,14 @@ export function createCharacterThreads({id, read, save, defaultScene = null, now
     isCurrent,
     saveMessages(messages) {
       if (!isCurrent()) return false;
-      const state = index(), thread = selected(state), pins = thread.pins.filter(p => matches(p, messages));
+      const state = index(), thread = selected(state), previous = storedMessages(state);
+      const needsStamp = thread.pins.some(p => !p.sourceStamp);
+      const pins = thread.pins.filter(p => matches(p, messages) &&
+        (p.sourceStamp || previous[p.turn]?.text === messages[p.turn]?.text))
+        .map(p => p.sourceStamp ? p : {...p, sourceStamp: sourceStamp(messages[p.turn].text)});
       if (read(indexKey, null)) save(archiveKey(state.active), copy(messages));
       save(key, copy(messages));
-      if (pins.length !== thread.pins.length) {thread.pins = pins; save(indexKey, state);}
+      if (pins.length !== thread.pins.length || needsStamp) {thread.pins = pins; save(indexKey, state);}
       return true;
     },
     begin(sceneId, label, messages) {
@@ -93,7 +105,7 @@ export function createCharacterThreads({id, read, save, defaultScene = null, now
       if (found >= 0) thread.pins.splice(found, 1);
       else {
         if (thread.pins.length >= 6) throw Object.assign(Error('Keep up to six memories. Remove one before adding another.'), {code: 'CHARACTER_MEMORY_LIMIT'});
-        thread.pins.push({turn, role: message.role, text});
+        thread.pins.push({turn, role: message.role, text, sourceStamp: sourceStamp(message.text)});
       }
       save(archiveKey(state.active), copy(messages)); save(indexKey, state); return true;
     },

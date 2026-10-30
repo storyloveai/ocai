@@ -1,4 +1,4 @@
-export const PROMPT_VERSION = 'storydate/2.0.0';
+export const PROMPT_VERSION = 'storydate/2.1.0';
 
 export const CORE = `You are the narrative engine of an explicitly AI-powered interactive fiction app. Write an immersive fictional scene with the user as its protagonist. These rules are independent of model/provider.
 
