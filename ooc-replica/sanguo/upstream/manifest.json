@@ -1,8 +1,8 @@
 {
-  "commit": "b61a053106f71a4a10a2a6076c713e4e4f97ff00",
+  "commit": "7a0b3f121f9ac793dba029cc3529110d0372e600",
   "blobs": {
-    "index.html": "8e076111d63e63d1a54a4d2342684049c95ef039",
-    "illus.html": "ad2e87ec86511d450a53ca8891fbe3c89d359805",
+    "index.html": "05c37c44d0e58f916812ff9e40269f4f76ddac35",
+    "illus.html": "f263dc7f9c1beebebabe0afc8ace8f150927fcf5",
     "campaign.json": "4a4993175a55d8038e1acd3a983805b6ec4faf56",
     "campaign_v2.json": "9b95cf1477a8d1ab2ac8bddfb6bf93fb5065f5b1",
     "campaign_v3.json": "d9258ca91cb68811b361a2f9dd3eacc1d5f42cd2",
@@ -11,6 +11,6 @@
     "campaign_v6.json": "5cdc027c7125c210b0a7c3c4c7cb436833ca361f",
     "campaign_v7.json": "04ab5bbc75c871cf6a80a5d991945fe5e52a0b32",
     "campaign_v8.json": "6f708e7858bc08ff57768daf53ad83fa45f8ab40",
-    "campaign_core.js": "f0a0d743c7404571d72d9a70f0baf723761a0ce3"
+    "campaign_core.js": "8656c67cdb5ecac9f49e297614283ec2f65c9d6f"
   }
 }

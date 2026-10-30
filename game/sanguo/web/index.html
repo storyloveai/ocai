@@ -602,6 +602,7 @@ function useVol(id) { const v = VOL(id) || BOOK.volumes[0]; CAMP = v.camp; COL =
     st.asked = st.asked || {}; st.asked[n.id] = ans.id;
     const e = ledgerPush(st, { kind: "answer", node: n.id, choice: null, answer: ans.id, to: a.who, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
     applyEffects(camp, st, ans.effects, e);
+    if (ans.id === "rude") { st.grudge = st.grudge || {}; st.grudge[a.who] = (st.grudge[a.who] || 0) + 1; e.offend = a.who; } // answering with an insult is an insult
     (ans.echo || []).forEach(id => { if (!st.echoes[id]) { st.echoes[id] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(id); } });
     st.log.push({ k: "ans", n: n.id, a: ans.id, said: (said || "").slice(0, 120), p: idxWhere(st, ans.out), seq: e.seq });
     const fl = flare(camp, st, a.who); if (fl) e.flare = fl;
@@ -804,6 +805,8 @@ function useVol(id) { const v = VOL(id) || BOOK.volumes[0]; CAMP = v.camp; COL =
     const outIdx = idxWhere(st, m.out);
     const e = ledgerPush(st, { kind: "move", node: n.id, choice: null, move: m.id, to: m.to, said: (said || "").slice(0, 40), changes: [], debts: [], echo: [] });
     applyEffects(camp, st, m.effects || [], e);
+    const hurt = (m.labels || []).includes("threat") ? 2 : (m.labels || []).includes("rude") ? 1 : 0; // a threat that changes the story is still a threat
+    if (hurt && m.to) { st.grudge = st.grudge || {}; st.grudge[m.to] = (st.grudge[m.to] || 0) + hurt; e.offend = m.to; }
     (m.echo || []).forEach(x => { if (!st.echoes[x]) { st.echoes[x] = { at: e.seq, node: n.id, paid: [] }; e.echo.push(x); } });
     st.log.push({ k: "move", n: n.id, m: m.id, to: m.to, p: outIdx, seq: e.seq });
     if (m.ends) { st.v.ended_early = true; st.done.push(n.id); st.cur = null; st.flash = null; enterChapter(camp, st, camp.chapters.length); }

@@ -173,4 +173,6 @@ test("grudges: an insult is remembered; kind or clever words don't move them unt
   assert.equal(w.mend, "tao"); assert.equal(st.grudge.tao, 0, "sincere warmth works the grudge off first");
   CC.speak(c, st, "flat", "", "tao", ["zhi"]);
   assert.ok(es() > after, "once mended, what you show moves them again");
+  const st2 = CC.newGame(c); st2.grudge = {};
+  assert.equal(CC.speak(c, st2, "threat", "杀了你", "tao", []).offend, "tao"); assert.equal(st2.grudge.tao, 2, "a threat counts double");
 });
