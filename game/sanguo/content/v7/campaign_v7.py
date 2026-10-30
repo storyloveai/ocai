@@ -581,15 +581,15 @@ for n in N:
 import moves_v7
 CAMP_MOVES = moves_v7.extend(N)
 
-PLACES = {"chengdu": V6["places"]["chengdu"], "hanzhong": {"x": 375, "y": 50, "rx": 372, "ry": 346, "zh": "汉中", "en": "Hanzhong"}}
+PLACES = {"chengdu": V6["places"]["chengdu"], "hanzhong": {"x": 340, "y": 130, "rx": 372, "ry": 346, "zh": "汉中", "en": "Hanzhong"}}
 PLACES.update({
-    "qishan": {"x": 300, "y": 25, "rx": 345, "ry": 330, "zh": "祁山", "en": "Qishan"},
-    "tianshui": {"x": 250, "y": 15, "rx": 325, "ry": 322, "zh": "天水", "en": "Tianshui"},
-    "jieting": {"x": 285, "y": 8, "rx": 337, "ry": 318, "zh": "街亭", "en": "Jieting"},
-    "xicheng": {"x": 330, "y": 35, "rx": 352, "ry": 338, "zh": "西城", "en": "Xicheng"},
-    "shangfang": {"x": 412, "y": 30, "rx": 392, "ry": 335, "zh": "上方谷", "en": "Shangfang Valley"},
-    "wei_camp": {"x": 430, "y": 18, "rx": 400, "ry": 328, "zh": "渭南魏营", "en": "The Wei camp south of the Wei"},
-    "wuzhang": {"x": 400, "y": 22, "rx": 385, "ry": 330, "zh": "五丈原", "en": "Wuzhang Plains"},
+    "qishan": {"x": 235, "y": 70, "rx": 345, "ry": 330, "zh": "祁山", "en": "Qishan"},
+    "tianshui": {"x": 140, "y": 48, "rx": 325, "ry": 322, "zh": "天水", "en": "Tianshui"},
+    "jieting": {"x": 300, "y": 40, "rx": 337, "ry": 318, "zh": "街亭", "en": "Jieting"},
+    "xicheng": {"x": 455, "y": 175, "rx": 352, "ry": 338, "zh": "西城", "en": "Xicheng"},
+    "shangfang": {"x": 560, "y": 100, "rx": 392, "ry": 335, "zh": "上方谷", "en": "Shangfang Valley"},
+    "wei_camp": {"x": 610, "y": 48, "rx": 400, "ry": 328, "zh": "渭南魏营", "en": "The Wei camp south of the Wei"},
+    "wuzhang": {"x": 500, "y": 62, "rx": 385, "ry": 330, "zh": "五丈原", "en": "Wuzhang Plains"},
 })
 RIVERS = V6["rivers"]
 
