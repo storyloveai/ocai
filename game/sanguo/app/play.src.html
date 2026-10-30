@@ -168,6 +168,21 @@ button:focus-visible, input:focus-visible, summary:focus-visible { outline: 2px 
 .chip b { color: var(--text); font-weight: 600 }
 .chip .up { color: var(--accent-text) } .chip .down { color: var(--rose) }
 .chip .pt { width: 30px }
+.act-where { font: 500 19px/1.7 var(--display); margin: 6px 0 22px }
+.epi .act { border-top: 1px solid var(--line); padding-top: 16px; margin-top: 8px }
+.epi .act h3 { font-size: 12px; letter-spacing: .12em; color: var(--muted); font-weight: 600; margin: 0 0 12px }
+.who { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 16px; align-items: start; margin-bottom: 18px }
+.who .pt { width: 84px } .who b { font: 600 17px/1.3 var(--display) } .who p { margin: 6px 0 4px; line-height: 1.7 }
+.who.romance b { color: var(--rose) }
+.left { display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: 14px; align-items: start; margin-bottom: 16px }
+.left p { margin: 4px 0; line-height: 1.7 } .left .gt, .act-hist .gt { font-size: 12px; color: var(--accent-text); letter-spacing: .06em }
+.lt-pic figure { margin: 0 } .lt-pic .art, .lt-pic figure { border-radius: 8px; overflow: hidden; aspect-ratio: 5 / 2 }
+.lt-pic img { width: 100%; height: 100%; object-fit: cover; display: block }
+.lt-why { font-size: 12.5px; color: var(--muted) }
+.more-who { font-size: 13px; margin: -6px 0 12px }
+.act-hist { color: var(--muted); font-size: 14px; line-height: 1.7; border-top: 1px solid var(--line); padding-top: 14px; margin-top: 8px }
+.allends { margin-top: 10px } .allends > summary { cursor: pointer; color: var(--muted); font-size: 13px; padding: 8px 0 }
+@media (max-width: 560px) { .left { grid-template-columns: minmax(0, 1fr) } .who { grid-template-columns: 64px minmax(0, 1fr) } .who .pt { width: 64px } }
 .map-wait svg * { animation-play-state: paused !important }
 .prgroup { font-size: 11.5px; letter-spacing: .08em; color: var(--muted); margin: 12px 0 2px }
 .ch.pr { padding: 6px 0 }
@@ -358,7 +373,7 @@ const UI = {
     artChanged: "画面随你的选择变了", youTo: w => `你对${w}说`, commitNote: (w, x) => `承诺已记下：你答应了${w}「${x}」。后面的剧情会记着。`,
     unlockedNote: x => `因为你刚才的话，${x} 现在可以选了。`, closedNote: x => `因为你刚才的话，${x} 选不了了。`, commitKept: "承诺·兑现", commitBroken: "承诺·落空", commitWas: x => `你说过「${x}」`,
     recallL: "记得", recallPromise: (w, x) => `${w}看着你：『你答应过我——“${x}”。』`, recallLove: w => `${w}的目光在你身上停了一下，像是想起了你上回说的话。`, recallRude: w => `${w}淡淡地看了你一眼。你上回那句话，显然还没忘。`, recallSaid: w => `${w}看了你一眼：『你上回说的话，我还记着。』`, valuesL: "话里见：",
-    youSaid: (w, x) => `你在「${w}」说过「${x}」`, prHere: "此刻在场", prVol: "这一卷的人", prRest: n => `这一卷不出场的 ${n} 人`, rcLast: (c, x) => `你们最近的一段：${c} · ${x}`, rcNone: "你们之间，还没有发生什么。", rcBefore: "这份情分，是前几卷里攒下的。",
+    youSaid: (w, x) => `你在「${w}」说过「${x}」`, actWho: "谁与你走到了这里", actLeft: "你留下了什么", actMore: x => `还有：${x}`, allEnds: "全部结局片段，和每一条的来由", endBecause: (c, x) => `因为${c}，你「${x}」`, prHere: "此刻在场", prVol: "这一卷的人", prRest: n => `这一卷不出场的 ${n} 人`, rcLast: (c, x) => `你们最近的一段：${c} · ${x}`, rcNone: "你们之间，还没有发生什么。", rcBefore: "这份情分，是前几卷里攒下的。",
     rcClose: "最亲近的人", rcWary: "对你有戒心的人", rcRom: (w, x) => `${w}与你，${x}。`, rcMore: n => `其余 ${n} 人`, fxSep: "——", fxTier: (w, d, a, b) => `${w}对你的${d}：${a} → ${b}`, fxGates: n => `后面有 ${n} 处选择要看这一点`, fxEnd: "结局也会看这一点",
     fxLow: (w, d, x, txt) => `${w}对你的${d}只剩 ${x}，${txt}`, fxHeat: (w, x, line) => `${w}的火气 ${x}/${line}`, fxHeatFlash: (w, line) => `到 ${line}，${w}会当场发作`, fxHeatWalk: (w, line) => `到 ${line}，这一场${w}就不再理你`, fxImp: (w, x) => `${w}记下了：${x}`, sceneHint: "选之前，也可以先对在场的人说两句——说的话会立刻影响他们。", toWho: "对：", scenePh: w => `对${w}说点什么，或者直接说你要做什么……`, lateNight: "（夜深了，再说一两句就该告辞了。）", sceneLast: "（再说一句，就得做决定了。）", topicsSoft: "可以聊聊：", impL: "印象·", meterRash: "到 4：有人会把你的话报上去", saidL: s => `你说了「${s}」`, mapViewL: "地图视图", mapViews: { near: "近景", realm: "天下" }, cgL: "高光", moveL: "你的话改变了局势", flareL: w => `${w}当场发作了。`, flashTag: "当场", walkout: w => `${w}不再接你的话了。`, resumeL: "事情还没完。", cooledNote: w => `${w}还在气头上，这一次不领你的情。`, decideNow: "（话已经说到这儿了，该做决定了。现在只能说你要怎么做。）", decidePh: "该做决定了——说你要怎么做……", heatL: "火气", askHint: "这个问题没有选项。用你自己的话回答——说什么，决定接下来发生什么。", askPh: "用你自己的话回答……", youAns: "你答", noAns: "（你没有回答。）", askL: "问", recapH: c => `${c}小结 · 你改变了什么`, recapEcho: n => `埋下 ${n} 处伏笔，后面会被提起`, recapDebt: x => `还欠着：${x}`, recapCommit: n => `许下 ${n} 个承诺`, benchH: "AI 试调台", benchNote: "用一组典型的话测试当前模型：语气标签、回答归类、承诺识别是否符合预期。会用掉若干次模型调用。", benchRun: "运行测试", benchRunning: "测试中……", benchNoAI: "当前没有可用的 AI（需要在 claude.ai 打开并允许调用，或接上服务端）。下面只显示关键词兜底的结果。", benchCols: ["输入", "对象", "期望", "关键词兜底", "模型", "回复"], benchSum: (a, b) => `模型与期望一致 ${a}/${b}`, sealedPh: "话已经说完了，从上面选一个吧", sealedNote: "这一场能说的话说完了，输入框已关闭。",
     gal: { title: "图鉴", runs: n => `已玩 ${n} 局`, frags: (a, b) => `结局片段 ${a}/${b}`, nodes: (a, b) => `场景 ${a}/${b}`, choices: (a, b) => `选择 ${a}/${b}`, cgs: (a, b) => `高光 ${a}/${b}`,
@@ -405,7 +420,7 @@ const UI = {
     artChanged: "The picture changed with your choice", youTo: w => `You, to ${w}`, commitNote: (w, x) => `Promise noted: you told ${w} "${x}". The story will remember.`,
     unlockedNote: x => `Because of what you just said, ${x} is now open.`, closedNote: x => `Because of what you just said, ${x} is no longer possible.`, commitKept: "Promise kept", commitBroken: "Promise broken", commitWas: x => `you said "${x}"`,
     recallL: "Remembered", recallPromise: (w, x) => `${w} looks at you. "You promised me: '${x}'."`, recallLove: w => `${w}'s eyes rest on you a moment, as if remembering what you said last time.`, recallRude: w => `${w} gives you a flat look. Clearly your last words haven't been forgotten.`, recallSaid: w => `${w} glances at you. "I remember what you said last time."`, valuesL: "Your words showed: ",
-    youSaid: (w, x) => `in "${w}" you said "${x}"`, prHere: "Here now", prVol: "In this volume", prRest: n => `${n} not in this volume`, rcLast: (c, x) => `Your latest moment: ${c} · ${x}`, rcNone: "Nothing has happened between you yet.", rcBefore: "What you have was built in earlier volumes.",
+    youSaid: (w, x) => `in "${w}" you said "${x}"`, actWho: "Who walked here with you", actLeft: "What you left behind", actMore: x => `Also: ${x}`, allEnds: "Every ending fragment, and why", endBecause: (c, x) => `Because in ${c} you chose: "${x}"`, prHere: "Here now", prVol: "In this volume", prRest: n => `${n} not in this volume`, rcLast: (c, x) => `Your latest moment: ${c} · ${x}`, rcNone: "Nothing has happened between you yet.", rcBefore: "What you have was built in earlier volumes.",
     rcClose: "Closest to you", rcWary: "Wary of you", rcRom: (w, x) => `${w} and you: ${x}.`, rcMore: n => `${n} others`, fxSep: " — ", fxTier: (w, d, a, b) => `${w}'s ${d.toLowerCase()} toward you: ${a} → ${b}`, fxGates: n => `${n} choice${n > 1 ? "s" : ""} ahead depend on this`, fxEnd: "your ending looks at this too",
     fxLow: (w, d, x, txt) => `${w}'s ${d.toLowerCase()} is down to ${x}. ${txt}`, fxHeat: (w, x, line) => `${w}'s temper ${x}/${line}`, fxHeatFlash: (w, line) => `at ${line}, ${w} acts on it right there`, fxHeatWalk: (w, line) => `at ${line}, ${w} stops talking to you for this scene`, fxImp: (w, x) => `${w} remembers: ${x}`, sceneHint: "Before choosing, you can say something to the people here—your words affect them right away.", toWho: "To: ", scenePh: w => `Say something to ${w}, or say what you'll do…`, lateNight: "(It's late—a line or two more, then say goodnight.)", sceneLast: "(One more line, then you must decide.)", topicsSoft: "Things to talk about:", impL: "Impression · ", meterRash: "At 4: someone reports what you've said", saidL: s => `you said "${s}"`, mapViewL: "Map view", mapViews: { near: "Nearby", realm: "The realm" }, cgL: "Key moment", moveL: "Your words changed things", flareL: w => `${w} loses patience—right here, right now.`, flashTag: "On the spot", walkout: w => `${w} stops answering you.`, resumeL: "It isn't over yet.", cooledNote: w => `${w} is still angry and gives you no credit for this.`, decideNow: "(You've said your piece. It's time to decide—now you can only say what you'll do.)", decidePh: "Time to decide—say what you'll do…", heatL: "Temper", askHint: "There are no options for this. Answer in your own words—what you say decides what happens next.", askPh: "Answer in your own words…", youAns: "You answer", noAns: "(You don't answer.)", askL: "Asks", recapH: c => `${c} recap · what you changed`, recapEcho: n => `${n} thread${n > 1 ? "s" : ""} laid down—they'll come back`, recapDebt: x => `Still owed: ${x}`, recapCommit: n => `${n} promise${n > 1 ? "s" : ""} made`, benchH: "AI test bench", benchNote: "Run a set of typical lines against the current model: do tone labels, answer sorting and promise detection match what we expect? Uses several model calls.", benchRun: "Run tests", benchRunning: "Testing…", benchNoAI: "No AI available (open in claude.ai and allow it, or connect the server). Showing keyword-fallback results only.", benchCols: ["Line", "To", "Expected", "Keywords", "Model", "Reply"], benchSum: (a, b) => `Model matches expectation ${a}/${b}`, sealedPh: "You've said your piece—pick one above", sealedNote: "You've used up what you can say in this scene; typing is closed.",
     gal: { title: "Gallery", runs: n => `${n} ${n === 1 ? "run" : "runs"} played`, frags: (a, b) => `Ending pieces ${a}/${b}`, nodes: (a, b) => `Scenes ${a}/${b}`, choices: (a, b) => `Choices ${a}/${b}`, cgs: (a, b) => `Key moments ${a}/${b}`,
@@ -1304,18 +1319,42 @@ function whyItem(w) {
     what = [ch, n ? t(n.title) : "", e && e.kind === "carry" ? l.carryH : tp ? l.freeSaid(t(tp.label)) : e && e.said ? l.saidL(e.said) : e && e.terms ? l.freeSaid(e.terms.map(x => t(x)).join(" / ")) : l.entered]; }
   return h("li", {}, h("b", {}, what[0] + " · " + what[1]), " — ", what[2], h("div", {}, delta(w)));
 }
+// v2.20: the ending in three short acts instead of a wall of fragments — where you ended up (the ending picture and
+// a few lines), who walked here with you (one or two people, with their faces), what you left behind (two or three
+// results that your own choices caused, each with the picture of the scene where you chose). Everything else, and
+// every "why", is one tap away.
+function endingActs(l) {
+  const ends = CC.endings(CAMP, G), byG = id => CAMP.endings.find(g => g.id === id);
+  const item = e => { const g = byG(e.group), f = g.fragments.find(x => x.id === e.frag); return { e, g, f, ff: (CAMP.frag_face[g.id] || {})[f.id] }; };
+  const all = ends.map(item);
+  const side = all.find(x => x.g.id === "g_side"), hist = all.find(x => x.g.id === "g_history");
+  const tierMax = cid => Math.max(0, ...Object.keys((CAMP.chars[cid] || {}).dims || {}).map(d => tierOf(G.v[`rel.${cid}.${d}`] || 0)));
+  const people = all.filter(x => x.ff && x !== side).sort((a, b) => (b.f.mood === "romance") - (a.f.mood === "romance") || tierMax(b.ff[0]) - tierMax(a.ff[0]));
+  const chosen = x => x.e.why.filter(w => w.choice).length;
+  const left = all.filter(x => !x.ff && x !== side && x !== hist).sort((a, b) => chosen(b) - chosen(a));
+  const thumb = x => { const w = x.e.why.slice().reverse().find(w => w.node && N(w.node) && N(w.node).art); if (!w) return null; const n = N(w.node);
+    return h("div", { class: "lt-pic" }, painting(n.art.scene, n.art.layers || [], t(n.title), n.art.illus)); };
+  const because = x => { const w = x.e.why.slice().reverse().find(w => w.choice); if (!w) return null; const n = N(w.node), c = n && n.choices.find(c => c.id === w.choice);
+    return c ? h("div", { class: "lt-why" }, l.endBecause(l.chap(w.ch), t(c.label))) : null; };
+  const full = h("details", { class: "allends" }, h("summary", {}, l.allEnds), all.map(({ e, g, f, ff }) => {
+    const body = [h("div", { class: "gt" }, t(g.title)), h("p", {}, t(f.text)),
+      h("details", {}, h("summary", {}, l.whyQ), e.why.length ? h("ol", { class: "chain" }, e.why.map(whyItem)) : h("p", { class: "muted", style: "font-size:13px" }, l.noWhy))];
+    return ff ? h("div", { class: "frag face" + (f.mood === "romance" ? " romance" : "") }, face(ff[0], ff[1]), h("div", {}, body)) : h("div", { class: "frag" + (f.mood === "romance" ? " romance" : "") }, body); }));
+  const topLeft = left.slice(0, 3);
+  return [
+    side ? h("p", { class: "act-where" }, t(side.f.text)) : null,
+    people.length ? h("div", { class: "act" }, h("h3", {}, l.actWho), people.slice(0, 2).map(x => h("div", { class: "who" + (x.f.mood === "romance" ? " romance" : "") }, face(x.ff[0], x.ff[1]),
+      h("div", {}, h("b", {}, t(x.g.title)), h("p", {}, t(x.f.text)), because(x)))),
+      people.length > 2 ? h("p", { class: "muted more-who" }, l.actMore(people.slice(2).map(x => t(x.g.title)).join(settings.lang === "zh" ? "、" : ", "))) : null) : null,
+    topLeft.length ? h("div", { class: "act" }, h("h3", {}, l.actLeft), topLeft.map(x => h("div", { class: "left" }, thumb(x), h("div", {}, h("span", { class: "gt" }, t(x.g.title)), h("p", {}, t(x.f.text)), because(x))))) : null,
+    hist ? h("p", { class: "act-hist" }, h("span", { class: "gt" }, t(hist.g.title)), " ", t(hist.f.text)) : null,
+    full];
+}
 function renderEnding() {
   const l = L();
-  const ends = CC.endings(CAMP, G);
-  const groups = {};
-  ends.forEach(e => (groups[e.group] = groups[e.group] || []).push(e));
   const title = G.v.ended_early ? l.endEarly(l.volTag(volIndex(G.vol))) : l.endTitle(l.volTag(volIndex(G.vol)));
-  return h("section", { class: "epi" }, painting("ending", CC.layers(CAMP, G, CAMP.ending_art.layers), title), h("h2", {}, title), h("p", { class: "sub" }, l.endSub),
-    CAMP.endings.filter(g => groups[g.id]).map(g => groups[g.id].map(e => { const f = g.fragments.find(x => x.id === e.frag);
-      const ff = (CAMP.frag_face[g.id] || {})[f.id];
-      const body = [h("div", { class: "gt" }, t(g.title)), h("p", {}, t(f.text)),
-        h("details", {}, h("summary", {}, l.whyQ), e.why.length ? h("ol", { class: "chain" }, e.why.map(whyItem)) : h("p", { class: "muted", style: "font-size:13px" }, l.noWhy))];
-      return ff ? h("div", { class: "frag face" + (f.mood === "romance" ? " romance" : "") }, face(ff[0], ff[1]), h("div", {}, body)) : h("div", { class: "frag" + (f.mood === "romance" ? " romance" : "") }, body); })),
+  return h("section", { class: "epi" }, painting("ending", CC.layers(CAMP, G, CAMP.ending_art.layers), title), h("h2", {}, title),
+    endingActs(l),
     h("div", { style: "margin-top:20px" }, mapEl("ending")),
     CAMP.life ? renderLife() : null,
     h("p", { class: "muted", style: "margin-top:16px" }, t(CAMP.end_note)),
