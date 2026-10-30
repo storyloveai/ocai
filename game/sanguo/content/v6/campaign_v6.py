@@ -9,6 +9,7 @@ import json, pathlib, sys
 HERE = pathlib.Path(__file__).parent
 sys.path.insert(0, str(HERE.parent))
 from lib import *
+import situations
 import speech, values
 from talks import topic, talk_node
 from asks import ans
@@ -523,7 +524,7 @@ CAMPAIGN = {
     "rights": {"source": "《三国演义》（罗贯中，明代），公版", "quotes": "中文原文直接引用；英文为本项目自译", "original_characters": ["子衡（玩家）", "温芷"]},
     "player": {"name": T("子衡", "Ziheng")}, "side_prompt": SIDE_PROMPT,
     "vars": VARS, "chars": CHARS, "dims": DIMS, "echoes": ECHOES, "debts": {},
-    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS, "moves": CAMP_MOVES,
+    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS, "situations": situations.volume(N, VARS), "moves": CAMP_MOVES,
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
     "ending_art": ENDING_ART, "art_prompts": dict(V5["art_prompts"]), "frag_face": FRAG_FACE, "portrait_prompts": dict(V5["portrait_prompts"]), "cg_captions": V5["cg_captions"], "realm": REALM,
     "react_patterns": V5["react_patterns"], "value_tags": values.TAGS, "commit_rules": COMMIT_RULES,
