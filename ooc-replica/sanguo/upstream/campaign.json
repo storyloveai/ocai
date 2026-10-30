@@ -821,6 +821,33 @@
     "en": "Sidelined"
    }
   },
+  "flag.guan_book": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "关羽送了你一卷他批注的《春秋》",
+    "en": "Guan Yu gave you his annotated Annals"
+   },
+   "carry": false
+  },
+  "flag.wz_pouch": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "温芷给了你一个药囊",
+    "en": "Wen Zhi gave you a medicine pouch"
+   },
+   "carry": false
+  },
+  "flag.cao_watched": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "曹操让程昱盯着你",
+    "en": "Cao Cao had Cheng Yu keep an eye on you"
+   },
+   "carry": false
+  },
   "imp.liubei.offended": {
    "type": "num",
    "init": 0,
@@ -3650,6 +3677,38 @@
     },
     {
      "text": {
+      "zh": "刘备在马上回头找你，把自己的备马让给了你：『子衡，跟紧我。』",
+      "en": "Liu Bei looks back for you from the saddle and gives you his spare horse. 'Ziheng, stay close.'"
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "刘备打马先走了。你跟在队伍后面，没有人回头等你。",
+      "en": "Liu Bei spurs ahead. You ride at the back of the column; no one turns to wait for you."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
+    },
+    {
+     "text": {
       "zh": "许褚追得格外急。梅园那天之后，曹操就没再放心过刘备。",
       "en": "Xu Chu rides harder than anyone. Since the day in the plum garden, Cao has never trusted Liu Bei."
      },
@@ -3863,6 +3922,22 @@
       "zh": "张辽单骑上山，劝关羽暂降。他说关羽若死战，有三罪：负了桃园之誓，负了皇叔托付的两位嫂嫂，负了匡扶汉室之志。关羽沉默了。",
       "en": "Zhang Liao rides up the hill alone to urge Guan Yu to surrender for now. If he fights to the death, Zhang Liao says, he commits three wrongs: he breaks the Peach Garden oath, abandons the two ladies his brother entrusted to him, and gives up on restoring the Han. Guan Yu says nothing."
      }
+    },
+    {
+     "text": {
+      "zh": "关羽没有看张辽，看的是你：『你说，怎么办。』",
+      "en": "Guan Yu doesn't look at Zhang Liao. He looks at you. 'You tell me. What now?'"
+     },
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "esteem",
+      2
+     ]
     },
     {
      "text": {
@@ -4380,6 +4455,22 @@
     },
     {
      "text": {
+      "zh": "曹操把你叫到一边：『云长要走，孤拦不住。你呢？』",
+      "en": "Cao Cao draws you aside. 'Yunchang is leaving, and I can't stop him. And you?'"
+     },
+     "when": {
+      "v": "rel.caocao.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "caocao",
+      "esteem",
+      2
+     ]
+    },
+    {
+     "text": {
       "zh": "关羽临走前低声对你说：『那晚的话，别再对旁人说了。』",
       "en": "Before leaving, Guan Yu says quietly, 'What you said that night—don't say it to anyone else.'"
      },
@@ -4420,11 +4511,61 @@
        "by": 1
       }
      ],
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": "<=",
+      "val": 3
+     },
      "values": [
       "yi",
       "yong"
      ],
      "place": "gucheng"
+    },
+    {
+     "id": "follow_r",
+     "type": "strategy",
+     "label": {
+      "zh": "随关羽护着两位夫人上路，一关一关闯过去。",
+      "en": "Ride with Guan Yu and the ladies and force your way through, pass by pass."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽把护送两位嫂嫂的车交给了你：『车在，人在。』",
+        "en": "Guan Yu puts the ladies' carriage in your charge. 'As long as the carriage stands, so do you.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "一路过东岭、洛阳、汜水、荥阳、黄河渡口，关羽连斩六将。到古城与刘备重逢时，你的马已经换过三匹。",
+        "en": "Through Dongling, Luoyang, Sishui, Xingyang and the Yellow River ford, Guan Yu kills six generals. By the time you reunite with Liu Bei at Gucheng, you've worn out three horses."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.guanyu.esteem",
+       "by": 2
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1
+      }
+     ],
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为关羽敬重你，把车交给了你",
+      "en": "Because Guan Yu respects you, he gives you the carriage"
+     }
     },
     {
      "id": "pass",
@@ -5229,6 +5370,38 @@
     },
     {
      "text": {
+      "zh": "到了草堂外，刘备让关羽、张飞在柴门外等，只带你一个人进去。",
+      "en": "At the thatched cottage Liu Bei leaves Guan Yu and Zhang Fei at the gate and takes only you inside."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "到了草堂外，刘备让你在柴门外牵马。",
+      "en": "At the thatched cottage Liu Bei leaves you at the gate to hold the horses."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
+    },
+    {
+     "text": {
       "zh": "刘备待你仍旧客气，只是议事时，他不再先问你。",
       "en": "Liu Bei is as courteous as ever—but at council, he no longer asks you first."
      },
@@ -5922,6 +6095,22 @@
       "zh": "程昱来找你：刘备得了个军师徐庶，屡次坏丞相的事。徐庶是孝子，他母亲就在许都。『你写得一手好字，』程昱说，『仿一封徐母的家书，不难吧？』",
       "en": "Cheng Yu comes to see you. Liu Bei has a new strategist, Xu Shu, who keeps spoiling the Chancellor's plans. Xu Shu is a devoted son, and his mother is in Xuchang. 'You write a fine hand,' Cheng Yu says. 'Forging a letter from his mother shouldn't be hard.'"
      }
+    },
+    {
+     "text": {
+      "zh": "程昱压低了声音：『丞相点名要你写。他说，这种事只信得过你。』",
+      "en": "Cheng Yu lowers his voice. 'The Chancellor asked for you by name. He says this is the kind of thing he trusts only you with.'"
+     },
+     "when": {
+      "v": "rel.caocao.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "caocao",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6120,6 +6309,38 @@
       "zh": "当阳长坂，曹军追到了。百姓哭喊着四散，刘备的家眷在乱军中走散了。",
       "en": "Changban, near Dangyang. Cao's cavalry catches up. Civilians scatter, screaming, and Liu Bei's family is lost in the chaos."
      }
+    },
+    {
+     "text": {
+      "zh": "乱军里，刘备一把拉住你的缰绳：『子衡，你说怎么办，我听你的。』",
+      "en": "In the chaos Liu Bei grabs your reins. 'Ziheng, tell me what to do. I'll listen.'"
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "刘备身边围满了人，你挤不进去说话。",
+      "en": "Liu Bei is surrounded; you can't get close enough to speak."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -6218,10 +6439,84 @@
       "zh": "需要刘备的信任在「可托」以上，他才会把家眷托给你",
       "en": "Needs Liu Bei's trust at Reliable or above to entrust his family to you"
      },
+     "when": {
+      "v": "flag.wz_pouch",
+      "op": "!=",
+      "val": true
+     },
      "values": [
       "ren",
       "yong"
      ]
+    },
+    {
+     "id": "search_pouch",
+     "type": "dilemma",
+     "label": {
+      "zh": "跟赵云一起杀回去，找夫人和小公子。",
+      "en": "Ride back in with Zhao Yun to find the lady and the young heir."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你们在一堵断墙后找到了糜夫人，她腿上中了枪，怀里抱着阿斗。赵云接过孩子，你扶夫人上了你的马。赵云单骑在前，怀抱阿斗冲出重围；你带着夫人从小路绕出来，左肩挨了一箭。你撕开温芷的药囊，按在伤口上，血止住了。",
+        "en": "Behind a broken wall you find Lady Mi, a spear wound in her leg, the infant Adou in her arms. Zhao Yun takes the child; you lift the lady onto your horse. Zhao Yun rides out alone with Adou at his chest, while you take the lady out by a back path and catch an arrow in your left shoulder. You tear open Wen Zhi's pouch and press it to the wound, and the bleeding stops."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.mi_saved",
+       "to": true
+      },
+      {
+       "add": "deviation",
+       "by": 1
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 2,
+       "key": true
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      },
+      {
+       "add": "rel.wenzhi.intimacy",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_mi"
+     ],
+     "debt": [
+      "d_mi"
+     ],
+     "resolve": [
+      [
+       "d_mi",
+       "transform"
+      ]
+     ],
+     "req": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "hint": {
+      "zh": "需要刘备的信任在「可托」以上，他才会把家眷托给你",
+      "en": "Needs Liu Bei's trust at Reliable or above to entrust his family to you"
+     },
+     "when": {
+      "v": "flag.wz_pouch",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为温芷给过你那个药囊",
+      "en": "Because Wen Zhi gave you that pouch"
+     }
     },
     {
      "id": "dust",
@@ -6231,6 +6526,43 @@
       "en": "Suggest Zhang Fei have riders drag branches through the woods east of the bridge to raise dust and fake an army."
      },
      "out": [
+      {
+       "text": {
+        "zh": "刘备犹豫了半刻才点头。张飞还是吼退了曹军，可桥西的百姓，没能全过来。",
+        "en": "Liu Bei hesitates a moment before he nods. Zhang Fei still roars Cao's army back, but not all the people west of the bridge make it across."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "renown.loyal",
+       "by": 1
+      }
+     ],
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 3
+     },
+     "because": {
+      "zh": "因为刘备还不够信你，耽误了半刻",
+      "en": "Because Liu Bei doesn't trust you enough yet, a moment is lost"
+     }
+    },
+    {
+     "id": "dust_r",
+     "type": "strategy",
+     "label": {
+      "zh": "献策：让张飞在长坂桥东的树林里拖着树枝跑马，扬尘作疑兵。",
+      "en": "Suggest Zhang Fei have riders drag branches through the woods east of the bridge to raise dust and fake an army."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "刘备一点头，张飞就去了。",
+        "en": "Liu Bei nods, and Zhang Fei is already gone."
+       }
+      },
       {
        "text": {
         "zh": "张飞横矛立马桥上，大喝一声：『我乃燕人张翼德也！谁敢与我决一死战？』身后林中尘土大起。曹军疑有伏兵，竟不敢过桥。",
@@ -6246,8 +6578,21 @@
       {
        "add": "renown.loyal",
        "by": 1
+      },
+      {
+       "add": "renown.cunning",
+       "by": 1
       }
-     ]
+     ],
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为刘备信你，你的话当场就用上了",
+      "en": "Because Liu Bei trusts you, your plan is used on the spot"
+     }
     },
     {
      "id": "guard_family",
@@ -6369,6 +6714,22 @@
       "zh": "长坂坡上，一员白袍将抱着婴孩，在你们的阵里杀进杀出，所向披靡。曹操在山顶看着，问：『那是谁？』",
       "en": "On the slope at Changban, a general in a white robe with an infant strapped to his chest cuts through your lines again and again. From the hilltop Cao Cao asks, 'Who is that?'"
      }
+    },
+    {
+     "text": {
+      "zh": "曹操把你叫到身边一起看：『子衡，你看此人如何？』",
+      "en": "Cao Cao calls you to his side to watch. 'Ziheng, what do you make of him?'"
+     },
+     "when": {
+      "v": "rel.caocao.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "caocao",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6451,7 +6812,62 @@
      ],
      "echo": [
       "e_mercy"
-     ]
+     ],
+     "when": {
+      "v": "flag.cao_watched",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "gap_watched",
+     "type": "dilemma",
+     "label": {
+      "zh": "借口查看后军，悄悄让开一条路，放刘备的家眷过去。",
+      "en": "Make an excuse to inspect the rear and quietly open a gap for Liu Bei's people."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "几辆车从你让开的缺口里逃了出去。当天夜里，程昱的人把这件事报了上去。曹操没有找你，只是第二天把你的差事交给了别人。",
+        "en": "A few carts escape through the gap you've opened. That night Cheng Yu's man reports it. Cao Cao doesn't summon you—he just gives your duties to someone else the next day."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.secret_mercy",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      },
+      {
+       "add": "rel.caocao.trust",
+       "by": -2
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": -1
+      }
+     ],
+     "echo": [
+      "e_mercy"
+     ],
+     "when": {
+      "v": "flag.cao_watched",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为程昱的人一直盯着你",
+      "en": "Because Cheng Yu's man has been watching you"
+     }
     }
    ],
    "salience": 0,
@@ -6998,6 +7414,22 @@
       "zh": "十一月二十日，东南风起。黄盖的二十条火船直冲曹营，连在一起的战船一条接一条烧起来。江面红了半边天。",
       "en": "The twentieth day of the eleventh month: the southeast wind rises. Huang Gai's twenty fire ships ram straight into Cao's fleet, and the chained warships catch one after another. Half the sky over the river turns red."
      }
+    },
+    {
+     "text": {
+      "zh": "诸葛亮把令旗分给众将，最后一面递到你手里：『子衡兄，这一面，你看着用。』",
+      "en": "Zhuge Liang hands out the command flags to the generals and puts the last one in your hand. 'Brother Ziheng—use this one as you see fit.'"
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7342,6 +7774,22 @@
     },
     {
      "text": {
+      "zh": "曹操转过头来：『子衡，你也说说。』",
+      "en": "Cao Cao turns to you. 'Ziheng—your view?'"
+     },
+     "when": {
+      "v": "rel.caocao.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "caocao",
+      "esteem",
+      2
+     ]
+    },
+    {
+     "text": {
       "zh": "曹操摆摆手：『你的好话我听腻了，今天说点有用的。』",
       "en": "Cao waves a hand. 'I'm tired of your compliments. Say something useful today.'"
      },
@@ -7573,6 +8021,22 @@
     },
     {
      "text": {
+      "zh": "关羽出帐前，在你肩上拍了一下，什么也没说。",
+      "en": "On his way out of the tent Guan Yu claps you on the shoulder and says nothing."
+     },
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "esteem",
+      2
+     ]
+    },
+    {
+     "text": {
       "zh": "诸葛亮摇着扇子：『子衡兄的好话，亮已经攒了一箩筐。今天，说句实话吧。』",
       "en": "Zhuge Liang waves his fan. 'I've a basketful of your compliments already, Ziheng. Today, tell me something true.'"
      },
@@ -7672,11 +8136,65 @@
       "zh": "需要关羽的敬重在「器重」以上，或刘备的信任在「倚重」以上，且关羽没有被你冒犯过两次以上",
       "en": "Needs Guan Yu's respect at Valued or above, or Liu Bei's trust at Relied on or above, and not to have offended Guan Yu twice"
      },
+     "when": {
+      "v": "flag.guan_book",
+      "op": "!=",
+      "val": true
+     },
      "values": [
       "yi",
       "yong"
      ],
      "cg": "turn"
+    },
+    {
+     "id": "vouch_book",
+     "type": "dilemma",
+     "label": {
+      "zh": "把那卷《春秋》还给关羽：『将军，书还你。我替你作保。』",
+      "en": "Give Guan Yu back his Annals: 'Your book, General. I'll vouch for you.'"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽在华容道等到了曹操。曹操只剩三百多骑，人人带伤。他提起当年的恩情，关羽长叹一声，把马头拨开了。",
+        "en": "Guan Yu waits on the Huarong road, and Cao comes—three hundred riders left, every one of them wounded. Cao speaks of old kindnesses. Guan Yu sighs and turns his horse aside."
+       }
+      },
+      {
+       "text": {
+        "zh": "回营后诸葛亮要斩关羽，你跪在关羽身边。刘备求情，诸葛亮便收了令。关羽扶你起来的时候，手很重。",
+        "en": "Back in camp Zhuge Liang orders Guan Yu executed, and you kneel beside him. Liu Bei pleads, and Zhuge Liang withdraws the order. When Guan Yu helps you up, his grip is heavy."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.vouched_guan",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": 2
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      }
+     ],
+     "when": {
+      "v": "flag.guan_book",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为关羽送过你那卷《春秋》",
+      "en": "Because Guan Yu once gave you his Annals"
+     }
     },
     {
      "id": "go_with",
@@ -8005,6 +8523,22 @@
       "zh": "曹操带着残兵往华容道逃，人马都饿得站不住。转过山口，一彪人马拦住去路，为首的是关羽。",
       "en": "Cao Cao flees by the Huarong road with what's left of his army, men and horses half-starved. Around a bend a troop blocks the way, and at its head is Guan Yu."
      }
+    },
+    {
+     "text": {
+      "zh": "关羽的目光越过曹操，落在你身上，停了很久。",
+      "en": "Guan Yu's gaze passes over Cao Cao and rests on you for a long time."
+     },
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -8060,6 +8594,46 @@
      "cg": "turn"
     },
     {
+     "id": "plead_book",
+     "type": "dilemma",
+     "label": {
+      "zh": "捧出关羽当年送你的那卷《春秋》。",
+      "en": "Hold up the Annals Guan Yu gave you long ago."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽看见那卷书，手里的刀慢慢垂了下来。他拨开马头：『书，你留着吧。』曹操走过去的时候，关羽看的是你。",
+        "en": "Guan Yu sees the scroll, and the blade in his hand slowly lowers. He turns his horse aside. 'Keep the book.' As Cao passes, Guan Yu is looking at you."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.pleaded_guan",
+       "to": true
+      },
+      {
+       "add": "rel.caocao.esteem",
+       "by": 2
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": 1
+      }
+     ],
+     "when": {
+      "v": "flag.guan_book",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为关羽送过你那卷《春秋》",
+      "en": "Because Guan Yu once gave you his Annals"
+     },
+     "cg": "turn"
+    },
+    {
      "id": "cao_pleads",
      "type": "strategy",
      "label": {
@@ -8080,9 +8654,56 @@
        "by": 1
       }
      ],
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": "<=",
+      "val": 3
+     },
      "values": [
       "zhi"
      ],
+     "cg": "turn"
+    },
+    {
+     "id": "cao_pleads_r",
+     "type": "strategy",
+     "label": {
+      "zh": "劝曹操亲自去说，提起当年的恩情。",
+      "en": "Urge Cao to speak to him himself and recall old kindnesses."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操上前，说起当年五关斩将、他没有追究的事。关羽长叹一声，放他们过去了。",
+        "en": "Cao rides forward and reminds Guan Yu how he never punished him for the generals killed at the five passes. Guan Yu sighs heavily and lets them through."
+       }
+      },
+      {
+       "text": {
+        "zh": "关羽让开路的时候，朝你点了一下头。",
+        "en": "As Guan Yu clears the way, he gives you a single nod."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.caocao.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": 1
+      }
+     ],
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为关羽敬重你",
+      "en": "Because Guan Yu respects you"
+     },
      "cg": "turn"
     },
     {
@@ -10181,6 +10802,348 @@
     "layers": []
    },
    "place": null,
+   "cast": [
+    {
+     "id": "caocao"
+    }
+   ]
+  },
+  "x_rel_guan": {
+   "id": "x_rel_guan",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "春秋",
+    "en": "The Annals"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "夜里关羽来找你，手里是一卷翻得起了毛边的《春秋》，页边都是他的批注：『这一卷，我读了二十年。你拿着。』",
+      "en": "Guan Yu comes to you at night with a copy of the Spring and Autumn Annals, its edges worn soft, its margins full of his notes. 'I've read this for twenty years. You keep it.'"
+     },
+     "rel": [
+      "guanyu",
+      "esteem",
+      3
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "take",
+     "type": "expression",
+     "label": {
+      "zh": "收下，郑重拜谢。",
+      "en": "Accept it, and bow your thanks."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽点点头，转身走了。那卷书很沉。",
+        "en": "Guan Yu nods and leaves. The scroll is heavy."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.guan_book",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "lend",
+     "type": "expression",
+     "label": {
+      "zh": "推辞：『将军的书，我不敢收。』",
+      "en": "Decline: 'I couldn't take your book, General.'"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽把书放在你案上：『那就算借你。总有一天，你还给我。』",
+        "en": "Guan Yu sets it on your desk. 'Then it's a loan. One day you'll give it back.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.guan_book",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "any": [
+       {
+        "v": "track",
+        "op": "==",
+        "val": "liu"
+       },
+       {
+        "v": "flag.with_guanyu",
+        "op": "==",
+        "val": true
+       }
+      ]
+     },
+     {
+      "any": [
+       {
+        "v": "rel.guanyu.warmth",
+        "op": ">=",
+        "val": 4
+       },
+       {
+        "v": "rel.guanyu.esteem",
+        "op": ">=",
+        "val": 6
+       }
+      ]
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": []
+   },
+   "cast": [
+    {
+     "id": "guanyu"
+    }
+   ]
+  },
+  "x_rel_wz": {
+   "id": "x_rel_wz",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "药囊",
+    "en": "The Pouch"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "温芷托人捎来一个药囊，针脚密密的，里面是止血的药粉，还有一张字条：『别让我在伤兵堆里找到你。』",
+      "en": "Wen Zhi sends you a medicine pouch, closely stitched, full of powder to stop bleeding, with a note: 'Don't make me find you among the wounded.'"
+     },
+     "rel": [
+      "wenzhi",
+      "intimacy",
+      2
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "keep",
+     "type": "expression",
+     "label": {
+      "zh": "贴身收好。",
+      "en": "Keep it close, inside your robe."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你把药囊系在了腰带里侧。",
+        "en": "You tie the pouch to the inside of your belt."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.wz_pouch",
+       "to": true
+      },
+      {
+       "add": "rel.wenzhi.intimacy",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "reply",
+     "type": "expression",
+     "label": {
+      "zh": "回一张字条：『你也是。』",
+      "en": "Send a note back: 'You too.'"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "过了几天，字条又回来了，只多了两个字：『知道。』",
+        "en": "A few days later the note comes back with one word added: 'Understood.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.wz_pouch",
+       "to": true
+      },
+      {
+       "add": "rel.wenzhi.warmth",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "rel.wenzhi.intimacy",
+      "op": ">=",
+      "val": 4
+     },
+     {
+      "v": "flag.wz_pouch",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": []
+   },
+   "cast": [
+    {
+     "id": "wenzhi"
+    }
+   ]
+  },
+  "x_rel_cao": {
+   "id": "x_rel_cao",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "照看",
+    "en": "Looked After"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "程昱来串门，坐了一盏茶的工夫，临走才说：『丞相让我多照看照看你。』从那天起，你出门，总觉得身后有人。",
+      "en": "Cheng Yu drops by and sits through a cup of tea. Only as he leaves does he say, 'The Chancellor asked me to look after you.' From that day on, whenever you go out, you feel someone behind you."
+     },
+     "rel": [
+      "caocao",
+      "trust",
+      0
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "ignore",
+     "type": "expression",
+     "label": {
+      "zh": "装作不知道。",
+      "en": "Pretend not to notice."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "身后的人一直在。你学会了走路时不回头。",
+        "en": "The man behind you stays. You learn not to look back when you walk."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.cao_watched",
+       "to": true
+      }
+     ]
+    },
+    {
+     "id": "confront",
+     "type": "dilemma",
+     "label": {
+      "zh": "去见曹操，把话说开：『丞相若信不过我，我走。』",
+      "en": "Go to Cao Cao and have it out: 'If you don't trust me, Chancellor, I'll go.'"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "曹操大笑：『孤若信不过你，你早不在许都了。』第二天，身后的人不见了。",
+        "en": "Cao Cao roars with laughter. 'If I didn't trust you, you'd have left Xuchang long ago.' The next day the man behind you is gone."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.caocao.trust",
+       "by": 2
+      }
+     ],
+     "req": {
+      "v": "rel.caocao.esteem",
+      "op": ">=",
+      "val": 2
+     },
+     "hint": {
+      "zh": "需要曹操对你的赏识至少是「寻常」",
+      "en": "Needs Cao's regard at Ordinary or above"
+     }
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "track",
+      "op": "==",
+      "val": "cao"
+     },
+     {
+      "v": "rel.caocao.trust",
+      "op": "<=",
+      "val": 1
+     },
+     {
+      "v": "rel.caocao.esteem",
+      "op": "<=",
+      "val": 3
+     }
+    ]
+   },
+   "art": {
+    "scene": "hall",
+    "layers": []
+   },
    "cast": [
     {
      "id": "caocao"
