@@ -1,5 +1,7 @@
 # Character：恢复貂蝉首屏与原有浏览交互
 
+后续修正：[旧角色首开英文简介遗漏及专项验证](../2026-10-30-character-intro-language/README.md)。
+
 按用户验收反馈修正 PR #88：保留已认可的对话能力，撤掉对原 Character 入口的整页替换。
 
 ![恢复后的貂蝉首屏](character-restored-desktop-zh.png)

@@ -3,9 +3,11 @@ import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {parseHTML} from 'linkedom';
 import {sanguoCharacters} from '../dist/assets/sanguo-characters.js';
+import {storydateCharacters} from '../dist/assets/storydate-originals.js';
 
 const pages=JSON.parse(await readFile(new URL('../dist/assets/interaction-pages.json',import.meta.url),'utf8'));
 const source=await readFile(new URL('../dist/assets/interaction.js',import.meta.url),'utf8');
+const scenarios=JSON.parse(await readFile(new URL('../dist/assets/scenarios.json',import.meta.url),'utf8'));
 
 test('captured chat shell keeps working suggestions, rich code copy, local history and accessible settings',async()=>{
  const {document,window}=parseHTML('<html><head></head><body></body></html>');
@@ -25,7 +27,7 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
    if(suggestionRequest.task!=='suggestions'){narrationRequests.push(suggestionRequest);if(failNarration)return new Response(JSON.stringify({error:'角色对话暂时无法连接，请稍后重试。',code:'AI_NOT_CONFIGURED'}),{status:503});return new Response(JSON.stringify({type:'text',text:'貂蝉听见你的问题，停下了脚步。'})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});}
    const text=JSON.stringify(['Read the letter on the desk.','Wait behind the shelves.','Ask who is approaching.']);
    return new Response(JSON.stringify({type:'text',text})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});
-  }return {ok:true,json:async()=>url.includes('interaction-pages')?pages:url.includes('scenarios')?{stories:{}}:configuration};};
+  }return {ok:true,json:async()=>url.includes('interaction-pages')?pages:url.includes('scenarios')?scenarios:configuration};};
  try{
   const adapted=source.replace("import {mountInteraction} from './reference.js';",'const mountInteraction=html=>{document.body.innerHTML=html;return document.body;};').replace(/from '(\.\/[^']+)'/g,(_match,path)=>'from '+JSON.stringify(new URL('../dist/assets/'+path.slice(2),import.meta.url).href));
   const {show}=await import('data:text/javascript;base64,'+Buffer.from(adapted).toString('base64'));
@@ -104,6 +106,22 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.deepEqual(values.get('ooc-session-v2-sgc-007').slice(0,previous.length),previous,'saved messages remain intact');
   assert.doesNotMatch(document.querySelector('#session-messages').textContent,/Ashley|lovely café/);
   assert.match(document.querySelector('.session-error').textContent,/Character replies are temporarily unavailable/);
+  // Real scenarios.json still contains English-only previews for these older
+  // characters. They must not override their bilingual catalogue introduction.
+  for(const lang of ['zh','en'])for(const id of ['sgc-007','sgc-005','sgc-006']){
+   const existing=storydateCharacters.find(c=>c.id===id);
+   if(!helpers.data.some(c=>c.id===id))helpers.data.push(existing);
+   const selected=helpers.data.find(c=>c.id===id),before=structuredClone(values.get('ooc-session-v2-'+id));
+   assert.ok(scenarios.stories[id].opening.length>40);
+   document.documentElement.lang=lang;
+   for(let visit=0;visit<2;visit++){
+    show('/play/'+id,helpers);
+    assert.equal(document.querySelector('#session-messages>.session-message').textContent,lang==='zh'?selected.description_zh:selected.description);
+    assert.equal(document.querySelector('.session-empty-preview').getAttribute('src'),selected.image);
+    assert.equal(document.querySelector('[data-onboard]').lastChild.nodeValue,lang==='zh'?'你':'You');
+   }
+   assert.deepEqual(values.get('ooc-session-v2-'+id),before,'opening localization never rewrites the saved conversation');
+  }
   // These six openings and first moves do not depend on a model being online.
   // They stay attached to the selected person rather than a captured demo shell.
   helpers.data.push(...sanguoCharacters.map(c=>({...c,type:'character'})));

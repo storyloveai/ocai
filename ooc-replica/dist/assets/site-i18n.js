@@ -20,7 +20,7 @@ const UI = [
   ['Character', '角色'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
   ['Explore', '探索'], ['Previous slide', '上一张'], ['Next slide', '下一张'], ['Main', '精选'], ['New Ranking', '新作榜'], ['Rankings', '排行榜'], ['Today', '今日'],
   ['Browse by genre','按题材浏览'], ['Start chatting','开始对话'],
-  ['Send a message','发送消息'], ['Continue the scene.','继续当前对话。'], ['Continue the conversation','继续对话'],
+  ['You','你'], ['Send a message','发送消息'], ['Continue the scene.','继续当前对话。'], ['Continue the conversation','继续对话'],
   ['Copy response','复制回复'], ['Copied','已复制'], ['Retry response','重试回复'], ['Regenerate response','重新生成回复'], ['Edit response','编辑回复'], ['Message options','消息选项'], ['Edit message','编辑消息'], ['Copy text','复制文字'], ['Stopped','已停止'],
   ['Copy code','复制代码'], ['Model comes from the server configuration','模型由服务端配置确定'], ['Close information','关闭资料'],
   ['Edit suggested response','编辑推荐回复'], ['Send suggested response','发送推荐回复'], ['Character Information','角色信息'], ['Close Character Information','关闭角色信息'], ['Bookmark character','收藏角色'],
