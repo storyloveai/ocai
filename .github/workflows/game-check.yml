@@ -71,3 +71,5 @@ jobs:
           node tools/check.js content/v6/campaign_v6.json 3000
           node tools/check.js content/v7/campaign_v7.json 3000
           node tools/check.js content/v8/campaign_v8.json 3000
+      - name: Illustrated edition has a picture everywhere (no ink fallbacks)
+        run: python3 tools/art_audit.py --strict
