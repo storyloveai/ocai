@@ -1,0 +1,370 @@
+{
+  "date": "2026-10-30",
+  "issue": 96,
+  "source_commit": "1b1552a700e1d910dd32b40f7559e4f68bb3cf09",
+  "source_manifest": "game/sanguo/art/fate-jobs.jsonl",
+  "source_manifest_sha256": "9fd95a8cfa9b4e7a22510e53359092c6555fc673102285af65b41a4f5580b3a4",
+  "external_paid_image_api_used": false,
+  "tool_calls": 11,
+  "selected_review_candidates": 8,
+  "superseded_candidates": 3,
+  "adopted": false,
+  "images": [
+    {
+      "id": "fate-execute",
+      "candidate": "A",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "In heavy rain, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible is led out of a courtyard between two armored guards; under a distant veranda a figure turns away; the shadow of a raised blade falls across wet stone, the blade itself not shown striking. Somber, silent, grey-blue light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nIn heavy rain, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible is led out of a courtyard between two armored guards; under a distant veranda a figure turns away; the shadow of a raised blade falls across wet stone, the blade itself not shown striking. Somber, silent, grey-blue light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n在大雨里，你被两名甲士押着走出庭院，远处廊下有人背过身去；一把高举的刀只露出影子，不画落刀\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nIn heavy rain, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible is led out of a courtyard between two armored guards; under a distant veranda a figure turns away; the shadow of a raised blade falls across wet stone, the blade itself not shown striking. Somber, silent, grey-blue light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n在大雨里，你被两名甲士押着走出庭院，远处廊下有人背过身去；一把高举的刀只露出影子，不画落刀\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-execute/a.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "d71bed3607364f9191a5977c324564e5e971b0e92344eb03db55add17a0f3e6b",
+      "crop": {
+        "x": 0,
+        "y": 190,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-execute/a-1200x480.webp",
+      "export_sha256": "09f7eb4042fc66d2825611c45f614175dcd079b565d31b77544e63859856acda",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-execute-a-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-execute-a-full.webp",
+      "full_frame_preview_sha256": "4d8f74ea43f88d7b80a80ad86f05e1daf9861cd0ffcfa08dc05b3bec20ffc672",
+      "reference_paths": [
+        "game/sanguo/art/scenes/garden.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/garden.webp": "65159747cc12dcaf6a690d4d6efec01b33b733bf06781689c1d02310417c00b3"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "雨中押送与背身远人；刀影较明显。",
+        "en": "Rainy escort, a distant turned figure, and a more legible blade shadow."
+      },
+      "revision": 1
+    },
+    {
+      "id": "fate-execute",
+      "candidate": "B",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "In heavy rain, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible is led out of a courtyard between two armored guards; under a distant veranda a figure turns away; the shadow of a raised blade falls across wet stone, the blade itself not shown striking. Somber, silent, grey-blue light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nIn heavy rain, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible is led out of a courtyard between two armored guards; under a distant veranda a figure turns away; the shadow of a raised blade falls across wet stone, the blade itself not shown striking. Somber, silent, grey-blue light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n在大雨里，你被两名甲士押着走出庭院，远处廊下有人背过身去；一把高举的刀只露出影子，不画落刀\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Revise the FIRST supplied candidate illustration to fully satisfy the original scene specification below. The second supplied image is ONLY the adopted illustration-style reference. Preserve the four adult figures, anonymous back views, gray-blue robe, armor, rain and distant turned-away figure. The prior candidate is missing a key element: add a CLEAR, UNMISTAKABLE projected SHADOW of a raised broad dao blade and its raised arm onto the wet paving in the RIGHT-HAND open space. The shadow must be legible INSIDE the central horizontal crop area, NOT along the bottom edge. Show only its SHADOW, with no additional visible person, no actual blade near the player, no strike, blood or wound. Reframe to a more distant wide shot if needed, so guards' heads, gripping hands, player and raised-blade shadow all survive a central 2.5:1 horizontal crop. Do not add text, graphics or labels. Unchanged original brief follows:\n\nCreate a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nIn heavy rain, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible is led out of a courtyard between two armored guards; under a distant veranda a figure turns away; the shadow of a raised blade falls across wet stone, the blade itself not shown striking. Somber, silent, grey-blue light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n在大雨里，你被两名甲士押着走出庭院，远处廊下有人背过身去；一把高举的刀只露出影子，不画落刀\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-execute/b.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "88d2443fcf43c79d7272183fe77b1f5d05c2028ae221612ac6caf23f3e3dfc89",
+      "crop": {
+        "x": 0,
+        "y": 230,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-execute/b-1200x480.webp",
+      "export_sha256": "8ecdd2f5eb3cd32f69d186111dbdf6f0ea2d269880abc8a13d342bfc6be17393",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-execute-b-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-execute-b-full.webp",
+      "full_frame_preview_sha256": "0539f56fe9ab6444b6eee638c36860a95797d0d398279750b1a603b27d5d9311",
+      "reference_paths": [
+        "game/sanguo/art/scenes/garden.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/garden.webp": "65159747cc12dcaf6a690d4d6efec01b33b733bf06781689c1d02310417c00b3"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "镜头更远，押送步态较完整；刀影偏轻，需重点审。",
+        "en": "A wider escort view; the blade shadow is subtle and needs closer review."
+      },
+      "revision": 2,
+      "previous_candidate": "game/sanguo/art/candidates/fate-execute/superseded/b-first.png",
+      "previous_sha256": "00dc10d4501d78239a55a91a9a0027dd7f0935d9a8203bf88e630a1e034a1e11",
+      "additional_revision_reference": "game/sanguo/art/candidates/fate-execute/superseded/b-first.png",
+      "revision_reason": "First escort candidate lacked a legible blade shadow."
+    },
+    {
+      "id": "fate-jail",
+      "candidate": "A",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "A prison cell at night, moonlight through one small high window; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits with his back against the stone wall, scratching tally marks into it to count the days. Cold, quiet, still. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nA prison cell at night, moonlight through one small high window; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits with his back against the stone wall, scratching tally marks into it to count the days. Cold, quiet, still. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n夜里的牢房，只有高处一个小窗透进月光；你背靠石墙坐着，在墙上刻下一道道记日子的划痕\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nA prison cell at night, moonlight through one small high window; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits with his back against the stone wall, scratching tally marks into it to count the days. Cold, quiet, still. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n夜里的牢房，只有高处一个小窗透进月光；你背靠石墙坐着，在墙上刻下一道道记日子的划痕\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-jail/a.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "c9cdc51eca3ff5433ef983e5367f9070f84a8e8dcfee10888cdc8c4179226136",
+      "crop": {
+        "x": 0,
+        "y": 66,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-jail/a-1200x480.webp",
+      "export_sha256": "238f0f3dd3fe33469593292e86f31649190a826c6624f3928c1f4c734d5fb713",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-jail-a-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-jail-a-full.webp",
+      "full_frame_preview_sha256": "40200e36762bb7ecf8db8fe927f184056131755bf40dc90e17601ca6cc654996",
+      "reference_paths": [
+        "game/sanguo/art/scenes/lamp.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/lamp.webp": "85ff742a1d9edf91d2d602364030b7901dbc17d1b3e3987b4b0c18ad17c1b814"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "左墙刻痕与高窗月光，动作集中。",
+        "en": "Wall scratches and high-window moonlight frame the small action."
+      },
+      "revision": 1
+    },
+    {
+      "id": "fate-jail",
+      "candidate": "B",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "A prison cell at night, moonlight through one small high window; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits with his back against the stone wall, scratching tally marks into it to count the days. Cold, quiet, still. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nA prison cell at night, moonlight through one small high window; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits with his back against the stone wall, scratching tally marks into it to count the days. Cold, quiet, still. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n夜里的牢房，只有高处一个小窗透进月光；你背靠石墙坐着，在墙上刻下一道道记日子的划痕\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nA prison cell at night, moonlight through one small high window; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits with his back against the stone wall, scratching tally marks into it to count the days. Cold, quiet, still. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n夜里的牢房，只有高处一个小窗透进月光；你背靠石墙坐着，在墙上刻下一道道记日子的划痕\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-jail/b.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "fe3f2f15c966d9965e246f4ccbc4ac4a486c6d7054713a610e6c6ef1234fdaf5",
+      "crop": {
+        "x": 0,
+        "y": 38,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-jail/b-1200x480.webp",
+      "export_sha256": "7634baaf070f16dac0834ca023f4b294b2612d9d52a97d28854adfb335a9fabc",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-jail-b-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-jail-b-full.webp",
+      "full_frame_preview_sha256": "87c8076a676f9d97e1fd05fc3b1e7adfc64aac8e87db9b25c5b05bc96c3c4a6b",
+      "reference_paths": [
+        "game/sanguo/art/scenes/lamp.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/lamp.webp": "85ff742a1d9edf91d2d602364030b7901dbc17d1b3e3987b4b0c18ad17c1b814"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "右手刻痕，牢门与冷光形成纵深。",
+        "en": "A raised hand, cell bars and cool light give the scene depth."
+      },
+      "revision": 1
+    },
+    {
+      "id": "fate-exile",
+      "candidate": "A",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "Early morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nEarly morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n清晨的城门外，你牵着一匹马、背着一个包袱独自离开，城楼上有一个人影在看（面目不细画）\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Correct the FIRST supplied candidate illustration against the unchanged source brief below. The SECOND image is only the adopted painted illustration style reference. Keep the gray-blue scholar seen from behind with a cloth hair tie and bundle, the single led horse, ancient Chinese city gate and mist. IMPORTANT correction: exactly TWO adults total: (1) the departing scholar and (2) ONE distant anonymous watcher on the city wall. Remove every extra tiny human silhouette inside/below the open arch and anywhere on the road. No other rider, guard, crowd or person. Recompose as a substantially MORE DISTANT panoramic wide shot: foreground scholar and entire horse (including legs/hooves and leading hand/rein) should occupy no more than 35 percent of total image height and be entirely inside the middle 60 percent horizontal crop band. Put the watcher's balcony low enough to also remain in this band. A final 1200x480 crop must retain the scholar's hair tie, leading hand, complete horse and wall watcher. Use a cooler, mistier dawn palette with restrained pale morning light, not blazing saturated sunset. One single full illustration, no panels, no words or numbers. Preserve the following original prompt and requirements:\n\nCreate a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nEarly morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n清晨的城门外，你牵着一匹马、背着一个包袱独自离开，城楼上有一个人影在看（面目不细画）\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-exile/a.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "d13ac47d1a6b86195a3036ef9b24984ea5a91421a820a2a9430a2641fe3d2402",
+      "crop": {
+        "x": 0,
+        "y": 270,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-exile/a-1200x480.webp",
+      "export_sha256": "43319a1216feb68ac78e0b9c3b9e63ad409f0d5bf51c9b2e33560d42537ff782",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-exile-a-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-exile-a-full.webp",
+      "full_frame_preview_sha256": "c95e37c0b4e25d8e23d45025c079a98be63bf9aded354357b283a56c6fbe19ef",
+      "reference_paths": [
+        "game/sanguo/art/scenes/road.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/road.webp": "ea79d6ed1b6aaa03789c5cfa51180e9ec8a59849d6fc7f92b77f1cd86e9a135a"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "山城晨雾，行人与整匹马均保留。",
+        "en": "A misty valley departure, retaining the traveler and complete horse."
+      },
+      "revision": 2,
+      "previous_candidate": "game/sanguo/art/candidates/fate-exile/superseded/a-first.png",
+      "previous_sha256": "c8b3fdf7a32b55c2814b80f34b15406c8fb30ac48c54c028b15ced95c835d14e",
+      "additional_revision_reference": "game/sanguo/art/candidates/fate-exile/superseded/a-first.png",
+      "revision_reason": "First departure candidate had an extra distant silhouette and foreground figures too large for the banner."
+    },
+    {
+      "id": "fate-exile",
+      "candidate": "B",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "Early morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nEarly morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n清晨的城门外，你牵着一匹马、背着一个包袱独自离开，城楼上有一个人影在看（面目不细画）\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Correct the FIRST supplied candidate illustration against the unchanged source brief below. The SECOND image is only the adopted painted illustration style reference. Keep the gray-blue scholar seen from behind with a cloth hair tie and bundle, the single led horse, ancient Chinese city gate and mist. IMPORTANT correction: exactly TWO adults total: (1) the departing scholar and (2) ONE distant anonymous watcher on the city wall. Remove every extra tiny human silhouette inside/below the open arch and anywhere on the road. No other rider, guard, crowd or person. Recompose as a substantially MORE DISTANT panoramic wide shot: foreground scholar and entire horse (including legs/hooves and leading hand/rein) should occupy no more than 35 percent of total image height and be entirely inside the middle 60 percent horizontal crop band. Put the watcher's balcony low enough to also remain in this band. A final 1200x480 crop must retain the scholar's hair tie, leading hand, complete horse and wall watcher. Use a cooler, mistier dawn palette with restrained pale morning light, not blazing saturated sunset. One single full illustration, no panels, no words or numbers. Preserve the following original prompt and requirements:\n\nCreate a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nEarly morning outside a city gate; Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible walks away alone leading a horse, a small bundle on his back; on the gate tower a single figure watches, too far to see the face. Long road, mist, cold dawn light. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n清晨的城门外，你牵着一匹马、背着一个包袱独自离开，城楼上有一个人影在看（面目不细画）\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-exile/b.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "bcab4e94f141862069b916d95fc1f4dfa54574e2b3723f89ace55d0a397fb120",
+      "crop": {
+        "x": 0,
+        "y": 250,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-exile/b-1200x480.webp",
+      "export_sha256": "458614f29554c097820171624bc9fc302a5b51dbb58920bd64023764186c7fd9",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-exile-b-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-exile-b-full.webp",
+      "full_frame_preview_sha256": "dedf5bfc20294ef8d27fa72aefe1879e1103e066c07e489581555f5fa842b726",
+      "reference_paths": [
+        "game/sanguo/art/scenes/road.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/road.webp": "ea79d6ed1b6aaa03789c5cfa51180e9ec8a59849d6fc7f92b77f1cd86e9a135a"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "右侧城门与守望者，背影牵马离开。",
+        "en": "A wall-top watcher remains behind the departing traveler and horse."
+      },
+      "revision": 2,
+      "previous_candidate": "game/sanguo/art/candidates/fate-exile/superseded/b-first.png",
+      "previous_sha256": "4723ff3e8087ce8353d5397427e20ef05c94012dd6a99986b3574459bedda1d5",
+      "additional_revision_reference": "game/sanguo/art/candidates/fate-exile/superseded/b-first.png",
+      "revision_reason": "First departure candidate had an extra distant silhouette and foreground figures too large for the banner."
+    },
+    {
+      "id": "fate-wounded",
+      "candidate": "A",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "Inside a tent by lamplight, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits on the edge of a cot with a clean bandage wrapped around one shoulder; someone with their back to us mixes medicine at a small table. No wound or blood visible. Warm lamp, dark tent. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nInside a tent by lamplight, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits on the edge of a cot with a clean bandage wrapped around one shoulder; someone with their back to us mixes medicine at a small table. No wound or blood visible. Warm lamp, dark tent. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n营帐里，你肩上缠着干净的绷带靠坐在榻边，有人背对着你在灯下调药（面目不细画）；不画伤口和血\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nInside a tent by lamplight, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits on the edge of a cot with a clean bandage wrapped around one shoulder; someone with their back to us mixes medicine at a small table. No wound or blood visible. Warm lamp, dark tent. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n营帐里，你肩上缠着干净的绷带靠坐在榻边，有人背对着你在灯下调药（面目不细画）；不画伤口和血\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-wounded/a.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "36c26b284902f69efc7df435240548eb76fdd845e040d645475cbe36a9a4ddf8",
+      "crop": {
+        "x": 0,
+        "y": 120,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-wounded/a-1200x480.webp",
+      "export_sha256": "3092ce0243f5ea6e62cf9af3e33193509911b88bcebf2094314f2856cf0746c4",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-wounded-a-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-wounded-a-full.webp",
+      "full_frame_preview_sha256": "405570e647af384f703ec7bd260cbd9aec0382e47c1f2b2ef44079ddff897a45",
+      "reference_paths": [
+        "game/sanguo/art/scenes/hall.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/hall.webp": "bb4e0746edafc4eea7a347036ca461cf02176533d02497c7d7f4c5b5949a78d4"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "干净的肩部绷带，背身医者在灯下调药。",
+        "en": "A clean shoulder bandage; the attendant mixes medicine by lamplight."
+      },
+      "revision": 1
+    },
+    {
+      "id": "fate-wounded",
+      "candidate": "B",
+      "status": "candidate-not-adopted",
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "original_prompt": "Inside a tent by lamplight, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits on the edge of a cot with a clean bandage wrapped around one shoulder; someone with their back to us mixes medicine at a small table. No wound or blood visible. Warm lamp, dark tent. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+      "original_negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.",
+      "initial_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nInside a tent by lamplight, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits on the edge of a cot with a clean bandage wrapped around one shoulder; someone with their back to us mixes medicine at a small table. No wound or blood visible. Warm lamp, dark tent. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n营帐里，你肩上缠着干净的绷带靠坐在榻边，有人背对着你在灯下调药（面目不细画）；不画伤口和血\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "final_generation_prompt": "Create a NEW original scene illustration. The supplied image is a reference for the established painted historical illustration style, linework, materials and lighting only. Do not reproduce the reference scene, its named characters or its recognizable faces. Render a horizontal 3:2 landscape canvas, preferably 1536x1024. Use a medium-wide cinematic scene, not a portrait. The final display is a 1200x480 crop: ALL critical people, head silhouettes, key hands, objects and action must fit comfortably inside the central 60 percent of the canvas height; top and bottom environment may be removed. Match the reference artwork, not live-action, photorealism or 3D rendering. No modern objects.\n\nAUTHORITATIVE ORIGINAL PROMPT (verbatim):\nInside a tent by lamplight, Ziheng (the player, a young scholar in his twenties in a plain grey-blue robe, hair tied up with a cloth band) seen from behind or from the side-back, face not visible sits on the edge of a cot with a clean bandage wrapped around one shoulder; someone with their back to us mixes medicine at a small table. No wound or blood visible. Warm lamp, dark tent. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nAUTHORITATIVE ORIGINAL NEGATIVE PROMPT (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, wounds, severed heads, minors, children.\n\nKEEP (verbatim):\n子衡（玩家，卷一）：二十多岁的年轻书生，灰蓝布袍，布带束发，只能背影或侧后方，不露脸\n\nCOMPOSITION (verbatim):\n营帐里，你肩上缠着干净的绷带靠坐在榻边，有人背对着你在灯下调药（面目不细画）；不画伤口和血\n\nACCEPTANCE (verbatim):\n汉服，不是和服；画面里没有任何文字\n人物都是成年人，画面里没有小孩\n裁成 2.5:1 横条后，主要人物和动作不被切掉\n玩家不露脸\n没有伤口、血腥、断头、行刑瞬间的画面；只画行刑之前或之后的气氛\n同一类下场在八卷里通用：画面不要有能认出是哪一年、哪个人物的细节（除玩家背影外，旁人面目不细画）\n\nUse only indistinct, unlettered scratches if there are wall marks: never readable glyphs, letters or words. The player must have no visible face, and all other human faces should remain small, indistinct or turned away. Exactly the people described in the original prompt; no crowd, no extra child, no blood or visible wound. One single illustration, no panels or frame.",
+      "original": "game/sanguo/art/candidates/fate-wounded/b.png",
+      "original_dimensions": [
+        1536,
+        1024
+      ],
+      "original_sha256": "c141ea9ee36c367906231c1631355283025a02599dd44ccfcf966e0afb0506f6",
+      "crop": {
+        "x": 0,
+        "y": 100,
+        "width": 1535,
+        "height": 614,
+        "export_width": 1200,
+        "export_height": 480
+      },
+      "export": "game/sanguo/art/candidates/fate-wounded/b-1200x480.webp",
+      "export_sha256": "5135dbd8e7e0e1d2f4cee88dc0b0f40a3102e40fbd90a3002d8c51262cf09547",
+      "web_export": "ooc-replica/dist/assets/candidates/fates/fate-wounded-b-1200x480.webp",
+      "full_frame_preview": "ooc-replica/dist/assets/candidates/fates/fate-wounded-b-full.webp",
+      "full_frame_preview_sha256": "5b973847459e8909ffb3e43344b027b833a92d1fcb6496772b68c422ad6a202d",
+      "reference_paths": [
+        "game/sanguo/art/scenes/hall.webp"
+      ],
+      "reference_sha256": {
+        "game/sanguo/art/scenes/hall.webp": "bb4e0746edafc4eea7a347036ca461cf02176533d02497c7d7f4c5b5949a78d4"
+      },
+      "reference_usage": "Adopted scene supplied as illustration-style reference; anonymous figures follow unchanged fate brief.",
+      "processing": "Original PNG unchanged. A recorded 5:2 rectangular crop, then Lanczos resize to 1200x480 and WebP encoding at quality 92. Full-frame web preview is WebP quality 90 without resizing or cropping.",
+      "review_note": {
+        "zh": "更开阔的帐内暖光，背影与调药动作分明。",
+        "en": "Warmer open tent space separates the seated figure and medicine preparation."
+      },
+      "revision": 1
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "size": "desktop",
+      "lang": "zh",
+      "eightExactBanners": "pass",
+      "fullFrameAndOriginalLinks": "pass",
+      "noImplicitSelection": "pass",
+      "selectionPersistence": "pass",
+      "exportAndCollapse": "pass",
+      "languageAndNoOverflow": "pass"
+    },
+    {
+      "size": "desktop",
+      "lang": "en",
+      "eightExactBanners": "pass",
+      "fullFrameAndOriginalLinks": "pass",
+      "noImplicitSelection": "pass",
+      "selectionPersistence": "pass",
+      "exportAndCollapse": "pass",
+      "languageAndNoOverflow": "pass"
+    },
+    {
+      "size": "mobile",
+      "lang": "zh",
+      "eightExactBanners": "pass",
+      "fullFrameAndOriginalLinks": "pass",
+      "noImplicitSelection": "pass",
+      "selectionPersistence": "pass",
+      "exportAndCollapse": "pass",
+      "languageAndNoOverflow": "pass"
+    },
+    {
+      "size": "mobile",
+      "lang": "en",
+      "eightExactBanners": "pass",
+      "fullFrameAndOriginalLinks": "pass",
+      "noImplicitSelection": "pass",
+      "selectionPersistence": "pass",
+      "exportAndCollapse": "pass",
+      "languageAndNoOverflow": "pass"
+    }
+  ],
+  "errors": [],
+  "note": "Read-only local review gallery; choices are synthetic QA selections, not adoption approval; no model calls."
+}

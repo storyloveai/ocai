@@ -1,0 +1,127 @@
+{
+  "issue": 96,
+  "date": "2026-10-30",
+  "adopted": false,
+  "groups": [
+    {
+      "id": "fate-execute",
+      "name": "execute",
+      "title": {
+        "zh": "被斩",
+        "en": "Condemned"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "/assets/candidates/fates/fate-execute-a-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-execute-a-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-execute/a.png",
+          "note": {
+            "zh": "雨中押送与背身远人；刀影较明显。",
+            "en": "Rainy escort, a distant turned figure, and a more legible blade shadow."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "/assets/candidates/fates/fate-execute-b-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-execute-b-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-execute/b.png",
+          "note": {
+            "zh": "镜头更远，押送步态较完整；刀影偏轻，需重点审。",
+            "en": "A wider escort view; the blade shadow is subtle and needs closer review."
+          }
+        }
+      ]
+    },
+    {
+      "id": "fate-jail",
+      "name": "jail",
+      "title": {
+        "zh": "下狱",
+        "en": "Imprisoned"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "/assets/candidates/fates/fate-jail-a-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-jail-a-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-jail/a.png",
+          "note": {
+            "zh": "左墙刻痕与高窗月光，动作集中。",
+            "en": "Wall scratches and high-window moonlight frame the small action."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "/assets/candidates/fates/fate-jail-b-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-jail-b-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-jail/b.png",
+          "note": {
+            "zh": "右手刻痕，牢门与冷光形成纵深。",
+            "en": "A raised hand, cell bars and cool light give the scene depth."
+          }
+        }
+      ]
+    },
+    {
+      "id": "fate-exile",
+      "name": "exile",
+      "title": {
+        "zh": "被逐出",
+        "en": "Sent away"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "/assets/candidates/fates/fate-exile-a-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-exile-a-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-exile/a.png",
+          "note": {
+            "zh": "山城晨雾，行人与整匹马均保留。",
+            "en": "A misty valley departure, retaining the traveler and complete horse."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "/assets/candidates/fates/fate-exile-b-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-exile-b-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-exile/b.png",
+          "note": {
+            "zh": "右侧城门与守望者，背影牵马离开。",
+            "en": "A wall-top watcher remains behind the departing traveler and horse."
+          }
+        }
+      ]
+    },
+    {
+      "id": "fate-wounded",
+      "name": "wounded",
+      "title": {
+        "zh": "负伤",
+        "en": "Wounded"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "/assets/candidates/fates/fate-wounded-a-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-wounded-a-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-wounded/a.png",
+          "note": {
+            "zh": "干净的肩部绷带，背身医者在灯下调药。",
+            "en": "A clean shoulder bandage; the attendant mixes medicine by lamplight."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "/assets/candidates/fates/fate-wounded-b-1200x480.webp",
+          "full": "/assets/candidates/fates/fate-wounded-b-full.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-fate-candidates/game/sanguo/art/candidates/fate-wounded/b.png",
+          "note": {
+            "zh": "更开阔的帐内暖光，背影与调药动作分明。",
+            "en": "Warmer open tent space separates the seated figure and medicine preparation."
+          }
+        }
+      ]
+    }
+  ]
+}
