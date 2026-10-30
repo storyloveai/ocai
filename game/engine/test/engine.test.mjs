@@ -176,3 +176,17 @@ test("grudges: an insult is remembered; kind or clever words don't move them unt
   const st2 = CC.newGame(c); st2.grudge = {};
   assert.equal(CC.speak(c, st2, "threat", "杀了你", "tao", []).offend, "tao"); assert.equal(st2.grudge.tao, 2, "a threat counts double");
 });
+
+test("grudges gate what choices earn: words nothing, deeds half, no higher tier; losses from insults aren't capped", () => {
+  const c = as04(tiny("x"));
+  c.nodes.c1_m1.choices.push({ id: "say", type: "expression", label: "说", out: [], effects: [{ add: "rel.tao.warmth", by: 2 }] },
+                             { id: "help", type: "strategy", label: "帮", out: [], effects: [{ add: "rel.tao.esteem", by: 3 }] });
+  const st = CC.newGame(c); st.grudge = { tao: 1 };
+  const w0 = st.v["rel.tao.warmth"]; const e = CC.choose(c, st, "say");
+  assert.equal(st.v["rel.tao.warmth"], w0, "kind words earn nothing while they hold a grudge"); assert.deepEqual(e.grudge, ["tao"]);
+  const st2 = CC.newGame(c); st2.grudge = { tao: 1 }; const s0 = st2.v["rel.tao.esteem"];
+  CC.choose(c, st2, "help"); assert.equal(st2.v["rel.tao.esteem"], s0 + 1, "a deed earns half (3 → 1), and stops at the top of the tier (2–3)");
+  const st3 = CC.newGame(c); st3.v["rel.tao.trust"] = 8;
+  for (let i = 0; i < 3; i++) CC.speak(c, st3, "rude", "蠢材", "tao", []);
+  assert.ok(st3.v["rel.tao.trust"] <= 3, "three insults in one scene cost more than 2");
+});
