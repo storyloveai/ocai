@@ -51,6 +51,13 @@ export function track(name, props = {}) { try { ph()?.capture(name, props); } ca
 export function identify(uid) { try { if (uid) ph()?.identify(uid); } catch {} }
 export function forget() { try { ph()?.reset(); } catch {} }
 
+// The caller cannot attach dialogue, quotations or memory to these events.
+export function characterFunnelEvent(stage,id,scene,send=track){
+ const events={opened:'character_conversation_opened',first:'character_first_exchange',five:'character_five_exchanges',requested:'character_reunion_requested',resumed:'character_reunion_completed'};
+ if(!Object.hasOwn(events,stage)||typeof id!=='string'||!/^oc-[a-z0-9-]{1,60}$/.test(id))return false;
+ send(events[stage],{title_id:id,...(typeof scene==='string'&&/^[a-z0-9-]{1,60}$/.test(scene)?{scene_id:scene}:{})});return true;
+}
+
 // Three Kingdoms progress, read from the run list the game saves through the site (no change to the game needed)
 export function gameTracker(base, send = track, now = Date.now()) {
   const opened = now; let last = null;

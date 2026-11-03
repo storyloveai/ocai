@@ -10,6 +10,9 @@
 .character-prose .character-narration{font-size:.97em}
 .character-prose strong{font-weight:600}
 .character-reading .sg-chat-intro{max-width:none;margin-bottom:8px}
+.character-return{padding:18px 20px;margin:12px 0 24px;background:#1c1c19;border:1px solid #ffffff10;border-radius:10px;font-size:13px;line-height:1.8}
+.character-return>p{color:#ceb183;margin:0 0 10px;font-size:12px}.character-return blockquote{color:#dedad2;padding:0;margin:0 0 8px;white-space:pre-wrap;overflow-wrap:anywhere}.character-return small{color:#9c978d;font-size:11px}.character-return>div{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px}.character-return button{border:0;background:transparent;color:#b5aea0;min-height:40px;padding:5px 0;font:12px/1.6 Inter,system-ui,sans-serif;cursor:pointer}.character-return [data-character-reunion]{color:#ead5b3;font-weight:550}.character-return button:focus-visible,.character-relationship-note:focus-visible{outline:2px solid #bd955a;outline-offset:4px}
+.character-relationship-note{display:flex;align-items:center;flex-wrap:wrap;gap:8px 12px;min-height:36px;padding:5px 0;margin-top:10px;border:0;background:transparent;color:#c7ab7e;font:11px/1.7 Inter,system-ui,sans-serif;text-align:left;cursor:pointer}.character-relationship-source{font-size:10px;color:#999387}
 .character-reading .sg-chat-intro header{margin-bottom:24px}
 .character-reading .message-tools{margin-top:12px;opacity:.8}
 .character-message-tools{display:flex;align-items:center;gap:16px;flex-wrap:wrap;font:11px/1.5 Inter,system-ui,sans-serif;margin-top:12px;color:#a29d92}

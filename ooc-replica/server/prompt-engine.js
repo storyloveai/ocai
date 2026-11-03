@@ -4,11 +4,13 @@ import {CORE,CHARACTER_STYLE,STORY_STYLE,LENGTHS,PROMPT_VERSION} from './prompts
 import {roleFor,customRole,isCustomId} from './roles.js';
 import {CHARACTER_CONTINUITY} from './character-continuity.js';
 import {responseLanguage,languageInstruction} from './response-language.js';
+import {characterReunionPrompt} from './character-reunion-prompt.js';
 export {PROMPT_VERSION};
 const text=(value,max)=>typeof value==='string'?value.slice(0,max):'';
 export function buildPrompt(body){
  if(body?.task==='author')return authorPrompt(body);
  if(body?.task==='suggestions')return suggestionPrompt(body);
+ if(body?.task==='character-reunion')return characterReunionPrompt(body);
  if(!body||typeof body!=='object'||Array.isArray(body))throw new Error('Invalid request');
  const language=responseLanguage(body);
  const role=isCustomId(body.titleId)?customRole(body.custom):roleFor(text(body.titleId,64),{sceneId:text(body.characterScene,64)||undefined});
