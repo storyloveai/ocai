@@ -1,0 +1,144 @@
+{
+  "service": "Local bilingual verification stub; actual server prompt assembly and actual browser UI",
+  "checks": [
+    {
+      "id": "oc-gu-chengye",
+      "size": "desktop",
+      "lang": "zh",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-song-zhixia",
+      "size": "desktop",
+      "lang": "zh",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-yan-fei",
+      "size": "desktop",
+      "lang": "zh",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-gu-chengye",
+      "size": "desktop",
+      "lang": "en",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-song-zhixia",
+      "size": "desktop",
+      "lang": "en",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-yan-fei",
+      "size": "desktop",
+      "lang": "en",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-gu-chengye",
+      "size": "mobile",
+      "lang": "zh",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-song-zhixia",
+      "size": "mobile",
+      "lang": "zh",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-yan-fei",
+      "size": "mobile",
+      "lang": "zh",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-gu-chengye",
+      "size": "mobile",
+      "lang": "en",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-song-zhixia",
+      "size": "mobile",
+      "lang": "en",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    },
+    {
+      "id": "oc-yan-fei",
+      "size": "mobile",
+      "lang": "en",
+      "sourceFeedback": "pass",
+      "noAutoReunionCall": "pass",
+      "trueTranscriptAndDraft": "pass",
+      "resumeLanguage": "pass",
+      "encounterIsolation": "pass",
+      "originalHero": "pass"
+    }
+  ],
+  "faults": [
+    "failed greeting retries without user duplication",
+    "cancel before text restores the return card",
+    "no false error dialog on cancellation"
+  ],
+  "requests": 50,
+  "errors": []
+}
