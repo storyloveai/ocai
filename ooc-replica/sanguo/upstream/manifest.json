@@ -1,11 +1,11 @@
 {
-  "commit": "23d8cfe404f6a797720cb540755c825474c12bc3",
+  "commit": "d94bac6d75fa3370962444cd4f168d88382bb667",
   "blobs": {
-    "index.html": "963464d7bfc7016272aaf90c52404e4c73f2ce58",
-    "illus.html": "ef36725e1edbacbd8c25409468d321632982b82c",
+    "index.html": "28e4d899d853c80b70ff485723ce5aa0c333bcdd",
+    "illus.html": "90a8b7dc743ae02757d97897bb3cd0da7c570fc3",
     "campaign.json": "e407c1b9a1f5fe83e6af8c5f9dc35f831ffe0bfe",
-    "campaign_v2.json": "a0953da492729afd040cd6f12cb5d742dd7500e7",
-    "campaign_v3.json": "e5d46ed4fa7220add6f519d0f4d1147c50b09f30",
+    "campaign_v2.json": "b8c3d7ca021b79ec9ce9ec4d57acbca5e3335f5e",
+    "campaign_v3.json": "797a6cfc8ade592e2135674d8576b1b7073d3515",
     "campaign_v4.json": "8a4a78b913c77ae44c25c356dd1e37c79ae81854",
     "campaign_v5.json": "107454ba6ac155563e7c567e89b2ff12a4165254",
     "campaign_v6.json": "2c868c73a73fbcdf8ca18a752ef59595f461870e",

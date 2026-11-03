@@ -60,13 +60,14 @@ BACK_ANY = T("冷了一阵子。这天议事，上首的人忽然转过头来：
              "A cold spell. Then one day in council the man at the head of the table suddenly turns to you: 'And what do you think, sir?' Every eye in the room is on you.")
 
 def volume(N, VARS):
-    if "flag.sidelined" not in VARS: return []
+    dead = [S("dead", "dead", "flag.fate_dead", T("身死", "dead"))] if "flag.fate_dead" in VARS else []
+    if "flag.sidelined" not in VARS: return dead
     for n in N:
         if n["kind"] in ("flash", "interrupt"): continue
         for c in n["choices"]:
             z = c["label"]["zh"]
             if ADVICE_ANY.match(z) or (c["type"] == "strategy" and (z.startswith("说：") or re.search(r"劝|(?<!自)请|举荐|献策", z[:12]))):
                 c.setdefault("tags", []).append("advice")
-    return [S("sidelined", "sidelined", "flag.sidelined", T("被冷落了，议事时没人问你的主意", "sidelined: no one asks your advice in council"),
+    return dead + [S("sidelined", "sidelined", "flag.sidelined", T("被冷落了，议事时没人问你的主意", "sidelined: no one asks your advice in council"),
               lock=T("你被冷落了，议事时没人问你的主意", "you've been sidelined; no one asks your advice"),
               locks={"tags": ["advice"]}, lasts=1, back=BACK_ANY)]
