@@ -53,3 +53,20 @@ def extend(N, VARS):
           "Liu Bei doesn't abandon the people. Zhang Fei's roar on the Changban bridge turns Cao's army back; Zhao Yun breaks out with A-Dou in his arms, and Lady Mi doesn't come back. In all that chaos, no one thinks to ask you anything."),
         [], when=SL))
     return SITUATIONS
+
+# 卷二至卷八（决策记录 v2.29）：这几卷没有死、下狱、负伤的路，只有失势；规则和卷一一样
+ADVICE_ANY = re.compile(r"^(献策|(预先)?(劝|请)(主公|陛下|汉中王|丞相|姜维|大将军|关羽|二将军))")
+BACK_ANY = T("冷了一阵子。这天议事，上首的人忽然转过头来：『先生怎么看？』满屋的人都看向你。",
+             "A cold spell. Then one day in council the man at the head of the table suddenly turns to you: 'And what do you think, sir?' Every eye in the room is on you.")
+
+def volume(N, VARS):
+    if "flag.sidelined" not in VARS: return []
+    for n in N:
+        if n["kind"] in ("flash", "interrupt"): continue
+        for c in n["choices"]:
+            z = c["label"]["zh"]
+            if ADVICE_ANY.match(z) or (c["type"] == "strategy" and (z.startswith("说：") or re.search(r"劝|(?<!自)请|举荐|献策", z[:12]))):
+                c.setdefault("tags", []).append("advice")
+    return [S("sidelined", "sidelined", "flag.sidelined", T("被冷落了，议事时没人问你的主意", "sidelined: no one asks your advice in council"),
+              lock=T("你被冷落了，议事时没人问你的主意", "you've been sidelined; no one asks your advice"),
+              locks={"tags": ["advice"]}, lasts=1, back=BACK_ANY)]

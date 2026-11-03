@@ -1084,7 +1084,7 @@
     "flag.warned_jing": false,
     "flag.v3_left": false,
     "flag.v3_exposed": false,
-    "flag.sidelined": true,
+    "flag.sidelined": false,
     "rel.liubei.warmth": 5,
     "rel.liubei.trust": 0,
     "rel.liubei.esteem": 6,

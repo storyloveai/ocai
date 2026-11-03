@@ -11,6 +11,7 @@ import json, pathlib, sys
 HERE = pathlib.Path(__file__).parent
 sys.path.insert(0, str(HERE.parent))
 from lib import *
+import situations
 import speech, values
 from talks import topic, talk_node
 from asks import ans
@@ -820,7 +821,7 @@ CAMPAIGN = {
     "player": {"name": T("子衡", "Ziheng")},
     "side_prompt": SIDE_PROMPT,
     "vars": VARS, "chars": CHARS, "dims": DIMS, "echoes": ECHOES, "debts": DEBTS,
-    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS,
+    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS, "situations": situations.volume(N, VARS),
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
     "ending_art": ENDING_ART, "art_prompts": ART_PROMPTS, "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": V3["cg_captions"], "realm": REALM,
     "react_patterns": V3["react_patterns"], "value_tags": values.TAGS, "commit_rules": COMMIT_RULES,

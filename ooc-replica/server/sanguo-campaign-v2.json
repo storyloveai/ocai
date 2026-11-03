@@ -4189,6 +4189,9 @@
      "values": [
       "zhi",
       "li"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -4241,6 +4244,9 @@
      "values": [
       "yi",
       "cheng"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -4710,6 +4716,9 @@
      ],
      "values": [
       "li"
+     ],
+     "tags": [
+      "advice"
      ]
     }
    ],
@@ -5420,6 +5429,9 @@
      ],
      "values": [
       "zhi"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -5506,6 +5518,9 @@
      ],
      "values": [
       "li"
+     ],
+     "tags": [
+      "advice"
      ]
     }
    ],
@@ -6366,6 +6381,9 @@
      ],
      "echo": [
       "e_pt_vouch"
+     ],
+     "tags": [
+      "advice"
      ]
     },
     {
@@ -10115,6 +10133,31 @@
      }
     }
    ]
+  }
+ ],
+ "situations": [
+  {
+   "id": "sidelined",
+   "kind": "sidelined",
+   "flag": "flag.sidelined",
+   "label": {
+    "zh": "被冷落了，议事时没人问你的主意",
+    "en": "sidelined: no one asks your advice in council"
+   },
+   "lock": {
+    "zh": "你被冷落了，议事时没人问你的主意",
+    "en": "you've been sidelined; no one asks your advice"
+   },
+   "locks": {
+    "tags": [
+     "advice"
+    ]
+   },
+   "lasts": 1,
+   "back": {
+    "zh": "冷了一阵子。这天议事，上首的人忽然转过头来：『先生怎么看？』满屋的人都看向你。",
+    "en": "A cold spell. Then one day in council the man at the head of the table suddenly turns to you: 'And what do you think, sir?' Every eye in the room is on you."
+   }
   }
  ],
  "future_terms": [
