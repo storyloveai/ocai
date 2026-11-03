@@ -720,6 +720,9 @@ ART_PROMPTS = dict(V4["art_prompts"])
 PORTRAIT_PROMPTS = dict(V4["portrait_prompts"])
 PRESETS = json.loads((HERE / "presets.json").read_text()) if (HERE / "presets.json").exists() else []
 
+import relations_v5
+relations_v5.extend(N, VARS)
+
 CAMPAIGN = {
     "spec": SPEC, "tiers": TIERS(), "hard_tiers": {"rel.liubei.trust": 3}, "pack": PACK("history-strategy"),
     "resources": {"reputation": ["renown.loyal", "renown.cunning"], "risk": ["uncanny", "renown.rash"], "drift": ["deviation"]},

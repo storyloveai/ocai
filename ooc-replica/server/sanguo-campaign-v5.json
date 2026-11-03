@@ -1827,6 +1827,24 @@
     "en": "Spoke of Lady Sun to His Majesty"
    },
    "carry": false
+  },
+  "flag.v5_zy_pact": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "赵云和你约好了退路",
+    "en": "Zhao Yun agreed a line of retreat with you"
+   },
+   "carry": false
+  },
+  "flag.v5_after_burn": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "火烧连营已经过去",
+    "en": "The burning of the camps has passed"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -3915,6 +3933,38 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "汉中王没有先问诸葛亮，先问的是你。",
+      "en": "The King asks you before he asks Zhuge Liang."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "汉中王问了一圈，最后才想起你也在。",
+      "en": "The King goes round the room and only at the end remembers you're there."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -4909,6 +4959,22 @@
       "zh": "满殿的人，都在等你开口。",
       "en": "The whole hall waits for you to speak."
      }
+    },
+    {
+     "text": {
+      "zh": "劝进的表文，丞相让你看过才递上去。",
+      "en": "The Chancellor had you read the petition before he presented it."
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -5881,6 +5947,57 @@
       "zhi",
       "cheng"
      ],
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 3
+     },
+     "tags": [
+      "advice"
+     ]
+    },
+    {
+     "id": "pause_r",
+     "type": "strategy",
+     "label": {
+      "zh": "等陛下醒了，劝他：翼德刚走，军心不稳，东征缓一缓。",
+      "en": "When His Majesty wakes, urge him: Yide is barely gone, the army is shaken—delay the march."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "陛下睁着眼睛看了你很久，终于点了头：『缓一个月。就一个月。让朕把三弟送回去。』",
+        "en": "His Majesty looks at you a long while with open eyes, and at last he nods. 'One month. Just one. Let Us send Third Brother home first.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.liubei.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1
+      }
+     ],
+     "values": [
+      "zhi",
+      "cheng"
+     ],
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为陛下信你，听进去了",
+      "en": "Because His Majesty trusts you, he takes it in"
+     },
      "tags": [
       "advice"
      ]
@@ -6140,6 +6257,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "陛下问你的时候，声音放低了：『只有你，不会拿好听的话哄朕。』",
+      "en": "When he asks you, His Majesty lowers his voice. 'You're the one who won't soothe me with pretty words.'"
+     },
+     "when": {
+      "v": "rel.liubei.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6907,6 +7040,38 @@
       "zh": "营一座座搬进了树林，挨着溪水。天太热，兵士们都说好。",
       "en": "One by one the camps move into the woods, beside the streams. It's very hot; the men are glad of it."
      }
+    },
+    {
+     "text": {
+      "zh": "陛下把营图摊在你面前：『你看看，朕扎得怎么样？』",
+      "en": "His Majesty spreads the camp map in front of you. 'Take a look. How have I laid them out?'"
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "陛下的营图，没有给你看。",
+      "en": "His Majesty doesn't show you the camp map."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -7389,6 +7554,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "火光里，有人喊你的名字。是赵云的亲兵：『将军让我来找先生！』",
+      "en": "Through the firelight someone is shouting your name. It's one of Zhao Yun's guards: 'The General sent me to find you, sir!'"
+     },
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhaoyun",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7435,6 +7616,10 @@
       {
        "add": "rel.zhaoyun.trust",
        "by": 1
+      },
+      {
+       "set": "flag.v5_after_burn",
+       "to": true
       }
      ],
      "echo": [
@@ -7444,7 +7629,76 @@
       "yi",
       "yong"
      ],
-     "place": "baidi"
+     "place": "baidi",
+     "when": {
+      "v": "flag.v5_zy_pact",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "guard_pact",
+     "type": "dilemma",
+     "label": {
+      "zh": "照赵云说的，护着陛下往江州方向退。",
+      "en": "As Zhao Yun said, take His Majesty back toward Jiangzhou."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你们在山路口看见了白马银枪。赵云带着江州的兵已经等了一夜，把陛下接上马，一路护进了白帝城。追兵到了路口，看见江州的旗，没敢再追。",
+        "en": "At the mountain crossroads you see the white horse and the silver spear. Zhao Yun has waited all night with the Jiangzhou troops; he puts His Majesty on a horse and escorts him all the way into Baidi. When the pursuers reach the crossroads and see the Jiangzhou banners, they dare not follow."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v5_guard",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1,
+       "key": true
+      },
+      {
+       "add": "rel.liubei.warmth",
+       "by": 2
+      },
+      {
+       "add": "rel.zhaoyun.trust",
+       "by": 1
+      },
+      {
+       "set": "flag.v5_after_burn",
+       "to": true
+      },
+      {
+       "add": "rel.zhaoyun.trust",
+       "by": 1
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_guard"
+     ],
+     "values": [
+      "yi",
+      "yong"
+     ],
+     "place": "baidi",
+     "when": {
+      "v": "flag.v5_zy_pact",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为赵云和你约好了退路",
+      "en": "Because Zhao Yun agreed a line of retreat with you"
+     }
     },
     {
      "id": "rear",
@@ -7484,6 +7738,10 @@
       {
        "add": "rel.zhaoyun.esteem",
        "by": 1
+      },
+      {
+       "set": "flag.v5_after_burn",
+       "to": true
       }
      ],
      "values": [
@@ -7515,6 +7773,10 @@
       {
        "add": "rel.zhuge.esteem",
        "by": 1
+      },
+      {
+       "set": "flag.v5_after_burn",
+       "to": true
       }
      ],
      "foresight": true,
@@ -7797,6 +8059,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "丞相进门时，先看了你一眼，像是有话要对你说。",
+      "en": "As the Chancellor comes in, he glances at you first, as if he has something to say to you."
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -8834,6 +9112,118 @@
     "layers": [],
     "illus": "g_cold"
    }
+  },
+  "x_rel_zypact": {
+   "id": "x_rel_zypact",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "江州",
+    "en": "Jiangzhou"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "赵云临去江州的前一夜来找你，压低了声音：『先生，陛下这一仗，我劝不住。营里若是起火，你护着陛下往江州这边退。我在路口等你们。』",
+      "en": "On the night before he leaves for Jiangzhou, Zhao Yun comes to you and lowers his voice. 'Sir, I can't talk His Majesty out of this war. If the camps ever catch fire, bring him back toward Jiangzhou. I'll be waiting at the crossroads.'"
+     },
+     "rel": [
+      "zhaoyun",
+      "trust",
+      2
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "promise",
+     "type": "expression",
+     "label": {
+      "zh": "点头：『一言为定。』",
+      "en": "Nod: 'Agreed.'"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "赵云抱了抱拳，转身走进夜里。",
+        "en": "Zhao Yun clasps his hands to you and walks off into the night."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v5_zy_pact",
+       "to": true
+      },
+      {
+       "add": "rel.zhaoyun.trust",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "worry",
+     "type": "expression",
+     "label": {
+      "zh": "问他：『将军就没想过，这一仗赢了呢？』",
+      "en": "Ask him: 'Have you never thought we might win?'"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "赵云笑了笑：『那我就白等一场。』",
+        "en": "Zhao Yun smiles. 'Then I'll have waited for nothing.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v5_zy_pact",
+       "to": true
+      },
+      {
+       "add": "rel.zhaoyun.warmth",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "rel.zhaoyun.trust",
+      "op": ">=",
+      "val": 4
+     },
+     {
+      "v": "flag.v5_zy_pact",
+      "op": "!=",
+      "val": true
+     },
+     {
+      "v": "flag.v5_after_burn",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": [],
+    "illus": "v2_zhaoyun_night"
+   },
+   "cast": [
+    {
+     "id": "zhaoyun"
+    }
+   ]
   }
  },
  "endings": [
