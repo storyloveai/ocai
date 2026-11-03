@@ -9,4 +9,5 @@ out = root.parent / 'klein-pilot.zip'
 with zipfile.ZipFile(out, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
     for name in files:
         archive.write(root / name, 'storydate-klein-pilot/' + name)
+    archive.write(root.parents[1] / 'docs/handoffs/2026-11-03-local-codex.md', 'storydate-klein-pilot/HANDOFF.md')
 print(out)

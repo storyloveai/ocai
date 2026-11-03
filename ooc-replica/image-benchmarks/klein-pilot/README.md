@@ -4,6 +4,8 @@
 
 只准备小样，不替换产品资源，不动剧情、人设或作图清单。不发布用户上传的公司接口文档、网关地址或测试密钥。
 
+云端会话接续到本机时，先读[完整工作交接](https://github.com/storyloveai/ocai/blob/codex/klein-image-eval/ooc-replica/docs/handoffs/2026-11-03-local-codex.md)：包含当前任务、设计约束、在审 PR 与本地执行顺序；不是聊天全文，不含凭据。独立测试包里也附了离线可读的 `HANDOFF.md`。
+
 ## 测什么
 
 | 条目 | 请求 | 基线 / 观察点 |
