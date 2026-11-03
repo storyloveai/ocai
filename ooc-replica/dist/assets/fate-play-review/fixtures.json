@@ -1,0 +1,3080 @@
+{
+  "exile": {
+    "node": "x_liu_break",
+    "choice": "true",
+    "before": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 0,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 0,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 1,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": false,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 3,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": false,
+        "flag.jailed": false,
+        "flag.was_jailed": false,
+        "flag.left_behind": false,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 1,
+        "grudge.liubei": 2,
+        "grudge.guanyu": 0,
+        "flag.fate_dead": false,
+        "flag.beaten": false,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none"
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 0,
+      "phase": "node",
+      "cur": "x_liu_break",
+      "offer": [],
+      "lastOrder": 10,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "rude",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "heat.caocao",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "var": "rel.liubei.trust",
+              "from": 3,
+              "to": 2
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0,
+          "offend": "caocao"
+        },
+        {
+          "kind": "choice",
+          "node": "c1_plum",
+          "choice": "still",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_wenzhi",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 3,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_guanyu",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 4,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_dongcheng",
+          "choice": null,
+          "move": "liu_threat",
+          "to": "liubei",
+          "said": "",
+          "changes": [
+            {
+              "var": "rel.liubei.trust",
+              "from": 2,
+              "to": 0
+            },
+            {
+              "var": "renown.rash",
+              "from": 1,
+              "to": 3
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 5,
+          "ch": 0,
+          "offend": "liubei"
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "rude",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "choice",
+          "n": "c1_plum",
+          "c": "still",
+          "p": [
+            0
+          ],
+          "seq": 2,
+          "al": [
+            "storm"
+          ]
+        },
+        {
+          "k": "offer",
+          "c": "c1",
+          "ids": [
+            "c1_wenzhi",
+            "c1_guanyu",
+            "c1_dongcheng"
+          ],
+          "scores": [
+            {
+              "id": "c1_guanyu",
+              "eligible": true,
+              "base": 1,
+              "spec": 1,
+              "due": 0,
+              "score": 3
+            },
+            {
+              "id": "c1_wenzhi",
+              "eligible": true,
+              "base": 2,
+              "spec": 1,
+              "due": 0,
+              "score": 4
+            },
+            {
+              "id": "c1_dongcheng",
+              "eligible": true,
+              "base": 0,
+              "spec": 1,
+              "due": 0,
+              "score": 2
+            }
+          ]
+        },
+        {
+          "k": "pick",
+          "n": "c1_dongcheng",
+          "missed": [
+            "c1_wenzhi",
+            "c1_guanyu"
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_dongcheng",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "edict"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 2,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "move",
+          "n": "c1_dongcheng",
+          "m": "liu_threat",
+          "to": "liubei",
+          "p": [
+            0
+          ],
+          "seq": 5
+        },
+        {
+          "k": "node",
+          "n": "x_liu_break",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 0,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        }
+      ],
+      "echoes": {},
+      "seq": 5,
+      "done": [
+        "c1_plum"
+      ],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "rude"
+      },
+      "grudge": {
+        "caocao": 1,
+        "liubei": 2
+      },
+      "free": {
+        "c1_plum": 2,
+        "c1_dongcheng": 0
+      },
+      "sidedCh": "c1",
+      "moved": {
+        "c1_dongcheng": [
+          "liu_threat"
+        ]
+      },
+      "flash": {
+        "from": "c1_dongcheng",
+        "who": "liubei",
+        "resume": true
+      },
+      "run": "fate-review-exile",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "after": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 0,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 0,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 1,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": true,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 3,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": false,
+        "flag.jailed": false,
+        "flag.was_jailed": false,
+        "flag.left_behind": false,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 1,
+        "grudge.liubei": 2,
+        "grudge.guanyu": 0,
+        "flag.fate_dead": false,
+        "flag.beaten": false,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none",
+        "ended_early": true
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 0,
+      "phase": "end",
+      "cur": null,
+      "offer": [],
+      "lastOrder": 10,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "rude",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "heat.caocao",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 1
+            },
+            {
+              "var": "rel.liubei.trust",
+              "from": 3,
+              "to": 2
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0,
+          "offend": "caocao"
+        },
+        {
+          "kind": "choice",
+          "node": "c1_plum",
+          "choice": "still",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_wenzhi",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 3,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_guanyu",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 4,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_dongcheng",
+          "choice": null,
+          "move": "liu_threat",
+          "to": "liubei",
+          "said": "",
+          "changes": [
+            {
+              "var": "rel.liubei.trust",
+              "from": 2,
+              "to": 0
+            },
+            {
+              "var": "renown.rash",
+              "from": 1,
+              "to": 3
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 5,
+          "ch": 0,
+          "offend": "liubei"
+        },
+        {
+          "kind": "choice",
+          "node": "x_liu_break",
+          "choice": "true",
+          "changes": [
+            {
+              "var": "flag.exiled",
+              "from": false,
+              "to": true
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 6,
+          "ch": 0
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "rude",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "choice",
+          "n": "c1_plum",
+          "c": "still",
+          "p": [
+            0
+          ],
+          "seq": 2,
+          "al": [
+            "storm"
+          ]
+        },
+        {
+          "k": "offer",
+          "c": "c1",
+          "ids": [
+            "c1_wenzhi",
+            "c1_guanyu",
+            "c1_dongcheng"
+          ],
+          "scores": [
+            {
+              "id": "c1_guanyu",
+              "eligible": true,
+              "base": 1,
+              "spec": 1,
+              "due": 0,
+              "score": 3
+            },
+            {
+              "id": "c1_wenzhi",
+              "eligible": true,
+              "base": 2,
+              "spec": 1,
+              "due": 0,
+              "score": 4
+            },
+            {
+              "id": "c1_dongcheng",
+              "eligible": true,
+              "base": 0,
+              "spec": 1,
+              "due": 0,
+              "score": 2
+            }
+          ]
+        },
+        {
+          "k": "pick",
+          "n": "c1_dongcheng",
+          "missed": [
+            "c1_wenzhi",
+            "c1_guanyu"
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_dongcheng",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "edict"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 2,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "move",
+          "n": "c1_dongcheng",
+          "m": "liu_threat",
+          "to": "liubei",
+          "p": [
+            0
+          ],
+          "seq": 5
+        },
+        {
+          "k": "node",
+          "n": "x_liu_break",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 0,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "choice",
+          "n": "x_liu_break",
+          "c": "true",
+          "p": [
+            0
+          ],
+          "seq": 6,
+          "al": []
+        },
+        {
+          "k": "end"
+        }
+      ],
+      "echoes": {},
+      "seq": 6,
+      "done": [
+        "c1_plum",
+        "x_liu_break"
+      ],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "rude"
+      },
+      "grudge": {
+        "caocao": 1,
+        "liubei": 2
+      },
+      "free": {
+        "c1_plum": 2,
+        "c1_dongcheng": 0
+      },
+      "sidedCh": "c1",
+      "moved": {
+        "c1_dongcheng": [
+          "liu_threat"
+        ]
+      },
+      "flash": null,
+      "run": "fate-review-exile",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "steps": [
+      [
+        "answer",
+        "rude"
+      ],
+      [
+        "choose",
+        "still"
+      ],
+      [
+        "side",
+        "c1_dongcheng"
+      ],
+      [
+        "move",
+        "liu_threat"
+      ],
+      [
+        "choose",
+        "true"
+      ]
+    ]
+  },
+  "wounded": {
+    "node": "x_guan_rage1",
+    "choice": "stand",
+    "before": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 3,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 1,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 0,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": false,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 1,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": false,
+        "flag.jailed": false,
+        "flag.was_jailed": false,
+        "flag.left_behind": false,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 0,
+        "grudge.liubei": 0,
+        "grudge.guanyu": 2,
+        "flag.fate_dead": false,
+        "flag.beaten": false,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none"
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 0,
+      "phase": "node",
+      "cur": "x_guan_rage1",
+      "offer": [],
+      "lastOrder": 10,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "cao",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "rel.caocao.esteem",
+              "from": 0,
+              "to": 1
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0
+        },
+        {
+          "kind": "choice",
+          "node": "c1_plum",
+          "choice": "still",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_wenzhi",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 3,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_dongcheng",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 4,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_guanyu",
+          "choice": null,
+          "move": "guan_threat1",
+          "to": "guanyu",
+          "said": "",
+          "changes": [
+            {
+              "var": "rel.guanyu.esteem",
+              "from": 1,
+              "to": 0
+            },
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 1
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 5,
+          "ch": 0,
+          "offend": "guanyu"
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "cao",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "choice",
+          "n": "c1_plum",
+          "c": "still",
+          "p": [
+            0
+          ],
+          "seq": 2,
+          "al": [
+            "storm"
+          ]
+        },
+        {
+          "k": "offer",
+          "c": "c1",
+          "ids": [
+            "c1_wenzhi",
+            "c1_guanyu",
+            "c1_dongcheng"
+          ],
+          "scores": [
+            {
+              "id": "c1_guanyu",
+              "eligible": true,
+              "base": 1,
+              "spec": 1,
+              "due": 0,
+              "score": 3
+            },
+            {
+              "id": "c1_wenzhi",
+              "eligible": true,
+              "base": 2,
+              "spec": 1,
+              "due": 0,
+              "score": 4
+            },
+            {
+              "id": "c1_dongcheng",
+              "eligible": true,
+              "base": 0,
+              "spec": 1,
+              "due": 0,
+              "score": 2
+            }
+          ]
+        },
+        {
+          "k": "pick",
+          "n": "c1_guanyu",
+          "missed": [
+            "c1_wenzhi",
+            "c1_dongcheng"
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_guanyu",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 1,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "move",
+          "n": "c1_guanyu",
+          "m": "guan_threat1",
+          "to": "guanyu",
+          "p": [
+            0
+          ],
+          "seq": 5
+        },
+        {
+          "k": "node",
+          "n": "x_guan_rage1",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 1,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 0,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        }
+      ],
+      "echoes": {},
+      "seq": 5,
+      "done": [
+        "c1_plum"
+      ],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "cao"
+      },
+      "free": {
+        "c1_plum": 2,
+        "c1_guanyu": 0
+      },
+      "sidedCh": "c1",
+      "moved": {
+        "c1_guanyu": [
+          "guan_threat1"
+        ]
+      },
+      "grudge": {
+        "guanyu": 2
+      },
+      "flash": {
+        "from": "c1_guanyu",
+        "who": "guanyu",
+        "resume": true
+      },
+      "run": "fate-review-wounded",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "after": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 2,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 1,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 0,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": false,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 2,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": false,
+        "flag.jailed": false,
+        "flag.was_jailed": false,
+        "flag.left_behind": false,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 0,
+        "grudge.liubei": 0,
+        "grudge.guanyu": 2,
+        "flag.fate_dead": false,
+        "flag.beaten": true,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none"
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 0,
+      "phase": "node",
+      "cur": "c1_guanyu",
+      "offer": [],
+      "lastOrder": 10,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "cao",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "rel.caocao.esteem",
+              "from": 0,
+              "to": 1
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0
+        },
+        {
+          "kind": "choice",
+          "node": "c1_plum",
+          "choice": "still",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_wenzhi",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 3,
+          "ch": 0
+        },
+        {
+          "kind": "missed",
+          "node": "c1_dongcheng",
+          "choice": null,
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 4,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_guanyu",
+          "choice": null,
+          "move": "guan_threat1",
+          "to": "guanyu",
+          "said": "",
+          "changes": [
+            {
+              "var": "rel.guanyu.esteem",
+              "from": 1,
+              "to": 0
+            },
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 1
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 5,
+          "ch": 0,
+          "offend": "guanyu"
+        },
+        {
+          "kind": "choice",
+          "node": "x_guan_rage1",
+          "choice": "stand",
+          "changes": [
+            {
+              "var": "flag.beaten",
+              "from": false,
+              "to": true
+            },
+            {
+              "var": "rel.liubei.trust",
+              "from": 3,
+              "to": 2
+            },
+            {
+              "var": "renown.rash",
+              "from": 1,
+              "to": 2
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 6,
+          "ch": 0
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "cao",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "choice",
+          "n": "c1_plum",
+          "c": "still",
+          "p": [
+            0
+          ],
+          "seq": 2,
+          "al": [
+            "storm"
+          ]
+        },
+        {
+          "k": "offer",
+          "c": "c1",
+          "ids": [
+            "c1_wenzhi",
+            "c1_guanyu",
+            "c1_dongcheng"
+          ],
+          "scores": [
+            {
+              "id": "c1_guanyu",
+              "eligible": true,
+              "base": 1,
+              "spec": 1,
+              "due": 0,
+              "score": 3
+            },
+            {
+              "id": "c1_wenzhi",
+              "eligible": true,
+              "base": 2,
+              "spec": 1,
+              "due": 0,
+              "score": 4
+            },
+            {
+              "id": "c1_dongcheng",
+              "eligible": true,
+              "base": 0,
+              "spec": 1,
+              "due": 0,
+              "score": 2
+            }
+          ]
+        },
+        {
+          "k": "pick",
+          "n": "c1_guanyu",
+          "missed": [
+            "c1_wenzhi",
+            "c1_dongcheng"
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_guanyu",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 1,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "move",
+          "n": "c1_guanyu",
+          "m": "guan_threat1",
+          "to": "guanyu",
+          "p": [
+            0
+          ],
+          "seq": 5
+        },
+        {
+          "k": "node",
+          "n": "x_guan_rage1",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 1,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 0,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "choice",
+          "n": "x_guan_rage1",
+          "c": "stand",
+          "p": [
+            0
+          ],
+          "seq": 6,
+          "al": []
+        },
+        {
+          "k": "resume",
+          "n": "c1_guanyu"
+        }
+      ],
+      "echoes": {},
+      "seq": 6,
+      "done": [
+        "c1_plum",
+        "x_guan_rage1"
+      ],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "cao"
+      },
+      "free": {
+        "c1_plum": 2,
+        "c1_guanyu": 0
+      },
+      "sidedCh": "c1",
+      "moved": {
+        "c1_guanyu": [
+          "guan_threat1"
+        ]
+      },
+      "grudge": {
+        "guanyu": 2
+      },
+      "flash": null,
+      "run": "fate-review-wounded",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "steps": [
+      [
+        "answer",
+        "cao"
+      ],
+      [
+        "choose",
+        "still"
+      ],
+      [
+        "side",
+        "c1_guanyu"
+      ],
+      [
+        "move",
+        "guan_threat1"
+      ],
+      [
+        "choose",
+        "stand"
+      ]
+    ]
+  },
+  "jail": {
+    "node": "x_plum_rage",
+    "choice": "defy",
+    "before": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 3,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 0,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 1,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": false,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 2,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": true,
+        "flag.jailed": false,
+        "flag.was_jailed": false,
+        "flag.left_behind": false,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 2,
+        "grudge.liubei": 0,
+        "grudge.guanyu": 0,
+        "flag.fate_dead": false,
+        "flag.beaten": false,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none"
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 0,
+      "phase": "node",
+      "cur": "x_plum_rage",
+      "offer": [],
+      "lastOrder": 10,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "others",
+          "to": "caocao",
+          "said": "",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_plum",
+          "choice": null,
+          "move": "threat",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 2
+            },
+            {
+              "var": "flag.cao_wary",
+              "from": false,
+              "to": true
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0,
+          "offend": "caocao"
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "others",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "move",
+          "n": "c1_plum",
+          "m": "threat",
+          "to": "caocao",
+          "p": [
+            0
+          ],
+          "seq": 2
+        },
+        {
+          "k": "node",
+          "n": "x_plum_rage",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        }
+      ],
+      "echoes": {},
+      "seq": 2,
+      "done": [],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "others"
+      },
+      "free": {
+        "c1_plum": 0
+      },
+      "moved": {
+        "c1_plum": [
+          "threat"
+        ]
+      },
+      "grudge": {
+        "caocao": 2
+      },
+      "flash": {
+        "from": "c1_plum",
+        "who": "caocao",
+        "resume": false
+      },
+      "run": "fate-review-jail",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "after": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 3,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 0,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 1,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": false,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 4,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": true,
+        "flag.jailed": true,
+        "flag.was_jailed": false,
+        "flag.left_behind": true,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 2,
+        "grudge.liubei": 0,
+        "grudge.guanyu": 0,
+        "flag.fate_dead": false,
+        "flag.beaten": false,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none"
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 1,
+      "phase": "node",
+      "cur": "x_jail",
+      "offer": [],
+      "lastOrder": -1,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "others",
+          "to": "caocao",
+          "said": "",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_plum",
+          "choice": null,
+          "move": "threat",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 2
+            },
+            {
+              "var": "flag.cao_wary",
+              "from": false,
+              "to": true
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0,
+          "offend": "caocao"
+        },
+        {
+          "kind": "choice",
+          "node": "x_plum_rage",
+          "choice": "defy",
+          "changes": [
+            {
+              "var": "flag.jailed",
+              "from": false,
+              "to": true
+            },
+            {
+              "var": "flag.left_behind",
+              "from": false,
+              "to": true
+            },
+            {
+              "var": "renown.rash",
+              "from": 2,
+              "to": 4
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 3,
+          "ch": 0
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "others",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "move",
+          "n": "c1_plum",
+          "m": "threat",
+          "to": "caocao",
+          "p": [
+            0
+          ],
+          "seq": 2
+        },
+        {
+          "k": "node",
+          "n": "x_plum_rage",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "choice",
+          "n": "x_plum_rage",
+          "c": "defy",
+          "p": [
+            0
+          ],
+          "seq": 3,
+          "al": [
+            "storm"
+          ]
+        },
+        {
+          "k": "sys",
+          "key": "away",
+          "sit": "jail"
+        },
+        {
+          "k": "ch",
+          "c": "c2",
+          "p": [
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "x_jail",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        }
+      ],
+      "echoes": {},
+      "seq": 3,
+      "done": [
+        "x_plum_rage",
+        "c1_plum"
+      ],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "others"
+      },
+      "free": {
+        "c1_plum": 0
+      },
+      "moved": {
+        "c1_plum": [
+          "threat"
+        ]
+      },
+      "grudge": {
+        "caocao": 2
+      },
+      "flash": null,
+      "sidedCh": "c1",
+      "run": "fate-review-jail",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "steps": [
+      [
+        "answer",
+        "others"
+      ],
+      [
+        "move",
+        "threat"
+      ],
+      [
+        "choose",
+        "defy"
+      ]
+    ]
+  },
+  "execute": {
+    "node": "x_jail",
+    "choice": "unbowed",
+    "before": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 3,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 0,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 1,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": false,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 4,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": true,
+        "flag.jailed": true,
+        "flag.was_jailed": false,
+        "flag.left_behind": true,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 2,
+        "grudge.liubei": 0,
+        "grudge.guanyu": 0,
+        "flag.fate_dead": false,
+        "flag.beaten": false,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none"
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 1,
+      "phase": "node",
+      "cur": "x_jail",
+      "offer": [],
+      "lastOrder": -1,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "others",
+          "to": "caocao",
+          "said": "",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_plum",
+          "choice": null,
+          "move": "threat",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 2
+            },
+            {
+              "var": "flag.cao_wary",
+              "from": false,
+              "to": true
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0,
+          "offend": "caocao"
+        },
+        {
+          "kind": "choice",
+          "node": "x_plum_rage",
+          "choice": "defy",
+          "changes": [
+            {
+              "var": "flag.jailed",
+              "from": false,
+              "to": true
+            },
+            {
+              "var": "flag.left_behind",
+              "from": false,
+              "to": true
+            },
+            {
+              "var": "renown.rash",
+              "from": 2,
+              "to": 4
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 3,
+          "ch": 0
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "others",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "move",
+          "n": "c1_plum",
+          "m": "threat",
+          "to": "caocao",
+          "p": [
+            0
+          ],
+          "seq": 2
+        },
+        {
+          "k": "node",
+          "n": "x_plum_rage",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "choice",
+          "n": "x_plum_rage",
+          "c": "defy",
+          "p": [
+            0
+          ],
+          "seq": 3,
+          "al": [
+            "storm"
+          ]
+        },
+        {
+          "k": "sys",
+          "key": "away",
+          "sit": "jail"
+        },
+        {
+          "k": "ch",
+          "c": "c2",
+          "p": [
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "x_jail",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        }
+      ],
+      "echoes": {},
+      "seq": 3,
+      "done": [
+        "x_plum_rage",
+        "c1_plum"
+      ],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "others"
+      },
+      "free": {
+        "c1_plum": 0
+      },
+      "moved": {
+        "c1_plum": [
+          "threat"
+        ]
+      },
+      "grudge": {
+        "caocao": 2
+      },
+      "flash": null,
+      "sidedCh": "c1",
+      "run": "fate-review-execute",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "after": {
+      "v": {
+        "track": "liu",
+        "renown.loyal": 0,
+        "renown.cunning": 0,
+        "uncanny": 0,
+        "deviation": 0,
+        "flag.covered_liu": false,
+        "flag.spoke_at_plum": false,
+        "flag.asked_wenzhi": false,
+        "flag.asked_yi": false,
+        "flag.warned_guan": false,
+        "flag.foresaw_yidai": false,
+        "flag.fast_departure": false,
+        "flag.drafted_terms": false,
+        "flag.carried_news": false,
+        "flag.with_guanyu": false,
+        "flag.took_cao_post": false,
+        "flag.promise_wenzhi": false,
+        "flag.pass_from_wenzhi": false,
+        "flag.kongxiu_spared": false,
+        "flag.urged_fight": false,
+        "flag.knows_pangtong": false,
+        "flag.xushu_stayed": false,
+        "flag.pangtong_joined": false,
+        "flag.aside_zhuge": false,
+        "flag.mi_saved": false,
+        "flag.wounded": false,
+        "flag.abandon_advice": false,
+        "flag.wenzhi_warned": false,
+        "flag.wenzhi_used": false,
+        "flag.wenzhi_with_you": false,
+        "flag.wenzhi_safe": false,
+        "flag.wenzhi_together": false,
+        "flag.vouched_guan": false,
+        "flag.at_huarong": false,
+        "flag.forged_letter": false,
+        "flag.secret_mercy": false,
+        "flag.cao_reserve": false,
+        "flag.pleaded_guan": false,
+        "rel.liubei.warmth": 3,
+        "rel.liubei.trust": 3,
+        "rel.liubei.esteem": 2,
+        "rel.caocao.warmth": 0,
+        "rel.caocao.trust": 1,
+        "rel.caocao.esteem": 0,
+        "rel.guanyu.warmth": 1,
+        "rel.guanyu.trust": 2,
+        "rel.guanyu.esteem": 1,
+        "rel.zhuge.warmth": 1,
+        "rel.zhuge.trust": 5,
+        "rel.zhuge.esteem": 0,
+        "rel.wenzhi.warmth": 3,
+        "rel.wenzhi.trust": 2,
+        "rel.wenzhi.esteem": 2,
+        "rel.wenzhi.intimacy": 1,
+        "flag.guan_fear": false,
+        "flag.heard_people": false,
+        "flag.zhuge_tested": false,
+        "flag.warned_wind": false,
+        "flag.cao_on_guan": false,
+        "flag.confessed": false,
+        "flag.exiled": false,
+        "flag.exposed": false,
+        "flag.sidelined": false,
+        "flag.guan_book": false,
+        "flag.wz_pouch": false,
+        "flag.cao_watched": false,
+        "imp.liubei.offended": 0,
+        "imp.liubei.flattery": 0,
+        "imp.caocao.offended": 0,
+        "imp.caocao.flattery": 0,
+        "imp.guanyu.offended": 0,
+        "imp.guanyu.frivolous": 0,
+        "imp.guanyu.flattery": 0,
+        "imp.zhuge.offended": 0,
+        "imp.zhuge.frivolous": 0,
+        "imp.zhuge.flattery": 0,
+        "imp.wenzhi.offended": 0,
+        "imp.wenzhi.flattery": 0,
+        "renown.rash": 4,
+        "flag.mi_heng": false,
+        "heat.caocao": 0,
+        "heat.guanyu": 0,
+        "heat.liubei": 0,
+        "heat.zhuge": 0,
+        "heat.wenzhi": 0,
+        "flag.flogged": false,
+        "flag.cao_wary": true,
+        "flag.jailed": true,
+        "flag.was_jailed": false,
+        "flag.left_behind": true,
+        "flag.urged_kill_liu": false,
+        "flag.named_liu_hero": false,
+        "flag.urged_stop_guan": false,
+        "grudge.caocao": 2,
+        "grudge.liubei": 0,
+        "grudge.guanyu": 0,
+        "flag.fate_dead": true,
+        "flag.beaten": false,
+        "debt.d_five_passes": "none",
+        "debt.d_recommend": "none",
+        "debt.d_lianhuan": "none",
+        "debt.d_mi": "none",
+        "ended_early": true
+      },
+      "vol": "sanguo_strategist_v1",
+      "ch": 1,
+      "phase": "end",
+      "cur": null,
+      "offer": [],
+      "lastOrder": -1,
+      "ledger": [
+        {
+          "kind": "answer",
+          "node": "c1_plum",
+          "choice": null,
+          "answer": "others",
+          "to": "caocao",
+          "said": "",
+          "changes": [],
+          "debts": [],
+          "echo": [],
+          "seq": 1,
+          "ch": 0
+        },
+        {
+          "kind": "move",
+          "node": "c1_plum",
+          "choice": null,
+          "move": "threat",
+          "to": "caocao",
+          "said": "",
+          "changes": [
+            {
+              "var": "renown.rash",
+              "from": 0,
+              "to": 2
+            },
+            {
+              "var": "flag.cao_wary",
+              "from": false,
+              "to": true
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 2,
+          "ch": 0,
+          "offend": "caocao"
+        },
+        {
+          "kind": "choice",
+          "node": "x_plum_rage",
+          "choice": "defy",
+          "changes": [
+            {
+              "var": "flag.jailed",
+              "from": false,
+              "to": true
+            },
+            {
+              "var": "flag.left_behind",
+              "from": false,
+              "to": true
+            },
+            {
+              "var": "renown.rash",
+              "from": 2,
+              "to": 4
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 3,
+          "ch": 0
+        },
+        {
+          "kind": "choice",
+          "node": "x_jail",
+          "choice": "unbowed",
+          "changes": [
+            {
+              "var": "flag.fate_dead",
+              "from": false,
+              "to": true
+            }
+          ],
+          "debts": [],
+          "echo": [],
+          "seq": 4,
+          "ch": 1
+        }
+      ],
+      "log": [
+        {
+          "k": "ch",
+          "c": "c1",
+          "p": [
+            0,
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "c1_plum",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "ans",
+          "n": "c1_plum",
+          "a": "others",
+          "said": "",
+          "p": [
+            0
+          ],
+          "seq": 1
+        },
+        {
+          "k": "move",
+          "n": "c1_plum",
+          "m": "threat",
+          "to": "caocao",
+          "p": [
+            0
+          ],
+          "seq": 2
+        },
+        {
+          "k": "node",
+          "n": "x_plum_rage",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [
+            "storm"
+          ],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "choice",
+          "n": "x_plum_rage",
+          "c": "defy",
+          "p": [
+            0
+          ],
+          "seq": 3,
+          "al": [
+            "storm"
+          ]
+        },
+        {
+          "k": "sys",
+          "key": "away",
+          "sit": "jail"
+        },
+        {
+          "k": "ch",
+          "c": "c2",
+          "p": [
+            1
+          ]
+        },
+        {
+          "k": "node",
+          "n": "x_jail",
+          "p": [
+            0
+          ],
+          "oe": [],
+          "cb": [],
+          "al": [],
+          "rel": {
+            "rel.liubei.warmth": 3,
+            "rel.liubei.trust": 3,
+            "rel.liubei.esteem": 2,
+            "rel.caocao.warmth": 0,
+            "rel.caocao.trust": 1,
+            "rel.caocao.esteem": 0,
+            "rel.guanyu.warmth": 1,
+            "rel.guanyu.trust": 2,
+            "rel.guanyu.esteem": 1,
+            "rel.zhuge.warmth": 1,
+            "rel.zhuge.trust": 5,
+            "rel.zhuge.esteem": 0,
+            "rel.wenzhi.warmth": 3,
+            "rel.wenzhi.trust": 2,
+            "rel.wenzhi.esteem": 2,
+            "rel.wenzhi.intimacy": 1
+          }
+        },
+        {
+          "k": "choice",
+          "n": "x_jail",
+          "c": "unbowed",
+          "p": [
+            0,
+            1
+          ],
+          "seq": 4,
+          "al": []
+        },
+        {
+          "k": "end"
+        }
+      ],
+      "echoes": {},
+      "seq": 4,
+      "done": [
+        "x_plum_rage",
+        "c1_plum",
+        "x_jail"
+      ],
+      "sitAge": {},
+      "asked": {
+        "c1_plum": "others"
+      },
+      "free": {
+        "c1_plum": 0
+      },
+      "moved": {
+        "c1_plum": [
+          "threat"
+        ]
+      },
+      "grudge": {
+        "caocao": 2
+      },
+      "flash": null,
+      "sidedCh": "c1",
+      "run": "fate-review-execute",
+      "n": 1,
+      "created": 1793670000000
+    },
+    "steps": [
+      [
+        "answer",
+        "others"
+      ],
+      [
+        "move",
+        "threat"
+      ],
+      [
+        "choose",
+        "defy"
+      ],
+      [
+        "choose",
+        "unbowed"
+      ]
+    ]
+  }
+}

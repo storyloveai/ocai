@@ -1,0 +1,52 @@
+{
+  "issue": 100,
+  "status": "proposed for preview; not user-approved adoption",
+  "parentPR": 97,
+  "jobsManifestUnchanged": true,
+  "selections": [
+    {
+      "kind": "execute",
+      "candidate": "A",
+      "source": "game/sanguo/art/candidates/fate-execute/a-1200x480.webp",
+      "file": "game/sanguo/art/fate/execute.webp",
+      "sha256": "09f7eb4042fc66d2825611c45f614175dcd079b565d31b77544e63859856acda",
+      "size": [
+        1200,
+        480
+      ]
+    },
+    {
+      "kind": "jail",
+      "candidate": "B",
+      "source": "game/sanguo/art/candidates/fate-jail/b-1200x480.webp",
+      "file": "game/sanguo/art/fate/jail.webp",
+      "sha256": "7634baaf070f16dac0834ca023f4b294b2612d9d52a97d28854adfb335a9fabc",
+      "size": [
+        1200,
+        480
+      ]
+    },
+    {
+      "kind": "exile",
+      "candidate": "B",
+      "source": "game/sanguo/art/candidates/fate-exile/b-1200x480.webp",
+      "file": "game/sanguo/art/fate/exile.webp",
+      "sha256": "458614f29554c097820171624bc9fc302a5b51dbb58920bd64023764186c7fd9",
+      "size": [
+        1200,
+        480
+      ]
+    },
+    {
+      "kind": "wounded",
+      "candidate": "A",
+      "source": "game/sanguo/art/candidates/fate-wounded/a-1200x480.webp",
+      "file": "game/sanguo/art/fate/wounded.webp",
+      "sha256": "3092ce0243f5ea6e62cf9af3e33193509911b88bcebf2094314f2856cf0746c4",
+      "size": [
+        1200,
+        480
+      ]
+    }
+  ]
+}

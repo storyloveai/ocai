@@ -1,0 +1,151 @@
+{
+  "scope": "Real adapted campaign, authored dialogue; AI disabled in local test; engine-produced isolated saves",
+  "checks": [
+    {
+      "kind": "execute",
+      "size": "desktop",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "jail",
+      "size": "desktop",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "exile",
+      "size": "desktop",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "wounded",
+      "size": "desktop",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "execute",
+      "size": "desktop",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "jail",
+      "size": "desktop",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "exile",
+      "size": "desktop",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "wounded",
+      "size": "desktop",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "execute",
+      "size": "mobile",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "jail",
+      "size": "mobile",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "exile",
+      "size": "mobile",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "wounded",
+      "size": "mobile",
+      "lang": "zh",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "execute",
+      "size": "mobile",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "jail",
+      "size": "mobile",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "exile",
+      "size": "mobile",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    },
+    {
+      "kind": "wounded",
+      "size": "mobile",
+      "lang": "en",
+      "dimensions": "1200x480",
+      "actualChoiceToImage": "pass",
+      "inkNoFateIllustration": "pass",
+      "noOverflow": true
+    }
+  ],
+  "noAccountOrGameLocalStorageWrites": true,
+  "errors": []
+}
