@@ -1584,6 +1584,15 @@
     "zh": "黄忠·火气",
     "en": "Huang Zhong · Temper"
    }
+  },
+  "flag.v4_wz_map": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "温芷给了你一张小路图",
+    "en": "Wen Zhi gave you a map of the back paths"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -3932,6 +3941,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "关羽把自己的护心镜摘下来，扣在你胸前：『阵后流矢多。』",
+      "en": "Guan Yu unfastens his own breastplate mirror and buckles it onto your chest. 'Stray arrows fly behind the lines.'"
+     },
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -4127,6 +4152,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "诸葛亮亲手给你倒了一杯茶，等你喝完才开口。",
+      "en": "Zhuge Liang pours you a cup of tea with his own hands and waits until you've finished it before he speaks."
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -4821,6 +4862,38 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "关羽把地图铺在你面前，压上一块石头：『这一仗怎么打，我想先听你的。』",
+      "en": "Guan Yu spreads the map before you and weighs it down with a stone. 'How this battle goes—I want to hear you first.'"
+     },
+     "when": {
+      "v": "rel.guanyu.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "关羽自己看着地图，问话的时候头也没抬。",
+      "en": "Guan Yu studies the map himself; he doesn't look up when he asks."
+     },
+     "when": {
+      "v": "rel.guanyu.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "guanyu",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -4858,7 +4931,67 @@
      ],
      "values": [
       "zhi"
-     ]
+     ],
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "plan_r",
+     "type": "strategy",
+     "label": {
+      "zh": "献计：先备船筏，堵住各处水口，等水涨起来，一齐放开。",
+      "en": "Propose it: ready boats and rafts, dam every outlet, and when the water is high, open them all at once."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽一拍大腿：『就这么办。』当夜就让关平去备船。",
+        "en": "Guan Yu slaps his thigh. 'That's how we'll do it.' That very night he sends Guan Ping to ready the boats."
+       }
+      },
+      {
+       "text": {
+        "zh": "关羽大笑：『正合我意！』那一夜风雨大作，水从四面八方灌进山谷。天亮时，七军都泡在水里。于禁跪着投降，庞德站在一条小船上，还在射箭。",
+        "en": "Guan Yu roars with laughter. 'Exactly what I had in mind!' That night the storm breaks, and water pours into the valley from every side. By dawn the seven armies are under water. Yu Jin kneels and surrenders; Pang De, standing in a little boat, is still shooting arrows."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.flood_plan",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": 2
+      },
+      {
+       "add": "renown.cunning",
+       "by": 1
+      },
+      {
+       "add": "rel.guanyu.trust",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_flood"
+     ],
+     "values": [
+      "zhi"
+     ],
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为关羽器重你，当场用了你的计",
+      "en": "Because Guan Yu values you, he takes your plan on the spot"
+     }
     },
     {
      "id": "people",
@@ -5917,6 +6050,22 @@
        }
       ]
      }
+    },
+    {
+     "text": {
+      "zh": "关羽伸出左臂之前，冲你笑了笑：『看着，别眨眼。』",
+      "en": "Before he holds out his left arm, Guan Yu smiles at you. 'Watch. Don't blink.'"
+     },
+     "when": {
+      "v": "rel.guanyu.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7360,6 +7509,38 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "汉中王把案上的令箭推到你手边：『你说怎么办，就怎么办。』",
+      "en": "The King of Hanzhong pushes the command arrows on his desk toward your hand. 'Whatever you say, we'll do.'"
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "汉中王问的是满屋的人，眼睛没有落在你身上。",
+      "en": "The King asks the whole room; his eyes don't rest on you."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -7395,7 +7576,65 @@
      "values": [
       "yi"
      ],
-     "place": "shangyong"
+     "place": "shangyong",
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "early_r",
+     "type": "dilemma",
+     "label": {
+      "zh": "自请先去上庸：刘封、孟达那里，得有人盯着。",
+      "en": "Ask to go to Shangyong ahead of time: someone needs to keep an eye on Liu Feng and Meng Da."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "汉中王当场写了手令：『上庸的兵，听子衡调遣。』",
+        "en": "The King writes an order then and there: 'The troops at Shangyong answer to Ziheng.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "你骑马出了成都，一路往东北去。蜀道难，你走了二十多天。",
+        "en": "You ride out of Chengdu, northeast. The roads out of Shu are hard; it takes you more than twenty days."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v4_early_sy",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1
+      }
+     ],
+     "values": [
+      "yi"
+     ],
+     "place": "shangyong",
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为汉中王信你，把上庸的兵交给了你",
+      "en": "Because the King trusts you, he puts the Shangyong troops under you"
+     }
     },
     {
      "id": "letter",
@@ -7755,6 +7994,64 @@
       "zhi"
      ],
      "place": "maicheng",
+     "when": {
+      "v": "flag.v4_wz_map",
+      "op": "!=",
+      "val": true
+     },
+     "tags": [
+      "advice"
+     ]
+    },
+    {
+     "id": "call_map",
+     "type": "strategy",
+     "label": {
+      "zh": "拿出温芷画的小路图，劝关羽：现在就派人抄小路去上庸、去成都求救。",
+      "en": "Bring out Wen Zhi's map and urge Guan Yu: send riders by the back paths to Shangyong and Chengdu, now."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "廖化照着温芷的图，抄山里的小路去了上庸，比走大路早到了两天。你写给成都的信，也跟着他走了。",
+        "en": "Following Wen Zhi's map, Liao Hua takes the mountain paths to Shangyong and arrives two days sooner than the main road would have allowed. Your letter to Chengdu travels with him."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v4_early_call",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.guanyu.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.wenzhi.trust",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_call"
+     ],
+     "values": [
+      "zhi"
+     ],
+     "place": "maicheng",
+     "when": {
+      "v": "flag.v4_wz_map",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为温芷给过你那张小路图",
+      "en": "Because Wen Zhi gave you that map"
+     },
      "tags": [
       "advice"
      ]
@@ -9185,6 +9482,22 @@
       "op": "!=",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "他醒过来，第一个找的是你：『子衡……云长他……』",
+      "en": "When he comes to, it's you he looks for first. 'Ziheng… Yunchang…'"
+     },
+     "when": {
+      "v": "rel.liubei.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -10171,7 +10484,12 @@
        "add": "renown.rash",
        "by": 1
       }
-     ]
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "stand",
@@ -10204,7 +10522,91 @@
      ],
      "values": [
       "yong"
-     ]
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": "<=",
+      "val": 2
+     }
+    },
+    {
+     "id": "bow_late",
+     "type": "expression",
+     "label": {
+      "zh": "拱手赔罪。",
+      "en": "Bow and apologize."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽看了你很久：『你走吧。』从那天起，他议事不再叫你，路上遇见了，也只当没看见。",
+        "en": "Guan Yu looks at you a long while. 'Go.' From that day on he no longer calls you to council; if you pass on the road, he looks straight through you."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.sidelined",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -2
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": -1
+      }
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": ">=",
+      "val": 3
+     }
+    },
+    {
+     "id": "stand_late",
+     "type": "dilemma",
+     "label": {
+      "zh": "不退。",
+      "en": "Don't back down."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽没有拔刀。他只说了一个字：『滚。』第二天一早，周仓把你的行李放在了营门外。荆州，你回不去了。",
+        "en": "Guan Yu doesn't draw his blade. He says only one word: 'Out.' Early the next morning Zhou Cang leaves your things outside the camp gate. You can't go back to Jingzhou."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v4_left",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -3
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -2
+      }
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": ">=",
+      "val": 3
+     },
+     "fate": {
+      "kind": "exile",
+      "who": "guanyu",
+      "label": {
+       "zh": "被逐出",
+       "en": "sent away"
+      }
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -10342,6 +10744,145 @@
     "layers": [],
     "illus": "g_cold"
    }
+  },
+  "x_rel_wzmap": {
+   "id": "x_rel_wzmap",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "小路图",
+    "en": "The Map"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "温芷托人送来一张折得很小的纸。打开是一张手画的地图：江陵到上庸、到麦城，几条山里的小路，是她这几年给伤兵送药走出来的。角上写着：『用不上最好。』",
+      "en": "Wen Zhi sends you a scrap of paper folded very small. Unfolded, it's a hand-drawn map: the mountain paths from Jiangling to Shangyong and to Maicheng, worn by her own feet over years of carrying medicine to the wounded. In the corner she has written: 'Best if you never need it.'"
+     },
+     "rel": [
+      "wenzhi",
+      "intimacy",
+      1
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "keep",
+     "type": "expression",
+     "label": {
+      "zh": "收进贴身的衣袋里。",
+      "en": "Tuck it into the pocket closest to you."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那张纸贴着你的心口，一直到麦城。",
+        "en": "The paper stays against your chest all the way to Maicheng."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v4_wz_map",
+       "to": true
+      },
+      {
+       "add": "rel.wenzhi.intimacy",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "thanks",
+     "type": "expression",
+     "label": {
+      "zh": "回一张字条：『等这一仗打完，你带我走一遍。』",
+      "en": "Send a note back: 'When this war is over, walk it with me.'"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "字条回来了，只有一个字：『好。』",
+        "en": "The note comes back with a single word: 'Yes.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v4_wz_map",
+       "to": true
+      },
+      {
+       "add": "rel.wenzhi.warmth",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "all": [
+       {
+        "any": [
+         {
+          "any": [
+           {
+            "v": "flag.post_jingzhou",
+            "op": "==",
+            "val": true
+           },
+           {
+            "v": "flag.v3_to_jing",
+            "op": "==",
+            "val": true
+           }
+          ]
+         },
+         {
+          "v": "flag.v4_to_jing",
+          "op": "==",
+          "val": true
+         }
+        ]
+       },
+       {
+        "v": "flag.v4_hermit",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     },
+     {
+      "v": "rel.wenzhi.intimacy",
+      "op": ">=",
+      "val": 2
+     },
+     {
+      "v": "flag.v4_wz_map",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": [],
+    "illus": "v4_wz_letter"
+   },
+   "cast": [
+    {
+     "id": "wenzhi"
+    }
+   ]
   }
  },
  "endings": [
