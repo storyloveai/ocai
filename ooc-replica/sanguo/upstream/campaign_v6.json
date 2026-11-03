@@ -1963,6 +1963,15 @@
     "en": "Said the southerners wouldn't rebel if they were all killed"
    },
    "carry": false
+  },
+  "flag.v6_wz_herb": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "温芷给了你一包草",
+    "en": "Wen Zhi gave you a bundle of herbs"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -3938,6 +3947,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "丞相说完，看着你：『子衡兄心里，怕是已经有人选了。』",
+      "en": "When he's done, the Chancellor looks at you. 'Brother Ziheng, I suspect you already have someone in mind.'"
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -4743,6 +4768,22 @@
       "zh": "孟获被王平、关索诱进山谷，捆了来。丞相问：『吾今擒汝，汝心服否？』孟获说：山路狭窄，误中你的计，怎么服？『汝放我回去，再整军马，共决雌雄；若能再擒吾，吾方服也。』丞相转头看你。",
       "en": "Lured into a valley, Meng Huo is taken and brought in bound. The Chancellor asks whether, now he's been caught, his heart submits. Meng Huo says he fell into a trick on a narrow mountain road—why should he submit? Let him go, and he'll gather his men and fight it out; catch him again and he'll submit. The Chancellor turns to you."
      }
+    },
+    {
+     "text": {
+      "zh": "丞相没有马上开口，转头问你：『子衡兄，放，还是不放？』",
+      "en": "The Chancellor doesn't answer at once; he turns to you. 'Brother Ziheng—release him, or not?'"
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -5174,6 +5215,38 @@
       "zh": "河边有几个当地人，远远地看着，不说话。",
       "en": "A few local people stand by the river at a distance, watching, saying nothing."
      }
+    },
+    {
+     "text": {
+      "zh": "丞相把令箭交到你手里：『过不过河，你看着办。』",
+      "en": "The Chancellor puts the command arrow in your hand. 'Whether we cross—that's your call.'"
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "丞相站在河边，没有回头问你。",
+      "en": "The Chancellor stands at the riverbank and doesn't turn to ask you."
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -5790,6 +5863,49 @@
      ]
     },
     {
+     "id": "cure_herb",
+     "type": "dilemma",
+     "label": {
+      "zh": "拿出温芷临行前塞给你的那包草。",
+      "en": "Bring out the bundle Wen Zhi pressed on you before you left."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "草叶的辛味一冲，几个军医都愣了：『这是薤叶芸香！』前军含着草叶，又照当地人指的路喝了安乐泉的水，一个也没死。",
+        "en": "The sharp smell of the leaves stops the army doctors short. 'That's xie-leaf rue!' The vanguard hold the leaves in their mouths and drink from the Anle spring the locals point to, and not one of them dies."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v6_cure",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.wenzhi.esteem",
+       "by": 1
+      },
+      {
+       "add": "deviation",
+       "by": 1
+      }
+     ],
+     "when": {
+      "v": "flag.v6_wz_herb",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为温芷给过你那包草",
+      "en": "Because Wen Zhi gave you that bundle"
+     }
+    },
+    {
      "id": "order",
      "type": "strategy",
      "label": {
@@ -6008,6 +6124,22 @@
       "zh": "藤甲兵刀箭不入，蜀兵连败了几阵。丞相看了一天地形，回来说：前面有个山谷，叫盘蛇谷，两边是光秃秃的石壁，只有一条路。他让人运去十辆黑油柜车，在谷里埋下火药。他把布置说给你听，问你：『子衡兄，你看呢？』",
       "en": "Blades and arrows can't touch the rattan troops, and the Shu army loses several engagements. The Chancellor studies the ground all day, then comes back: ahead is a valley called Coiled Snake, bare rock on both sides and a single road. He has ten carts of black oil sent in and powder buried in the valley. He lays out the plan for you and asks, 'What do you think, Ziheng?'"
      }
+    },
+    {
+     "text": {
+      "zh": "丞相把你拉到一边：『这一把火，亮下不去手。你帮亮想想。』",
+      "en": "The Chancellor draws you aside. 'I can't bring myself to light this fire. Help me think.'"
+     },
+     "when": {
+      "v": "rel.zhuge.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6406,6 +6538,22 @@
       "zh": "费祎劝丞相在南中设官留兵。丞相说：『留外人则当留兵，兵无所食，一不易也……』他又转头问你。",
       "en": "Fei Yi urges the Chancellor to set up officials and leave a garrison in the south. The Chancellor says that to leave outsiders means leaving soldiers, and soldiers with nothing to eat—that's the first difficulty… He turns to ask you."
      }
+    },
+    {
+     "text": {
+      "zh": "丞相听孟获说完，先看了你一眼。",
+      "en": "When Meng Huo has finished, the Chancellor glances at you first."
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7109,6 +7257,120 @@
    "cast": [
     {
      "id": "zhuge"
+    }
+   ]
+  },
+  "x_rel_wzherb": {
+   "id": "x_rel_wzherb",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "一包草",
+    "en": "A Bundle of Herbs"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "出征前一夜，温芷塞给你一个小布包，里面是晒干的草叶，有一股辛味：『南边的水不干净，听老药农说，含着这个能挡一挡。你别不当回事。』",
+      "en": "On the night before the army sets out, Wen Zhi presses a small cloth bundle into your hands: dried leaves with a sharp smell. 'The water in the south is bad. An old herbalist told me holding this in your mouth can ward it off. Don't laugh at it.'"
+     },
+     "rel": [
+      "wenzhi",
+      "intimacy",
+      1
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "keep",
+     "type": "expression",
+     "label": {
+      "zh": "收好，答应她会带回来。",
+      "en": "Keep it, and promise to bring it back."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "她瞪了你一眼：『用完了才好。』",
+        "en": "She glares at you. 'Better if you use it up.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v6_wz_herb",
+       "to": true
+      },
+      {
+       "add": "rel.wenzhi.intimacy",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "rel.wenzhi.intimacy",
+      "op": ">=",
+      "val": 2
+     },
+     {
+      "any": [
+       {
+        "all": [
+         {
+          "v": "flag.wz_west",
+          "op": "!=",
+          "val": true
+         },
+         {
+          "v": "flag.wz_jingzhou",
+          "op": "!=",
+          "val": true
+         },
+         {
+          "v": "flag.wz_huatuo",
+          "op": "!=",
+          "val": true
+         },
+         {
+          "v": "flag.wz_wed",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       },
+       {
+        "v": "flag.wz_qingnang",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     },
+     {
+      "v": "flag.v6_wz_herb",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": [],
+    "illus": "v6_wz_burns"
+   },
+   "cast": [
+    {
+     "id": "wenzhi"
     }
    ]
   }
