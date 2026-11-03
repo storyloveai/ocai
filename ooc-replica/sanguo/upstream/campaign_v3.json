@@ -1332,6 +1332,26 @@
     "zh": "黄忠·火气",
     "en": "Huang Zhong · Temper"
    }
+  },
+  "flag.v3_token": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "关羽给了你一块腰牌",
+    "en": "Guan Yu gave you his token"
+   },
+   "carry": false
+  },
+  "grudge.guanyu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·记仇",
+    "en": "Guan Yu · grudge"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -3563,6 +3583,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "诸葛亮把门掩上：『子衡兄，这话我只问你一个人。』",
+      "en": "Zhuge Liang closes the door. 'Brother Ziheng, I'm asking you and no one else.'"
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -3892,6 +3928,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "临上船，关羽问的不是周仓，是你：『子衡，你说我去不去？』",
+      "en": "As he's about to board, it's you Guan Yu asks, not Zhou Cang. 'Ziheng—should I go?'"
+     },
+     "when": {
+      "v": "rel.guanyu.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -4513,6 +4565,38 @@
       "zh": "法正站在你旁边，低声说：『主公在看你。』",
       "en": "Fa Zheng, standing next to you, says quietly, 'Our lord is looking at you.'"
      }
+    },
+    {
+     "text": {
+      "zh": "刘备没等众人开口，先看向了你。",
+      "en": "Before anyone else can speak, Liu Bei turns to you."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "刘备挨个问了一圈，最后才轮到你。",
+      "en": "Liu Bei asks everyone in turn; you're the last."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -5926,6 +6010,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "法正把两面令旗分了一面给你：『白旗你举，红旗我举。』",
+      "en": "Fa Zheng hands you one of the two signal flags. 'You raise the white. I'll raise the red.'"
+     },
+     "when": {
+      "v": "rel.fazheng.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "fazheng",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6013,7 +6113,73 @@
      "values": [
       "yong",
       "yi"
-     ]
+     ],
+     "when": {
+      "v": "rel.huangzhong.warmth",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "charge_r",
+     "type": "dilemma",
+     "label": {
+      "zh": "跟黄忠一起冲下山。",
+      "en": "Charge down the hill with Huang Zhong."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "黄忠把自己的副马牵给你：『先生跟紧老夫。』",
+        "en": "Huang Zhong brings you his spare horse. 'Stay close to this old man, sir.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "红旗一举，你跟着黄忠冲进了曹营。乱军中一支箭擦着你的头盔飞过。等你回过神来，夏侯渊已经倒在地上，黄忠的刀还在滴血。他大笑着把你拉上马：『先生不怕死，老夫喜欢！』",
+        "en": "When the red flag goes up you charge into Cao's camp behind Huang Zhong. In the melee an arrow grazes your helmet. By the time you come to yourself Xiahou Yuan is on the ground and Huang Zhong's blade is dripping. Laughing, he hauls you up onto his horse. 'You're not afraid to die, sir. I like that!'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.dj_charge",
+       "to": true
+      },
+      {
+       "add": "rel.huangzhong.warmth",
+       "by": 2
+      },
+      {
+       "add": "rel.huangzhong.esteem",
+       "by": 2
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1,
+       "key": true
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_charge"
+     ],
+     "values": [
+      "yong",
+      "yi"
+     ],
+     "when": {
+      "v": "rel.huangzhong.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为黄忠和你相熟，把副马给了你",
+      "en": "Because Huang Zhong knows you well, he gives you his spare horse"
+     }
     },
     {
      "id": "wait",
@@ -6842,6 +7008,38 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "赵云把寨门的事交给了你：『先生说开，就开。』",
+      "en": "Zhao Yun leaves the gate to you. 'Say open, sir, and it opens.'"
+     },
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhaoyun",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "赵云没有问你，一个人在寨门口站了很久。",
+      "en": "Zhao Yun doesn't ask you. He stands alone at the gate for a long time."
+     },
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "zhaoyun",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -6853,6 +7051,71 @@
       "en": "Urge Zhao Yun: throw the gates open, lower the banners, silence the drums. Cao Cao is suspicious; he won't dare come in."
      },
      "out": [
+      {
+       "text": {
+        "zh": "赵云犹豫了好一会儿，才下令开门。曹军的前锋已经冲到了寨前。",
+        "en": "Zhao Yun hesitates a long moment before ordering the gate opened. Cao's vanguard is already at the stockade."
+       }
+      },
+      {
+       "text": {
+        "zh": "赵云一个人一杆枪立在寨门外。曹兵到了，看见寨门大开，不敢前进。一声梆子响，伏在壕里的弓弩齐发，曹兵自相践踏，退到汉水边，淹死无数。刘备第二天来看战场，说：『子龙一身都是胆也！』赵云说：『先生的主意。』",
+        "en": "Zhao Yun stands alone outside the open gate with his spear. Cao's men arrive, see the gate wide open, and dare not advance. A clapper sounds; the crossbowmen hidden in the trench loose together, and Cao's men trample one another in the retreat to the Han River, where countless drown. Next day Liu Bei comes to see the field. 'Zilong is all courage!' Zhao Yun says, 'It was the master's idea.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.hs_open",
+       "to": true
+      },
+      {
+       "add": "rel.zhaoyun.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.liubei.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.zhaoyun.trust",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_hanshui"
+     ],
+     "values": [
+      "zhi",
+      "yong"
+     ],
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": "<=",
+      "val": 3
+     },
+     "because": {
+      "zh": "因为赵云还不够信你，耽误了一会儿",
+      "en": "Because Zhao Yun doesn't trust you enough yet, time is lost"
+     },
+     "tags": [
+      "advice"
+     ]
+    },
+    {
+     "id": "open_r",
+     "type": "strategy",
+     "label": {
+      "zh": "劝赵云：大开寨门，偃旗息鼓。曹操多疑，必不敢进。",
+      "en": "Urge Zhao Yun: throw the gates open, lower the banners, silence the drums. Cao Cao is suspicious; he won't dare come in."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "赵云一句话没问，下令开门。",
+        "en": "Zhao Yun asks nothing; he orders the gate opened."
+       }
+      },
       {
        "text": {
         "zh": "赵云一个人一杆枪立在寨门外。曹兵到了，看见寨门大开，不敢前进。一声梆子响，伏在壕里的弓弩齐发，曹兵自相践踏，退到汉水边，淹死无数。刘备第二天来看战场，说：『子龙一身都是胆也！』赵云说：『先生的主意。』",
@@ -6876,6 +7139,10 @@
       {
        "add": "rel.liubei.esteem",
        "by": 1
+      },
+      {
+       "add": "rel.zhaoyun.warmth",
+       "by": 1
       }
      ],
      "echo": [
@@ -6885,6 +7152,15 @@
       "zhi",
       "yong"
      ],
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为赵云信你，你一开口他就照做",
+      "en": "Because Zhao Yun trusts you, he acts the moment you speak"
+     },
      "tags": [
       "advice"
      ]
@@ -7866,6 +8142,38 @@
       "op": ">=",
       "val": 2
      }
+    },
+    {
+     "text": {
+      "zh": "刘备把名单递给你时，低声说：『这份名单，我只给你看过。』",
+      "en": "As Liu Bei hands you the list he says quietly, 'You're the only one I've shown this to.'"
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "名单在众人手里传了一圈，才传到你这里。",
+      "en": "The list goes all the way round the room before it reaches you."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -8739,6 +9047,38 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "关羽开口之前，先看了你一眼。",
+      "en": "Before he speaks, Guan Yu glances at you."
+     },
+     "when": {
+      "v": "rel.guanyu.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "guanyu",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "关羽连看都没看你，一拍案就骂了出去。",
+      "en": "Guan Yu doesn't even look your way; he slams the table and starts shouting."
+     },
+     "when": {
+      "v": "rel.guanyu.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "guanyu",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -8804,6 +9144,55 @@
      "values": [
       "zhi"
      ]
+    },
+    {
+     "id": "soft_token",
+     "type": "dilemma",
+     "label": {
+      "zh": "趁关羽还没开口，把他给你的腰牌放在案上。",
+      "en": "Before Guan Yu can speak, set the token he gave you on the table."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽看着那块腰牌，到了嘴边的话又咽了回去。他对诸葛瑾说：『小女的事，要问过汉中王。』诸葛瑾松了一口气。",
+        "en": "Guan Yu looks at the token, and the words on his lips go unsaid. He tells Zhuge Jin, 'My daughter's marriage is for the King of Hanzhong to decide.' Zhuge Jin lets out a breath."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.hn_soft",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -1
+      },
+      {
+       "add": "rel.guanyu.trust",
+       "by": 1
+      },
+      {
+       "add": "deviation",
+       "by": 2
+      }
+     ],
+     "echo": [
+      "e_soft"
+     ],
+     "values": [
+      "zhi"
+     ],
+     "when": {
+      "v": "flag.v3_token",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为关羽给过你那块腰牌",
+      "en": "Because Guan Yu gave you his token"
+     }
     },
     {
      "id": "canon",
@@ -10147,7 +10536,12 @@
        "add": "renown.rash",
        "by": 1
       }
-     ]
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "stand",
@@ -10180,7 +10574,91 @@
      ],
      "values": [
       "yong"
-     ]
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": "<=",
+      "val": 2
+     }
+    },
+    {
+     "id": "bow_late",
+     "type": "expression",
+     "label": {
+      "zh": "拱手赔罪。",
+      "en": "Bow and apologize."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽看了你很久：『你走吧。』从那天起，他议事不再叫你，路上遇见了，也只当没看见。",
+        "en": "Guan Yu looks at you a long while. 'Go.' From that day on he no longer calls you to council; if you pass on the road, he looks straight through you."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.sidelined",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -2
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": -1
+      }
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": ">=",
+      "val": 3
+     }
+    },
+    {
+     "id": "stand_late",
+     "type": "dilemma",
+     "label": {
+      "zh": "不退。",
+      "en": "Don't back down."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽没有拔刀。他只说了一个字：『滚。』第二天一早，周仓把你的行李放在了城门外。荆州，你回不去了。",
+        "en": "Guan Yu doesn't draw his blade. He says only one word: 'Out.' Early the next morning Zhou Cang leaves your things outside the city gate. You can't go back to Jingzhou."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v3_left",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.esteem",
+       "by": -3
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": -2
+      }
+     ],
+     "when": {
+      "v": "grudge.guanyu",
+      "op": ">=",
+      "val": 3
+     },
+     "fate": {
+      "kind": "exile",
+      "who": "guanyu",
+      "label": {
+       "zh": "被逐出",
+       "en": "sent away"
+      }
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -10318,6 +10796,118 @@
     "layers": [],
     "illus": "g_cold"
    }
+  },
+  "x_rel_token": {
+   "id": "x_rel_token",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "腰牌",
+    "en": "The Token"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "单刀会回来没几天，关羽派周仓送来一块铜腰牌，背面刻着一个“关”字。周仓说：『将军说，陆口那天先生站在他身后。荆州九郡的城门，先生走到哪里都开。』",
+      "en": "A few days after the feast at Lukou, Guan Yu sends Zhou Cang with a bronze token, the character 'Guan' cut into its back. Zhou Cang says, 'The General says you stood behind him at Lukou, sir. Every gate in the nine commanderies of Jingzhou will open for you.'"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "keep",
+     "type": "expression",
+     "label": {
+      "zh": "收下，托周仓带一句谢。",
+      "en": "Accept it, and send your thanks back with Zhou Cang."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "周仓咧嘴一笑，走了。",
+        "en": "Zhou Cang grins and goes."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v3_token",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.warmth",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "visit",
+     "type": "expression",
+     "label": {
+      "zh": "亲自去谢关羽。",
+      "en": "Go and thank Guan Yu in person."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "关羽在灯下读《春秋》，听你说完，只点了点头：『收着就是。』",
+        "en": "Guan Yu is reading the Annals by lamplight. He hears you out and only nods. 'Just keep it.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v3_token",
+       "to": true
+      },
+      {
+       "add": "rel.guanyu.trust",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "track",
+      "op": "!=",
+      "val": "cao"
+     },
+     {
+      "v": "flag.dd_guard",
+      "op": "==",
+      "val": true
+     },
+     {
+      "v": "grudge.guanyu",
+      "op": "<=",
+      "val": 0
+     },
+     {
+      "v": "flag.v3_token",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": [],
+    "illus": "v3_guan_hall"
+   },
+   "cast": [
+    {
+     "id": "guanyu"
+    }
+   ]
   }
  },
  "endings": [

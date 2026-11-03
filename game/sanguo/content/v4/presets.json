@@ -121,6 +121,8 @@
     "heat.pangtong": 0,
     "heat.fazheng": 0,
     "heat.huangzhong": 0,
+    "flag.v3_token": false,
+    "grudge.guanyu": 0,
     "debt.d_xiang": "none",
     "debt.d_tiger": "reroute"
    },
@@ -252,6 +254,8 @@
     "heat.pangtong": 0,
     "heat.fazheng": 0,
     "heat.huangzhong": 0,
+    "flag.v3_token": false,
+    "grudge.guanyu": 0,
     "debt.d_xiang": "none",
     "debt.d_tiger": "none"
    },
@@ -383,6 +387,8 @@
     "heat.pangtong": 0,
     "heat.fazheng": 0,
     "heat.huangzhong": 0,
+    "flag.v3_token": false,
+    "grudge.guanyu": 0,
     "debt.d_xiang": "none",
     "debt.d_tiger": "none"
    },
@@ -514,6 +520,8 @@
     "heat.pangtong": 0,
     "heat.fazheng": 0,
     "heat.huangzhong": 0,
+    "flag.v3_token": false,
+    "grudge.guanyu": 0,
     "debt.d_xiang": "reroute",
     "debt.d_tiger": "none"
    },
@@ -645,6 +653,8 @@
     "heat.pangtong": 0,
     "heat.fazheng": 0,
     "heat.huangzhong": 0,
+    "flag.v3_token": false,
+    "grudge.guanyu": 0,
     "debt.d_xiang": "none",
     "debt.d_tiger": "none",
     "ended_early": true

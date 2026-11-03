@@ -1203,6 +1203,26 @@
    "imp": "offended",
    "show": false
   },
+  "flag.v3_token": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "关羽给了你一块腰牌",
+    "en": "Guan Yu gave you his token"
+   },
+   "carry": false
+  },
+  "grudge.guanyu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·记仇",
+    "en": "Guan Yu · grudge"
+   },
+   "carry": false
+  },
   "flag.v4_came_back": {
    "type": "flag",
    "init": false,
@@ -12307,6 +12327,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "debt.d_xiang": "none",
      "debt.d_tiger": "reroute"
     },
@@ -12438,6 +12460,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "debt.d_xiang": "none",
      "debt.d_tiger": "none"
     },
@@ -12569,6 +12593,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "debt.d_xiang": "none",
      "debt.d_tiger": "none"
     },
@@ -12700,6 +12726,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "debt.d_xiang": "reroute",
      "debt.d_tiger": "none"
     },
@@ -12831,6 +12859,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "debt.d_xiang": "none",
      "debt.d_tiger": "none",
      "ended_early": true
