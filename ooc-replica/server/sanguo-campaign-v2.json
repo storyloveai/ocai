@@ -1354,6 +1354,44 @@
     "zh": "关羽托付了你一句话",
     "en": "Guan Yu entrusted you with a word"
    }
+  },
+  "flag.v2_jinnang": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "诸葛亮给了你一个锦囊",
+    "en": "Zhuge Liang gave you a sealed pouch"
+   },
+   "carry": false
+  },
+  "flag.v2_after_ganlu": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "甘露寺那一天已经过去",
+    "en": "The day at Ganlu Temple has passed"
+   },
+   "carry": false
+  },
+  "grudge.zhouyu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "周瑜·记仇",
+    "en": "Zhou Yu · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -4139,6 +4177,38 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "诸葛亮把兵符推到你面前：『子衡，你先看。看完再说。』",
+      "en": "Zhuge Liang pushes the tally across to you. 'Ziheng, you look first. Then tell me.'"
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "诸葛亮把兵符收进了袖子，只给刘备看了一眼。",
+      "en": "Zhuge Liang tucks the tally into his sleeve and shows it only to Liu Bei."
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -4767,6 +4837,22 @@
       "zh": "关羽取长沙，和老将黄忠战了一百多合不分胜负。第二天黄忠马失前蹄，关羽没有杀他；黄忠也只射了关羽的盔缨。太守韩玄要斩黄忠，魏延杀了韩玄，开城献降。诸葛亮却下令：把魏延推出去斩了。",
       "en": "Guan Yu attacks Changsha and fights the old general Huang Zhong for over a hundred bouts without a winner. Next day Huang Zhong's horse stumbles and Guan Yu spares him; Huang Zhong, in turn, shoots only the tassel of Guan Yu's helmet. The governor, Han Xuan, means to behead Huang Zhong—so Wei Yan kills Han Xuan and opens the gates. And Zhuge Liang orders: take Wei Yan out and behead him."
      }
+    },
+    {
+     "text": {
+      "zh": "诸葛亮下令之前，先看了你一眼，像在等你开口。",
+      "en": "Before he gives the order, Zhuge Liang glances at you, as if waiting for you to speak."
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -5205,6 +5291,38 @@
       "zh": "南徐。吴国太在甘露寺相看女婿，一见刘备就喜欢上了。可你在廊下看见：两廊的帐幕后面，藏着刀斧手。赵云按着剑，看着你。",
       "en": "Nanxu. Lady Wu, the Marquis's mother, receives her prospective son-in-law at Ganlu Temple, and takes to Liu Bei at once. But in the corridors you see it: behind the curtains on both sides are men with axes. Zhao Yun, hand on his sword, looks at you."
      }
+    },
+    {
+     "text": {
+      "zh": "赵云挪到你身边，压低了声音：『先生说动手，我就动手。』",
+      "en": "Zhao Yun moves to your side and lowers his voice. 'Say the word, sir, and I'll act.'"
+     },
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhaoyun",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "赵云按着剑，看你的眼神里带着提防。",
+      "en": "Zhao Yun keeps his hand on his sword; there's wariness in the way he looks at you."
+     },
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "zhaoyun",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -5231,6 +5349,10 @@
       {
        "add": "renown.cunning",
        "by": 1
+      },
+      {
+       "set": "flag.v2_after_ganlu",
+       "to": true
       }
      ],
      "values": [
@@ -5276,6 +5398,10 @@
       {
        "add": "renown.rash",
        "by": 1
+      },
+      {
+       "set": "flag.v2_after_ganlu",
+       "to": true
       }
      ],
      "echo": [
@@ -5300,7 +5426,70 @@
        }
       }
      ],
-     "effects": []
+     "effects": [
+      {
+       "set": "flag.v2_after_ganlu",
+       "to": true
+      }
+     ]
+    },
+    {
+     "id": "jinnang",
+     "type": "strategy",
+     "label": {
+      "zh": "拆开诸葛亮给的锦囊。",
+      "en": "Open the pouch Zhuge Liang gave you."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "锦囊里只有一行字：『请国太去廊下看一眼。』你借口请国太赏廊下的花，帐幕一掀，刀斧手无处可藏。国太大怒，当场喝退了吕范。从这天起，东吴没人敢再动主公。",
+        "en": "Inside is a single line: 'Ask the Dowager to take a look along the corridor.' You invite her to admire the flowers there; the curtains lift and the axemen have nowhere to hide. The Dowager is furious and dismisses Lü Fan on the spot. From that day, no one in Wu dares lay a hand on your lord."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.ganlu_exposed",
+       "to": true
+      },
+      {
+       "add": "rel.liubei.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.zhaoyun.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.zhouyu.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.zhouyu.trust",
+       "by": -1
+      },
+      {
+       "set": "flag.v2_after_ganlu",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 1
+      }
+     ],
+     "when": {
+      "v": "flag.v2_jinnang",
+      "op": "==",
+      "val": true
+     },
+     "echo": [
+      "e_ganlu"
+     ],
+     "because": {
+      "zh": "因为诸葛亮给过你一个锦囊",
+      "en": "Because Zhuge Liang gave you a pouch"
+     }
     }
    ],
    "salience": 0,
@@ -6126,6 +6315,22 @@
       "op": "!=",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "出发前，诸葛亮来找你：『子衡兄，柴桑这一趟，你陪我去。』",
+      "en": "Before setting out, Zhuge Liang comes to find you. 'Brother Ziheng, come with me to Chaisang.'"
+     },
+     "when": {
+      "v": "rel.zhuge.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6582,6 +6787,38 @@
       "op": "!=",
       "val": "cao"
      }
+    },
+    {
+     "text": {
+      "zh": "刘备让你坐在他和张松中间。",
+      "en": "Liu Bei seats you between himself and Zhang Song."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "敬酒的时候，刘备没有叫上你。",
+      "en": "When the toasts go round, Liu Bei doesn't call on you."
+     },
+     "when": {
+      "v": "rel.liubei.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "liubei",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -7112,7 +7349,62 @@
      "values": [
       "yong",
       "yi"
-     ]
+     ],
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "board_r",
+     "type": "strategy",
+     "label": {
+      "zh": "随赵云跳上大船，挡在夫人面前。",
+      "en": "Leap aboard the big ship with Zhao Yun and stand before the lady."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "赵云把阿斗交给你：『先生抱稳了。』他一个人横枪挡在船头，东吴的人没一个敢上前。夫人看着你怀里的孩子，什么也没说。",
+        "en": "Zhao Yun hands A-Dou to you. 'Hold him tight, sir.' He stands alone at the bow with his spear across, and not one of the Wu men dares come near. Lady Sun looks at the child in your arms and says nothing."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.adou_kept",
+       "to": true
+      },
+      {
+       "add": "rel.zhaoyun.trust",
+       "by": 1
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      },
+      {
+       "add": "rel.zhaoyun.trust",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_adou"
+     ],
+     "values": [
+      "yong",
+      "yi"
+     ],
+     "when": {
+      "v": "rel.zhaoyun.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为赵云信你，把阿斗交给了你",
+      "en": "Because Zhao Yun trusts you, he hands A-Dou to you"
+     }
     },
     {
      "id": "talk",
@@ -7660,6 +7952,22 @@
       "op": ">=",
       "val": 1
      }
+    },
+    {
+     "text": {
+      "zh": "庞统临上马，回头冲你一笑：『子衡，等我进了雒城，请你喝酒。』",
+      "en": "As he mounts, Pang Tong turns back with a grin. 'Ziheng, once I'm in Luo, the wine's on me.'"
+     },
+     "when": {
+      "v": "rel.pangtong.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "pangtong",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7774,7 +8082,69 @@
      "values": [
       "yong",
       "yi"
-     ]
+     ],
+     "when": {
+      "v": "rel.pangtong.warmth",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "ride_r",
+     "type": "dilemma",
+     "label": {
+      "zh": "陪他走小路。",
+      "en": "Ride the narrow road with him."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "庞统让你走在他左边：『你跟着我，我放心。』",
+        "en": "Pang Tong has you ride on his left. 'With you beside me, I'm easy.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "走到半路，庞统勒住马问：『此处是何地名？』降兵说：『此处地名落凤坡。』庞统惊道：『吾道号凤雏，此处名落凤坡，不利于吾。』话音未落，山坡上一声炮响，箭如飞蝗，只朝骑白马的人射来。你扑过去时，已经晚了。他倒下前，抓住你的袖子说了一句话。",
+        "en": "Halfway along Pang Tong reins in. 'What is this place called?' A surrendered soldier answers, 'This is Fallen Phoenix Slope.' Pang Tong starts. 'They call me the Young Phoenix, and this is called Fallen Phoenix Slope. This bodes ill for me.' Before the words are out a cannon booms on the hillside and arrows fly like locusts, all aimed at the man on the white horse. You throw yourself toward him, too late. Before he falls, he grips your sleeve and says one thing."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.with_pangtong",
+       "to": true
+      },
+      {
+       "add": "rel.pangtong.warmth",
+       "by": 2
+      },
+      {
+       "add": "rel.liubei.trust",
+       "by": 1,
+       "key": true
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_luofeng"
+     ],
+     "values": [
+      "yong",
+      "yi"
+     ],
+     "when": {
+      "v": "rel.pangtong.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为庞统和你相熟，让你走在他身边",
+      "en": "Because Pang Tong knows you well, he keeps you at his side"
+     }
     },
     {
      "id": "main",
@@ -9103,7 +9473,12 @@
        "add": "renown.rash",
        "by": 1
       }
-     ]
+     ],
+     "when": {
+      "v": "grudge.zhouyu",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "stand",
@@ -9140,7 +9515,98 @@
      ],
      "values": [
       "yong"
-     ]
+     ],
+     "when": {
+      "v": "grudge.zhouyu",
+      "op": "<=",
+      "val": 2
+     }
+    },
+    {
+     "id": "plead",
+     "type": "expression",
+     "label": {
+      "zh": "跪下求饶。",
+      "en": "Kneel and beg for your life."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "周瑜低头看着你：『同样的话，我不听第二遍。』",
+        "en": "Zhou Yu looks down at you. 'I don't hear the same words twice.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "周瑜的剑没有再收回去。鲁肃扑上来拦，被甲士架开。帐外的江风很大，你最后听见的，是鲁肃在喊你的名字。",
+        "en": "Zhou Yu's sword does not go back into its sheath. Lu Su lunges to stop him and is dragged aside by the guards. The river wind roars outside the tent; the last thing you hear is Lu Su shouting your name."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.zhouyu.esteem",
+       "by": -3
+      }
+     ],
+     "when": {
+      "v": "grudge.zhouyu",
+      "op": ">=",
+      "val": 3
+     },
+     "fate": {
+      "kind": "execute",
+      "who": "zhouyu",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     },
+     "ends": true
+    },
+    {
+     "id": "repeat",
+     "type": "dilemma",
+     "label": {
+      "zh": "盯着周瑜，把那句话再说一遍。",
+      "en": "Look Zhou Yu in the eye and say it again."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "周瑜的剑没有再收回去。鲁肃扑上来拦，被甲士架开。帐外的江风很大，你最后听见的，是鲁肃在喊你的名字。",
+        "en": "Zhou Yu's sword does not go back into its sheath. Lu Su lunges to stop him and is dragged aside by the guards. The river wind roars outside the tent; the last thing you hear is Lu Su shouting your name."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.zhouyu.esteem",
+       "by": -3
+      }
+     ],
+     "when": {
+      "v": "grudge.zhouyu",
+      "op": ">=",
+      "val": 3
+     },
+     "fate": {
+      "kind": "execute",
+      "who": "zhouyu",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -9281,6 +9747,123 @@
     "layers": [],
     "illus": "g_cold"
    }
+  },
+  "x_rel_jinnang": {
+   "id": "x_rel_jinnang",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "锦囊",
+    "en": "The Pouch"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "诸葛亮把一个缝得严严实实的锦囊放进你手里：『主公要去东吴招亲。那一天若是万不得已，你再拆。』他没说里面是什么。",
+      "en": "Zhuge Liang presses a tightly stitched pouch into your hand. 'Our lord will go to Wu to be wed. If that day comes to the worst, open it.' He doesn't say what is inside."
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      3
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "keep",
+     "type": "expression",
+     "label": {
+      "zh": "收好，不问。",
+      "en": "Keep it, and don't ask."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "诸葛亮点点头：『子衡兄，亮信你。』",
+        "en": "Zhuge Liang nods. 'Brother Ziheng, I trust you.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v2_jinnang",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.warmth",
+       "by": 1
+      }
+     ]
+    },
+    {
+     "id": "ask",
+     "type": "expression",
+     "label": {
+      "zh": "问他：赵将军不是也有三个吗？",
+      "en": "Ask him: doesn't General Zhao already have three?"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "诸葛亮摇着扇子笑了：『子龙的是给子龙的。这一个，是给你的。』",
+        "en": "Zhuge Liang smiles behind his fan. 'Zilong's are for Zilong. This one is for you.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v2_jinnang",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "track",
+      "op": "!=",
+      "val": "cao"
+     },
+     {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 6
+     },
+     {
+      "v": "flag.v2_jinnang",
+      "op": "!=",
+      "val": true
+     },
+     {
+      "v": "flag.v2_after_ganlu",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": [],
+    "illus": "v2_nanjun"
+   },
+   "cast": [
+    {
+     "id": "zhuge"
+    }
+   ]
   }
  },
  "endings": [
@@ -9291,6 +9874,18 @@
     "en": "Where You Ended Up"
    },
    "fragments": [
+    {
+     "id": "dead",
+     "text": {
+      "zh": "你没有走出周瑜的大营。那年冬天，江上的风很冷。",
+      "en": "You never left Zhou Yu's camp. The wind on the river was very cold that winter."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "==",
+      "val": true
+     }
+    },
     {
      "id": "hermit",
      "text": {
@@ -9393,33 +9988,42 @@
      "when": {
       "all": [
        {
-        "all": [
-         {
-          "v": "track",
-          "op": "!=",
-          "val": "cao"
-         },
-         {
-          "v": "flag.v2_hermit",
-          "op": "!=",
-          "val": true
-         },
-         {
-          "v": "flag.v2_exposed",
-          "op": "!=",
-          "val": true
-         },
-         {
-          "v": "flag.v2_left",
-          "op": "!=",
-          "val": true
-         }
-        ]
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.liubei.trust",
-        "op": ">=",
-        "val": 8
+        "all": [
+         {
+          "all": [
+           {
+            "v": "track",
+            "op": "!=",
+            "val": "cao"
+           },
+           {
+            "v": "flag.v2_hermit",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v2_exposed",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v2_left",
+            "op": "!=",
+            "val": true
+           }
+          ]
+         },
+         {
+          "v": "rel.liubei.trust",
+          "op": ">=",
+          "val": 8
+         }
+        ]
        }
       ]
      }
@@ -9433,6 +10037,60 @@
      "when": {
       "all": [
        {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "all": [
+         {
+          "all": [
+           {
+            "v": "track",
+            "op": "!=",
+            "val": "cao"
+           },
+           {
+            "v": "flag.v2_hermit",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v2_exposed",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v2_left",
+            "op": "!=",
+            "val": true
+           }
+          ]
+         },
+         {
+          "v": "rel.liubei.trust",
+          "op": ">=",
+          "val": 6
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "low",
+     "text": {
+      "zh": "刘备待你客气。你知道，客气就是隔着一层。",
+      "en": "Liu Bei is courteous to you. You know courtesy is a kind of distance."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
         "all": [
          {
           "v": "track",
@@ -9455,42 +10113,6 @@
           "val": true
          }
         ]
-       },
-       {
-        "v": "rel.liubei.trust",
-        "op": ">=",
-        "val": 6
-       }
-      ]
-     }
-    },
-    {
-     "id": "low",
-     "text": {
-      "zh": "刘备待你客气。你知道，客气就是隔着一层。",
-      "en": "Liu Bei is courteous to you. You know courtesy is a kind of distance."
-     },
-     "when": {
-      "all": [
-       {
-        "v": "track",
-        "op": "!=",
-        "val": "cao"
-       },
-       {
-        "v": "flag.v2_hermit",
-        "op": "!=",
-        "val": true
-       },
-       {
-        "v": "flag.v2_exposed",
-        "op": "!=",
-        "val": true
-       },
-       {
-        "v": "flag.v2_left",
-        "op": "!=",
-        "val": true
        }
       ]
      }
@@ -9504,14 +10126,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "cao"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.caocao.esteem",
-        "op": ">=",
-        "val": 8
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "cao"
+         },
+         {
+          "v": "rel.caocao.esteem",
+          "op": ">=",
+          "val": 8
+         }
+        ]
        }
       ]
      }
@@ -9523,9 +10154,18 @@
       "en": "Cao Cao uses you, and watches you."
      },
      "when": {
-      "v": "track",
-      "op": "==",
-      "val": "cao"
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "track",
+        "op": "==",
+        "val": "cao"
+       }
+      ]
      }
     }
    ]
@@ -9638,9 +10278,18 @@
       "en": "Pang Tong lives, seated with Zhuge Liang at Liu Bei's left and right. He always says he owes you a cup of western wine. He never pays."
      },
      "when": {
-      "v": "flag.pt_alive",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.pt_alive",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -9650,9 +10299,18 @@
       "en": "Before he fell, Pang Tong gripped your sleeve and said, 'Tell Kongming I walked half the western road for him.' You never told anyone else."
      },
      "when": {
-      "v": "flag.with_pangtong",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.with_pangtong",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -9664,69 +10322,10 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "!=",
-        "val": "cao"
-       },
-       {
-        "v": "flag.v2_hermit",
+        "v": "flag.fate_dead",
         "op": "!=",
         "val": true
        },
-       {
-        "v": "flag.v2_exposed",
-        "op": "!=",
-        "val": true
-       },
-       {
-        "v": "flag.v2_left",
-        "op": "!=",
-        "val": true
-       }
-      ]
-     }
-    }
-   ]
-  },
-  {
-   "id": "g_sun",
-   "title": {
-    "zh": "孙夫人",
-    "en": "Lady Sun"
-   },
-   "fragments": [
-    {
-     "id": "parted",
-     "text": {
-      "zh": "孙夫人回了东吴。临走前她托人带给你一张弓：『荆州人里，就你一个说话算话。』",
-      "en": "Lady Sun went back to Wu. Before she left she sent you a bow: 'Of all the Jingzhou men, you're the only one who kept his word.'"
-     },
-     "when": {
-      "v": "flag.sun_parted",
-      "op": "==",
-      "val": true
-     }
-    },
-    {
-     "id": "letter",
-     "text": {
-      "zh": "孙夫人回东吴后给你写过一封信，只问了一句：荆州的弓，还好用吗？",
-      "en": "After she went back to Wu, Lady Sun wrote you a single letter. It asked only: are the Jingzhou bows any good?"
-     },
-     "when": {
-      "v": "rel.sunfuren.trust",
-      "op": ">=",
-      "val": 4
-     }
-    },
-    {
-     "id": "cold",
-     "text": {
-      "zh": "孙夫人走的那天，没有回头看一眼。",
-      "en": "The day Lady Sun left, she never looked back."
-     },
-     "when": {
-      "all": [
        {
         "all": [
          {
@@ -9750,11 +10349,106 @@
           "val": true
          }
         ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "g_sun",
+   "title": {
+    "zh": "孙夫人",
+    "en": "Lady Sun"
+   },
+   "fragments": [
+    {
+     "id": "parted",
+     "text": {
+      "zh": "孙夫人回了东吴。临走前她托人带给你一张弓：『荆州人里，就你一个说话算话。』",
+      "en": "Lady Sun went back to Wu. Before she left she sent you a bow: 'Of all the Jingzhou men, you're the only one who kept his word.'"
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "rel.sunfuren.warmth",
-        "op": "<=",
-        "val": 1
+        "v": "flag.sun_parted",
+        "op": "==",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "letter",
+     "text": {
+      "zh": "孙夫人回东吴后给你写过一封信，只问了一句：荆州的弓，还好用吗？",
+      "en": "After she went back to Wu, Lady Sun wrote you a single letter. It asked only: are the Jingzhou bows any good?"
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "rel.sunfuren.trust",
+        "op": ">=",
+        "val": 4
+       }
+      ]
+     }
+    },
+    {
+     "id": "cold",
+     "text": {
+      "zh": "孙夫人走的那天，没有回头看一眼。",
+      "en": "The day Lady Sun left, she never looked back."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "all": [
+         {
+          "all": [
+           {
+            "v": "track",
+            "op": "!=",
+            "val": "cao"
+           },
+           {
+            "v": "flag.v2_hermit",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v2_exposed",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v2_left",
+            "op": "!=",
+            "val": true
+           }
+          ]
+         },
+         {
+          "v": "rel.sunfuren.warmth",
+          "op": "<=",
+          "val": 1
+         }
+        ]
        }
       ]
      }
@@ -9768,24 +10462,33 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "!=",
-        "val": "cao"
-       },
-       {
-        "v": "flag.v2_hermit",
+        "v": "flag.fate_dead",
         "op": "!=",
         "val": true
        },
        {
-        "v": "flag.v2_exposed",
-        "op": "!=",
-        "val": true
-       },
-       {
-        "v": "flag.v2_left",
-        "op": "!=",
-        "val": true
+        "all": [
+         {
+          "v": "track",
+          "op": "!=",
+          "val": "cao"
+         },
+         {
+          "v": "flag.v2_hermit",
+          "op": "!=",
+          "val": true
+         },
+         {
+          "v": "flag.v2_exposed",
+          "op": "!=",
+          "val": true
+         },
+         {
+          "v": "flag.v2_left",
+          "op": "!=",
+          "val": true
+         }
+        ]
        }
       ]
      }
@@ -9806,9 +10509,18 @@
       "en": "In the little yard on the west side of Chengdu, Wen Zhi's angelica has flowered. She says that once the child can walk, she'll teach him the herbs."
      },
      "when": {
-      "v": "flag.wz_child",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wz_child",
+        "op": "==",
+        "val": true
+       }
+      ]
      },
      "mood": "romance"
     },
@@ -9819,9 +10531,18 @@
       "en": "Wen Zhi crossed the Shu roads with the army. Hard, she says, but not as hard as the stories."
      },
      "when": {
-      "v": "flag.wz_west",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wz_west",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -9831,9 +10552,18 @@
       "en": "Wen Zhi stayed in Jingzhou as physician to Guan Yu's army. Her letters come once a month and never say she misses you."
      },
      "when": {
-      "v": "flag.wz_jingzhou",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wz_jingzhou",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -9843,16 +10573,25 @@
       "en": "Every year at the solstice a packet of wound powder comes from the north, with no letter."
      },
      "when": {
-      "any": [
+      "all": [
        {
-        "v": "flag.wenzhi_safe",
-        "op": "==",
+        "v": "flag.fate_dead",
+        "op": "!=",
         "val": true
        },
        {
-        "v": "flag.wenzhi_warned",
-        "op": "==",
-        "val": true
+        "any": [
+         {
+          "v": "flag.wenzhi_safe",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "flag.wenzhi_warned",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      }
@@ -9866,14 +10605,23 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "cao"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "v": "flag.wenzhi_together",
-        "op": "==",
-        "val": true
+        "all": [
+         {
+          "v": "track",
+          "op": "==",
+          "val": "cao"
+         },
+         {
+          "v": "flag.wenzhi_together",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      },
@@ -9886,9 +10634,18 @@
       "en": "Wen Zhi never wrote again."
      },
      "when": {
-      "v": "flag.wenzhi_used",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wenzhi_used",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -9896,6 +10653,11 @@
      "text": {
       "zh": "你很久没有温芷的消息了。",
       "en": "You haven't heard from Wen Zhi in a long time."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "!=",
+      "val": true
      }
     }
    ]
@@ -10136,6 +10898,15 @@
   }
  ],
  "situations": [
+  {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
   {
    "id": "sidelined",
    "kind": "sidelined",
