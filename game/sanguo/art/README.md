@@ -56,3 +56,24 @@
 ## 审图要点
 
 人物年龄、外貌符合原著描写；同一个人在不同图里脸要一致；不像任何影视剧或游戏形象；汉服不是和服；画面里没有文字。
+
+
+## Klein 出图（团队部署的 FLUX 3 Image Klein，决策记录 v2.30）
+
+**分工**：新角色定妆图、新场景首图、封面海报，继续用 GPT（`portraits.yml` / Codex）；在已有图上出版本——表情、昼夜、出事前后、命运图、小修小补——用 Klein。Klein 改图很稳（只改要改的地方），从零生图明显不如 GPT。
+
+**流程**（你说一句，比如“给温芷出表情”，后面都是自动的）：
+1. Claude 写任务文件 `art/klein-jobs/<批次>.jsonl`（底图、改图指令、每张出几个 seed、验收标准），推到自己的分支，开 PR。
+2. Claude 用 API 触发 Actions「Klein 出图」（`.github/workflows/klein.yml`），指定这个分支和批次。
+3. 内网的 self-hosted runner（标签 `klein`）跑 `tools/gen_klein.py`，候选图推回同一个分支的 `art/candidates/<批次>/`，旁边有 `index.html`。
+4. Claude 按验收标准审图：合格的裁好放进正式目录，不合格的写原因、改指令重跑（再触发一次）。
+5. 合并前删掉 `art/candidates/`（候选图不进 main），你看预览，说“合并 #N”。
+
+**一次性准备（开发同事做）**：
+- 内网一台常开的机器（Mac 或 Linux）装 GitHub self-hosted runner：仓库 Settings → Actions → Runners → New self-hosted runner，按页面命令装好，加标签 `klein`，设成开机自启（`./svc.sh install && ./svc.sh start`）。机器上要有 `python3`、`git`，建议 `pip3 install pillow`。
+- 仓库 Settings → Secrets and variables → Actions：Secrets 加 `KLEIN_API_KEY`；网关地址变了的话，Variables 加 `KLEIN_BASE_URL`。
+- 仓库是公开的：这个流程只能手动触发（要写权限），别人 fork 的 PR 触发不了；不要给 runner 加别的流程。
+
+**没装 runner 时**：在内网电脑上进仓库根目录，`KLEIN_API_KEY=sk-xxx python3 game/sanguo/tools/gen_klein.py --batch art/klein-jobs/<批次>.jsonl`，把 `game/sanguo/art/candidates/` 推到分支或打包发给 Claude。
+
+**第一批**：`art/klein-jobs/moods-v1.jsonl`，刘备、曹操、温芷的真表情（温和、冷淡、伤心、吃惊，温芷多一个害羞），13 张 × 2 个 seed。游戏里现在的表情只是同一张头像加滤镜；采用后头像会随关系变化换成真表情。

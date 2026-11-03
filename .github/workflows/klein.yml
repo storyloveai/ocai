@@ -1,0 +1,47 @@
+# Klein 出图：在公司内网的 self-hosted runner 上，用团队部署的 FLUX 3 Image Klein 跑一批任务，把候选图推回同一个分支。
+# Klein 网关只对内网开放，所以不能用 GitHub 自带的云端机器。
+# 只能手动触发（Actions → "Klein 出图" → Run workflow，或 Claude 用 API 触发）：需要仓库写权限，别人 fork 的 PR 触发不了。
+# 一次性准备（开发同事做，见 game/sanguo/art/README.md「Klein 出图」）：
+#   1. 内网一台常开的机器装 GitHub self-hosted runner，加标签 klein；机器上要有 python3、git（建议 pip install pillow）
+#   2. 仓库 Secrets 加 KLEIN_API_KEY；网关地址变了的话，在仓库 Variables 加 KLEIN_BASE_URL
+name: Klein 出图
+on:
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: "任务文件，相对 game/sanguo/，例如 art/klein-jobs/moods-v1.jsonl"
+        required: true
+      ids:
+        description: "只跑这些 id（逗号分隔）；空 = 所有 pending"
+        required: false
+        default: ""
+permissions:
+  contents: write
+concurrency:
+  group: klein   # Klein 服务一次只处理一张图，排队跑
+  cancel-in-progress: false
+jobs:
+  generate:
+    runs-on: [self-hosted, klein]
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate
+        env:
+          KLEIN_API_KEY: ${{ secrets.KLEIN_API_KEY }}
+          KLEIN_BASE_URL: ${{ vars.KLEIN_BASE_URL }}
+          BATCH: ${{ inputs.batch }}
+          IDS: ${{ inputs.ids }}
+        run: |
+          [ -n "$KLEIN_BASE_URL" ] || unset KLEIN_BASE_URL
+          python3 game/sanguo/tools/gen_klein.py --batch "$BATCH" --ids "$IDS"
+      - name: Push the candidates back to this branch
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add game/sanguo/art/candidates game/sanguo/art/klein-jobs
+          git diff --cached --quiet && { echo "没有新图"; exit 0; }
+          git commit -m "Klein 候选图：${{ inputs.batch }}（run ${{ github.run_number }}）"
+          git pull --rebase origin "${{ github.ref_name }}"
+          git push origin "HEAD:${{ github.ref_name }}"
