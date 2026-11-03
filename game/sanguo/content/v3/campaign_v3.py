@@ -1010,6 +1010,9 @@ PORTRAIT_PROMPTS = dict(V2["portrait_prompts"]); PORTRAIT_PROMPTS.update(P3.PORT
 
 PRESETS = json.loads((HERE / "presets.json").read_text()) if (HERE / "presets.json").exists() else []
 
+import relations_v3
+relations_v3.extend(N, VARS)
+
 CAMPAIGN = {
     "spec": SPEC,
     "tiers": TIERS(),

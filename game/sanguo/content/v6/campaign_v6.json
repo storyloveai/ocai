@@ -1200,6 +1200,26 @@
    "imp": "offended",
    "show": false
   },
+  "flag.v3_token": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "关羽给了你一块腰牌",
+    "en": "Guan Yu gave you his token"
+   },
+   "carry": false
+  },
+  "grudge.guanyu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "关羽·记仇",
+    "en": "Guan Yu · grudge"
+   },
+   "carry": false
+  },
   "flag.v4_came_back": {
    "type": "flag",
    "init": false,
@@ -8462,6 +8482,8 @@
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -8649,6 +8671,8 @@
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -8836,6 +8860,8 @@
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -9023,6 +9049,8 @@
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": false,
@@ -9210,6 +9238,8 @@
      "imp.fazheng.offended": 0,
      "imp.huangzhong.offended": 0,
      "imp.lusu.offended": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
