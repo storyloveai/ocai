@@ -1,0 +1,2406 @@
+{
+ "spec": "storydate.campaign/0.4",
+ "tiers": {
+  "start": [
+   0,
+   2,
+   4,
+   6,
+   8
+  ],
+  "end": [
+   1,
+   3,
+   5,
+   7,
+   10
+  ],
+  "names": {
+   "trust": [
+    {
+     "zh": "戒备",
+     "en": "Guarded"
+    },
+    {
+     "zh": "观望",
+     "en": "Watching"
+    },
+    {
+     "zh": "可托",
+     "en": "Reliable"
+    },
+    {
+     "zh": "倚重",
+     "en": "Relied on"
+    },
+    {
+     "zh": "心腹",
+     "en": "Confidant"
+    }
+   ],
+   "esteem": [
+    {
+     "zh": "轻视",
+     "en": "Dismissive"
+    },
+    {
+     "zh": "寻常",
+     "en": "Ordinary"
+    },
+    {
+     "zh": "器重",
+     "en": "Valued"
+    },
+    {
+     "zh": "推崇",
+     "en": "Admired"
+    },
+    {
+     "zh": "折服",
+     "en": "In awe"
+    }
+   ],
+   "warmth": [
+    {
+     "zh": "冷淡",
+     "en": "Cold"
+    },
+    {
+     "zh": "相识",
+     "en": "Acquainted"
+    },
+    {
+     "zh": "相熟",
+     "en": "Familiar"
+    },
+    {
+     "zh": "交好",
+     "en": "Friends"
+    },
+    {
+     "zh": "知己",
+     "en": "Kindred"
+    }
+   ],
+   "intimacy": [
+    {
+     "zh": "生疏",
+     "en": "Distant"
+    },
+    {
+     "zh": "在意",
+     "en": "Caring"
+    },
+    {
+     "zh": "心动",
+     "en": "Drawn"
+    },
+    {
+     "zh": "两情相悦",
+     "en": "In love"
+    },
+    {
+     "zh": "相许",
+     "en": "Promised"
+    }
+   ]
+  },
+  "axes": [
+   "warmth",
+   "trust",
+   "esteem"
+  ],
+  "romance_axis": "intimacy",
+  "min": 0,
+  "max": 10,
+  "axis_names": {
+   "warmth": {
+    "zh": "交情",
+    "en": "friendship"
+   },
+   "trust": {
+    "zh": "信任",
+    "en": "trust"
+   },
+   "esteem": {
+    "zh": "看重",
+    "en": "esteem"
+   },
+   "intimacy": {
+    "zh": "亲近",
+    "en": "closeness"
+   }
+  },
+  "axis_meaning": {
+   "warmth": {
+    "zh": "喜不喜欢你",
+    "en": "do they like you"
+   },
+   "trust": {
+    "zh": "敢不敢把事交给你",
+    "en": "would they put things in your hands"
+   },
+   "esteem": {
+    "zh": "认不认你的本事",
+    "en": "do they rate your ability"
+   },
+   "intimacy": {
+    "zh": "恋爱的进展，只有产品允许的人物才有",
+    "en": "romance; only characters the product allows"
+   }
+  }
+ },
+ "pack": {
+  "id": "school-romance",
+  "version": 1,
+  "title": {
+   "zh": "校园恋爱",
+   "en": "School romance"
+  },
+  "premise": {
+   "zh": "galgame 式的恋爱故事：读剧情、看人，在关键处做选择。好感藏在后台，只从对方的态度里感觉得到；共通线走完，按好感进入某个人的线。好玩在“当时随手的一句话，后来才知道有多重”。",
+   "en": "A visual-novel romance: read, watch the characters, choose at the key moments. Affection stays hidden and shows only in how they treat you; after the common route, affection decides whose route you enter. The fun is learning later how much a passing remark weighed."
+  },
+  "values": {
+   "cheng": {
+    "zh": "真诚",
+    "en": "sincerity"
+   },
+   "wen": {
+    "zh": "温柔",
+    "en": "gentleness"
+   },
+   "yong": {
+    "zh": "勇气",
+    "en": "courage"
+   },
+   "ti": {
+    "zh": "体贴",
+    "en": "consideration"
+   },
+   "xi": {
+    "zh": "玩笑",
+    "en": "playfulness"
+   },
+   "gu": {
+    "zh": "坚持",
+    "en": "persistence"
+   }
+  },
+  "roles": {
+   "risk": {
+    "required": true,
+    "zh": "误会、流言：说错话、做错事积下来的。到线必须出事（一场误会、一次冷战），不能只是一个数字。",
+    "en": "Misunderstanding, rumor: what careless words and deeds pile up. Crossing the line must cause something (a misunderstanding, a cold spell), not just change a number."
+   },
+   "time": {
+    "required": false,
+    "zh": "剩下的日子：离某个期限（毕业、拆迁、离开）还有多久。",
+    "en": "Days left: how long until a deadline (graduation, demolition, a departure)."
+   },
+   "keepsake": {
+    "required": false,
+    "zh": "信物、回忆：一起做过的事留下的东西，后面会在关键时刻用上。",
+    "en": "Keepsakes and memories: what shared moments leave behind, used later at a key moment."
+   }
+  },
+  "failures": [
+   {
+    "zh": "错过：该开口的时候没有开口",
+    "en": "Missed: you didn't speak when it mattered"
+   },
+   {
+    "zh": "误会：一句话被听成了另一个意思",
+    "en": "Misunderstood: one remark heard as something else"
+   },
+   {
+    "zh": "普通结局：谁都不够亲近，春天就这样过去了",
+    "en": "Normal ending: no one close enough, and the season simply passes"
+   }
+  ],
+  "checklist": [
+   {
+    "zh": "所有角色都是成年人；纯爱，不写露骨内容",
+    "en": "Every character is an adult; romance stays non-explicit"
+   },
+   {
+    "zh": "好感不显示数字，只体现在台词、表情和后面的走向上",
+    "en": "Affection is never shown as a number; only in lines, expressions and what follows"
+   },
+   {
+    "zh": "分歧点总有一条路可走：谁都不够时进普通结局，不卡死",
+    "en": "Every branch point has a way forward: if no one is close enough, the normal ending, never a dead end"
+   },
+   {
+    "zh": "每条个人线都有好结局和普通结局，通关全部个人线后开启真结局",
+    "en": "Every route has a good and a normal ending; clearing all routes opens the true ending"
+   }
+  ],
+  "rules": [
+   "alt_path",
+   "earned_victory",
+   "risk_bites"
+  ]
+ },
+ "resources": {
+  "risk": [
+   "rumor"
+  ]
+ },
+ "id": "xichuan_v1",
+ "title": {
+  "zh": "汐川的第七个春天",
+  "en": "The Seventh Spring of Xichuan"
+ },
+ "volume": {
+  "zh": "共通线",
+  "en": "Common Route"
+ },
+ "rights": {
+  "source": "原创",
+  "original_characters": [
+   "陆远（玩家）",
+   "夏知遥",
+   "沈澄",
+   "季白",
+   "老周",
+   "程航"
+  ]
+ },
+ "player": {
+  "name": {
+   "zh": "陆远",
+   "en": "Lu Yuan"
+  }
+ },
+ "format": "vn",
+ "vars": {
+  "rel.zhiyao.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "zhiyao",
+   "dim": "warmth",
+   "label": {
+    "zh": "夏知遥·warmth",
+    "en": "Xia Zhiyao · warmth"
+   }
+  },
+  "rel.zhiyao.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "zhiyao",
+   "dim": "trust",
+   "label": {
+    "zh": "夏知遥·trust",
+    "en": "Xia Zhiyao · trust"
+   }
+  },
+  "rel.zhiyao.esteem": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "zhiyao",
+   "dim": "esteem",
+   "label": {
+    "zh": "夏知遥·esteem",
+    "en": "Xia Zhiyao · esteem"
+   }
+  },
+  "rel.zhiyao.intimacy": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "char": "zhiyao",
+   "dim": "intimacy",
+   "label": {
+    "zh": "夏知遥·intimacy",
+    "en": "Xia Zhiyao · intimacy"
+   }
+  },
+  "rel.shencheng.warmth": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "shencheng",
+   "dim": "warmth",
+   "label": {
+    "zh": "沈澄·warmth",
+    "en": "Shen Cheng · warmth"
+   }
+  },
+  "rel.shencheng.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "shencheng",
+   "dim": "trust",
+   "label": {
+    "zh": "沈澄·trust",
+    "en": "Shen Cheng · trust"
+   }
+  },
+  "rel.shencheng.esteem": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "shencheng",
+   "dim": "esteem",
+   "label": {
+    "zh": "沈澄·esteem",
+    "en": "Shen Cheng · esteem"
+   }
+  },
+  "rel.shencheng.intimacy": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "shencheng",
+   "dim": "intimacy",
+   "label": {
+    "zh": "沈澄·intimacy",
+    "en": "Shen Cheng · intimacy"
+   }
+  },
+  "rel.jibai.warmth": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "jibai",
+   "dim": "warmth",
+   "label": {
+    "zh": "季白·warmth",
+    "en": "Ji Bai · warmth"
+   }
+  },
+  "rel.jibai.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "jibai",
+   "dim": "trust",
+   "label": {
+    "zh": "季白·trust",
+    "en": "Ji Bai · trust"
+   }
+  },
+  "rel.jibai.esteem": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "jibai",
+   "dim": "esteem",
+   "label": {
+    "zh": "季白·esteem",
+    "en": "Ji Bai · esteem"
+   }
+  },
+  "rel.jibai.intimacy": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "char": "jibai",
+   "dim": "intimacy",
+   "label": {
+    "zh": "季白·intimacy",
+    "en": "Ji Bai · intimacy"
+   }
+  },
+  "rel.zhou.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "zhou",
+   "dim": "warmth",
+   "label": {
+    "zh": "老周·warmth",
+    "en": "Old Zhou · warmth"
+   }
+  },
+  "rel.zhou.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "zhou",
+   "dim": "trust",
+   "label": {
+    "zh": "老周·trust",
+    "en": "Old Zhou · trust"
+   }
+  },
+  "rel.zhou.esteem": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "zhou",
+   "dim": "esteem",
+   "label": {
+    "zh": "老周·esteem",
+    "en": "Old Zhou · esteem"
+   }
+  },
+  "rel.chenghang.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "chenghang",
+   "dim": "warmth",
+   "label": {
+    "zh": "程航·warmth",
+    "en": "Cheng Hang · warmth"
+   }
+  },
+  "rel.chenghang.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "chenghang",
+   "dim": "trust",
+   "label": {
+    "zh": "程航·trust",
+    "en": "Cheng Hang · trust"
+   }
+  },
+  "rel.chenghang.esteem": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "chenghang",
+   "dim": "esteem",
+   "label": {
+    "zh": "程航·esteem",
+    "en": "Cheng Hang · esteem"
+   }
+  },
+  "rumor": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 5,
+   "label": {
+    "zh": "误会",
+    "en": "Misunderstanding"
+   }
+  },
+  "flag.saw_last_spring": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "对知遥说“来看它最后一个春天”",
+    "en": "Told Zhiyao he came to see its last spring"
+   }
+  },
+  "flag.joined_club": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "加入了电影社",
+    "en": "Joined the film club"
+   }
+  },
+  "flag.cheng_coffee": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "在沈澄的店里点了小时候那杯",
+    "en": "Ordered his childhood drink at Shen Cheng's café"
+   }
+  },
+  "flag.saw_reel": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "看见了那盘没有标签的胶片",
+    "en": "Saw the unlabeled reel"
+   }
+  }
+ },
+ "chars": {
+  "zhiyao": {
+   "name": {
+    "zh": "夏知遥",
+    "en": "Xia Zhiyao"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     1,
+     0,
+     10
+    ],
+    "esteem": [
+     1,
+     0,
+     10
+    ],
+    "intimacy": [
+     0,
+     0,
+     10
+    ]
+   },
+   "original": true,
+   "main": "intimacy",
+   "persona": {
+    "zh": "夏知遥：21 岁，汐川大学大三，电影社社长。明亮、嘴快、固执，一个人撑着快解散的社团；毕业后要去外地照顾生病的母亲，这件事谁也没告诉。叫主角“陆远”，熟了以后叫“喂”。",
+    "en": "Xia Zhiyao: 21, a third-year at Xichuan University and president of the film club. Bright, quick-tongued, stubborn; holding a dying club together alone. After graduation she must move away to care for her sick mother, and she has told no one. Calls the protagonist 'Lu Yuan', later just 'hey'."
+   },
+   "values": {
+    "yong": [
+     "esteem",
+     1
+    ],
+    "cheng": [
+     "trust",
+     1
+    ],
+    "xi": [
+     "warmth",
+     1
+    ],
+    "gu": [
+     "esteem",
+     1
+    ]
+   },
+   "romance": true
+  },
+  "shencheng": {
+   "name": {
+    "zh": "沈澄",
+    "en": "Shen Cheng"
+   },
+   "dims": {
+    "warmth": [
+     1,
+     0,
+     10
+    ],
+    "trust": [
+     1,
+     0,
+     10
+    ],
+    "esteem": [
+     1,
+     0,
+     10
+    ],
+    "intimacy": [
+     1,
+     0,
+     10
+    ]
+   },
+   "original": true,
+   "main": "intimacy",
+   "persona": {
+    "zh": "沈澄：21 岁，主角的青梅竹马，留在汐川，一边读书一边在家里的海边咖啡馆帮忙。对主角冷淡、话少；七年前他走的那天，他们有一个约，她记得，他忘了。叫主角“陆远”，从不叫小名。",
+    "en": "Shen Cheng: 21, the protagonist's childhood friend who stayed in Xichuan, studying while helping at her family's seaside café. Cool and curt with him. Seven years ago, on the day he left, they made a promise; she remembers, he forgot. Calls him 'Lu Yuan', never his childhood nickname."
+   },
+   "values": {
+    "cheng": [
+     "trust",
+     1
+    ],
+    "ti": [
+     "warmth",
+     1
+    ],
+    "wen": [
+     "warmth",
+     1
+    ],
+    "gu": [
+     "trust",
+     1
+    ]
+   },
+   "romance": true
+  },
+  "jibai": {
+   "name": {
+    "zh": "季白",
+    "en": "Ji Bai"
+   },
+   "dims": {
+    "warmth": [
+     1,
+     0,
+     10
+    ],
+    "trust": [
+     1,
+     0,
+     10
+    ],
+    "esteem": [
+     1,
+     0,
+     10
+    ],
+    "intimacy": [
+     0,
+     0,
+     10
+    ]
+   },
+   "original": true,
+   "main": "intimacy",
+   "persona": {
+    "zh": "季白：23 岁，研究生，潮声影院的兼职放映员，整天在放映室修老胶片。安静、说话准确、爱用电影打比方；仓库里有一盘没有标签的胶片，她一直没敢放。叫主角“陆同学”。",
+    "en": "Ji Bai: 23, a graduate student and part-time projectionist at the Tidesound Cinema, forever restoring old film in the booth. Quiet, precise, fond of film metaphors. In the storeroom there is an unlabeled reel she has never dared to run. Calls him 'Mr. Lu'."
+   },
+   "values": {
+    "wen": [
+     "warmth",
+     1
+    ],
+    "ti": [
+     "trust",
+     1
+    ],
+    "cheng": [
+     "esteem",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ]
+   },
+   "romance": true
+  },
+  "zhou": {
+   "name": {
+    "zh": "老周",
+    "en": "Old Zhou"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     1,
+     0,
+     10
+    ]
+   },
+   "original": true,
+   "main": "trust",
+   "persona": {
+    "zh": "老周：六十多岁，潮声影院看门的，主角祖父的老搭档。嘴硬心软。",
+    "en": "Old Zhou: in his sixties, caretaker of the Tidesound Cinema and the protagonist's grandfather's old partner. Gruff, soft-hearted."
+   },
+   "values": {
+    "cheng": [
+     "trust",
+     1
+    ],
+    "ti": [
+     "warmth",
+     1
+    ]
+   }
+  },
+  "chenghang": {
+   "name": {
+    "zh": "程航",
+    "en": "Cheng Hang"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     1,
+     0,
+     10
+    ]
+   },
+   "original": true,
+   "main": "warmth",
+   "persona": {
+    "zh": "程航：21 岁，主角的室友，话多，自认恋爱军师，其实一次也没谈过。",
+    "en": "Cheng Hang: 21, the protagonist's roommate. Talkative, a self-appointed love strategist who has never dated."
+   },
+   "values": {
+    "xi": [
+     "warmth",
+     1
+    ],
+    "yong": [
+     "esteem",
+     1
+    ]
+   }
+  }
+ },
+ "dims": {},
+ "echoes": {},
+ "debts": {},
+ "chapters": [
+  {
+   "id": "p",
+   "title": {
+    "zh": "序章",
+    "en": "Prologue"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "三月，汐川。",
+      "en": "March, Xichuan."
+     }
+    }
+   ],
+   "offer": 0
+  },
+  {
+   "id": "c1",
+   "title": {
+    "zh": "第一章 · 电影社",
+    "en": "Chapter 1 · The Film Club"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "开学第一周。",
+      "en": "The first week of term."
+     }
+    }
+   ],
+   "offer": 3,
+   "main_first": true,
+   "side_prompt": {
+    "zh": "放学后，你去了……",
+    "en": "After classes, you went…"
+   }
+  }
+ ],
+ "nodes": {
+  "p_return": {
+   "id": "p_return",
+   "chapter": "p",
+   "kind": "main",
+   "title": {
+    "zh": "序章 · 返乡",
+    "en": "Prologue · Coming Back"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "三月。列车沿着海岸线往南开。窗外的海，和七年前一模一样。",
+      "en": "March. The train runs south along the coast. The sea outside the window looks exactly as it did seven years ago."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "honest",
+     "type": "expression",
+     "label": {
+      "zh": "“我只是来收拾爷爷的东西。”",
+      "en": "\"I'm just here to pack up my grandfather's things.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……这样啊。",
+        "en": "…I see."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.zhiyao.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "……这样啊。",
+        "en": "…I see."
+       },
+       "face": "sad"
+      },
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "那你收拾的时候，小心点放映室。里面的东西，比你以为的要多。",
+        "en": "Then be careful in the booth when you do. There's more in there than you think."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她跳下台子，从我身边走过，没有回头。",
+        "en": "She hops down from the stage and walks past me without looking back."
+       }
+      }
+     ],
+     "values": [
+      "cheng"
+     ]
+    },
+    {
+     "id": "spring",
+     "type": "expression",
+     "label": {
+      "zh": "“……来看它最后一个春天。”",
+      "en": "\"…I came to see its last spring.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "最后一个春天……",
+        "en": "Its last spring…"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.zhiyao.intimacy",
+       "by": 1
+      },
+      {
+       "set": "flag.saw_last_spring",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "最后一个春天……",
+        "en": "Its last spring…"
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "这句话不错。可以借我用在海报上吗？",
+        "en": "That's a good line. Can I borrow it for the poster?"
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她笑起来的时候，夕阳刚好落进海里。",
+        "en": "When she smiles, the sun has just slipped into the sea."
+       }
+      }
+     ],
+     "values": [
+      "wen"
+     ]
+    },
+    {
+     "id": "who",
+     "type": "expression",
+     "label": {
+      "zh": "“……先说你是谁？”",
+      "en": "\"…Who are you, first?\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "我？夏知遥，汐川大学电影社社长。",
+        "en": "Me? Xia Zhiyao. President of the Xichuan University Film Club."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.zhiyao.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "我？夏知遥，汐川大学电影社社长。",
+        "en": "Me? Xia Zhiyao. President of the Xichuan University Film Club."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "社员嘛……目前，一个。就是我。",
+        "en": "Members… currently, one. Me."
+       },
+       "face": "smile"
+      }
+     ],
+     "values": [
+      "xi"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "train"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "三月。列车沿着海岸线往南开。窗外的海，和七年前一模一样。",
+      "en": "March. The train runs south along the coast. The sea outside the window looks exactly as it did seven years ago."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "七年。我以为自己不会再回来了。",
+      "en": "Seven years. I thought I'd never come back."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "父亲去世以后，律师寄来一封信：汐川的老房子归我了。还有一句话，写在信的最后——",
+      "en": "After my father died, the lawyer sent a letter: the old house in Xichuan was mine now. And one more line, at the very end—"
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "“潮声影院五月拆除。你祖父的东西，还在放映室。——老周”",
+      "en": "'The Tidesound Cinema comes down in May. Your grandfather's things are still in the projection booth. —Old Zhou'"
+     }
+    },
+    {
+     "op": "bg",
+     "id": "station"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "汐川站小得只有一个站台。风里有咸味。",
+      "en": "Xichuan Station has only one platform. The wind tastes of salt."
+     }
+    },
+    {
+     "op": "bg",
+     "id": "oldhouse"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "老房子的门锁锈了。院子里那棵枇杷树还在，比记忆里高了很多。",
+      "en": "The lock on the old house has rusted. The loquat tree in the yard is still there, much taller than I remember."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "先去影院看看吧。趁天还没黑。",
+      "en": "I'll go see the cinema first. While it's still light."
+     }
+    },
+    {
+     "op": "bg",
+     "id": "cinema_dusk"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "潮声影院是一座露天影院。白色的银幕背对着海，前面是一排排生锈的铁椅子。夕阳把银幕染成了橙色。",
+      "en": "The Tidesound Cinema is an open-air theater. Its white screen stands with its back to the sea, rows of rusting iron seats before it. The sunset has turned the screen orange."
+     }
+    },
+    {
+     "op": "cg",
+     "id": "cg_stage"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "银幕下面的台子上，站着一个女孩。她对着空无一人的座位，大声地念着什么。",
+      "en": "On the stage beneath the screen stands a girl. She is reading something aloud, at full volume, to rows of empty seats."
+     }
+    },
+    {
+     "op": "cg",
+     "id": null
+    },
+    {
+     "op": "show",
+     "who": "zhiyao",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "……春季放映会，最后一季！每周六晚上七点，潮声影院，免费入场！——不对，太像卖菜的了。",
+      "en": "…The Spring Screenings, final season! Every Saturday, seven p.m., the Tidesound Cinema, free admission!—No. That sounds like a market stall."
+     }
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "……啊。",
+      "en": "…Oh."
+     },
+     "face": "surprised"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "你是拆迁办的人吧？我告诉你，五月之前，我们一天也不会搬的！",
+      "en": "You're from the demolition office, right? Let me tell you—until May, we're not moving out a single day early!"
+     },
+     "face": "angry"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "t": {
+      "zh": "我不是拆迁办的。我姓陆。这座影院，是我爷爷开的。",
+      "en": "I'm not from the demolition office. My name's Lu. My grandfather built this cinema."
+     }
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "……诶？",
+      "en": "…Huh?"
+     },
+     "face": "surprised"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "陆爷爷的孙子？那你——你是来拆它的，还是来救它的？",
+      "en": "Grandpa Lu's grandson? Then you're—are you here to tear it down, or to save it?"
+     },
+     "face": "normal"
+    }
+   ],
+   "cast": [
+    {
+     "id": "zhiyao"
+    }
+   ]
+  },
+  "c1_fair": {
+   "id": "c1_fair",
+   "chapter": "c1",
+   "kind": "main",
+   "title": {
+    "zh": "社团招新",
+    "en": "Club Fair"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "转学到汐川大学的第一天，室友程航就把我拖到了社团招新的广场上。",
+      "en": "On my first day at Xichuan University, my roommate Cheng Hang drags me to the club fair in the square."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "join",
+     "type": "dilemma",
+     "label": {
+      "zh": "当场填表。",
+      "en": "Fill in the form on the spot."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "真的？！",
+        "en": "Really?!"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.joined_club",
+       "to": true
+      },
+      {
+       "add": "rel.zhiyao.intimacy",
+       "by": 1
+      },
+      {
+       "add": "rel.zhiyao.esteem",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "真的？！",
+        "en": "Really?!"
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "好，陆远，从今天起你就是电影社的第二个社员。工作很多的，你别后悔。",
+        "en": "Okay, Lu Yuan, as of today you're the film club's second member. There's a lot of work. No regrets."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她把表格收好，像是怕我反悔，又看了一遍我的名字。",
+        "en": "She tucks the form away, then reads my name over once more, as if afraid I'd take it back."
+       }
+      }
+     ],
+     "values": [
+      "yong"
+     ]
+    },
+    {
+     "id": "chase",
+     "type": "dilemma",
+     "label": {
+      "zh": "说要想想，转身去追沈澄。",
+      "en": "Say you need to think, and go after Shen Cheng."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……喂！",
+        "en": "…Hey!"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.shencheng.intimacy",
+       "by": 1
+      },
+      {
+       "add": "rumor",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "……喂！",
+        "en": "…Hey!"
+       },
+       "face": "angry"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "我在广场的另一头追上了沈澄。她没有停下来。",
+        "en": "I catch up with Shen Cheng at the far end of the square. She doesn't stop walking."
+       }
+      },
+      {
+       "op": "show",
+       "who": "shencheng",
+       "face": "normal",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "有事？",
+        "en": "Something you need?"
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "t": {
+        "zh": "……好久不见。",
+        "en": "…It's been a long time."
+       }
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "七年。不是“好久”。",
+        "en": "Seven years. Not 'a long time.'"
+       },
+       "face": "sad"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她说完就走了。可我看见，她走到拐角时，回头看了一眼。",
+        "en": "Then she's gone. But at the corner, I see her glance back once."
+       }
+      }
+     ],
+     "values": [
+      "gu"
+     ]
+    },
+    {
+     "id": "ask",
+     "type": "expression",
+     "label": {
+      "zh": "问季白：放映员是做什么的？",
+      "en": "Ask Ji Bai what a projectionist actually does."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "让光穿过胶片，一秒二十四格，打到银幕上。观众看见的是动，其实每一格都是停着的。",
+        "en": "I send light through the film, twenty-four frames a second, onto the screen. The audience sees motion, but every single frame is standing still."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.joined_club",
+       "to": true
+      },
+      {
+       "add": "rel.jibai.intimacy",
+       "by": 1
+      },
+      {
+       "add": "rel.zhiyao.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "show",
+       "who": "jibai",
+       "face": "normal",
+       "at": "right"
+      },
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "让光穿过胶片，一秒二十四格，打到银幕上。观众看见的是动，其实每一格都是停着的。",
+        "en": "I send light through the film, twenty-four frames a second, onto the screen. The audience sees motion, but every single frame is standing still."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "……抱歉，说多了。",
+        "en": "…Sorry. I talked too much."
+       },
+       "face": "shy"
+      },
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "她一说起胶片就停不下来。所以——你入不入？",
+        "en": "Once she starts on film she can't stop. So—are you in?"
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "我在表格上写了名字。季白在旁边看着，没说话，嘴角好像动了一下。",
+        "en": "I write my name on the form. Ji Bai watches without a word; the corner of her mouth seems to move."
+       }
+      }
+     ],
+     "values": [
+      "ti"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "campus"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "转学到汐川大学的第一天，室友程航就把我拖到了社团招新的广场上。",
+      "en": "On my first day at Xichuan University, my roommate Cheng Hang drags me to the club fair in the square."
+     }
+    },
+    {
+     "op": "show",
+     "who": "chenghang",
+     "face": "smile",
+     "at": "left"
+    },
+    {
+     "op": "say",
+     "who": "chenghang",
+     "t": {
+      "zh": "听我的，大三转学生想融入，只有一条路：社团。尤其是女生多的社团。",
+      "en": "Trust me. A third-year transfer has one way to fit in: clubs. Especially clubs with lots of girls."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": "chenghang",
+     "t": {
+      "zh": "那个摊位就不行了，你看，只有一个人。",
+      "en": "That booth's hopeless, though. Look—one person."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "hide",
+     "who": "chenghang"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "最角落的摊位上，摆着一台老式放映机，一张手画的海报：《春季放映会 · 最后一季》。摊位后面坐着的，是昨天那个女孩。",
+      "en": "At the farthest corner booth sit an old film projector and a hand-drawn poster: 'The Spring Screenings · Final Season.' Behind it sits the girl from yesterday."
+     }
+    },
+    {
+     "op": "show",
+     "who": "zhiyao",
+     "face": "surprised",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "啊，陆爷爷的孙子！你也是这个学校的？",
+      "en": "Oh—Grandpa Lu's grandson! You go here too?"
+     },
+     "face": "surprised"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "太好了。听着，电影社再招不到两个人，学期末就要被撤销了。你来，就还差一个。",
+      "en": "Perfect. Listen—if the film club doesn't get two more members, it's dissolved at the end of term. You join, and we're only one short."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "show",
+     "who": "jibai",
+     "face": "normal",
+     "at": "right"
+    },
+    {
+     "op": "say",
+     "who": "jibai",
+     "t": {
+      "zh": "知遥，放映机的片门我调好了。下周六可以用。",
+      "en": "Zhiyao, I've adjusted the projector's gate. It'll be ready next Saturday."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "这是季白，研究生，影院的放映员。",
+      "en": "This is Ji Bai, a grad student. She's the cinema's projectionist."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "jibai",
+     "t": {
+      "zh": "我不是社员。我是被雇来的。……你好，陆同学。",
+      "en": "I'm not a member. I'm hired help. …Hello, Mr. Lu."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "一个端着托盘的女孩从摊位前走过，停下了。托盘上是几杯外送的咖啡。",
+      "en": "A girl carrying a tray of takeaway coffees passes the booth, and stops."
+     }
+    },
+    {
+     "op": "hide",
+     "who": "jibai"
+    },
+    {
+     "op": "show",
+     "who": "shencheng",
+     "face": "normal",
+     "at": "right"
+    },
+    {
+     "op": "say",
+     "who": "shencheng",
+     "t": {
+      "zh": "……陆远。",
+      "en": "…Lu Yuan."
+     },
+     "face": "surprised"
+    },
+    {
+     "op": "say",
+     "who": "shencheng",
+     "t": {
+      "zh": "回来了啊。",
+      "en": "So you're back."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "沈澄。七年没见，她一眼就认出了我。",
+      "en": "Shen Cheng. Seven years, and she recognized me at a glance."
+     }
+    },
+    {
+     "op": "say",
+     "who": "shencheng",
+     "t": {
+      "zh": "我还要送咖啡。",
+      "en": "I've got coffee to deliver."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "hide",
+     "who": "shencheng"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "认识的人？……先不管这个。所以，你入不入社？",
+      "en": "Someone you know? …Never mind. So—are you joining or not?"
+     },
+     "face": "normal"
+    }
+   ],
+   "cast": [
+    {
+     "id": "zhiyao"
+    },
+    {
+     "id": "jibai"
+    },
+    {
+     "id": "shencheng"
+    },
+    {
+     "id": "chenghang"
+    }
+   ]
+  },
+  "c1_poster": {
+   "id": "c1_poster",
+   "chapter": "c1",
+   "kind": "side",
+   "title": {
+    "zh": "雨里的海报",
+    "en": "Posters in the Rain"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "傍晚下起了雨。我在校门口看见夏知遥抱着一卷海报，一张一张往公告栏上贴。",
+      "en": "It starts raining in the evening. At the school gate I find Xia Zhiyao with an armful of posters, pasting them onto the notice board one by one."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "umbrella",
+     "type": "expression",
+     "label": {
+      "zh": "把伞撑到她头顶。",
+      "en": "Hold your umbrella over her."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……都湿透了还撑伞，你傻不傻。",
+        "en": "…We're already soaked and you open an umbrella. Are you an idiot?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.zhiyao.intimacy",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "……都湿透了还撑伞，你傻不傻。",
+        "en": "…We're already soaked and you open an umbrella. Are you an idiot?"
+       },
+       "face": "shy"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她没有躲开。",
+        "en": "She doesn't step away."
+       }
+      }
+     ],
+     "values": [
+      "ti"
+     ]
+    },
+    {
+     "id": "promise",
+     "type": "dilemma",
+     "label": {
+      "zh": "“那就让它满一次。我帮你。”",
+      "en": "\"Then let's fill it once. I'll help.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "说好了啊。说话不算数的人，我会记一辈子的。",
+        "en": "That's a promise. I'll remember anyone who breaks one for the rest of my life."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.zhiyao.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.zhiyao.esteem",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "zhiyao",
+       "t": {
+        "zh": "说好了啊。说话不算数的人，我会记一辈子的。",
+        "en": "That's a promise. I'll remember anyone who breaks one for the rest of my life."
+       },
+       "face": "smile"
+      }
+     ],
+     "values": [
+      "yong"
+     ]
+    }
+   ],
+   "salience": 1,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "rain_street"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "傍晚下起了雨。我在校门口看见夏知遥抱着一卷海报，一张一张往公告栏上贴。",
+      "en": "It starts raining in the evening. At the school gate I find Xia Zhiyao with an armful of posters, pasting them onto the notice board one by one."
+     }
+    },
+    {
+     "op": "show",
+     "who": "zhiyao",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "看什么？来帮忙啊，社员。",
+      "en": "What are you staring at? Come help, member."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "我们贴完最后一张的时候，两个人都湿透了。",
+      "en": "By the time we've put up the last one, we're both soaked."
+     }
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "其实我知道，就算招满了人，影院五月还是要拆。",
+      "en": "Honestly, I know it. Even if we fill the club, the cinema still comes down in May."
+     },
+     "face": "sad"
+    },
+    {
+     "op": "say",
+     "who": "zhiyao",
+     "t": {
+      "zh": "可是我想在它拆掉之前，让它再满一次。哪怕就一次。",
+      "en": "But before it does, I want to see it full one more time. Even just once."
+     },
+     "face": "normal"
+    }
+   ],
+   "cast": [
+    {
+     "id": "zhiyao"
+    }
+   ]
+  },
+  "c1_cafe": {
+   "id": "c1_cafe",
+   "chapter": "c1",
+   "kind": "side",
+   "title": {
+    "zh": "海边的咖啡馆",
+    "en": "The Seaside Café"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "沈家的咖啡馆还在海堤边上，招牌换了，门口的风铃没换。",
+      "en": "The Shen family café still sits by the seawall. The sign is new; the wind chime by the door isn't."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "childhood",
+     "type": "expression",
+     "label": {
+      "zh": "“热可可，多放一块棉花糖。”——小时候每次来都点这个。",
+      "en": "\"Hot cocoa, extra marshmallow.\" The order you always made as a kid."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……嗯。",
+        "en": "…Okay."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.shencheng.intimacy",
+       "by": 1
+      },
+      {
+       "set": "flag.cheng_coffee",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "……嗯。",
+        "en": "…Okay."
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她转身去做，背对着我站了很久。端上来的时候，杯子里有两块棉花糖。",
+        "en": "She turns to make it and stands with her back to me for a long time. When she brings it over, there are two marshmallows in the cup."
+       }
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "这个你倒是记得。",
+        "en": "That, you remember."
+       },
+       "face": "sad"
+      }
+     ],
+     "values": [
+      "wen"
+     ]
+    },
+    {
+     "id": "ask_why",
+     "type": "dilemma",
+     "label": {
+      "zh": "“你在生我的气？”",
+      "en": "\"Are you angry with me?\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "生气？",
+        "en": "Angry?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.shencheng.trust",
+       "by": 1
+      },
+      {
+       "add": "rumor",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "生气？",
+        "en": "Angry?"
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "生气要力气的。七年，早用完了。",
+        "en": "Being angry takes energy. I used it all up years ago."
+       },
+       "face": "sad"
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "……你连那天也忘了吧。",
+        "en": "…You've forgotten that day too, haven't you."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "那天？哪一天？",
+        "en": "That day? Which day?"
+       }
+      }
+     ],
+     "values": [
+      "cheng"
+     ]
+    }
+   ],
+   "salience": 1,
+   "order": 2,
+   "script": [
+    {
+     "op": "bg",
+     "id": "cafe"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈家的咖啡馆还在海堤边上，招牌换了，门口的风铃没换。",
+      "en": "The Shen family café still sits by the seawall. The sign is new; the wind chime by the door isn't."
+     }
+    },
+    {
+     "op": "show",
+     "who": "shencheng",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "shencheng",
+     "t": {
+      "zh": "……欢迎光临。要点什么？",
+      "en": "…Welcome. What can I get you?"
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "她的语气，和对任何一个客人都一样。",
+      "en": "Her tone is the same as with any other customer."
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "shencheng"
+    }
+   ]
+  },
+  "c1_booth": {
+   "id": "c1_booth",
+   "chapter": "c1",
+   "kind": "side",
+   "title": {
+    "zh": "放映室",
+    "en": "The Projection Booth"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "潮声影院的放映室在银幕对面的小楼上。我推门进去的时候，季白正对着灯，一格一格地看胶片。",
+      "en": "The Tidesound's projection booth is in the little building facing the screen. When I push the door open, Ji Bai is holding film up to the lamp, studying it frame by frame."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "look",
+     "type": "dilemma",
+     "label": {
+      "zh": "“能让我看看那盘胶片吗？”",
+      "en": "\"Could I see that reel?\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……可以看，不可以放。",
+        "en": "…You can look. You can't run it."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.saw_reel",
+       "to": true
+      },
+      {
+       "add": "rel.jibai.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.jibai.intimacy",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "……可以看，不可以放。",
+        "en": "…You can look. You can't run it."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那盘胶片很轻，铁盒上有一道划痕，像是有人用指甲刻下的一个数字：7。",
+        "en": "The reel is light. On its tin there is a scratch, as if someone carved a number with a fingernail: 7."
+       }
+      }
+     ],
+     "values": [
+      "yong"
+     ]
+    },
+    {
+     "id": "help",
+     "type": "expression",
+     "label": {
+      "zh": "“你在修什么？我能帮忙吗？”",
+      "en": "\"What are you repairing? Can I help?\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那你帮我拿着这一头。别碰到画面。",
+        "en": "Then hold this end for me. Don't touch the picture."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.jibai.warmth",
+       "by": 1
+      },
+      {
+       "add": "rel.jibai.intimacy",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "那你帮我拿着这一头。别碰到画面。",
+        "en": "Then hold this end for me. Don't touch the picture."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "我们一直修到天黑。她讲每一格的时候，声音比白天轻快很多。",
+        "en": "We work until dark. When she talks about each frame, her voice is far lighter than it was by day."
+       }
+      }
+     ],
+     "values": [
+      "ti"
+     ]
+    }
+   ],
+   "salience": 1,
+   "order": 3,
+   "script": [
+    {
+     "op": "bg",
+     "id": "projection"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "潮声影院的放映室在银幕对面的小楼上。我推门进去的时候，季白正对着灯，一格一格地看胶片。",
+      "en": "The Tidesound's projection booth is in the little building facing the screen. When I push the door open, Ji Bai is holding film up to the lamp, studying it frame by frame."
+     }
+    },
+    {
+     "op": "show",
+     "who": "jibai",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "jibai",
+     "t": {
+      "zh": "陆同学。墙上那些，是你祖父的字。",
+      "en": "Mr. Lu. The writing on the wall there is your grandfather's."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "墙上贴满了泛黄的便签：哪台机器哪天换过灯泡，哪部片子哪一卷容易断。最下面一张写着：“第七卷，别放。”",
+      "en": "The wall is covered with yellowed notes: which machine had its bulb changed when, which reel of which film tends to snap. The one at the very bottom says: 'Reel seven. Don't run it.'"
+     }
+    },
+    {
+     "op": "say",
+     "who": "jibai",
+     "t": {
+      "zh": "仓库里确实有一盘没有标签的胶片。我数过，它在第七个架子上。",
+      "en": "There is a reel with no label in the storeroom. I counted. It's on the seventh shelf."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "jibai",
+     "t": {
+      "zh": "我一直没放。……因为他说别放。",
+      "en": "I've never run it. …Because he said not to."
+     },
+     "face": "sad"
+    }
+   ],
+   "cast": [
+    {
+     "id": "jibai"
+    }
+   ]
+  },
+  "x_rumor": {
+   "id": "x_rumor",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "流言",
+    "en": "Rumors"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "兄弟，你出名了。论坛上说转学生一来就到处追女生。",
+      "en": "Buddy, you're famous. The forum says the new transfer has been chasing every girl in sight."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "ok",
+     "type": "expression",
+     "label": {
+      "zh": "“……知道了。”",
+      "en": "\"…Got it.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "这几天，路上遇见的人好像都在看我。",
+        "en": "For days after, everyone I pass seems to be looking at me."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rumor",
+       "by": -2
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "这几天，路上遇见的人好像都在看我。",
+        "en": "For days after, everyone I pass seems to be looking at me."
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": -1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "campus"
+    },
+    {
+     "op": "show",
+     "who": "chenghang",
+     "face": "surprised",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "chenghang",
+     "t": {
+      "zh": "兄弟，你出名了。论坛上说转学生一来就到处追女生。",
+      "en": "Buddy, you're famous. The forum says the new transfer has been chasing every girl in sight."
+     },
+     "face": "surprised"
+    },
+    {
+     "op": "say",
+     "who": "chenghang",
+     "t": {
+      "zh": "我的建议是：这两天低调一点。",
+      "en": "My advice: keep your head down for a couple of days."
+     },
+     "face": "normal"
+    }
+   ],
+   "when": {
+    "v": "rumor",
+    "op": ">=",
+    "val": 2
+   }
+  }
+ },
+ "endings": [
+  {
+   "id": "g_tbc",
+   "title": {
+    "zh": "未完待续",
+    "en": "To be continued"
+   },
+   "fragments": [
+    {
+     "id": "tbc",
+     "text": {
+      "zh": "第一章完。第一场放映，就在这个周六。",
+      "en": "End of Chapter 1. The first screening is this Saturday."
+     }
+    }
+   ]
+  },
+  {
+   "id": "g_heart",
+   "title": {
+    "zh": "这一周",
+    "en": "This week"
+   },
+   "fragments": [
+    {
+     "id": "zhiyao",
+     "text": {
+      "zh": "那个雨夜之后，夏知遥在社团群里第一次叫了你的名字。",
+      "en": "After that rainy night, Xia Zhiyao calls you by name in the club chat for the first time."
+     },
+     "when": {
+      "v": "rel.zhiyao.intimacy",
+      "op": ">=",
+      "val": 2
+     }
+    },
+    {
+     "id": "shencheng",
+     "text": {
+      "zh": "沈澄的咖啡馆，那天打烊比平时晚了一个小时。",
+      "en": "Shen Cheng's café closes an hour later than usual that night."
+     },
+     "when": {
+      "v": "rel.shencheng.intimacy",
+      "op": ">=",
+      "val": 2
+     }
+    },
+    {
+     "id": "jibai",
+     "text": {
+      "zh": "放映室的灯，那一周每晚都亮到很晚。",
+      "en": "That week the light in the projection booth burns late every night."
+     },
+     "when": {
+      "v": "rel.jibai.intimacy",
+      "op": ">=",
+      "val": 2
+     }
+    },
+    {
+     "id": "none",
+     "text": {
+      "zh": "这一周过得很快。你还说不清，自己最想见的是谁。",
+      "en": "The week goes by fast. You can't yet say who you most want to see."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "rel.zhiyao.intimacy",
+        "op": "<=",
+        "val": 1
+       },
+       {
+        "v": "rel.shencheng.intimacy",
+        "op": "<=",
+        "val": 1
+       },
+       {
+        "v": "rel.jibai.intimacy",
+        "op": "<=",
+        "val": 1
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "side_prompt": {
+  "zh": "放学后，你去了……",
+  "en": "After classes, you went…"
+ },
+ "art": {
+  "bg": {
+   "train": {
+    "zh": "列车车厢 · 黄昏",
+    "en": "Train carriage · dusk"
+   },
+   "station": {
+    "zh": "汐川站",
+    "en": "Xichuan Station"
+   },
+   "oldhouse": {
+    "zh": "老房子的院子",
+    "en": "The old house"
+   },
+   "cinema_dusk": {
+    "zh": "潮声影院 · 黄昏",
+    "en": "Tidesound Cinema · dusk"
+   },
+   "campus": {
+    "zh": "汐川大学 · 社团广场",
+    "en": "Xichuan University · club square"
+   },
+   "rain_street": {
+    "zh": "雨中的校门",
+    "en": "School gate in the rain"
+   },
+   "cafe": {
+    "zh": "海边咖啡馆",
+    "en": "Seaside café"
+   },
+   "projection": {
+    "zh": "放映室",
+    "en": "Projection booth"
+   }
+  },
+  "cg": {
+   "cg_stage": {
+    "zh": "银幕下的女孩",
+    "en": "The girl beneath the screen"
+   }
+  },
+  "faces": {
+   "normal": {
+    "zh": "平常",
+    "en": "neutral"
+   },
+   "smile": {
+    "zh": "笑",
+    "en": "smile"
+   },
+   "shy": {
+    "zh": "害羞",
+    "en": "shy"
+   },
+   "angry": {
+    "zh": "生气",
+    "en": "angry"
+   },
+   "sad": {
+    "zh": "难过",
+    "en": "sad"
+   },
+   "surprised": {
+    "zh": "吃惊",
+    "en": "surprised"
+   }
+  }
+ }
+}
