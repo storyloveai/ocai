@@ -13,6 +13,10 @@ export function check(camp, runs = 2000, prev = null) {
   const out = [], pct = (a, b) => (100 * a / b).toFixed(1) + "%";
   const v = CC.validate(camp);
   out.push(`# ${typeof camp.title === "object" ? camp.title.zh : camp.title} · spec ${camp.spec} · engine ${CC.VERSION}${camp.pack ? " · pack " + camp.pack.id : ""}`);
+  if (camp.recipe === "relations") {
+    const r = CC.recipe(camp);
+    out.push(`\n## recipe relations: ${r.changes.length} scenes change with a relationship · approach ${r.approach.map(x => x.node + (x.pays.length ? "→" + x.pays.join("/") : "（没用上）")).join(", ") || "无"} · split ${r.split.length} · offense ${Object.entries(r.offense).map(([w, ok]) => w + (ok ? "✓" : "✗")).join(" ") || "无"}`);
+  }
   out.push(`\n## static: ${v.errors.length} errors, ${v.warnings.length} warnings`);
   v.errors.forEach(e => out.push("  ERROR " + e)); v.warnings.forEach(e => out.push("  warn  " + e));
   const S = CC.simulate(camp, runs, 11, null, { budget: !prev });

@@ -229,3 +229,33 @@ test("situations: dead ends the run, absent skips side scenes, locks close choic
   const bad = JSON.parse(JSON.stringify(camp)); bad.nodes.c2_m.choices[1].tags = ["advice"];
   assert.ok(sitErr(bad).some(e => /c2_m with no choice/.test(e)));
 });
+
+test("relations recipe: a book that declares it must have changes, a paying-off approach, a split request and consequences", () => {
+  const flag = l => ({ type: "flag", init: false, label: l });
+  const ch = c => ({ id: c, title: c, intro: [] });
+  const say = (who, k) => ({ text: "x", when: { v: `rel.${who}.trust`, op: ">=", val: 4 }, rel: [who, "trust", k] });
+  const pick = (id, extra = {}) => ({ id, type: "expression", label: id, out: [], effects: [], ...extra });
+  const scenes = {};
+  for (let i = 1; i <= 5; i++) scenes["c1_s" + i] = { id: "c1_s" + i, chapter: "c1", kind: "main", lock: "free", order: i, title: "s", intro: [say("a", 2)], cast: [{ id: "a" }], choices: [pick("go")] };
+  const camp = {
+    spec: "storydate.campaign/0.4", recipe: "relations", id: "r", title: "t", volume: "v", echoes: {}, debts: {}, dims: {}, chapters: [ch("c1")],
+    vars: { "flag.gift": flag("gift"), "rel.a.trust": { type: "num", init: 2, min: 0, max: 10, label: "t" } },
+    chars: { a: { name: "a", main: "trust", dims: { trust: { label: "t" } } } },
+    nodes: { ...scenes,
+      x_gift: { id: "x_gift", chapter: "*", kind: "interrupt", lock: "free", order: 3, title: "g", intro: [say("a", 2)], cast: [], when: { v: "rel.a.trust", op: ">=", val: 4 }, choices: [pick("take", { effects: [{ set: "flag.gift", to: true }] })] } },
+    endings: [{ id: "g", fragments: [{ id: "f", text: "end" }] }]
+  };
+  const errs = c => CC.validate(c).errors.filter(e => /recipe/.test(e));
+  assert.ok(errs(camp).some(e => /pays off/.test(e)) && errs(camp).some(e => /lands differently/.test(e)));
+  const s1 = camp.nodes.c1_s1;
+  s1.choices.push(pick("use", { when: { v: "flag.gift", op: "==", val: true }, because: "因为" }));
+  s1.choices.push(pick("go", { id: "go_r", label: "go", when: { v: "rel.a.trust", op: ">=", val: 4 }, because: "因为" }));
+  assert.deepEqual(errs(camp), []);
+  camp.moves = [{ id: "threat", to: "a", means: "m", out: [], effects: [], labels: ["threat"] }];
+  assert.ok(errs(camp).some(e => /threatening a twice/.test(e)));
+  camp.vars["grudge.a"] = { type: "num", init: 0, min: 0, max: 10, label: "g" };
+  camp.moves.unshift({ id: "threat2", to: "a", means: "m", out: [], effects: [], labels: ["threat"], ends: true, when: { v: "grudge.a", op: ">=", val: 2 } });
+  assert.deepEqual(errs(camp), []);
+  const r = CC.recipe(camp);
+  assert.equal(r.changes.length, 5); assert.deepEqual(r.approach[0].pays, ["c1_s1.use"]);
+});

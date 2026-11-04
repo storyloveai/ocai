@@ -1352,6 +1352,26 @@
     "en": "Guan Yu · grudge"
    },
    "carry": false
+  },
+  "grudge.lusu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·记仇",
+    "en": "Lu Su · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -4235,6 +4255,42 @@
    ],
    "moves": [
     {
+     "id": "threat_lusu2",
+     "to": "lusu",
+     "means": {
+      "zh": "又一次威胁鲁肃、说要他的命",
+      "en": "threatens Lu Su again / says they'll take his life"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "鲁肃的脸色变了。他把酒杯往地上一摔，帐后的刀斧手涌了出来。关羽一把挟住鲁肃，提刀退到江边，上了船。你被隔在了人群的另一边。江上的船越来越远，周仓回头喊你的名字。",
+        "en": "Lu Su's face changes. He dashes his cup to the floor, and the axemen pour out from behind the curtains. Guan Yu seizes Lu Su, backs to the river with his blade raised, and boards the boat. You are cut off on the other side of the crowd. The boat pulls away; Zhou Cang turns back, shouting your name."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.lusu.trust",
+       "by": -3
+      }
+     ],
+     "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die|敢动.{0,6}(关|将军)|别想活着|走不出",
+     "labels": [
+      "threat"
+     ],
+     "when": {
+      "v": "grudge.lusu",
+      "op": ">=",
+      "val": 2
+     },
+     "ends": true
+    },
+    {
      "id": "threat_lusu",
      "to": "lusu",
      "means": {
@@ -4270,7 +4326,12 @@
      "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die|敢动.{0,6}(关|将军)|别想活着|走不出",
      "labels": [
       "threat"
-     ]
+     ],
+     "when": {
+      "v": "grudge.lusu",
+      "op": "<=",
+      "val": 1
+     }
     }
    ]
   },
@@ -10815,7 +10876,12 @@
      "text": {
       "zh": "单刀会回来没几天，关羽派周仓送来一块铜腰牌，背面刻着一个“关”字。周仓说：『将军说，陆口那天先生站在他身后。荆州九郡的城门，先生走到哪里都开。』",
       "en": "A few days after the feast at Lukou, Guan Yu sends Zhou Cang with a bronze token, the character 'Guan' cut into its back. Zhou Cang says, 'The General says you stood behind him at Lukou, sir. Every gate in the nine commanderies of Jingzhou will open for you.'"
-     }
+     },
+     "rel": [
+      "guanyu",
+      "warmth",
+      1
+     ]
     }
    ],
    "choices": [
@@ -10887,6 +10953,11 @@
       "val": true
      },
      {
+      "v": "rel.guanyu.warmth",
+      "op": ">=",
+      "val": 2
+     },
+     {
       "v": "grudge.guanyu",
       "op": "<=",
       "val": 0
@@ -10918,6 +10989,18 @@
     "en": "Where You Ended Up"
    },
    "fragments": [
+    {
+     "id": "dead",
+     "text": {
+      "zh": "你没有回到荆州。陆口的江水，那天流得很急。",
+      "en": "You never made it back to Jingzhou. The river at Lukou ran very fast that day."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "==",
+      "val": true
+     }
+    },
     {
      "id": "hermit",
      "text": {
@@ -11051,37 +11134,46 @@
      "when": {
       "all": [
        {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
         "all": [
-         {
-          "v": "track",
-          "op": "==",
-          "val": "liu"
-         },
          {
           "all": [
            {
-            "v": "flag.v3_hermit",
-            "op": "!=",
-            "val": true
+            "v": "track",
+            "op": "==",
+            "val": "liu"
            },
            {
-            "v": "flag.v3_left",
-            "op": "!=",
-            "val": true
-           },
-           {
-            "v": "flag.v3_exposed",
-            "op": "!=",
-            "val": true
+            "all": [
+             {
+              "v": "flag.v3_hermit",
+              "op": "!=",
+              "val": true
+             },
+             {
+              "v": "flag.v3_left",
+              "op": "!=",
+              "val": true
+             },
+             {
+              "v": "flag.v3_exposed",
+              "op": "!=",
+              "val": true
+             }
+            ]
            }
           ]
+         },
+         {
+          "v": "rel.liubei.trust",
+          "op": ">=",
+          "val": 8
          }
         ]
-       },
-       {
-        "v": "rel.liubei.trust",
-        "op": ">=",
-        "val": 8
        }
       ]
      }
@@ -11095,6 +11187,64 @@
      "when": {
       "all": [
        {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "all": [
+         {
+          "all": [
+           {
+            "v": "track",
+            "op": "==",
+            "val": "liu"
+           },
+           {
+            "all": [
+             {
+              "v": "flag.v3_hermit",
+              "op": "!=",
+              "val": true
+             },
+             {
+              "v": "flag.v3_left",
+              "op": "!=",
+              "val": true
+             },
+             {
+              "v": "flag.v3_exposed",
+              "op": "!=",
+              "val": true
+             }
+            ]
+           }
+          ]
+         },
+         {
+          "v": "rel.liubei.trust",
+          "op": ">=",
+          "val": 6
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "low",
+     "text": {
+      "zh": "汉中王待你客气。你知道，客气就是隔着一层。",
+      "en": "The King of Hanzhong is courteous to you. You know courtesy is a kind of distance."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
         "all": [
          {
           "v": "track",
@@ -11119,46 +11269,6 @@
             "val": true
            }
           ]
-         }
-        ]
-       },
-       {
-        "v": "rel.liubei.trust",
-        "op": ">=",
-        "val": 6
-       }
-      ]
-     }
-    },
-    {
-     "id": "low",
-     "text": {
-      "zh": "汉中王待你客气。你知道，客气就是隔着一层。",
-      "en": "The King of Hanzhong is courteous to you. You know courtesy is a kind of distance."
-     },
-     "when": {
-      "all": [
-       {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
-       },
-       {
-        "all": [
-         {
-          "v": "flag.v3_hermit",
-          "op": "!=",
-          "val": true
-         },
-         {
-          "v": "flag.v3_left",
-          "op": "!=",
-          "val": true
-         },
-         {
-          "v": "flag.v3_exposed",
-          "op": "!=",
-          "val": true
          }
         ]
        }
@@ -11181,9 +11291,18 @@
       "en": "Sun Quan's proposal was declined gently. Wu didn't flare up—not on the spot, at least."
      },
      "when": {
-      "v": "flag.hn_soft",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.hn_soft",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11193,9 +11312,18 @@
       "en": "You apologized for Guan Yu. Zhuge Jin accepted the letter. Sun Quan didn't accept the insult."
      },
      "when": {
-      "v": "flag.hn_apology",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.hn_apology",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11205,9 +11333,18 @@
       "en": "You urged Liu Bei to send troops to back up Jingzhou. The column toward Shangyong isn't moving fast."
      },
      "when": {
-      "v": "flag.warned_jing",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.warned_jing",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11217,9 +11354,18 @@
       "en": "'An old soldier, that's all.' You said it first. Guan Yu said it many times after."
      },
      "when": {
-      "v": "flag.fed_pride",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.fed_pride",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11231,30 +11377,39 @@
      "when": {
       "all": [
        {
-        "any": [
-         {
-          "v": "flag.post_jingzhou",
-          "op": "==",
-          "val": true
-         },
-         {
-          "v": "flag.v3_to_jing",
-          "op": "==",
-          "val": true
-         }
-        ]
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
-        "any": [
+        "all": [
          {
-          "v": "rel.guanyu.warmth",
-          "op": ">=",
-          "val": 6
+          "any": [
+           {
+            "v": "flag.post_jingzhou",
+            "op": "==",
+            "val": true
+           },
+           {
+            "v": "flag.v3_to_jing",
+            "op": "==",
+            "val": true
+           }
+          ]
          },
          {
-          "v": "flag.fs_private",
-          "op": "==",
-          "val": true
+          "any": [
+           {
+            "v": "rel.guanyu.warmth",
+            "op": ">=",
+            "val": 6
+           },
+           {
+            "v": "flag.fs_private",
+            "op": "==",
+            "val": true
+           }
+          ]
          }
         ]
        }
@@ -11268,9 +11423,18 @@
       "en": "Guan Yu drove off Wu's envoy and marched north on Fancheng. Glory that would shake the realm was within reach. In the east, Sun Quan was waiting too."
      },
      "when": {
-      "v": "flag.hn_canon",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.hn_canon",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11282,26 +11446,35 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
         "all": [
          {
-          "v": "flag.v3_hermit",
-          "op": "!=",
-          "val": true
+          "v": "track",
+          "op": "==",
+          "val": "liu"
          },
          {
-          "v": "flag.v3_left",
-          "op": "!=",
-          "val": true
-         },
-         {
-          "v": "flag.v3_exposed",
-          "op": "!=",
-          "val": true
+          "all": [
+           {
+            "v": "flag.v3_hermit",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v3_left",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v3_exposed",
+            "op": "!=",
+            "val": true
+           }
+          ]
          }
         ]
        }
@@ -11324,9 +11497,18 @@
       "en": "Huang Zhong tells everyone: on Mount Dingjun, a scholar charged down the hill right behind me."
      },
      "when": {
-      "v": "flag.dj_charge",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.dj_charge",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11336,9 +11518,18 @@
       "en": "Fa Zheng says half that red flag on Mount Dingjun was yours."
      },
      "when": {
-      "v": "flag.dj_flags",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.dj_flags",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11348,9 +11539,18 @@
       "en": "Huang Zhong says: the gentleman understands me."
      },
      "when": {
-      "v": "rel.huangzhong.warmth",
-      "op": ">=",
-      "val": 6
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "rel.huangzhong.warmth",
+        "op": ">=",
+        "val": 6
+       }
+      ]
      }
     },
     {
@@ -11360,9 +11560,18 @@
       "en": "You heard about Mount Dingjun in Jingzhou."
      },
      "when": {
-      "v": "flag.post_jingzhou",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.post_jingzhou",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11374,26 +11583,35 @@
      "when": {
       "all": [
        {
-        "v": "track",
-        "op": "==",
-        "val": "liu"
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
        },
        {
         "all": [
          {
-          "v": "flag.v3_hermit",
-          "op": "!=",
-          "val": true
+          "v": "track",
+          "op": "==",
+          "val": "liu"
          },
          {
-          "v": "flag.v3_left",
-          "op": "!=",
-          "val": true
-         },
-         {
-          "v": "flag.v3_exposed",
-          "op": "!=",
-          "val": true
+          "all": [
+           {
+            "v": "flag.v3_hermit",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v3_left",
+            "op": "!=",
+            "val": true
+           },
+           {
+            "v": "flag.v3_exposed",
+            "op": "!=",
+            "val": true
+           }
+          ]
          }
         ]
        }
@@ -11418,14 +11636,23 @@
      "when": {
       "all": [
        {
-        "v": "flag.v3_to_jing",
-        "op": "==",
+        "v": "flag.fate_dead",
+        "op": "!=",
         "val": true
        },
        {
-        "v": "flag.wz_jingzhou",
-        "op": "==",
-        "val": true
+        "all": [
+         {
+          "v": "flag.v3_to_jing",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "flag.wz_jingzhou",
+          "op": "==",
+          "val": true
+         }
+        ]
        }
       ]
      },
@@ -11438,9 +11665,18 @@
       "en": "In the little yard on the west side of Chengdu, Wen Zhi's angelica has flowered again."
      },
      "when": {
-      "v": "flag.wz_child",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wz_child",
+        "op": "==",
+        "val": true
+       }
+      ]
      },
      "mood": "romance"
     },
@@ -11451,9 +11687,18 @@
       "en": "Wen Zhi carries medicine up to the night watch on the Jiangling walls. To the north, the lights grow more numerous each night."
      },
      "when": {
-      "v": "flag.wz_jingzhou",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wz_jingzhou",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11463,9 +11708,18 @@
       "en": "Wen Zhi runs a clinic in Chengdu. The poor pay nothing."
      },
      "when": {
-      "v": "flag.wz_west",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.wz_west",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -11473,6 +11727,11 @@
      "text": {
       "zh": "你很久没有温芷的消息了。",
       "en": "You haven't heard from Wen Zhi in a long time."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "!=",
+      "val": true
      }
     }
    ]
@@ -11720,6 +11979,15 @@
  ],
  "situations": [
   {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
+  {
    "id": "sidelined",
    "kind": "sidelined",
    "flag": "flag.sidelined",
@@ -11743,6 +12011,7 @@
    }
   }
  ],
+ "recipe": "relations",
  "future_terms": [
   {
    "term": {

@@ -1223,6 +1223,26 @@
    },
    "carry": false
   },
+  "grudge.lusu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·记仇",
+    "en": "Lu Su · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
+  },
   "flag.v4_came_back": {
    "type": "flag",
    "init": false,
@@ -9730,6 +9750,15 @@
  ],
  "situations": [
   {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
+  {
    "id": "sidelined",
    "kind": "sidelined",
    "flag": "flag.sidelined",
@@ -9753,6 +9782,7 @@
    }
   }
  ],
+ "recipe": "relations",
  "moves": [
   {
    "id": "liu_threat",
@@ -10899,6 +10929,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11060,6 +11092,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11221,6 +11255,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11382,6 +11418,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 1,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11543,6 +11581,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": false,
@@ -11704,6 +11744,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": true,
      "flag.pd_guard": false,

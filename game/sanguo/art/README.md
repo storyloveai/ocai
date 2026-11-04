@@ -27,6 +27,7 @@
 - `fate-jobs.jsonl`：命运分支的“命运图”（被斩、下狱、被逐出、负伤），采用后裁成 1200×480 放进 `fate/<kind>.webp`（新目录）。八卷通用，画面不要认得出具体年份和人物；不画伤口、血腥和行刑瞬间。没画之前游戏只显示场景图，缺图检查把它们列为“待画”，不报错。
 - `edition-jobs-endings.jsonl`：卷二至卷八各自的“留任”结局图（`ending/v2_city.webp` … `v8_city.webp`）。有本卷的结局图就用本卷的，没有就用 `ending/city.webp`。
 - `edition-jobs-v8.jsonl`：卷八的场景图（21 张，`v8_` 开头），参考图都已是正式采用的文件，可以直接画；第三章以后的玩家是接班人，画面里只画背影、看不出男女。
+- `edition-jobs-relations.jsonl`：“关系层”新增的 7 个“找上门”场景（锦囊、腰牌、小路图、江州之约、一包草、令箭、兵书），现在先借用相近的场景图；采用后放进 `scenes/<name>.webp`，把对应节点（`node` 字段）的 `illus` 改成这个 name。
 - `edition-jobs-v7.jsonl`：卷七的场景图（20 张，`v7_` 开头），有姜维、司马懿、魏延的几张要等他们的插画头像（`portrait-jobs.jsonl` 新增的三条）采用后再画。
 - `edition-jobs-v6.jsonl`：卷六的场景图（14 张，`v6_` 开头），排在卷五之后。
 - `edition-jobs-v5.jsonl`：卷五的场景图（17 张，`v5_` 开头），排在卷四之后。

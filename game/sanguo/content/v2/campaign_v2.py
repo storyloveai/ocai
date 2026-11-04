@@ -886,7 +886,7 @@ CAMPAIGN = {
     "player": {"name": T("子衡", "Ziheng")},
     "side_prompt": SIDE_PROMPT,
     "vars": VARS, "chars": CHARS, "dims": DIMS, "echoes": ECHOES, "debts": DEBTS,
-    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS, "situations": situations.volume(N, VARS),
+    "chapters": CHAPTERS, "nodes": {n["id"]: n for n in N}, "endings": ENDINGS, "situations": situations.volume(N, VARS), "recipe": "relations",
     "future_terms": [{"term": t, "from": c} for t, c in FUTURE],
     "ending_art": ENDING_ART, "art_prompts": ART_PROMPTS, "frag_face": FRAG_FACE, "portrait_prompts": PORTRAIT_PROMPTS, "cg_captions": V1["cg_captions"], "realm": REALM,
     "react_patterns": V1["react_patterns"], "value_tags": values.TAGS, "commit_rules": COMMIT_RULES,

@@ -33,21 +33,25 @@ INTRO = {   # scene: (person, axis, warm line, cold line or None)
 }
 
 TOKEN = node("x_rel_token", "*", "interrupt", T("腰牌", "The Token"), "free", T("原创", "original"),
-    [P(T("单刀会回来没几天，关羽派周仓送来一块铜腰牌，背面刻着一个“关”字。周仓说：『将军说，陆口那天先生站在他身后。荆州九郡的城门，先生走到哪里都开。』",
-         "A few days after the feast at Lukou, Guan Yu sends Zhou Cang with a bronze token, the character 'Guan' cut into its back. Zhou Cang says, 'The General says you stood behind him at Lukou, sir. Every gate in the nine commanderies of Jingzhou will open for you.'"))],
+    [RP(T("单刀会回来没几天，关羽派周仓送来一块铜腰牌，背面刻着一个“关”字。周仓说：『将军说，陆口那天先生站在他身后。荆州九郡的城门，先生走到哪里都开。』",
+         "A few days after the feast at Lukou, Guan Yu sends Zhou Cang with a bronze token, the character 'Guan' cut into its back. Zhou Cang says, 'The General says you stood behind him at Lukou, sir. Every gate in the nine commanderies of Jingzhou will open for you.'"), None, ["guanyu", "warmth", 1])],
     [choice("keep", "expression", T("收下，托周仓带一句谢。", "Accept it, and send your thanks back with Zhou Cang."), T("周仓咧嘴一笑，走了。", "Zhou Cang grins and goes."),
             [setv("flag.v3_token"), rel("guanyu", "warmth", 1)]),
      choice("visit", "expression", T("亲自去谢关羽。", "Go and thank Guan Yu in person."),
             T("关羽在灯下读《春秋》，听你说完，只点了点头：『收着就是。』", "Guan Yu is reading the Annals by lamplight. He hears you out and only nods. 'Just keep it.'"),
             [setv("flag.v3_token"), rel("guanyu", "trust", 1)])],
-    when=ALL(LIU3, F("flag.dd_guard"), V("grudge.guanyu", "<=", 0), NF("flag.v3_token")), order=3)
+    when=ALL(LIU3, F("flag.dd_guard"), AT("guanyu", "warmth", 1), V("grudge.guanyu", "<=", 0), NF("flag.v3_token")), order=3)
 TOKEN["art"] = {"scene": "lamp", "layers": [], "illus": "v3_guan_hall"}; TOKEN["cast"] = [{"id": "guanyu"}]
 
 GUAN_OUT = T("关羽没有拔刀。他只说了一个字：『滚。』第二天一早，周仓把你的行李放在了城门外。荆州，你回不去了。",
              "Guan Yu doesn't draw his blade. He says only one word: 'Out.' Early the next morning Zhou Cang leaves your things outside the city gate. You can't go back to Jingzhou.")
 
 
-def extend(N, VARS):
+LUKOU_DEATH = T("鲁肃的脸色变了。他把酒杯往地上一摔，帐后的刀斧手涌了出来。关羽一把挟住鲁肃，提刀退到江边，上了船。你被隔在了人群的另一边。江上的船越来越远，周仓回头喊你的名字。",
+                 "Lu Su's face changes. He dashes his cup to the floor, and the axemen pour out from behind the curtains. Guan Yu seizes Lu Su, backs to the river with his blade raised, and boards the boat. You are cut off on the other side of the crowd. The boat pulls away; Zhou Cang turns back, shouting your name.")
+
+
+def extend(N, VARS, CAMP_MOVES=None, ENDINGS=None):
     for k, lab in FLAGS.items(): VARS[k] = {"type": "flag", "init": False, "label": lab, "carry": False}
     VARS["grudge.guanyu"] = {"type": "num", "init": 0, "min": 0, "max": 10, "label": T("关羽·记仇", "Guan Yu · grudge"), "carry": False}
     byid = {n["id"]: n for n in N}
@@ -77,6 +81,24 @@ def extend(N, VARS):
     _twin(dj, "charge", WARM("huangzhong", "warmth"), NOTWARM("huangzhong", "warmth"),
           {"out": [P(T("黄忠把自己的副马牵给你：『先生跟紧老夫。』", "Huang Zhong brings you his spare horse. 'Stay close to this old man, sir.'"))] + ch["out"],
            "because": T("因为黄忠和你相熟，把副马给了你", "Because Huang Zhong knows you well, he gives you his spare horse")})
+    # 5. 单刀会上第二次威胁鲁肃：鲁肃摔杯为号，你死在陆口
+    if ENDINGS is not None:
+        from moves import mv, KILL_YOU
+        VARS["grudge.lusu"] = {"type": "num", "init": 0, "min": 0, "max": 10, "label": T("鲁肃·记仇", "Lu Su · grudge"), "carry": False}
+        VARS["flag.fate_dead"] = {"type": "flag", "init": False, "label": T("死于非命", "Died before the volume's end"), "carry": False}
+        dd = byid["c1_dandao"]; t1 = next(m for m in dd["moves"] if m["id"] == "threat_lusu")
+        m2 = mv("threat_lusu2", "lusu", T("又一次威胁鲁肃、说要他的命", "threatens Lu Su again / says they'll take his life"), LUKOU_DEATH,
+                [setv("flag.fate_dead"), rel("lusu", "trust", -3)], match=t1["match"], labels=["threat"], when=V("grudge.lusu", ">=", 2))
+        m2["ends"] = True
+        t1["when"] = ALL(t1["when"], V("grudge.lusu", "<=", 1)) if t1.get("when") else V("grudge.lusu", "<=", 1)
+        dd["moves"].insert(0, m2)
+        side = next(g for g in ENDINGS if g["id"] == "g_side")
+        side["fragments"].insert(0, {"id": "dead", "text": T("你没有回到荆州。陆口的江水，那天流得很急。", "You never made it back to Jingzhou. The river at Lukou ran very fast that day."), "when": F("flag.fate_dead")})
+        for g in ENDINGS:
+            if g["id"] in ("g_lord", "g_guanyu", "g_dingjun", "g_wenzhi"):
+                for f in g["fragments"]:
+                    f["when"] = ALL(NF("flag.fate_dead"), f["when"]) if f.get("when") else NF("flag.fate_dead")
+
     # 4. Guan Yu doesn't kill his brother's man — he drives you out
     gr = byid["x_guan_rage"]
     for c in gr["choices"]: c["when"] = ALL(c["when"], V("grudge.guanyu", "<=", 2)) if c.get("when") else V("grudge.guanyu", "<=", 2)

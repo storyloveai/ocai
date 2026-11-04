@@ -1223,6 +1223,26 @@
    },
    "carry": false
   },
+  "grudge.lusu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·记仇",
+    "en": "Lu Su · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
+  },
   "flag.v4_came_back": {
    "type": "flag",
    "init": false,
@@ -11592,6 +11612,15 @@
  ],
  "situations": [
   {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
+  {
    "id": "sidelined",
    "kind": "sidelined",
    "flag": "flag.sidelined",
@@ -11615,6 +11644,7 @@
    }
   }
  ],
+ "recipe": "relations",
  "future_terms": [
   {
    "term": {
@@ -12870,6 +12900,8 @@
      "heat.huangzhong": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "debt.d_xiang": "none",
      "debt.d_tiger": "reroute"
     },
@@ -13003,6 +13035,8 @@
      "heat.huangzhong": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "debt.d_xiang": "none",
      "debt.d_tiger": "none"
     },
@@ -13136,6 +13170,8 @@
      "heat.huangzhong": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "debt.d_xiang": "none",
      "debt.d_tiger": "none"
     },
@@ -13269,6 +13305,8 @@
      "heat.huangzhong": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "debt.d_xiang": "reroute",
      "debt.d_tiger": "none"
     },
@@ -13402,6 +13440,8 @@
      "heat.huangzhong": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "debt.d_xiang": "none",
      "debt.d_tiger": "none",
      "ended_early": true
