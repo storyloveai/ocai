@@ -13,7 +13,7 @@
         {
           "variant": "a",
           "preview": "sprite-zhiyao-normal-a.webp",
-          "source": "sprite-zhiyao-normal/a.png",
+          "source": "sprite-zhiyao-normal-1.png",
           "dimensions": [
             1024,
             1536
@@ -22,12 +22,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "sprite-zhiyao-normal-b.webp",
-          "source": "sprite-zhiyao-normal/b.png",
+          "source": "sprite-zhiyao-normal-2.png",
           "dimensions": [
             1024,
             1536
@@ -36,12 +37,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         },
         {
           "variant": "c",
           "preview": "sprite-zhiyao-normal-c.webp",
-          "source": "sprite-zhiyao-normal/c.png",
+          "source": "sprite-zhiyao-normal-3.png",
           "dimensions": [
             1024,
             1536
@@ -50,12 +52,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 3
         },
         {
           "variant": "d",
           "preview": "sprite-zhiyao-normal-d.webp",
-          "source": "sprite-zhiyao-normal/d.png",
+          "source": "sprite-zhiyao-normal-4.png",
           "dimensions": [
             1024,
             1536
@@ -64,7 +67,8 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 4
         }
       ]
     },
@@ -79,7 +83,7 @@
         {
           "variant": "a",
           "preview": "sprite-shencheng-normal-a.webp",
-          "source": "sprite-shencheng-normal/a.png",
+          "source": "sprite-shencheng-normal-1.png",
           "dimensions": [
             1024,
             1536
@@ -88,12 +92,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "sprite-shencheng-normal-b.webp",
-          "source": "sprite-shencheng-normal/b.png",
+          "source": "sprite-shencheng-normal-2.png",
           "dimensions": [
             1024,
             1536
@@ -102,12 +107,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         },
         {
           "variant": "c",
           "preview": "sprite-shencheng-normal-c.webp",
-          "source": "sprite-shencheng-normal/c.png",
+          "source": "sprite-shencheng-normal-3.png",
           "dimensions": [
             1024,
             1536
@@ -116,12 +122,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 3
         },
         {
           "variant": "d",
           "preview": "sprite-shencheng-normal-d.webp",
-          "source": "sprite-shencheng-normal/d.png",
+          "source": "sprite-shencheng-normal-4.png",
           "dimensions": [
             1024,
             1536
@@ -130,7 +137,8 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 4
         }
       ]
     },
@@ -145,7 +153,7 @@
         {
           "variant": "a",
           "preview": "sprite-jibai-normal-a.webp",
-          "source": "sprite-jibai-normal/a.png",
+          "source": "sprite-jibai-normal-1.png",
           "dimensions": [
             1024,
             1536
@@ -154,12 +162,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "sprite-jibai-normal-b.webp",
-          "source": "sprite-jibai-normal/b.png",
+          "source": "sprite-jibai-normal-2.png",
           "dimensions": [
             1024,
             1536
@@ -168,12 +177,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         },
         {
           "variant": "c",
           "preview": "sprite-jibai-normal-c.webp",
-          "source": "sprite-jibai-normal/c.png",
+          "source": "sprite-jibai-normal-3.png",
           "dimensions": [
             1024,
             1536
@@ -182,12 +192,13 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 3
         },
         {
           "variant": "d",
           "preview": "sprite-jibai-normal-d.webp",
-          "source": "sprite-jibai-normal/d.png",
+          "source": "sprite-jibai-normal-4.png",
           "dimensions": [
             1024,
             1536
@@ -196,7 +207,8 @@
             0,
             254
           ],
-          "adopted": false
+          "adopted": false,
+          "sequence": 4
         }
       ]
     },
@@ -211,24 +223,26 @@
         {
           "variant": "a",
           "preview": "bg-station-a.webp",
-          "source": "bg-station/a.png",
+          "source": "bg-station-1.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "bg-station-b.webp",
-          "source": "bg-station/b.png",
+          "source": "bg-station-2.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         }
       ]
     },
@@ -243,24 +257,26 @@
         {
           "variant": "a",
           "preview": "bg-oldhouse-a.webp",
-          "source": "bg-oldhouse/a.png",
+          "source": "bg-oldhouse-1.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "bg-oldhouse-b.webp",
-          "source": "bg-oldhouse/b.png",
+          "source": "bg-oldhouse-2.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         }
       ]
     },
@@ -275,24 +291,26 @@
         {
           "variant": "a",
           "preview": "bg-cinema_dusk-a.webp",
-          "source": "bg-cinema_dusk/a.png",
+          "source": "bg-cinema_dusk-1.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "bg-cinema_dusk-b.webp",
-          "source": "bg-cinema_dusk/b.png",
+          "source": "bg-cinema_dusk-2.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         }
       ]
     },
@@ -307,24 +325,26 @@
         {
           "variant": "a",
           "preview": "bg-campus-a.webp",
-          "source": "bg-campus/a.png",
+          "source": "bg-campus-1.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "bg-campus-b.webp",
-          "source": "bg-campus/b.png",
+          "source": "bg-campus-2.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         }
       ]
     },
@@ -339,24 +359,26 @@
         {
           "variant": "a",
           "preview": "bg-cafe-a.webp",
-          "source": "bg-cafe/a.png",
+          "source": "bg-cafe-1.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "bg-cafe-b.webp",
-          "source": "bg-cafe/b.png",
+          "source": "bg-cafe-2.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         }
       ]
     },
@@ -371,24 +393,26 @@
         {
           "variant": "a",
           "preview": "bg-projection-a.webp",
-          "source": "bg-projection/a.png",
+          "source": "bg-projection-1.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 1
         },
         {
           "variant": "b",
           "preview": "bg-projection-b.webp",
-          "source": "bg-projection/b.png",
+          "source": "bg-projection-2.png",
           "dimensions": [
             1672,
             941
           ],
           "alpha": null,
-          "adopted": false
+          "adopted": false,
+          "sequence": 2
         }
       ]
     }
