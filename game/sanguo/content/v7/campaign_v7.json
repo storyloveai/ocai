@@ -1835,6 +1835,15 @@
    },
    "carry": false
   },
+  "flag.v6_wz_herb": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "温芷给了你一包草",
+    "en": "Wen Zhi gave you a bundle of herbs"
+   },
+   "carry": false
+  },
   "flag.v7_came_back": {
    "type": "flag",
    "init": false,
@@ -2313,6 +2322,26 @@
    "char": "jiangwei",
    "imp": "offended",
    "show": false
+  },
+  "grudge.weiyan": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "魏延·记仇",
+    "en": "Wei Yan · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
   }
  },
  "chars": {
@@ -4779,6 +4808,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "丞相把表递给你的时候说：『这一份，亮只给你一个人看过。』",
+      "en": "As he hands you the memorial the Chancellor says, 'You're the only one I've shown this to.'"
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -5524,6 +5569,22 @@
       "zh": "天水冀县的姜维，看穿了丞相的计，赵云都没占到便宜。丞相大喜，要收这个人。有人献计：姜维是孝子，母亲在冀县，假装去攻冀县，他必回城救母。丞相看你：『子衡兄以为如何？』",
       "en": "Jiang Wei of Ji in Tianshui saw through the Chancellor's plan; not even Zhao Yun could get the better of him. The Chancellor is delighted and wants the man. Someone proposes: Jiang Wei is a devoted son with his mother in Ji; pretend to attack Ji, and he'll come back to save her. The Chancellor looks at you. 'What do you think, Ziheng?'"
      }
+    },
+    {
+     "text": {
+      "zh": "丞相问计之前，先把姜维的事一五一十讲给了你。",
+      "en": "Before asking anyone for a plan, the Chancellor tells you everything about Jiang Wei."
+     },
+     "when": {
+      "v": "rel.zhuge.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -5912,6 +5973,38 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "丞相看了马谡很久，又看你：『子衡兄，你说。』",
+      "en": "The Chancellor looks at Ma Su a long time, then at you. 'Brother Ziheng—you say.'"
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      2
+     ]
+    },
+    {
+     "text": {
+      "zh": "丞相没有问你，自己在案前坐了很久。",
+      "en": "The Chancellor doesn't ask you; he sits at his desk for a long time."
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": "<=",
+      "val": 1
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      0
+     ]
     }
    ],
    "choices": [
@@ -6253,7 +6346,69 @@
       "yong",
       "yi"
      ],
-     "place": "hanzhong"
+     "place": "hanzhong",
+     "when": {
+      "v": "rel.zhuge.warmth",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "wall_r",
+     "type": "dilemma",
+     "label": {
+      "zh": "上城楼，站在他身边，给他添香。",
+      "en": "Go up the tower and stand at his side, tending the incense."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "丞相往旁边让了让，让你坐在琴边：『子衡兄，替亮翻谱。』",
+        "en": "The Chancellor shifts aside and has you sit by the zither. 'Brother Ziheng, turn the pages for me.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "司马懿在城下看了很久。你看见他的脸，也看见他在看你。他说：『亮平生谨慎，不曾弄险。今大开城门，必有埋伏。』魏军退了。丞相的手指停下的时候，在发抖。",
+        "en": "Sima Yi looks up from below a long time. You see his face, and see him looking at you. He says Liang has been cautious all his life and never gambled; with the gates wide open there must be an ambush. The Wei army withdraws. When the Chancellor's fingers stop on the strings, they're shaking."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v7_wall",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.warmth",
+       "by": 2
+      },
+      {
+       "add": "rel.simayi.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.zhuge.trust",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_wall"
+     ],
+     "values": [
+      "yong",
+      "yi"
+     ],
+     "place": "hanzhong",
+     "when": {
+      "v": "rel.zhuge.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为丞相和你交好，让你坐在琴边",
+      "en": "Because you and the Chancellor are close, he has you sit by the zither"
+     }
     },
     {
      "id": "gate",
@@ -6382,6 +6537,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "丞相下令之前，攥住了你的手腕，攥得很紧。",
+      "en": "Before he gives the order, the Chancellor grips your wrist, very tight."
+     },
+     "when": {
+      "v": "rel.zhuge.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7524,6 +7695,22 @@
       "zh": "你去了。司马懿打开盒子，笑了笑，收下了，还请你喝茶。他不问打仗的事，只问：『孔明寝食及事之烦简若何？』",
       "en": "You go. Sima Yi opens the box, smiles, accepts it, and invites you to tea. He asks nothing about the war—only how Kongming eats and sleeps, and how heavy his work is."
      }
+    },
+    {
+     "text": {
+      "zh": "丞相把盒子交给你：『这一趟，只有你去我才放心。』",
+      "en": "The Chancellor hands you the box. 'Only if you go will I rest easy.'"
+     },
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7936,6 +8123,22 @@
       "zh": "你在帐外。魏延提着刀，急急忙忙地往帐里闯，要报军情。",
       "en": "You're outside the tent. Wei Yan, blade in hand, is rushing for the entrance to report."
      }
+    },
+    {
+     "text": {
+      "zh": "姜维看见你，眼圈一下就红了：『先生……』",
+      "en": "When Jiang Wei sees you, his eyes redden at once. 'Sir…'"
+     },
+     "when": {
+      "v": "rel.jiangwei.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "jiangwei",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -8881,7 +9084,12 @@
        "add": "renown.rash",
        "by": 1
       }
-     ]
+     ],
+     "when": {
+      "v": "grudge.weiyan",
+      "op": "<=",
+      "val": 2
+     }
     },
     {
      "id": "stand",
@@ -8914,7 +9122,98 @@
      ],
      "values": [
       "yong"
-     ]
+     ],
+     "when": {
+      "v": "grudge.weiyan",
+      "op": "<=",
+      "val": 2
+     }
+    },
+    {
+     "id": "plead",
+     "type": "expression",
+     "label": {
+      "zh": "拱手赔罪。",
+      "en": "Bow and apologize."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "魏延冷笑：『晚了。』",
+        "en": "Wei Yan sneers. 'Too late.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "魏延的刀没有再推回去。帐里的人还没反应过来，刀光已经到了。你最后看见的，是魏延脸上那一点愣住的神情——他也没想到，自己真的砍了下去。",
+        "en": "Wei Yan's blade doesn't go back into its sheath. Before anyone in the tent can move, the steel has already fallen. The last thing you see is a flicker of shock on Wei Yan's face—he hadn't thought he would really strike either."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.weiyan.esteem",
+       "by": -3
+      }
+     ],
+     "when": {
+      "v": "grudge.weiyan",
+      "op": ">=",
+      "val": 3
+     },
+     "fate": {
+      "kind": "execute",
+      "who": "weiyan",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     },
+     "ends": true
+    },
+    {
+     "id": "repeat",
+     "type": "dilemma",
+     "label": {
+      "zh": "盯着魏延，把那句话再说一遍。",
+      "en": "Look Wei Yan in the eye and say it again."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "魏延的刀没有再推回去。帐里的人还没反应过来，刀光已经到了。你最后看见的，是魏延脸上那一点愣住的神情——他也没想到，自己真的砍了下去。",
+        "en": "Wei Yan's blade doesn't go back into its sheath. Before anyone in the tent can move, the steel has already fallen. The last thing you see is a flicker of shock on Wei Yan's face—he hadn't thought he would really strike either."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.fate_dead",
+       "to": true
+      },
+      {
+       "add": "rel.weiyan.esteem",
+       "by": -3
+      }
+     ],
+     "when": {
+      "v": "grudge.weiyan",
+      "op": ">=",
+      "val": 3
+     },
+     "fate": {
+      "kind": "execute",
+      "who": "weiyan",
+      "label": {
+       "zh": "被斩",
+       "en": "executed"
+      }
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -8939,6 +9238,18 @@
     "en": "Where You Ended Up"
    },
    "fragments": [
+    {
+     "id": "dead",
+     "text": {
+      "zh": "你没有走出魏延的营帐。那一年，北伐还在继续，只是少了一个人。",
+      "en": "You never left Wei Yan's tent. That year the northern campaigns went on, one man short."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "==",
+      "val": true
+     }
+    },
     {
      "id": "hermit",
      "text": {
@@ -9026,9 +9337,18 @@
       "en": "The Chancellor put the white feather fan in your hand: watch over them for me."
      },
      "when": {
-      "v": "flag.v7_fan",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.v7_fan",
+        "op": "==",
+        "val": true
+       }
+      ]
      },
      "mood": "warm"
     },
@@ -9039,9 +9359,18 @@
       "en": "That night at Wuzhang you stopped Wei Yan. The lamp went out all the same. The Chancellor said it wasn't your fault."
      },
      "when": {
-      "v": "flag.v7_lamp_guard",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.v7_lamp_guard",
+        "op": "==",
+        "val": true
+       }
+      ]
      },
      "mood": "sad"
     },
@@ -9052,9 +9381,18 @@
       "en": "On the day of the empty city you tended the incense on the wall. His hands were shaking, and only you saw."
      },
      "when": {
-      "v": "flag.v7_wall",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.v7_wall",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -9063,7 +9401,12 @@
       "zh": "建兴十二年秋，丞相病逝于五丈原，寿五十四岁。蜀中人谚曰：死诸葛能走生仲达。",
       "en": "In the autumn of Jianxing 12 the Chancellor died on the Wuzhang Plains, aged fifty-four. In Shu they said: a dead Zhuge put a living Zhongda to flight."
      },
-     "mood": "sad"
+     "mood": "sad",
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "!=",
+      "val": true
+     }
     }
    ]
   },
@@ -9127,9 +9470,18 @@
       "en": "Your child with Wen Zhi can write their own name now. The road ahead is theirs to walk."
      },
      "when": {
-      "v": "flag.v7_child",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.v7_child",
+        "op": "==",
+        "val": true
+       }
+      ]
      },
      "mood": "romance"
     },
@@ -9140,9 +9492,18 @@
       "en": "The student you took on writes down every word you say. The road ahead is his to walk."
      },
      "when": {
-      "v": "flag.v7_student",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.v7_student",
+        "op": "==",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -9152,9 +9513,18 @@
       "en": "Jiang Wei says he has two teachers."
      },
      "when": {
-      "v": "rel.jiangwei.esteem",
-      "op": ">=",
-      "val": 6
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "rel.jiangwei.esteem",
+        "op": ">=",
+        "val": 6
+       }
+      ]
      }
     },
     {
@@ -9162,6 +9532,11 @@
      "text": {
       "zh": "你身边，没有接你担子的人。",
       "en": "There is no one beside you to take up your load."
+     },
+     "when": {
+      "v": "flag.fate_dead",
+      "op": "!=",
+      "val": true
      }
     }
    ]
@@ -9221,9 +9596,18 @@
       "en": "Of the three who swore brotherhood in the peach garden, the last one died with your hand in his."
      },
      "when": {
-      "v": "flag.v7_old_farewell",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "flag.v7_old_farewell",
+        "op": "==",
+        "val": true
+       }
+      ]
      },
      "mood": "sad"
     },
@@ -9234,9 +9618,18 @@
       "en": "Zhao Yun left his spear to Jiang Wei."
      },
      "when": {
-      "v": "rel.zhaoyun.warmth",
-      "op": ">=",
-      "val": 6
+      "all": [
+       {
+        "v": "flag.fate_dead",
+        "op": "!=",
+        "val": true
+       },
+       {
+        "v": "rel.zhaoyun.warmth",
+        "op": ">=",
+        "val": 6
+       }
+      ]
      }
     }
    ]
@@ -9323,6 +9716,15 @@
   }
  ],
  "situations": [
+  {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
   {
    "id": "sidelined",
    "kind": "sidelined",
@@ -10412,7 +10814,7 @@
      "renown.loyal": 10,
      "renown.cunning": 1,
      "uncanny": 1,
-     "deviation": 8,
+     "deviation": 9,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -10480,13 +10882,13 @@
      "rel.guanyu.warmth": 6,
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 10,
+     "rel.zhuge.warmth": 6,
      "rel.zhuge.trust": 10,
-     "rel.zhuge.esteem": 10,
-     "rel.wenzhi.warmth": 6,
-     "rel.wenzhi.trust": 7,
+     "rel.zhuge.esteem": 8,
+     "rel.wenzhi.warmth": 7,
+     "rel.wenzhi.trust": 6,
      "rel.wenzhi.esteem": 4,
-     "rel.wenzhi.intimacy": 8,
+     "rel.wenzhi.intimacy": 10,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 8,
      "rel.zhaoyun.esteem": 1,
@@ -10575,9 +10977,9 @@
      "flag.v6_dengzhi": false,
      "flag.v6_to_wu": true,
      "flag.v6_masu_praise": false,
-     "flag.v6_masu_doubt": false,
+     "flag.v6_masu_doubt": true,
      "flag.v6_lushui": true,
-     "flag.v6_cure": false,
+     "flag.v6_cure": true,
      "flag.v6_water": false,
      "flag.v6_mercy": true,
      "flag.v6_fire_plan": false,
@@ -10594,7 +10996,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
-     "flag.v6_said_killall": false
+     "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": true
     },
     "ended_early": false,
     "mem": {},
@@ -10617,9 +11020,9 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 1,
+     "renown.cunning": 4,
      "uncanny": 1,
-     "deviation": 9,
+     "deviation": 6,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -10687,12 +11090,12 @@
      "rel.guanyu.warmth": 6,
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 9,
-     "rel.zhuge.trust": 10,
-     "rel.zhuge.esteem": 8,
+     "rel.zhuge.warmth": 3,
+     "rel.zhuge.trust": 8,
+     "rel.zhuge.esteem": 9,
      "rel.wenzhi.warmth": 7,
      "rel.wenzhi.trust": 7,
-     "rel.wenzhi.esteem": 3,
+     "rel.wenzhi.esteem": 5,
      "rel.wenzhi.intimacy": 10,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 8,
@@ -10779,16 +11182,16 @@
      "flag.v5_after_burn": false,
      "flag.v6_came_back": false,
      "flag.v6_hermit": false,
-     "flag.v6_dengzhi": false,
-     "flag.v6_to_wu": true,
-     "flag.v6_masu_praise": true,
+     "flag.v6_dengzhi": true,
+     "flag.v6_to_wu": false,
+     "flag.v6_masu_praise": false,
      "flag.v6_masu_doubt": false,
      "flag.v6_lushui": false,
      "flag.v6_cure": false,
      "flag.v6_water": false,
-     "flag.v6_mercy": true,
-     "flag.v6_fire_plan": false,
-     "flag.v6_officials": true,
+     "flag.v6_mercy": false,
+     "flag.v6_fire_plan": true,
+     "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "heat.liubei": 0,
@@ -10801,7 +11204,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
-     "flag.v6_said_killall": false
+     "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": true
     },
     "ended_early": false,
     "mem": {},
@@ -10824,9 +11228,9 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 2,
+     "renown.cunning": 3,
      "uncanny": 1,
-     "deviation": 11,
+     "deviation": 10,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -10894,13 +11298,13 @@
      "rel.guanyu.warmth": 6,
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 8,
+     "rel.zhuge.warmth": 4,
      "rel.zhuge.trust": 10,
      "rel.zhuge.esteem": 10,
      "rel.wenzhi.warmth": 7,
      "rel.wenzhi.trust": 6,
-     "rel.wenzhi.esteem": 3,
-     "rel.wenzhi.intimacy": 9,
+     "rel.wenzhi.esteem": 4,
+     "rel.wenzhi.intimacy": 10,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 7,
      "rel.zhaoyun.esteem": 2,
@@ -10991,10 +11395,10 @@
      "flag.v6_masu_praise": false,
      "flag.v6_masu_doubt": false,
      "flag.v6_lushui": true,
-     "flag.v6_cure": false,
+     "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": true,
-     "flag.v6_fire_plan": false,
+     "flag.v6_mercy": false,
+     "flag.v6_fire_plan": true,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
@@ -11008,7 +11412,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
-     "flag.v6_said_killall": false
+     "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": true
     },
     "ended_early": false,
     "mem": {},
@@ -11215,7 +11620,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
-     "flag.v6_said_killall": false
+     "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false
     },
     "ended_early": false,
     "mem": {},
@@ -11422,7 +11828,8 @@
      "heat.pangtong": 0,
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
-     "flag.v6_said_killall": false
+     "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false
     },
     "ended_early": false,
     "mem": {},
@@ -11630,6 +12037,7 @@
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
      "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false,
      "ended_early": true
     },
     "ended_early": true,

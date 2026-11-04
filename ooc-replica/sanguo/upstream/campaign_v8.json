@@ -1836,6 +1836,15 @@
    },
    "carry": false
   },
+  "flag.v6_wz_herb": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "温芷给了你一包草",
+    "en": "Wen Zhi gave you a bundle of herbs"
+   },
+   "carry": false
+  },
   "flag.v7_came_back": {
    "type": "flag",
    "init": false,
@@ -2145,6 +2154,26 @@
    "char": "jiangwei",
    "imp": "offended",
    "show": false
+  },
+  "grudge.weiyan": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "魏延·记仇",
+    "en": "Wei Yan · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
   },
   "flag.v8_came_back": {
    "type": "flag",
@@ -5308,6 +5337,22 @@
       "zh": "对面阵里，魏延看见了你。",
       "en": "From the far line, Wei Yan has seen you."
      }
+    },
+    {
+     "text": {
+      "zh": "姜维把丞相的信交给你：『这封信，只有你拿着走过去，两边才肯听。』",
+      "en": "Jiang Wei hands you the Chancellor's letter. 'Only if you carry it across will both sides listen.'"
+     },
+     "when": {
+      "v": "rel.jiangwei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "jiangwei",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6003,6 +6048,22 @@
       "zh": "姜维连夜来看你。他也快五十了，坐在你床边，问：『先生，该不该打？』",
       "en": "Jiang Wei comes to see you that night. He's nearly fifty himself. He sits by your bed and asks, 'Master, should we march?'"
      }
+    },
+    {
+     "text": {
+      "zh": "姜维把夏侯霸的降书先给你看了。",
+      "en": "Jiang Wei shows you Xiahou Ba's letter of surrender before anyone else."
+     },
+     "when": {
+      "v": "rel.jiangwei.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "jiangwei",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6885,6 +6946,22 @@
       "zh": "约好的日子到了，胡济没有来。邓艾的兵却到了，堵在段谷。姜维看着地图，脸色铁青。",
       "en": "The appointed day comes and Hu Ji doesn't. Deng Ai's troops do, blocking Duan Valley. Jiang Wei stares at the map, his face like iron."
      }
+    },
+    {
+     "text": {
+      "zh": "姜维把地图推到你面前：『你说，进不进？』",
+      "en": "Jiang Wei pushes the map across to you. 'You tell me—do we go in?'"
+     },
+     "when": {
+      "v": "rel.jiangwei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "jiangwei",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -6979,7 +7056,57 @@
      "values": [
       "yong"
      ],
-     "place": "hanzhong"
+     "place": "hanzhong",
+     "when": {
+      "v": "rel.jiangwei.warmth",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "with_r",
+     "type": "expression",
+     "label": {
+      "zh": "什么也不说，跟着他冲阵。",
+      "en": "Say nothing. Charge with him."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "冲阵之前，姜维把自己的护心镜扣在了你身上。",
+        "en": "Before the charge, Jiang Wei buckles his own breastplate mirror onto you."
+       }
+      },
+      {
+       "text": {
+        "zh": "你们杀出来的时候，身边的人少了一大半。姜维浑身是血，回头找你：『你还在。好。』",
+        "en": "When you cut your way out, more than half of those around you are gone. Jiang Wei, covered in blood, turns to look for you. 'You're still here. Good.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.jiangwei.warmth",
+       "by": 2
+      },
+      {
+       "add": "rel.jiangwei.trust",
+       "by": 1
+      }
+     ],
+     "values": [
+      "yong"
+     ],
+     "place": "hanzhong",
+     "when": {
+      "v": "rel.jiangwei.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为姜维和你相熟，把护心镜给了你",
+      "en": "Because Jiang Wei knows you well, he gives you his breastplate mirror"
+     }
     }
    ],
    "salience": 0,
@@ -7482,6 +7609,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "姜维出宫的时候，在台阶上等了你一会儿。",
+      "en": "Leaving the palace, Jiang Wei waits for you a while on the steps."
+     },
+     "when": {
+      "v": "rel.jiangwei.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "jiangwei",
+      "warmth",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7774,6 +7917,22 @@
       "op": "==",
       "val": true
      }
+    },
+    {
+     "text": {
+      "zh": "姜维把灯往你那边推了推：『你看得比我细。』",
+      "en": "Jiang Wei pushes the lamp toward you. 'You see more closely than I do.'"
+     },
+     "when": {
+      "v": "rel.jiangwei.esteem",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "jiangwei",
+      "esteem",
+      2
+     ]
     }
    ],
    "choices": [
@@ -7818,6 +7977,75 @@
       "cheng"
      ],
      "place": "chengdu",
+     "when": {
+      "v": "rel.jiangwei.trust",
+      "op": "<=",
+      "val": 3
+     },
+     "tags": [
+      "advice"
+     ]
+    },
+    {
+     "id": "memo_r",
+     "type": "strategy",
+     "label": {
+      "zh": "请姜维上表：派兵守阴平。你亲自把表送到成都。",
+      "en": "Ask Jiang Wei to memorialize for troops at Yinping. Carry the memorial to Chengdu yourself."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "姜维当场写了表，又在你的那份地图上盖了自己的印：『有我的印，宫里不敢压。』",
+        "en": "Jiang Wei writes the memorial on the spot and stamps your map with his own seal. 'With my seal on it, the palace won't dare bury it.'"
+       }
+      },
+      {
+       "text": {
+        "zh": "你赶到成都，把表递了上去。三天没有回音。后来你才知道，黄皓把表压了下来，说巫师算过了，魏兵不会来。",
+        "en": "You reach Chengdu and hand up the memorial. Three days, no answer. Only later do you learn that Huang Hao kept it back, saying a shaman had read the signs and Wei would not come."
+       }
+      },
+      {
+       "text": {
+        "zh": "黄皓收过你的礼。表递到了陛下手上，陛下派了五百个老兵去阴平——太少，太晚。",
+        "en": "Huang Hao once took your gift. The memorial reaches His Majesty, and he sends five hundred old soldiers to Yinping—too few, too late."
+       },
+       "when": {
+        "v": "flag.v8_hh_ally",
+        "op": "==",
+        "val": true
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v8_yp_memo",
+       "to": true
+      },
+      {
+       "add": "rel.jiangwei.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.jiangwei.trust",
+       "by": 1
+      }
+     ],
+     "values": [
+      "zhi",
+      "cheng"
+     ],
+     "place": "chengdu",
+     "when": {
+      "v": "rel.jiangwei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为姜维信你，把自己的印给了你",
+      "en": "Because Jiang Wei trusts you, he puts his seal on it"
+     },
      "tags": [
       "advice"
      ]
@@ -8728,6 +8956,22 @@
       "zh": "你在城里。宫里的喊杀声，隔着三条街都听得见。",
       "en": "You're in the city. You can hear the killing in the palace three streets away."
      }
+    },
+    {
+     "text": {
+      "zh": "姜维的计划，只告诉了你一个人。",
+      "en": "Jiang Wei has told his plan to no one but you."
+     },
+     "when": {
+      "v": "rel.jiangwei.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "rel": [
+      "jiangwei",
+      "trust",
+      2
+     ]
     }
    ],
    "choices": [
@@ -10148,6 +10392,15 @@
  ],
  "situations": [
   {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
+  {
    "id": "sidelined",
    "kind": "sidelined",
    "flag": "flag.sidelined",
@@ -11244,9 +11497,9 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 1,
+     "renown.cunning": 4,
      "uncanny": 1,
-     "deviation": 9,
+     "deviation": 6,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -11314,12 +11567,12 @@
      "rel.guanyu.warmth": 5,
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 10,
-     "rel.zhuge.trust": 9,
+     "rel.zhuge.warmth": 9,
+     "rel.zhuge.trust": 8,
      "rel.zhuge.esteem": 9,
      "rel.wenzhi.warmth": 7,
      "rel.wenzhi.trust": 6,
-     "rel.wenzhi.esteem": 3,
+     "rel.wenzhi.esteem": 5,
      "rel.wenzhi.intimacy": 10,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 7,
@@ -11406,19 +11659,20 @@
      "flag.v5_after_burn": false,
      "flag.v6_came_back": false,
      "flag.v6_hermit": false,
-     "flag.v6_dengzhi": false,
-     "flag.v6_to_wu": true,
-     "flag.v6_masu_praise": true,
+     "flag.v6_dengzhi": true,
+     "flag.v6_to_wu": false,
+     "flag.v6_masu_praise": false,
      "flag.v6_masu_doubt": false,
      "flag.v6_lushui": false,
      "flag.v6_cure": false,
      "flag.v6_water": false,
-     "flag.v6_mercy": true,
-     "flag.v6_fire_plan": false,
-     "flag.v6_officials": true,
+     "flag.v6_mercy": false,
+     "flag.v6_fire_plan": true,
+     "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": false,
@@ -11464,7 +11718,9 @@
      "heat.simayi": 0,
      "heat.weiyan": 0,
      "imp.weiyan.offended": 1,
-     "imp.jiangwei.offended": 0
+     "imp.jiangwei.offended": 0,
+     "grudge.weiyan": 0,
+     "flag.fate_dead": false
     },
     "ended_early": false,
     "mem": {},
@@ -11487,9 +11743,9 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 2,
+     "renown.cunning": 3,
      "uncanny": 1,
-     "deviation": 13,
+     "deviation": 12,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -11562,7 +11818,7 @@
      "rel.zhuge.esteem": 9,
      "rel.wenzhi.warmth": 6,
      "rel.wenzhi.trust": 5,
-     "rel.wenzhi.esteem": 3,
+     "rel.wenzhi.esteem": 4,
      "rel.wenzhi.intimacy": 9,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 7,
@@ -11654,14 +11910,15 @@
      "flag.v6_masu_praise": false,
      "flag.v6_masu_doubt": false,
      "flag.v6_lushui": true,
-     "flag.v6_cure": false,
+     "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": true,
-     "flag.v6_fire_plan": false,
+     "flag.v6_mercy": false,
+     "flag.v6_fire_plan": true,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
@@ -11707,7 +11964,9 @@
      "heat.simayi": 0,
      "heat.weiyan": 0,
      "imp.weiyan.offended": 0,
-     "imp.jiangwei.offended": 0
+     "imp.jiangwei.offended": 0,
+     "grudge.weiyan": 0,
+     "flag.fate_dead": false
     },
     "ended_early": false,
     "mem": {},
@@ -11730,9 +11989,9 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 2,
+     "renown.cunning": 3,
      "uncanny": 1,
-     "deviation": 12,
+     "deviation": 11,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -11805,7 +12064,7 @@
      "rel.zhuge.esteem": 10,
      "rel.wenzhi.warmth": 6,
      "rel.wenzhi.trust": 6,
-     "rel.wenzhi.esteem": 3,
+     "rel.wenzhi.esteem": 4,
      "rel.wenzhi.intimacy": 7,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 7,
@@ -11897,14 +12156,15 @@
      "flag.v6_masu_praise": false,
      "flag.v6_masu_doubt": false,
      "flag.v6_lushui": true,
-     "flag.v6_cure": false,
+     "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": true,
-     "flag.v6_fire_plan": false,
+     "flag.v6_mercy": false,
+     "flag.v6_fire_plan": true,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
@@ -11916,7 +12176,7 @@
      "flag.v7_jt_warned": false,
      "flag.v7_jt_road": false,
      "flag.v7_jt_wangping": true,
-     "flag.v7_wall": false,
+     "flag.v7_wall": true,
      "flag.masu_alive": false,
      "flag.v7_old_farewell": true,
      "flag.v7_feud": false,
@@ -11932,7 +12192,7 @@
      "rel.jiangwei.esteem": 3,
      "rel.simayi.warmth": 0,
      "rel.simayi.trust": 0,
-     "rel.simayi.esteem": 3,
+     "rel.simayi.esteem": 5,
      "rel.weiyan.warmth": 1,
      "rel.weiyan.trust": 0,
      "rel.weiyan.esteem": 3,
@@ -11950,7 +12210,9 @@
      "heat.simayi": 0,
      "heat.weiyan": 0,
      "imp.weiyan.offended": 1,
-     "imp.jiangwei.offended": 0
+     "imp.jiangwei.offended": 0,
+     "grudge.weiyan": 0,
+     "flag.fate_dead": false
     },
     "ended_early": false,
     "mem": {},
@@ -11973,9 +12235,9 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 2,
+     "renown.cunning": 3,
      "uncanny": 1,
-     "deviation": 11,
+     "deviation": 10,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -12043,12 +12305,12 @@
      "rel.guanyu.warmth": 5,
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 8,
+     "rel.zhuge.warmth": 6,
      "rel.zhuge.trust": 9,
      "rel.zhuge.esteem": 10,
      "rel.wenzhi.warmth": 6,
      "rel.wenzhi.trust": 5,
-     "rel.wenzhi.esteem": 3,
+     "rel.wenzhi.esteem": 4,
      "rel.wenzhi.intimacy": 9,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 7,
@@ -12140,14 +12402,15 @@
      "flag.v6_masu_praise": false,
      "flag.v6_masu_doubt": false,
      "flag.v6_lushui": true,
-     "flag.v6_cure": false,
+     "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": true,
-     "flag.v6_fire_plan": false,
+     "flag.v6_mercy": false,
+     "flag.v6_fire_plan": true,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
@@ -12193,7 +12456,9 @@
      "heat.simayi": 0,
      "heat.weiyan": 0,
      "imp.weiyan.offended": 1,
-     "imp.jiangwei.offended": 0
+     "imp.jiangwei.offended": 0,
+     "grudge.weiyan": 0,
+     "flag.fate_dead": false
     },
     "ended_early": false,
     "mem": {},
@@ -12391,6 +12656,7 @@
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false,
      "flag.v7_came_back": false,
      "flag.v7_hermit": true,
      "flag.v7_biao": false,
@@ -12437,6 +12703,8 @@
      "heat.weiyan": 0,
      "imp.weiyan.offended": 0,
      "imp.jiangwei.offended": 0,
+     "grudge.weiyan": 0,
+     "flag.fate_dead": false,
      "ended_early": true
     },
     "ended_early": true,

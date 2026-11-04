@@ -658,6 +658,9 @@ COMMIT_RULES = speech.commit_rules()
 PORTRAIT_PROMPTS = dict(V6["portrait_prompts"]); PORTRAIT_PROMPTS.update(P7.PORTRAIT_PROMPTS)
 PRESETS = json.loads((HERE / "presets.json").read_text()) if (HERE / "presets.json").exists() else []
 
+import relations_late
+relations_late.v7(N, VARS, ENDINGS)
+
 CAMPAIGN = {
     "spec": SPEC, "tiers": TIERS(), "pack": PACK("history-strategy"),
     "resources": {"reputation": ["renown.loyal", "renown.cunning"], "risk": ["uncanny", "renown.rash"], "drift": ["deviation"]},

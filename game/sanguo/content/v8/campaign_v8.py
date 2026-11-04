@@ -815,6 +815,9 @@ for vol in LIFE["vols"]:
 COMMIT_RULES = speech.commit_rules()
 PRESETS = json.loads((HERE / "presets.json").read_text()) if (HERE / "presets.json").exists() else []
 
+import relations_late
+relations_late.v8(N, VARS)
+
 CAMPAIGN = {
     "spec": SPEC, "tiers": TIERS(), "pack": PACK("history-strategy"),
     "resources": {"reputation": ["renown.loyal", "renown.cunning"], "risk": ["uncanny", "renown.rash"], "drift": ["deviation"]},
