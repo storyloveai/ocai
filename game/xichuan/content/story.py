@@ -209,30 +209,30 @@ X_RUMOR = scene("x_rumor", "*", "interrupt", T("流言", "Rumors"), [
     choice("ok", "expression", T("“……知道了。”", "\"…Got it.\""), [nar("这几天，路上遇见的人好像都在看我。", "For days after, everyone I pass seems to be looking at me.")], [add("rumor", -2)]),
 ], order=-1, when=V("rumor", ">=", 2))
 
-import common
+import common, zhiyao
 
 CHAPTERS = [
     {"id": "p", "title": T("序章", "Prologue"), "intro": [P(T("三月，汐川。", "March, Xichuan."))], "offer": 0},
     {"id": "c1", "title": T("第一章 · 电影社", "Chapter 1 · The Film Club"), "intro": [P(T("开学第一周。", "The first week of term."))], "offer": 3,
      "main_first": True, "side_prompt": AFTER},
 ]
-CHAPTERS += common.CHAPTERS
-NODES = [PROLOGUE, C1_FAIR, S_ZHIYAO, S_SHENCHENG, S_JIBAI, X_RUMOR] + common.NODES
-for f, zh, en in common.FLAGS: VARS[f] = {"type": "flag", "init": False, "label": T(zh, en)}
+CHAPTERS += common.CHAPTERS + zhiyao.CHAPTERS
+NODES = [PROLOGUE, C1_FAIR, S_ZHIYAO, S_SHENCHENG, S_JIBAI, X_RUMOR] + common.NODES + zhiyao.NODES
+for f, zh, en in common.FLAGS + zhiyao.FLAGS: VARS[f] = {"type": "flag", "init": False, "label": T(zh, en)}
 
 ENDINGS = [
-    {"id": "g_tbc", "title": T("共通线 · 完", "Common Route · End"), "fragments": [
-        {"id": "zhiyao", "text": T("明天的最后一场，你会站在她身边，陪她把那句开场白念完。——夏知遥线，敬请期待。", "At tomorrow's last show you'll stand beside her and help her get through that opening line. —Xia Zhiyao's route, coming soon."), "when": F("flag.route_zhiyao")},
-        {"id": "shencheng", "text": T("七年前的那个约，明天就要兑现了。——沈澄线，即将开放。", "The promise from seven years ago will be kept tomorrow. —Shen Cheng's route, coming soon."), "when": F("flag.route_shencheng")},
-        {"id": "jibai", "text": T("放映机转起来了。第七卷的第一格，是一片海。——季白线，即将开放。", "The projector starts to turn. The first frame of reel seven is the sea. —Ji Bai's route, coming soon."), "when": F("flag.route_jibai")},
-        {"id": "none", "text": T("最后一场放映，你坐在最后一排。散场的时候，银幕上的光一点一点暗下去。春天就这样过去了。（普通结局）", "At the last show you sit in the back row. As the crowd leaves, the light on the screen fades bit by bit. And so the spring passes. (Normal ending)"), "when": F("flag.route_none")}]},
-    {"id": "g_heart", "title": T("这个春天", "This spring"), "fragments": [
+    {"id": "g_end", "title": T("尾声", "Epilogue"), "fragments": [{"id": e["id"], "title": e["title"], "text": e["text"], "when": e["when"]} for e in zhiyao.ENDINGS] + [
+        {"id": "shencheng", "title": T("沈澄线 · 即将开放", "Shen Cheng's route · coming soon"), "text": T("七年前的那个约，明天就要兑现了。", "The promise from seven years ago will be kept tomorrow."), "when": F("flag.route_shencheng")},
+        {"id": "jibai", "title": T("季白线 · 即将开放", "Ji Bai's route · coming soon"), "text": T("放映机转起来了。第七卷的第一格，是一片海。", "The projector starts to turn. The first frame of reel seven is the sea."), "when": F("flag.route_jibai")},
+        {"id": "none", "title": T("普通结局「最后一排」", "Normal Ending: The Back Row"), "text": T("最后一场放映，你坐在最后一排。散场的时候，银幕上的光一点一点暗下去。春天就这样过去了。", "At the last show you sit in the back row. As the crowd leaves, the light on the screen fades bit by bit. And so the spring passes."), "when": F("flag.route_none")}]},
+    {"id": "g_heart", "title": T("这个春天", "This spring"), "fragments": [  # 走完一条个人线的人不再显示这一组
         {"id": "zhiyao", "text": T("夏知遥在社团群里，第一次叫了你的名字。", "In the club chat, Xia Zhiyao calls you by name for the first time."), "when": WARM_("zhiyao")},
         {"id": "shencheng", "text": T("沈澄的咖啡馆，那几天打烊总比平时晚一个小时。", "Those nights, Shen Cheng's café always closes an hour late."), "when": WARM_("shencheng")},
         {"id": "jibai", "text": T("放映室的灯，那几周每晚都亮到很晚。", "For those weeks, the light in the booth burns late every night."), "when": WARM_("jibai")},
         {"id": "none", "text": T("这个春天过得很快。你还说不清，自己最想见的是谁。", "The spring goes by fast. You still can't say who you most want to see."),
          "when": ALL(UPTO("zhiyao", "intimacy", 0), UPTO("shencheng", "intimacy", 0), UPTO("jibai", "intimacy", 0))}]},
 ]
+for f in ENDINGS[1]["fragments"]: f["when"] = ALL(NF("flag.route_zhiyao"), f["when"])
 
 # 播放页用的美术清单：背景和 CG 的名字（占位图和 CG 鉴赏用），立绘按 人/表情 取图
 ART = {
@@ -243,12 +243,12 @@ ART = {
   "faces": {"normal": T("平常", "neutral"), "smile": T("笑", "smile"), "shy": T("害羞", "shy"), "angry": T("生气", "angry"), "sad": T("难过", "sad"), "surprised": T("吃惊", "surprised")},
 }
 
-ART["bg"].update(common.BG); ART["cg"].update(common.CG)
+ART["bg"].update(common.BG); ART["bg"].update(zhiyao.BG); ART["cg"].update(common.CG); ART["cg"].update(zhiyao.CG)
 
 CAMPAIGN = {
     "spec": SPEC, "tiers": TIERS(), "pack": PACK("school-romance"),
     "resources": {"risk": ["rumor"]},
-    "id": "xichuan_v1", "title": T("汐川的第七个春天", "The Seventh Spring of Xichuan"), "volume": T("共通线", "Common Route"),
+    "id": "xichuan_v1", "title": T("汐川的第七个春天", "The Seventh Spring of Xichuan"), "volume": T("共通线 + 夏知遥线", "Common Route + Xia Zhiyao"),
     "rights": {"source": "原创", "original_characters": ["陆远（玩家）", "夏知遥", "沈澄", "季白", "老周", "程航"]},
     "player": {"name": PLAYER}, "format": "vn",
     "vars": VARS, "chars": CHARS, "dims": {}, "echoes": {}, "debts": {},
