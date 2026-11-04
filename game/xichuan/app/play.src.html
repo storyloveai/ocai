@@ -150,6 +150,7 @@ function step() {
   if (typing) { finishTyping(); return; }
   while (V.i < V.queue.length) {
     const op = V.queue[V.i++];
+    if (op.when && !CC.evalCond(G, op.when)) continue;
     if (op.op === "bg") { V.bg = op.id; V.cg = null; V.sprites = {}; draw(); continue; }
     if (op.op === "show") { V.sprites[op.who] = { face: op.face, at: op.at || (V.sprites[op.who] || {}).at || "center" }; drawSprites(); continue; }
     if (op.op === "hide") { if (op.who) delete V.sprites[op.who]; else V.sprites = {}; drawSprites(); continue; }

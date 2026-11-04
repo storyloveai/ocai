@@ -40,13 +40,22 @@ def say(who, zh, en, face=None):
 def nar(zh, en): return {"op": "say", "who": None, "t": T(zh, en)}
 def me(zh, en): return {"op": "say", "who": "me", "t": T(zh, en)}
 def think(zh, en): return {"op": "say", "who": "me", "think": True, "t": T(zh, en)}
+def iff(cond, *ops):
+    """lines that play only when `cond` holds at that moment (something you did earlier, a relationship tier)"""
+    return [{**o, "when": cond} for o in ops]
+
+def flat(script):
+    out = []
+    for x in script: out.extend(flat(x) if isinstance(x, list) else [x])
+    return out
 
 def lines(script):
     """first spoken line of a script, for the engine's own short `out`/`intro` text"""
-    s = next((x for x in script if x["op"] == "say"), None)
+    s = next((x for x in script if x["op"] == "say" and not x.get("when")), None)
     return [P(s["t"])] if s else [P(T("……", "…"))]
 
 def choice(id, type, label, script, effects=(), values=(), when=None, req=None, hint=None, ends=False):
+    script = flat(script)
     d = {"id": id, "type": type, "label": label, "out": lines(script), "effects": list(effects), "script": script}
     if values: d["values"] = list(values)
     if when: d["when"] = when
@@ -56,6 +65,7 @@ def choice(id, type, label, script, effects=(), values=(), when=None, req=None, 
     return d
 
 def scene(id, chapter, kind, title, script, choices, order=0, when=None, salience=0, cast=()):
+    script = flat(script)
     d = {"id": id, "chapter": chapter, "kind": kind, "title": title, "lock": "free", "canon": T("原创", "original"),
          "intro": lines(script), "choices": choices, "salience": salience, "order": order, "script": script}
     if when: d["when"] = when
