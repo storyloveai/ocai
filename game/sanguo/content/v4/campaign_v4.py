@@ -806,6 +806,9 @@ ART_PROMPTS = dict(V3["art_prompts"])
 PORTRAIT_PROMPTS = dict(V3["portrait_prompts"])
 PRESETS = json.loads((HERE / "presets.json").read_text()) if (HERE / "presets.json").exists() else []
 
+import relations_v4
+relations_v4.extend(N, VARS)
+
 CAMPAIGN = {
     "spec": SPEC,
     "tiers": TIERS(),
