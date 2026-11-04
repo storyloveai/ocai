@@ -1,0 +1,273 @@
+{
+  "issue": 115,
+  "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+  "adopted": false,
+  "groups": [
+    {
+      "id": "scene-v2_jinnang",
+      "name": "v2_jinnang",
+      "title": {
+        "zh": "锦囊 · 诸葛亮",
+        "en": "A pouch from Zhuge Liang"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "./scene-v2_jinnang-a.webp",
+          "full": "./scene-v2_jinnang-a.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v2_jinnang-1.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "桌前交付锦囊，窗外夜山。",
+            "en": "The pouch changes hands across a study table."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "./scene-v2_jinnang-b.webp",
+          "full": "./scene-v2_jinnang-b.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v2_jinnang-2.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "侧向交付机位，灯火靠近窗边。",
+            "en": "A side angle frames the pouch and lamplit window."
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-v3_token",
+      "name": "v3_token",
+      "title": {
+        "zh": "腰牌 · 关羽与周仓",
+        "en": "A token from Guan Yu’s attendant"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "./scene-v3_token-a.webp",
+          "full": "./scene-v3_token-a.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v3_token-1.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "关羽在后读书，周仓在前递无字铜牌。",
+            "en": "Guan Yu reads behind the foreground token handover."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "./scene-v3_token-b.webp",
+          "full": "./scene-v3_token-b.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v3_token-2.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "近景强调腰牌与接牌的手。",
+            "en": "A closer view emphasizes the unlettered token and hands."
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-v4_wz_map",
+      "name": "v4_wz_map",
+      "title": {
+        "zh": "山路图 · 温芷",
+        "en": "Wen Zhi’s mountain map"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "./scene-v4_wz_map-a.webp",
+          "full": "./scene-v4_wz_map-a.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v4_wz_map-1.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "山路图展开，药袋与干草在旁。",
+            "en": "An unfolded route map, medicine pouch and herbs."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "./scene-v4_wz_map-b.webp",
+          "full": "./scene-v4_wz_map-b.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v4_wz_map-2.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "机位更近，手收回到图纸右侧。",
+            "en": "A closer still life with a withdrawing sleeve and hand."
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-v5_zy_pact",
+      "name": "v5_zy_pact",
+      "title": {
+        "zh": "出征前的约定 · 赵云",
+        "en": "A quiet pact with Zhao Yun"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "./scene-v5_zy_pact-a.webp",
+          "full": "./scene-v5_zy_pact-a.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v5_zy_pact-1.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "双手靠膝，夜营里低声商议。",
+            "en": "A restrained discussion beside the night camp."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "./scene-v5_zy_pact-b.webp",
+          "full": "./scene-v5_zy_pact-b.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v5_zy_pact-2.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "赵云抬手解释，白马和长枪在后。",
+            "en": "Zhao Yun gestures quietly with horse and spear behind."
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-v6_wz_herb",
+      "name": "v6_wz_herb",
+      "title": {
+        "zh": "一包草药 · 温芷",
+        "en": "A bundle of herbs from Wen Zhi"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "./scene-v6_wz_herb-a.webp",
+          "full": "./scene-v6_wz_herb-a.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v6_wz_herb-1.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "药包系紧，神情严肃担忧。",
+            "en": "A tied herb pouch and a stern, worried expression."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "./scene-v6_wz_herb-b.webp",
+          "full": "./scene-v6_wz_herb-b.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v6_wz_herb-2.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "药包露出干叶，背景已移除多余士兵。",
+            "en": "Visible dried leaves; unrequested background guards removed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-v7_zg_ling",
+      "name": "v7_zg_ling",
+      "title": {
+        "zh": "令箭 · 诸葛亮",
+        "en": "Zhuge Liang’s command arrow"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "./scene-v7_zg_ling-a.webp",
+          "full": "./scene-v7_zg_ling-a.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v7_zg_ling-1.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "红缨令箭横递，病容与灰白鬓发可见。",
+            "en": "A red-tasselled command arrow, aged features and grey hair."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "./scene-v7_zg_ling-b.webp",
+          "full": "./scene-v7_zg_ling-b.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v7_zg_ling-2.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "头发灰白更明显，交接动作在桌前。",
+            "en": "More visible greying hair frames the quiet handover."
+          }
+        }
+      ]
+    },
+    {
+      "id": "scene-v8_jw_book",
+      "name": "v8_jw_book",
+      "title": {
+        "zh": "兵书 · 姜维",
+        "en": "Jiang Wei’s inherited strategy book"
+      },
+      "variants": [
+        {
+          "candidate": "A",
+          "image": "./scene-v8_jw_book-a.webp",
+          "full": "./scene-v8_jw_book-a.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v8_jw_book-1.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "银甲白缨深蓝披风，兵书只有无字山路图。",
+            "en": "Silver armour, white plume, blue cloak and an unlettered book."
+          }
+        },
+        {
+          "candidate": "B",
+          "image": "./scene-v8_jw_book-b.webp",
+          "full": "./scene-v8_jw_book-b.webp",
+          "original": "https://github.com/storyloveai/ocai/blob/codex/sanguo-relations-art/game/sanguo/art/candidates/relations-batch9/scene-v8_jw_book-2.png",
+          "dimensions": [
+            1983,
+            793
+          ],
+          "note": {
+            "zh": "更近的交书动作，接班人只露背影。",
+            "en": "A closer handover with only the successor’s back visible."
+          }
+        }
+      ]
+    }
+  ]
+}

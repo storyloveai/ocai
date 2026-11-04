@@ -1,0 +1,59 @@
+{
+  "scope": "Local static review pages; real generated image files; no gameplay or model API calls",
+  "results": [
+    {
+      "device": "desktop",
+      "lang": "zh",
+      "relationImagesDecoded": 14,
+      "fateImagesDecoded": 8,
+      "selectionPersistenceAndExport": "pass",
+      "sourceLinks": "pass",
+      "fullImageModalAndEscape": "pass",
+      "languageSwitch": "pass",
+      "reviewStorageIsolated": true,
+      "gameStorageUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "desktop",
+      "lang": "en",
+      "relationImagesDecoded": 14,
+      "fateImagesDecoded": 8,
+      "selectionPersistenceAndExport": "pass",
+      "sourceLinks": "pass",
+      "fullImageModalAndEscape": "pass",
+      "languageSwitch": "pass",
+      "reviewStorageIsolated": true,
+      "gameStorageUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "mobile",
+      "lang": "zh",
+      "relationImagesDecoded": 14,
+      "fateImagesDecoded": 8,
+      "selectionPersistenceAndExport": "pass",
+      "sourceLinks": "pass",
+      "fullImageModalAndEscape": "pass",
+      "languageSwitch": "pass",
+      "reviewStorageIsolated": true,
+      "gameStorageUnchanged": true,
+      "noOverflow": true
+    },
+    {
+      "device": "mobile",
+      "lang": "en",
+      "relationImagesDecoded": 14,
+      "fateImagesDecoded": 8,
+      "selectionPersistenceAndExport": "pass",
+      "sourceLinks": "pass",
+      "fullImageModalAndEscape": "pass",
+      "languageSwitch": "pass",
+      "reviewStorageIsolated": true,
+      "gameStorageUnchanged": true,
+      "noOverflow": true
+    }
+  ],
+  "errors": [],
+  "apiRequests": []
+}

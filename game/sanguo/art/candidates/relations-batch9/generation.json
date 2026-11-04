@@ -1,0 +1,1065 @@
+{
+  "issue": 115,
+  "date": "2026-11-04",
+  "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+  "sourceJobs": "game/sanguo/art/edition-jobs-relations.jsonl",
+  "inputSha256": "7a1c2528d1e3272a1c8d45fc5bcba71fa2edcbe0bb8200f3549a2e3821b801f2",
+  "tool": "image_gen.imagegen (built-in ChatGPT generation)",
+  "model": "not exposed by tool",
+  "seed": "not exposed by tool",
+  "externalPaidImageAPIUsed": false,
+  "adopted": false,
+  "activeCandidateCount": 14,
+  "supersededCount": 1,
+  "notes": [
+    "Original prompt/negative_prompt unchanged in each submitted prompt. Delivery/acceptance instructions separately appended.",
+    "Every listed portrait supplied, plus adopted scenes/v7_last.webp used only as style reference.",
+    "Main-only candidate delivery. No story, engine, author manifests, official artwork or generated game pages changed. No build.py or game:sync run.",
+    "Three composition/prompt text contradictions reported in #115; generated without writing as required by prompt/accept/user.",
+    "One Wen Zhi candidate revised to remove unrequested background guards; initial image archived.",
+    "Source size requested 1536x1024; actual native output dimensions recorded honestly, images not resized. Formal 1200x480 adoption reserved for Claude."
+  ],
+  "records": [
+    {
+      "id": "scene-v2_jinnang",
+      "variant": "a",
+      "prompt": "Night, lamplight in a simple study: Zhuge Liang (matching his adopted portrait: feather fan, crane-feather cloak, scholar's cap) places a small, tightly stitched silk pouch into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone landscape scene, not a grid. First reference is the canonical character portrait; preserve that person's facial identity, hairstyle and clothing. Final reference is ONLY the adopted illustration style, cinematic light, fine linework and painted material texture, not its characters or event. Respect this job's required people and ages. Han Chinese robes, not kimono. The player's face must be completely hidden. Put all heads, hands, exchanged objects and meaningful actions comfortably within the middle horizontal band for a later 1200x480 crop. No writing at all, including books, tokens, maps and background papers. Any map marks are only roads, never letters. Candidate A.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v2_jinnang-1.png",
+      "sourceSha256": "9a2a8e72ef965622d7b61c37a816775eddb44b8fdcb2ea470bfe73f23fa4e9bc",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2576093,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v2_jinnang",
+        "kind": "scene",
+        "name": "v2_jinnang",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_jinnang",
+        "vol": 2,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "夜里灯下，诸葛亮把一个缝得严严实实的锦囊放进子衡手里",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Night, lamplight in a simple study: Zhuge Liang (matching his adopted portrait: feather fan, crane-feather cloak, scholar's cap) places a small, tightly stitched silk pouch into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v2_jinnang-a.webp",
+      "previewSha256": "3dcc2730eadf35a4868cf059fe166cb359263324bd94d0d6a2b1c755a1b8404d"
+    },
+    {
+      "id": "scene-v2_jinnang",
+      "variant": "b",
+      "prompt": "Night, lamplight in a simple study: Zhuge Liang (matching his adopted portrait: feather fan, crane-feather cloak, scholar's cap) places a small, tightly stitched silk pouch into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone landscape scene, not a grid. First reference is the canonical character portrait; preserve that person's facial identity, hairstyle and clothing. Final reference is ONLY the adopted illustration style, cinematic light, fine linework and painted material texture, not its characters or event. Respect this job's required people and ages. Han Chinese robes, not kimono. The player's face must be completely hidden. Put all heads, hands, exchanged objects and meaningful actions comfortably within the middle horizontal band for a later 1200x480 crop. No writing at all, including books, tokens, maps and background papers. Any map marks are only roads, never letters. Candidate B.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v2_jinnang-2.png",
+      "sourceSha256": "342f3e2212e49b22291dc36a1eb84548f32cfe335a84289ef3116533a83d9ccb",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2615338,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v2_jinnang",
+        "kind": "scene",
+        "name": "v2_jinnang",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_jinnang",
+        "vol": 2,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "夜里灯下，诸葛亮把一个缝得严严实实的锦囊放进子衡手里",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Night, lamplight in a simple study: Zhuge Liang (matching his adopted portrait: feather fan, crane-feather cloak, scholar's cap) places a small, tightly stitched silk pouch into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v2_jinnang-b.webp",
+      "previewSha256": "fd80535f0aa32c9c372d52b71918be43375a87954cfc30fa2e4edba8a73d772f"
+    },
+    {
+      "id": "scene-v3_token",
+      "variant": "a",
+      "prompt": "Lamplit hall: Guan Yu (matching his adopted portrait: red face, long beard, green robe) reads the Spring and Autumn Annals in the background; in the foreground a stocky bearded attendant hands a small bronze token to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). No legible characters on the token. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone landscape scene, not a grid. First reference is the canonical character portrait; preserve that person's facial identity, hairstyle and clothing. Final reference is ONLY the adopted illustration style, cinematic light, fine linework and painted material texture, not its characters or event. Respect this job's required people and ages. Han Chinese robes, not kimono. The player's face must be completely hidden. Put all heads, hands, exchanged objects and meaningful actions comfortably within the middle horizontal band for a later 1200x480 crop. No writing at all, including books, tokens, maps and background papers. Any map marks are only roads, never letters. Candidate A.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v3_token-1.png",
+      "sourceSha256": "e9510af0441c47f5cc5283e6b5f179b31af8e70983ffc5884cd5f2706845940a",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2725795,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v3_token",
+        "kind": "scene",
+        "name": "v3_token",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_token",
+        "vol": 3,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/guanyu.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "灯下读《春秋》的关羽；周仓把一块刻着“关”字的铜腰牌递给子衡",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Lamplit hall: Guan Yu (matching his adopted portrait: red face, long beard, green robe) reads the Spring and Autumn Annals in the background; in the foreground a stocky bearded attendant hands a small bronze token to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). No legible characters on the token. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/guanyu.webp",
+          "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v3_token-a.webp",
+      "previewSha256": "22db001728529598de986efd2c056160300e07942607367ddc0d58ad611faf3f"
+    },
+    {
+      "id": "scene-v4_wz_map",
+      "variant": "a",
+      "prompt": "Close still life by lamplight: a small hand-drawn map on rough paper, unfolded, showing mountain paths as ink lines (no legible writing), a medicine pouch and dried herbs beside it, a woman's slender hand (Wen Zhi, matching her adopted portrait's sleeve colour) withdrawing from the edge of the frame. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical character portrait; preserve facial identity, hairstyle and clothing, or sleeve colour for the still life. Last reference is ONLY the adopted illustration style, fine linework and painted material texture, not its people, event or sunset. Use this job's lamplight. Respect the exact required people; for the map scene show ONLY the adult woman's withdrawing hand and matching pale blue sleeve, no faces or extra people. Han Chinese robes, not kimono. The player's face must be completely hidden. Keep all meaningful actions, faces, hands and objects in the central horizontal band for a later 1200x480 crop. Absolutely no writing, pseudo-writing or text-like marks anywhere: map has only a simple connected mountain-road diagram without labels; token has decorative abstract relief but no letters; no annotations or writing on books or paper. Candidate A.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v4_wz_map-1.png",
+      "sourceSha256": "b9f4555a0572afb365fd62e472df50401266f202c0181a388619215fa4015424",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2817664,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v4_wz_map",
+        "kind": "scene",
+        "name": "v4_wz_map",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_wzmap",
+        "vol": 4,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/wenzhi.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "一张折得很小的手绘山路图，摊在灯下；温芷的字迹在角上",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Close still life by lamplight: a small hand-drawn map on rough paper, unfolded, showing mountain paths as ink lines (no legible writing), a medicine pouch and dried herbs beside it, a woman's slender hand (Wen Zhi, matching her adopted portrait's sleeve colour) withdrawing from the edge of the frame. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/wenzhi.webp",
+          "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v4_wz_map-a.webp",
+      "previewSha256": "1f1ccb5f7676b91cd2021a5926fe15681ecf10cd6f3f7ca0d3dfaa669128b23f"
+    },
+    {
+      "id": "scene-v3_token",
+      "variant": "b",
+      "prompt": "Lamplit hall: Guan Yu (matching his adopted portrait: red face, long beard, green robe) reads the Spring and Autumn Annals in the background; in the foreground a stocky bearded attendant hands a small bronze token to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). No legible characters on the token. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical character portrait; preserve facial identity, hairstyle and clothing, or sleeve colour for the still life. Last reference is ONLY the adopted illustration style, fine linework and painted material texture, not its people, event or sunset. Use this job's lamplight. Respect the exact required people; for the map scene show ONLY the adult woman's withdrawing hand and matching pale blue sleeve, no faces or extra people. Han Chinese robes, not kimono. The player's face must be completely hidden. Keep all meaningful actions, faces, hands and objects in the central horizontal band for a later 1200x480 crop. Absolutely no writing, pseudo-writing or text-like marks anywhere: map has only a simple connected mountain-road diagram without labels; token has decorative abstract relief but no letters; no annotations or writing on books or paper. Candidate B.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v3_token-2.png",
+      "sourceSha256": "48cbca0dbb0228d5b8b0b05f748801d7a4fff0ce4cc92d6a029309214fe916da",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2663165,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v3_token",
+        "kind": "scene",
+        "name": "v3_token",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_token",
+        "vol": 3,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/guanyu.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "灯下读《春秋》的关羽；周仓把一块刻着“关”字的铜腰牌递给子衡",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Lamplit hall: Guan Yu (matching his adopted portrait: red face, long beard, green robe) reads the Spring and Autumn Annals in the background; in the foreground a stocky bearded attendant hands a small bronze token to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible). No legible characters on the token. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/guanyu.webp",
+          "sha256": "fb43cef8fda564ebf99ff0c16b3ae4df8209554561fb146fe483b187c7207991",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v3_token-b.webp",
+      "previewSha256": "90b4bafae5662f021aec567dc96023e5d53d3c13e408a9f7276cf3e1cf759814"
+    },
+    {
+      "id": "scene-v4_wz_map",
+      "variant": "b",
+      "prompt": "Close still life by lamplight: a small hand-drawn map on rough paper, unfolded, showing mountain paths as ink lines (no legible writing), a medicine pouch and dried herbs beside it, a woman's slender hand (Wen Zhi, matching her adopted portrait's sleeve colour) withdrawing from the edge of the frame. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical character portrait; preserve facial identity, hairstyle and clothing, or sleeve colour for the still life. Last reference is ONLY the adopted illustration style, fine linework and painted material texture, not its people, event or sunset. Use this job's lamplight. Respect the exact required people; for the map scene show ONLY the adult woman's withdrawing hand and matching pale blue sleeve, no faces or extra people. Han Chinese robes, not kimono. The player's face must be completely hidden. Keep all meaningful actions, faces, hands and objects in the central horizontal band for a later 1200x480 crop. Absolutely no writing, pseudo-writing or text-like marks anywhere: map has only a simple connected mountain-road diagram without labels; token has decorative abstract relief but no letters; no annotations or writing on books or paper. Candidate B.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v4_wz_map-2.png",
+      "sourceSha256": "d5bd58e1d61e2f4a427318c41ac9c2c007c604a3f1e51d6df71121e7166b1af8",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2778973,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v4_wz_map",
+        "kind": "scene",
+        "name": "v4_wz_map",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_wzmap",
+        "vol": 4,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/wenzhi.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "一张折得很小的手绘山路图，摊在灯下；温芷的字迹在角上",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Close still life by lamplight: a small hand-drawn map on rough paper, unfolded, showing mountain paths as ink lines (no legible writing), a medicine pouch and dried herbs beside it, a woman's slender hand (Wen Zhi, matching her adopted portrait's sleeve colour) withdrawing from the edge of the frame. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/wenzhi.webp",
+          "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v4_wz_map-b.webp",
+      "previewSha256": "a3e9121f477b1bb0a24eccc4848522b47816f332b136c4bc6ccfe5220ee35306"
+    },
+    {
+      "id": "scene-v5_zy_pact",
+      "variant": "b",
+      "prompt": "Night outside army tents before departure: Zhao Yun (matching his adopted portrait: silver armour, white cloak) speaks quietly to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), a white horse and a spear behind him, distant campfires. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical character portrait; preserve that person's facial identity, hairstyle and clothing. Last reference is ONLY the adopted illustration style, fine linework and painted material texture, not the people, event or sunset. This scene is AT NIGHT with the job's lantern or campfire lighting. Exactly TWO ADULT humans, the named character and Ziheng; no extra people. Han Chinese robes, not kimono. Ziheng must be rear-view with his face completely hidden, gray-blue plain robes. A serious quiet exchange rather than heroic posing. Keep all heads and the hands/action comfortably within the middle horizontal band for a later 1200x480 crop. No writing or text-like marks anywhere. Candidate B.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v5_zy_pact-2.png",
+      "sourceSha256": "6efcf0db9e54f82402363d8cb9374894a8c679125e1e00f0712a42a8229e21eb",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2612840,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v5_zy_pact",
+        "kind": "scene",
+        "name": "v5_zy_pact",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_zypact",
+        "vol": 5,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhaoyun.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "出发前夜，赵云在营帐外和子衡低声约定",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Night outside army tents before departure: Zhao Yun (matching his adopted portrait: silver armour, white cloak) speaks quietly to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), a white horse and a spear behind him, distant campfires. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhaoyun.webp",
+          "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v5_zy_pact-b.webp",
+      "previewSha256": "1b346e1f1ee2479bed28ec2fec47554630815b0a88b2947a9a94c90970da349a"
+    },
+    {
+      "id": "scene-v5_zy_pact",
+      "variant": "a",
+      "prompt": "Night outside army tents before departure: Zhao Yun (matching his adopted portrait: silver armour, white cloak) speaks quietly to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), a white horse and a spear behind him, distant campfires. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical character portrait; preserve that person's facial identity, hairstyle and clothing. Last reference is ONLY the adopted illustration style, fine linework and painted material texture, not the people, event or sunset. This scene is AT NIGHT with the job's lantern or campfire lighting. Exactly TWO ADULT humans, the named character and Ziheng; no extra people. Han Chinese robes, not kimono. Ziheng must be rear-view with his face completely hidden, gray-blue plain robes. A serious quiet exchange rather than heroic posing. Keep all heads and the hands/action comfortably within the middle horizontal band for a later 1200x480 crop. No writing or text-like marks anywhere. Candidate A.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v5_zy_pact-1.png",
+      "sourceSha256": "9ced1a29efb3d361df005d558a3830b216579b01c85c1128983c5ff38e797458",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2602309,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v5_zy_pact",
+        "kind": "scene",
+        "name": "v5_zy_pact",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_zypact",
+        "vol": 5,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhaoyun.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "出发前夜，赵云在营帐外和子衡低声约定",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Night outside army tents before departure: Zhao Yun (matching his adopted portrait: silver armour, white cloak) speaks quietly to the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), a white horse and a spear behind him, distant campfires. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhaoyun.webp",
+          "sha256": "fa60b2a43e1bb271c77615c4b7a4519f364489d82539d293044070684a50c5a7",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v5_zy_pact-a.webp",
+      "previewSha256": "d30cd9066152dd53ddd1cf63bf7ed45f6a65499d8aa07977b068257fe23abc85"
+    },
+    {
+      "id": "scene-v6_wz_herb",
+      "variant": "a",
+      "prompt": "Night before a southern campaign, a courtyard with lanterns: Wen Zhi (matching her adopted portrait) presses a small cloth bundle of dried leaves into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), her expression stern and worried. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical character portrait; preserve that person's facial identity, hairstyle and clothing. Last reference is ONLY the adopted illustration style, fine linework and painted material texture, not the people, event or sunset. This scene is AT NIGHT with the job's lantern or campfire lighting. Exactly TWO ADULT humans, the named character and Ziheng; no extra people. Han Chinese robes, not kimono. Ziheng must be rear-view with his face completely hidden, gray-blue plain robes. A serious quiet exchange rather than heroic posing. Keep all heads and the hands/action comfortably within the middle horizontal band for a later 1200x480 crop. No writing or text-like marks anywhere. Candidate A.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v6_wz_herb-1.png",
+      "sourceSha256": "461d51c808f0cdce4751aa59a36c34b3c9bcf4d01525a1dc421fdde9f92dd4c2",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2402634,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v6_wz_herb",
+        "kind": "scene",
+        "name": "v6_wz_herb",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_wzherb",
+        "vol": 6,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/wenzhi.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "出征前夜，温芷把一小包晒干的草叶塞进子衡手里",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Night before a southern campaign, a courtyard with lanterns: Wen Zhi (matching her adopted portrait) presses a small cloth bundle of dried leaves into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), her expression stern and worried. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/wenzhi.webp",
+          "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v6_wz_herb-a.webp",
+      "previewSha256": "d323d8f1d1c651e656a9393a648fbbf1fcc8feeb6aa5eff42e37bad5a987ab1f"
+    },
+    {
+      "id": "scene-v6_wz_herb",
+      "variant": "b-background-guards-initial",
+      "prompt": "Night before a southern campaign, a courtyard with lanterns: Wen Zhi (matching her adopted portrait) presses a small cloth bundle of dried leaves into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), her expression stern and worried. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical portrait, final reference ONLY the adopted illustration style, fine linework, material texture and clothing continuity, not its event or sunset. Exactly TWO ADULTS in the job's night lighting. For the command-arrow scene, Zhuge Liang must be visibly older and gaunt: grey temples, fine age lines, weary eyes, crane-feather cloak and scholar cap, retaining the portrait's recognizable face. Ziheng is now a man in his forties with clearly grey-streaked tied hair, completely rear-view; his face is hidden. Show a single red-tasselled command-arrow baton, not a threatening drawn weapon; the exchange of it between their hands is clear. Blank documents only. For the herb scene retain Wen Zhi's adopted face, dark updo with white blossom, pale blue Han robe, stern worried expression and herbal pouch handover. Han robes, not kimono. Keep meaningful faces, hands and exchanged object within the central horizontal band for a later 1200x480 crop. No writing or text-like marks on anything. Candidate B.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "superseded": true,
+      "supersededReason": "Background soldiers added despite two-person scene; regenerated edit removes them",
+      "source": "game/sanguo/art/candidates/relations-batch9/superseded/scene-v6_wz_herb-b-background-guards-initial.png",
+      "sourceSha256": "099f1013cbabf90da18a751945d435ba595d97386c057a201c5633f630593c89",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2773086,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v6_wz_herb",
+        "kind": "scene",
+        "name": "v6_wz_herb",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_wzherb",
+        "vol": 6,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/wenzhi.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "出征前夜，温芷把一小包晒干的草叶塞进子衡手里",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Night before a southern campaign, a courtyard with lanterns: Wen Zhi (matching her adopted portrait) presses a small cloth bundle of dried leaves into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), her expression stern and worried. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/wenzhi.webp",
+          "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ]
+    },
+    {
+      "id": "scene-v7_zg_ling",
+      "variant": "a",
+      "prompt": "Inside a dim military tent at night: an older, gaunt Zhuge Liang (matching his adopted portrait, now older, greying) seated at a desk of documents, places a red-tasselled command arrow into the hand of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible) (now in his forties, hair streaked with grey). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical portrait, final reference ONLY the adopted illustration style, fine linework, material texture and clothing continuity, not its event or sunset. Exactly TWO ADULTS in the job's night lighting. For the command-arrow scene, Zhuge Liang must be visibly older and gaunt: grey temples, fine age lines, weary eyes, crane-feather cloak and scholar cap, retaining the portrait's recognizable face. Ziheng is now a man in his forties with clearly grey-streaked tied hair, completely rear-view; his face is hidden. Show a single red-tasselled command-arrow baton, not a threatening drawn weapon; the exchange of it between their hands is clear. Blank documents only. For the herb scene retain Wen Zhi's adopted face, dark updo with white blossom, pale blue Han robe, stern worried expression and herbal pouch handover. Han robes, not kimono. Keep meaningful faces, hands and exchanged object within the central horizontal band for a later 1200x480 crop. No writing or text-like marks on anything. Candidate A.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v7_zg_ling-1.png",
+      "sourceSha256": "841c92e0562728d4388d2b2f404eb27b97c94ef15db8772b6a4a402c3a70886a",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2813623,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v7_zg_ling",
+        "kind": "scene",
+        "name": "v7_zg_ling",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_zgling",
+        "vol": 7,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "病中的诸葛亮在帐里把一支令箭放到子衡手里",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Inside a dim military tent at night: an older, gaunt Zhuge Liang (matching his adopted portrait, now older, greying) seated at a desk of documents, places a red-tasselled command arrow into the hand of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible) (now in his forties, hair streaked with grey). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v7_zg_ling-a.webp",
+      "previewSha256": "0b3b504c9a3b062c40c48bcfc70c2973cc5a5d4b61046b2b3e91bce33f6592f0"
+    },
+    {
+      "id": "scene-v7_zg_ling",
+      "variant": "b",
+      "prompt": "Inside a dim military tent at night: an older, gaunt Zhuge Liang (matching his adopted portrait, now older, greying) seated at a desk of documents, places a red-tasselled command arrow into the hand of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible) (now in his forties, hair streaked with grey). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery and reference instructions (original job above unchanged): One standalone wide scene, not a grid. First reference is the canonical portrait, final reference ONLY the adopted illustration style, fine linework, material texture and clothing continuity, not its event or sunset. Exactly TWO ADULTS in the job's night lighting. For the command-arrow scene, Zhuge Liang must be visibly older and gaunt: grey temples, fine age lines, weary eyes, crane-feather cloak and scholar cap, retaining the portrait's recognizable face. Ziheng is now a man in his forties with clearly grey-streaked tied hair, completely rear-view; his face is hidden. Show a single red-tasselled command-arrow baton, not a threatening drawn weapon; the exchange of it between their hands is clear. Blank documents only. For the herb scene retain Wen Zhi's adopted face, dark updo with white blossom, pale blue Han robe, stern worried expression and herbal pouch handover. Han robes, not kimono. Keep meaningful faces, hands and exchanged object within the central horizontal band for a later 1200x480 crop. No writing or text-like marks on anything. Candidate B.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v7_zg_ling-2.png",
+      "sourceSha256": "435a65406c4c0056c983ed87a2395933f4f82e5f62bcbbff1237d708d072ace2",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2619283,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v7_zg_ling",
+        "kind": "scene",
+        "name": "v7_zg_ling",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_zgling",
+        "vol": 7,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/zhuge.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "病中的诸葛亮在帐里把一支令箭放到子衡手里",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Inside a dim military tent at night: an older, gaunt Zhuge Liang (matching his adopted portrait, now older, greying) seated at a desk of documents, places a red-tasselled command arrow into the hand of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible) (now in his forties, hair streaked with grey). Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/zhuge.webp",
+          "sha256": "c7df2e03d345d2a242ffbc6c91a5c18408e5bf8602dcc9b80c933407a451ba6d",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v7_zg_ling-b.webp",
+      "previewSha256": "d46dd8772b61fe9efe751d3a657041dc5ae0f9ba6416a8cbe11d50ced426be83"
+    },
+    {
+      "id": "scene-v8_jw_book",
+      "variant": "a",
+      "prompt": "Lamplit tent: Jiang Wei (matching his adopted portrait: silver armour, white plume, deep blue cloak, in his forties) pushes an old bound book of military strategy across the table toward the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible); the open pages show sketched mountain roads, no legible writing. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery/reference instructions (original prompt above unchanged):\nCreate one standalone illustration. FIRST reference: adopted Jiang Wei portrait. Retain silver armour, silver helmet with WHITE plume, deep BLUE cloak, same facial structure, but visibly in his forties, mature eyes and slight age lines. LAST reference: adopted painted scene STYLE only, not its characters or event. Exactly two adults. Jiang Wei pushes the open, old, thread-bound military book across a lamplit tent table. The other adult is an ungendered SUCCESSOR, plain undyed robe, tied hair, viewed entirely FROM BEHIND, no visible face or gender cues. The book has only simple winding mountain-road sketches, absolutely no writing or text-like marks, no ruled imitation text. Quiet night, intimate lamplight; heads, hands, open book and action kept comfortably inside the central horizontal band for 1200x480.\nNo extra people, no text, watermark or lettering anywhere. One landscape image, no panels. Candidate A.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v8_jw_book-1.png",
+      "sourceSha256": "464b9d7b30d7cfbaf774046927aa9c8ca85367923e2a8ec9eecc07746c3534b6",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2656763,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v8_jw_book",
+        "kind": "scene",
+        "name": "v8_jw_book",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_jwbook",
+        "vol": 8,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/jiangwei.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "姜维把丞相留下的兵书推到你面前；书页边是小字画的路",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Lamplit tent: Jiang Wei (matching his adopted portrait: silver armour, white plume, deep blue cloak, in his forties) pushes an old bound book of military strategy across the table toward the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible); the open pages show sketched mountain roads, no legible writing. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v8_jw_book-a.webp",
+      "previewSha256": "de03f6b1e68d9e62bf8c7f536ef1bd8b93e759539fb0f534ea9b84bcae2dc752"
+    },
+    {
+      "id": "scene-v8_jw_book",
+      "variant": "b",
+      "prompt": "Lamplit tent: Jiang Wei (matching his adopted portrait: silver armour, white plume, deep blue cloak, in his forties) pushes an old bound book of military strategy across the table toward the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible); the open pages show sketched mountain roads, no legible writing. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery/reference instructions (original prompt above unchanged):\nCreate one standalone illustration. FIRST reference: adopted Jiang Wei portrait. Retain silver armour, silver helmet with WHITE plume, deep BLUE cloak, same facial structure, but visibly in his forties, mature eyes and slight age lines. LAST reference: adopted painted scene STYLE only, not its characters or event. Exactly two adults. Jiang Wei pushes the open, old, thread-bound military book across a lamplit tent table. The other adult is an ungendered SUCCESSOR, plain undyed robe, tied hair, viewed entirely FROM BEHIND, no visible face or gender cues. The book has only simple winding mountain-road sketches, absolutely no writing or text-like marks, no ruled imitation text. Quiet night, intimate lamplight; heads, hands, open book and action kept comfortably inside the central horizontal band for 1200x480.\nNo extra people, no text, watermark or lettering anywhere. One landscape image, no panels. Candidate B.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v8_jw_book-2.png",
+      "sourceSha256": "84ad18301ab77bd3761d5feb90fde687305a7e5165ff3f8fa3dfc57660b7ad54",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2544729,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v8_jw_book",
+        "kind": "scene",
+        "name": "v8_jw_book",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_jwbook",
+        "vol": 8,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/jiangwei.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "姜维把丞相留下的兵书推到你面前；书页边是小字画的路",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Lamplit tent: Jiang Wei (matching his adopted portrait: silver armour, white plume, deep blue cloak, in his forties) pushes an old bound book of military strategy across the table toward the player (an adult in a plain undyed robe with hair tied up, seen from behind, face not visible, gender not discernible); the open pages show sketched mountain roads, no legible writing. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/portraits/jiangwei.webp",
+          "sha256": "5033467b347a8a8418673e79b1e1b1fd1369a927ba003b27df8965eba1354479",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v8_jw_book-b.webp",
+      "previewSha256": "09a8b9cf39a8190debbde8a8d08d902bc9fbfb31d52d5a4b15661c5123ec6d34"
+    },
+    {
+      "id": "scene-v6_wz_herb",
+      "variant": "b",
+      "prompt": "Night before a southern campaign, a courtyard with lanterns: Wen Zhi (matching her adopted portrait) presses a small cloth bundle of dried leaves into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), her expression stern and worried. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.\n\nDelivery/reference instructions (original prompt above unchanged):\nEdit the FIRST image: remove EVERY background guard and person, including the small soldiers by tents and doors. Replace them with empty night courtyard paving and empty tents, retaining the two foreground adults, their exact faces, poses and handover, and the same art style. The scene has ONLY Wen Zhi and rear-view Ziheng. No human silhouettes beyond them. Reference 2 is Wen Zhi's adopted portrait, last reference is art style only.\nNo extra people, no text, watermark or lettering anywhere. One landscape image, no panels. Candidate B revision.",
+      "tool": "image_gen.imagegen",
+      "model": "not exposed by tool",
+      "adopted": false,
+      "revisionOf": "game/sanguo/art/candidates/relations-batch9/superseded/scene-v6_wz_herb-b-background-guards-initial.png",
+      "source": "game/sanguo/art/candidates/relations-batch9/scene-v6_wz_herb-2.png",
+      "sourceSha256": "cdb25005d5d85047769f73449854b7fed4775897e15027dfa3bd5b35824fdf33",
+      "dimensions": [
+        1983,
+        793
+      ],
+      "mode": "RGB",
+      "bytes": 2676852,
+      "sourceCommit": "30e542bb410469877c0de090e7b02b7e19dfe318",
+      "requestedSourceSize": "1536x1024",
+      "targetOnAdoption": [
+        1200,
+        480
+      ],
+      "negativePrompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+      "authorJob": {
+        "id": "scene-v6_wz_herb",
+        "kind": "scene",
+        "name": "v6_wz_herb",
+        "batch": 9,
+        "status": "pending",
+        "node": "x_rel_wzherb",
+        "vol": 6,
+        "refs": [],
+        "ref_paths": [
+          "game/sanguo/art/portraits/wenzhi.webp"
+        ],
+        "keep": [
+          "人物和 ref_paths 里的头像一致：脸、发型、服色"
+        ],
+        "composition": "出征前夜，温芷把一小包晒干的草叶塞进子衡手里",
+        "accept": [
+          "和参考头像比，脸、发型、服色一致",
+          "汉服，不是和服；画面里没有任何文字",
+          "人物都是成年人",
+          "裁成 2.5:1 横条后，主要人物和动作不被切掉",
+          "玩家不露脸"
+        ],
+        "prompt": "Night before a southern campaign, a courtyard with lanterns: Wen Zhi (matching her adopted portrait) presses a small cloth bundle of dried leaves into the hands of the player (Ziheng, a young scholar in a plain grey-blue robe, seen from behind or in profile, face not visible), her expression stern and worried. Wide cinematic landscape composition. Keep everything important inside the central horizontal band, because the image will be cropped to a 2.5:1 strip. All depicted people are adults. Characters follow the descriptions in the public-domain novel Romance of the Three Kingdoms, not any film, TV drama or game.",
+        "negative_prompt": "No text, lettering, captions, logos, watermark, frame, recognizable copyrighted characters, celebrity likeness, sexual content, gore, blood, minors, children.",
+        "size": "1536x1024",
+        "out": [
+          1200,
+          480
+        ]
+      },
+      "processing": "Original PNG copied byte-for-byte; no crop, resize or retouch. WebP for preview encoding only.",
+      "references": [
+        {
+          "path": "game/sanguo/art/candidates/relations-batch9/superseded/scene-v6_wz_herb-b-background-guards-initial.png",
+          "sha256": "099f1013cbabf90da18a751945d435ba595d97386c057a201c5633f630593c89",
+          "role": "candidate for editing"
+        },
+        {
+          "path": "game/sanguo/art/portraits/wenzhi.webp",
+          "sha256": "4ca645e0b328be591a836fdacc6c24c4054de86cfa6d7ddfd7dc8982eb41c516",
+          "role": "adopted character identity"
+        },
+        {
+          "path": "game/sanguo/art/scenes/v7_last.webp",
+          "sha256": "28efd5266b9e092c353c8a81d18541487a8d55f2651a58ee68165d91d4c6e0b0",
+          "role": "adopted style only"
+        }
+      ],
+      "preview": "ooc-replica/dist/assets/art-review/relations/scene-v6_wz_herb-b.webp",
+      "previewSha256": "4ef531b1ae45f4ea4cd9634d8b47c61309249c3b77c6c98523b27514fb5b94da"
+    }
+  ]
+}
