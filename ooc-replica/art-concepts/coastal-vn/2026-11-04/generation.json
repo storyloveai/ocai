@@ -1,0 +1,65 @@
+{
+  "issue": 112,
+  "date": "2026-11-04",
+  "kind": "preproduction-atmosphere-study",
+  "status": "concept candidates only; author jobs and character canon not available at generation time",
+  "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+  "model": "not exposed by tool",
+  "externalPaidImageAPIUsed": false,
+  "portraitsGenerated": 0,
+  "storyCanonChanged": false,
+  "images": [
+    {
+      "id": "cinema-exterior-a",
+      "prompt": "Create ONE polished 2D hand-painted animation background concept for an original adult romance visual novel, StoryDate. This is a preliminary atmosphere study, not a finalized story location or character design. WIDE 16:9 landscape framing. An intimate old neighborhood cinema in a fictional contemporary East Asian seaside town in early spring, seen from the quiet pedestrian lane at a gentle three-quarter angle. The compact two-story building has warm ivory stucco, weathered cedar trim, a restrained faded sea-teal metal canopy, narrow tall windows, and inviting warm amber light just inside a recessed wooden-and-glass entrance. A small unlettered marquee with no bulbs spelling anything. To the right, the lane slopes gently toward a glimpse of blue ocean and the distant harbor, with a low pale stone sea wall. At the left edge, only a few branches of soft pale cherry blossom and scattered petals; the building, rather than blossoms, is the focal point. Gentle late-afternoon spring sun, cool sea air, believable salt-weathering, tactile materials, quiet nostalgic warmth without dilapidation. Clear, carefully composed depth from calm foreground paving to the cinema door to the distant sea. Premium detailed Japanese-style animation background painting with fine controlled drawn edges, soft painterly texture, cinematic natural color, restrained teal-blue / warm cream / amber palette. It should feel like an inviting place a player wants to return to, elegant and grounded, neither generic stock art nor photorealistic nor 3D. Keep the lowest 20 percent visually quiet for a future visual-novel dialogue overlay, but DO NOT draw any interface. NO people, human silhouettes, faces or animals. No schoolchildren. Absolutely NO text, letters, kanji, numbers, logos, watermarks, signatures, posters containing graphics or lettering, subtitles, borders or panels anywhere. All sign surfaces and poster frames are completely blank. No famous or copyrighted buildings, no recognizable film characters or film posters. Make the entire finished image an opaque background.",
+      "references": [],
+      "transparentBackground": false,
+      "source": "source/cinema-exterior-a.png",
+      "requestedAspectRatio": "16:9",
+      "adopted": false,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "sourceSha256": "e2121eba6bd244b650f9f861b242a826df03003056fe9083d9f69da6eef3f56f",
+      "sourceBytes": 2642061,
+      "preview": "ooc-replica/dist/assets/art-review/coastal-vn/cinema-exterior-a.webp",
+      "previewSha256": "8a0fd03e14511be7eca35bb11794068d98eb6fbf01d49cd81518af913efc4492",
+      "previewBytes": 422968,
+      "processing": "WebP encoding only; no resize, crop, retouch or image-content changes",
+      "visualReview": "No people or apparent text/watermarks; exterior/room are provisional concept architecture, not author-approved canon."
+    },
+    {
+      "id": "cinema-auditorium-a",
+      "prompt": "Use the provided original exterior concept ONLY as the architectural and art-direction reference for the same old seaside cinema: warm ivory plaster, cedar detailing, faded teal trim, gentle amber light, and a refined 2D hand-painted animation style. Create ONE matching INTERIOR AUDITORIUM background concept, as if stepping inside that building. This is a preliminary visual-development candidate, not a finalized story scene. WIDE 16:9 landscape. View from the back of a compact, intimate neighborhood cinema, slightly left of the central aisle, looking toward its small completely blank cream-colored screen. Six or seven tidy rows of softly worn deep muted burgundy upholstered seats, warm wooden armrests with absolutely no seat numbers; a low shallow stage, heavy deep-teal curtains pulled to the sides of the blank screen, simple ivory plaster walls with warm cedar wainscoting and subtle period wall sconces. It is late afternoon in early spring BETWEEN screenings: the projector is off. A narrow high side window with its blackout curtain temporarily opened admits soft pale-gold sunshine and a little cool sea-blue bounce, revealing a restrained luminous beam and a few dust motes. No actual sea must be visible from this view. Warm, cared-for, gently nostalgic, practical and believable, never abandoned, frightening or luxurious. Clear coherent aisle and seat perspective; premium story-rich atmosphere and fine material detail, with soft painted texture and delicate controlled drawn edges. Match the reference image's high-end East Asian animation rendering and restrained cream / amber / teal-blue color relationships; no photorealism or 3D rendering. Leave the lowest foreground 20 percent calm and relatively dark for a future dialogue overlay, but do not draw any UI. NO people, silhouettes, faces, animals or human-shaped decorations. Absolutely NO text, letters, kanji, numbers, logos, watermarks, signatures, film images, recognizable movie graphics, advertisements, exit lettering, captions, borders or panels. The movie screen is plain blank and unlettered. Opaque finished background.",
+      "references": [
+        "source/cinema-exterior-a.png"
+      ],
+      "referencePurpose": "Architectural materials, color and visual style only; conceptual matching interior, not a certified floor plan",
+      "transparentBackground": false,
+      "source": "source/cinema-auditorium-a.png",
+      "requestedAspectRatio": "16:9",
+      "adopted": false,
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "sourceSha256": "841c25d97f75ec5fa467334a2bd1cc3432ab65b0c763c44857278b2bb73b54c8",
+      "sourceBytes": 2134493,
+      "preview": "ooc-replica/dist/assets/art-review/coastal-vn/cinema-auditorium-a.webp",
+      "previewSha256": "13c3f787a30c32c868f04b82db79d9122d4c1576e801f9259b25c02d7c7cf30c",
+      "previewBytes": 209146,
+      "processing": "WebP encoding only; no resize, crop, retouch or image-content changes",
+      "visualReview": "No people or apparent text/watermarks; exterior/room are provisional concept architecture, not author-approved canon."
+    }
+  ],
+  "notes": [
+    "Inspired by the user's screenshot proposal only; not produced from a published author job manifest.",
+    "Fictional sea-side cinema; building and room layout are visual-development proposals, not established story facts.",
+    "Does not replace the proposed first batch of three standard character sprites and six authored background jobs.",
+    "No portraits or story text invented. Formal character art awaits explicit age, appearance, costume and production geometry.",
+    "User and Claude must review before adopting; no build.py or game:sync for these concepts."
+  ]
+}
