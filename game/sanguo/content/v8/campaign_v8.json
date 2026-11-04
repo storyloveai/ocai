@@ -1222,6 +1222,26 @@
    },
    "carry": false
   },
+  "grudge.lusu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·记仇",
+    "en": "Lu Su · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
+  },
   "flag.v4_came_back": {
    "type": "flag",
    "init": false,
@@ -1845,6 +1865,17 @@
    },
    "carry": false
   },
+  "grudge.zhuge": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "丞相·记仇",
+    "en": "The Chancellor · grudge"
+   },
+   "carry": false
+  },
   "flag.v7_came_back": {
    "type": "flag",
    "init": false,
@@ -2166,12 +2197,21 @@
    },
    "carry": false
   },
-  "flag.fate_dead": {
+  "flag.v7_zg_ling": {
    "type": "flag",
    "init": false,
    "label": {
-    "zh": "死于非命",
-    "en": "Died before the volume's end"
+    "zh": "丞相给了你一支令箭",
+    "en": "The Chancellor gave you a command arrow"
+   },
+   "carry": false
+  },
+  "flag.v7_after_lamp": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "七星灯那一夜已经过去",
+    "en": "The night of the seven-star lamp has passed"
    },
    "carry": false
   },
@@ -2662,6 +2702,35 @@
    "label": {
     "zh": "劝姜维当场杀了黄皓",
     "en": "Urged Jiang Wei to kill Huang Hao on the spot"
+   },
+   "carry": false
+  },
+  "flag.v8_jw_book": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "姜维把丞相的兵书给你抄",
+    "en": "Jiang Wei let you copy the Chancellor's book of war"
+   },
+   "carry": false
+  },
+  "flag.v8_after_jiange": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "剑阁那一夜已经过去",
+    "en": "The night at Jiange has passed"
+   },
+   "carry": false
+  },
+  "grudge.jiangwei": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "姜维·记仇",
+    "en": "Jiang Wei · grudge"
    },
    "carry": false
   }
@@ -7970,6 +8039,10 @@
       {
        "add": "rel.jiangwei.esteem",
        "by": 1
+      },
+      {
+       "set": "flag.v8_after_jiange",
+       "to": true
       }
      ],
      "values": [
@@ -8028,6 +8101,10 @@
        "by": 1
       },
       {
+       "set": "flag.v8_after_jiange",
+       "to": true
+      },
+      {
        "add": "rel.jiangwei.trust",
        "by": 1
       }
@@ -8073,6 +8150,10 @@
       {
        "add": "rel.jiangwei.trust",
        "by": 1
+      },
+      {
+       "set": "flag.v8_after_jiange",
+       "to": true
       }
      ],
      "req": {
@@ -8088,6 +8169,49 @@
       "yong"
      ],
      "place": "yinping"
+    },
+    {
+     "id": "guard_book",
+     "type": "dilemma",
+     "label": {
+      "zh": "翻开抄来的兵书，指着阴平那一页，自请带五百人去守。",
+      "en": "Open the copy of the book of war at the Yinping page and volunteer to hold it with five hundred men."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "姜维看着丞相画的那条小路，半天没说话。最后他拍了拍你的肩：『丞相早就看见了。去吧。』",
+        "en": "Jiang Wei stares at the little road the Chancellor drew and says nothing for a long while. At last he claps your shoulder. 'The Chancellor saw it long ago. Go.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v8_yp_guard",
+       "to": true
+      },
+      {
+       "add": "rel.jiangwei.trust",
+       "by": 1
+      },
+      {
+       "set": "flag.v8_after_jiange",
+       "to": true
+      }
+     ],
+     "values": [
+      "yong"
+     ],
+     "place": "yinping",
+     "when": {
+      "v": "flag.v8_jw_book",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为姜维给你抄过丞相的兵书",
+      "en": "Because Jiang Wei let you copy the Chancellor's book of war"
+     }
     },
     {
      "id": "hold",
@@ -8108,6 +8232,10 @@
       {
        "add": "rel.jiangwei.warmth",
        "by": 1
+      },
+      {
+       "set": "flag.v8_after_jiange",
+       "to": true
       }
      ]
     }
@@ -9863,6 +9991,92 @@
      "id": "jiangwei"
     }
    ]
+  },
+  "x_rel_jwbook": {
+   "id": "x_rel_jwbook",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "兵书",
+    "en": "The Book of War"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "姜维把丞相留下的兵书推到你面前：『丞相的东西，不该只在我一个人手里。你拿去抄。』书页边上，是丞相的小字，画着蜀中的每一条路。",
+      "en": "Jiang Wei pushes the Chancellor's book of war across to you. 'The Chancellor's legacy shouldn't sit in my hands alone. Take it and copy it.' In its margins, in the Chancellor's small hand, every road in Shu is drawn."
+     },
+     "rel": [
+      "jiangwei",
+      "warmth",
+      2
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "copy",
+     "type": "expression",
+     "label": {
+      "zh": "连夜抄。",
+      "en": "Copy it through the night."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你抄到天亮。阴平那一页，你多看了两眼。",
+        "en": "You copy until dawn. You linger twice over the page about Yinping."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v8_jw_book",
+       "to": true
+      },
+      {
+       "add": "rel.jiangwei.trust",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "rel.jiangwei.warmth",
+      "op": ">=",
+      "val": 4
+     },
+     {
+      "v": "flag.v8_jw_book",
+      "op": "!=",
+      "val": true
+     },
+     {
+      "v": "flag.v8_after_jiange",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": [],
+    "illus": "v8_jiangwei_night"
+   },
+   "cast": [
+    {
+     "id": "jiangwei"
+    }
+   ]
   }
  },
  "endings": [
@@ -10424,7 +10638,44 @@
    }
   }
  ],
+ "recipe": "relations",
  "moves": [
+  {
+   "id": "jw_threat2",
+   "to": "jiangwei",
+   "means": {
+    "zh": "又一次当面威胁姜维、说要杀他",
+    "en": "threatens Jiang Wei to his face again / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "姜维这一回没有沉默。他把你的东西收拾好，放在营门口：『你走吧。我不想哪天真的对你拔枪。』那天起，汉中的营里没有你了。",
+      "en": "This time Jiang Wei doesn't stay silent. He packs your things and leaves them at the camp gate. 'Go. I don't want the day to come when I really raise my spear at you.' From that day on there is no place for you in the Hanzhong camps."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "set": "flag.v8_left",
+     "to": true
+    },
+    {
+     "add": "rel.jiangwei.trust",
+     "by": -3
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "when": {
+    "v": "grudge.jiangwei",
+    "op": ">=",
+    "val": 2
+   },
+   "ends": true
+  },
   {
    "id": "jw_threat",
    "to": "jiangwei",
@@ -10457,7 +10708,12 @@
    "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
    "labels": [
     "threat"
-   ]
+   ],
+   "when": {
+    "v": "grudge.jiangwei",
+    "op": "<=",
+    "val": 1
+   }
   }
  ],
  "future_terms": [
@@ -11568,7 +11824,7 @@
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 9,
-     "rel.zhuge.trust": 8,
+     "rel.zhuge.trust": 10,
      "rel.zhuge.esteem": 9,
      "rel.wenzhi.warmth": 7,
      "rel.wenzhi.trust": 6,
@@ -11596,6 +11852,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11673,21 +11931,22 @@
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
      "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
-     "flag.v7_biao": false,
+     "flag.v7_biao": true,
      "flag.v7_child": true,
      "flag.v7_student": false,
-     "flag.v7_ziwu": false,
+     "flag.v7_ziwu": true,
      "flag.v7_mother": false,
      "flag.v7_jt_with": false,
      "flag.v7_jt_warned": false,
      "flag.v7_jt_road": true,
      "flag.v7_jt_wangping": false,
-     "flag.v7_wall": false,
+     "flag.v7_wall": true,
      "flag.masu_alive": false,
      "flag.v7_old_farewell": false,
-     "flag.v7_feud": true,
+     "flag.v7_feud": false,
      "flag.v7_warned_weiyan": true,
      "flag.v7_envoy": true,
      "flag.v7_lamp_guard": false,
@@ -11695,13 +11954,13 @@
      "flag.v7_weiyan_word": false,
      "flag.v7_left": false,
      "flag.v7_exposed": false,
-     "rel.jiangwei.warmth": 5,
-     "rel.jiangwei.trust": 5,
-     "rel.jiangwei.esteem": 2,
+     "rel.jiangwei.warmth": 2,
+     "rel.jiangwei.trust": 6,
+     "rel.jiangwei.esteem": 4,
      "rel.simayi.warmth": 0,
-     "rel.simayi.trust": 0,
-     "rel.simayi.esteem": 3,
-     "rel.weiyan.warmth": 4,
+     "rel.simayi.trust": 1,
+     "rel.simayi.esteem": 5,
+     "rel.weiyan.warmth": 3,
      "rel.weiyan.trust": 3,
      "rel.weiyan.esteem": 1,
      "heat.liubei": 0,
@@ -11720,7 +11979,8 @@
      "imp.weiyan.offended": 1,
      "imp.jiangwei.offended": 0,
      "grudge.weiyan": 0,
-     "flag.fate_dead": false
+     "flag.v7_zg_ling": true,
+     "flag.v7_after_lamp": true
     },
     "ended_early": false,
     "mem": {},
@@ -11743,7 +12003,257 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 3,
+     "renown.cunning": 2,
+     "uncanny": 1,
+     "deviation": 13,
+     "prev.ended_early": false,
+     "renown.rash": 5,
+     "flag.mi_saved": true,
+     "flag.wenzhi_with_you": true,
+     "flag.confessed": true,
+     "flag.vouched_guan": true,
+     "flag.pleaded_guan": false,
+     "flag.promised_return": false,
+     "flag.liuqi_pretext": false,
+     "flag.pleaded_weiyan": true,
+     "flag.foresaw_weiyan": false,
+     "flag.zy_refused": true,
+     "flag.adou_kept": false,
+     "flag.wz_west": false,
+     "flag.wz_jingzhou": true,
+     "flag.wz_child": true,
+     "flag.pt_alive": false,
+     "flag.post_chengdu": false,
+     "flag.post_jingzhou": false,
+     "flag.post_none": true,
+     "flag.guan_charge": true,
+     "flag.v3_came_back": false,
+     "flag.v3_hermit": false,
+     "flag.dd_guard": false,
+     "flag.dd_lusu": false,
+     "flag.jin_trick": false,
+     "flag.jin_honest": true,
+     "flag.xiang_envoy": false,
+     "flag.xiang_hold": false,
+     "flag.xiang_obey": false,
+     "flag.xiang_bargain": false,
+     "flag.xiang_letter": false,
+     "flag.wakou_go": true,
+     "flag.hz_goaded": false,
+     "flag.hz_backed": true,
+     "flag.dj_flags": false,
+     "flag.dj_charge": true,
+     "flag.fed_pride": false,
+     "flag.praised_hz": false,
+     "flag.hs_open": false,
+     "flag.jl_chase": false,
+     "flag.jl_yangxiu": false,
+     "flag.mf_mended": false,
+     "flag.mf_warned": false,
+     "flag.mf_told": false,
+     "flag.wh_ask": false,
+     "flag.v3_to_jing": true,
+     "flag.fs_helped": false,
+     "flag.fs_private": false,
+     "flag.fs_pushed": false,
+     "flag.hn_soft": false,
+     "flag.hn_canon": true,
+     "flag.hn_apology": false,
+     "flag.fire_spared": true,
+     "flag.warned_jing": false,
+     "flag.v3_left": false,
+     "flag.v3_exposed": false,
+     "flag.sidelined": false,
+     "rel.liubei.warmth": 6,
+     "rel.liubei.trust": 5,
+     "rel.liubei.esteem": 4,
+     "rel.caocao.warmth": 0,
+     "rel.caocao.trust": 1,
+     "rel.caocao.esteem": 1,
+     "rel.guanyu.warmth": 5,
+     "rel.guanyu.trust": 5,
+     "rel.guanyu.esteem": 4,
+     "rel.zhuge.warmth": 10,
+     "rel.zhuge.trust": 10,
+     "rel.zhuge.esteem": 7,
+     "rel.wenzhi.warmth": 7,
+     "rel.wenzhi.trust": 5,
+     "rel.wenzhi.esteem": 4,
+     "rel.wenzhi.intimacy": 10,
+     "rel.zhaoyun.warmth": 8,
+     "rel.zhaoyun.trust": 7,
+     "rel.zhaoyun.esteem": 2,
+     "rel.lusu.warmth": 2,
+     "rel.lusu.trust": 5,
+     "rel.lusu.esteem": 1,
+     "rel.pangtong.warmth": 5,
+     "rel.pangtong.trust": 1,
+     "rel.pangtong.esteem": 1,
+     "rel.fazheng.warmth": 2,
+     "rel.fazheng.trust": 2,
+     "rel.fazheng.esteem": 3,
+     "rel.huangzhong.warmth": 5,
+     "rel.huangzhong.trust": 4,
+     "rel.huangzhong.esteem": 4,
+     "imp.guanyu.offended": 0,
+     "imp.liubei.offended": 0,
+     "imp.fazheng.offended": 0,
+     "imp.huangzhong.offended": 0,
+     "imp.lusu.offended": 0,
+     "flag.v3_token": false,
+     "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
+     "flag.v4_came_back": false,
+     "flag.v4_hermit": false,
+     "flag.pd_guard": true,
+     "flag.pd_bow": false,
+     "flag.flood_plan": false,
+     "flag.flood_people": false,
+     "flag.pd_spare": false,
+     "flag.pow_home": false,
+     "flag.bone_rest": false,
+     "flag.wz_huatuo": false,
+     "flag.v4_to_jing": false,
+     "flag.v4_order": false,
+     "flag.v4_early_sy": false,
+     "flag.lx_warned": false,
+     "flag.v4_kept_rear": false,
+     "flag.mf_kind": false,
+     "flag.mf_pressed": true,
+     "flag.v4_mf_path": false,
+     "flag.v4_early_call": true,
+     "flag.v4_relief": false,
+     "flag.v4_ride": false,
+     "flag.guan_alive": false,
+     "flag.v4_with_guan": false,
+     "flag.v4_letter": true,
+     "flag.v4_counsel_wait": false,
+     "flag.v4_vow": true,
+     "flag.v4_wz_letter": true,
+     "flag.v4_left": false,
+     "flag.v4_exposed": false,
+     "flag.v4_wz_map": false,
+     "flag.v5_came_back": false,
+     "flag.v5_hermit": false,
+     "flag.v5_north": false,
+     "flag.wz_qingnang": false,
+     "flag.liufeng_spared": false,
+     "flag.v5_mengda": false,
+     "flag.v5_fei_letter": true,
+     "flag.v5_fei_vow": false,
+     "flag.v5_zhaoyun": false,
+     "flag.v5_nearly": false,
+     "flag.v5_langzhong": true,
+     "flag.v5_fei_warned": false,
+     "flag.fei_alive": false,
+     "flag.v5_fei_night": false,
+     "flag.v5_peace": true,
+     "flag.v5_hz_ride": true,
+     "flag.v5_hz_word": false,
+     "flag.v5_firebreak": true,
+     "flag.v5_map": false,
+     "flag.v5_rear": true,
+     "flag.v5_guard": false,
+     "flag.v5_guan_last": false,
+     "flag.v5_entrusted": false,
+     "flag.v5_masu": true,
+     "flag.wz_wed": false,
+     "flag.v5_left": false,
+     "flag.v5_exposed": false,
+     "flag.v5_blamed_fei": false,
+     "flag.v5_asked_sun": false,
+     "flag.v5_zy_pact": false,
+     "flag.v5_after_burn": false,
+     "flag.v6_came_back": false,
+     "flag.v6_hermit": false,
+     "flag.v6_dengzhi": false,
+     "flag.v6_to_wu": true,
+     "flag.v6_masu_praise": false,
+     "flag.v6_masu_doubt": false,
+     "flag.v6_lushui": true,
+     "flag.v6_cure": true,
+     "flag.v6_water": false,
+     "flag.v6_mercy": true,
+     "flag.v6_fire_plan": false,
+     "flag.v6_officials": false,
+     "flag.v6_left": false,
+     "flag.v6_exposed": false,
+     "flag.v6_said_killall": false,
+     "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0,
+     "flag.v7_came_back": false,
+     "flag.v7_hermit": false,
+     "flag.v7_biao": false,
+     "flag.v7_child": false,
+     "flag.v7_student": true,
+     "flag.v7_ziwu": true,
+     "flag.v7_mother": false,
+     "flag.v7_jt_with": false,
+     "flag.v7_jt_warned": true,
+     "flag.v7_jt_road": false,
+     "flag.v7_jt_wangping": false,
+     "flag.v7_wall": false,
+     "flag.masu_alive": false,
+     "flag.v7_old_farewell": true,
+     "flag.v7_feud": true,
+     "flag.v7_warned_weiyan": true,
+     "flag.v7_envoy": true,
+     "flag.v7_lamp_guard": true,
+     "flag.v7_fan": false,
+     "flag.v7_weiyan_word": true,
+     "flag.v7_left": false,
+     "flag.v7_exposed": false,
+     "rel.jiangwei.warmth": 6,
+     "rel.jiangwei.trust": 4,
+     "rel.jiangwei.esteem": 4,
+     "rel.simayi.warmth": 0,
+     "rel.simayi.trust": 0,
+     "rel.simayi.esteem": 3,
+     "rel.weiyan.warmth": 5,
+     "rel.weiyan.trust": 8,
+     "rel.weiyan.esteem": 1,
+     "heat.liubei": 0,
+     "heat.caocao": 0,
+     "heat.guanyu": 0,
+     "heat.zhuge": 0,
+     "heat.wenzhi": 0,
+     "heat.zhaoyun": 0,
+     "heat.lusu": 0,
+     "heat.pangtong": 0,
+     "heat.fazheng": 0,
+     "heat.huangzhong": 0,
+     "heat.jiangwei": 0,
+     "heat.simayi": 0,
+     "heat.weiyan": 0,
+     "imp.weiyan.offended": 0,
+     "imp.jiangwei.offended": 0,
+     "grudge.weiyan": 0,
+     "flag.v7_zg_ling": true,
+     "flag.v7_after_lamp": true
+    },
+    "ended_early": false,
+    "mem": {},
+    "commits": [],
+    "said": []
+   }
+  },
+  {
+   "id": "fan",
+   "title": {
+    "zh": "受了羽扇的人",
+    "en": "The Keeper of the Fan"
+   },
+   "desc": {
+    "zh": "丞相把白羽扇放进你手里：替亮看着。你收了一个学生。",
+    "en": "The Chancellor put the white feather fan in your hand: watch over them for me. You took on a student."
+   },
+   "carry": {
+    "vol": "sanguo_strategist_v7",
+    "v": {
+     "track": "liu",
+     "renown.loyal": 10,
+     "renown.cunning": 2,
      "uncanny": 1,
      "deviation": 12,
      "prev.ended_early": false,
@@ -11815,7 +12325,7 @@
      "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 10,
      "rel.zhuge.trust": 10,
-     "rel.zhuge.esteem": 9,
+     "rel.zhuge.esteem": 8,
      "rel.wenzhi.warmth": 6,
      "rel.wenzhi.trust": 5,
      "rel.wenzhi.esteem": 4,
@@ -11842,6 +12352,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11912,44 +12424,45 @@
      "flag.v6_lushui": true,
      "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": false,
-     "flag.v6_fire_plan": true,
+     "flag.v6_mercy": true,
+     "flag.v6_fire_plan": false,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
      "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
      "flag.v7_child": false,
-     "flag.v7_student": true,
-     "flag.v7_ziwu": true,
-     "flag.v7_mother": false,
-     "flag.v7_jt_with": true,
-     "flag.v7_jt_warned": false,
+     "flag.v7_student": false,
+     "flag.v7_ziwu": false,
+     "flag.v7_mother": true,
+     "flag.v7_jt_with": false,
+     "flag.v7_jt_warned": true,
      "flag.v7_jt_road": false,
-     "flag.v7_jt_wangping": true,
-     "flag.v7_wall": false,
+     "flag.v7_jt_wangping": false,
+     "flag.v7_wall": true,
      "flag.masu_alive": false,
      "flag.v7_old_farewell": true,
      "flag.v7_feud": true,
      "flag.v7_warned_weiyan": true,
      "flag.v7_envoy": true,
      "flag.v7_lamp_guard": true,
-     "flag.v7_fan": false,
-     "flag.v7_weiyan_word": true,
+     "flag.v7_fan": true,
+     "flag.v7_weiyan_word": false,
      "flag.v7_left": false,
      "flag.v7_exposed": false,
-     "rel.jiangwei.warmth": 10,
-     "rel.jiangwei.trust": 6,
-     "rel.jiangwei.esteem": 5,
-     "rel.simayi.warmth": 0,
+     "rel.jiangwei.warmth": 8,
+     "rel.jiangwei.trust": 10,
+     "rel.jiangwei.esteem": 4,
+     "rel.simayi.warmth": 1,
      "rel.simayi.trust": 0,
-     "rel.simayi.esteem": 2,
-     "rel.weiyan.warmth": 5,
-     "rel.weiyan.trust": 8,
-     "rel.weiyan.esteem": 1,
+     "rel.simayi.esteem": 4,
+     "rel.weiyan.warmth": 4,
+     "rel.weiyan.trust": 4,
+     "rel.weiyan.esteem": 2,
      "heat.liubei": 0,
      "heat.caocao": 0,
      "heat.guanyu": 0,
@@ -11963,10 +12476,11 @@
      "heat.jiangwei": 0,
      "heat.simayi": 0,
      "heat.weiyan": 0,
-     "imp.weiyan.offended": 0,
+     "imp.weiyan.offended": 1,
      "imp.jiangwei.offended": 0,
      "grudge.weiyan": 0,
-     "flag.fate_dead": false
+     "flag.v7_zg_ling": true,
+     "flag.v7_after_lamp": true
     },
     "ended_early": false,
     "mem": {},
@@ -11975,23 +12489,23 @@
    }
   },
   {
-   "id": "fan",
+   "id": "envoy",
    "title": {
-    "zh": "受了羽扇的人",
-    "en": "The Keeper of the Fan"
+    "zh": "见过司马懿的人",
+    "en": "The One Who Met Sima Yi"
    },
    "desc": {
-    "zh": "丞相把白羽扇放进你手里：替亮看着。你收了一个学生。",
-    "en": "The Chancellor put the white feather fan in your hand: watch over them for me. You took on a student."
+    "zh": "你在司马懿帐里喝过茶，他记住了你的名字。",
+    "en": "You drank tea in Sima Yi's tent, and he remembered your name."
    },
    "carry": {
     "vol": "sanguo_strategist_v7",
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 3,
+     "renown.cunning": 2,
      "uncanny": 1,
-     "deviation": 11,
+     "deviation": 13,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -12060,12 +12574,12 @@
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 10,
-     "rel.zhuge.trust": 10,
+     "rel.zhuge.trust": 9,
      "rel.zhuge.esteem": 10,
-     "rel.wenzhi.warmth": 6,
-     "rel.wenzhi.trust": 6,
+     "rel.wenzhi.warmth": 7,
+     "rel.wenzhi.trust": 5,
      "rel.wenzhi.esteem": 4,
-     "rel.wenzhi.intimacy": 7,
+     "rel.wenzhi.intimacy": 10,
      "rel.zhaoyun.warmth": 8,
      "rel.zhaoyun.trust": 7,
      "rel.zhaoyun.esteem": 2,
@@ -12088,6 +12602,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -12158,44 +12674,45 @@
      "flag.v6_lushui": true,
      "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": false,
-     "flag.v6_fire_plan": true,
+     "flag.v6_mercy": true,
+     "flag.v6_fire_plan": false,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
      "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
      "flag.v7_biao": true,
      "flag.v7_child": false,
-     "flag.v7_student": true,
+     "flag.v7_student": false,
      "flag.v7_ziwu": false,
-     "flag.v7_mother": true,
-     "flag.v7_jt_with": true,
+     "flag.v7_mother": false,
+     "flag.v7_jt_with": false,
      "flag.v7_jt_warned": false,
-     "flag.v7_jt_road": false,
-     "flag.v7_jt_wangping": true,
-     "flag.v7_wall": true,
+     "flag.v7_jt_road": true,
+     "flag.v7_jt_wangping": false,
+     "flag.v7_wall": false,
      "flag.masu_alive": false,
      "flag.v7_old_farewell": true,
      "flag.v7_feud": false,
      "flag.v7_warned_weiyan": false,
      "flag.v7_envoy": true,
-     "flag.v7_lamp_guard": false,
-     "flag.v7_fan": true,
-     "flag.v7_weiyan_word": false,
+     "flag.v7_lamp_guard": true,
+     "flag.v7_fan": false,
+     "flag.v7_weiyan_word": true,
      "flag.v7_left": false,
      "flag.v7_exposed": false,
-     "rel.jiangwei.warmth": 7,
-     "rel.jiangwei.trust": 10,
-     "rel.jiangwei.esteem": 3,
+     "rel.jiangwei.warmth": 3,
+     "rel.jiangwei.trust": 5,
+     "rel.jiangwei.esteem": 5,
      "rel.simayi.warmth": 0,
      "rel.simayi.trust": 0,
-     "rel.simayi.esteem": 5,
+     "rel.simayi.esteem": 3,
      "rel.weiyan.warmth": 1,
-     "rel.weiyan.trust": 0,
-     "rel.weiyan.esteem": 3,
+     "rel.weiyan.trust": 2,
+     "rel.weiyan.esteem": 0,
      "heat.liubei": 0,
      "heat.caocao": 0,
      "heat.guanyu": 0,
@@ -12212,7 +12729,8 @@
      "imp.weiyan.offended": 1,
      "imp.jiangwei.offended": 0,
      "grudge.weiyan": 0,
-     "flag.fate_dead": false
+     "flag.v7_zg_ling": true,
+     "flag.v7_after_lamp": true
     },
     "ended_early": false,
     "mem": {},
@@ -12221,25 +12739,25 @@
    }
   },
   {
-   "id": "envoy",
+   "id": "wanderer",
    "title": {
-    "zh": "见过司马懿的人",
-    "en": "The One Who Met Sima Yi"
+    "zh": "流落之人",
+    "en": "The Wanderer"
    },
    "desc": {
-    "zh": "你在司马懿帐里喝过茶，他记住了你的名字。",
-    "en": "You drank tea in Sima Yi's tent, and he remembered your name."
+    "zh": "你早早就离开了。五丈原的事，你是从远处听说的。",
+    "en": "You left early. You heard about Wuzhang from far away."
    },
    "carry": {
     "vol": "sanguo_strategist_v7",
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 3,
+     "renown.cunning": 2,
      "uncanny": 1,
-     "deviation": 10,
-     "prev.ended_early": false,
-     "renown.rash": 5,
+     "deviation": 12,
+     "prev.ended_early": true,
+     "renown.rash": 6,
      "flag.mi_saved": true,
      "flag.wenzhi_with_you": true,
      "flag.confessed": true,
@@ -12305,14 +12823,14 @@
      "rel.guanyu.warmth": 5,
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 6,
-     "rel.zhuge.trust": 9,
+     "rel.zhuge.warmth": 10,
+     "rel.zhuge.trust": 7,
      "rel.zhuge.esteem": 10,
      "rel.wenzhi.warmth": 6,
      "rel.wenzhi.trust": 5,
      "rel.wenzhi.esteem": 4,
-     "rel.wenzhi.intimacy": 9,
-     "rel.zhaoyun.warmth": 8,
+     "rel.wenzhi.intimacy": 7,
+     "rel.zhaoyun.warmth": 7,
      "rel.zhaoyun.trust": 7,
      "rel.zhaoyun.esteem": 2,
      "rel.lusu.warmth": 2,
@@ -12334,6 +12852,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": true,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -12404,41 +12924,42 @@
      "flag.v6_lushui": true,
      "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": false,
-     "flag.v6_fire_plan": true,
+     "flag.v6_mercy": true,
+     "flag.v6_fire_plan": false,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
      "flag.v6_said_killall": false,
      "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0,
      "flag.v7_came_back": false,
      "flag.v7_hermit": false,
-     "flag.v7_biao": true,
+     "flag.v7_biao": false,
      "flag.v7_child": false,
-     "flag.v7_student": false,
+     "flag.v7_student": true,
      "flag.v7_ziwu": false,
      "flag.v7_mother": false,
      "flag.v7_jt_with": false,
-     "flag.v7_jt_warned": false,
-     "flag.v7_jt_road": true,
+     "flag.v7_jt_warned": true,
+     "flag.v7_jt_road": false,
      "flag.v7_jt_wangping": false,
      "flag.v7_wall": false,
      "flag.masu_alive": false,
      "flag.v7_old_farewell": true,
-     "flag.v7_feud": false,
+     "flag.v7_feud": true,
      "flag.v7_warned_weiyan": false,
-     "flag.v7_envoy": true,
+     "flag.v7_envoy": false,
      "flag.v7_lamp_guard": false,
-     "flag.v7_fan": true,
+     "flag.v7_fan": false,
      "flag.v7_weiyan_word": false,
      "flag.v7_left": false,
      "flag.v7_exposed": false,
-     "rel.jiangwei.warmth": 4,
-     "rel.jiangwei.trust": 8,
-     "rel.jiangwei.esteem": 5,
-     "rel.simayi.warmth": 1,
+     "rel.jiangwei.warmth": 1,
+     "rel.jiangwei.trust": 2,
+     "rel.jiangwei.esteem": 4,
+     "rel.simayi.warmth": 0,
      "rel.simayi.trust": 0,
-     "rel.simayi.esteem": 2,
+     "rel.simayi.esteem": 0,
      "rel.weiyan.warmth": 1,
      "rel.weiyan.trust": 0,
      "rel.weiyan.esteem": 0,
@@ -12457,254 +12978,9 @@
      "heat.weiyan": 0,
      "imp.weiyan.offended": 1,
      "imp.jiangwei.offended": 0,
-     "grudge.weiyan": 0,
-     "flag.fate_dead": false
-    },
-    "ended_early": false,
-    "mem": {},
-    "commits": [],
-    "said": []
-   }
-  },
-  {
-   "id": "wanderer",
-   "title": {
-    "zh": "流落之人",
-    "en": "The Wanderer"
-   },
-   "desc": {
-    "zh": "你早早就离开了。五丈原的事，你是从远处听说的。",
-    "en": "You left early. You heard about Wuzhang from far away."
-   },
-   "carry": {
-    "vol": "sanguo_strategist_v7",
-    "v": {
-     "track": "liu",
-     "renown.loyal": 10,
-     "renown.cunning": 2,
-     "uncanny": 2,
-     "deviation": 5,
-     "prev.ended_early": true,
-     "renown.rash": 7,
-     "flag.mi_saved": true,
-     "flag.wenzhi_with_you": true,
-     "flag.confessed": true,
-     "flag.vouched_guan": true,
-     "flag.pleaded_guan": false,
-     "flag.promised_return": false,
-     "flag.liuqi_pretext": false,
-     "flag.pleaded_weiyan": true,
-     "flag.foresaw_weiyan": false,
-     "flag.zy_refused": true,
-     "flag.adou_kept": false,
-     "flag.wz_west": false,
-     "flag.wz_jingzhou": true,
-     "flag.wz_child": true,
-     "flag.pt_alive": false,
-     "flag.post_chengdu": false,
-     "flag.post_jingzhou": false,
-     "flag.post_none": true,
-     "flag.guan_charge": true,
-     "flag.v3_came_back": false,
-     "flag.v3_hermit": false,
-     "flag.dd_guard": false,
-     "flag.dd_lusu": false,
-     "flag.jin_trick": false,
-     "flag.jin_honest": true,
-     "flag.xiang_envoy": false,
-     "flag.xiang_hold": false,
-     "flag.xiang_obey": false,
-     "flag.xiang_bargain": false,
-     "flag.xiang_letter": false,
-     "flag.wakou_go": true,
-     "flag.hz_goaded": false,
-     "flag.hz_backed": true,
-     "flag.dj_flags": false,
-     "flag.dj_charge": true,
-     "flag.fed_pride": false,
-     "flag.praised_hz": false,
-     "flag.hs_open": false,
-     "flag.jl_chase": false,
-     "flag.jl_yangxiu": false,
-     "flag.mf_mended": false,
-     "flag.mf_warned": false,
-     "flag.mf_told": false,
-     "flag.wh_ask": false,
-     "flag.v3_to_jing": true,
-     "flag.fs_helped": false,
-     "flag.fs_private": false,
-     "flag.fs_pushed": false,
-     "flag.hn_soft": false,
-     "flag.hn_canon": true,
-     "flag.hn_apology": false,
-     "flag.fire_spared": true,
-     "flag.warned_jing": false,
-     "flag.v3_left": false,
-     "flag.v3_exposed": false,
-     "flag.sidelined": false,
-     "rel.liubei.warmth": 5,
-     "rel.liubei.trust": 1,
-     "rel.liubei.esteem": 5,
-     "rel.caocao.warmth": 0,
-     "rel.caocao.trust": 1,
-     "rel.caocao.esteem": 1,
-     "rel.guanyu.warmth": 5,
-     "rel.guanyu.trust": 5,
-     "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 3,
-     "rel.zhuge.trust": 4,
-     "rel.zhuge.esteem": 4,
-     "rel.wenzhi.warmth": 5,
-     "rel.wenzhi.trust": 5,
-     "rel.wenzhi.esteem": 3,
-     "rel.wenzhi.intimacy": 5,
-     "rel.zhaoyun.warmth": 5,
-     "rel.zhaoyun.trust": 5,
-     "rel.zhaoyun.esteem": 0,
-     "rel.lusu.warmth": 2,
-     "rel.lusu.trust": 5,
-     "rel.lusu.esteem": 1,
-     "rel.pangtong.warmth": 5,
-     "rel.pangtong.trust": 1,
-     "rel.pangtong.esteem": 1,
-     "rel.fazheng.warmth": 1,
-     "rel.fazheng.trust": 2,
-     "rel.fazheng.esteem": 4,
-     "rel.huangzhong.warmth": 5,
-     "rel.huangzhong.trust": 4,
-     "rel.huangzhong.esteem": 4,
-     "imp.guanyu.offended": 0,
-     "imp.liubei.offended": 0,
-     "imp.fazheng.offended": 0,
-     "imp.huangzhong.offended": 0,
-     "imp.lusu.offended": 0,
-     "flag.v3_token": false,
-     "grudge.guanyu": 0,
-     "flag.v4_came_back": false,
-     "flag.v4_hermit": false,
-     "flag.pd_guard": true,
-     "flag.pd_bow": false,
-     "flag.flood_plan": false,
-     "flag.flood_people": false,
-     "flag.pd_spare": false,
-     "flag.pow_home": false,
-     "flag.bone_rest": false,
-     "flag.wz_huatuo": false,
-     "flag.v4_to_jing": false,
-     "flag.v4_order": false,
-     "flag.v4_early_sy": false,
-     "flag.lx_warned": false,
-     "flag.v4_kept_rear": false,
-     "flag.mf_kind": false,
-     "flag.mf_pressed": true,
-     "flag.v4_mf_path": false,
-     "flag.v4_early_call": true,
-     "flag.v4_relief": false,
-     "flag.v4_ride": false,
-     "flag.guan_alive": false,
-     "flag.v4_with_guan": false,
-     "flag.v4_letter": true,
-     "flag.v4_counsel_wait": false,
-     "flag.v4_vow": true,
-     "flag.v4_wz_letter": true,
-     "flag.v4_left": false,
-     "flag.v4_exposed": false,
-     "flag.v4_wz_map": false,
-     "flag.v5_came_back": false,
-     "flag.v5_hermit": false,
-     "flag.v5_north": false,
-     "flag.wz_qingnang": false,
-     "flag.liufeng_spared": false,
-     "flag.v5_mengda": true,
-     "flag.v5_fei_letter": false,
-     "flag.v5_fei_vow": true,
-     "flag.v5_zhaoyun": false,
-     "flag.v5_nearly": false,
-     "flag.v5_langzhong": true,
-     "flag.v5_fei_warned": false,
-     "flag.fei_alive": false,
-     "flag.v5_fei_night": false,
-     "flag.v5_peace": false,
-     "flag.v5_hz_ride": false,
-     "flag.v5_hz_word": false,
-     "flag.v5_firebreak": false,
-     "flag.v5_map": false,
-     "flag.v5_rear": false,
-     "flag.v5_guard": false,
-     "flag.v5_guan_last": false,
-     "flag.v5_entrusted": false,
-     "flag.v5_masu": false,
-     "flag.wz_wed": false,
-     "flag.v5_left": true,
-     "flag.v5_exposed": false,
-     "flag.v5_blamed_fei": false,
-     "flag.v5_asked_sun": false,
-     "flag.v5_zy_pact": false,
-     "flag.v5_after_burn": false,
-     "flag.v6_came_back": false,
-     "flag.v6_hermit": true,
-     "flag.v6_dengzhi": false,
-     "flag.v6_to_wu": false,
-     "flag.v6_masu_praise": false,
-     "flag.v6_masu_doubt": false,
-     "flag.v6_lushui": false,
-     "flag.v6_cure": false,
-     "flag.v6_water": false,
-     "flag.v6_mercy": false,
-     "flag.v6_fire_plan": false,
-     "flag.v6_officials": false,
-     "flag.v6_left": false,
-     "flag.v6_exposed": false,
-     "flag.v6_said_killall": false,
-     "flag.v6_wz_herb": false,
-     "flag.v7_came_back": false,
-     "flag.v7_hermit": true,
-     "flag.v7_biao": false,
-     "flag.v7_child": false,
-     "flag.v7_student": false,
-     "flag.v7_ziwu": false,
-     "flag.v7_mother": false,
-     "flag.v7_jt_with": false,
-     "flag.v7_jt_warned": false,
-     "flag.v7_jt_road": false,
-     "flag.v7_jt_wangping": false,
-     "flag.v7_wall": false,
-     "flag.masu_alive": false,
-     "flag.v7_old_farewell": false,
-     "flag.v7_feud": false,
-     "flag.v7_warned_weiyan": false,
-     "flag.v7_envoy": false,
-     "flag.v7_lamp_guard": false,
-     "flag.v7_fan": false,
-     "flag.v7_weiyan_word": false,
-     "flag.v7_left": false,
-     "flag.v7_exposed": false,
-     "rel.jiangwei.warmth": 1,
-     "rel.jiangwei.trust": 1,
-     "rel.jiangwei.esteem": 1,
-     "rel.simayi.warmth": 0,
-     "rel.simayi.trust": 0,
-     "rel.simayi.esteem": 1,
-     "rel.weiyan.warmth": 1,
-     "rel.weiyan.trust": 1,
-     "rel.weiyan.esteem": 1,
-     "heat.liubei": 0,
-     "heat.caocao": 0,
-     "heat.guanyu": 0,
-     "heat.zhuge": 0,
-     "heat.wenzhi": 0,
-     "heat.zhaoyun": 0,
-     "heat.lusu": 0,
-     "heat.pangtong": 0,
-     "heat.fazheng": 0,
-     "heat.huangzhong": 0,
-     "heat.jiangwei": 0,
-     "heat.simayi": 0,
-     "heat.weiyan": 0,
-     "imp.weiyan.offended": 0,
-     "imp.jiangwei.offended": 0,
-     "grudge.weiyan": 0,
-     "flag.fate_dead": false,
+     "grudge.weiyan": 4,
+     "flag.v7_zg_ling": true,
+     "flag.v7_after_lamp": false,
      "ended_early": true
     },
     "ended_early": true,

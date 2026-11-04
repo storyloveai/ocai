@@ -1221,6 +1221,26 @@
    },
    "carry": false
   },
+  "grudge.lusu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·记仇",
+    "en": "Lu Su · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
+  },
   "flag.v4_came_back": {
    "type": "flag",
    "init": false,
@@ -1844,6 +1864,17 @@
    },
    "carry": false
   },
+  "grudge.zhuge": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "丞相·记仇",
+    "en": "The Chancellor · grudge"
+   },
+   "carry": false
+  },
   "flag.v7_came_back": {
    "type": "flag",
    "init": false,
@@ -2334,12 +2365,21 @@
    },
    "carry": false
   },
-  "flag.fate_dead": {
+  "flag.v7_zg_ling": {
    "type": "flag",
    "init": false,
    "label": {
-    "zh": "死于非命",
-    "en": "Died before the volume's end"
+    "zh": "丞相给了你一支令箭",
+    "en": "The Chancellor gave you a command arrow"
+   },
+   "carry": false
+  },
+  "flag.v7_after_lamp": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "七星灯那一夜已经过去",
+    "en": "The night of the seven-star lamp has passed"
    },
    "carry": false
   }
@@ -8169,12 +8209,71 @@
       {
        "add": "rel.zhuge.warmth",
        "by": 1
+      },
+      {
+       "set": "flag.v7_after_lamp",
+       "to": true
       }
      ],
      "values": [
       "yi",
       "yong"
      ]
+    },
+    {
+     "id": "guard_ling",
+     "type": "dilemma",
+     "label": {
+      "zh": "举起丞相给你的令箭，拦在帐门口。",
+      "en": "Raise the command arrow the Chancellor gave you and bar the tent door."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "魏延看见令箭，单膝跪了下来：『末将遵令。』军情由你进帐低声禀报，主灯一直亮着。到了第六夜，丞相自己咳了一阵，主灯晃了晃，灭了。丞相反倒笑了：『这一回，谁也不怪。』",
+        "en": "At the sight of the arrow Wei Yan drops to one knee. 'I obey.' You go in and report the news in a low voice, and the main lamp stays lit. On the sixth night the Chancellor has a fit of coughing; the lamp flickers and goes out. He only smiles. 'This time, no one is to blame.'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v7_lamp_guard",
+       "to": true
+      },
+      {
+       "add": "rel.weiyan.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.zhuge.warmth",
+       "by": 1
+      },
+      {
+       "set": "flag.v7_after_lamp",
+       "to": true
+      },
+      {
+       "add": "rel.weiyan.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.zhuge.trust",
+       "by": 1
+      }
+     ],
+     "values": [
+      "yi",
+      "yong"
+     ],
+     "when": {
+      "v": "flag.v7_zg_ling",
+      "op": "==",
+      "val": true
+     },
+     "because": {
+      "zh": "因为丞相给过你那支令箭",
+      "en": "Because the Chancellor gave you that command arrow"
+     }
     },
     {
      "id": "let",
@@ -8195,6 +8294,10 @@
       {
        "add": "rel.jiangwei.trust",
        "by": 1
+      },
+      {
+       "set": "flag.v7_after_lamp",
+       "to": true
       }
      ]
     },
@@ -8217,6 +8320,10 @@
       {
        "add": "rel.zhuge.warmth",
        "by": 2
+      },
+      {
+       "set": "flag.v7_after_lamp",
+       "to": true
       }
      ],
      "values": [
@@ -9228,6 +9335,92 @@
      "id": "weiyan"
     }
    ]
+  },
+  "x_rel_zgling": {
+   "id": "x_rel_zgling",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "令箭",
+    "en": "The Command Arrow"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "丞相把一支令箭放在你手里：『亮的身子，亮自己知道。营里若有一天乱了，子衡兄凭这支箭，可以替亮挡一挡。』",
+      "en": "The Chancellor places a command arrow in your hand. 'I know the state of my own body. If the camp is ever thrown into disorder, Brother Ziheng, with this arrow you can stand in for me.'"
+     },
+     "rel": [
+      "zhuge",
+      "trust",
+      3
+     ]
+    }
+   ],
+   "choices": [
+    {
+     "id": "take",
+     "type": "expression",
+     "label": {
+      "zh": "双手接过。",
+      "en": "Take it in both hands."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "丞相点点头，又低头看他的文书了。灯芯爆了一下。",
+        "en": "The Chancellor nods and goes back to his papers. The wick sputters."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v7_zg_ling",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.warmth",
+       "by": 1
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "when": {
+    "all": [
+     {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 6
+     },
+     {
+      "v": "flag.v7_zg_ling",
+      "op": "!=",
+      "val": true
+     },
+     {
+      "v": "flag.v7_after_lamp",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   },
+   "art": {
+    "scene": "lamp",
+    "layers": [],
+    "illus": "v7_lamp"
+   },
+   "cast": [
+    {
+     "id": "zhuge"
+    }
+   ]
   }
  },
  "endings": [
@@ -9749,6 +9942,7 @@
    }
   }
  ],
+ "recipe": "relations",
  "future_terms": [
   {
    "term": {
@@ -10884,7 +11078,7 @@
      "rel.guanyu.esteem": 4,
      "rel.zhuge.warmth": 6,
      "rel.zhuge.trust": 10,
-     "rel.zhuge.esteem": 8,
+     "rel.zhuge.esteem": 9,
      "rel.wenzhi.warmth": 7,
      "rel.wenzhi.trust": 6,
      "rel.wenzhi.esteem": 4,
@@ -10911,6 +11105,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -10997,7 +11193,8 @@
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
      "flag.v6_said_killall": false,
-     "flag.v6_wz_herb": true
+     "flag.v6_wz_herb": true,
+     "grudge.zhuge": 0
     },
     "ended_early": false,
     "mem": {},
@@ -11119,6 +11316,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11205,7 +11404,8 @@
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
      "flag.v6_said_killall": false,
-     "flag.v6_wz_herb": true
+     "flag.v6_wz_herb": true,
+     "grudge.zhuge": 0
     },
     "ended_early": false,
     "mem": {},
@@ -11228,9 +11428,9 @@
     "v": {
      "track": "liu",
      "renown.loyal": 10,
-     "renown.cunning": 3,
+     "renown.cunning": 2,
      "uncanny": 1,
-     "deviation": 10,
+     "deviation": 12,
      "prev.ended_early": false,
      "renown.rash": 5,
      "flag.mi_saved": true,
@@ -11298,7 +11498,7 @@
      "rel.guanyu.warmth": 6,
      "rel.guanyu.trust": 5,
      "rel.guanyu.esteem": 4,
-     "rel.zhuge.warmth": 4,
+     "rel.zhuge.warmth": 7,
      "rel.zhuge.trust": 10,
      "rel.zhuge.esteem": 10,
      "rel.wenzhi.warmth": 7,
@@ -11327,6 +11527,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -11397,8 +11599,8 @@
      "flag.v6_lushui": true,
      "flag.v6_cure": true,
      "flag.v6_water": false,
-     "flag.v6_mercy": false,
-     "flag.v6_fire_plan": true,
+     "flag.v6_mercy": true,
+     "flag.v6_fire_plan": false,
      "flag.v6_officials": false,
      "flag.v6_left": false,
      "flag.v6_exposed": false,
@@ -11413,7 +11615,8 @@
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
      "flag.v6_said_killall": false,
-     "flag.v6_wz_herb": true
+     "flag.v6_wz_herb": true,
+     "grudge.zhuge": 0
     },
     "ended_early": false,
     "mem": {},
@@ -11535,6 +11738,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": false,
@@ -11621,7 +11826,8 @@
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
      "flag.v6_said_killall": false,
-     "flag.v6_wz_herb": false
+     "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0
     },
     "ended_early": false,
     "mem": {},
@@ -11743,6 +11949,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": false,
@@ -11829,7 +12037,8 @@
      "heat.fazheng": 0,
      "heat.huangzhong": 0,
      "flag.v6_said_killall": false,
-     "flag.v6_wz_herb": false
+     "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0
     },
     "ended_early": false,
     "mem": {},
@@ -11951,6 +12160,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -12038,6 +12249,7 @@
      "heat.huangzhong": 0,
      "flag.v6_said_killall": false,
      "flag.v6_wz_herb": false,
+     "grudge.zhuge": 0,
      "ended_early": true
     },
     "ended_early": true,

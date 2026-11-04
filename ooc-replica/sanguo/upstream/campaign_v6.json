@@ -1220,6 +1220,26 @@
    },
    "carry": false
   },
+  "grudge.lusu": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "鲁肃·记仇",
+    "en": "Lu Su · grudge"
+   },
+   "carry": false
+  },
+  "flag.fate_dead": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死于非命",
+    "en": "Died before the volume's end"
+   },
+   "carry": false
+  },
   "flag.v4_came_back": {
    "type": "flag",
    "init": false,
@@ -1970,6 +1990,17 @@
    "label": {
     "zh": "温芷给了你一包草",
     "en": "Wen Zhi gave you a bundle of herbs"
+   },
+   "carry": false
+  },
+  "grudge.zhuge": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "丞相·记仇",
+    "en": "The Chancellor · grudge"
    },
    "carry": false
   }
@@ -6185,7 +6216,69 @@
      ],
      "values": [
       "ren"
-     ]
+     ],
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": "<=",
+      "val": 3
+     }
+    },
+    {
+     "id": "mercy_r",
+     "type": "dilemma",
+     "label": {
+      "zh": "说：火可以放。可谷口留一条出路，让愿意扔下藤甲的人走出来。",
+      "en": "Say: set the fire. But leave a way out at the mouth of the valley, for anyone who throws off his armour."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "丞相没有犹豫，当场点了头：『就依子衡兄。』那一夜，盘蛇谷烧了起来。谷口那条路上，扔下藤甲跑出来的人，有好几千。丞相站在山上，还是哭了：『吾虽有功于社稷，必损寿矣！』",
+        "en": "The Chancellor doesn't hesitate; he nods at once. 'As you say, Brother Ziheng.' That night Coiled Snake Valley burns. Along the path at its mouth, thousands throw down their rattan armour and run out. Standing on the hill, the Chancellor weeps all the same. 'I have served the state, but this will cost me years of my life!'"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.v6_mercy",
+       "to": true
+      },
+      {
+       "add": "rel.zhuge.warmth",
+       "by": 2
+      },
+      {
+       "add": "rel.zhuge.trust",
+       "by": 1
+      },
+      {
+       "add": "deviation",
+       "by": 2
+      },
+      {
+       "add": "renown.loyal",
+       "by": 1
+      },
+      {
+       "add": "rel.zhuge.esteem",
+       "by": 1
+      }
+     ],
+     "echo": [
+      "e_mercy"
+     ],
+     "values": [
+      "ren"
+     ],
+     "when": {
+      "v": "rel.zhuge.trust",
+      "op": ">=",
+      "val": 4
+     },
+     "because": {
+      "zh": "因为丞相信你，当场就依了你",
+      "en": "Because the Chancellor trusts you, he agrees on the spot"
+     }
     },
     {
      "id": "plan",
@@ -7739,6 +7832,15 @@
  ],
  "situations": [
   {
+   "id": "dead",
+   "kind": "dead",
+   "flag": "flag.fate_dead",
+   "label": {
+    "zh": "身死",
+    "en": "dead"
+   }
+  },
+  {
    "id": "sidelined",
    "kind": "sidelined",
    "flag": "flag.sidelined",
@@ -7762,7 +7864,84 @@
    }
   }
  ],
- "moves": [],
+ "recipe": "relations",
+ "moves": [
+  {
+   "id": "zg_threat2",
+   "to": "zhuge",
+   "means": {
+    "zh": "又一次当面威胁丞相、说要杀他",
+    "en": "threatens the Chancellor to his face again / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "丞相这一回没有看你。第二天，他让人送来一纸调令：『子衡兄劳苦，回成都歇歇吧。』押送粮草的车队走的时候，把你也带上了。",
+      "en": "This time the Chancellor doesn't look at you. The next day an order arrives: 'Brother Ziheng has worked hard; let him rest in Chengdu.' When the grain convoy heads back, it takes you with it."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "set": "flag.v6_left",
+     "to": true
+    },
+    {
+     "add": "rel.zhuge.trust",
+     "by": -3
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "when": {
+    "v": "grudge.zhuge",
+    "op": ">=",
+    "val": 2
+   },
+   "ends": true
+  },
+  {
+   "id": "zg_threat",
+   "to": "zhuge",
+   "means": {
+    "zh": "当面威胁丞相、说要杀他",
+    "en": "threatens the Chancellor to his face / says they will kill him"
+   },
+   "out": [
+    {
+     "text": {
+      "zh": "丞相手里的羽扇停了一下，又慢慢摇了起来。他什么也没说。",
+      "en": "The Chancellor's feather fan pauses, then slowly starts to move again. He says nothing."
+     }
+    }
+   ],
+   "effects": [
+    {
+     "add": "rel.zhuge.trust",
+     "by": -2
+    },
+    {
+     "add": "rel.zhuge.warmth",
+     "by": -1
+    },
+    {
+     "add": "renown.rash",
+     "by": 2
+    }
+   ],
+   "match": "杀了?你|宰了你|砍了你|要你的命|取你(的)?性命|你的(人)?头|刺杀|除掉你|弄死你|让你死|kill you|i'll kill|your head|end you|you'll die",
+   "labels": [
+    "threat"
+   ],
+   "when": {
+    "v": "grudge.zhuge",
+    "op": "<=",
+    "val": 1
+   }
+  }
+ ],
  "future_terms": [
   {
    "term": {
@@ -8773,6 +8952,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -8965,6 +9146,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -9157,6 +9340,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,
@@ -9349,6 +9534,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": false,
@@ -9541,6 +9728,8 @@
      "imp.lusu.offended": 0,
      "flag.v3_token": false,
      "grudge.guanyu": 0,
+     "grudge.lusu": 0,
+     "flag.fate_dead": false,
      "flag.v4_came_back": false,
      "flag.v4_hermit": false,
      "flag.pd_guard": true,

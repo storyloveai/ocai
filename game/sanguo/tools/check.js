@@ -20,6 +20,10 @@ if (camp.realm) { for (const ch of camp.chapters) { const c = camp.realm.control
 const pct = (a, b) => (100 * a / b).toFixed(1) + "%";
 console.log(`# ${camp.title.zh} · ${camp.volume.zh}`);
 console.log(`nodes ${Object.keys(camp.nodes).length}, chapters ${camp.chapters.length}, echoes ${Object.keys(camp.echoes).length}, debts ${Object.keys(camp.debts).length}`);
+if (camp.recipe === "relations") {
+  const r = CC.recipe(camp);
+  console.log(`\n## recipe relations: ${r.changes.length} scenes change with a relationship · approach ${r.approach.map(a => a.node + (a.pays.length ? "→" + a.pays.join("/") : "（没用上）")).join(", ") || "无"} · split ${r.split.length} · offense ${Object.entries(r.offense).map(([w, ok]) => w + (ok ? "✓" : "✗")).join(" ") || "无"}`);
+}
 console.log(`\n## static: ${v.errors.length} errors, ${v.warnings.length} warnings`);
 v.errors.forEach(e => console.log("  ERROR " + e));
 v.warnings.forEach(e => console.log("  warn  " + e));

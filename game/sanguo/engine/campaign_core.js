@@ -15,7 +15,7 @@
 (function (root) {
   "use strict";
   const CC = {};
-  CC.VERSION = "0.4.6";
+  CC.VERSION = "0.4.7";
   CC.SPECS = ["storydate.campaign/0.3", "storydate.campaign/0.4"];
   // 3 for legacy campaigns, 4 for campaigns on the unified relationship model + tiers + genre pack
   CC.specLevel = camp => { const m = /^storydate\.campaign\/0\.(\d+)$/.exec(camp.spec || ""); return m ? +m[1] : 0; };
@@ -668,6 +668,43 @@
   };
 
   /* ---------------- static validation ---------------- */
+  /* ---------------- the relations recipe (关系层配方) ----------------
+   * A book that declares camp.recipe = "relations" promises, in every volume:
+   *   changes   ≥ 5 scenes whose intro has a paragraph shown because of where a relationship stands (paragraph.rel)
+   *   approach  ≥ 1 interrupt that comes to you because of a relationship (a .rel paragraph) and sets a flag that a later
+   *             choice with `because` reads — a gift that pays off
+   *   split     ≥ 1 request that lands differently: two choices in one scene with the same label, the one marked `because`
+   *             shown by a relationship tier
+   *   offense   everyone the player can threaten (a move labelled "threat") has a consequence for doing it again: a
+   *             grudge.<who> condition on a choice or move, or a confrontation with a way out that ends the volume
+   *   death     a choice that kills you (fate.kind "execute") sets the flag of a "dead" situation
+   * CC.recipe returns what the book has; CC.validate turns shortfalls into errors when the recipe is declared. */
+  CC.recipe = function (camp) {
+    const nodes = Object.values(camp.nodes), J = x => JSON.stringify(x || null);
+    const sets = cs => new Set(cs.flatMap(c => (c.effects || []).filter(e => e.set && e.to !== false).map(e => e.set)));
+    const changes = nodes.filter(n => n.kind !== "interrupt" && (n.intro || []).some(p => p.rel)).map(n => n.id);
+    const approach = nodes.filter(n => n.kind === "interrupt" && (n.intro || []).some(p => p.rel)).map(n => {
+      const flags = [...sets(n.choices)];
+      const pays = nodes.flatMap(m => m.choices.filter(c => c.because && flags.some(f => J(c.when).includes(`"${f}"`))).map(c => m.id + "." + c.id));
+      return { node: n.id, flags, pays };
+    });
+    const split = nodes.flatMap(n => n.choices.filter(c => c.because && /"rel\./.test(J(c.when)) &&
+      n.choices.some(o => o !== c && J(o.label) === J(c.label))).map(c => n.id + "." + c.id));
+    const threatened = [...new Set(Object.values(camp.nodes).concat([{ moves: camp.moves }]).flatMap(x => (x.moves || []).filter(m => (m.labels || []).includes("threat")).map(m => m.to)))];
+    const offense = {};
+    for (const who of threatened) {
+      const g = `"grudge.${who}"`;
+      const gated = nodes.some(n => n.choices.some(c => J(c.when).includes(g))) || Object.values(camp.nodes).concat([{ moves: camp.moves }]).some(x => (x.moves || []).some(m => J(m.when).includes(g)));
+      const rooms = new Set(Object.values(camp.nodes).concat([{ moves: camp.moves }]).flatMap(x => (x.moves || []).filter(m => m.to === who && m.goto).map(m => m.goto))
+        .concat((camp.flash || []).filter(f => f.char === who).map(f => f.node)));
+      const out = [...rooms].some(id => camp.nodes[id] && camp.nodes[id].choices.some(c => c.ends));
+      offense[who] = gated || out;
+    }
+    const deadFlags = new Set((camp.situations || []).filter(x => x.kind === "dead").map(x => x.flag));
+    const deaths = nodes.flatMap(n => n.choices.filter(c => c.fate && c.fate.kind === "execute").map(c => ({ at: n.id + "." + c.id, ok: [...sets([c])].some(f => deadFlags.has(f)) })));
+    return { changes, approach, split, offense, deaths };
+  };
+
   CC.validate = function (camp) {
     const errors = [], warnings = [];
     const E = (m) => errors.push(m), W = (m) => warnings.push(m);
@@ -819,6 +856,16 @@
     }
     for (const n of Object.values(camp.nodes)) for (const c of n.choices) (c.values || []).forEach(tag => { if (!VT[tag]) E(`${n.id}.${c.id}: unknown value ${tag}`); });
     if (strict && !Object.values(camp.chars).some(ch => ch.values && Object.keys(ch.values).length)) W("no character has values: choices will never draw automatic reactions");
+
+    if (camp.recipe === "relations") {
+      const r = CC.recipe(camp), at = "recipe relations";
+      if (r.changes.length < 5) E(`${at}: only ${r.changes.length} scenes change with a relationship (need 5)`);
+      if (!r.approach.some(a => a.pays.length)) E(`${at}: no one comes to you because of a relationship with something that pays off later`);
+      r.approach.filter(a => !a.pays.length).forEach(a => W(`${at}: ${a.node} gives ${a.flags.join(", ") || "nothing"} but no choice marked "because" uses it`));
+      if (!r.split.length) E(`${at}: no request that lands differently depending on a relationship`);
+      Object.entries(r.offense).filter(([, ok]) => !ok).forEach(([who]) => E(`${at}: threatening ${who} twice has no consequence (gate a choice or move on grudge.${who}, or give the confrontation a way out that ends the volume)`));
+      r.deaths.filter(d => !d.ok).forEach(d => E(`${at}: ${d.at} kills the player but sets no "dead" situation flag`));
+    } else if (camp.recipe) E(`recipe ${camp.recipe}: unknown (this engine knows "relations")`);
 
     // situations: a known flag, a known kind; a scene must keep at least one way forward whatever has happened to you
     (camp.situations || []).forEach((x, i) => {
