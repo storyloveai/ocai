@@ -80,7 +80,9 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 <script>
 const CAMP = /*__CAMPAIGN__*/null;
 const ART_FILES = new Set(/*__ART__*/[]);
-const ART_BASE = "art/";
+// 不管页面是以 /assets/xichuan、/assets/xichuan/ 还是 /assets/xichuan/index.html 打开，图都从同一个目录取
+const ART_BASE = (() => { const u = new URL(location.href); u.search = u.hash = ""; let p = u.pathname; if (/\.html?$/.test(p)) p = p.replace(/[^/]*$/, ""); else if (!p.endsWith("/")) p += "/"; return u.origin + p + "art/"; })();
+const PRELOADED = new Set(); function preload(url) { if (url && !PRELOADED.has(url)) { PRELOADED.add(url); const i = new Image(); i.src = url; } }
 CC.validate(CAMP);
 const $ = s => document.querySelector(s);
 const store = { get(k, d) { try { const v = localStorage.getItem("xc." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
@@ -108,14 +110,16 @@ const unlock = (kind, id) => { const u = store.get(kind, []); if (!u.includes(id
 /* ---------- drawing ---------- */
 function drawBg() {
   const el = $("#bg"), id = V.bg, url = id && art(`bg/${id}.webp`);
-  el.style.backgroundImage = url ? `url("${url}")` : id ? `linear-gradient(160deg, hsl(${hue(id)} 45% 32%), hsl(${(hue(id) + 40) % 360} 40% 14%))` : "none";
+  const grad = id ? `linear-gradient(160deg, hsl(${hue(id)} 45% 32%), hsl(${(hue(id) + 40) % 360} 40% 14%))` : "none";
+  el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;   // 图没到之前先垫一层颜色，不会是一片黑
   el.innerHTML = !url && id ? `<span class="ph"></span>` : "";
   if (!url && id) el.firstChild.textContent = t((CAMP.art.bg || {})[id]) || id;
 }
 function drawCg() {
   const el = $("#cg"), id = V.cg, url = id && art(`cg/${id}.webp`);
   el.classList.toggle("on", !!id);
-  el.style.backgroundImage = url ? `url("${url}")` : id ? `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))` : "none";
+  const grad = id ? `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))` : "none";
+  el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
   el.innerHTML = !url && id ? `<span class="ph"></span>` : "";
   if (!url && id) el.firstChild.textContent = "CG · " + (t((CAMP.art.cg || {})[id]) || id);
 }
@@ -282,6 +286,7 @@ function title() {
   el.querySelector("button")?.focus();
 }
 function start() {
+  ART_FILES.forEach(f => { if (f.startsWith("bg/") || f.endsWith("/normal.webp")) preload(ART_BASE + f); });
   G = CC.newGame(CAMP); V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null, started: null };
   $("#title").hidden = true; $("#endscreen").hidden = true; draw(); next();
 }
