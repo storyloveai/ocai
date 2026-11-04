@@ -73,3 +73,26 @@ jobs:
           node tools/check.js content/v8/campaign_v8.json 3000
       - name: Illustrated edition has a picture everywhere (no ink fallbacks)
         run: python3 tools/art_audit.py --strict
+
+  xichuan:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: game/xichuan
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build script and page
+        run: |
+          python3 content/story.py
+          python3 tools/build.py
+      - name: Committed build outputs are up to date
+        run: |
+          git diff --exit-code -- content/campaign.json web/index.html || (echo "::error::Run 'python3 content/story.py && python3 tools/build.py' in game/xichuan and commit the results." && exit 1)
+      - name: Static checks and simulated players
+        run: node ../engine/tools/check.mjs content/campaign.json 3000

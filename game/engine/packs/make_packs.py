@@ -64,6 +64,23 @@ PACKS = {
  "checklist": [T("证据程序是剧情规则，不写成现实中的法律或调查教程", "Evidence procedure is a story rule, never a real-world legal or investigation guide"),
                T("原著人物保留自己的目标，不围着玩家转", "Characters from the book keep their own goals; they don't orbit the player")],
 },
+"school-romance": {
+ "title": T("校园恋爱", "School romance"),
+ "premise": T("galgame 式的恋爱故事：读剧情、看人，在关键处做选择。好感藏在后台，只从对方的态度里感觉得到；共通线走完，按好感进入某个人的线。好玩在“当时随手的一句话，后来才知道有多重”。",
+              "A visual-novel romance: read, watch the characters, choose at the key moments. Affection stays hidden and shows only in how they treat you; after the common route, affection decides whose route you enter. The fun is learning later how much a passing remark weighed."),
+ "values": {"cheng": T("真诚", "sincerity"), "wen": T("温柔", "gentleness"), "yong": T("勇气", "courage"), "ti": T("体贴", "consideration"), "xi": T("玩笑", "playfulness"), "gu": T("坚持", "persistence")},
+ "roles": {
+   "risk": {"required": True, **T("误会、流言：说错话、做错事积下来的。到线必须出事（一场误会、一次冷战），不能只是一个数字。", "Misunderstanding, rumor: what careless words and deeds pile up. Crossing the line must cause something (a misunderstanding, a cold spell), not just change a number.")},
+   "time": {"required": False, **T("剩下的日子：离某个期限（毕业、拆迁、离开）还有多久。", "Days left: how long until a deadline (graduation, demolition, a departure).")},
+   "keepsake": {"required": False, **T("信物、回忆：一起做过的事留下的东西，后面会在关键时刻用上。", "Keepsakes and memories: what shared moments leave behind, used later at a key moment.")}},
+ "failures": [T("错过：该开口的时候没有开口", "Missed: you didn't speak when it mattered"),
+              T("误会：一句话被听成了另一个意思", "Misunderstood: one remark heard as something else"),
+              T("普通结局：谁都不够亲近，春天就这样过去了", "Normal ending: no one close enough, and the season simply passes")],
+ "checklist": [T("所有角色都是成年人；纯爱，不写露骨内容", "Every character is an adult; romance stays non-explicit"),
+               T("好感不显示数字，只体现在台词、表情和后面的走向上", "Affection is never shown as a number; only in lines, expressions and what follows"),
+               T("分歧点总有一条路可走：谁都不够时进普通结局，不卡死", "Every branch point has a way forward: if no one is close enough, the normal ending, never a dead end"),
+               T("每条个人线都有好结局和普通结局，通关全部个人线后开启真结局", "Every route has a good and a normal ending; clearing all routes opens the true ending")],
+},
 }
 
 if __name__ == "__main__":
