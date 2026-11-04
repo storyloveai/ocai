@@ -7,7 +7,7 @@ Codex 出图，Claude 审图，用户定标准立绘。流程和三国插画版�
 | 路径 | 内容 | 尺寸 |
 |---|---|---|
 | `bg/<id>.webp` | 背景，id 见 `content/story.py` 的 `ART["bg"]` | 1920×1080 |
-| `sprites/<人>/<表情>.webp` | 立绘，透明底；表情：normal、smile、shy、angry、sad、surprised | 900×1600 |
+| `sprites/<人>/<表情>.webp` | 立绘，透明底；表情：normal、smile、shy、angry、sad、surprised。某个表情还没画时，播放页用 normal | 1024×1536 |
 | `cg/<id>.webp` | CG，id 见 `ART["cg"]`；`cg/title.webp` 是标题画面 | 1920×1080 |
 
 ## 画风

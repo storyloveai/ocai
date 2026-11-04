@@ -15,7 +15,7 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 #bg { background-size: cover; background-position: center; transition: opacity .6s }
 #bg .ph, #cg .ph { position: absolute; left: 16px; top: 14px; font-size: 13px; color: rgba(255,255,255,.75); letter-spacing: .08em; background: rgba(0,0,0,.25); padding: 2px 10px; border-radius: 99px }
 #sprites { pointer-events: none }
-.sprite { position: absolute; bottom: 0; height: 92%; aspect-ratio: 9 / 16; transform: translateX(-50%); transition: left .35s, filter .25s, opacity .3s; display: flex; align-items: flex-end; justify-content: center }
+.sprite { position: absolute; bottom: 0; height: 96%; aspect-ratio: 2 / 3; transform: translateX(-50%); transition: left .35s, filter .25s, opacity .3s; display: flex; align-items: flex-end; justify-content: center }
 .sprite img { height: 100%; width: auto; object-fit: contain }
 .sprite.dim { filter: brightness(.62) saturate(.8) }
 .sprite svg { height: 100%; width: 100% }
@@ -136,7 +136,7 @@ function drawSprites() {
   for (const [who, s] of Object.entries(V.sprites)) {
     const d = document.createElement("div"); d.className = "sprite" + (V.speaker && V.speaker !== who ? " dim" : "");
     d.style.left = (POS[s.at] ?? 50) + "%";
-    const url = art(`sprites/${who}/${s.face}.webp`);
+    const url = art(`sprites/${who}/${s.face}.webp`) || art(`sprites/${who}/normal.webp`);   // an expression not drawn yet: the standard sprite
     if (url) { const img = new Image(); img.src = url; img.alt = ""; d.append(img); } else d.append(silhouette(who, s.face));
     box.append(d);
   }
