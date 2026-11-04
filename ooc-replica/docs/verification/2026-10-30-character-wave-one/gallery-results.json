@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "size": "desktop",
+      "lang": "zh",
+      "tenPictures": "pass",
+      "language": "pass",
+      "responsive": "pass"
+    },
+    {
+      "size": "desktop",
+      "lang": "en",
+      "tenPictures": "pass",
+      "language": "pass",
+      "responsive": "pass"
+    },
+    {
+      "size": "mobile",
+      "lang": "zh",
+      "tenPictures": "pass",
+      "language": "pass",
+      "responsive": "pass"
+    },
+    {
+      "size": "mobile",
+      "lang": "en",
+      "tenPictures": "pass",
+      "language": "pass",
+      "responsive": "pass"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,187 @@
+{
+  "date": "2026-10-30",
+  "issue": 94,
+  "external_paid_image_api_used": false,
+  "images": [
+    {
+      "key": "gu-chengye",
+      "age": 30,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/gu-chengye.png",
+      "web_asset": "dist/assets/characters/gu-chengye.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "3ad4a47d141ae247d806a826b084f77b297a7ab5c0cc0e77b6934e3681bb3939",
+      "web_sha256": "15052ac66676f921cae750bdef2fc87550b9f813ebb33234f91319e9a8d6c320",
+      "web_bytes": 205388,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "ji-tinglan",
+      "age": 29,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/ji-tinglan.png",
+      "web_asset": "dist/assets/characters/ji-tinglan.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "41e3a7ad535ef74ba1e5fac6ef7ae1a7058e1d402dc797291f8947d47182fd63",
+      "web_sha256": "87a2dac7880cb596db4ab923f81962ea97422d9fed897ef5084d649704d00636",
+      "web_bytes": 179906,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "wen-chi",
+      "age": 26,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/wen-chi.png",
+      "web_asset": "dist/assets/characters/wen-chi.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "913c567a4efc829c83ff4ada3bfa39d1c793a17748bbe7b07ba2a038fc72b678",
+      "web_sha256": "d9d16d8b56a7515622903556ca27e74be74ff36a5fc5b221074f95ad240fcd92",
+      "web_bytes": 235488,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "xie-wujiu",
+      "age": 34,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/xie-wujiu.png",
+      "web_asset": "dist/assets/characters/xie-wujiu.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "51f1708b60fa503962658402cb3cbbdc03f97760a729a64c8c7daf578c79f571",
+      "web_sha256": "938b154be3cabf0932cd5c85a8fcad76d6b1838d882747c3df12b5b2f900c7ca",
+      "web_bytes": 273462,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "eli-voss",
+      "age": 32,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/eli-voss.png",
+      "web_asset": "dist/assets/characters/eli-voss.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "ccc6b621f76ba229a2a414fe82b5d396a9157ca14e9050f4741a63d7ad30447a",
+      "web_sha256": "06abc45d2c151acfd010e89a0a88fa99d1f8bec27a41e33e3905096df0836323",
+      "web_bytes": 178534,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "song-zhixia",
+      "age": 27,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/song-zhixia.png",
+      "web_asset": "dist/assets/characters/song-zhixia.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "ab177407a67dc998879f06b411c2acd56077d4cb414347cb0351775b598a0c73",
+      "web_sha256": "99fe35543387a1d5f6e762a932d2d84e5312b7584e2f1123cac31106348195c6",
+      "web_bytes": 232980,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "xu-zhiji",
+      "age": 32,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/xu-zhiji.png",
+      "web_asset": "dist/assets/characters/xu-zhiji.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "2f4725610926735f76dddf5fad8c58918dbecfab2cf806c21cc1e13aac6605b8",
+      "web_sha256": "ae0aca7337dc7078398ae624d7939911391450f8cc763555696f6750b6de8cef",
+      "web_bytes": 213818,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "ye-xinghui",
+      "age": 28,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/ye-xinghui.png",
+      "web_asset": "dist/assets/characters/ye-xinghui.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "d7cda641d742499a630fc70ed30dca8ae46cc03a2bd230087a3db152d79b3962",
+      "web_sha256": "9bec28102f1570ca3c67dfd8e93f745df27018630f64f09038b9be12847b8925",
+      "web_bytes": 192122,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "yan-fei",
+      "age": 216,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/yan-fei.png",
+      "web_asset": "dist/assets/characters/yan-fei.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "106121051dc72a9e504ffbf28ebaf0da7f2bd9039d4c7c1041424e6b4f6c9017",
+      "web_sha256": "dcd6305844f04545cb9b33ce8b3cbebff89a444f677ab9ac9a9bce34afc0641b",
+      "web_bytes": 220166,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    },
+    {
+      "key": "irene-sol",
+      "age": 35,
+      "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+      "model": "not exposed by tool",
+      "references": [],
+      "original": "character-art/wave-one/source/irene-sol.png",
+      "web_asset": "dist/assets/characters/irene-sol.webp",
+      "dimensions": [
+        1086,
+        1448
+      ],
+      "original_sha256": "196389293979a5a49bf36c8fc17d7c590bb556e30678667c016570f63fdcf811",
+      "web_sha256": "0e0e2dcec5a0c3bfc39794ab8706dcebd8ed1bf59b45d6f19be4a5d61893baa5",
+      "web_bytes": 288676,
+      "processing": "WebP encoding only; no crop, resize, retouch or content changes",
+      "review": "One clothed adult, no visible text/watermark, appearance and setting reviewed against the authored profile."
+    }
+  ]
+}
