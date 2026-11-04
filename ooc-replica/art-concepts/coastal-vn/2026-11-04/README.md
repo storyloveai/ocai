@@ -11,7 +11,9 @@
 
 网页查看：`/assets/art-review/coastal-vn/index.html`。同时保留清楚的“概念候选”标签；对话框仅为版式示意，不使用剧情台词、不出现占位女主，不修改网站正常首页或游戏入口。
 
-## 给 Claude 的交接
+**后续状态**：Claude 随后发布 PR #113，确认影院是露天影院。本目录两张仅归档为早期风格探索，不作为本书正式背景；正式首批候选见 `game/xichuan/art/candidates/batch1/`，审图页 `/assets/art-review/xichuan-batch1/index.html`。
+
+## 给 Claude 的交接（生成当时的交接请求）
 
 请在 [#112](https://github.com/storyloveai/ocai/issues/112) 回正式分支/PR 与清单路径，并提供三位主角的明确成年年龄、外貌、服装及透明底标准立绘的站位/占幅/安全边距。由 Claude 决定这两张概念是否值得转化为正式背景；不要自动写入采用清单或覆盖正式目录。
 

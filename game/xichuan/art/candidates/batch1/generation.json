@@ -1,0 +1,608 @@
+{
+  "issue": 112,
+  "parentPR": 113,
+  "reviewPR": 114,
+  "date": "2026-11-04",
+  "sourceCommit": "49078fe48c9d920b2d4b472773e8cb0218f941a7",
+  "sourceJobs": "game/xichuan/art/jobs-batch1.jsonl",
+  "status": "all requested candidates generated; awaiting user and Claude review; none adopted",
+  "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+  "model": "not exposed by tool",
+  "seed": "not exposed by tool",
+  "externalPaidImageAPIUsed": false,
+  "notes": [
+    "Original prompt and negative_prompt preserved verbatim at the start of every submitted prompt; acceptance criteria and delivery metadata are separate wrappers.",
+    "Formal source PNG candidates only. No target crop/resize and no edits to the author's jobs, story, engine, formal art directories or generated game pages.",
+    "Output target 900x1600 / 1920x1080 is for post-approval adoption; original generated dimensions are recorded separately.",
+    "Two pre-manifest coastal-cinema concepts are separate and are not part of these jobs. Formal cinema canon is open-air.",
+    "No expression variants generated before standard sprites are selected."
+  ],
+  "records": [
+    {
+      "id": "sprite-shencheng-normal",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nDelivery metadata: one standalone PNG image, requested source canvas 1024x1536. Do not make a contact sheet. Transparent background.",
+      "transparentBackground": true,
+      "source": "sprite-shencheng-normal/a.png",
+      "sourceSha256": "0312f1e437ba694436ce93617babf6514fe23d4614af06e5159b2282d0c62479",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1941156,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.5459,
+      "preview": "sprite-shencheng-normal-a.webp",
+      "previewSha256": "bde544974b8186976757699d7d342fcd09455a1d1c80e76cd5ea38679040e783",
+      "previewBytes": 1197042,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-jibai-normal",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nDelivery metadata: one standalone PNG image, requested source canvas 1024x1536. Do not make a contact sheet. Transparent background.",
+      "transparentBackground": true,
+      "source": "sprite-jibai-normal/a.png",
+      "sourceSha256": "95e0526d59e46620d417b485c8a691fc3e41f043e596c3a338c6e800709a763f",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1831453,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.528,
+      "preview": "sprite-jibai-normal-a.webp",
+      "previewSha256": "7f3344f2d07248dbdd9dc15a4bdf50fbee5e9123aa2b8afa34bfc0e3fab8dfb3",
+      "previewBytes": 1123912,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-zhiyao-normal",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-zhiyao-normal/b.png",
+      "sourceSha256": "0114092b84bcb333654dbf7b5f4e4293cd2ec424b8ed196869738f3a11e3bb28",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1867112,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.5029,
+      "preview": "sprite-zhiyao-normal-b.webp",
+      "previewSha256": "b4213f0551e1695cd09079f65e2240c3dca56763eeb75efc49190fc8af04b1f6",
+      "previewBytes": 1186786,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-shencheng-normal",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-shencheng-normal/b.png",
+      "sourceSha256": "55f9f128c920ee84598a818597225f8c0e855df0dac34974bf43425fff08b7c7",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 2090515,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.5176,
+      "preview": "sprite-shencheng-normal-b.webp",
+      "previewSha256": "659722ffc3a971bcb9c0b5786f60bd3775b3b8923e14592370f5231f44c64739",
+      "previewBytes": 1295384,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-jibai-normal",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-jibai-normal/b.png",
+      "sourceSha256": "fbd4c02484444c5bee893855dadb3e4e2e1c57d237983a4fc2796d36dd94edd8",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1792307,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.4931,
+      "preview": "sprite-jibai-normal-b.webp",
+      "previewSha256": "cdd6919d5dee945285c535f9f9c33ccd4416b8acf5ca8d73069ccb930740d439",
+      "previewBytes": 1099042,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-zhiyao-normal",
+      "variant": "c",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-zhiyao-normal/c.png",
+      "sourceSha256": "c164e52b601678568cb599e52f5b43ae39c16990ae2d1f06dc17ac57ceb41efa",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1995243,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.4864,
+      "preview": "sprite-zhiyao-normal-c.webp",
+      "previewSha256": "7f672d5bc6f2ecd6537c7c76f7382bb35e345bbbd78a3198fe1600a96bc790b5",
+      "previewBytes": 1270466,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-shencheng-normal",
+      "variant": "c",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-shencheng-normal/c.png",
+      "sourceSha256": "2466aab6e8399fd9eb1855034113d97362916a0320fe770788ce95da31332fdb",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 2098035,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.5061,
+      "preview": "sprite-shencheng-normal-c.webp",
+      "previewSha256": "5c157678aea78c4eee154106c6deceee8f8e88e9d76dca3225312c9c2b851a9d",
+      "previewBytes": 1306670,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-jibai-normal",
+      "variant": "c",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-jibai-normal/c.png",
+      "sourceSha256": "5b0b73f221598f82492011187742eb711d0cbd546cf978b2c28decc257fa33f7",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1820811,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.4794,
+      "preview": "sprite-jibai-normal-c.webp",
+      "previewSha256": "dad7a7ef46924da373abe13d4a4e0c224b3d04c7f4dd406d612a049f01335c4e",
+      "previewBytes": 1120726,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-zhiyao-normal",
+      "variant": "d",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-zhiyao-normal/d.png",
+      "sourceSha256": "3d7aa899451f4aabe3f03b3235556dc284f2e4d7fce01cf5daa32aa2ea58df59",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1933973,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.4955,
+      "preview": "sprite-zhiyao-normal-d.webp",
+      "previewSha256": "d9d484d501f13b7d95f897e61fde788fc4a3f7491f36606644da71d4883df8b9",
+      "previewBytes": 1223828,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-shencheng-normal",
+      "variant": "d",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-shencheng-normal/d.png",
+      "sourceSha256": "9b9a36b064d936aad7a0f5f5bf30310f9388be5e1af5215ca19d4c0fdab02005",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 2038986,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.515,
+      "preview": "sprite-shencheng-normal-d.webp",
+      "previewSha256": "dbd8bedd827112c5ea36c209b9f235093fe7af7b3316f945316f5f193f6650c4",
+      "previewBytes": 1259694,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-jibai-normal",
+      "variant": "d",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nDelivery metadata: one standalone transparent PNG, requested source canvas 1024x1536. Strict knee-up camera: knees just outside the lower edge; shoes are outside the frame. Do not make a contact sheet.",
+      "transparentBackground": true,
+      "source": "sprite-jibai-normal/d.png",
+      "sourceSha256": "d756de41b1f78734913f6967593b034ba4c55de18507dfa794785c49aa18f940",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1881403,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.4694,
+      "preview": "sprite-jibai-normal-d.webp",
+      "previewSha256": "a24be1473a34a2d961164c3dcb42e0873670ca05aa121efc308a8d1f946ab9c0",
+      "previewBytes": 1162946,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "sprite-zhiyao-normal",
+      "variant": "a-full-body-initial",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nDelivery metadata: one standalone PNG image, requested source canvas 1024x1536. Do not make a contact sheet. Transparent background.",
+      "transparentBackground": true,
+      "review": "Superseded: full-body rather than required knee-up framing.",
+      "superseded": true,
+      "source": "sprite-zhiyao-normal/superseded/a-full-body-initial.png",
+      "sourceSha256": "5eea968c1471786c045f82775e7fa392febf2dc2d0981e96942516c0b15562bc",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1533712,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.7327
+    },
+    {
+      "id": "sprite-zhiyao-normal",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: calm, neutral, a faint natural smile.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n只有一个人，透明背景（PNG 带透明通道），没有地面阴影\n成年大学生的样子：脸和身材都是成年人，不像中学生\n膝上构图、正面略侧、双手自然，之后要在这张上换表情\n画风：现代日式 galgame 立绘，细线稿、柔和赛璐璐上色、眼睛高光细致\n画面里没有任何文字或标志\n\nRevision of candidate A: preserve the reference woman's exact adult face, chestnut hair, amber eyes, film-reel clip, denim jacket, plain white T-shirt, navy skirt, mild neutral expression and relaxed clasped hands. Correct ONLY the framing: a KNEE-UP sprite with knees below the bottom edge, no lower legs or shoes visible. Her head has a little top margin and the complete hair clip stays inside the canvas. Keep natural adult proportions. One transparent PNG, no backdrop or ground shadow. This is a framing correction, not a costume or identity redesign.",
+      "transparentBackground": true,
+      "referencePaths": [
+        "sprite-zhiyao-normal/superseded/a-full-body-initial.png"
+      ],
+      "revisionOf": "a-full-body-initial",
+      "source": "sprite-zhiyao-normal/a.png",
+      "sourceSha256": "37ac45da5b7b7a444a935d4e2790d1948c2692f96b7aed2a1c79926a7cbd06c0",
+      "dimensions": [
+        1024,
+        1536
+      ],
+      "imageMode": "RGBA",
+      "bytes": 1797272,
+      "adopted": false,
+      "alphaRange": [
+        0,
+        254
+      ],
+      "transparentFraction": 0.5576,
+      "preview": "sprite-zhiyao-normal-a.webp",
+      "previewSha256": "1925a8210ee58bf40d73c77d1c77fe06acc98fca708ba1bd16a0520bf1bc435d",
+      "previewBytes": 1136398,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-station",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A tiny one-platform railway station in a quiet Chinese seaside town in early spring afternoon: an old platform canopy, a single bench, blossoming trees beyond the fence, the sea glinting in the distance, overhead wires, gentle blue sky.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-station/a.png",
+      "sourceSha256": "1d7547691cb8de59122ff8d8292533f2638ca15193fc9d45cd46f869ff452510",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2675817,
+      "adopted": false,
+      "preview": "bg-station-a.webp",
+      "previewSha256": "2446c0dae9156dc289ad398acbc784ead98c89999e17b62bf32aeb32651eba8f",
+      "previewBytes": 429988,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-oldhouse",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. The courtyard of an old two-storey family house in a Chinese seaside town at late afternoon: weathered white walls, a tall loquat tree, a rusty iron gate, potted plants, warm slanted light.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-oldhouse/a.png",
+      "sourceSha256": "b195f0efa3a6a6523811d70784c6022e7da4a1ab80e164ba063707fb6abe1c9a",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2767728,
+      "adopted": false,
+      "preview": "bg-oldhouse-a.webp",
+      "previewSha256": "6e9f4630464c101509dc613f85867cb0a3e01c1ed854d814c6626f389bb65928",
+      "previewBytes": 454558,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-cinema_dusk",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. An old open-air cinema by the sea at sunset: a large white screen on a low concrete stage with its back to the ocean, rows of slightly rusted iron seats facing it, a small projection booth building behind the seats, the sky orange and pink, waves visible past the screen.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-cinema_dusk/a.png",
+      "sourceSha256": "2f6f0161e58a659c790f74c62e6317f5f902c4b68d899dcec2de1989167383d0",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2485658,
+      "adopted": false,
+      "preview": "bg-cinema_dusk-a.webp",
+      "previewSha256": "8fc460761f1615cb16f42e79cb7a4073bc8f29eab0cc5c9d67f96159131d3a7b",
+      "previewBytes": 377208,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-campus",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A university plaza on club recruitment day in spring: rows of folding tables with colorful blank banners and balloons, cherry and magnolia trees, a modern campus building behind, bright midday light. No people; banners must be blank.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-campus/a.png",
+      "sourceSha256": "f6a54bf10f39b52862d240a2f57c3b6b9833accc36de7c7006829fc2b99a6cf8",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2584692,
+      "adopted": false,
+      "preview": "bg-campus-a.webp",
+      "previewSha256": "5d7b0cf193656c0d4b915a28f8230b56bede7add06dbf8c63608831a7b96188d",
+      "previewBytes": 406428,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-cafe",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. Interior of a small cozy café on a seawall: wooden counter with an espresso machine, a few small tables, a wind chime by the door, large windows showing the sea, warm afternoon light, plants on the sill.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-cafe/a.png",
+      "sourceSha256": "bba7e57da0a0d7d43b81bb95ff109f0e1247822935ba4ee7d99177b5e0a0af76",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2138708,
+      "adopted": false,
+      "preview": "bg-cafe-a.webp",
+      "previewSha256": "27cee6f94881a79b25104ca3b0349af34c15f4e4f1d68e7e784d510259510146",
+      "previewBytes": 300326,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-station",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A tiny one-platform railway station in a quiet Chinese seaside town in early spring afternoon: an old platform canopy, a single bench, blossoming trees beyond the fence, the sea glinting in the distance, overhead wires, gentle blue sky.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-station/b.png",
+      "sourceSha256": "6637d0e4103ddaa349285f1aeda11e9fa09f75aa6e24c7bf508da1008e15e2af",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2640000,
+      "adopted": false,
+      "preview": "bg-station-b.webp",
+      "previewSha256": "33aebd6842d097ffe2a55c81979b8f112aa80525c23180f3e4b9273273bf0611",
+      "previewBytes": 415126,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-oldhouse",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. The courtyard of an old two-storey family house in a Chinese seaside town at late afternoon: weathered white walls, a tall loquat tree, a rusty iron gate, potted plants, warm slanted light.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-oldhouse/b.png",
+      "sourceSha256": "ef7428072f6ca3583887aec0d5e945e0e5d42a85aa9ee1daaed7e93a4bb14c98",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2932600,
+      "adopted": false,
+      "preview": "bg-oldhouse-b.webp",
+      "previewSha256": "0f5f9a18d50d27e9fc09f3160e278e17564ad9a45f10d47960b00e77f9e400db",
+      "previewBytes": 502258,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-cinema_dusk",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. An old open-air cinema by the sea at sunset: a large white screen on a low concrete stage with its back to the ocean, rows of slightly rusted iron seats facing it, a small projection booth building behind the seats, the sky orange and pink, waves visible past the screen.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-cinema_dusk/b.png",
+      "sourceSha256": "10bdbe77ba8c96536a0478bff25bdb2aa0e6b1095ea96b154069df8619e43be7",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2448592,
+      "adopted": false,
+      "preview": "bg-cinema_dusk-b.webp",
+      "previewSha256": "2e8e2318ebec1cf8680471c6709201626384271113b232fe0f91467c295cfef5",
+      "previewBytes": 365724,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-campus",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A university plaza on club recruitment day in spring: rows of folding tables with colorful blank banners and balloons, cherry and magnolia trees, a modern campus building behind, bright midday light. No people; banners must be blank.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-campus/b.png",
+      "sourceSha256": "509ed0c4d52f7619c845fb27b3606962d1cd90eb12c26e1c2c6c4e6a27c0f814",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2483736,
+      "adopted": false,
+      "preview": "bg-campus-b.webp",
+      "previewSha256": "e946c4c9f78a008d0da5c06fa92aad8ffef4f481dbefdb93d466706abafc9017",
+      "previewBytes": 388562,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-cafe",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. Interior of a small cozy café on a seawall: wooden counter with an espresso machine, a few small tables, a wind chime by the door, large windows showing the sea, warm afternoon light, plants on the sill.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "source": "bg-cafe/b.png",
+      "sourceSha256": "2409d00ca2e9a58857d2a2d5f09b4c4b4f68a2b85b260fad2d68f0f4a79c896f",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2139440,
+      "adopted": false,
+      "preview": "bg-cafe-b.webp",
+      "previewSha256": "79a9f797cfa50a3eb37dae93379d95c018dda2f0d7e06cf6670c75aa3ff255c4",
+      "previewBytes": 299410,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-projection",
+      "variant": "b",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. Inside a small old cinema projection booth: two vintage 35mm film projectors facing a small window, film reels stacked on shelves, a workbench with a lamp, the wall covered in yellowed paper notes (no legible writing), warm dim light with dust in the air.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.\n\nBook context from the author's README: this booth serves an OPEN-AIR cinema by the sea. The small window looks OUTSIDE toward a blank outdoor movie screen and open sky, never into an enclosed auditorium. Both film projectors' lenses point in the SAME direction toward the projection window, not toward each other. The yellowed paper notes are blank, with no writing or scribbles.",
+      "transparentBackground": false,
+      "authorContextSource": "game/xichuan/README.md and literal projector-facing-window requirement from the job",
+      "source": "bg-projection/b.png",
+      "sourceSha256": "97eba559ebab9ddc3f4406d45d00951fd1181d4634c71900115f2bbadbab6875",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2089526,
+      "adopted": false,
+      "preview": "bg-projection-b.webp",
+      "previewSha256": "e702e35270e2af38ba9760925d4a9179d191b344e631c4a0e549f3f11fa1bc08",
+      "previewBytes": 235474,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    },
+    {
+      "id": "bg-projection",
+      "variant": "a-indoor-window-initial",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. Inside a small old cinema projection booth: two vintage 35mm film projectors facing a small window, film reels stacked on shelves, a workbench with a lamp, the wall covered in yellowed paper notes (no legible writing), warm dim light with dust in the air.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nDelivery metadata: one standalone background image, no contact sheet. The final frame is 16:9; keep the lower third calm, with no critical objects there. Do not draw a dialogue box.",
+      "transparentBackground": false,
+      "review": "Superseded: window implied an enclosed auditorium rather than the authored open-air cinema; notes and projector axes also needed correction.",
+      "superseded": true,
+      "source": "bg-projection/superseded/a-indoor-window-initial.png",
+      "sourceSha256": "27c00c963242272d3d84a9dd97178629597278e15637fda0b8d2b0bb86684145",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2094773,
+      "adopted": false
+    },
+    {
+      "id": "bg-projection",
+      "variant": "a-window-fixed-axes-initial",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. Inside a small old cinema projection booth: two vintage 35mm film projectors facing a small window, film reels stacked on shelves, a workbench with a lamp, the wall covered in yellowed paper notes (no legible writing), warm dim light with dust in the air.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nRevision of candidate A to match the book's established OPEN-AIR seaside cinema. Keep a warm dim old projection booth, two vintage 35mm projectors, film tins, wooden workbench, lamp and yellowed paper notes, with a calm lower third. Correct the small window: it must look OUTSIDE onto the blank outdoor cinema screen, OPEN sunset sky and a little sea; remove every trace of an enclosed auditorium or interior red curtains behind that window. Correct the projector orientation: the optical lenses of BOTH machines aim in parallel toward the SAME projection window, not inward at each other. Make ALL wall notes completely blank paper, with no writing, scribbles, letters or pseudo-lettering at all. No people. One 16:9 image, no interface, no borders.",
+      "transparentBackground": false,
+      "referencePaths": [
+        "bg-projection/superseded/a-indoor-window-initial.png"
+      ],
+      "revisionOf": "a-indoor-window-initial",
+      "authorContextSource": "game/xichuan/README.md: open-air cinema",
+      "review": "Superseded: exterior window and blank notes were corrected, but projector axes still faced inward.",
+      "superseded": true,
+      "source": "bg-projection/superseded/a-window-fixed-axes-initial.png",
+      "sourceSha256": "668cf0ffb01f59128748ffd54fbcd524b2eaed03d0ceaa0503466bf7f20a06df",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2148293,
+      "adopted": false
+    },
+    {
+      "id": "bg-projection",
+      "variant": "a",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. Inside a small old cinema projection booth: two vintage 35mm film projectors facing a small window, film reels stacked on shelves, a workbench with a lamp, the wall covered in yellowed paper notes (no legible writing), warm dim light with dust in the air.\n\nNegative prompt (verbatim):\nNo text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\n\nAcceptance criteria (verbatim):\n没有任何人物\n画面里没有文字、招牌字、标志\n16:9，下面三分之一留给对话框（不放关键内容）\n日式动画背景画风，和立绘放在一起不违和\n\nAuthor's established book context: the cinema is OPEN-AIR by the sea. Compose a fresh, physically coherent candidate from a REAR THREE-QUARTER VIEW: the camera is behind and to the left of the two projectors, looking past their backs toward the projection window in the far right wall. Both machines stand side by side and both optical axes point parallel toward that one window, away from the camera; do not put them facing one another. Their lamp-housing backs face generally toward the viewer and the lens ends face the window. Through the small window we see a plain outdoor movie screen, a little sea and open dusk sky. There is NO enclosed auditorium or interior theater curtain anywhere. Keep the shelving of film tins and workbench at the left, warm dim lamplight, blank yellowed notes, clear foreground floor in the lower third. ALL papers, machine nameplates and film tins are completely unlettered, with no handwriting, pseudo-lettering or logos. No people. Single 16:9 background.",
+      "transparentBackground": false,
+      "revisionOf": "a-window-fixed-axes-initial",
+      "authorContextSource": "game/xichuan/README.md and literal projector-facing-window requirement",
+      "source": "bg-projection/a.png",
+      "sourceSha256": "58fe1db014132ae69caf9152c4c04043acf9dfe0685bd7f1f22846aeb5ad91da",
+      "dimensions": [
+        1672,
+        941
+      ],
+      "imageMode": "RGB",
+      "bytes": 2101973,
+      "adopted": false,
+      "preview": "bg-projection-a.webp",
+      "previewSha256": "f6970cd2f67bf99c81abb5cf52b26b8b05f09de3e6581cdbb70bb73b30998d14",
+      "previewBytes": 244590,
+      "processing": "Preview encoding only; no crop, resizing, alpha editing or retouch. Original PNG unchanged."
+    }
+  ],
+  "activeCandidateCount": 24,
+  "supersededCount": 3
+}

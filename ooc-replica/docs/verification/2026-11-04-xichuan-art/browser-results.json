@@ -1,0 +1,59 @@
+{
+  "service": "Local static art-review page with the real generated candidate files; no model/gameplay/analytics calls",
+  "checks": [
+    {
+      "size": "desktop",
+      "lang": "zh",
+      "sprites": 12,
+      "backgrounds": 12,
+      "imageDecode": "pass",
+      "matteAndModal": "pass",
+      "selectionPersistenceAndExport": "pass",
+      "compositeAndDialogueToggle": "pass",
+      "languageSwitch": "pass",
+      "unrelatedStorageUnchanged": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "size": "desktop",
+      "lang": "en",
+      "sprites": 12,
+      "backgrounds": 12,
+      "imageDecode": "pass",
+      "matteAndModal": "pass",
+      "selectionPersistenceAndExport": "pass",
+      "compositeAndDialogueToggle": "pass",
+      "languageSwitch": "pass",
+      "unrelatedStorageUnchanged": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "size": "mobile",
+      "lang": "zh",
+      "sprites": 12,
+      "backgrounds": 12,
+      "imageDecode": "pass",
+      "matteAndModal": "pass",
+      "selectionPersistenceAndExport": "pass",
+      "compositeAndDialogueToggle": "pass",
+      "languageSwitch": "pass",
+      "unrelatedStorageUnchanged": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "size": "mobile",
+      "lang": "en",
+      "sprites": 12,
+      "backgrounds": 12,
+      "imageDecode": "pass",
+      "matteAndModal": "pass",
+      "selectionPersistenceAndExport": "pass",
+      "compositeAndDialogueToggle": "pass",
+      "languageSwitch": "pass",
+      "unrelatedStorageUnchanged": true,
+      "noHorizontalOverflow": true
+    }
+  ],
+  "errors": [],
+  "apiRequests": []
+}
