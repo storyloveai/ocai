@@ -1,0 +1,32 @@
+{
+  "modelAlias": "flux-3-image-klein",
+  "limitations": [
+    "Gateway auto-expands prompts; expansion may not be returned.",
+    "Gateway ignores size/n/response_format; inspect actual dimensions.",
+    "Historical built-in model version, generation latency and seed were not exposed; this is a small service/pipeline comparison, not a controlled model ranking.",
+    "The edit case compares input and output for preservation; it is not a head-to-head editing comparison."
+  ],
+  "records": [
+    {
+      "id": "gu-chengye",
+      "task": "generation",
+      "status": "failed",
+      "requestSha256": "e1a594658fdb3702fea1a2b4a607f92e386a588fbd402bd139aca9490bd2058d",
+      "requestedSeed": 103,
+      "referenceSha256": [],
+      "error": "Proxy tunnel refused the connection; request was not retried",
+      "elapsedSeconds": 0.135
+    }
+  ],
+  "assessment": "Not evaluated: no model image was returned.",
+  "connectivity": {
+    "gatewayDNS": "Name or service not known",
+    "proxy": "Tunnel connection failed: 403 Forbidden",
+    "reachedModelAuthentication": false,
+    "serviceKeyValidity": "not determined",
+    "attemptedImageRequests": 1,
+    "remainingCasesNotAttempted": true
+  },
+  "date": "2026-11-03",
+  "issue": 103
+}

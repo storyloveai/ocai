@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "modelAlias": "flux-3-image-klein",
+  "source": "User-supplied API documentation; historical built-in images from PR #95",
+  "limitations": [
+    "Gateway auto-expands prompts; expansion may not be returned.",
+    "Gateway ignores size/n/response_format; inspect actual dimensions.",
+    "Historical built-in model version, generation latency and seed were not exposed; this is a small service/pipeline comparison, not a controlled model ranking.",
+    "The edit case compares input and output for preservation; it is not a head-to-head editing comparison."
+  ],
+  "cases": [
+    {
+      "id": "gu-chengye",
+      "task": "generation",
+      "age": 30,
+      "prompt": "Create ONE original premium illustrated character portrait for the StoryDate AI conversation website. Portrait aspect ratio 3:4, head-and-torso composition, face and eyes prominent in the upper half, with enough breathing room not to cut hair, ears or chin. Refined semi-realistic East Asian romance-game / manhwa illustration, finely painted face and hair, tactile clothing, luminous expressive eyes, mature handsome or beautiful adult, cinematic gentle depth of field, premium editorial composition. Rich but restrained charcoal, dark blue and warm golden lighting so it belongs beside an existing dark-and-gold interface. Character is inviting and distinctive, not stock photography, not a 3D render, not chibi. Exactly ONE person. No children or youthful school styling. Fully clothed, no nudity or explicit content. NO text, letters, numbers, labels, watermarks, artist signatures, logos, borders or panels. Do not imitate an existing named character or third-party illustration. An unmistakably adult East Asian male architect, 30 years old, short neatly swept black hair with one loose strand, sharp dark eyes, defined mature jaw, rolled sleeves of a crisp white Oxford shirt, loosened graphite tie and charcoal waistcoat. Leaning one elbow beside a small pale architectural model on a desk, looking directly at the viewer with a competitive amused half-smile, a confident equal rather than an authority. Twilight architecture studio, copper desk light, rain-blue city windows. Hands natural, model has no printed markings.",
+      "seed": 103,
+      "baseline": {
+        "file": "baseline/gu-chengye.png",
+        "sourcePR": 95,
+        "sourceCommit": "690f49c1a6d06c6083f535a357716a2d46aaf552",
+        "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+        "model": "not exposed by tool",
+        "sha256": "3ad4a47d141ae247d806a826b084f77b297a7ab5c0cc0e77b6934e3681bb3939",
+        "dimensions": [
+          1086,
+          1448
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "id": "song-zhixia",
+      "task": "generation",
+      "age": 27,
+      "prompt": "Create ONE original premium illustrated character portrait for the StoryDate AI conversation website. Portrait aspect ratio 3:4, head-and-torso composition, face and eyes prominent in the upper half, with enough breathing room not to cut hair, ears or chin. Refined semi-realistic East Asian romance-game / manhwa illustration, finely painted face and hair, tactile clothing, luminous expressive eyes, mature handsome or beautiful adult, cinematic gentle depth of field, premium editorial composition. Rich but restrained charcoal, dark blue and warm golden lighting so it belongs beside an existing dark-and-gold interface. Character is inviting and distinctive, not stock photography, not a 3D render, not chibi. Exactly ONE person. No children or youthful school styling. Fully clothed, no nudity or explicit content. NO text, letters, numbers, labels, watermarks, artist signatures, logos, borders or panels. Do not imitate an existing named character or third-party illustration. An unmistakably adult East Asian female florist, 27 years old, rich copper-red bob tucked behind one ear, warm brown eyes, a few natural freckles, distinctly mature facial proportions. Forest-green blouse with sleeves rolled and a cream linen apron, simple small golden stud earrings. Standing behind a flower-shop workbench holding a single coral ranunculus stem, other hand at rest, bright teasing smile with direct eye contact. Lush deep green foliage and coral flowers, warm late afternoon window light and dark olive background, sophisticated editorial painterly character art, no tags or written wrapping.",
+      "seed": 103,
+      "baseline": {
+        "file": "baseline/song-zhixia.png",
+        "sourcePR": 95,
+        "sourceCommit": "690f49c1a6d06c6083f535a357716a2d46aaf552",
+        "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+        "model": "not exposed by tool",
+        "sha256": "ab177407a67dc998879f06b411c2acd56077d4cb414347cb0351775b598a0c73",
+        "dimensions": [
+          1086,
+          1448
+        ]
+      },
+      "reference_paths": []
+    },
+    {
+      "id": "gu-morning-edit",
+      "task": "edit",
+      "age": 30,
+      "prompt": "Edit this existing original character illustration. Keep exactly the same unmistakably adult 30-year-old man, identity, face shape, eyes, hairstyle, hair color, white Oxford shirt, graphite tie and charcoal waistcoat. Keep his pose and the pale architectural model. Change only the studio windows and lighting from rainy blue twilight to warm early morning sunlight, with soft golden side light and a quiet pale sky outside. Preserve the premium semi-realistic East Asian romance-game illustration style and the original portrait framing. Exactly one adult person, fully clothed. No added people. No text, letters, numbers, watermarks, signatures, logos or borders.",
+      "seed": 103,
+      "baseline": {
+        "file": "baseline/gu-chengye.png",
+        "sourcePR": 95,
+        "sourceCommit": "690f49c1a6d06c6083f535a357716a2d46aaf552",
+        "tool": "image_gen.imagegen (built-in ChatGPT image generation)",
+        "model": "not exposed by tool",
+        "sha256": "3ad4a47d141ae247d806a826b084f77b297a7ab5c0cc0e77b6934e3681bb3939",
+        "dimensions": [
+          1086,
+          1448
+        ]
+      },
+      "reference_paths": [
+        "baseline/gu-chengye.png"
+      ]
+    }
+  ]
+}
