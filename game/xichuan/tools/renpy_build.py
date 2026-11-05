@@ -28,4 +28,5 @@ if "error" in lint.lower().split("statistics")[0]: print(lint); sys.exit(1)
 if dest.exists(): shutil.rmtree(dest)
 run(sdk / "launcher", "web_build", proj, "--destination", dest)
 for p in ("index.html.symbols",): (dest / p).unlink(missing_ok=True)      # 调试符号，网页用不到
+dest.with_suffix(".zip").unlink(missing_ok=True)                            # web_build 顺手打的压缩包，网站用不到
 print("Ren'Py 网页版 →", dest, f"{sum(f.stat().st_size for f in dest.rglob('*') if f.is_file()) / 1e6:.0f} MB")
