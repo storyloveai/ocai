@@ -83,7 +83,12 @@ const CAMP = /*__CAMPAIGN__*/null;
 const ART_FILES = new Set(/*__ART__*/[]);
 // 不管页面是以 /assets/xichuan、/assets/xichuan/ 还是 /assets/xichuan/index.html 打开，图都从同一个目录取
 const ART_BASE = (() => { const u = new URL(location.href); u.search = u.hash = ""; let p = u.pathname; if (/\.html?$/.test(p)) p = p.replace(/[^/]*$/, ""); else if (!p.endsWith("/")) p += "/"; return u.origin + p + "art/"; })();
-const PRELOADED = new Set(); function preload(url) { if (url && !PRELOADED.has(url)) { PRELOADED.add(url); const i = new Image(); i.src = url; } }
+const IMGS = new Map();          // url -> Promise<Image>，同一张图只下一次
+function preload(url) {
+  if (!url) return Promise.resolve(null);
+  if (!IMGS.has(url)) IMGS.set(url, new Promise(res => { const i = new Image(); i.onload = () => (i.decode ? i.decode().catch(() => {}) : Promise.resolve()).then(() => res(i)); i.onerror = () => res(null); i.src = url; }));
+  return IMGS.get(url);
+}
 CC.validate(CAMP);
 const $ = s => document.querySelector(s);
 const store = { get(k, d) { try { const v = localStorage.getItem("xc." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
@@ -95,7 +100,17 @@ const UI = {
   en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", tilt: "3D", savedAt: n => `Slot ${n}` },
 };
 const ui = k => UI[LANG][k];
-const art = p => ART_FILES.has(p) ? ART_BASE + p : null;
+// 手机屏幕用 1280 宽的小图（art/m/ 下），体积约一半
+const SMALL = Math.max(screen.width || 0, screen.height || 0) <= 1000;
+const art = p => SMALL && ART_FILES.has("m/" + p) ? ART_BASE + "m/" + p : ART_FILES.has(p) ? ART_BASE + p : null;
+// 提前下好接下来要用的图：背景（连深度图）、CG、立绘
+function prefetch(ops) {
+  for (const op of (ops || []).slice(0, 60)) {
+    if (op.op === "bg" && op.id) { preload(art(`bg/${op.id}.webp`)); preload(art(`depth/bg/${op.id}.webp`)); }
+    else if (op.op === "cg" && op.id) { preload(art(`cg/${op.id}.webp`)); preload(art(`depth/cg/${op.id}.webp`)); }
+    else if ((op.op === "show" || op.op === "say") && op.who && op.who !== "me") preload(art(`sprites/${op.who}/${op.face || "normal"}.webp`));
+  }
+}
 const hue = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
 const COLORS = { zhiyao: "#ff9db8", shencheng: "#8fc7ff", jibai: "#c7b4ff", zhou: "#c9b48a", chenghang: "#9fe0a8" };
 const nameOf = who => who === "me" ? t(CAMP.player.name) : who ? t(CAMP.chars[who].name) : "";
@@ -112,17 +127,29 @@ const unlock = (kind, id) => { const u = store.get(kind, []); if (!u.includes(id
 function drawBg() {
   const el = $("#bg"), id = V.bg, url = id && art(`bg/${id}.webp`);
   const grad = id ? `linear-gradient(160deg, hsl(${hue(id)} 45% 32%), hsl(${(hue(id) + 40) % 360} 40% 14%))` : "none";
-  el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;   // 图没到之前先垫一层颜色，不会是一片黑
-  ph(el, !url && id ? t((CAMP.art.bg || {})[id]) || id : null);
-  FX.bg && FX.bg.set(url, url && art(`depth/bg/${id}.webp`));
+  const apply = () => {
+    if (V.bg !== id || el.dataset.shown === (id || "")) return; el.dataset.shown = id || "";
+    el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
+    ph(el, !url && id ? t((CAMP.art.bg || {})[id]) || id : null);
+    FX.bg && FX.bg.set(url, url && art(`depth/bg/${id}.webp`));
+  };
+  if (!url) return apply();
+  // 新背景下好之前继续显示上一张，不露出底色；太久没到（网慢）才先垫颜色
+  preload(url).then(apply); setTimeout(apply, el.dataset.shown ? 2500 : 1500);
 }
 function drawCg() {
   const el = $("#cg"), id = V.cg, url = id && art(`cg/${id}.webp`);
-  el.classList.toggle("on", !!id);
-  const grad = id ? `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))` : "none";
-  el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
-  ph(el, !url && id ? "CG · " + (t((CAMP.art.cg || {})[id]) || id) : null);
-  FX.cg && FX.cg.set(url, url && art(`depth/cg/${id}.webp`));
+  if (!id) { el.classList.remove("on"); return; }
+  const grad = `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))`;
+  const apply = () => {
+    if (V.cg !== id || (el.dataset.shown === id && el.classList.contains("on"))) return; el.dataset.shown = id;
+    el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
+    ph(el, !url ? "CG · " + (t((CAMP.art.cg || {})[id]) || id) : null);
+    FX.cg && FX.cg.set(url, url && art(`depth/cg/${id}.webp`));
+    el.classList.add("on");
+  };
+  if (!url) return apply();
+  preload(url).then(apply); setTimeout(apply, 2500);   // CG 下好了才淡入
 }
 const POS = { left: 24, center: 50, right: 76 };
 function silhouette(who, face) {
@@ -150,7 +177,7 @@ function drawSprites() {
 function draw() { drawBg(); drawSprites(); drawCg(); }
 
 /* ---------- the script runner ---------- */
-function load(lines, src) { V.queue = lines.map((l, k) => ({ ...l, src: `${src}:${k}` })); V.i = 0; }
+function load(lines, src) { V.queue = lines.map((l, k) => ({ ...l, src: `${src}:${k}` })); V.i = 0; prefetch(lines); }
 function step() {
   clearTimeout(timer);
   if (typing) { finishTyping(); return; }
@@ -205,6 +232,7 @@ function menu(prompt, opts) {
 }
 function choiceMenu(n) {
   const os = CC.choices(CAMP, G).filter(o => !o.locked);
+  os.forEach(o => prefetch((o.c.script || []).slice(0, 12)));
   menu(ui("prompt"), os.map(o => ({ label: t(o.c.label), go: () => {
     V.log.push({ who: "", text: "▸ " + t(o.c.label) });
     const lines = o.c.script || []; CC.choose(CAMP, G, o.id); V.started = null;
@@ -213,6 +241,7 @@ function choiceMenu(n) {
 }
 function sideMenu() {
   const ch = CAMP.chapters[G.ch];
+  G.offer.forEach(id => prefetch((CAMP.nodes[id].script || []).slice(0, 12)));
   menu(t(ch.side_prompt || CAMP.side_prompt), G.offer.map(id => ({ label: t(CAMP.nodes[id].title), go: () => { CC.pickSide(CAMP, G, id); V.started = null; next(); } })));
 }
 function showEnd() {
@@ -285,6 +314,8 @@ function title() {
   auto = skip = false; clearTimeout(timer);
   const el = $("#title"); el.hidden = false; el.replaceChildren();
   const url = art("cg/title.webp") || art("bg/cinema_dusk.webp");
+  // 停在标题画面时，先把开场要用的图下好
+  const first = Object.values(CAMP.nodes).find(n => n.chapter === CAMP.chapters[0].id && n.kind === "main"); if (first) prefetch(first.script);
   el.style.backgroundImage = url ? `url("${url}")` : "linear-gradient(160deg, #2a3c6b, #f2a6b8 140%)";
   const h = document.createElement("h1"); h.textContent = t(CAMP.title);
   const sub = document.createElement("div"); sub.className = "sub"; sub.textContent = ui("sub");
@@ -299,7 +330,7 @@ function title() {
 }
 function start() {
   askTilt();
-  ART_FILES.forEach(f => { if (f.startsWith("bg/") || f.endsWith("/normal.webp")) preload(ART_BASE + f); });
+  ["zhiyao", "shencheng", "jibai"].forEach(w => preload(art(`sprites/${w}/normal.webp`)));
   G = CC.newGame(CAMP); V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null, started: null };
   $("#title").hidden = true; $("#endscreen").hidden = true; draw(); next();
 }
