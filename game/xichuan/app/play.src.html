@@ -170,7 +170,8 @@ function drawSprites() {
     const d = document.createElement("div"); d.className = "sprite" + (V.speaker && V.speaker !== who ? " dim" : "");
     d.style.left = (POS[s.at] ?? 50) + "%";
     const url = art(`sprites/${who}/${s.face}.webp`) || art(`sprites/${who}/normal.webp`);   // an expression not drawn yet: the standard sprite
-    if (url) { const img = new Image(); img.src = url; img.alt = ""; d.append(img); } else d.append(silhouette(who, s.face));
+    if (!url) continue;   // 还没画立绘的人（配角）不放占位轮廓，只在对话框上显示名字
+    const img = new Image(); img.src = url; img.alt = ""; d.append(img);
     box.append(d);
   }
 }
