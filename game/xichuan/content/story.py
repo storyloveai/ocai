@@ -211,7 +211,7 @@ X_RUMOR = scene("x_rumor", "*", "interrupt", T("流言", "Rumors"), [
     choice("ok", "expression", T("“……知道了。”", "\"…Got it.\""), [nar("这几天，路上遇见的人好像都在看我。", "For days after, everyone I pass seems to be looking at me.")], [add("rumor", -2)]),
 ], order=-1, when=V("rumor", ">=", 2))
 
-import common, zhiyao, shencheng, jibai, talk
+import common, zhiyao, shencheng, jibai, talk, stance
 
 CHAPTERS = [
     {"id": "p", "title": T("序章", "Prologue"), "intro": [P(T("三月，汐川。", "March, Xichuan."))], "offer": 0},
@@ -223,7 +223,7 @@ NODES = [PROLOGUE, C1_FAIR, S_ZHIYAO, S_SHENCHENG, S_JIBAI, X_RUMOR] + common.NO
 for f, zh, en in common.FLAGS + zhiyao.FLAGS + shencheng.FLAGS + jibai.FLAGS: VARS[f] = {"type": "flag", "init": False, "label": T(zh, en)}
 
 ENDINGS = [
-    {"id": "g_end", "title": T("尾声", "Epilogue"), "fragments": [{"id": e["id"], "cg": e["cg"], "title": e["title"], "text": e["text"], "when": e["when"]} for e in zhiyao.ENDINGS + shencheng.ENDINGS + jibai.ENDINGS] + [
+    {"id": "g_end", "title": T("尾声", "Epilogue"), "fragments": talk.BROKEN_ENDINGS + [{"id": e["id"], "cg": e["cg"], "title": e["title"], "text": e["text"], "when": e["when"]} for e in zhiyao.ENDINGS + shencheng.ENDINGS + jibai.ENDINGS] + [
         {"id": "none", "cg": "cg_end_none", "title": T("普通结局「最后一排」", "Normal Ending: The Back Row"), "text": T("最后一场放映，你坐在最后一排。散场的时候，银幕上的光一点一点暗下去。春天就这样过去了。", "At the last show you sit in the back row. As the crowd leaves, the light on the screen fades bit by bit. And so the spring passes."), "when": F("flag.route_none")}]},
     {"id": "g_heart", "title": T("这个春天", "This spring"), "fragments": [  # 走完一条个人线的人不再显示这一组
         {"id": "zhiyao", "text": T("夏知遥在社团群里，第一次叫了你的名字。", "In the club chat, Xia Zhiyao calls you by name for the first time."), "when": WARM_("zhiyao")},
@@ -258,6 +258,7 @@ CAMPAIGN = {
 # 自由对话（v0.18）：玩家对场上的女主说一句话，AI 只判断语气和这句话显出的品质（value_tags），好感由引擎规则决定
 CAMPAIGN["value_tags"] = CAMPAIGN["pack"]["values"]
 # 自由对话影响剧情（v0.20）：决裂、隐藏的门、承诺、说过的话被提起
+stance.extend(NODES)      # 主线按她的状态选版本（v0.22），要在 talk 之前，talk 再给所有版本补“记仇”冷场
 talk.extend(NODES, VARS, CAMPAIGN)
 CAMPAIGN["nodes"] = {n["id"]: n for n in NODES}
 ENDINGS.append(talk.WORDS_ENDING)

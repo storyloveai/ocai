@@ -1996,7 +1996,12 @@
      ],
      "values": [
       "ti"
-     ]
+     ],
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
     }
    ],
    "salience": 0,
@@ -2100,7 +2105,12 @@
      "op": "show",
      "who": "jibai",
      "face": "normal",
-     "at": "right"
+     "at": "right",
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -2131,7 +2141,12 @@
       "zh": "知遥，放映机的片门我调好了。下周六可以用。",
       "en": "Zhiyao, I've adjusted the projector's gate. It'll be ready next Saturday."
      },
-     "face": "normal"
+     "face": "normal",
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -2149,7 +2164,12 @@
       "zh": "我不是社员。我是被雇来的。……你好，陆同学。",
       "en": "I'm not a member. I'm hired help. …Hello, Mr. Lu."
      },
-     "face": "normal"
+     "face": "normal",
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -2167,7 +2187,12 @@
      "op": "show",
      "who": "shencheng",
      "face": "normal",
-     "at": "right"
+     "at": "right",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -2198,7 +2223,12 @@
       "zh": "……陆远。",
       "en": "…Lu Yuan."
      },
-     "face": "surprised"
+     "face": "surprised",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -2207,7 +2237,12 @@
       "zh": "回来了啊。",
       "en": "So you're back."
      },
-     "face": "normal"
+     "face": "normal",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -2225,7 +2260,12 @@
       "zh": "我还要送咖啡。",
       "en": "I've got coffee to deliver."
      },
-     "face": "normal"
+     "face": "normal",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "hide",
@@ -2255,6 +2295,11 @@
      "id": "chenghang"
     }
    ],
+   "when": {
+    "v": "flag.broken_zhiyao",
+    "op": "!=",
+    "val": true
+   },
    "free_scene": 3
   },
   "c1_poster": {
@@ -3051,6 +3096,28 @@
       },
       {
        "op": "say",
+       "who": null,
+       "t": {
+        "zh": "季白对你点了点头，客气得像对一个陌生人。",
+        "en": "Ji Bai nods to you, as politely as she would to a stranger."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.jibai",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_jibai",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
        "who": "jibai",
        "t": {
         "zh": "按住这里。对，别抖。",
@@ -3086,7 +3153,12 @@
      ],
      "values": [
       "ti"
-     ]
+     ],
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "id": "stage",
@@ -3236,7 +3308,12 @@
      ],
      "values": [
       "wen"
-     ]
+     ],
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
     }
    ],
    "salience": 0,
@@ -3344,7 +3421,12 @@
      "op": "show",
      "who": "shencheng",
      "face": "normal",
-     "at": "right"
+     "at": "right",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -3375,7 +3457,12 @@
       "zh": "……我妈让我送的。热饮，给看电影的人。",
       "en": "…My mom told me to bring these. Hot drinks, for the audience."
      },
-     "face": "normal"
+     "face": "normal",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "op": "say",
@@ -3386,9 +3473,18 @@
      },
      "face": "shy",
      "when": {
-      "v": "flag.cheng_coffee",
-      "op": "==",
-      "val": true
+      "all": [
+       {
+        "v": "flag.cheng_coffee",
+        "op": "==",
+        "val": true
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
      }
     },
     {
@@ -3480,6 +3576,11 @@
      "id": "zhou"
     }
    ],
+   "when": {
+    "v": "flag.broken_zhiyao",
+    "op": "!=",
+    "val": true
+   },
    "free_scene": 3
   },
   "c2_ledger": {
@@ -4203,6 +4304,28 @@
       },
       {
        "op": "say",
+       "who": null,
+       "t": {
+        "zh": "季白对你点了点头，客气得像对一个陌生人。",
+        "en": "Ji Bai nods to you, as politely as she would to a stranger."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.jibai",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_jibai",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
        "who": "jibai",
        "t": {
         "zh": "我？我说过，我不是社员。",
@@ -4239,7 +4362,12 @@
      ],
      "values": [
       "cheng"
-     ]
+     ],
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
     },
     {
      "id": "cheng",
@@ -4276,6 +4404,28 @@
        "who": "shencheng",
        "face": "normal",
        "at": "center"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+        "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.shencheng",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_shencheng",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
       },
       {
        "op": "say",
@@ -4325,6 +4475,11 @@
      "hint": {
       "zh": "她现在还不肯理你",
       "en": "She won't give you the time of day yet"
+     },
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
      }
     },
     {
@@ -4509,6 +4664,11 @@
      "id": "chenghang"
     }
    ],
+   "when": {
+    "v": "flag.broken_zhiyao",
+    "op": "!=",
+    "val": true
+   },
    "free_scene": 3
   },
   "c3_rooftop": {
@@ -5196,6 +5356,28 @@
       },
       {
        "op": "say",
+       "who": null,
+       "t": {
+        "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+        "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.zhiyao",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_zhiyao",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
        "who": "zhiyao",
        "t": {
         "zh": "……你来了。",
@@ -5276,6 +5458,28 @@
       },
       {
        "op": "say",
+       "who": null,
+       "t": {
+        "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+        "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.shencheng",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_shencheng",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
        "who": "shencheng",
        "t": {
         "zh": "……我就知道。",
@@ -5315,9 +5519,18 @@
      "when": {
       "all": [
        {
-        "v": "rel.shencheng.intimacy",
-        "op": ">=",
-        "val": 4
+        "all": [
+         {
+          "v": "rel.shencheng.intimacy",
+          "op": ">=",
+          "val": 4
+         },
+         {
+          "v": "flag.broken_shencheng",
+          "op": "!=",
+          "val": true
+         }
+        ]
        },
        {
         "v": "flag.broken_shencheng",
@@ -5361,6 +5574,28 @@
       },
       {
        "op": "say",
+       "who": null,
+       "t": {
+        "zh": "季白对你点了点头，客气得像对一个陌生人。",
+        "en": "Ji Bai nods to you, as politely as she would to a stranger."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.jibai",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_jibai",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
        "who": "jibai",
        "t": {
         "zh": "我修好了。第七卷。……要看吗？",
@@ -5400,9 +5635,18 @@
      "when": {
       "all": [
        {
-        "v": "rel.jibai.intimacy",
-        "op": ">=",
-        "val": 4
+        "all": [
+         {
+          "v": "rel.jibai.intimacy",
+          "op": ">=",
+          "val": 4
+         },
+         {
+          "v": "flag.broken_jibai",
+          "op": "!=",
+          "val": true
+         }
+        ]
        },
        {
         "v": "flag.broken_jibai",
@@ -12382,6 +12626,974 @@
    ],
    "free_scene": 3
   },
+  "c1_fair_out": {
+   "id": "c1_fair_out",
+   "chapter": "c1",
+   "kind": "main",
+   "title": {
+    "zh": "社团招新",
+    "en": "Club Fair"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "转学到汐川大学的第一天，室友程航就把我拖到了社团招新的广场上。",
+      "en": "On my first day at Xichuan University, my roommate Cheng Hang drags me to the club fair in the square."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "chase",
+     "type": "dilemma",
+     "label": {
+      "zh": "去追沈澄。",
+      "en": "Go after Shen Cheng."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "有事？",
+        "en": "Something you need?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.shencheng.intimacy",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "show",
+       "who": "shencheng",
+       "face": "normal",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "有事？",
+        "en": "Something you need?"
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "t": {
+        "zh": "……好久不见。",
+        "en": "…It's been a long time."
+       }
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "七年。不是“好久”。",
+        "en": "Seven years. Not 'a long time.'"
+       },
+       "face": "sad"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她走到拐角时，回头看了一眼。",
+        "en": "At the corner, she glances back once."
+       }
+      }
+     ],
+     "values": [
+      "gu"
+     ],
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "booth",
+     "type": "expression",
+     "label": {
+      "zh": "问季白：放映室在哪里？",
+      "en": "Ask Ji Bai where the booth is."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "银幕对面的小楼上。你祖父的东西，都还在那里。",
+        "en": "In the little building facing the screen. Your grandfather's things are all still there."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.jibai.intimacy",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "show",
+       "who": "jibai",
+       "face": "normal",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "银幕对面的小楼上。你祖父的东西，都还在那里。",
+        "en": "In the little building facing the screen. Your grandfather's things are all still there."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "ti"
+     ],
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "leave",
+     "type": "expression",
+     "label": {
+      "zh": "一个人走开。",
+      "en": "Walk away alone."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "广场上很吵。我在人群里走了很久，才走到海边。",
+        "en": "The square is loud. I walk a long way through the crowd before I reach the sea."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "广场上很吵。我在人群里走了很久，才走到海边。",
+        "en": "The square is loud. I walk a long way through the crowd before I reach the sea."
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "campus"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "转学到汐川大学的第一天，室友程航就把我拖到了社团招新的广场上。",
+      "en": "On my first day at Xichuan University, my roommate Cheng Hang drags me to the club fair in the square."
+     }
+    },
+    {
+     "op": "show",
+     "who": "chenghang",
+     "face": "smile",
+     "at": "left"
+    },
+    {
+     "op": "say",
+     "who": "chenghang",
+     "t": {
+      "zh": "听我的，大三转学生想融入，只有一条路：社团。",
+      "en": "Trust me. A third-year transfer has one way to fit in: clubs."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "hide",
+     "who": "chenghang"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "最角落的摊位上，摆着一台老式放映机。摊位后面坐着的，是昨天那个女孩。",
+      "en": "At the farthest corner booth sits an old projector. Behind it is the girl from yesterday."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "她看见了我，把报名表往桌上一扣，转过身去跟别人说话。",
+      "en": "She sees me, slaps the sign-up sheet face down on the table, and turns to talk to someone else."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "昨天那句话，收不回来了。",
+      "en": "What I said yesterday can't be taken back."
+     }
+    },
+    {
+     "op": "show",
+     "who": "jibai",
+     "face": "normal",
+     "at": "right",
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
+     "who": "jibai",
+     "t": {
+      "zh": "……你就是陆同学？社长让我转告你：电影社不缺人。",
+      "en": "…You're Mr. Lu? The president asked me to tell you: the film club isn't short of members."
+     },
+     "face": "sad",
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "op": "say",
+     "who": "jibai",
+     "t": {
+      "zh": "不过，放映室的门白天一般开着。那是影院的，不是社团的。",
+      "en": "Though the booth door is usually open during the day. It belongs to the cinema, not the club."
+     },
+     "face": "normal",
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "op": "hide",
+     "who": "jibai"
+    },
+    {
+     "op": "show",
+     "who": "shencheng",
+     "face": "normal",
+     "at": "right",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
+     "who": "shencheng",
+     "t": {
+      "zh": "……陆远。回来了啊。",
+      "en": "…Lu Yuan. So you're back."
+     },
+     "face": "surprised",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "op": "say",
+     "who": "shencheng",
+     "t": {
+      "zh": "我还要送咖啡。",
+      "en": "I've got coffee to deliver."
+     },
+     "face": "normal",
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "op": "hide",
+     "who": "shencheng"
+    }
+   ],
+   "when": {
+    "v": "flag.broken_zhiyao",
+    "op": "==",
+    "val": true
+   },
+   "cast": [
+    {
+     "id": "zhiyao"
+    },
+    {
+     "id": "jibai"
+    },
+    {
+     "id": "shencheng"
+    },
+    {
+     "id": "chenghang"
+    }
+   ],
+   "free_scene": 3
+  },
+  "c2_screening_out": {
+   "id": "c2_screening_out",
+   "chapter": "c2",
+   "kind": "main",
+   "title": {
+    "zh": "栏杆外面",
+    "en": "Outside the Railing"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "周六傍晚。我没有进影院，坐在海堤上，隔着铁栏杆看银幕。",
+      "en": "Saturday evening. I don't go into the cinema. I sit on the seawall and watch the screen through the iron railing."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "splice",
+     "type": "dilemma",
+     "label": {
+      "zh": "拿着钥匙去放映室，帮季白接片。",
+      "en": "Take the key to the booth and help Ji Bai splice the film."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "社长说过，不让你进来。",
+        "en": "The president said you weren't to come in."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.jibai.intimacy",
+       "by": 1
+      },
+      {
+       "add": "rel.jibai.esteem",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "bg",
+       "id": "projection"
+      },
+      {
+       "op": "show",
+       "who": "jibai",
+       "face": "surprised",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "季白对你点了点头，客气得像对一个陌生人。",
+        "en": "Ji Bai nods to you, as politely as she would to a stranger."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.jibai",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_jibai",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "社长说过，不让你进来。",
+        "en": "The president said you weren't to come in."
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "……算了。按住这里，别抖。",
+        "en": "…Never mind. Hold it here. Don't shake."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "三分钟后，银幕重新亮了起来。",
+        "en": "Three minutes later, the screen lights up again."
+       }
+      }
+     ],
+     "values": [
+      "ti"
+     ],
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "walk",
+     "type": "dilemma",
+     "label": {
+      "zh": "看见沈澄提着空保温桶往外走，追上去送她回家。",
+      "en": "See Shen Cheng leaving with the empty flask, and walk her home."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你在外面坐了一晚上？",
+        "en": "You sat out here all evening?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.shencheng.intimacy",
+       "by": 1
+      },
+      {
+       "add": "rel.shencheng.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "bg",
+       "id": "street"
+      },
+      {
+       "op": "show",
+       "who": "shencheng",
+       "face": "normal",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+        "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.shencheng",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_shencheng",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "你在外面坐了一晚上？",
+        "en": "You sat out here all evening?"
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "……你小时候，也总是一个人坐在栏杆外面。",
+        "en": "…When we were kids, you'd always sit outside the railing on your own too."
+       },
+       "face": "sad"
+      }
+     ],
+     "values": [
+      "wen"
+     ],
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "stay",
+     "type": "expression",
+     "label": {
+      "zh": "留在栏杆外面看完。",
+      "en": "Stay outside the railing and watch to the end."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "银幕重新亮起来的时候，我听见台上那个女孩松了一口气。她没有往这边看。",
+        "en": "When the screen comes back on, I hear the girl on the stage let out a breath. She doesn't look this way."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "银幕重新亮起来的时候，我听见台上那个女孩松了一口气。她没有往这边看。",
+        "en": "When the screen comes back on, I hear the girl on the stage let out a breath. She doesn't look this way."
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "cinema_dusk"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "周六傍晚。我没有进影院，坐在海堤上，隔着铁栏杆看银幕。",
+      "en": "Saturday evening. I don't go into the cinema. I sit on the seawall and watch the screen through the iron railing."
+     }
+    },
+    {
+     "op": "show",
+     "who": "zhou",
+     "face": "normal",
+     "at": "left"
+    },
+    {
+     "op": "say",
+     "who": "zhou",
+     "t": {
+      "zh": "老陆的孙子？进去坐啊。……哦，跟社长闹翻了？",
+      "en": "Old Lu's grandson? Go on in and sit down. …Oh. Fell out with the president, did you?"
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "zhou",
+     "t": {
+      "zh": "放映室的钥匙，你爷爷说过，哪天你回来了就给你。喏。去不去，你自己定。",
+      "en": "Your grandfather said if you ever came back, I was to give you the booth key. Here. Whether you use it is up to you."
+     },
+     "face": "sad"
+    },
+    {
+     "op": "hide",
+     "who": "zhou"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "七点，银幕亮了。来的人一共五个。放到一半，放映室那边传来一声闷响——画面停住，烧出一个白洞。",
+      "en": "Seven o'clock, and the screen lights up. Five people in all. Halfway through, a dull snap comes from the booth—the picture freezes and a white hole burns through it."
+     }
+    }
+   ],
+   "when": {
+    "v": "flag.broken_zhiyao",
+    "op": "==",
+    "val": true
+   },
+   "cast": [
+    {
+     "id": "zhou"
+    },
+    {
+     "id": "jibai"
+    },
+    {
+     "id": "shencheng"
+    }
+   ],
+   "free_scene": 3
+  },
+  "c3_member_out": {
+   "id": "c3_member_out",
+   "chapter": "c3",
+   "kind": "main",
+   "title": {
+    "zh": "公告栏",
+    "en": "The Notice Board"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "原创",
+    "en": "original"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "四月初，学生处的通知贴了出来：电影社月底前凑不齐三个人，就撤销。",
+      "en": "Early April, Student Affairs posts a notice: if the film club doesn't have three members by month's end, it's dissolved."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "jibai",
+     "type": "dilemma",
+     "label": {
+      "zh": "去放映室找季白。",
+      "en": "Go find Ji Bai in the booth."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "社长来问过我。我入了。她一个人撑不下去。",
+        "en": "The president asked me. I joined. She can't hold it together on her own."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.jibai.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.jibai.intimacy",
+       "by": 1
+      },
+      {
+       "set": "flag.third_jibai",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "bg",
+       "id": "projection"
+      },
+      {
+       "op": "show",
+       "who": "jibai",
+       "face": "normal",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "季白对你点了点头，客气得像对一个陌生人。",
+        "en": "Ji Bai nods to you, as politely as she would to a stranger."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.jibai",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_jibai",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "社长来问过我。我入了。她一个人撑不下去。",
+        "en": "The president asked me. I joined. She can't hold it together on her own."
+       },
+       "face": "sad"
+      },
+      {
+       "op": "say",
+       "who": "jibai",
+       "t": {
+        "zh": "你们之间的事，我不问。可放映室，你随时可以来。",
+        "en": "Whatever's between you two, I won't ask. But you can come to the booth any time."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "cheng"
+     ],
+     "when": {
+      "v": "flag.broken_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "cheng",
+     "type": "dilemma",
+     "label": {
+      "zh": "去咖啡馆找沈澄。",
+      "en": "Go find Shen Cheng at the café."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "她来问过我要不要入社。……我答应了。",
+        "en": "She came and asked if I'd join. …I said yes."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.shencheng.intimacy",
+       "by": 1
+      },
+      {
+       "set": "flag.third_cheng",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "bg",
+       "id": "cafe"
+      },
+      {
+       "op": "show",
+       "who": "shencheng",
+       "face": "normal",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+        "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+       },
+       "when": {
+        "all": [
+         {
+          "v": "grudge.shencheng",
+          "op": ">=",
+          "val": 1
+         },
+         {
+          "v": "flag.broken_shencheng",
+          "op": "!=",
+          "val": true
+         }
+        ]
+       }
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "她来问过我要不要入社。……我答应了。",
+        "en": "She came and asked if I'd join. …I said yes."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "shencheng",
+       "t": {
+        "zh": "潮声影院的最后一场，我本来就要去的。",
+        "en": "I was going to be at the Tidesound's last show anyway."
+       },
+       "face": "sad"
+      }
+     ],
+     "values": [
+      "ti"
+     ],
+     "req": {
+      "v": "rel.shencheng.trust",
+      "op": ">=",
+      "val": 2
+     },
+     "hint": {
+      "zh": "她现在还不肯理你",
+      "en": "She won't give you the time of day yet"
+     },
+     "when": {
+      "v": "flag.broken_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "none",
+     "type": "expression",
+     "label": {
+      "zh": "什么也不做。",
+      "en": "Do nothing."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "月底，电影社凑够了三个人。那天我在宿舍里，听程航说的。",
+        "en": "By month's end, the film club has its three members. I hear about it from Cheng Hang, back in the dorm."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.third_hang",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "月底，电影社凑够了三个人。那天我在宿舍里，听程航说的。",
+        "en": "By month's end, the film club has its three members. I hear about it from Cheng Hang, back in the dorm."
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "campus"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "四月初，学生处的通知贴了出来：电影社月底前凑不齐三个人，就撤销。",
+      "en": "Early April, Student Affairs posts a notice: if the film club doesn't have three members by month's end, it's dissolved."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "我看见夏知遥在公告栏前站了很久，然后一个摊位一个摊位地去问。没有人停下来。",
+      "en": "I see Zhiyao stand in front of the board for a long time, then go from booth to booth asking. No one stops."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "这件事，已经没有我的位置了。",
+      "en": "There's no place for me in this anymore."
+     }
+    }
+   ],
+   "when": {
+    "v": "flag.broken_zhiyao",
+    "op": "==",
+    "val": true
+   },
+   "cast": [
+    {
+     "id": "jibai"
+    },
+    {
+     "id": "shencheng"
+    }
+   ],
+   "free_scene": 3
+  },
   "x_break_zhiyao": {
    "id": "x_break_zhiyao",
    "chapter": "*",
@@ -12446,7 +13658,70 @@
         "en": "She doesn't look back."
        }
       }
-     ]
+     ],
+     "when": {
+      "v": "flag.route_zhiyao",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "sorry_end",
+     "type": "expression",
+     "label": {
+      "zh": "“……对不起。”",
+      "en": "\"…I'm sorry.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "她没有回头。",
+        "en": "She doesn't look back."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.broken_zhiyao",
+       "to": true
+      },
+      {
+       "add": "rel.zhiyao.intimacy",
+       "by": -10
+      },
+      {
+       "add": "rel.zhiyao.trust",
+       "by": -3
+      },
+      {
+       "add": "rel.zhiyao.warmth",
+       "by": -3
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她没有回头。",
+        "en": "She doesn't look back."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那是那个春天，我最后一次见到她。",
+        "en": "That was the last time I saw her that spring."
+       }
+      }
+     ],
+     "when": {
+      "v": "flag.route_zhiyao",
+      "op": "==",
+      "val": true
+     },
+     "ends": true
     },
     {
      "id": "let",
@@ -12490,7 +13765,70 @@
         "en": "From that day on, whenever we pass each other, she takes the long way around."
        }
       }
-     ]
+     ],
+     "when": {
+      "v": "flag.route_zhiyao",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "let_end",
+     "type": "expression",
+     "label": {
+      "zh": "看着她走远。",
+      "en": "Watch her walk away."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那天以后，我们在路上遇见，她都会绕开。",
+        "en": "From that day on, whenever we pass each other, she takes the long way around."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.broken_zhiyao",
+       "to": true
+      },
+      {
+       "add": "rel.zhiyao.intimacy",
+       "by": -10
+      },
+      {
+       "add": "rel.zhiyao.trust",
+       "by": -3
+      },
+      {
+       "add": "rel.zhiyao.warmth",
+       "by": -3
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那天以后，我们在路上遇见，她都会绕开。",
+        "en": "From that day on, whenever we pass each other, she takes the long way around."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那是那个春天，我最后一次见到她。",
+        "en": "That was the last time I saw her that spring."
+       }
+      }
+     ],
+     "when": {
+      "v": "flag.route_zhiyao",
+      "op": "==",
+      "val": true
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -12602,7 +13940,70 @@
         "en": "She doesn't look back."
        }
       }
-     ]
+     ],
+     "when": {
+      "v": "flag.route_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "sorry_end",
+     "type": "expression",
+     "label": {
+      "zh": "“……对不起。”",
+      "en": "\"…I'm sorry.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "她没有回头。",
+        "en": "She doesn't look back."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.broken_shencheng",
+       "to": true
+      },
+      {
+       "add": "rel.shencheng.intimacy",
+       "by": -10
+      },
+      {
+       "add": "rel.shencheng.trust",
+       "by": -3
+      },
+      {
+       "add": "rel.shencheng.warmth",
+       "by": -3
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她没有回头。",
+        "en": "She doesn't look back."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那是那个春天，我最后一次见到她。",
+        "en": "That was the last time I saw her that spring."
+       }
+      }
+     ],
+     "when": {
+      "v": "flag.route_shencheng",
+      "op": "==",
+      "val": true
+     },
+     "ends": true
     },
     {
      "id": "let",
@@ -12646,7 +14047,70 @@
         "en": "From that day on, whenever we pass each other, she takes the long way around."
        }
       }
-     ]
+     ],
+     "when": {
+      "v": "flag.route_shencheng",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "let_end",
+     "type": "expression",
+     "label": {
+      "zh": "看着她走远。",
+      "en": "Watch her walk away."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那天以后，我们在路上遇见，她都会绕开。",
+        "en": "From that day on, whenever we pass each other, she takes the long way around."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.broken_shencheng",
+       "to": true
+      },
+      {
+       "add": "rel.shencheng.intimacy",
+       "by": -10
+      },
+      {
+       "add": "rel.shencheng.trust",
+       "by": -3
+      },
+      {
+       "add": "rel.shencheng.warmth",
+       "by": -3
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那天以后，我们在路上遇见，她都会绕开。",
+        "en": "From that day on, whenever we pass each other, she takes the long way around."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那是那个春天，我最后一次见到她。",
+        "en": "That was the last time I saw her that spring."
+       }
+      }
+     ],
+     "when": {
+      "v": "flag.route_shencheng",
+      "op": "==",
+      "val": true
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -12749,7 +14213,70 @@
         "en": "She doesn't look back."
        }
       }
-     ]
+     ],
+     "when": {
+      "v": "flag.route_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "sorry_end",
+     "type": "expression",
+     "label": {
+      "zh": "“……对不起。”",
+      "en": "\"…I'm sorry.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "她没有回头。",
+        "en": "She doesn't look back."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.broken_jibai",
+       "to": true
+      },
+      {
+       "add": "rel.jibai.intimacy",
+       "by": -10
+      },
+      {
+       "add": "rel.jibai.trust",
+       "by": -3
+      },
+      {
+       "add": "rel.jibai.warmth",
+       "by": -3
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她没有回头。",
+        "en": "She doesn't look back."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那是那个春天，我最后一次见到她。",
+        "en": "That was the last time I saw her that spring."
+       }
+      }
+     ],
+     "when": {
+      "v": "flag.route_jibai",
+      "op": "==",
+      "val": true
+     },
+     "ends": true
     },
     {
      "id": "let",
@@ -12793,7 +14320,70 @@
         "en": "From that day on, whenever we pass each other, she takes the long way around."
        }
       }
-     ]
+     ],
+     "when": {
+      "v": "flag.route_jibai",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "let_end",
+     "type": "expression",
+     "label": {
+      "zh": "看着她走远。",
+      "en": "Watch her walk away."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那天以后，我们在路上遇见，她都会绕开。",
+        "en": "From that day on, whenever we pass each other, she takes the long way around."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.broken_jibai",
+       "to": true
+      },
+      {
+       "add": "rel.jibai.intimacy",
+       "by": -10
+      },
+      {
+       "add": "rel.jibai.trust",
+       "by": -3
+      },
+      {
+       "add": "rel.jibai.warmth",
+       "by": -3
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那天以后，我们在路上遇见，她都会绕开。",
+        "en": "From that day on, whenever we pass each other, she takes the long way around."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那是那个春天，我最后一次见到她。",
+        "en": "That was the last time I saw her that spring."
+       }
+      }
+     ],
+     "when": {
+      "v": "flag.route_jibai",
+      "op": "==",
+      "val": true
+     },
+     "ends": true
     }
    ],
    "salience": 0,
@@ -12841,6 +14431,81 @@
     "en": "Epilogue"
    },
    "fragments": [
+    {
+     "id": "broken_zhiyao",
+     "title": {
+      "zh": "夏知遥 · 决裂",
+      "en": "Xia Zhiyao · The Break"
+     },
+     "text": {
+      "zh": "那个春天提前结束了。很久以后再想起来，最清楚的不是她的样子，是那天自己说出口的那句话。",
+      "en": "That spring ended early. Long afterward, what I remember most clearly isn't her face—it's the words I said that day."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.route_zhiyao",
+        "op": "==",
+        "val": true
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "==",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "broken_shencheng",
+     "title": {
+      "zh": "沈澄 · 决裂",
+      "en": "Shen Cheng · The Break"
+     },
+     "text": {
+      "zh": "那个春天提前结束了。很久以后再想起来，最清楚的不是她的样子，是那天自己说出口的那句话。",
+      "en": "That spring ended early. Long afterward, what I remember most clearly isn't her face—it's the words I said that day."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.route_shencheng",
+        "op": "==",
+        "val": true
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "==",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "broken_jibai",
+     "title": {
+      "zh": "季白 · 决裂",
+      "en": "Ji Bai · The Break"
+     },
+     "text": {
+      "zh": "那个春天提前结束了。很久以后再想起来，最清楚的不是她的样子，是那天自己说出口的那句话。",
+      "en": "That spring ended early. Long afterward, what I remember most clearly isn't her face—it's the words I said that day."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "flag.route_jibai",
+        "op": "==",
+        "val": true
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "==",
+        "val": true
+       }
+      ]
+     }
+    },
     {
      "id": "zhiyao_good",
      "cg": "cg_end_zhiyao_good",

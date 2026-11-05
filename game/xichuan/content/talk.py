@@ -48,12 +48,14 @@ BREAK_LINES = {
 def break_node(h):
     sc = flat([BREAK_LINES[h]])
     effs = [setv(f"flag.broken_{h}"), rel(h, "intimacy", -10), rel(h, "trust", -3), rel(h, "warmth", -3)]
-    return scene(f"x_break_{h}", "*", "flash", T("决裂", "The Break"), sc, [
-        choice("sorry", "expression", T("“……对不起。”", "\"…I'm sorry.\""),
-               [nar("她没有回头。", "She doesn't look back.")], effs),
-        choice("let", "expression", T("看着她走远。", "Watch her walk away."),
-               [nar("那天以后，我们在路上遇见，她都会绕开。", "From that day on, whenever we pass each other, she takes the long way around.")], effs),
-    ], cast=[h])
+    route = F(f"flag.route_{h}")
+    cs = []
+    for cid, lab, line in (("sorry", T("“……对不起。”", "\"…I'm sorry.\""), nar("她没有回头。", "She doesn't look back.")),
+                           ("let", T("看着她走远。", "Watch her walk away."), nar("那天以后，我们在路上遇见，她都会绕开。", "From that day on, whenever we pass each other, she takes the long way around."))):
+        cs.append(choice(cid, "expression", lab, [line], effs, when=NF(f"flag.route_{h}")))
+        # 已经在她的线里：这个春天就此提前结束
+        cs.append(choice(cid + "_end", "expression", lab, [line, nar("那是那个春天，我最后一次见到她。", "That was the last time I saw her that spring.")], effs, when=route, ends=True))
+    return scene(f"x_break_{h}", "*", "flash", T("决裂", "The Break"), sc, cs, cast=[h])
 
 MOVES = []
 for h in HEROINES:
@@ -97,6 +99,10 @@ FLAGS = [(f"flag.broken_{h}", f"和{NAMES[h]['zh']}决裂", f"Broke with {NAMES[
     ("flag.j_asked_end", "问季白为什么害怕结束", "Asked Ji Bai why endings frighten her"),
 ]
 
+BROKEN_ENDINGS = [{"id": f"broken_{h}", "title": T(f"{NAMES[h]['zh']} · 决裂", f"{NAMES[h]['en']} · The Break"),
+    "text": T("那个春天提前结束了。很久以后再想起来，最清楚的不是她的样子，是那天自己说出口的那句话。", "That spring ended early. Long afterward, what I remember most clearly isn't her face—it's the words I said that day."),
+    "when": ALL(F(f"flag.route_{h}"), BROKE(h))} for h in HEROINES]
+
 WORDS_ENDING = {"id": "g_words", "title": T("你说过的话", "Things you said"), "mode": "all", "fragments": [
     {"id": "firstday", "text": T("很久以后她才告诉你：那天对着空椅子念宣传词，是她最丢人的一天。也是她第一次觉得，有人在听。", "Much later she tells you: that day, reading the flyer to empty seats, was the most embarrassing day of her life. It was also the first time she felt someone was listening."), "when": ALL(F("flag.route_zhiyao"), F("flag.z_firstday"))},
     {"id": "promise", "text": T("拉过钩的事，你做到了。她说，这比那句告白还让她高兴。", "The pinky swear—you kept it. She says that made her happier than the confession."), "when": ALL(F("flag.z_promised"), NF("flag.z_broke_promise"), F("flag.z_good"))},
@@ -133,12 +139,17 @@ def extend(NODES, VARS, CAMPAIGN):
     HURT = {"zhiyao": T("夏知遥看见你，把脸别了过去。那句话，她还记着。", "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."),
             "shencheng": T("沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。", "Shen Cheng glances at you, then goes back to what she's doing without a word."),
             "jibai": T("季白对你点了点头，客气得像对一个陌生人。", "Ji Bai nods to you, as politely as she would to a stranger.")}
+    def cold(ops, h):
+        i = next((k for k, op in enumerate(ops) if op["op"] == "show" and op.get("who") == h), None)
+        if i is None: return ops, False
+        return ops[:i + 1] + [{**nar(HURT[h]["zh"], HURT[h]["en"]), "when": ALL(V(f"grudge.{h}", ">=", 1), OK(h))}] + ops[i + 1:], True
     for n in NODES:
         if n["kind"] not in ("main", "side"): continue
         for h in HEROINES:
-            i = next((k for k, op in enumerate(n["script"]) if op["op"] == "show" and op.get("who") == h), None)
-            if i is None: continue
-            n["script"] = n["script"][:i + 1] + [{**nar(HURT[h]["zh"], HURT[h]["en"]), "when": ALL(V(f"grudge.{h}", ">=", 1), OK(h))}] + n["script"][i + 1:]
+            n["script"], here = cold(n["script"], h)
+            if here: continue
+            for c in n["choices"]:            # 她只在某个选项里出场：冷场补在那个选项里
+                c["script"], _ = cold(c.get("script", []), h)
     # 承诺被检查：最后一场跑去放映室 = 没站在她身边
     last = byid["c5_last"]; booth = next(c for c in last["choices"] if c["id"] == "booth")
     broke = {**booth, "id": "booth_broke", "when": F("flag.z_promised"),
