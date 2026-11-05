@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {buildXichuanStage,campaign} from '../server/xichuan-prompt.js';
-import {createXichuanHandler} from '../api/xichuan.js';
+import {createXichuanHandler} from '../server/xichuan-api.js';
+import sanguoApi from '../api/sanguo.js';
 import CC from '../server/xichuan-core.cjs';
 
 test('xichuan talk prompt binds the scene and a present heroine; rejects absent characters and raw prompts', () => {
@@ -24,4 +25,7 @@ test('xichuan talk handler returns the model output and refuses other origins', 
  const res={setHeader(){},status(code){this.code=code;return this;},json(value){this.value=value;}};
  await handler(req,res);assert.equal(res.code,200);assert.deepEqual(res.value.output,output);
  await handler({...req,headers:{...req.headers,origin:'https://evil.example'}},res);assert.equal(res.code,403);
+ // 网站上走 /api/sanguo，带 game:'xichuan' 才转到汐川；同源检查照样生效
+ const r2={setHeader(){},status(code){this.code=code;return this;},json(value){this.value=value;}};
+ await sanguoApi({...req,headers:{...req.headers,origin:'https://evil.example'},body:{...req.body,game:'xichuan'}},r2);assert.equal(r2.code,403);
 });

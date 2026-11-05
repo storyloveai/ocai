@@ -1,7 +1,8 @@
-// 《汐川的第七个春天》自由对话接口。和 api/sanguo.js 同一个处理器（限流、超时、备用模型），只换了提示词和输出格式。
+// 《汐川的第七个春天》自由对话。网站在 Vercel 免费版上最多 12 个后端函数，所以不单独开接口：
+// 由 api/sanguo.js 按请求里的 game:'xichuan' 转到这里。和三国同一个处理器（限流、超时、备用模型），只换了提示词和输出格式。
 import {jsonSchema} from 'ai';
-import {createHandler} from './three-kingdoms.js';
-import {buildXichuanStage} from '../server/xichuan-prompt.js';
+import {createHandler} from '../api/three-kingdoms.js';
+import {buildXichuanStage} from './xichuan-prompt.js';
 const schema=jsonSchema({type:'object',properties:{
  reply:{type:'string'},
  tone:{type:'string',enum:['warm','rude','romantic','flatter','nonsense','threat','flat']},
