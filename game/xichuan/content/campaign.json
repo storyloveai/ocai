@@ -7702,8 +7702,8 @@
      "who": "me",
      "think": true,
      "t": {
-      "zh": "城里的公司只给了我两个月假。回来之前，我是打算把房子卖掉的。",
-      "en": "My company in the city only gave me two months' leave. Before I came back, I'd planned to sell the house."
+      "zh": "转学手续是临时办的：只在这里念一个学期。回来之前，我的打算是看完影院最后一场，把房子卖掉，回城里的学校去。",
+      "en": "The transfer was only ever meant to be temporary: one semester here. Before I came back, the plan was to see the cinema's last show, sell the house, and go back to my university in the city."
      }
     },
     {
@@ -8620,8 +8620,8 @@
        "op": "say",
        "who": null,
        "t": {
-        "zh": "我给城里的公司发了一封辞职信。发完以后，手机在手里攥了很久。",
-        "en": "I send my resignation to the company in the city. Afterward, I hold the phone in my hand for a long time."
+        "zh": "我给城里的学校发了一封邮件：下学期，我不回去了。发完以后，手机在手里攥了很久。",
+        "en": "I email my university in the city: I won't be coming back next semester. Afterward, I hold the phone in my hand for a long time."
        }
       },
       {
@@ -8801,8 +8801,8 @@
      "who": "me",
      "think": true,
      "t": {
-      "zh": "沈澄没有来。她说今天店里忙。",
-      "en": "Shen Cheng didn't come. She said the café was busy today."
+      "zh": "沈澄没有来。她说今天要盯着店里装修。",
+      "en": "Shen Cheng didn't come. She said she had to keep an eye on the café renovation today."
      }
     }
    ],
@@ -9056,8 +9056,8 @@
      "op": "say",
      "who": "shencheng",
      "t": {
-      "zh": "听说签了。……挺好的。城里的工作，不能丢。",
-      "en": "I heard you signed. …That's good. You can't lose that job in the city."
+      "zh": "听说签了。……挺好的。城里的学校，总要回去的。",
+      "en": "I heard you signed. …That's good. You have to go back to your university in the city eventually."
      },
      "face": "smile",
      "when": {
@@ -9957,8 +9957,8 @@
    "chapter": "c6",
    "kind": "side",
    "title": {
-    "zh": "一九九九年的报纸",
-    "en": "A Newspaper from 1999"
+    "zh": "十四年前的报纸",
+    "en": "A Newspaper from Fourteen Years Ago"
    },
    "lock": "free",
    "canon": {
@@ -10093,8 +10093,8 @@
      "op": "say",
      "who": "jibai",
      "t": {
-      "zh": "找到了。一九九九年，汐川晚报。“潮声影院的放映员老陆，在拍一部关于小城的电影。”",
-      "en": "Found it. Xichuan Evening News, 1999. 'Old Lu, projectionist at the Tidesound, is making a film about our little town.'"
+      "zh": "找到了。十四年前的汐川晚报。“潮声影院的放映员老陆，在拍一部关于小城的电影。”",
+      "en": "Found it. The Xichuan Evening News, fourteen years ago. 'Old Lu, projectionist at the Tidesound, is making a film about our little town.'"
      },
      "face": "smile"
     },
@@ -10102,8 +10102,8 @@
      "op": "say",
      "who": "jibai",
      "t": {
-      "zh": "片名叫《第七个春天》。他说，要拍七年，拍完了，只放一次。",
-      "en": "It's called The Seventh Spring. He said he'd shoot it over seven years, and when it was done, it would be shown only once."
+      "zh": "片名叫《第七个春天》。他说，要拍七个春天，拍完了，只放一次。",
+      "en": "It's called The Seventh Spring. He said he'd shoot it over seven springs, and when it was done, it would be shown only once."
      },
      "face": "normal"
     }

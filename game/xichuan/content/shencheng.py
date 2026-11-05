@@ -44,7 +44,7 @@ C5_EVEN = scene("c5_even", "c5", "main", T("两清", "Even"), [
     show("shencheng", "normal", "center"),
     say("shencheng", "约兑现了。陆远，我们两清了。", "The promise is kept. Lu Yuan, we're even now.", face="smile"),
     say("shencheng", "……下午有个中介来店里，问你那栋老房子什么时候能看。", "…A real estate agent came by the café this afternoon. Asked when they could view that old house of yours.", face="normal"),
-    think("城里的公司只给了我两个月假。回来之前，我是打算把房子卖掉的。", "My company in the city only gave me two months' leave. Before I came back, I'd planned to sell the house."),
+    think("转学手续是临时办的：只在这里念一个学期。回来之前，我的打算是看完影院最后一场，把房子卖掉，回城里的学校去。", "The transfer was only ever meant to be temporary: one semester here. Before I came back, the plan was to see the cinema's last show, sell the house, and go back to my university in the city."),
     say("shencheng", "要卖了，对吧。看完影院最后一场，你就又要走了。", "You're selling, aren't you. Once you've seen the cinema's last show, you'll leave again.", face="sad"),
 ], [
     choice("undecided", "dilemma", T("“我还没想好。……这是实话。”", "\"I haven't decided. …That's the truth.\""), [
@@ -155,11 +155,11 @@ C7_SIGN = scene("c7_sign", "c7", "main", T("签字的那天", "The Day of the Si
     iff(F("flag.c_umbrella"), think("阁楼的箱子里，还有一把黄色的伞。", "Up in the attic, in a box, there's still a yellow umbrella.")),
     iff(F("flag.c_rash"), think("那天晚上，我随口说过“不卖了”。她说她不信。", "That night I said 'I'm not selling' without thinking. She said she didn't believe me.")),
     iff(F("flag.c_honest"), think("她说过：想好了，第一个告诉她。", "She said: when you've decided, tell me first.")),
-    think("沈澄没有来。她说今天店里忙。", "Shen Cheng didn't come. She said the café was busy today."),
+    think("沈澄没有来。她说今天要盯着店里装修。", "Shen Cheng didn't come. She said she had to keep an eye on the café renovation today."),
 ], [
     choice("keep", "dilemma", T("把笔还给中介：“对不起。不卖了。”", "Hand the pen back to the agent: \"I'm sorry. I'm not selling.\""), [
         nar("买家骂了几句，走了。中介摇着头，把合同收回了包里。", "The buyer grumbles a few words and leaves. The agent shakes his head and puts the contract back in his bag."),
-        nar("我给城里的公司发了一封辞职信。发完以后，手机在手里攥了很久。", "I send my resignation to the company in the city. Afterward, I hold the phone in my hand for a long time."),
+        nar("我给城里的学校发了一封邮件：下学期，我不回去了。发完以后，手机在手里攥了很久。", "I email my university in the city: I won't be coming back next semester. Afterward, I hold the phone in my hand for a long time."),
         iff(F("flag.c_honest"), think("然后，我拨了她的号码。答应过的：第一个告诉她。", "Then I dial her number. I promised: she'd be the first to know.")),
     ], [rel("shencheng", "trust", 1), setv("flag.c_keep")], values=["gu"]),
     choice("later", "strategy", T("“再给我一周。”", "\"Give me another week.\""), [
@@ -175,7 +175,7 @@ C7_LETTER = scene("c7_letter", "c7", "main", T("第七个信封", "The Seventh E
     nar("夜里，沈澄在海堤上等我。手里拿着那个可可罐。", "That night, Shen Cheng waits for me on the seawall, the cocoa tin in her hands."),
     show("shencheng", "normal", "center"),
     iff(F("flag.c_keep"), say("shencheng", "中介来店里了，说你把买家气走了。……笨蛋。", "The agent came by the café. Said you drove the buyer off. …Idiot.", face="shy")),
-    iff(F("flag.c_sold"), say("shencheng", "听说签了。……挺好的。城里的工作，不能丢。", "I heard you signed. …That's good. You can't lose that job in the city.", face="smile")),
+    iff(F("flag.c_sold"), say("shencheng", "听说签了。……挺好的。城里的学校，总要回去的。", "I heard you signed. …That's good. You have to go back to your university in the city eventually.", face="smile")),
     iff(ALL(NF("flag.c_keep"), NF("flag.c_sold")), say("shencheng", "听说你让人家再等一周。……你总是让人等。", "I heard you asked them to wait another week. …You're always making people wait.", face="sad")),
     say("shencheng", "这七封信，我想了很久要怎么办。", "I've thought for a long time about what to do with these seven letters.", face="normal"),
     iff(F("flag.c_letters"), say("shencheng", "那天你一封都没拆。……谢谢。", "That day you didn't open a single one. …Thank you.", face="shy")),

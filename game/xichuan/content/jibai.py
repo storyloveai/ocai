@@ -91,12 +91,12 @@ C6_SCRAP = scene("c6_scrap", "c6", "main", T("废铁", "Scrap Metal"), [
     ], [rel("jibai", "trust", 1), rel("jibai", "intimacy", 1)], values=["ti"]),
 ], order=1, when=ON, cast=["jibai", "zhou"])
 
-S6_PAPER = scene("c6_paper", "c6", "side", T("一九九九年的报纸", "A Newspaper from 1999"), [
+S6_PAPER = scene("c6_paper", "c6", "side", T("十四年前的报纸", "A Newspaper from Fourteen Years Ago"), [
     bg("library"),
     nar("图书馆三楼，季白翻出了一摞旧报纸。", "On the library's third floor, Ji Bai has dug out a stack of old newspapers."),
     show("jibai", "normal", "center"),
-    say("jibai", "找到了。一九九九年，汐川晚报。“潮声影院的放映员老陆，在拍一部关于小城的电影。”", "Found it. Xichuan Evening News, 1999. 'Old Lu, projectionist at the Tidesound, is making a film about our little town.'", face="smile"),
-    say("jibai", "片名叫《第七个春天》。他说，要拍七年，拍完了，只放一次。", "It's called The Seventh Spring. He said he'd shoot it over seven years, and when it was done, it would be shown only once.", face="normal"),
+    say("jibai", "找到了。十四年前的汐川晚报。“潮声影院的放映员老陆，在拍一部关于小城的电影。”", "Found it. The Xichuan Evening News, fourteen years ago. 'Old Lu, projectionist at the Tidesound, is making a film about our little town.'", face="smile"),
+    say("jibai", "片名叫《第七个春天》。他说，要拍七个春天，拍完了，只放一次。", "It's called The Seventh Spring. He said he'd shoot it over seven springs, and when it was done, it would be shown only once.", face="normal"),
 ], [
     choice("once", "dilemma", T("“只放一次……那一次，他想放给谁看？”", "\"Only once… Who did he want to show it to?\""), [
         say("jibai", "……陆同学。", "…Mr. Lu.", face="sad"),
