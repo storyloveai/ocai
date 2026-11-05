@@ -11515,5 +11515,31 @@
     "en": "surprised"
    }
   }
+ },
+ "value_tags": {
+  "cheng": {
+   "zh": "真诚",
+   "en": "sincerity"
+  },
+  "wen": {
+   "zh": "温柔",
+   "en": "gentleness"
+  },
+  "yong": {
+   "zh": "勇气",
+   "en": "courage"
+  },
+  "ti": {
+   "zh": "体贴",
+   "en": "consideration"
+  },
+  "xi": {
+   "zh": "玩笑",
+   "en": "playfulness"
+  },
+  "gu": {
+   "zh": "坚持",
+   "en": "persistence"
+  }
  }
 }

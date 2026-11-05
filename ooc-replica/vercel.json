@@ -16,6 +16,9 @@
     },
     "api/sanguo.js": {
       "includeFiles": "server/sanguo-*"
+    },
+    "api/xichuan.js": {
+      "includeFiles": "server/xichuan-*"
     }
   },
   "buildCommand": "npm run build && npm run check",

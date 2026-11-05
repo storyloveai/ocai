@@ -34,12 +34,20 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 #bar { position: absolute; right: 4%; bottom: calc(3% + 4px); display: flex; gap: 4px; z-index: 3 }
 #bar button, .menu button, .panel button { font: inherit; font-size: 12.5px; color: var(--muted); background: none; border: 0; padding: 4px 8px; border-radius: 6px; cursor: pointer }
 #bar button[aria-pressed="true"] { color: var(--accent) }
+#bar button { white-space: nowrap }
+@media (max-width: 520px) { #bar { left: 4%; right: 4%; justify-content: space-between; gap: 0 } #bar button { padding: 4px 2px; font-size: 12px } }
 #bar button:hover { color: var(--ink) }
 .menu { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgba(6, 8, 18, .35); z-index: 4 }
 .menu .prompt { color: var(--muted); font-size: 14px; letter-spacing: .1em; margin-bottom: 4px }
 .menu .opt { min-width: min(560px, 82%); font-size: clamp(14px, 1.8vw, 18px); color: var(--ink); background: var(--box); border: 1px solid var(--edge); border-radius: 12px; padding: 12px 22px; text-align: center; transition: background .15s, border-color .15s }
 .menu .opt:hover, .menu .opt:focus-visible { border-color: var(--accent); background: rgba(58, 29, 39, .85); outline: none }
 .menu .opt[disabled] { opacity: .45; cursor: default }
+.menu .opt.talk-opt { border-style: dashed; color: var(--accent) }
+.menu form.talk { display: flex; gap: 8px; width: min(560px, 86%); flex-wrap: wrap; justify-content: center }
+.menu form.talk input { flex: 1 1 260px; min-width: 0; font: inherit; font-size: 16px; color: var(--ink); background: var(--box); border: 1px solid var(--accent); border-radius: 12px; padding: 12px 16px; outline: none }
+.menu form.talk button { font-size: 15px; color: var(--ink); border: 1px solid var(--edge); background: var(--box); border-radius: 12px; padding: 10px 18px }
+.heart { position: absolute; z-index: 3; font-size: clamp(22px, 3vw, 34px); color: #ff8fb1; pointer-events: none; animation: heart 1.6s ease-out forwards; text-shadow: 0 0 12px rgba(255,143,177,.7) }
+@keyframes heart { 0% { opacity: 0; transform: translateY(10px) scale(.6) } 20% { opacity: 1; transform: translateY(0) scale(1.1) } 100% { opacity: 0; transform: translateY(-60px) scale(1) } }
 .panel { position: absolute; inset: 4%; background: rgba(10, 13, 26, .94); border: 1px solid var(--edge); border-radius: 14px; z-index: 6; display: flex; flex-direction: column; padding: 18px 22px }
 .panel h2 { margin: 0 0 10px; font-size: 18px; letter-spacing: .1em }
 .panel .body { overflow: auto; flex: 1; padding-right: 6px }
@@ -96,8 +104,8 @@ const store = { get(k, d) { try { const v = localStorage.getItem("xc." + k); ret
 let LANG = store.get("lang", (navigator.language || "").startsWith("zh") ? "zh" : "en");
 const t = x => x == null ? "" : typeof x === "string" ? x : (x[LANG] || x.zh || x.en || "");
 const UI = {
-  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", tilt: "立体", savedAt: n => `存档 ${n}` },
-  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", tilt: "3D", savedAt: n => `Slot ${n}` },
+  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", tilt: "立体", music: "音乐", talk: n => `（对${n}说点什么……）`, talkHint: "想对她说什么？", send: "说", cancel: "算了", noReply: "（她好像没听清，看了你一眼。）", savedAt: n => `存档 ${n}` },
+  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", tilt: "3D", music: "Music", talk: n => `(Say something to ${n}…)`, talkHint: "What do you want to say?", send: "Say", cancel: "Never mind", noReply: "(She doesn't seem to catch it, and just glances at you.)", savedAt: n => `Slot ${n}` },
 };
 const ui = k => UI[LANG][k];
 // 手机屏幕用 1280 宽的小图（art/m/ 下），体积约一半
@@ -127,6 +135,7 @@ const unlock = (kind, id) => { const u = store.get(kind, []); if (!u.includes(id
 function drawBg() {
   const el = $("#bg"), id = V.bg, url = id && art(`bg/${id}.webp`);
   const grad = id ? `linear-gradient(160deg, hsl(${hue(id)} 45% 32%), hsl(${(hue(id) + 40) % 360} 40% 14%))` : "none";
+  audioMood(id);
   const apply = () => {
     if (V.bg !== id || el.dataset.shown === (id || "")) return; el.dataset.shown = id || "";
     el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
@@ -196,6 +205,7 @@ function step() {
 }
 function say(op) {
   if (op.face && op.who && V.sprites[op.who]) V.sprites[op.who].face = op.face;
+  if (op.heart) { const h = document.createElement("div"); h.className = "heart"; h.textContent = "♡"; const at = (V.sprites[op.who] && POS[V.sprites[op.who].at]) ?? 50; h.style.left = `calc(${at}% + 9%)`; h.style.top = "18%"; $("#stage").append(h); setTimeout(() => h.remove(), 1700); }
   V.speaker = op.who && op.who !== "me" ? op.who : null; drawSprites();
   $("#name").textContent = op.who ? nameOf(op.who) : "";
   const el = $("#text"), full = t(op.t);
@@ -239,6 +249,12 @@ function choiceMenu(n) {
     const lines = o.c.script || []; CC.choose(CAMP, G, o.id); V.started = null;
     load(lines, `c:${n.id}.${o.id}`); step();
   } })));
+  // 自由对话：场上有女主、这一幕还有说话的机会、网站接了 AI，就多一个“对她说点什么”
+  const who = talkTarget(n);
+  if (who && TALK.ai && CC.freeLeft(CAMP, G) > 0) {
+    const b = document.createElement("button"); b.className = "opt talk-opt"; b.textContent = ui("talk")(nameOf(who));
+    b.onclick = () => talkBox(n, who); $("#menu").insertBefore(b, $("#menu .opt"));
+  }
 }
 function sideMenu() {
   const ch = CAMP.chapters[G.ch];
@@ -264,7 +280,7 @@ function showEnd() {
 /* ---------- saves ---------- */
 const snapshot = () => JSON.parse(JSON.stringify({ G, V: { ...V, log: V.log.slice(-60) }, at: Date.now(), label: nameOf(null) + t(CAMP.chapters[Math.max(0, G.ch)]?.title) }));
 function autosave() { if (G && G.phase !== "end") store.set("auto", snapshot()); }
-function restore(s) { G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); }
+function restore(s) { askTilt(); audioStart(); G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); }
 function slots(mode) {
   const p = $("#panel"); p.replaceChildren(); p.hidden = false;
   const h = document.createElement("h2"); h.textContent = mode === "save" ? ui("save") : ui("loadS");
@@ -306,6 +322,7 @@ function renderBar() {
   const btn = (k, f, pressed) => { const b = document.createElement("button"); b.textContent = ui(k); if (pressed != null) b.setAttribute("aria-pressed", String(pressed)); b.onclick = e => { e.stopPropagation(); f(); }; bar.append(b); };
   btn("log", showLog); btn("auto", () => { auto = !auto; skip = false; renderBar(); if (auto && !typing && $("#menu").hidden) step(); }, auto);
   btn("skip", () => { skip = !skip; auto = false; renderBar(); if (skip && $("#menu").hidden) step(); }, skip);
+  btn("music", () => { AUDIO.on = !AUDIO.on; store.set("music", AUDIO.on); AUDIO.on ? audioStart() : audioStop(); renderBar(); }, AUDIO.on);
   btn("tilt", () => { TILT.on = !TILT.on; store.set("tilt", TILT.on); askTilt(); renderBar(); }, TILT.on);
   btn("save", () => slots("save")); btn("loadS", () => slots("load"));
   btn("lang", () => { LANG = LANG === "zh" ? "en" : "zh"; store.set("lang", LANG); document.documentElement.lang = LANG; renderBar(); draw(); const op = V.queue[V.i - 1]; if (op && op.op === "say") { clearInterval(typing); typing = null; $("#name").textContent = op.who ? nameOf(op.who) : ""; $("#text").textContent = t(op.t); $("#next").classList.add("on"); } });
@@ -330,7 +347,7 @@ function title() {
   el.querySelector("button")?.focus();
 }
 function start() {
-  askTilt();
+  askTilt(); audioStart();
   ["zhiyao", "shencheng", "jibai"].forEach(w => preload(art(`sprites/${w}/normal.webp`)));
   G = CC.newGame(CAMP); V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null, started: null };
   $("#title").hidden = true; $("#endscreen").hidden = true; draw(); next();
@@ -343,6 +360,110 @@ document.addEventListener("keydown", e => {
   if (e.key === "Control") { skip = true; renderBar(); step(); }
 });
 document.addEventListener("keyup", e => { if (e.key === "Control") { skip = false; renderBar(); } });
+
+/* ---------- 背景音乐（实验版，v0.18）：页面里实时合成，不用音频文件 ----------
+   轻柔的钢琴琶音 + 和弦铺底，按场景分白天、黄昏、夜里、雨天；海边的场景加海浪，下雨的场景加雨声。
+   确认“有声音”值得做以后，换成正式授权的配乐。 */
+const AUDIO = { on: store.get("music", true), ctx: null, out: null, mood: "day", sea: false, rain: false, beat: 0, next: 0, timer: null, amb: null };
+const MOODS = {   // 每小节一个和弦（MIDI 音高）、每分钟拍数、音量
+  day:   { bpm: 76, vol: .9, chords: [[60, 64, 67, 71], [57, 60, 64, 67], [53, 57, 60, 64], [55, 59, 62, 67]] },
+  dusk:  { bpm: 68, vol: .8, chords: [[53, 57, 60, 64], [52, 55, 59, 62], [50, 53, 57, 60], [48, 52, 55, 59]] },
+  night: { bpm: 58, vol: .65, chords: [[57, 60, 64, 67], [53, 57, 60, 64], [48, 52, 55, 59], [55, 59, 62, 65]] },
+};
+const BGMOOD = { cinema_night: "night", seawall_night: "night", street: "night", rain_street: "night", projection: "night", train: "dusk", cinema_dusk: "dusk", rooftop: "dusk", library: "dusk", oldhouse: "dusk" };
+const SEA = new Set(["station", "cinema_dusk", "cinema_night", "seawall_night", "beach", "train", "street"]);
+function audioMood(id) { if (!id) return; AUDIO.mood = BGMOOD[id] || "day"; AUDIO.sea = SEA.has(id); AUDIO.rain = id === "rain_street"; audioAmb(); }
+function audioStart() {
+  if (!AUDIO.on) return;
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+  if (!AUDIO.ctx) {
+    const c = AUDIO.ctx = new AC(), out = AUDIO.out = c.createGain(); out.gain.value = 0;
+    const lp = c.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2600;
+    const dl = c.createDelay(); dl.delayTime.value = .33; const fb = c.createGain(); fb.gain.value = .32; const wet = c.createGain(); wet.gain.value = .35;
+    out.connect(lp); lp.connect(c.destination); lp.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(c.destination);
+    const n = c.createBuffer(1, c.sampleRate * 2, c.sampleRate), d = n.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    AUDIO.noise = n;
+  }
+  const c = AUDIO.ctx; c.resume && c.resume();
+  AUDIO.out.gain.cancelScheduledValues(c.currentTime); AUDIO.out.gain.setTargetAtTime(.16, c.currentTime, 1.2);
+  if (!AUDIO.timer) { AUDIO.next = c.currentTime + .2; AUDIO.timer = setInterval(audioTick, 120); }
+  audioAmb();
+}
+function audioStop() {
+  if (!AUDIO.ctx) return; const c = AUDIO.ctx;
+  AUDIO.out.gain.setTargetAtTime(0, c.currentTime, .4); clearInterval(AUDIO.timer); AUDIO.timer = null; audioAmb(true);
+}
+function note(midi, t, len, vol, type) {
+  const c = AUDIO.ctx, o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(), f = 440 * Math.pow(2, (midi - 69) / 12);
+  o.type = type || "sine"; o.frequency.value = f; o2.type = "sine"; o2.frequency.value = f * 2; const g2 = c.createGain(); g2.gain.value = .18;
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .015); g.gain.exponentialRampToValueAtTime(.0008, t + len);
+  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(AUDIO.out); o.start(t); o2.start(t); o.stop(t + len + .05); o2.stop(t + len + .05);
+}
+function audioTick() {
+  const c = AUDIO.ctx; if (!c || document.hidden) return;
+  while (AUDIO.next < c.currentTime + .4) {
+    const m = MOODS[AUDIO.mood], spb = 60 / m.bpm, t = AUDIO.next, bar = Math.floor(AUDIO.beat / 4) % 4, b = AUDIO.beat % 4, ch = m.chords[bar];
+    if (b === 0) { ch.forEach(n => note(n - 12, t, spb * 4.2, .05 * m.vol, "triangle")); note(ch[0] - 24, t, spb * 4, .07 * m.vol, "sine"); }
+    const pat = [0, 2, 1, 3, 2, 3, 1, 2][(AUDIO.beat % 8)];
+    if (!(AUDIO.mood === "night" && b === 3)) note(ch[pat] + 12, t, spb * 2.6, .07 * m.vol);
+    if (AUDIO.beat % 16 === 14) note(ch[3] + 24, t + spb / 2, spb * 2, .03 * m.vol);
+    AUDIO.beat++; AUDIO.next += spb;
+  }
+}
+function audioAmb(stop) {        // 海浪、雨声：滤过的噪声，海浪带慢起伏
+  const c = AUDIO.ctx; if (!c) return;
+  const want = stop || !AUDIO.on ? null : AUDIO.rain ? "rain" : AUDIO.sea ? "sea" : null;
+  if (AUDIO.amb && AUDIO.amb.kind === want) return;
+  if (AUDIO.amb) { const a = AUDIO.amb; a.g.gain.setTargetAtTime(0, c.currentTime, .6); setTimeout(() => { try { a.src.stop(); a.lfo && a.lfo.stop(); } catch {} }, 3000); AUDIO.amb = null; }
+  if (!want) return;
+  const src = c.createBufferSource(); src.buffer = AUDIO.noise; src.loop = true;
+  const f = c.createBiquadFilter(), g = c.createGain(); g.gain.value = 0;
+  let lfo = null;
+  if (want === "sea") { f.type = "lowpass"; f.frequency.value = 520; lfo = c.createOscillator(); lfo.frequency.value = .11; const lg = c.createGain(); lg.gain.value = .025; lfo.connect(lg); lg.connect(g.gain); lfo.start(); g.gain.setTargetAtTime(.035, c.currentTime, 1.5); }
+  else { f.type = "highpass"; f.frequency.value = 1400; g.gain.setTargetAtTime(.03, c.currentTime, 1); }
+  src.connect(f); f.connect(g); g.connect(c.destination); src.start();
+  AUDIO.amb = { kind: want, src, g, lfo };
+}
+document.addEventListener("visibilitychange", () => { if (!AUDIO.ctx) return; document.hidden ? AUDIO.ctx.suspend() : AUDIO.on && AUDIO.ctx.resume(); });
+
+/* ---------- 自由对话（v0.18）：对场上的女主说一句话 ----------
+   AI 回一句台词，并只给你的话打标签（语气、显出的品质）；好感怎么变由引擎规则决定（CC.speak），每幕最多两句。
+   网站没接 AI（或本地打开页面）时不出现这个入口。 */
+const TALK = { ai: false };
+fetch("/api/config", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(d => { TALK.ai = !!(d && d.configured); }).catch(() => {});
+const MOODFACE = { neutral: "normal", warm: "smile", cold: "angry", sad: "sad", surprised: "surprised", shy: "shy" };
+function talkTarget(n) {
+  const cast = (n.cast || []).map(c => c.id);
+  return Object.keys(V.sprites).find(w => CAMP.chars[w] && CAMP.chars[w].romance && cast.includes(w)) || null;
+}
+function talkBox(n, who) {
+  const m = $("#menu"); m.replaceChildren(); m.hidden = false;
+  const p = document.createElement("div"); p.className = "prompt"; p.textContent = ui("talk")(nameOf(who)); m.append(p);
+  const f = document.createElement("form"); f.className = "talk";
+  const inp = document.createElement("input"); inp.maxLength = 120; inp.placeholder = ui("talkHint"); inp.autocomplete = "off"; inp.enterKeyHint = "send";
+  const send = document.createElement("button"); send.type = "submit"; send.textContent = ui("send");
+  const back = document.createElement("button"); back.type = "button"; back.textContent = ui("cancel"); back.onclick = () => choiceMenu(n);
+  f.append(inp, send, back); m.append(f);
+  f.onsubmit = async e => {
+    e.preventDefault(); const text = inp.value.trim(); if (!text) return;
+    inp.disabled = send.disabled = back.disabled = true; send.textContent = "…";
+    const recent = V.log.slice(-10).map(l => (l.who ? l.who + "：" : "") + l.text);
+    let out = null;
+    try {
+      const r = await fetch("/api/xichuan", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ task: "talk", lang: LANG, context: { node: n.id, target: who, text, vars: G.v, recent } }) });
+      const d = await r.json().catch(() => ({})); if (r.ok && d.output && typeof d.output.reply === "string") out = d.output;
+    } catch {}
+    m.hidden = true;
+    const mine = { op: "say", who: "me", t: { zh: text, en: text } };
+    if (!out) { load([mine, { op: "say", who: null, t: { zh: UI.zh.noReply, en: UI.en.noReply } }], `t:${n.id}`); return step(); }
+    CC.chat(CAMP, G);
+    const e2 = CC.speak(CAMP, G, out.tone || "flat", text, who, Array.isArray(out.values) ? out.values : []);
+    const up = !!(e2 && e2.changes && e2.changes.some(c => c.var === `rel.${who}.intimacy` && c.to > c.from));
+    load([mine, { op: "say", who, t: { zh: out.reply, en: out.reply }, face: MOODFACE[out.mood] || "normal", heart: up }], `t:${n.id}`);
+    step(); autosave();
+  };
+  setTimeout(() => inp.focus(), 50);
+}
 
 /* ---------- 2.5D：倾斜手机（电脑上移动鼠标），背景和 CG 按深度图错开，立绘是中间一层 ----------
    深度图在 art/depth/（越亮越近），由开源的 Depth Anything V2 Small 生成；没有深度图或浏览器不支持 WebGL 时，照常显示平面图。 */

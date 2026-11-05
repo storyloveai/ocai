@@ -255,6 +255,8 @@ CAMPAIGN = {
     "chapters": CHAPTERS, "nodes": {n["id"]: n for n in NODES}, "endings": ENDINGS,
     "side_prompt": AFTER, "art": ART,
 }
+# 自由对话（v0.18）：玩家对场上的女主说一句话，AI 只判断语气和这句话显出的品质（value_tags），好感由引擎规则决定
+CAMPAIGN["value_tags"] = CAMPAIGN["pack"]["values"]
 
 if __name__ == "__main__":
     out = HERE / "campaign.json"
