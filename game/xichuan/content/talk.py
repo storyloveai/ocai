@@ -129,6 +129,16 @@ def extend(NODES, VARS, CAMPAIGN):
                            ("c2_screening", "shencheng", "沈澄把热饮放下就走了，没有跟你打招呼。", "Shen Cheng sets down the hot drinks and leaves without a word to you."),
                            ("c2_screening", "jibai", "放映室的门关着。季白没有出来。", "The booth door stays shut. Ji Bai doesn't come out.")):
         byid[nid]["script"] = byid[nid]["script"] + [{**nar(zh, en), "when": BROKE(h)}]
+    # 记了仇还没和好：之后每一幕她一出场就冷着你（真心道歉一次消一笔仇，由规则决定），决裂另算
+    HURT = {"zhiyao": T("夏知遥看见你，把脸别了过去。那句话，她还记着。", "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."),
+            "shencheng": T("沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。", "Shen Cheng glances at you, then goes back to what she's doing without a word."),
+            "jibai": T("季白对你点了点头，客气得像对一个陌生人。", "Ji Bai nods to you, as politely as she would to a stranger.")}
+    for n in NODES:
+        if n["kind"] not in ("main", "side"): continue
+        for h in HEROINES:
+            i = next((k for k, op in enumerate(n["script"]) if op["op"] == "show" and op.get("who") == h), None)
+            if i is None: continue
+            n["script"] = n["script"][:i + 1] + [{**nar(HURT[h]["zh"], HURT[h]["en"]), "when": ALL(V(f"grudge.{h}", ">=", 1), OK(h))}] + n["script"][i + 1:]
     # 承诺被检查：最后一场跑去放映室 = 没站在她身边
     last = byid["c5_last"]; booth = next(c for c in last["choices"] if c["id"] == "booth")
     broke = {**booth, "id": "booth_broke", "when": F("flag.z_promised"),

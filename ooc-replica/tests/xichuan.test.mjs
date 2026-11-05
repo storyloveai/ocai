@@ -19,7 +19,7 @@ test('xichuan talk prompt binds the scene and a present heroine; rejects absent 
  // 这一幕能触发的走向会列给模型：决裂（对谁都在），夏知遥的隐藏的门按场景和条件出现
  const ids=data.moves.map(m=>m.id);assert.ok(ids.includes('crude_zhiyao'));assert.ok(!ids.includes('again_zhiyao'),'again needs a grudge first');
  const hurt=JSON.parse(buildXichuanStage({task:'talk',lang:'zh',context:{node:'c3_rooftop',target:'zhiyao',text:'x',vars:{...g.v,'grudge.zhiyao':1},memories:['我会一直站你旁边']}}).prompt);
- assert.ok(hurt.moves.some(m=>m.id==='again_zhiyao'));assert.deepEqual(hurt.memories,['我会一直站你旁边']);
+ assert.ok(hurt.moves.some(m=>m.id==='again_zhiyao'));assert.equal(hurt.grudge,1);assert.deepEqual(hurt.memories,['我会一直站你旁边']);
 });
 
 test('xichuan talk handler returns the model output and refuses other origins', async () => {

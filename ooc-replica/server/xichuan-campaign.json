@@ -1671,6 +1671,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "……春季放映会，最后一季！每周六晚上七点，潮声影院，免费入场！——不对，太像卖菜的了。",
@@ -2036,6 +2058,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "啊，陆爷爷的孙子！你也是这个学校的？",
@@ -2057,6 +2101,28 @@
      "who": "jibai",
      "face": "normal",
      "at": "right"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -2102,6 +2168,28 @@
      "who": "shencheng",
      "face": "normal",
      "at": "right"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -2304,6 +2392,28 @@
      "who": "zhiyao",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -2523,6 +2633,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "shencheng",
      "t": {
       "zh": "……欢迎光临。要点什么？",
@@ -2695,6 +2827,28 @@
      "who": "jibai",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -3157,6 +3311,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "五个人也是观众！春季放映会，第一场，开始！",
@@ -3169,6 +3345,28 @@
      "who": "shencheng",
      "face": "normal",
      "at": "right"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -3448,6 +3646,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "租发电机、买胶片、印海报……最后一场想放得像样，至少要三千。",
@@ -3663,6 +3883,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "shencheng",
      "t": {
       "zh": "……你走的那天，你说过一句话。你还记得吗？",
@@ -3829,6 +4071,28 @@
      "who": "jibai",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -4165,6 +4429,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "还差一个。就差一个。",
@@ -4378,6 +4664,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "从这里能看见潮声影院的银幕。看，那个白点。",
@@ -4562,6 +4870,28 @@
      "who": "shencheng",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -4756,6 +5086,28 @@
      "who": "jibai",
      "face": "sad",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -5610,6 +5962,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "各位晚上好。欢迎来到潮声影院，春季放映会——",
@@ -5899,6 +6273,28 @@
      "who": "zhiyao",
      "face": "smile",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -6248,6 +6644,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "单子上第一件：从银幕上剪一块布带走。工人叔叔同意了，就一小块。",
@@ -6532,6 +6950,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "第七件：对着海，喊一句平时不敢说的话。",
@@ -6738,6 +7178,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "妈。嗯，吃了。……这个？这是社员。",
@@ -6941,6 +7403,28 @@
      "who": "zhiyao",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -7217,6 +7701,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "zhiyao",
      "t": {
       "zh": "这一周，你真的没来找我。……我是不是很奇怪，明明是我让你别来的。",
@@ -7471,6 +7977,28 @@
      "who": "zhiyao",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "夏知遥看见你，把脸别了过去。那句话，她还记着。",
+      "en": "Zhiyao sees you and turns her face away. She hasn't forgotten what you said."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.zhiyao",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_zhiyao",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -7833,6 +8361,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "shencheng",
      "t": {
       "zh": "……别看了。是我写的。",
@@ -8107,6 +8657,28 @@
      "who": "shencheng",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -8390,6 +8962,28 @@
      "op": "say",
      "who": null,
      "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
       "zh": "那天晚上以后，她给我端咖啡，只说一句“请慢用”。和对任何一个客人都一样。",
       "en": "Since that night, when she brings me coffee she says only 'Enjoy.' The same as with any other customer."
      },
@@ -8612,6 +9206,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "shencheng",
      "t": {
       "zh": "装修的时候，店里不能养。可是不管它，它活不过这个夏天。",
@@ -8786,6 +9402,28 @@
      "who": "shencheng",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -8983,6 +9621,28 @@
      "who": "shencheng",
      "face": "smile",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -9510,6 +10170,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "沈澄看了你一眼，又低下头去忙手里的事，一句话也没说。",
+      "en": "Shen Cheng glances at you, then goes back to what she's doing without a word."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.shencheng",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_shencheng",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "shencheng",
      "t": {
       "zh": "中介来店里了，说你把买家气走了。……笨蛋。",
@@ -9843,6 +10525,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "jibai",
      "t": {
       "zh": "我修好了，可是一格都没看。……你来开。",
@@ -10104,6 +10808,28 @@
      "who": "jibai",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -10413,6 +11139,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "jibai",
      "t": {
       "zh": "陆同学，有件事我还没说。",
@@ -10590,6 +11338,28 @@
      "who": "jibai",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -10777,6 +11547,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "jibai",
      "t": {
       "zh": "这两年，我修片修到太晚，就在这张床上睡。",
@@ -10942,6 +11734,28 @@
      "who": "jibai",
      "face": "surprised",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
@@ -11177,6 +11991,28 @@
     },
     {
      "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
+    },
+    {
+     "op": "say",
      "who": "jibai",
      "t": {
       "zh": "……就是它。第七卷剪掉的那一段。",
@@ -11398,6 +12234,28 @@
      "who": "jibai",
      "face": "normal",
      "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "季白对你点了点头，客气得像对一个陌生人。",
+      "en": "Ji Bai nods to you, as politely as she would to a stranger."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "grudge.jibai",
+        "op": ">=",
+        "val": 1
+       },
+       {
+        "v": "flag.broken_jibai",
+        "op": "!=",
+        "val": true
+       }
+      ]
+     }
     },
     {
      "op": "say",
