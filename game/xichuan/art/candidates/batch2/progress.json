@@ -1,11 +1,1 @@
-{
-  "issue": 118,
-  "generated": 58,
-  "tasks": 29,
-  "strictSpriteQA": "30 candidates fail face-exterior invariants; awaiting user face-only compositing approval",
-  "backgroundCGTitle": "28 candidates available for Claude review",
-  "auth": "666ZHOUZEYA, ADMIN verified",
-  "gameChecks": "passed on ccb7ee3",
-  "photo": "latest no-person revision used",
-  "method": "built-in image_gen.imagegen; no paid external API"
-}
+{"tasks":29,"candidates":58,"spriteOutsideFaceAndAlphaEquality":"30/30 PASS","photo":"latest no-person revision","status":"awaiting Claude review"}
