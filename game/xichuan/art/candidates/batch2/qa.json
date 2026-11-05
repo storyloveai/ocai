@@ -8,7 +8,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "2edfaf29388f9988321d602a388e4a7be4a12eac804f8a799d6d41040819d295",
+    "sha256": "59373e3d1ebb78a363cb87288af82e2f815e95fbf92d5192f29d095aad547a05",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -21,18 +21,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      380
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      988,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-smile",
@@ -43,7 +39,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "7d95d9184c28857b9e732ced3e20055d3a74b0ac4e42fa63bc32e5b0e29dd1ed",
+    "sha256": "77c34b4eb278e81327e07c0ebb0cff7ed85e7ac4643d80cc758821f80f54c89a",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -56,18 +52,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      188,
+      604,
+      378
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1002,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-shy",
@@ -78,7 +70,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "83386ff34ea6db7de82479c604be9cd6986d630afbdd3006490495fe1ef4c59b",
+    "sha256": "03af66df81956fae223dc95962c1459e788b1e6febf61c60362ed7a2fb06ebf6",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -91,18 +83,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      379
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      990,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-shy",
@@ -113,7 +101,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "675f2650b1f4b6b4cdbd5e2253238bcf317983d9366027c59024c8a87524833e",
+    "sha256": "8040df2eca2a6165066b7d739c14d201c244810ed0b7453f4cd19eedefea81b0",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -126,18 +114,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      379
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      988,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-angry",
@@ -148,7 +132,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "0beaa5a5c9d0439d7955db2ae19101a234ddd4924bac3080ffd2c01a808fe950",
+    "sha256": "88f1674d6f883d7ba5a9ee43a9a41163d4b7ead698946a15fae04a3f04c07c33",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -161,18 +145,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      380
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1004,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-angry",
@@ -183,7 +163,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "8866f2a549b49081815609142f5221bddac256f4800dfac086894a45c4937626",
+    "sha256": "e5e5a1a1c773d571a3a56a9e85be1f011e452c3454479f8b8036c9989206eec3",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -196,18 +176,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      380
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      988,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-sad",
@@ -218,7 +194,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "51169719743edb4c740be9026996688ca233e6a51eb65d60b944271375d5720e",
+    "sha256": "e02e3cbcf2410b5e83332357ad196168a79f3057f515df6a89631f845da602c4",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -231,18 +207,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      379
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      990,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-sad",
@@ -253,7 +225,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "0a0fa581aceb369ae79f6d276e91d0a4bfd50a79628c485141a7aa93b13d3fea",
+    "sha256": "8226b6d23276b7cafd47163a961f94f7d0793a828fb142ee077491b05ede2e2e",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -266,18 +238,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      379
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1002,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-surprised",
@@ -288,7 +256,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "3d092df06786ef42c5ee9ed138695f60016324c45db7938d5f014defaa7bb479",
+    "sha256": "81d9e0633ed8e88eefef6f24966d75d690b4205aa1109ddacb52b1e0c788fd19",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -301,18 +269,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      380
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      988,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-zhiyao-surprised",
@@ -323,7 +287,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "5da82e6c616a5abae126ee1a90cda94932de252d21f71d1689b608fffd9b5bc7",
+    "sha256": "1640aa2a8601bf9afc064997174ee6917d7da19b2b10e7064b96ee41dc7f3a93",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -336,18 +300,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      390,
+      187,
+      604,
+      379
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      988,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-smile",
@@ -358,7 +318,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "e1be40bfc2f4adedab08b052e0e71269f4cc879bce7da52bd54b735ff171eb01",
+    "sha256": "f3043073c90fd7b85cffa3bf86ffcca8db48a51e2e02921856afb671df238f5b",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -371,18 +331,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      386
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1000,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-smile",
@@ -393,7 +349,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "bf5f49b159180cc689f8cc6d1156984674c2ebc506772b2ae2986d9528b39330",
+    "sha256": "c65093be95f2e9052e1bafba4d4dd48657de4f6d8b6c1a36f0da94d18ed96b19",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -406,18 +362,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      387
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1006,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-shy",
@@ -428,7 +380,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "e960f83e573882a36f6890f05e8511b168f38b2bf2f22e5d68be6e39c2633bab",
+    "sha256": "e99148212e7df24eb34345821a2a25cf330f4384925ba30f886872b26d91590d",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -441,18 +393,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      386
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1014,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-shy",
@@ -463,7 +411,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "41f51b85896dc5dd9b50df85691471e4487961a73945c3b84a95077efb912b24",
+    "sha256": "a76aadc7e8b86779f4943e5a26090774de19d044774d4a106d36573625f6425a",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -476,18 +424,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      387
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1000,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-angry",
@@ -498,7 +442,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "8c0a8d9a7ed8373a276ab59b6bbbacb1e52fad1a686922d8526486b1eeaac241",
+    "sha256": "ff61f4d3b254ea1497776704afe243d3d59d184cad99dc24b704fe0a3707d7e4",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -511,18 +455,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      387
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1023,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-angry",
@@ -533,7 +473,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "396eb4e34cf9b2f22f74f925ba2941cce7075df2f752e77645d9cb65da58b5c0",
+    "sha256": "598869a36458a146ec6aeb87533cb54a8a2a3033a0804d8e2158b327dace7353",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -546,18 +486,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      385
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1000,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-sad",
@@ -568,7 +504,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "008b10f586c525b97eda8b702d27ea115f0e1ddf092248ef6c58a6b01b81dd06",
+    "sha256": "965504f6b5517cce4bb2e79593897c25ca7e49da89ed956a3fa3a8c10d5aedca",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -581,18 +517,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      420,
+      204,
+      637,
+      387
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1000,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-sad",
@@ -603,7 +535,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "cc8c62b54630cae6c8630cded87d23241547b5e1cbbaa14c032a43f04569606c",
+    "sha256": "040bb8e8d94c3069c83d97f212bee95d61b76d3a41a594d85d80b4323cd92160",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -616,18 +548,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      387
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1000,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-surprised",
@@ -638,7 +566,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "b67fa53dbab9f8e3d0ef4f024540526417f44fe10d6468034227b5b558e3ff6a",
+    "sha256": "099d18c2b6677b45f821885500c30118133648629ab19c61bfc8fc396263bb7c",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -651,18 +579,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      204,
+      637,
+      387
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1000,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-shencheng-surprised",
@@ -673,7 +597,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "04fbb87f9f6c141d46296f32185b5163e61b7e83af5dbb3c0d507473e91986cd",
+    "sha256": "b32bb4861fb4f9d881351114f8d59d543fcecbd13b6469776690b83ea6ed689b",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -686,18 +610,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      419,
+      203,
+      637,
+      387
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1000,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-smile",
@@ -708,7 +628,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "f493cadf649c1c579ad46e037580a784cf50eacb45e197ac099bd421a2d55bbe",
+    "sha256": "63b0233e84fd3c0b06f821efff86944e2995aa1b514e4c7570330e42a79dc5cc",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -721,18 +641,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      605,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-smile",
@@ -743,7 +659,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "9d8e950fbc29aa5b7566c93dd7ed4e24315321a5b171af65f1e1968e2761b01d",
+    "sha256": "38434c2d8ee60251c4d5b5fbfaa4f42628d5801d7eb5115f89908696aefdb401",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -756,18 +672,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      605,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-shy",
@@ -778,7 +690,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "db599d5728257e924c2c66ac609d63e41a988f572b4a0f2367eb348f6065ce0d",
+    "sha256": "917dd40c86ae5a21d16ec8330f49f68c10f2ec719210151be525151107bf1688",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -791,18 +703,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-shy",
@@ -813,7 +721,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "8690e9a96f8229ee927f04b89d17f1ee266e780370c192e4ea6f4980bc8605e1",
+    "sha256": "7782d7eabbff7d4f7f05abd561cb8c4c80a73ef3f5942d82255e8a80b515365b",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -826,18 +734,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1004,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-angry",
@@ -848,7 +752,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "3884dc7f004e265e738debdb4af7a82362c82d9dd6ec79f000bfa94309255c22",
+    "sha256": "b870a28e7b7b4f6630fde672e01e81ee024b9b747d0928c216824e994a33791c",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -861,18 +765,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      397
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-angry",
@@ -883,7 +783,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "87213c8e88ff54327aef0cf3602a40eaa9fe063e874b916a0b3e4534d0cd58fc",
+    "sha256": "3ece1641bccabf27f85fc44a4a4e4441ed0bb108f46bee24ddbac5d19eccb1c5",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -896,18 +796,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-sad",
@@ -918,7 +814,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "191e906141bdd88a59a8e04c0f7ab7446e7c7435421b4ae75cac6d814560406d",
+    "sha256": "980c47789767e8eed80cc7a4ff17deb83d97d21480c274b3ac8fdbfb4b79bf69",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -931,18 +827,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      399
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-sad",
@@ -953,7 +845,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "cd04dfbcfffc76e0e77b7feaffd46a75fd886cccbbfa65f111d2a599b774ec83",
+    "sha256": "082993d12859b9ef05fb7e5d8bdbd2afbadd99855e83060b4f94038af64fb6ec",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -966,18 +858,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-surprised",
@@ -988,7 +876,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "7412313541c4eba47c62e0f79bebb6d1ad6ac858f056a44469fd0b9430f912ab",
+    "sha256": "253899e8d8f0d11c558afecc257dba3a01e7f42087e5a81e713d39637e14f833",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -1001,18 +889,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      944,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "sprite-jibai-surprised",
@@ -1023,7 +907,7 @@
       1536
     ],
     "mode": "RGBA",
-    "sha256": "2021a866b212483f964d6a18305cbedfd77ada1feeeb41be3940c6a68cd103bc",
+    "sha256": "8686705de9c35192372d48fa17841e12a47ac6dab4ecb120ca06176b2b54c8a7",
     "accept": [
       "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
       "只有一个人，透明背景（PNG 带透明通道）",
@@ -1036,18 +920,14 @@
     ],
     "sameCanvas": true,
     "fullDiffBBox": [
-      0,
-      0,
-      1024,
-      1536
+      382,
+      201,
+      606,
+      398
     ],
-    "alphaDiffBBox": [
-      0,
-      0,
-      1006,
-      1536
-    ],
-    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+    "alphaDiffBBox": null,
+    "strictFaceOnly": "PASS: face compositing applied; outside facial support and complete Alpha identical to adopted reference",
+    "faceCompositingRecord": "face-compositing.json"
   },
   {
     "id": "bg-train",
