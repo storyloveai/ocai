@@ -1,0 +1,5643 @@
+{
+ "spec": "storydate.campaign/0.4",
+ "tiers": {
+  "start": [
+   0,
+   2,
+   4,
+   6,
+   8
+  ],
+  "end": [
+   1,
+   3,
+   5,
+   7,
+   10
+  ],
+  "names": {
+   "trust": [
+    {
+     "zh": "戒备",
+     "en": "Guarded"
+    },
+    {
+     "zh": "观望",
+     "en": "Watching"
+    },
+    {
+     "zh": "可托",
+     "en": "Reliable"
+    },
+    {
+     "zh": "倚重",
+     "en": "Relied on"
+    },
+    {
+     "zh": "心腹",
+     "en": "Confidant"
+    }
+   ],
+   "esteem": [
+    {
+     "zh": "轻视",
+     "en": "Dismissive"
+    },
+    {
+     "zh": "寻常",
+     "en": "Ordinary"
+    },
+    {
+     "zh": "器重",
+     "en": "Valued"
+    },
+    {
+     "zh": "推崇",
+     "en": "Admired"
+    },
+    {
+     "zh": "折服",
+     "en": "In awe"
+    }
+   ],
+   "warmth": [
+    {
+     "zh": "冷淡",
+     "en": "Cold"
+    },
+    {
+     "zh": "相识",
+     "en": "Acquainted"
+    },
+    {
+     "zh": "相熟",
+     "en": "Familiar"
+    },
+    {
+     "zh": "交好",
+     "en": "Friends"
+    },
+    {
+     "zh": "知己",
+     "en": "Kindred"
+    }
+   ],
+   "intimacy": [
+    {
+     "zh": "生疏",
+     "en": "Distant"
+    },
+    {
+     "zh": "在意",
+     "en": "Caring"
+    },
+    {
+     "zh": "心动",
+     "en": "Drawn"
+    },
+    {
+     "zh": "两情相悦",
+     "en": "In love"
+    },
+    {
+     "zh": "相许",
+     "en": "Promised"
+    }
+   ]
+  },
+  "axes": [
+   "warmth",
+   "trust",
+   "esteem"
+  ],
+  "romance_axis": "intimacy",
+  "min": 0,
+  "max": 10,
+  "axis_names": {
+   "warmth": {
+    "zh": "交情",
+    "en": "friendship"
+   },
+   "trust": {
+    "zh": "信任",
+    "en": "trust"
+   },
+   "esteem": {
+    "zh": "看重",
+    "en": "esteem"
+   },
+   "intimacy": {
+    "zh": "亲近",
+    "en": "closeness"
+   }
+  },
+  "axis_meaning": {
+   "warmth": {
+    "zh": "喜不喜欢你",
+    "en": "do they like you"
+   },
+   "trust": {
+    "zh": "敢不敢把事交给你",
+    "en": "would they put things in your hands"
+   },
+   "esteem": {
+    "zh": "认不认你的本事",
+    "en": "do they rate your ability"
+   },
+   "intimacy": {
+    "zh": "恋爱的进展，只有产品允许的人物才有",
+    "en": "romance; only characters the product allows"
+   }
+  }
+ },
+ "pack": {
+  "id": "mystery-revenge",
+  "version": 1,
+  "title": {
+   "zh": "悬疑复仇",
+   "en": "Mystery & revenge"
+  },
+  "premise": {
+   "zh": "真相一点一点拼出来，但每一块证据都可能伤到无辜的人。好玩在“查得清”和“下不下得了手”是两件事。",
+   "en": "The truth comes together piece by piece, and every piece can hurt someone innocent. The fun is that knowing and acting are two different things."
+  },
+  "values": {
+   "zhen": {
+    "zh": "真",
+    "en": "truth"
+   },
+   "ren": {
+    "zh": "忍",
+    "en": "patience"
+   },
+   "li": {
+    "zh": "利",
+    "en": "advantage"
+   },
+   "qing": {
+    "zh": "情",
+    "en": "sentiment"
+   },
+   "yi": {
+    "zh": "义",
+    "en": "justice"
+   },
+   "hen": {
+    "zh": "狠",
+    "en": "ruthlessness"
+   }
+  },
+  "roles": {
+   "proof": {
+    "required": true,
+    "earned": true,
+    "zh": "证据：能核验的才算，同一来源的传言不能算两条。",
+    "en": "Proof: only what can be verified counts; two rumors from one source are one."
+   },
+   "currency": {
+    "required": false,
+    "zh": "经费、人情：查案要花钱，花了就欠了谁。",
+    "en": "Currency: investigating costs money, and money means owing someone."
+   },
+   "time": {
+    "required": false,
+    "zh": "时间、余裕：拖得越久，对方准备得越好。",
+    "en": "Time: the longer it takes, the readier the other side is."
+   },
+   "risk": {
+    "required": true,
+    "zh": "暴露：被对手察觉。到线必须出事。",
+    "en": "Exposure: being noticed by the other side. Cross the line and something must happen."
+   }
+  },
+  "failures": [
+   {
+    "zh": "身份暴露：对手先动手",
+    "en": "Exposed: the other side moves first"
+   },
+   {
+    "zh": "证据链断：关键一环说不出来源",
+    "en": "A broken chain: a key link can't be sourced"
+   },
+   {
+    "zh": "误伤：真相落在无辜的人身上",
+    "en": "Collateral: the truth lands on the innocent"
+   }
+  ],
+  "checklist": [
+   {
+    "zh": "证据程序是剧情规则，不写成现实中的法律或调查教程",
+    "en": "Evidence procedure is a story rule, never a real-world legal or investigation guide"
+   },
+   {
+    "zh": "原著人物保留自己的目标，不围着玩家转",
+    "en": "Characters from the book keep their own goals; they don't orbit the player"
+   }
+  ],
+  "rules": [
+   "alt_path",
+   "earned_victory",
+   "risk_bites"
+  ]
+ },
+ "resources": {
+  "proof": [
+   "proof"
+  ],
+  "risk": [
+   "alert"
+  ]
+ },
+ "id": "bakerstreet_v1",
+ "title": {
+  "zh": "贝克街",
+  "en": "Baker Street"
+ },
+ "volume": {
+  "zh": "卷一 · 血字的研究",
+  "en": "Volume 1 · A Study in Scarlet"
+ },
+ "rights": {
+  "source": "柯南·道尔《血字的研究》（1887，公版）",
+  "original_characters": []
+ },
+ "player": {
+  "name": {
+   "zh": "华生",
+   "en": "Watson"
+  }
+ },
+ "format": "vn",
+ "vars": {
+  "rel.holmes.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "holmes",
+   "dim": "warmth",
+   "label": {
+    "zh": "歇洛克·福尔摩斯·warmth",
+    "en": "Sherlock Holmes · warmth"
+   }
+  },
+  "rel.holmes.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "holmes",
+   "dim": "trust",
+   "label": {
+    "zh": "歇洛克·福尔摩斯·trust",
+    "en": "Sherlock Holmes · trust"
+   }
+  },
+  "rel.holmes.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "holmes",
+   "dim": "esteem",
+   "label": {
+    "zh": "歇洛克·福尔摩斯·esteem",
+    "en": "Sherlock Holmes · esteem"
+   }
+  },
+  "rel.lestrade.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "lestrade",
+   "dim": "warmth",
+   "label": {
+    "zh": "雷斯垂德·warmth",
+    "en": "Inspector Lestrade · warmth"
+   }
+  },
+  "rel.lestrade.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "lestrade",
+   "dim": "trust",
+   "label": {
+    "zh": "雷斯垂德·trust",
+    "en": "Inspector Lestrade · trust"
+   }
+  },
+  "rel.lestrade.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "lestrade",
+   "dim": "esteem",
+   "label": {
+    "zh": "雷斯垂德·esteem",
+    "en": "Inspector Lestrade · esteem"
+   }
+  },
+  "rel.gregson.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "gregson",
+   "dim": "warmth",
+   "label": {
+    "zh": "葛莱森·warmth",
+    "en": "Inspector Gregson · warmth"
+   }
+  },
+  "rel.gregson.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "gregson",
+   "dim": "trust",
+   "label": {
+    "zh": "葛莱森·trust",
+    "en": "Inspector Gregson · trust"
+   }
+  },
+  "rel.gregson.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "gregson",
+   "dim": "esteem",
+   "label": {
+    "zh": "葛莱森·esteem",
+    "en": "Inspector Gregson · esteem"
+   }
+  },
+  "rel.hudson.warmth": {
+   "type": "num",
+   "init": 3,
+   "min": 0,
+   "max": 10,
+   "char": "hudson",
+   "dim": "warmth",
+   "label": {
+    "zh": "哈德森太太·warmth",
+    "en": "Mrs Hudson · warmth"
+   }
+  },
+  "rel.hudson.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "hudson",
+   "dim": "trust",
+   "label": {
+    "zh": "哈德森太太·trust",
+    "en": "Mrs Hudson · trust"
+   }
+  },
+  "rel.hudson.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "hudson",
+   "dim": "esteem",
+   "label": {
+    "zh": "哈德森太太·esteem",
+    "en": "Mrs Hudson · esteem"
+   }
+  },
+  "rel.stamford.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "stamford",
+   "dim": "warmth",
+   "label": {
+    "zh": "斯坦福·warmth",
+    "en": "Stamford · warmth"
+   }
+  },
+  "rel.stamford.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "stamford",
+   "dim": "trust",
+   "label": {
+    "zh": "斯坦福·trust",
+    "en": "Stamford · trust"
+   }
+  },
+  "rel.stamford.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "stamford",
+   "dim": "esteem",
+   "label": {
+    "zh": "斯坦福·esteem",
+    "en": "Stamford · esteem"
+   }
+  },
+  "rel.rance.warmth": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "rance",
+   "dim": "warmth",
+   "label": {
+    "zh": "约翰·兰斯·warmth",
+    "en": "Constable John Rance · warmth"
+   }
+  },
+  "rel.rance.trust": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "rance",
+   "dim": "trust",
+   "label": {
+    "zh": "约翰·兰斯·trust",
+    "en": "Constable John Rance · trust"
+   }
+  },
+  "rel.rance.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "rance",
+   "dim": "esteem",
+   "label": {
+    "zh": "约翰·兰斯·esteem",
+    "en": "Constable John Rance · esteem"
+   }
+  },
+  "rel.sawyer.warmth": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "sawyer",
+   "dim": "warmth",
+   "label": {
+    "zh": "索耶太太·warmth",
+    "en": "Mrs Sawyer · warmth"
+   }
+  },
+  "rel.sawyer.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "sawyer",
+   "dim": "trust",
+   "label": {
+    "zh": "索耶太太·trust",
+    "en": "Mrs Sawyer · trust"
+   }
+  },
+  "rel.sawyer.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "sawyer",
+   "dim": "esteem",
+   "label": {
+    "zh": "索耶太太·esteem",
+    "en": "Mrs Sawyer · esteem"
+   }
+  },
+  "rel.hope.warmth": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "hope",
+   "dim": "warmth",
+   "label": {
+    "zh": "杰弗逊·霍普·warmth",
+    "en": "Jefferson Hope · warmth"
+   }
+  },
+  "rel.hope.trust": {
+   "type": "num",
+   "init": 1,
+   "min": 0,
+   "max": 10,
+   "char": "hope",
+   "dim": "trust",
+   "label": {
+    "zh": "杰弗逊·霍普·trust",
+    "en": "Jefferson Hope · trust"
+   }
+  },
+  "rel.hope.esteem": {
+   "type": "num",
+   "init": 2,
+   "min": 0,
+   "max": 10,
+   "char": "hope",
+   "dim": "esteem",
+   "label": {
+    "zh": "杰弗逊·霍普·esteem",
+    "en": "Jefferson Hope · esteem"
+   }
+  },
+  "proof": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 20,
+   "label": {
+    "zh": "线索",
+    "en": "Clues"
+   }
+  },
+  "alert": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 3,
+   "label": {
+    "zh": "打草惊蛇",
+    "en": "Alarm"
+   }
+  },
+  "deduce": {
+   "type": "num",
+   "init": 0,
+   "min": 0,
+   "max": 10,
+   "label": {
+    "zh": "华生自己看穿的",
+    "en": "What Watson worked out himself"
+   }
+  },
+  "clue.cab": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "车辙：一辆四轮出租马车",
+    "en": "Ruts: a four-wheeled cab"
+   },
+   "clue": true
+  },
+  "clue.boots": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "方头靴的大步子",
+    "en": "The long stride of square-toed boots"
+   },
+   "clue": true
+  },
+  "clue.lips": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "死者嘴唇上的药味",
+    "en": "A drug smell on the dead man's lips"
+   },
+   "clue": true
+  },
+  "clue.ring": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "一枚女人的结婚戒指",
+    "en": "A woman's wedding ring"
+   },
+   "clue": true
+  },
+  "clue.rache": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "墙上的 RACHE：德语“复仇”",
+    "en": "RACHE on the wall: German for 'revenge'"
+   },
+   "clue": true
+  },
+  "clue.drunk": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "门口的“醉汉”拿着马鞭",
+    "en": "The 'drunkard' at the gate had a whip"
+   },
+   "clue": true
+  },
+  "clue.accomplice": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "来取戒指的“老太太”是个年轻人",
+    "en": "The 'old woman' who came for the ring was a young man"
+   },
+   "clue": true
+  },
+  "clue.telegram": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "电报：“J·H 在欧洲”",
+    "en": "The telegram: 'J. H. is in Europe'"
+   },
+   "clue": true
+  },
+  "clue.pills": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "两颗药丸，一颗剧毒一颗无害",
+    "en": "Two pills: one deadly, one harmless"
+   },
+   "clue": true
+  },
+  "flag.heard_stick": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "听斯坦福讲过福尔摩斯打尸体",
+    "en": "Heard Stamford's story of the stick"
+   }
+  },
+  "flag.asked_afghan": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "当面问过阿富汗是怎么看出来的",
+    "en": "Asked Holmes how he knew about Afghanistan"
+   }
+  },
+  "flag.saw_sergeant": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "亲眼看清了那位海军陆战队中士",
+    "en": "Saw the sergeant of Marines for himself"
+   }
+  },
+  "flag.notebook": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "把福尔摩斯的推断都记在了本子上",
+    "en": "Wrote down all of Holmes's deductions"
+   }
+  },
+  "flag.hope_warned": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "凶手被惊动了",
+    "en": "The murderer was put on his guard"
+   }
+  },
+  "flag.journal": {
+   "type": "flag",
+   "init": false,
+   "label": {
+    "zh": "决定把案子写下来",
+    "en": "Decided to write the case down"
+   }
+  }
+ },
+ "chars": {
+  "holmes": {
+   "name": {
+    "zh": "歇洛克·福尔摩斯",
+    "en": "Sherlock Holmes"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "esteem",
+   "persona": {
+    "zh": "歇洛克·福尔摩斯：27 岁，世界上唯一的咨询侦探。高瘦，目光锐利，热情起来像个孩子，消沉时几天不开口。只记对破案有用的知识（不知道地球绕太阳转）。看重观察力，讨厌瞎猜和自以为是。叫华生“华生”或“医生”。",
+    "en": "Sherlock Holmes, 27, the world's only consulting detective. Tall, lean, piercing eyes; childlike enthusiasm when working, days of silence when not. Keeps only knowledge useful to his work. Values observation; despises guessing and conceit. Calls the player 'Watson' or 'Doctor'."
+   },
+   "values": {
+    "zhen": [
+     "esteem",
+     1
+    ],
+    "ren": [
+     "trust",
+     1
+    ],
+    "qing": [
+     "warmth",
+     1
+    ],
+    "hen": [
+     "warmth",
+     -1
+    ],
+    "li": [
+     "esteem",
+     -1
+    ]
+   }
+  },
+  "lestrade": {
+   "name": {
+    "zh": "雷斯垂德",
+    "en": "Inspector Lestrade"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "trust",
+   "persona": {
+    "zh": "雷斯垂德：苏格兰场探长，瘦小、黄脸、精明又固执，和葛莱森互相嫉妒。爱抢功，但不坏。",
+    "en": "Lestrade: Scotland Yard inspector, small, sallow, shrewd and stubborn; jealous rival of Gregson. Likes credit, but not a bad man."
+   },
+   "values": {
+    "li": [
+     "trust",
+     1
+    ],
+    "zhen": [
+     "esteem",
+     1
+    ],
+    "hen": [
+     "warmth",
+     -1
+    ]
+   }
+  },
+  "gregson": {
+   "name": {
+    "zh": "葛莱森",
+    "en": "Inspector Gregson"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "trust",
+   "persona": {
+    "zh": "葛莱森：苏格兰场探长，高个、白脸、淡黄头发，精力旺盛，自以为是。",
+    "en": "Gregson: Scotland Yard inspector, tall, white-faced, flaxen-haired, energetic and self-satisfied."
+   },
+   "values": {
+    "li": [
+     "warmth",
+     1
+    ],
+    "zhen": [
+     "esteem",
+     1
+    ],
+    "hen": [
+     "trust",
+     -1
+    ]
+   }
+  },
+  "hudson": {
+   "name": {
+    "zh": "哈德森太太",
+    "en": "Mrs Hudson"
+   },
+   "dims": {
+    "warmth": [
+     3,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "warmth",
+   "persona": {
+    "zh": "哈德森太太：贝克街 221B 的房东，和气、能干、耐心极好。",
+    "en": "Mrs Hudson: landlady of 221B Baker Street; kind, capable, endlessly patient."
+   },
+   "values": {
+    "qing": [
+     "warmth",
+     1
+    ],
+    "hen": [
+     "warmth",
+     -1
+    ]
+   }
+  },
+  "stamford": {
+   "name": {
+    "zh": "斯坦福",
+    "en": "Stamford"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "warmth",
+   "persona": {
+    "zh": "斯坦福：华生在巴茨医院的旧助手，年轻、爽快。",
+    "en": "Stamford: Watson's former dresser at Barts; young and friendly."
+   },
+   "values": {
+    "qing": [
+     "warmth",
+     1
+    ]
+   }
+  },
+  "rance": {
+   "name": {
+    "zh": "约翰·兰斯",
+    "en": "Constable John Rance"
+   },
+   "dims": {
+    "warmth": [
+     1,
+     0,
+     10
+    ],
+    "trust": [
+     2,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "warmth",
+   "persona": {
+    "zh": "约翰·兰斯：值夜班的警员，被从床上叫醒，不太高兴；给点好处话就多了。",
+    "en": "John Rance: the night constable, grumpy at being woken; loosens up for a coin."
+   },
+   "values": {
+    "li": [
+     "warmth",
+     1
+    ],
+    "hen": [
+     "trust",
+     -1
+    ]
+   }
+  },
+  "sawyer": {
+   "name": {
+    "zh": "索耶太太",
+    "en": "Mrs Sawyer"
+   },
+   "dims": {
+    "warmth": [
+     2,
+     0,
+     10
+    ],
+    "trust": [
+     1,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "trust",
+   "persona": {
+    "zh": "“索耶太太”：来认领戒指的老太太。其实是霍普的朋友，一个年轻男人假扮的。",
+    "en": "'Mrs Sawyer': the old woman who claims the ring — in fact a young friend of Hope's in disguise."
+   },
+   "values": {
+    "qing": [
+     "warmth",
+     1
+    ]
+   }
+  },
+  "hope": {
+   "name": {
+    "zh": "杰弗逊·霍普",
+    "en": "Jefferson Hope"
+   },
+   "dims": {
+    "warmth": [
+     1,
+     0,
+     10
+    ],
+    "trust": [
+     1,
+     0,
+     10
+    ],
+    "esteem": [
+     2,
+     0,
+     10
+    ]
+   },
+   "original": false,
+   "main": "trust",
+   "persona": {
+    "zh": "杰弗逊·霍普：伦敦的马车夫，美国人。为死去的未婚妻露西追了仇人二十年。冷静、坦荡，知道自己快死了（主动脉瘤）。",
+    "en": "Jefferson Hope: an American cabman in London who hunted his dead fiancée's persecutors for twenty years. Calm and frank; knows he is dying (aortic aneurism)."
+   },
+   "values": {
+    "qing": [
+     "warmth",
+     1
+    ],
+    "yi": [
+     "esteem",
+     1
+    ],
+    "zhen": [
+     "trust",
+     1
+    ]
+   }
+  }
+ },
+ "dims": {},
+ "echoes": {},
+ "debts": {},
+ "chapters": [
+  {
+   "id": "p",
+   "title": {
+    "zh": "序章 · 伦敦",
+    "en": "Prologue · London"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "1881 年，伦敦。",
+      "en": "London, 1881."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c1",
+   "title": {
+    "zh": "第一章 · 歇洛克·福尔摩斯先生",
+    "en": "Chapter 1 · Mr Sherlock Holmes"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "圣巴托罗缪医院。",
+      "en": "St Bartholomew's Hospital."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c2",
+   "title": {
+    "zh": "第二章 · 演绎法",
+    "en": "Chapter 2 · The Science of Deduction"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "贝克街 221B。",
+      "en": "221B Baker Street."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c3",
+   "title": {
+    "zh": "第三章 · 劳瑞斯顿花园疑案",
+    "en": "Chapter 3 · The Lauriston Gardens Mystery"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "布里克斯顿路，一座空屋。",
+      "en": "An empty house off the Brixton Road."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c4",
+   "title": {
+    "zh": "第四章 · 警员兰斯的话",
+    "en": "Chapter 4 · What John Rance Had to Tell"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "肯宁顿公园门，奥德利大院 46 号。",
+      "en": "46 Audley Court, Kennington Park Gate."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c5",
+   "title": {
+    "zh": "第五章 · 广告引来的访客",
+    "en": "Chapter 5 · Our Advertisement Brings a Visitor"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "“布里克斯顿路拾获金质结婚戒指一枚。”",
+      "en": "'In Brixton Road, a plain gold wedding ring, found.'"
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c6",
+   "title": {
+    "zh": "第六章 · 黑暗中的光",
+    "en": "Chapter 6 · Light in the Darkness"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "第二个死者。",
+      "en": "A second death."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c7",
+   "title": {
+    "zh": "第七章 · 圣徒之国",
+    "en": "Chapter 7 · The Country of the Saints"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "警察局，夜里。",
+      "en": "The police station, at night."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  },
+  {
+   "id": "c8",
+   "title": {
+    "zh": "尾声",
+    "en": "Epilogue"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "几天以后。",
+      "en": "A few days later."
+     }
+    }
+   ],
+   "offer": 0,
+   "main_first": true
+  }
+ ],
+ "nodes": {
+  "p_return": {
+   "id": "p_return",
+   "chapter": "p",
+   "kind": "main",
+   "title": {
+    "zh": "序章 · 回到伦敦",
+    "en": "Prologue · Back in London"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "1878 年，我在伦敦大学拿到医学博士学位，随后作为军医去了阿富汗。",
+      "en": "In the year 1878 I took my degree of Doctor of Medicine of the University of London, and went out to Afghanistan as an army surgeon."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "eager",
+     "type": "expression",
+     "label": {
+      "zh": "“就是我了。我宁可有个伴，也不想一个人住。”",
+      "en": "\"I am the very man for him. I should prefer having a partner to being alone.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那好。不过以后合不来，可别怪我。",
+        "en": "Very well. But you mustn't blame me if you don't get on with him."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "stamford",
+       "t": {
+        "zh": "那好。不过以后合不来，可别怪我。",
+        "en": "Very well. But you mustn't blame me if you don't get on with him."
+       }
+      }
+     ],
+     "values": [
+      "qing"
+     ]
+    },
+    {
+     "id": "ask",
+     "type": "expression",
+     "label": {
+      "zh": "“他有什么毛病？别吞吞吐吐的。”",
+      "en": "\"What is there against him? Don't be mealy-mouthed about it.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "他太讲科学了，近乎冷血。我能想象他给朋友下一小撮最新的植物碱——不是出于恶意，只是想弄清楚效果。",
+        "en": "Holmes is a little too scientific for my tastes — it approaches to cold-bloodedness. I could imagine his giving a friend a little pinch of the latest vegetable alkaloid, not out of malevolence, but simply out of a spirit of inquiry."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.heard_stick",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "stamford",
+       "t": {
+        "zh": "他太讲科学了，近乎冷血。我能想象他给朋友下一小撮最新的植物碱——不是出于恶意，只是想弄清楚效果。",
+        "en": "Holmes is a little too scientific for my tastes — it approaches to cold-bloodedness. I could imagine his giving a friend a little pinch of the latest vegetable alkaloid, not out of malevolence, but simply out of a spirit of inquiry."
+       }
+      },
+      {
+       "op": "say",
+       "who": "stamford",
+       "t": {
+        "zh": "我还亲眼见过他在解剖室里用棍子打尸体，为了看人死后还会不会出淤青。",
+        "en": "When it comes to beating the subjects in the dissecting-rooms with a stick… to verify how far bruises may be produced after death. I saw him at it with my own eyes."
+       }
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "……这倒让我更想见见他了。",
+        "en": "…That only makes me want to meet him more."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "street_fog"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "1878 年，我在伦敦大学拿到医学博士学位，随后作为军医去了阿富汗。",
+      "en": "In the year 1878 I took my degree of Doctor of Medicine of the University of London, and went out to Afghanistan as an army surgeon."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "迈万德一战，一颗子弹打碎了我的肩胛骨。后来又染上伤寒，几个月里生死难料。",
+      "en": "At the fatal battle of Maiwand I was struck on the shoulder by a Jezail bullet. Then came enteric fever, and for months my life was despaired of."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "军方给了我九个月的病假，送我回国。我在世界上无亲无故，就像所有闲人一样，被冲进了伦敦这个大污水坑。",
+      "en": "I was sent home with nine months' leave. Having neither kith nor kin in England, I naturally gravitated to London, that great cesspool into which all the loungers and idlers of the Empire are irresistibly drained."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "钱快花光了。要么离开伦敦，要么换个便宜点的住处。",
+      "en": "My money is nearly gone. Either I leave London, or I find cheaper lodgings."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "就在我下定决心的那天，有人在克里特利安酒吧拍了拍我的肩。是小斯坦福，以前在巴茨医院给我当过助手。",
+      "en": "On the very day I made up my mind, someone tapped me on the shoulder at the Criterion Bar. It was young Stamford, who had been a dresser under me at Barts."
+     }
+    },
+    {
+     "op": "say",
+     "who": "stamford",
+     "t": {
+      "zh": "华生，你这阵子都干什么去了？瘦得像根竹竿，黑得像颗栗子。",
+      "en": "Whatever have you been doing with yourself, Watson? You are as thin as a lath and as brown as a nut."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "t": {
+      "zh": "在找住处。想弄明白，在伦敦能不能用合理的价钱租到舒服的房间。",
+      "en": "Looking for lodgings. Trying to solve the problem as to whether it is possible to get comfortable rooms at a reasonable price."
+     }
+    },
+    {
+     "op": "say",
+     "who": "stamford",
+     "t": {
+      "zh": "怪了，你是今天第二个跟我说这话的人。",
+      "en": "That's a strange thing. You are the second man to-day that has used that expression to me."
+     }
+    },
+    {
+     "op": "say",
+     "who": "stamford",
+     "t": {
+      "zh": "医院化学实验室有个人，找到了一套好房子，可一个人付不起，正发愁找不到人合租。",
+      "en": "A fellow who is working at the chemical laboratory up at the hospital. He could not get someone to go halves with him in some nice rooms which he had found."
+     }
+    },
+    {
+     "op": "say",
+     "who": "stamford",
+     "t": {
+      "zh": "不过……你还不认识歇洛克·福尔摩斯。他做长期室友，你未必受得了。",
+      "en": "You don't know Sherlock Holmes yet. Perhaps you would not care for him as a constant companion."
+     }
+    }
+   ]
+  },
+  "c1_lab": {
+   "id": "c1_lab",
+   "chapter": "c1",
+   "kind": "main",
+   "title": {
+    "zh": "“我找到了！”",
+    "en": "\"I've Found It!\""
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "实验室又高又大，四壁摆满了瓶瓶罐罐。桌上是曲颈瓶、试管和冒着蓝色火苗的本生灯。",
+      "en": "It was a lofty chamber, lined and littered with countless bottles. Broad, low tables bristled with retorts, test-tubes, and little Bunsen lamps with their blue flickering flames."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "confess",
+     "type": "expression",
+     "label": {
+      "zh": "老实说：“我养了只小斗牛犬，怕吵，起得没准，而且非常懒。”",
+      "en": "Be honest: \"I keep a bull pup, I object to rows, I get up at all sorts of ungodly hours, and I am extremely lazy.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你把拉小提琴也算在“吵”里吗？",
+        "en": "Do you include violin playing in your category of rows?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "你把拉小提琴也算在“吵”里吗？",
+        "en": "Do you include violin playing in your category of rows?"
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "t": {
+        "zh": "那要看谁拉。拉得好是天上的享受，拉得不好……",
+        "en": "It depends on the player. A well-played violin is a treat for the gods — a badly-played one—"
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "哦，那就没问题了。我想这事就算定了。",
+        "en": "Oh, that's all right. I think we may consider the thing as settled."
+       },
+       "face": "smile"
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "guess",
+     "type": "dilemma",
+     "label": {
+      "zh": "先别谈房子：“你是怎么看出阿富汗的？让我猜猜——”",
+      "en": "Not the rooms yet: \"How did you know about Afghanistan? Let me guess—\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "是斯坦福告诉你的？",
+        "en": "Stamford told you?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      },
+      {
+       "set": "flag.asked_afghan",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "t": {
+        "zh": "是斯坦福告诉你的？",
+        "en": "Stamford told you?"
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "斯坦福什么也没说。你回头自己想想。",
+        "en": "Stamford said nothing. Think it over for yourself."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "他在考我。",
+        "en": "He is testing me."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "cool",
+     "type": "expression",
+     "label": {
+      "zh": "有所保留：“我们先看看房子再说。”",
+      "en": "Reserved: \"Let us see the rooms first.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "明天中午来这里找我，一起去把事情定下来。",
+        "en": "Call for me here at noon to-morrow, and we'll go together and settle everything."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "明天中午来这里找我，一起去把事情定下来。",
+        "en": "Call for me here at noon to-morrow, and we'll go together and settle everything."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "ren"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "lab"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "实验室又高又大，四壁摆满了瓶瓶罐罐。桌上是曲颈瓶、试管和冒着蓝色火苗的本生灯。",
+      "en": "It was a lofty chamber, lined and littered with countless bottles. Broad, low tables bristled with retorts, test-tubes, and little Bunsen lamps with their blue flickering flames."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "屋里只有一个人。听见脚步声，他回头一看，高兴地跳了起来。",
+      "en": "There was only one student in the room. At the sound of our steps he glanced round and sprang to his feet with a cry of pleasure."
+     }
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "smile",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "我找到了！我找到了！一种只和血红蛋白起反应的试剂，别的什么都不行！",
+      "en": "I've found it! I've found it! I have found a re-agent which is precipitated by haemoglobin, and by nothing else."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": "stamford",
+     "t": {
+      "zh": "华生医生，这位是歇洛克·福尔摩斯先生。",
+      "en": "Dr Watson, Mr Sherlock Holmes."
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "你好。我看得出，你到过阿富汗。",
+      "en": "How are you? You have been in Afghanistan, I perceive."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "t": {
+      "zh": "你怎么知道的？",
+      "en": "How on earth did you know that?"
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "不用管它。眼下的问题是血红蛋白。",
+      "en": "Never mind. The question now is about haemoglobin."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "他刺破自己的手指，把一滴血滴进一升清水，又撒进几粒白色晶体。水立刻变成了暗红褐色。",
+      "en": "He pricked his own finger, let a drop of blood fall into a litre of water, and threw in a few white crystals. In an instant the contents assumed a dull mahogany colour."
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "有了这个检验法，世上不知多少逍遥法外的人早该伏法了。现在有了“福尔摩斯检验法”，以后就不难了。",
+      "en": "Had this test been invented, there are hundreds of men now walking the earth who would long ago have paid the penalty of their crimes. Now we have the Sherlock Holmes test, and there will no longer be any difficulty."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "我在贝克街看中了一套房子。你不介意浓烈的烟草味吧？我常摆弄化学药品，有时还做实验。我心情不好时会一连几天不开口。你有什么要坦白的？",
+      "en": "I have my eye on a suite in Baker Street. You don't mind the smell of strong tobacco, I hope? I generally have chemicals about, and occasionally do experiments. I get in the dumps at times, and don't open my mouth for days on end. What have you to confess now?"
+     },
+     "face": "normal"
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    }
+   ]
+  },
+  "c2_baker": {
+   "id": "c2_baker",
+   "chapter": "c2",
+   "kind": "main",
+   "title": {
+    "zh": "生活之书",
+    "en": "The Book of Life"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "贝克街 221B：两间舒适的卧室，一间宽敞通风的起居室，两扇大窗。我们当天就搬了进去。",
+      "en": "221B Baker Street: a couple of comfortable bedrooms and a single large airy sitting-room, illuminated by two broad windows. We moved in that very day."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "test",
+     "type": "dilemma",
+     "label": {
+      "zh": "等那人上楼，当面问他是干什么的。",
+      "en": "When the man comes up, ask him his trade to his face."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "敲门声，楼梯上沉重的脚步。那人把信递给福尔摩斯。",
+        "en": "A loud knock, heavy steps on the stair. The man handed my friend the letter."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.holmes.warmth",
+       "by": 1
+      },
+      {
+       "set": "flag.saw_sergeant",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "敲门声，楼梯上沉重的脚步。那人把信递给福尔摩斯。",
+        "en": "A loud knock, heavy steps on the stair. The man handed my friend the letter."
+       }
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "t": {
+        "zh": "请问，伙计，你是干哪一行的？",
+        "en": "May I ask, my lad, what your trade may be?"
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "当差的，先生。制服送去修了。以前是皇家海军陆战队轻步兵的中士，先生。",
+        "en": "Commissionaire, sir. Uniform away for repairs. A sergeant, sir, Royal Marine Light Infantry, sir."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "他立正、敬礼，走了。",
+        "en": "He clicked his heels together, raised his hand in a salute, and was gone."
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "你也看见了，华生：手背上的锚形刺青，军人的姿态和络腮胡，中年人的端正和威严。",
+        "en": "You saw it yourself, Watson: a great blue anchor tattooed on the back of his hand, the military carriage, regulation side whiskers, a man of some self-importance and a certain air of command."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "我服了。",
+        "en": "I was won over."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "say",
+     "type": "expression",
+     "label": {
+      "zh": "直说：“你那是瞎猜，谁都没法证实。”",
+      "en": "Say it: \"That is a random shot. No one can check it.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那就等他上来，你自己问。",
+        "en": "Then wait until he comes up, and ask him yourself."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.esteem",
+       "by": -1
+      },
+      {
+       "add": "rel.holmes.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "那就等他上来，你自己问。",
+        "en": "Then wait until he comes up, and ask him yourself."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那人果然是退伍的海军陆战队中士。福尔摩斯什么也没说，只是把信拆开了。",
+        "en": "He was indeed a retired sergeant of Marines. Holmes said nothing; he only opened the letter."
+       }
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "……我输了，输得很难看。",
+        "en": "…I had lost, and lost badly."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "look",
+     "type": "expression",
+     "label": {
+      "zh": "不说话，自己仔细看那个人。",
+      "en": "Say nothing. Study the man yourself."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "步子很稳，背挺得很直。手背上……那是个刺青吗？",
+        "en": "A steady stride, a very straight back. On the back of his hand… is that a tattoo?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      },
+      {
+       "add": "deduce",
+       "by": 1
+      },
+      {
+       "set": "flag.saw_sergeant",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "步子很稳，背挺得很直。手背上……那是个刺青吗？",
+        "en": "A steady stride, a very straight back. On the back of his hand… is that a tattoo?"
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那人上楼送信，说自己是退伍的海军陆战队中士。我看了福尔摩斯一眼，他也正看着我。",
+        "en": "He came up with the letter and said he was a retired sergeant of Marines. I glanced at Holmes; he was looking at me."
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "你看见锚了。很好，华生。你看了，而且开始观察了。",
+        "en": "You saw the anchor. Good, Watson. You see, and you are beginning to observe."
+       },
+       "face": "smile"
+      }
+     ],
+     "values": [
+      "ren"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_day"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "贝克街 221B：两间舒适的卧室，一间宽敞通风的起居室，两扇大窗。我们当天就搬了进去。",
+      "en": "221B Baker Street: a couple of comfortable bedrooms and a single large airy sitting-room, illuminated by two broad windows. We moved in that very day."
+     }
+    },
+    {
+     "op": "show",
+     "who": "hudson",
+     "face": "normal",
+     "at": "left"
+    },
+    {
+     "op": "say",
+     "who": "hudson",
+     "t": {
+      "zh": "早饭在桌上了，医生。福尔摩斯先生天不亮就出去了。",
+      "en": "Breakfast is on the table, Doctor. Mr Holmes was out before it was light."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "hide",
+     "who": "hudson"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "几个星期过去，我对这位室友越来越好奇。他懂的东西多得惊人，不懂的东西也多得惊人。",
+      "en": "As the weeks went by, my curiosity about my companion deepened. His ignorance was as remarkable as his knowledge."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "他竟然不知道地球绕着太阳转。他说知道了也会尽量把它忘掉——脑子是一间小阁楼，只该放有用的家具。",
+      "en": "He did not know that the earth travelled round the sun — and said he would do his best to forget it. A man's brain, to him, is a little empty attic, to be stocked only with useful furniture."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "一天早上，我拿起一本杂志，读到一篇叫《生活之书》的文章：观察入微的人，凭一个人的指甲、袖口、靴子，就能看出他的身世和职业。",
+      "en": "One morning I picked up a magazine and read an article entitled 'The Book of Life': by a man's finger-nails, by his coat-sleeve, by his boot, a man's calling is plainly revealed."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "t": {
+      "zh": "一派胡言！我这辈子没读过这么荒唐的东西。",
+      "en": "What ineffable twaddle! I never read such rubbish in my life."
+     }
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "那篇文章是我写的。",
+      "en": "I wrote the article myself."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "我有一门自己的职业。我想全世界只有我一个干这一行——我是咨询侦探。",
+      "en": "I have a trade of my own. I suppose I am the only one in the world. I'm a consulting detective."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "你刚到时我说你从阿富汗来，你很吃惊。其实我一眼就知道：一位医务界的绅士，却有军人气概——军医。脸黑，手腕白，刚从热带回来。面容憔悴，吃过苦、生过病。左臂受过伤，动作僵硬。英国军医在热带吃苦受伤，还能在哪儿？阿富汗。",
+      "en": "Here is a gentleman of a medical type, but with the air of a military man. Clearly an army doctor, then. He has just come from the tropics, for his face is dark, and that is not the natural tint of his skin, for his wrists are fair. He has undergone hardship and sickness, as his haggard face says clearly. His left arm has been injured. Where in the tropics could an English army doctor have seen much hardship and got his arm wounded? Clearly in Afghanistan."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "原来如此。我那天猜的是斯坦福，差得远了。",
+      "en": "So that was it. I had guessed Stamford. I was nowhere near."
+     },
+     "when": {
+      "v": "flag.asked_afghan",
+      "op": "==",
+      "val": true
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "我走到窗前。街对面，一个穿着朴素、身材魁梧的人拿着一个蓝色大信封，正一边走一边看门牌号。",
+      "en": "I walked over to the window. Across the street a stalwart, plainly-dressed man with a large blue envelope was walking slowly, looking anxiously at the numbers."
+     }
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "t": {
+      "zh": "不知道那个人在找什么。",
+      "en": "I wonder what that fellow is looking for?"
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "你是说那位退伍的海军陆战队中士？",
+      "en": "You mean the retired sergeant of Marines?"
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "吹牛。他知道我没法核实。",
+      "en": "Brag and bounce! He knows that I cannot verify his guess."
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "hudson"
+    }
+   ]
+  },
+  "c3_arrive": {
+   "id": "c3_arrive",
+   "chapter": "c3",
+   "kind": "main",
+   "title": {
+    "zh": "空屋门前",
+    "en": "Before the Empty House"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "葛莱森来信了。布里克斯顿路劳瑞斯顿花园 3 号，一个空屋里发现了一具尸体。戴上帽子，华生。",
+      "en": "A letter from Gregson. A body found in an empty house, No. 3, Lauriston Gardens, off the Brixton Road. Get your hat, Watson."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "kerb",
+     "type": "dilemma",
+     "label": {
+      "zh": "看路边：泥地上的车辙和马蹄印。",
+      "en": "The kerb: wheel-marks and hoof-prints in the mud."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "两道车轮印挨得很近——是出租马车。马蹄印里，有三个旧的，一个是新钉的。",
+        "en": "Two ruts close together — a cab. Of the hoof-prints, three are worn and one is new."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.cab",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "两道车轮印挨得很近——是出租马车。马蹄印里，有三个旧的，一个是新钉的。",
+        "en": "Two ruts close together — a cab. Of the hoof-prints, three are worn and one is new."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "福尔摩斯瞥了我一眼，眼睛里有一点意外。",
+        "en": "Holmes glanced at me with a flicker of surprise."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "path",
+     "type": "dilemma",
+     "label": {
+      "zh": "跟着福尔摩斯，看他在小路边上看什么。",
+      "en": "Follow Holmes and see what he studies along the path."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "他在路边的草上找脚印。有一双是漆皮靴，一双是方头靴。方头靴的步子……很大。",
+        "en": "He is reading footprints in the grass along the edge. One pair patent leather, one pair square-toed. The square-toed stride is… very long."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.boots",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "add": "rel.holmes.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "他在路边的草上找脚印。有一双是漆皮靴，一双是方头靴。方头靴的步子……很大。",
+        "en": "He is reading footprints in the grass along the edge. One pair patent leather, one pair square-toed. The square-toed stride is… very long."
+       }
+      }
+     ],
+     "values": [
+      "ren"
+     ]
+    },
+    {
+     "id": "gregson",
+     "type": "expression",
+     "label": {
+      "zh": "先跟葛莱森探长打听案情。",
+      "en": "Get the facts from Inspector Gregson first."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "死者叫伊诺克·J·德雷伯，美国俄亥俄州克利夫兰人。身上没有伤口，可屋里有血。雷斯垂德也在里面。",
+        "en": "The dead man is Enoch J. Drebber, of Cleveland, Ohio, U.S.A. No wound on him, but there is blood about the room. Lestrade is inside too."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.gregson.trust",
+       "by": 1
+      },
+      {
+       "add": "rel.gregson.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "gregson",
+       "t": {
+        "zh": "死者叫伊诺克·J·德雷伯，美国俄亥俄州克利夫兰人。身上没有伤口，可屋里有血。雷斯垂德也在里面。",
+        "en": "The dead man is Enoch J. Drebber, of Cleveland, Ohio, U.S.A. No wound on him, but there is blood about the room. Lestrade is inside too."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "gregson",
+       "t": {
+        "zh": "医生，你是福尔摩斯先生的朋友？那我们可得把功劳分清楚。",
+        "en": "You are Mr Holmes's friend, Doctor? Then we must keep the credit straight between us."
+       },
+       "face": "smile"
+      }
+     ],
+     "values": [
+      "li"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "street_fog"
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "葛莱森来信了。布里克斯顿路劳瑞斯顿花园 3 号，一个空屋里发现了一具尸体。戴上帽子，华生。",
+      "en": "A letter from Gregson. A body found in an empty house, No. 3, Lauriston Gardens, off the Brixton Road. Get your hat, Watson."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "bg",
+     "id": "lauriston_out"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "那是一座阴森的空屋，三排窗户空空洞洞。门前一条黄泥小路，被雨淋得一片泥泞。",
+      "en": "It was an ill-omened, empty house, its three tiers of windows blank and dreary. A narrow clay path ran up to the door, sodden with the night's rain."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "福尔摩斯没有进门，而是慢悠悠地在人行道上来回踱步，看看地，看看天，看看对面的房子和栏杆。",
+      "en": "Holmes did not hurry in. He lounged up and down the pavement, gazing vacantly at the ground, the sky, the opposite houses and the line of railings."
+     }
+    },
+    {
+     "op": "show",
+     "who": "gregson",
+     "face": "normal",
+     "at": "right"
+    },
+    {
+     "op": "say",
+     "who": "gregson",
+     "t": {
+      "zh": "你来了真好。东西一样都没动过。",
+      "en": "It is indeed kind of you to come. I have had everything left untouched."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "除了这条路！就算一群水牛走过，也不会比这更乱了。",
+      "en": "Except that! If a herd of buffaloes had passed along there could not be a greater mess."
+     },
+     "face": "angry"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "警察的脚印把路踩烂了。可福尔摩斯在路边看了很久。我该看哪里？",
+      "en": "The police have trampled the path. But Holmes spent a long while at the kerb. Where should I look?"
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "gregson"
+    }
+   ]
+  },
+  "c3_room": {
+   "id": "c3_room",
+   "chapter": "c3",
+   "kind": "main",
+   "title": {
+    "zh": "前厅",
+    "en": "The Front Room"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "屋里没有家具，墙纸大片剥落，发着霉。壁炉台上有一截红蜡烛头。",
+      "en": "The room was bare of furniture, the cheap wallpaper blotched with mildew and hanging in strips. On the mantelpiece stood the stump of a red wax candle."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "lips",
+     "type": "dilemma",
+     "label": {
+      "zh": "以医生的身份，检查死者的脸和嘴唇。",
+      "en": "As a doctor, examine the dead man's face and lips."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "没有勒痕，没有伤口。嘴唇上有一股酸涩的气味……像某种药。",
+        "en": "No marks of strangulation, no wound. On the lips, a faint sour smell… like some drug."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.lips",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "没有勒痕，没有伤口。嘴唇上有一股酸涩的气味……像某种药。",
+        "en": "No marks of strangulation, no wound. On the lips, a faint sour smell… like some drug."
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "你也闻到了，医生。",
+        "en": "You have smelt it too, Doctor."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "ring",
+     "type": "dilemma",
+     "label": {
+      "zh": "看他们把尸体抬起来。",
+      "en": "Watch them lift the body."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "尸体一抬起来，一枚戒指叮的一声掉在地上。雷斯垂德捡起来——是一枚女人的金质结婚戒指。",
+        "en": "As they raised him, a ring tinkled down and rolled across the floor. Lestrade snatched it up — a woman's plain gold wedding ring."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.ring",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "add": "rel.lestrade.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "尸体一抬起来，一枚戒指叮的一声掉在地上。雷斯垂德捡起来——是一枚女人的金质结婚戒指。",
+        "en": "As they raised him, a ring tinkled down and rolled across the floor. Lestrade snatched it up — a woman's plain gold wedding ring."
+       }
+      },
+      {
+       "op": "say",
+       "who": "lestrade",
+       "t": {
+        "zh": "上帝啊，这下更乱了。",
+        "en": "This complicates matters. Heaven knows, they were complicated enough before."
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "一个死去的男人，身上带着一个女人的结婚戒指。",
+        "en": "A dead man, carrying a woman's wedding ring."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "wall",
+     "type": "dilemma",
+     "label": {
+      "zh": "拿起蜡烛，看墙角墙纸剥落的地方。",
+      "en": "Take the candle and look at the corner where the paper has peeled."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "烛光下，粗糙的灰泥上用血写着一个词：",
+        "en": "In the candlelight, scrawled in blood-red letters across the bare yellow plaster, a single word:"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.rache",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "烛光下，粗糙的灰泥上用血写着一个词：",
+        "en": "In the candlelight, scrawled in blood-red letters across the bare yellow plaster, a single word:"
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "墙上的字是：RACHE",
+        "en": "RACHE"
+       }
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "Rache……我在阿富汗的德国军医那里听过这个词。",
+        "en": "Rache… I heard that word from the German surgeons in Afghanistan."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 2,
+   "script": [
+    {
+     "op": "bg",
+     "id": "lauriston_in"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "屋里没有家具，墙纸大片剥落，发着霉。壁炉台上有一截红蜡烛头。",
+      "en": "The room was bare of furniture, the cheap wallpaper blotched with mildew and hanging in strips. On the mantelpiece stood the stump of a red wax candle."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "死者仰面躺着，双手握拳，脸上的表情是我从没见过的——恐惧，还有仇恨。",
+      "en": "The dead man lay on his back, his hands clenched, and on his features such an expression of horror, and of hatred, as I have never seen."
+     }
+    },
+    {
+     "op": "show",
+     "who": "lestrade",
+     "face": "normal",
+     "at": "right"
+    },
+    {
+     "op": "say",
+     "who": "lestrade",
+     "t": {
+      "zh": "我干这行这么多年，没见过这么怪的案子。",
+      "en": "Beats anything I have seen, and I am no chicken."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "你们确定没有伤口？那这些血是另一个人的——如果是凶杀，多半是凶手的。",
+      "en": "You are sure there is no wound? Then this blood belongs to a second individual — presumably the murderer, if murder has been committed."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "屋里有三样东西值得细看。他会全看一遍，可我只看得清一样。",
+      "en": "There are three things here worth a close look. He will see all of them; I can only take in one properly."
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "lestrade"
+    }
+   ]
+  },
+  "c3_rachel": {
+   "id": "c3_rachel",
+   "chapter": "c3",
+   "kind": "main",
+   "title": {
+    "zh": "“蕾切尔”",
+    "en": "'Rachel'"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "写字的人本来要写“Rachel”这个女人的名字，还没写完就被打断了。等着瞧吧，这个案子查清楚，准有个叫蕾切尔的女人。",
+      "en": "It means that the writer was going to put the female name Rachel, but was disturbed before he or she had time to finish. You mark my words, when this case comes to be cleared up, you will find that a woman named Rachel has something to do with it."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "german",
+     "type": "dilemma",
+     "label": {
+      "zh": "开口：“Rache 是德语，意思是‘复仇’。”",
+      "en": "Speak up: \"'Rache' is the German for 'revenge'.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……德语？",
+        "en": "…German?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      },
+      {
+       "add": "rel.holmes.warmth",
+       "by": 1
+      },
+      {
+       "add": "rel.lestrade.esteem",
+       "by": -1
+      },
+      {
+       "add": "deduce",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "lestrade",
+       "t": {
+        "zh": "……德语？",
+        "en": "…German?"
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "正是。别浪费时间找什么蕾切尔小姐了。",
+        "en": "Exactly. So don't lose your time by looking for Miss Rachel."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "雷斯垂德的脸一阵红一阵白。福尔摩斯朝我点了点头。",
+        "en": "Lestrade went red and white by turns. Holmes gave me a nod."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ],
+     "req": {
+      "v": "clue.rache",
+      "op": "==",
+      "val": true
+     },
+     "hint": {
+      "zh": "你没细看墙上的字",
+      "en": "You did not look closely at the word on the wall"
+     }
+    },
+    {
+     "id": "laugh",
+     "type": "expression",
+     "label": {
+      "zh": "忍不住笑出声。",
+      "en": "Fail to keep a straight face."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "医生觉得很好笑？",
+        "en": "The Doctor finds it amusing?"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.lestrade.warmth",
+       "by": -1
+      },
+      {
+       "add": "rel.lestrade.trust",
+       "by": -1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "lestrade",
+       "t": {
+        "zh": "医生觉得很好笑？",
+        "en": "The Doctor finds it amusing?"
+       },
+       "face": "angry"
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "临走前再说一句，雷斯垂德：Rache 是德语的“复仇”。别找什么蕾切尔小姐了。",
+        "en": "One other thing, Lestrade. 'Rache' is the German for 'revenge'; so don't lose your time by looking for Miss Rachel."
+       },
+       "face": "smile"
+      }
+     ],
+     "values": [
+      "hen"
+     ]
+    },
+    {
+     "id": "quiet",
+     "type": "expression",
+     "label": {
+      "zh": "什么也不说，把一切都记在本子上。",
+      "en": "Say nothing, and write everything down."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "临走前再说一句，雷斯垂德：Rache 是德语的“复仇”。别找什么蕾切尔小姐了。",
+        "en": "One other thing, Lestrade. 'Rache' is the German for 'revenge'; so don't lose your time by looking for Miss Rachel."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.trust",
+       "by": 1
+      },
+      {
+       "set": "flag.notebook",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "临走前再说一句，雷斯垂德：Rache 是德语的“复仇”。别找什么蕾切尔小姐了。",
+        "en": "One other thing, Lestrade. 'Rache' is the German for 'revenge'; so don't lose your time by looking for Miss Rachel."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "我把他说的每一个细节都记了下来。总有一天，我要弄明白他是怎么看出来的。",
+        "en": "I wrote down every detail he gave. Some day I would understand how he saw it."
+       }
+      }
+     ],
+     "values": [
+      "ren"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "script": [
+    {
+     "op": "bg",
+     "id": "lauriston_in"
+    },
+    {
+     "op": "show",
+     "who": "lestrade",
+     "face": "smile",
+     "at": "right"
+    },
+    {
+     "op": "say",
+     "who": "lestrade",
+     "t": {
+      "zh": "写字的人本来要写“Rachel”这个女人的名字，还没写完就被打断了。等着瞧吧，这个案子查清楚，准有个叫蕾切尔的女人。",
+      "en": "It means that the writer was going to put the female name Rachel, but was disturbed before he or she had time to finish. You mark my words, when this case comes to be cleared up, you will find that a woman named Rachel has something to do with it."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "福尔摩斯掏出卷尺和一个大放大镜，在屋里无声地走来走去，时而跪下，时而趴在地上，又从地板上小心地收起一小撮灰。",
+      "en": "Holmes whipped a tape measure and a large round magnifying glass from his pocket and trotted noiselessly about the room, sometimes stopping, occasionally kneeling, and once lying flat upon his face. He gathered up very carefully a little pile of grey dust from the floor."
+     }
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "这里发生了凶杀，凶手是个男人。他身高六英尺以上，正当壮年，以身高来说脚偏小，穿方头粗皮靴，抽特里奇诺波利雪茄。",
+      "en": "There has been murder done, and the murderer was a man. He was more than six feet high, was in the prime of life, had small feet for his height, wore coarse, square-toed boots and smoked a Trichinopoly cigar."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "他和死者坐一辆四轮马车来，拉车的马有三只旧蹄铁，右前腿上是新的。凶手多半脸色红润，右手指甲很长。",
+      "en": "He came here with his victim in a four-wheeled cab, which was drawn by a horse with three old shoes and one new one on his off fore-leg. In all probability the murderer had a florid face, and the finger-nails of his right hand were remarkably long."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "gregson",
+     "t": {
+      "zh": "要是凶杀，是怎么杀的？",
+      "en": "If this man was murdered, how was it done?"
+     },
+     "face": "surprised"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "毒。",
+      "en": "Poison."
+     },
+     "face": "normal"
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "lestrade"
+    },
+    {
+     "id": "gregson"
+    }
+   ]
+  },
+  "c4_rance": {
+   "id": "c4_rance",
+   "chapter": "c4",
+   "kind": "main",
+   "title": {
+    "zh": "警员兰斯",
+    "en": "Constable Rance"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "发现尸体的是警员约翰·兰斯。我们在他家门口把他从床上叫了起来，他一脸不高兴。",
+      "en": "The constable who found the body was John Rance. We roused him from his bed, and he did not look pleased."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "ask_face",
+     "type": "dilemma",
+     "label": {
+      "zh": "追问：“那个醉汉长什么样？手里拿着什么？”",
+      "en": "Press him: \"What was the drunk man like? What was he holding?\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "高个子，红脸，下半张脸裹着围巾……手里？好像拿着一根马鞭。",
+        "en": "A tall man, red-faced, the lower part muffled round… In his hand? A whip, I think."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.drunk",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "rance",
+       "t": {
+        "zh": "高个子，红脸，下半张脸裹着围巾……手里？好像拿着一根马鞭。",
+        "en": "A tall man, red-faced, the lower part muffled round… In his hand? A whip, I think."
+       },
+       "face": "normal"
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "马鞭！他把马车停在哪儿了？……兰斯，你这辈子就毁在这儿了：那个人就是我们要找的人。",
+        "en": "A whip! And where was his cab? …Rance, that man is the very one we want. You had him in your hands."
+       },
+       "face": "angry"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "他回来，是为了找那枚戒指。",
+        "en": "He came back — for the ring."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "pay",
+     "type": "expression",
+     "label": {
+      "zh": "学福尔摩斯，掏出半个金镑放在桌上。",
+      "en": "Like Holmes, lay a half-sovereign on the table."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……先生要知道什么，尽管问。",
+        "en": "…Whatever you want to know, sir, ask away."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.drunk",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "add": "rel.rance.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "rance",
+       "t": {
+        "zh": "……先生要知道什么，尽管问。",
+        "en": "…Whatever you want to know, sir, ask away."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": "rance",
+       "t": {
+        "zh": "那醉汉个子很高，脸红红的，围巾裹着下巴。我们把他扶起来，他就走了。",
+        "en": "He was a tall chap, red-faced, his chin wrapped up. We stood him up and he went off."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "li"
+     ]
+    },
+    {
+     "id": "leave",
+     "type": "expression",
+     "label": {
+      "zh": "没什么好问的，一个醉汉而已。",
+      "en": "Nothing more to ask. Just a drunkard."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "一个醉汉而已？华生，他就站在门口，等着我们去抓。",
+        "en": "Just a drunkard? Watson, he stood at the gate waiting to be caught."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.esteem",
+       "by": -1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "一个醉汉而已？华生，他就站在门口，等着我们去抓。",
+        "en": "Just a drunkard? Watson, he stood at the gate waiting to be caught."
+       },
+       "face": "sad"
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "street_fog"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "发现尸体的是警员约翰·兰斯。我们在他家门口把他从床上叫了起来，他一脸不高兴。",
+      "en": "The constable who found the body was John Rance. We roused him from his bed, and he did not look pleased."
+     }
+    },
+    {
+     "op": "show",
+     "who": "rance",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "rance",
+     "t": {
+      "zh": "我在局里已经报告过了。",
+      "en": "I made my report at the office."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "normal",
+     "at": "left"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "我们想听你亲口讲一遍。",
+      "en": "We thought that we should like to hear it all from your own lips."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "rance",
+     "t": {
+      "zh": "夜里两点，我看见那座空屋的窗户里有光。我进去，看见他躺在地上。我出来吹哨子，门口……",
+      "en": "About two in the morning I saw a light in the window of that empty house. I went in and found him lying there. I came out to blow my whistle, and at the gate…"
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "rance",
+     "t": {
+      "zh": "门口有个醉汉，靠在栏杆上，扯着嗓子唱什么《哥伦拜恩的新式旗帜》。醉得站都站不稳。",
+      "en": "He was at the gate when I came out, a-leanin' up ag'in the railings, and a-singin' at the pitch o' his lungs about Columbine's New-fangled Banner. He couldn't stand, far less help."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "一个醉汉，偏偏在凶杀现场的门口。",
+      "en": "A drunk man — at the gate of a murder house, of all places."
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "rance"
+    },
+    {
+     "id": "holmes"
+    }
+   ]
+  },
+  "c4_scarlet": {
+   "id": "c4_scarlet",
+   "chapter": "c4",
+   "kind": "main",
+   "title": {
+    "zh": "血字的研究",
+    "en": "A Study in Scarlet"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "要不是你，我可能就不去了，那就错过了我见过的最好的一项研究：一项血字的研究，嗯？",
+      "en": "I might not have gone but for you, and so have missed the finest study I ever came across: a study in scarlet, eh?"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "concert",
+     "type": "expression",
+     "label": {
+      "zh": "陪他去听音乐会。",
+      "en": "Go to the concert with him."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那天下午，他在音乐厅里闭着眼，手指轻轻打着拍子，像是换了一个人。",
+        "en": "That afternoon in the concert hall he sat with his eyes closed and his long thin fingers waving in time — a different man."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "那天下午，他在音乐厅里闭着眼，手指轻轻打着拍子，像是换了一个人。",
+        "en": "That afternoon in the concert hall he sat with his eyes closed and his long thin fingers waving in time — a different man."
+       }
+      }
+     ],
+     "values": [
+      "qing"
+     ]
+    },
+    {
+     "id": "rest",
+     "type": "expression",
+     "label": {
+      "zh": "回去休息。这一天够累了。",
+      "en": "Go home and rest. It has been a long day."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "我躺在沙发上，想睡，却一直看见那张扭曲的脸。",
+        "en": "I lay on the sofa, trying to sleep, and kept seeing that contorted face."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "我躺在沙发上，想睡，却一直看见那张扭曲的脸。",
+        "en": "I lay on the sofa, trying to sleep, and kept seeing that contorted face."
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 2,
+   "script": [
+    {
+     "op": "bg",
+     "id": "street_fog"
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "smile",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "要不是你，我可能就不去了，那就错过了我见过的最好的一项研究：一项血字的研究，嗯？",
+      "en": "I might not have gone but for you, and so have missed the finest study I ever came across: a study in scarlet, eh?"
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "生活这团无色的线里，贯穿着一根凶杀的红线。我们的责任，就是把它解开，抽出来，一寸一寸地暴露出来。",
+      "en": "There's the scarlet thread of murder running through the colourless skein of life, and our duty is to unravel it, and isolate it, and expose every inch of it."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "好了，现在去吃午饭，然后去听诺曼-聂鲁达。她的琴弓真是了不起。",
+      "en": "And now for lunch, and then for Norman Neruda. Her attack and her bowing are splendid."
+     },
+     "face": "smile"
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    }
+   ]
+  },
+  "c5_visitor": {
+   "id": "c5_visitor",
+   "chapter": "c5",
+   "kind": "main",
+   "title": {
+    "zh": "老太太",
+    "en": "The Old Woman"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "我用你的名字登了一则失物招领：布里克斯顿路拾获金戒指一枚。凶手冒险回去找过一次，他还会再来找。",
+      "en": "I have put an advertisement in every paper this morning in your name: a wedding ring found in Brixton Road. The man risked going back for it once. He will come for it again."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "give",
+     "type": "expression",
+     "label": {
+      "zh": "把戒指给她，记下她的地址。福尔摩斯会跟上去。",
+      "en": "Give her the ring and take her address. Holmes will follow her."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "她连声道谢，蹒跚着出了门。福尔摩斯一把抓起大衣，跟着下了楼。",
+        "en": "She thanked me and hobbled out. Holmes snatched up his ulster and was down the stairs after her."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.accomplice",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她连声道谢，蹒跚着出了门。福尔摩斯一把抓起大衣，跟着下了楼。",
+        "en": "She thanked me and hobbled out. Holmes snatched up his ulster and was down the stairs after her."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "快到半夜他才回来，一进门就大笑起来，笑的是他自己。",
+        "en": "He came back near midnight, and burst into a laugh at his own expense."
+       }
+      },
+      {
+       "op": "show",
+       "who": "holmes",
+       "face": "smile",
+       "at": "center"
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "她在马车开动时跳了下去，我连影子都没看见。那不是老太太——那一定是个年轻人，身手敏捷，还是个了不起的演员。",
+        "en": "She jumped out while the cab was moving, and I never saw her go. It must have been a young man, and an active one, too, besides being an incomparable actor."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "凶手不是一个人。他有同伙，而且同伙肯为他冒险。",
+        "en": "Our man is not alone. He has a friend who is ready to risk something for him."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "ren"
+     ]
+    },
+    {
+     "id": "press",
+     "type": "dilemma",
+     "label": {
+      "zh": "先问她几个问题：萨莉住哪？她丈夫是做什么的？",
+      "en": "Ask her a few questions first: where does Sally live, what is her husband?"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "哎呀，先生，我老了，记不清……她丈夫是船上的乘务员……",
+        "en": "Oh, sir, I'm old, I can't recall… her husband's a steward on a ship…"
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "alert",
+       "by": 1
+      },
+      {
+       "set": "clue.accomplice",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "sawyer",
+       "t": {
+        "zh": "哎呀，先生，我老了，记不清……她丈夫是船上的乘务员……",
+        "en": "Oh, sir, I'm old, I can't recall… her husband's a steward on a ship…"
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她答得颠三倒四，可手指抓戒指的动作快得出奇。她一出门，福尔摩斯就追了出去。",
+        "en": "Her answers wandered, but her fingers closed on the ring remarkably fast. The moment she left, Holmes was after her."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "半夜他回来了：人在马车上跑了。",
+        "en": "At midnight he came back: she had slipped out of the cab."
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "你问得太急了，华生。那人已经起了疑心。",
+        "en": "You pressed too hard, Watson. Our friend has taken alarm."
+       },
+       "face": "sad"
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "keep",
+     "type": "dilemma",
+     "label": {
+      "zh": "不给。这枚戒指是证物。",
+      "en": "Refuse. The ring is evidence."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……那就算了，先生，算了。",
+        "en": "…Never mind then, sir, never mind."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "alert",
+       "by": 2
+      },
+      {
+       "add": "rel.holmes.trust",
+       "by": -1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "sawyer",
+       "t": {
+        "zh": "……那就算了，先生，算了。",
+        "en": "…Never mind then, sir, never mind."
+       },
+       "face": "sad"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "她一转身就走，快得不像个老太太。福尔摩斯追出去，在街角就跟丢了。",
+        "en": "She was off at once, far too quickly for an old woman. Holmes ran after her and lost her at the corner."
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "我们手里还有戒指，可也打草惊蛇了。",
+        "en": "We still have the ring. But we have shown our hand."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "li"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_night"
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "我用你的名字登了一则失物招领：布里克斯顿路拾获金戒指一枚。凶手冒险回去找过一次，他还会再来找。",
+      "en": "I have put an advertisement in every paper this morning in your name: a wedding ring found in Brixton Road. The man risked going back for it once. He will come for it again."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "我的左轮手枪在抽屉里。他要是硬来，你就用它。",
+      "en": "I have my old service revolver here. If he is desperate, you must be ready."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "门铃响了。进来的不是凶手，而是一个满脸皱纹、步履蹒跚的老太太。",
+      "en": "The bell rang. It was not the murderer who came in, but a very old and wrinkled woman, hobbling into the room."
+     }
+    },
+    {
+     "op": "say",
+     "who": "sawyer",
+     "t": {
+      "zh": "先生，这是我女儿萨莉的结婚戒指。她丈夫要是知道她丢了戒指……",
+      "en": "It's my Sally's wedding ring, sir. If her husband knew she'd lost it…"
+     },
+     "face": "sad"
+    },
+    {
+     "op": "hide",
+     "who": "holmes"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "福尔摩斯朝我递了个眼色。戒指要不要还给她？",
+      "en": "Holmes gave me a look. Do I give her the ring?"
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "sawyer"
+    }
+   ]
+  },
+  "x_alert": {
+   "id": "x_alert",
+   "chapter": "*",
+   "kind": "interrupt",
+   "title": {
+    "zh": "报纸",
+    "en": "The Papers"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "第二天，几份报纸都登了“警方已掌握重要线索”的消息，引的是葛莱森的话。",
+      "en": "Next day several papers carried 'the police have an important clue', quoting Gregson."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "ok",
+     "type": "expression",
+     "label": {
+      "zh": "“我能做什么？”",
+      "en": "\"What can I do?\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "等着。还有，把你的枪擦干净。",
+        "en": "Wait. And clean your revolver."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.hope_warned",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "等着。还有，把你的枪擦干净。",
+        "en": "Wait. And clean your revolver."
+       },
+       "face": "normal"
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": -1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_day"
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "angry",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "第二天，几份报纸都登了“警方已掌握重要线索”的消息，引的是葛莱森的话。",
+      "en": "Next day several papers carried 'the police have an important clue', quoting Gregson."
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "现在他知道有人在找他了。他会更小心，我们得更快。",
+      "en": "Now he knows that he is hunted. He will be more careful, and we must be quicker."
+     },
+     "face": "angry"
+    }
+   ],
+   "when": {
+    "all": [
+     {
+      "v": "alert",
+      "op": ">=",
+      "val": 2
+     },
+     {
+      "v": "flag.hope_warned",
+      "op": "!=",
+      "val": true
+     }
+    ]
+   }
+  },
+  "c6_gregson": {
+   "id": "c6_gregson",
+   "chapter": "c6",
+   "kind": "main",
+   "title": {
+    "zh": "葛莱森的功劳",
+    "en": "Gregson Shows What He Can Do"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "一群衣衫褴褛的流浪儿冲上楼来，领头的叫维金斯。他们是福尔摩斯的“贝克街分队”。",
+      "en": "A dozen ragged street Arabs came clattering up the stairs, led by one Wiggins: Holmes's Baker Street division of the detective police force."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "pills",
+     "type": "dilemma",
+     "label": {
+      "zh": "提议：“用房东太太那条快不行的老狗试试那两颗药丸。”",
+      "en": "Suggest it: \"Try the pills on the landlady's poor old terrier.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "医生，你和我想到一块儿了。",
+        "en": "Doctor, you are ahead of me."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.pills",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "add": "rel.holmes.esteem",
+       "by": 1
+      },
+      {
+       "add": "deduce",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "医生，你和我想到一块儿了。",
+        "en": "Doctor, you are ahead of me."
+       },
+       "face": "surprised"
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "半颗药丸泡进牛奶，那条狗喝下去，什么事也没有。另外半颗放进去，它舔了一口，四肢一抽，倒下死了。",
+        "en": "Half of one pill in milk: the dog lapped it and nothing happened. Half of the other: it gave a convulsive shiver and lay as rigid as though struck by lightning."
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "两颗药，一颗剧毒，一颗无害。",
+        "en": "Of the two pills, one was of the most deadly poison, and the other was entirely harmless."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "watch",
+     "type": "expression",
+     "label": {
+      "zh": "看福尔摩斯怎么处理那两颗药丸。",
+      "en": "Watch what Holmes does with the pills."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "福尔摩斯把两颗药丸各取一半，喂给房东太太那条快死的老狗。第一颗没事，第二颗一下去，狗就死了。",
+        "en": "Holmes gave half of each pill to the landlady's dying terrier. The first did nothing. With the second, the creature died at once."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.pills",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "福尔摩斯把两颗药丸各取一半，喂给房东太太那条快死的老狗。第一颗没事，第二颗一下去，狗就死了。",
+        "en": "Holmes gave half of each pill to the landlady's dying terrier. The first did nothing. With the second, the creature died at once."
+       }
+      },
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "两颗药，一颗剧毒，一颗无害。",
+        "en": "Of the two pills, one was of the most deadly poison, and the other was entirely harmless."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "ren"
+     ]
+    },
+    {
+     "id": "telegram",
+     "type": "dilemma",
+     "label": {
+      "zh": "盯着那封电报：J·H 是谁？",
+      "en": "Fix on the telegram: who is J. H.?"
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "J·H 在欧洲。有人从美国追了过来，追了很多年。",
+        "en": "J. H. is in Europe. Someone followed them from America — for years."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "clue.telegram",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      },
+      {
+       "set": "clue.pills",
+       "to": true
+      },
+      {
+       "add": "proof",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "J·H 在欧洲。有人从美国追了过来，追了很多年。",
+        "en": "J. H. is in Europe. Someone followed them from America — for years."
+       }
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "葛莱森和雷斯垂德还在争论，福尔摩斯已经把药丸喂给了房东太太的老狗：一颗无害，一颗剧毒。",
+        "en": "While Gregson and Lestrade argued, Holmes had fed the pills to the landlady's old dog: one harmless, one deadly."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_day"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "一群衣衫褴褛的流浪儿冲上楼来，领头的叫维金斯。他们是福尔摩斯的“贝克街分队”。",
+      "en": "A dozen ragged street Arabs came clattering up the stairs, led by one Wiggins: Holmes's Baker Street division of the detective police force."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "他们刚走，葛莱森就来了，得意洋洋。",
+      "en": "They had hardly gone when Gregson arrived, radiant."
+     }
+    },
+    {
+     "op": "show",
+     "who": "gregson",
+     "face": "smile",
+     "at": "right"
+    },
+    {
+     "op": "say",
+     "who": "gregson",
+     "t": {
+      "zh": "案子破了！我抓到了亚瑟·夏庞蒂埃，海军中尉。德雷伯住在他母亲的公寓里，喝醉了侮辱他妹妹，他拿着棍子追了出去。",
+      "en": "The case is solved! I have arrested Arthur Charpentier, sub-lieutenant in Her Majesty's Navy. Drebber lodged at his mother's house, insulted his sister in drink, and he went after him with a stick."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "show",
+     "who": "lestrade",
+     "face": "sad",
+     "at": "left"
+    },
+    {
+     "op": "say",
+     "who": "lestrade",
+     "t": {
+      "zh": "约瑟夫·斯坦格森——德雷伯的秘书——今天早上六点钟，在哈利戴旅馆被人杀了。",
+      "en": "Joseph Stangerson — Drebber's secretary — was murdered at Halliday's Private Hotel about six o'clock this morning."
+     },
+     "face": "sad"
+    },
+    {
+     "op": "say",
+     "who": "lestrade",
+     "t": {
+      "zh": "心口一刀。墙上，血写着同一个词：RACHE。",
+      "en": "Stabbed in the side. And above him, written in blood, the same word: RACHE."
+     },
+     "face": "sad"
+    },
+    {
+     "op": "say",
+     "who": "lestrade",
+     "t": {
+      "zh": "他口袋里有一封电报，上面写着“J·H 在欧洲”。还有一个小盒子，里面有两颗药丸。",
+      "en": "In his pocket, a telegram reading 'J. H. is in Europe.' And a little box with two pills in it."
+     },
+     "face": "normal"
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "gregson"
+    },
+    {
+     "id": "lestrade"
+    }
+   ]
+  },
+  "c6_q1": {
+   "id": "c6_q1",
+   "chapter": "c6",
+   "kind": "main",
+   "title": {
+    "zh": "推理",
+    "en": "Deduction"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "先别看他。我自己来想：凶手是谁？",
+      "en": "Don't look at him. Think it through myself: who is the murderer?"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "cab",
+     "type": "dilemma",
+     "label": {
+      "zh": "一个赶马车的人。",
+      "en": "A man who drives a cab."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "车辙、马鞭、门口那个“醉汉”。他就在马车上，在伦敦的大街上，没人会多看他一眼。",
+        "en": "The ruts, the whip, the 'drunkard' at the gate. He drives a cab — no one in London looks twice at a cabman."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "deduce",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "车辙、马鞭、门口那个“醉汉”。他就在马车上，在伦敦的大街上，没人会多看他一眼。",
+        "en": "The ruts, the whip, the 'drunkard' at the gate. He drives a cab — no one in London looks twice at a cabman."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ],
+     "req": {
+      "any": [
+       {
+        "v": "clue.cab",
+        "op": "==",
+        "val": true
+       },
+       {
+        "v": "clue.drunk",
+        "op": "==",
+        "val": true
+       }
+      ]
+     },
+     "hint": {
+      "zh": "你还没把马车和醉汉连起来",
+      "en": "You have not yet connected the cab and the drunkard"
+     }
+    },
+    {
+     "id": "arthur",
+     "type": "expression",
+     "label": {
+      "zh": "亚瑟·夏庞蒂埃，葛莱森抓的那个人。",
+      "en": "Arthur Charpentier, Gregson's man."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "可斯坦格森死的时候，他已经被关起来了。",
+        "en": "But he was in custody when Stangerson died."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "可斯坦格森死的时候，他已经被关起来了。",
+        "en": "But he was in custody when Stangerson died."
+       }
+      }
+     ]
+    },
+    {
+     "id": "rachel",
+     "type": "expression",
+     "label": {
+      "zh": "一个叫蕾切尔的女人。",
+      "en": "A woman named Rachel."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……雷斯垂德的说法。",
+        "en": "…Lestrade's theory."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "……雷斯垂德的说法。",
+        "en": "…Lestrade's theory."
+       }
+      }
+     ]
+    },
+    {
+     "id": "pass",
+     "type": "expression",
+     "label": {
+      "zh": "我不知道。等福尔摩斯说。",
+      "en": "I don't know. I'll wait for Holmes."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "我还没看清。",
+        "en": "I can't see it yet."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "我还没看清。",
+        "en": "I can't see it yet."
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 2,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_day"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "先别看他。我自己来想：凶手是谁？",
+      "en": "Don't look at him. Think it through myself: who is the murderer?"
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    }
+   ]
+  },
+  "c6_q2": {
+   "id": "c6_q2",
+   "chapter": "c6",
+   "kind": "main",
+   "title": {
+    "zh": "推理",
+    "en": "Deduction"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "他是怎么杀死德雷伯的？",
+      "en": "How did he kill Drebber?"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "pills",
+     "type": "dilemma",
+     "label": {
+      "zh": "两颗药丸，一颗有毒一颗无害，让对方先挑——像是交给命运裁决。",
+      "en": "Two pills, one poisoned and one harmless; he made the other man choose — a judgement left to chance."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "死者脸上的恐惧……他知道自己挑错了。",
+        "en": "The horror on the dead man's face… he knew he had chosen wrong."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "deduce",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "死者脸上的恐惧……他知道自己挑错了。",
+        "en": "The horror on the dead man's face… he knew he had chosen wrong."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ],
+     "req": {
+      "v": "clue.pills",
+      "op": "==",
+      "val": true
+     },
+     "hint": {
+      "zh": "你没注意到那两颗药丸的秘密",
+      "en": "You missed the secret of the two pills"
+     }
+    },
+    {
+     "id": "stick",
+     "type": "expression",
+     "label": {
+      "zh": "用棍子打死的。",
+      "en": "Beaten with a stick."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "可尸体上没有伤。",
+        "en": "But there was no wound on the body."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "可尸体上没有伤。",
+        "en": "But there was no wound on the body."
+       }
+      }
+     ]
+    },
+    {
+     "id": "drink",
+     "type": "expression",
+     "label": {
+      "zh": "在他的酒里下了毒。",
+      "en": "Poisoned his drink."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "也许……可那两颗药丸又是怎么回事？",
+        "en": "Perhaps… but then why the two pills?"
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "也许……可那两颗药丸又是怎么回事？",
+        "en": "Perhaps… but then why the two pills?"
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_day"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "他是怎么杀死德雷伯的？",
+      "en": "How did he kill Drebber?"
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    }
+   ]
+  },
+  "c6_q3": {
+   "id": "c6_q3",
+   "chapter": "c6",
+   "kind": "main",
+   "title": {
+    "zh": "推理",
+    "en": "Deduction"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "为什么？",
+      "en": "Why?"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "revenge",
+     "type": "dilemma",
+     "label": {
+      "zh": "复仇。为了那枚结婚戒指的主人——一个已经死去的女人。",
+      "en": "Revenge. For the woman the wedding ring belonged to — a woman who is dead."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "Rache。一个女人的戒指。从美国追到欧洲。这不是抢劫，是讨债。",
+        "en": "Rache. A woman's ring. From America to Europe. Not robbery — a debt being collected."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "deduce",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "Rache。一个女人的戒指。从美国追到欧洲。这不是抢劫，是讨债。",
+        "en": "Rache. A woman's ring. From America to Europe. Not robbery — a debt being collected."
+       }
+      }
+     ],
+     "values": [
+      "qing"
+     ],
+     "req": {
+      "all": [
+       {
+        "v": "clue.ring",
+        "op": "==",
+        "val": true
+       },
+       {
+        "any": [
+         {
+          "v": "clue.rache",
+          "op": "==",
+          "val": true
+         },
+         {
+          "v": "clue.telegram",
+          "op": "==",
+          "val": true
+         }
+        ]
+       }
+      ]
+     },
+     "hint": {
+      "zh": "你缺一条线索：戒指，或者墙上的字",
+      "en": "You are missing a clue: the ring, or the word on the wall"
+     }
+    },
+    {
+     "id": "rob",
+     "type": "expression",
+     "label": {
+      "zh": "为了钱。",
+      "en": "For money."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "可德雷伯的金表和钱包都还在。",
+        "en": "But Drebber's gold watch and purse were untouched."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "可德雷伯的金表和钱包都还在。",
+        "en": "But Drebber's gold watch and purse were untouched."
+       }
+      }
+     ]
+    },
+    {
+     "id": "secret",
+     "type": "expression",
+     "label": {
+      "zh": "政治暗杀，某个秘密会社。",
+      "en": "A political killing by some secret society."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "报纸上是这么写的。",
+        "en": "That is what the papers say."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "报纸上是这么写的。",
+        "en": "That is what the papers say."
+       }
+      }
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 4,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_day"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "think": true,
+     "t": {
+      "zh": "为什么？",
+      "en": "Why?"
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    }
+   ]
+  },
+  "c6_arrest": {
+   "id": "c6_arrest",
+   "chapter": "c6",
+   "kind": "main",
+   "title": {
+    "zh": "落网",
+    "en": "The Arrest"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "门上轻轻一敲，维金斯探进头来：“马车在楼下了，先生。”",
+      "en": "A tap at the door, and young Wiggins put his head in. 'Please, sir, I have the cab downstairs.'"
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "hold",
+     "type": "expression",
+     "label": {
+      "zh": "上前按住他。",
+      "en": "Step in and hold him."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "他一点一点安静下来，喘着气，看着我们，脸上竟然带着一点笑。",
+        "en": "Little by little he went quiet, breathing hard, and looked at us with something like a smile."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "cg",
+       "id": null
+      },
+      {
+       "op": "say",
+       "who": null,
+       "t": {
+        "zh": "他一点一点安静下来，喘着气，看着我们，脸上竟然带着一点笑。",
+        "en": "Little by little he went quiet, breathing hard, and looked at us with something like a smile."
+       }
+      }
+     ],
+     "values": [
+      "yi"
+     ]
+    },
+    {
+     "id": "look",
+     "type": "expression",
+     "label": {
+      "zh": "看着他的脸。",
+      "en": "Look at his face."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "那不是一张凶手的脸。那是一个把一件事做完了的人的脸。",
+        "en": "It was not a murderer's face. It was the face of a man who had finished something."
+       }
+      }
+     ],
+     "effects": [],
+     "script": [
+      {
+       "op": "cg",
+       "id": null
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "那不是一张凶手的脸。那是一个把一件事做完了的人的脸。",
+        "en": "It was not a murderer's face. It was the face of a man who had finished something."
+       }
+      }
+     ],
+     "values": [
+      "qing"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 5,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_day"
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "华生，你脸上的表情告诉我，你已经知道了。",
+      "en": "Watson, I see from your face that you have it."
+     },
+     "face": "smile",
+     "when": {
+      "v": "deduce",
+      "op": ">=",
+      "val": 3
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "你看了，华生，可你没有观察。",
+      "en": "You see, Watson, but you do not observe."
+     },
+     "face": "normal",
+     "when": {
+      "v": "deduce",
+      "op": "<=",
+      "val": 1
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "门上轻轻一敲，维金斯探进头来：“马车在楼下了，先生。”",
+      "en": "A tap at the door, and young Wiggins put his head in. 'Please, sir, I have the cab downstairs.'"
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "让车夫上来帮我捆一下箱子。",
+      "en": "Just ask him to step up, Wiggins, and help with my box."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "一个高大魁梧的车夫走进来，弯腰去抓箱子的皮带。只听咔嗒一声——福尔摩斯把一副手铐锁在了他的手腕上。",
+      "en": "A broad-shouldered cabman entered and bent to the strap of the box. There was a sharp click, the jangling of metal — Holmes had snapped a pair of handcuffs on his wrists."
+     }
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "那人像发了疯一样挣扎，四个人才把他按住。他早有防备。",
+      "en": "The man fought like a madman; it took four of us to hold him. He had been on his guard."
+     },
+     "when": {
+      "v": "flag.hope_warned",
+      "op": "==",
+      "val": true
+     }
+    },
+    {
+     "op": "cg",
+     "id": "cg_arrest"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "先生们，请允许我介绍：杰弗逊·霍普先生，杀害伊诺克·德雷伯和约瑟夫·斯坦格森的凶手。",
+      "en": "Gentlemen, let me introduce you to Mr Jefferson Hope, the murderer of Enoch Drebber and of Joseph Stangerson."
+     },
+     "face": "smile"
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "hope"
+    },
+    {
+     "id": "gregson"
+    },
+    {
+     "id": "lestrade"
+    }
+   ]
+  },
+  "c7_heart": {
+   "id": "c7_heart",
+   "chapter": "c7",
+   "kind": "main",
+   "title": {
+    "zh": "车夫",
+    "en": "The Cabman"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "我有话要说。你们这几位先生，是我的朋友也好，是我的对头也好，我都想让你们知道这件事是怎么回事。",
+      "en": "I've got a good deal to say. I want to tell you gentlemen all about it."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "tell",
+     "type": "expression",
+     "label": {
+      "zh": "告诉他实话：“主动脉瘤。随时会破。”",
+      "en": "Tell him the truth: \"An aortic aneurism. It may burst at any moment.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "我就知道。所以我想在死前把话说完，不想被人当成一个普通的杀人犯。",
+        "en": "That's it. So I want to leave some account of the business behind me. I don't want to be remembered as a common cut-throat."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.hope.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "hope",
+       "t": {
+        "zh": "我就知道。所以我想在死前把话说完，不想被人当成一个普通的杀人犯。",
+        "en": "That's it. So I want to leave some account of the business behind me. I don't want to be remembered as a common cut-throat."
+       },
+       "face": "sad"
+      }
+     ],
+     "values": [
+      "zhen"
+     ]
+    },
+    {
+     "id": "soften",
+     "type": "expression",
+     "label": {
+      "zh": "“你需要休息。先别说太多。”",
+      "en": "\"You need rest. Don't say too much now.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "我休息得够久了，医生。二十年。",
+        "en": "I've rested long enough, Doctor. Twenty years."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.hope.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "hope",
+       "t": {
+        "zh": "我休息得够久了，医生。二十年。",
+        "en": "I've rested long enough, Doctor. Twenty years."
+       },
+       "face": "sad"
+      }
+     ],
+     "values": [
+      "qing"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "station"
+    },
+    {
+     "op": "show",
+     "who": "hope",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "我有话要说。你们这几位先生，是我的朋友也好，是我的对头也好，我都想让你们知道这件事是怎么回事。",
+      "en": "I've got a good deal to say. I want to tell you gentlemen all about it."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "你们不用急着把我送上法庭。我活不到那一天了。……你是医生吧？",
+      "en": "You needn't be in such a hurry about a trial. I may never be tried. You're a medical man, aren't you?"
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "me",
+     "t": {
+      "zh": "是的。",
+      "en": "I am."
+     }
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "那你把手放在这儿。",
+      "en": "Then put your hand here."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "我把手放在他胸口。里面像是有一台破机器在猛烈地震动、嗡鸣。",
+      "en": "I did so, and became at once conscious of an extraordinary throbbing and commotion going on inside."
+     }
+    }
+   ],
+   "cast": [
+    {
+     "id": "hope"
+    },
+    {
+     "id": "holmes"
+    },
+    {
+     "id": "lestrade"
+    }
+   ]
+  },
+  "c7_utah": {
+   "id": "c7_utah",
+   "chapter": "c7",
+   "kind": "main",
+   "title": {
+    "zh": "盐湖谷",
+    "en": "The Valley of Salt"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "很多年前，在北美的大荒原上，一个叫约翰·费里尔的人带着一个小女孩，快要渴死了。一个从东边迁来的教团救了他们，条件是入他们的教。",
+      "en": "Many years ago, out on the great alkali plain, a man named John Ferrier and a little girl were dying of thirst. A band of pilgrims bound for the West took them in — on condition that they joined their faith."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "sorry",
+     "type": "expression",
+     "label": {
+      "zh": "“……我很遗憾。”",
+      "en": "\"…I am sorry.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "不必，医生。我要的不是可怜。",
+        "en": "Don't be, Doctor. It isn't pity I'm after."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.hope.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "hope",
+       "t": {
+        "zh": "不必，医生。我要的不是可怜。",
+        "en": "Don't be, Doctor. It isn't pity I'm after."
+       },
+       "face": "sad"
+      }
+     ],
+     "values": [
+      "qing"
+     ]
+    },
+    {
+     "id": "law",
+     "type": "dilemma",
+     "label": {
+      "zh": "“可是，杀人就是杀人。”",
+      "en": "\"Still — murder is murder.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "你说得对。所以我把选择交给了上帝。",
+        "en": "You're right. That's why I left the choice to God."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.hope.esteem",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "hope",
+       "t": {
+        "zh": "你说得对。所以我把选择交给了上帝。",
+        "en": "You're right. That's why I left the choice to God."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "yi"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 2,
+   "script": [
+    {
+     "op": "bg",
+     "id": "utah"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "很多年前，在北美的大荒原上，一个叫约翰·费里尔的人带着一个小女孩，快要渴死了。一个从东边迁来的教团救了他们，条件是入他们的教。",
+      "en": "Many years ago, out on the great alkali plain, a man named John Ferrier and a little girl were dying of thirst. A band of pilgrims bound for the West took them in — on condition that they joined their faith."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "那个小女孩叫露西。他们在盐湖谷住了下来。露西长大了，成了那片山谷里最美的花。",
+      "en": "The little girl was Lucy. They settled in the valley of the great salt lake, and Lucy grew to be the flower of that valley."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "我是在山路上遇见她的。她的马被牛群冲惊了，我把她拉了出来。……后来，我们订了婚。",
+      "en": "I met her on the mountain road, when her horse bolted among a drove of cattle and I pulled her clear. …Later, we were promised to each other."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "可教团的长老们不准。他们要她嫁给教里的人：德雷伯家的儿子，或者斯坦格森家的儿子。限期一个月。",
+      "en": "But the Elders would not have it. She must marry within the faith: the son of Drebber or the son of Stangerson. They gave her a month."
+     },
+     "face": "angry"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "我带他们父女连夜逃进山里。我出去找吃的，回来的时候，费里尔已经死了。露西被他们带走，嫁给了德雷伯。",
+      "en": "I got them away into the mountains by night. I went out to find food, and when I came back Ferrier was dead and Lucy was gone — carried back and married to Drebber."
+     },
+     "face": "sad"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "不到一个月，她就死了。下葬的前一夜，我闯进去，从她手上取下了这枚戒指。我对着她发誓：他们欠的，要一个一个还。",
+      "en": "In less than a month she was dead. The night before the burial I broke in and took this ring from her finger. And I swore over her that they would pay."
+     },
+     "face": "angry"
+    }
+   ],
+   "cast": [
+    {
+     "id": "hope"
+    }
+   ]
+  },
+  "c7_night": {
+   "id": "c7_night",
+   "chapter": "c7",
+   "kind": "main",
+   "title": {
+    "zh": "那一夜",
+    "en": "That Night"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "我跟着他们追了二十年，从美国追到欧洲，钱用完了，就在伦敦赶马车。",
+      "en": "I followed them for twenty years, from America to Europe. When my money ran out I took to driving a cab in London."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "ask_friend",
+     "type": "expression",
+     "label": {
+      "zh": "“你那位朋友，我们不会去找他。”",
+      "en": "\"We won't go looking for your friend.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "谢谢你，医生。",
+        "en": "Thank you, Doctor."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.hope.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "hope",
+       "t": {
+        "zh": "谢谢你，医生。",
+        "en": "Thank you, Doctor."
+       },
+       "face": "smile"
+      }
+     ],
+     "values": [
+      "qing"
+     ]
+    },
+    {
+     "id": "nothing",
+     "type": "expression",
+     "label": {
+      "zh": "不说话，把他的话一字一句记下来。",
+      "en": "Say nothing. Write down every word."
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "这些话，总得有人记下来。",
+        "en": "Someone had to write these words down."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.notebook",
+       "to": true
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "这些话，总得有人记下来。",
+        "en": "Someone had to write these words down."
+       }
+      }
+     ],
+     "values": [
+      "ren"
+     ]
+    }
+   ],
+   "salience": 0,
+   "order": 3,
+   "script": [
+    {
+     "op": "bg",
+     "id": "lauriston_in"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "我跟着他们追了二十年，从美国追到欧洲，钱用完了，就在伦敦赶马车。",
+      "en": "I followed them for twenty years, from America to Europe. When my money ran out I took to driving a cab in London."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "那天夜里，德雷伯喝得烂醉，上了我的车。我把他拉到那座空屋，点上蜡烛，把露西的戒指举到他眼前。",
+      "en": "That night Drebber came out drunk and got into my cab. I drove him to the empty house, lit the candle, and held Lucy's ring before his eyes."
+     },
+     "face": "angry"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "我拿出两颗药丸：一颗致命，一颗无害。我让他先挑，剩下那颗我吃。世上若有公道，就让上帝来裁决。",
+      "en": "I took out two pills: one death, one harmless. I made him choose, and I took the other. If there was any justice in the world, let God decide between us."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "他挑错了。……我鼻子流血流得厉害，就蘸着血在墙上写了那个词，想让警察往秘密会社那边想。",
+      "en": "He chose wrong. …My nose was bleeding hard, and I wrote that word on the wall with it, to put the police on the wrong track — secret societies."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "hope",
+     "t": {
+      "zh": "走出去才发现戒指丢了。我装成醉汉回去找，撞上了那个警察。来取戒指的“老太太”，是我的一个朋友。我不会说他是谁。",
+      "en": "Outside I found I'd lost the ring. I went back pretending to be drunk and ran into the constable. The 'old woman' who came for it was a friend of mine. I won't tell you who."
+     },
+     "face": "smile"
+    }
+   ],
+   "cast": [
+    {
+     "id": "hope"
+    }
+   ]
+  },
+  "c8_end": {
+   "id": "c8_end",
+   "chapter": "c8",
+   "kind": "main",
+   "title": {
+    "zh": "倒着推理",
+    "en": "Reasoning Backwards"
+   },
+   "lock": "free",
+   "canon": {
+    "zh": "柯南·道尔原著",
+    "en": "Arthur Conan Doyle"
+   },
+   "intro": [
+    {
+     "text": {
+      "zh": "那天夜里，杰弗逊·霍普的动脉瘤破了。第二天早上，人们发现他躺在牢房的地板上，脸上带着平静的笑。",
+      "en": "That very night the aneurism burst, and Jefferson Hope was found in the morning stretched upon the floor of the cell, with a placid smile upon his face."
+     }
+    }
+   ],
+   "choices": [
+    {
+     "id": "journal",
+     "type": "dilemma",
+     "label": {
+      "zh": "“没关系。事情的经过都在我的日记里，大家总会知道的。”",
+      "en": "\"Never mind. I have all the facts in my journal, and the public shall know them.\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "……随你吧，医生。",
+        "en": "…Do as you please, Doctor."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "set": "flag.journal",
+       "to": true
+      },
+      {
+       "add": "rel.holmes.warmth",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "……随你吧，医生。",
+        "en": "…Do as you please, Doctor."
+       },
+       "face": "smile"
+      },
+      {
+       "op": "say",
+       "who": "me",
+       "think": true,
+       "t": {
+        "zh": "就这样，我开始写下我和歇洛克·福尔摩斯的故事。",
+        "en": "And so I began to write down my adventures with Sherlock Holmes."
+       }
+      }
+     ],
+     "values": [
+      "zhen"
+     ],
+     "ends": true
+    },
+    {
+     "id": "laugh",
+     "type": "expression",
+     "label": {
+      "zh": "“你一点也不在乎？”",
+      "en": "\"You don't mind at all?\""
+     },
+     "out": [
+      {
+       "text": {
+        "zh": "我在乎的是案子本身。名声？让他们拿去吧。",
+        "en": "What I care for is the problem itself. The credit? Let them have it."
+       }
+      }
+     ],
+     "effects": [
+      {
+       "add": "rel.holmes.trust",
+       "by": 1
+      }
+     ],
+     "script": [
+      {
+       "op": "say",
+       "who": "holmes",
+       "t": {
+        "zh": "我在乎的是案子本身。名声？让他们拿去吧。",
+        "en": "What I care for is the problem itself. The credit? Let them have it."
+       },
+       "face": "normal"
+      }
+     ],
+     "values": [
+      "ren"
+     ],
+     "ends": true
+    }
+   ],
+   "salience": 0,
+   "order": 1,
+   "script": [
+    {
+     "op": "bg",
+     "id": "baker_night"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "那天夜里，杰弗逊·霍普的动脉瘤破了。第二天早上，人们发现他躺在牢房的地板上，脸上带着平静的笑。",
+      "en": "That very night the aneurism burst, and Jefferson Hope was found in the morning stretched upon the floor of the cell, with a placid smile upon his face."
+     }
+    },
+    {
+     "op": "show",
+     "who": "holmes",
+     "face": "normal",
+     "at": "center"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "解这类问题，最要紧的是能倒着推理。这本事很有用，也很简单，可人们很少练。",
+      "en": "In solving a problem of this sort, the grand thing is to be able to reason backwards. That is a very useful accomplishment, and a very easy one, but people do not practise it much."
+     },
+     "face": "normal"
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "你看看这个。",
+      "en": "Look at this."
+     },
+     "face": "smile"
+    },
+    {
+     "op": "say",
+     "who": null,
+     "t": {
+      "zh": "他递给我一份《回声报》：“……这次破案，全靠苏格兰场的雷斯垂德和葛莱森两位探长精明能干……一位叫歇洛克·福尔摩斯的业余人士也提供了些许协助。”",
+      "en": "He handed me the Echo: '…the credit of the capture belongs entirely to the well-known Scotland Yard officials, Messrs Lestrade and Gregson… an amateur, one Mr Sherlock Holmes, has also shown some talent…'"
+     }
+    },
+    {
+     "op": "say",
+     "who": "holmes",
+     "t": {
+      "zh": "这就是我们这项血字研究的结果：给他们挣了一份表彰！",
+      "en": "That's the result of all our Study in Scarlet: to get them a testimonial!"
+     },
+     "face": "smile"
+    }
+   ],
+   "cast": [
+    {
+     "id": "holmes"
+    }
+   ]
+  }
+ },
+ "endings": [
+  {
+   "id": "g_rating",
+   "title": {
+    "zh": "这一案，华生看穿了多少",
+    "en": "How much Watson saw"
+   },
+   "fragments": [
+    {
+     "id": "ahead",
+     "title": {
+      "zh": "抢先看穿",
+      "en": "One Step Ahead"
+     },
+     "text": {
+      "zh": "福尔摩斯揭晓之前，你已经说出了答案。他看了你很久，说：“华生，你在进步。”这是他第一次这么说。",
+      "en": "Before Holmes revealed it, you had already said it. He looked at you a long moment: 'Watson, you improve.' It was the first time he had said so."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "deduce",
+        "op": ">=",
+        "val": 4
+       },
+       {
+        "v": "proof",
+        "op": ">=",
+        "val": 4
+       }
+      ]
+     }
+    },
+    {
+     "id": "kept_up",
+     "title": {
+      "zh": "跟上了",
+      "en": "Kept Up"
+     },
+     "text": {
+      "zh": "真相揭开时，你没有太吃惊。有些环节你想到了，有些没有。",
+      "en": "When the truth came out, you were not too surprised. You had seen some links of the chain, if not all."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "deduce",
+        "op": ">=",
+        "val": 2
+       },
+       {
+        "v": "deduce",
+        "op": "<=",
+        "val": 3
+       }
+      ]
+     }
+    },
+    {
+     "id": "in_dark",
+     "title": {
+      "zh": "被蒙在鼓里",
+      "en": "In the Dark"
+     },
+     "text": {
+      "zh": "手铐咔嗒一声响的时候，你和两位探长一样目瞪口呆。“你看了，华生，可你没有观察。”",
+      "en": "When the handcuffs clicked, you were as dumbfounded as the two inspectors. 'You see, Watson, but you do not observe.'"
+     },
+     "when": {
+      "v": "deduce",
+      "op": "<=",
+      "val": 1
+     }
+    },
+    {
+     "id": "lucky",
+     "title": {
+      "zh": "猜中了",
+      "en": "A Lucky Guess"
+     },
+     "text": {
+      "zh": "你说对了，可你手里的线索撑不起你的答案。福尔摩斯说：“猜测是个坏习惯。”",
+      "en": "You were right, but your clues could not carry your answer. 'Guessing is a shocking habit,' said Holmes."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "deduce",
+        "op": ">=",
+        "val": 4
+       },
+       {
+        "v": "proof",
+        "op": "<=",
+        "val": 3
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "g_holmes",
+   "title": {
+    "zh": "你和福尔摩斯",
+    "en": "You and Holmes"
+   },
+   "fragments": [
+    {
+     "id": "partner",
+     "text": {
+      "zh": "那以后，他出门查案，总会先问一句：“你来吗，华生？”",
+      "en": "After that, whenever he went out on a case, he would ask first: 'Are you coming, Watson?'"
+     },
+     "when": {
+      "v": "rel.holmes.esteem",
+      "op": ">=",
+      "val": 6
+     }
+    },
+    {
+     "id": "lodger",
+     "text": {
+      "zh": "你们仍是合租的室友。他的案子，他愿意说就说。",
+      "en": "You remained fellow lodgers. Of his cases, he told you what he chose."
+     },
+     "when": {
+      "v": "rel.holmes.esteem",
+      "op": "<=",
+      "val": 5
+     }
+    }
+   ]
+  },
+  {
+   "id": "g_yard",
+   "title": {
+    "zh": "苏格兰场",
+    "en": "Scotland Yard"
+   },
+   "fragments": [
+    {
+     "id": "friend",
+     "text": {
+      "zh": "雷斯垂德下回来贝克街，先跟你打了招呼。",
+      "en": "Next time Lestrade came to Baker Street, he greeted you first."
+     },
+     "when": {
+      "v": "rel.lestrade.trust",
+      "op": ">=",
+      "val": 4
+     }
+    },
+    {
+     "id": "sour",
+     "text": {
+      "zh": "雷斯垂德提起你时，嘴撇了一下。",
+      "en": "When Lestrade mentioned you, his mouth twisted."
+     },
+     "when": {
+      "v": "rel.lestrade.warmth",
+      "op": "<=",
+      "val": 1
+     }
+    },
+    {
+     "id": "plain",
+     "text": {
+      "zh": "两位探长忙着领奖，没顾上看你一眼。",
+      "en": "The two inspectors were too busy with their testimonial to spare you a glance."
+     },
+     "when": {
+      "all": [
+       {
+        "v": "rel.lestrade.trust",
+        "op": "<=",
+        "val": 1
+       },
+       {
+        "v": "rel.lestrade.warmth",
+        "op": ">=",
+        "val": 2
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "g_journal",
+   "title": {
+    "zh": "日记",
+    "en": "The Journal"
+   },
+   "fragments": [
+    {
+     "id": "write",
+     "text": {
+      "zh": "你的日记本上，第一页写着：《血字的研究》。",
+      "en": "On the first page of your journal you wrote: 'A Study in Scarlet'."
+     },
+     "when": {
+      "v": "flag.journal",
+      "op": "==",
+      "val": true
+     }
+    },
+    {
+     "id": "nowrite",
+     "text": {
+      "zh": "这件案子，后来只有你们两个人记得。",
+      "en": "Afterwards, only the two of you remembered the case."
+     },
+     "when": {
+      "v": "flag.journal",
+      "op": "!=",
+      "val": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "g_alert",
+   "title": {
+    "zh": "那个朋友",
+    "en": "The Friend"
+   },
+   "fragments": [
+    {
+     "id": "safe",
+     "text": {
+      "zh": "那个扮成老太太的年轻人，再也没有出现。",
+      "en": "The young man who played the old woman was never seen again."
+     },
+     "when": {
+      "v": "flag.hope_warned",
+      "op": "!=",
+      "val": true
+     }
+    },
+    {
+     "id": "fled",
+     "text": {
+      "zh": "报纸登出消息的那天，有人看见一个年轻人匆匆上了去利物浦的火车。",
+      "en": "On the day the papers ran the story, a young man was seen hurrying onto the Liverpool train."
+     },
+     "when": {
+      "v": "flag.hope_warned",
+      "op": "==",
+      "val": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "g_hope",
+   "title": {
+    "zh": "杰弗逊·霍普",
+    "en": "Jefferson Hope"
+   },
+   "fragments": [
+    {
+     "id": "heard",
+     "text": {
+      "zh": "你把霍普的话一字一句写了下来。他说，他不想被人当成一个普通的杀人犯。",
+      "en": "You wrote down Hope's words, every one. He did not want to be remembered as a common cut-throat."
+     },
+     "when": {
+      "v": "rel.hope.trust",
+      "op": ">=",
+      "val": 2
+     }
+    },
+    {
+     "id": "judged",
+     "text": {
+      "zh": "霍普死在了法庭开庭之前。那个更高的法庭，已经审过他了。",
+      "en": "Hope died before his trial. A higher Judge had taken the case in hand."
+     },
+     "when": {
+      "v": "rel.hope.trust",
+      "op": "<=",
+      "val": 1
+     }
+    }
+   ]
+  }
+ ],
+ "art": {
+  "bg": {
+   "street_fog": {
+    "zh": "伦敦街道 · 雾",
+    "en": "London street · fog"
+   },
+   "lab": {
+    "zh": "巴茨医院化学实验室",
+    "en": "Barts chemical laboratory"
+   },
+   "baker_day": {
+    "zh": "贝克街 221B · 白天",
+    "en": "221B Baker Street · day"
+   },
+   "baker_night": {
+    "zh": "贝克街 221B · 夜晚",
+    "en": "221B Baker Street · night"
+   },
+   "lauriston_out": {
+    "zh": "劳瑞斯顿花园 3 号",
+    "en": "No. 3 Lauriston Gardens"
+   },
+   "lauriston_in": {
+    "zh": "空屋前厅",
+    "en": "The empty front room"
+   },
+   "station": {
+    "zh": "警察局",
+    "en": "Police station"
+   },
+   "utah": {
+    "zh": "北美大荒原",
+    "en": "The great alkali plain"
+   }
+  },
+  "cg": {
+   "cg_arrest": {
+    "zh": "杰弗逊·霍普落网",
+    "en": "The arrest of Jefferson Hope"
+   }
+  },
+  "faces": {
+   "normal": {
+    "zh": "平常",
+    "en": "neutral"
+   },
+   "smile": {
+    "zh": "笑",
+    "en": "smile"
+   },
+   "angry": {
+    "zh": "生气",
+    "en": "angry"
+   },
+   "sad": {
+    "zh": "难过",
+    "en": "sad"
+   },
+   "surprised": {
+    "zh": "吃惊",
+    "en": "surprised"
+   }
+  }
+ },
+ "value_tags": {
+  "zhen": {
+   "zh": "真",
+   "en": "truth"
+  },
+  "ren": {
+   "zh": "忍",
+   "en": "patience"
+  },
+  "li": {
+   "zh": "利",
+   "en": "advantage"
+  },
+  "qing": {
+   "zh": "情",
+   "en": "sentiment"
+  },
+  "yi": {
+   "zh": "义",
+   "en": "justice"
+  },
+  "hen": {
+   "zh": "狠",
+   "en": "ruthlessness"
+  }
+ }
+}

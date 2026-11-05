@@ -1,0 +1,6 @@
+Game_name:汐川的第七个春天;
+Game_key:storydate-xichuan-webgal-spike-v1;
+Title_img:title.webp;
+Enable_Appreciation:true;
+Enable_Continue:true;
+Enable_flowchart:false;

@@ -1,0 +1,242 @@
+{
+ "3gab": {
+  "title": "3GAB: The Adventure of the Three Gables",
+  "words": 6154
+ },
+ "3gar": {
+  "title": "3GAR: The Adventure of the Three Garridebs",
+  "words": 6278
+ },
+ "3stu": {
+  "title": "3STU: The Adventure of the Three Students",
+  "words": 6549
+ },
+ "abbe": {
+  "title": "ABBE: The Adventure of the Abbey Grange",
+  "words": 9260
+ },
+ "bery": {
+  "title": "BERY: The Adventure of the Beryl Coronet",
+  "words": 9781
+ },
+ "blac": {
+  "title": "BLAC: The Adventure of Black Peter",
+  "words": 8212
+ },
+ "blan": {
+  "title": "BLAN: The Adventure of the Blanched Soldier",
+  "words": 7803
+ },
+ "blue": {
+  "title": "BLUE: The Adventure of the Blue Carbuncle",
+  "words": 7896
+ },
+ "bosc": {
+  "title": "BOSC: The Boscombe Valley Mystery",
+  "words": 9696
+ },
+ "bruc": {
+  "title": "BRUC: The Adventure of the Bruce-Partington Plans",
+  "words": 10783
+ },
+ "card": {
+  "title": "CARD: The Adventure of the Cardboard Box",
+  "words": 8784
+ },
+ "chas": {
+  "title": "CHAS: The Adventure of Charles Augustus Milverton",
+  "words": 6823
+ },
+ "copp": {
+  "title": "COPP: The Adventure of the Copper Beeches",
+  "words": 10022
+ },
+ "cree": {
+  "title": "CREE: The Adventure of the Creeping Man",
+  "words": 7785
+ },
+ "croo": {
+  "title": "CROO: The Adventure of the Crooked Man",
+  "words": 7210
+ },
+ "danc": {
+  "title": "DANC: The Adventure of the Dancing Men",
+  "words": 9591
+ },
+ "devi": {
+  "title": "DEVI: The Adventure of the Devil's Foot",
+  "words": 10080
+ },
+ "dyin": {
+  "title": "DYIN: The Adventure of the Dying Detective",
+  "words": 5875
+ },
+ "empt": {
+  "title": "EMPT: The Adventure of the Empty House",
+  "words": 8781
+ },
+ "engr": {
+  "title": "ENGR: The Adventure of the Engineer's Thumb",
+  "words": 8370
+ },
+ "fina": {
+  "title": "FINA: The Adventure of the Final Problem",
+  "words": 7300
+ },
+ "five": {
+  "title": "FIVE: The Five Orange Pips",
+  "words": 7400
+ },
+ "glor": {
+  "title": "GLOR: The Adventure of the Gloria Scott",
+  "words": 7912
+ },
+ "gold": {
+  "title": "GOLD: The Adventure of the Golden Pince-Nez",
+  "words": 9057
+ },
+ "gree": {
+  "title": "GREE: The Adventure of the Greek Interpreter",
+  "words": 7104
+ },
+ "houn": {
+  "title": "HOUN: The Hound of the Baskervilles",
+  "words": 59436
+ },
+ "iden": {
+  "title": "IDEN: A Case of Identity",
+  "words": 7055
+ },
+ "illu": {
+  "title": "ILLU: The Adventure of the Illustrious Client",
+  "words": 9865
+ },
+ "lady": {
+  "title": "LADY: The Disappearance of Lady Frances Carfax",
+  "words": 7767
+ },
+ "last": {
+  "title": "LAST: His Last Bow",
+  "words": 6132
+ },
+ "lion": {
+  "title": "LION: The Adventure of the Lion's Mane",
+  "words": 7280
+ },
+ "maza": {
+  "title": "MAZA: The Adventure of the Mazarin Stone",
+  "words": 5744
+ },
+ "miss": {
+  "title": "MISS: The Adventure of the Missing Three-Quarter",
+  "words": 8098
+ },
+ "musg": {
+  "title": "MUSG: The Adventure of the Musgrave Ritual",
+  "words": 7668
+ },
+ "nava": {
+  "title": "NAVA: The Adventure of the Naval Treaty",
+  "words": 12422
+ },
+ "nobl": {
+  "title": "NOBL: The Adventure of the Noble Bachelor",
+  "words": 8185
+ },
+ "norw": {
+  "title": "NORW: The Adventure of the Norwood Builder",
+  "words": 9352
+ },
+ "prio": {
+  "title": "PRIO: The Adventure of the Priory School",
+  "words": 11572
+ },
+ "redc": {
+  "title": "REDC: The Adventure of the Red Circle",
+  "words": 7441
+ },
+ "redh": {
+  "title": "REDH: The Red-Headed League",
+  "words": 9186
+ },
+ "reig": {
+  "title": "REIG: The Adventure of the Reigate Squire",
+  "words": 7236
+ },
+ "resi": {
+  "title": "RESI: The Adventure of the Resident Patient",
+  "words": 6529
+ },
+ "reti": {
+  "title": "RETI: The Adventure of the Retired Colourman",
+  "words": 5604
+ },
+ "scan": {
+  "title": "SCAN: A Scandal in Bohemia",
+  "words": 8627
+ },
+ "seco": {
+  "title": "SECO: The Adventure of the Second Stain",
+  "words": 9783
+ },
+ "shos": {
+  "title": "SHOS: The Adventure of Shoscombe Old Place",
+  "words": 6340
+ },
+ "sign": {
+  "title": "SIGN: The Sign of Four",
+  "words": 43250
+ },
+ "silv": {
+  "title": "SILV: The Adventure of Silver Blaze",
+  "words": 9692
+ },
+ "sixn": {
+  "title": "SIXN: The Adventure of the Six Napoleons",
+  "words": 8425
+ },
+ "soli": {
+  "title": "SOLI: The Adventure of the Solitary Cyclist",
+  "words": 7916
+ },
+ "spec": {
+  "title": "SPEC: The Adventure of the Speckled Band",
+  "words": 9862
+ },
+ "stoc": {
+  "title": "STOC: The Adventure of the Stockbroker's Clerk",
+  "words": 6872
+ },
+ "stud": {
+  "title": "STUD: A Study in Scarlet",
+  "words": 43512
+ },
+ "suss": {
+  "title": "SUSS: The Adventure of the Sussex Vampire",
+  "words": 6038
+ },
+ "thor": {
+  "title": "THOR: The Problem of Thor Bridge",
+  "words": 9724
+ },
+ "twis": {
+  "title": "TWIS: The Man with the Twisted Lip",
+  "words": 9303
+ },
+ "vall": {
+  "title": "VALL: The Valley of Fear",
+  "words": 58132
+ },
+ "veil": {
+  "title": "VEIL: The Adventure of the Veiled Lodger",
+  "words": 4557
+ },
+ "wist": {
+  "title": "WIST: The Adventure of Wisteria Lodge",
+  "words": 11505
+ },
+ "yell": {
+  "title": "YELL: The Adventure of the Yellow Face",
+  "words": 7590
+ }
+}

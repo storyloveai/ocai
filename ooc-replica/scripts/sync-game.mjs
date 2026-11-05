@@ -30,6 +30,9 @@ for (const dir of ['portraits', 'scenes', 'cg', 'ending', 'fate']) {
 }
 // 《汐川的第七个春天》（galgame）：页面和图，网站上在 /assets/xichuan/。
 FILES.push(['game/xichuan/web/index.html', 'dist/assets/xichuan/index.html']);
+// 汐川的自由对话（api/xichuan.js）在服务端读剧本、用引擎判断状态
+FILES.push(['game/xichuan/content/campaign.json', 'server/xichuan-campaign.json']);
+FILES.push(['game/engine/campaign_core.js', 'server/xichuan-core.cjs']);
 async function walk(rel) {
   const out = [];
   for (const e of await readdir(new URL(rel, repo), { withFileTypes: true }).catch(() => [])) {

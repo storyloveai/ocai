@@ -1,0 +1,23 @@
+{
+  "viewportPortrait": [
+    390,
+    844
+  ],
+  "viewportLandscape": [
+    844,
+    390
+  ],
+  "device": "Chrome Android touch emulation, not a physical phone",
+  "errors": [],
+  "missing": [
+    "404 http://127.0.0.1:8765/assets/xichuan-webgal/lib/live2d.min.js",
+    "404 http://127.0.0.1:8765/assets/xichuan-webgal/lib/live2dcubismcore.min.js"
+  ],
+  "passed": [
+    "portrait title/choices",
+    "touch save/load",
+    "landscape choices",
+    "backlog",
+    "cross-chapter transition"
+  ]
+}
