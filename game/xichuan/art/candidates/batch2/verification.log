@@ -1,0 +1,1582 @@
+
+RUN python3 content/campaign.py
+nodes 46 -> /Users/zhouzy02/Documents/Codex/2026-11-03/storyloveai-ocai-codex-klein-image-eval/work/ocai/game/sanguo/content/campaign.json
+
+RUN python3 tools/build.py
+illus.html links 197 illustrations
+dist/index.html 1910436 bytes; web/index.html 1910628
+
+RUN node tools/check.js content/campaign.json 5000
+# 三国·谋士 · 卷一 · 许都至赤壁
+nodes 46, chapters 8, echoes 31, debts 4
+
+## recipe relations: 11 scenes change with a relationship · approach x_rel_guan→c8_huarong.vouch_book/c8_cao.plead_book, x_rel_wz→c6_slope.search_pouch, x_rel_cao→c6_pursuit.gap_watched · split 4 · offense caocao✓ liubei✓ guanyu✓
+
+## static: 0 errors, 2 warnings
+  warn  var grudge.caocao: read but never written
+  warn  var grudge.guanyu: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 10.3, distinct ending combinations 767
+track: liu 91.3%, cao 8.7%
+deviation: 0:71.6% 1:19.7% 2:7.3% 3:1.2% 4:0.1%
+uncanny: 0:38.4% 1:27.4% 2:18.0% 3:11.7% 4:3.5% 5:0.7% 6:0.2% 7:0.1% 8:0.0%
+
+relationships at the end (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          4.9%  95.1%   0.0%   0.0%   0.0%  · moved 9.8% · max 0.0%
+  liubei.trust*         68.6%  18.3%   7.4%   4.7%   1.1%  · moved 91.5% · max 0.0%
+  liubei.esteem          0.0%  99.0%   1.0%   0.0%   0.0%  · moved 34.0% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust          99.9%   0.1%   0.0%   0.0%   0.0%  · moved 0.3% · max 0.0%
+  caocao.esteem*        50.4%  34.3%  11.5%   3.0%   0.8%  · moved 68.4% · max 0.3%
+  guanyu.warmth         95.7%   4.0%   0.3%   0.0%   0.0%  · moved 7.6% · max 0.0%
+  guanyu.trust           2.2%  97.7%   0.1%   0.0%   0.0%  · moved 5.9% · max 0.0%
+  guanyu.esteem*        76.3%  13.1%   6.2%   2.3%   2.1%  · moved 65.7% · max 0.5%
+  zhuge.warmth          94.1%   5.8%   0.0%   0.0%   0.0%  · moved 5.9% · max 0.0%
+  zhuge.trust            7.6%  12.9%  78.0%   1.5%   0.0%  · moved 27.4% · max 0.0%
+  zhuge.esteem*         74.4%   8.4%  10.2%   5.3%   1.6%  · moved 29.0% · max 0.2%
+  wenzhi.warmth          0.0%  97.7%   2.3%   0.0%   0.0%  · moved 2.3% · max 0.0%
+  wenzhi.trust           1.9%  91.5%   6.5%   0.1%   0.0%  · moved 31.8% · max 0.0%
+  wenzhi.esteem          0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.intimacy*      82.4%  13.3%   2.7%   1.0%   0.6%  · moved 18.8% · max 0.2%
+
+ending fragments:
+  归属: dead 9.8% · miheng 2.2% · exposed 2.9% · left 66.8% · liu 17.0% · cao 1.2%
+  主公: liu_high 1.1% · liu_mid 4.3% · liu_low 80.4% · cao_high 0.7% · cao_low 3.7%
+  名声: rash 72.0% · uncanny 3.9% · loyal 3.8% · cunning 12.0% · none 8.2%
+  关羽: vouched 2.8% · pleaded 0.0% · owes 11.3% · respect 1.9% · cold 61.0% · plain 13.3%
+  诸葛亮: nod 5.1% · wary 16.6% · respect 4.9% · plain 59.1%
+  温芷: married 0.3% · with_you 0.8% · together 0.4% · cao_saved 0.1% · used 2.0% · safe 2.8% · far 83.8%
+  因你而不同的人: jail 0.7% · flogged 1.0% · xushu 4.5% · mi 8.2% · kongxiu 12.9% · pangtong 2.0% · mercy 1.0% · forged 2.2% · reserve 1.0%
+  天下: far 1.4% · near 27.0% · same 71.6%
+
+echoes (registered → paid):
+  e_cover: 1522 → 736
+  e_spoke: 1560 → 586
+  e_yi: 513 → 309
+  e_warn_gifts: 1797 → 899
+  e_wenzhi_spy: 497 → 311
+  e_foresaw: 590 → 340
+  e_fast: 1394 → 1394
+  e_terms: 1092 → 920
+  e_news: 696 → 667
+  e_promise: 65 → 25
+  e_pass: 646 → 596
+  e_xushu: 115 → 115
+  e_pangtong: 98 → 59
+  e_aside: 462 → 394
+  e_mi: 409 → 373
+  e_abandon: 263 → 221
+  e_warned: 135 → 133
+  e_forged: 112 → 69
+  e_mercy: 49 → 36
+  e_reserve: 52 → 49
+  e_fight: 1073 → 906
+  e_post: 544 → 544
+  e_stay: 435 → 190
+  e_angelica: 27 → 11
+  e_used: 103 → 103
+  e_row: 58 → 51
+  e_guan_fear: 401 → 348
+  e_people: 245 → 132
+  e_zhuge_test: 643 → 389
+  e_wind: 79 → 38
+  e_cao_guan: 80 → 28
+
+debts: {"d_recommend:reroute":224,"d_five_passes:transform":646,"d_mi:transform":409,"d_lianhuan:open":39,"d_lianhuan:transform":22,"d_lianhuan:reroute":37,"d_recommend:open":3}
+
+side offers (times offered): {"c1_wenzhi":4757,"c1_guanyu":4757,"c1_dongcheng":4685,"c2_pretext":3945,"c4_horse":1965,"c2_note":937,"c5_mirror":1660,"c7_arrows":840,"c5_letter":752,"c7_letter":522,"c4_garden":374,"c7_phoenix":58,"c5_spring":76}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:married|with_you|together|cao_saved 100% · g_wenzhi:married|with_you|together|cao_saved|safe 100% · early end 0% · scenes 17.0
+  loyal    g_lord:liu_high 100% · g_name:loyal 100% · early end 0% · scenes 15.0
+  schemer  g_side:cao 66% · g_lord:cao_high 66% · g_name:cunning 100% · early end 0% · scenes 14.8
+  seer     g_name:uncanny 100% · g_side:exposed 0% · early end 0% · scenes 17.0
+  provoker g_lives:flogged 0% · g_lives:jail 0% · g_side:miheng 0% · g_name:rash 100% · early end 100% · scenes 1.0
+    on-the-spot breaks (scene:kind:who): {}
+
+talk topics taken (random): {"c2_campfire.peach":1398,"c2_campfire.warn":1446,"c5_feast.poem":76,"c5_feast.wind":79,"c8_north.common":35,"c8_north.pride":22,"c2_campfire.self":1384,"c5_lamp.test":643,"c5_lamp.why":687,"c4_gucheng.bitter":253,"c4_gucheng.people":245,"c8_vigil.regret":498,"c5_lamp.share":511,"c8_vigil.sit":511,"c2_campfire.fear":401,"c5_lamp.rival":160,"c4_gucheng.south":246,"c5_feast.guan":80,"c8_river.home":31,"c8_river.future":31,"c8_river.confess":19,"c5_feast.why":76,"c8_north.water":27,"c8_vigil.fear":44,"c8_river.hands":17}
+early endings (random): {"x_cold_liu":984,"x_cao_rage":473,"x_liu_break":1171,"x_loose":758,"x_plum_rage":108,"x_guan_rage1":398,"x_exposed":147,"x_jail":17,"x_miheng":3,"x_cold_cao":30}
+
+## findings (12)
+  WARN choice x_miheng.kneel never available
+  WARN choice x_jail.wenzhi never available
+  WARN echo e_spoke paid off in only 38% of runs that registered it
+  WARN echo e_warn_gifts paid off in only 50% of runs that registered it
+  WARN echo e_foresaw paid off in only 58% of runs that registered it
+  WARN echo e_cover paid off in only 48% of runs that registered it
+  WARN echo e_stay paid off in only 44% of runs that registered it
+  WARN echo e_wind paid off in only 48% of runs that registered it
+  WARN echo e_people paid off in only 54% of runs that registered it
+  WARN echo e_cao_guan paid off in only 35% of runs that registered it
+  WARN echo e_promise paid off in only 38% of runs that registered it
+  WARN echo e_angelica paid off in only 41% of runs that registered it
+
+PASS: no blocking issues
+
+RUN node tools/check.js content/v2/campaign_v2.json 5000
+# 三国·谋士 · 卷二 · 荆州与西川
+nodes 29, chapters 8, echoes 22, debts 3
+
+## recipe relations: 6 scenes change with a relationship · approach x_rel_jinnang→c3_ganlu.jinnang · split 2 · offense zhouyu✓ liubei✓
+
+## static: 0 errors, 3 warnings
+  warn  c3_ganlu.kneel: major choice registers no echo (consequence may stay invisible)
+  warn  c3_ganlu.stone: major choice registers no echo (consequence may stay invisible)
+  warn  var grudge.zhouyu: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 12.2, distinct ending combinations 2913
+track: liu 95.7%, cao 4.3%
+deviation: 0:21.4% 1:40.2% 2:21.4% 3:10.9% 4:4.6% 5:1.3% 6:0.1% 7:0.0%
+uncanny: 0:24.4% 1:18.6% 2:18.3% 3:12.2% 4:6.1% 5:3.2% 6:0.3% 7:1.0% 8:2.8% 9:8.7% 10:4.4%
+
+relationships at the end, starting from presets (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          0.1%  99.9%   0.0%   0.0%   0.0%  · moved 2.9% · max 0.0%
+  liubei.trust*         36.7%  13.4%  18.8%  23.2%   8.0%  · moved 64.0% · max 0.0%
+  liubei.esteem          0.0%  79.8%  20.1%   0.1%   0.0%  · moved 56.8% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*        66.0%  17.6%   9.1%   3.3%   4.0%  · moved 16.7% · max 3.7%
+  guanyu.warmth         40.5%  44.9%  14.7%   0.0%   0.0%  · moved 23.2% · max 0.0%
+  guanyu.trust           0.0%  99.7%   0.3%   0.0%   0.0%  · moved 4.9% · max 0.0%
+  guanyu.esteem*        21.4%  11.3%  39.2%  20.3%   7.8%  · moved 54.8% · max 0.9%
+  zhuge.warmth          78.6%  21.4%   0.0%   0.0%   0.0%  · moved 6.2% · max 0.0%
+  zhuge.trust           23.3%  26.3%  45.5%   4.9%   0.0%  · moved 57.6% · max 0.0%
+  zhuge.esteem*         30.9%  15.6%  19.9%  17.9%  15.7%  · moved 66.9% · max 3.7%
+  wenzhi.warmth          0.0%  99.7%   0.3%   0.0%   0.0%  · moved 0.3% · max 0.0%
+  wenzhi.trust           0.1%  85.4%  12.8%   1.8%   0.0%  · moved 11.2% · max 0.0%
+  wenzhi.esteem          0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.intimacy*      74.7%   8.5%   0.3%   6.9%   9.6%  · moved 19.4% · max 1.2%
+  zhouyu.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhouyu.trust          71.6%  25.2%   2.8%   0.4%   0.0%  · moved 65.2% · max 0.0%
+  zhouyu.esteem*        29.2%  47.9%  17.6%   5.1%   0.1%  · moved 66.1% · max 0.0%
+  lusu.warmth            0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.trust*            2.1%  44.9%  35.9%  16.6%   0.5%  · moved 65.6% · max 0.0%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhaoyun.warmth        12.2%  62.9%  23.9%   1.0%   0.0%  · moved 54.3% · max 0.0%
+  zhaoyun.trust*         5.2%  42.9%  16.8%  16.1%  19.0%  · moved 62.9% · max 6.3%
+  zhaoyun.esteem        95.7%   4.2%   0.0%   0.0%   0.0%  · moved 26.7% · max 0.0%
+  sunfuren.warmth*      74.6%  25.2%   0.2%   0.0%   0.0%  · moved 42.8% · max 0.0%
+  sunfuren.trust        70.4%   9.7%  19.8%   0.1%   0.0%  · moved 40.2% · max 0.0%
+  sunfuren.esteem       99.5%   0.5%   0.0%   0.0%   0.0%  · moved 18.8% · max 0.0%
+  pangtong.warmth       37.3%  12.8%  18.2%  22.1%   9.6%  · moved 62.7% · max 0.9%
+  pangtong.trust        92.5%   7.5%   0.0%   0.0%   0.0%  · moved 7.5% · max 0.0%
+  pangtong.esteem*      55.1%  22.5%  16.2%   5.7%   0.5%  · moved 56.5% · max 0.0%
+  zhangsong.warmth      95.1%   4.9%   0.0%   0.0%   0.0%  · moved 5.6% · max 0.0%
+  zhangsong.trust      100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhangsong.esteem*     73.4%  20.8%   5.8%   0.0%   0.0%  · moved 41.2% · max 0.0%
+
+relationships at the end, chained from the previous volume (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          5.1%  94.9%   0.0%   0.0%   0.0%  · moved 2.2% · max 0.0%
+  liubei.trust*         65.3%  16.0%  10.9%   7.7%   0.1%  · moved 39.2% · max 0.0%
+  liubei.esteem          0.0%  81.5%  17.8%   0.7%   0.0%  · moved 32.1% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust          99.9%   0.1%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*        51.2%  33.8%  13.6%   1.1%   0.3%  · moved 1.4% · max 0.2%
+  guanyu.warmth         85.4%  13.8%   0.8%   0.0%   0.0%  · moved 12.2% · max 0.0%
+  guanyu.trust           2.0%  97.6%   0.4%   0.0%   0.0%  · moved 2.2% · max 0.0%
+  guanyu.esteem*        63.6%  21.5%   9.4%   4.1%   1.5%  · moved 27.2% · max 0.3%
+  zhuge.warmth          90.4%   9.6%   0.0%   0.0%   0.0%  · moved 4.7% · max 0.0%
+  zhuge.trust           14.7%  22.1%  58.2%   5.0%   0.0%  · moved 42.3% · max 0.0%
+  zhuge.esteem*         56.2%  19.0%  12.3%   7.4%   5.1%  · moved 43.2% · max 1.4%
+  wenzhi.warmth          0.0%  97.9%   2.1%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.trust           1.5%  91.5%   6.8%   0.2%   0.0%  · moved 0.5% · max 0.0%
+  wenzhi.esteem          0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.intimacy*      78.8%  17.6%   2.6%   0.9%   0.1%  · moved 6.5% · max 0.0%
+  zhouyu.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhouyu.trust          77.4%  21.0%   1.5%   0.1%   0.0%  · moved 46.1% · max 0.0%
+  zhouyu.esteem*        18.9%  63.0%  14.1%   3.9%   0.0%  · moved 47.4% · max 0.0%
+  lusu.warmth            0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.trust*            1.6%  53.8%  23.2%  19.9%   1.5%  · moved 50.5% · max 0.0%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhaoyun.warmth         4.3%  75.9%  18.7%   1.0%   0.0%  · moved 32.2% · max 0.0%
+  zhaoyun.trust*         2.2%  67.9%   8.3%  10.0%  11.6%  · moved 34.3% · max 4.7%
+  zhaoyun.esteem        96.9%   3.1%   0.0%   0.0%   0.0%  · moved 12.8% · max 0.0%
+  sunfuren.warmth*      82.1%  17.8%   0.1%   0.0%   0.0%  · moved 27.1% · max 0.0%
+  sunfuren.trust        82.9%   5.9%  11.2%   0.1%   0.0%  · moved 20.8% · max 0.0%
+  sunfuren.esteem       99.8%   0.2%   0.0%   0.0%   0.0%  · moved 10.9% · max 0.0%
+  pangtong.warmth       66.4%   6.8%  10.5%  11.1%   5.2%  · moved 33.6% · max 0.4%
+  pangtong.trust        96.4%   3.6%   0.0%   0.0%   0.0%  · moved 3.6% · max 0.0%
+  pangtong.esteem*      75.7%  12.3%   8.2%   3.5%   0.3%  · moved 30.1% · max 0.0%
+  zhangsong.warmth      97.5%   2.5%   0.0%   0.0%   0.0%  · moved 2.7% · max 0.0%
+  zhangsong.trust      100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhangsong.esteem*     87.4%   9.3%   3.2%   0.0%   0.0%  · moved 20.8% · max 0.0%
+
+ending fragments:
+  去处: dead 5.3% · hermit 9.0% · north 4.3% · exposed 5.6% · left 22.6% · jingzhou 17.4% · chengdu 17.6% · none 18.1%
+  主公: high 7.5% · mid 20.6% · low 25.0% · cao_high 4.0% · cao 0.3%
+  周瑜: lives 0.8% · esteem 5.1% · rival 25.2% · plain 35.1%
+  庞统: alive 15.0% · words 21.1% · dead 20.3%
+  孙夫人: parted 0.1% · letter 18.8% · cold 29.1% · plain 7.9%
+  温芷: child 5.2% · west 4.4% · jingzhou 4.7% · north 1.2% · together 0.0% · used 0.0% · far 79.1%
+  因你而不同的人: weiyan 32.8% · zhaoyun 24.5% · zhangsong 30.0% · tongguan 4.1% · defected 4.0% · owes 14.7% · lusu 22.4% · guan 25.4%
+  名声: uncanny 26.6% · rash 27.9% · loyal 17.7% · cunning 25.0% · none 2.9%
+  天下: far 1.4% · near 98.6%
+
+echoes (registered → paid):
+  e_nanjun: 1277 → 1074
+  e_yield: 1263 → 1095
+  e_warned_zy: 1259 → 1076
+  e_wz_zhou: 256 → 244
+  e_lusu: 1122 → 873
+  e_weiyan: 2252 → 1945
+  e_zy: 1914 → 1678
+  e_ganlu: 1097 → 1097
+  e_rear: 1478 → 1388
+  e_left_sun: 865 → 779
+  e_pt: 1532 → 1480
+  e_pt_vouch: 1557 → 1422
+  e_zs: 1497 → 1489
+  e_adou: 1523 → 1429
+  e_wz_road: 715 → 691
+  e_luofeng: 1807 → 1778
+  e_liuqi: 1151 → 982
+  e_tongque: 418 → 418
+  e_zy_lives: 38 → 38
+  e_cloak: 207 → 207
+  e_defect: 201 → 201
+  e_cao_stay: 418 → 418
+
+debts: {"d_phoenix:reroute":727,"d_base:reroute":1095,"d_phoenix:open":25,"d_base:open":168,"d_zhouyu:transform":38}
+
+side offers (times offered): {"c1_lusu":3870,"c2_guiyang":3395,"c4_leiyang":3245,"c1_wound":836,"c6_wenzhi":715}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:child|west|jingzhou 86% · early end 0% · scenes 17.0
+  loyal    g_lord:high|mid 100% · g_name:loyal 100% · early end 0% · scenes 16.1
+  schemer  g_name:cunning 100% · early end 0% · scenes 11.9
+  seer     g_name:uncanny 100% · early end 0% · scenes 17.0
+  provoker g_name:rash 83% · early end 92% · scenes 3.4
+    on-the-spot breaks (scene:kind:who): {"x_north:walkout:caocao":168,"c1_cao:walkout:caocao":79,"c4_tongque:walkout:caocao":79,"c5_tongguan:walkout:caocao":79,"c5_zhangsong:walkout:zhangsong":79,"c6_river:walkout:sunfuren":79,"c6_pangtong:walkout:pangtong":79,"c7_guanyu:walkout:guanyu":79}
+
+talk topics taken (random): {"c2_zhaoyun.lord":1457,"c2_zhaoyun.east":1458,"c6_pangtong.face":1340,"c6_pangtong.road":1345,"c7_guanyu.huarong":1291,"c7_guanyu.wu":1232,"c7_guanyu.brother":1268,"c2_zhaoyun.changban":1454,"c6_pangtong.kongming":1343}
+early endings (random): {"x_zhouyu_rage":267,"x_liu_break2":560,"c5_zhangsong":217,"x_uncanny":282,"x_return":448,"x_cold":570}
+
+## findings (4)
+  WARN choice c4_mourn.old never available
+  WARN ending g_wenzhi.together never reached
+  WARN ending g_wenzhi.used never reached
+  WARN caocao.esteem changes in only 1% of chained runs (random through the previous volume, then this one) (barely moves)
+
+PASS: no blocking issues
+
+RUN node tools/check.js content/v3/campaign_v3.json 5000
+# 三国·谋士 · 卷三 · 汉中
+nodes 37, chapters 8, echoes 22, debts 2
+
+## recipe relations: 7 scenes change with a relationship · approach x_rel_token→c8_huniu.soft_token · split 3 · offense lusu✓ guanyu✓ liubei✓
+
+## static: 0 errors, 11 warnings
+  warn  c1_clinic: no place on the map
+  warn  c2_hanzhong.hold: major choice registers no echo (consequence may stay invisible)
+  warn  c2_xiang.bargain: major choice registers no echo (consequence may stay invisible)
+  warn  c2_xiang.letter: major choice registers no echo (consequence may stay invisible)
+  warn  c2_wz_letter: no place on the map
+  warn  c4_wz_wounded: no place on the map
+  warn  c6_mifang.warn: major choice registers no echo (consequence may stay invisible)
+  warn  c7_feishi.push: major choice registers no echo (consequence may stay invisible)
+  warn  c7_wz_jing: no place on the map
+  warn  var grudge.lusu: read but never written
+  warn  var grudge.guanyu: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 10.4, distinct ending combinations 1604
+track: liu 91.8%, cao 8.2%
+deviation: 0:6.7% 1:19.8% 2:22.7% 3:21.2% 4:15.3% 5:9.5% 6:3.8% 7:0.9% 8:0.1%
+uncanny: 0:31.5% 1:21.8% 2:13.7% 3:8.5% 4:5.8% 5:2.2% 6:0.4% 7:0.0% 8:1.9% 9:3.3% 10:11.1%
+
+relationships at the end, starting from presets (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          1.0%  94.2%   4.8%   0.0%   0.0%  · moved 26.8% · max 0.0%
+  liubei.trust*         40.4%  21.3%  20.3%  14.5%   3.6%  · moved 70.3% · max 0.0%
+  liubei.esteem          0.0%  55.4%  38.0%   5.9%   0.6%  · moved 43.3% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*        65.8%   0.0%  17.0%  17.3%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.warmth         38.8%  47.1%  11.9%   1.9%   0.4%  · moved 26.3% · max 0.0%
+  guanyu.trust           7.4%  83.9%   7.8%   0.7%   0.2%  · moved 35.5% · max 0.0%
+  guanyu.esteem*        25.2%   9.4%  40.2%  24.3%   0.9%  · moved 44.5% · max 0.2%
+  zhuge.warmth          56.6%  43.0%   0.4%   0.0%   0.0%  · moved 35.3% · max 0.0%
+  zhuge.trust           14.6%  16.0%  53.5%  14.9%   1.0%  · moved 52.4% · max 0.0%
+  zhuge.esteem*         24.9%  31.4%  10.9%  17.8%  15.0%  · moved 54.3% · max 4.8%
+  wenzhi.warmth          0.5%  89.8%   7.9%   1.7%   0.0%  · moved 13.0% · max 0.0%
+  wenzhi.trust           0.0%  83.1%   5.2%   9.9%   1.8%  · moved 12.0% · max 0.0%
+  wenzhi.esteem          0.0%  95.4%   4.6%   0.0%   0.0%  · moved 11.6% · max 0.0%
+  wenzhi.intimacy*      83.1%   0.0%   0.3%   3.6%  13.0%  · moved 13.6% · max 4.3%
+  zhaoyun.warmth         0.0%  33.0%  39.9%  22.7%   4.4%  · moved 48.0% · max 0.0%
+  zhaoyun.trust*         0.1%  21.3%  28.8%  40.5%   9.3%  · moved 40.9% · max 0.3%
+  zhaoyun.esteem        77.0%  22.7%   0.2%   0.0%   0.0%  · moved 31.3% · max 0.0%
+  lusu.warmth            1.0%  97.0%   2.0%   0.0%   0.0%  · moved 10.1% · max 0.0%
+  lusu.trust*            0.7%  38.4%  34.2%  19.3%   7.4%  · moved 56.2% · max 0.4%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.warmth       32.5%   0.0%  33.9%  33.6%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.trust       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.esteem*      49.4%  17.4%  33.2%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.warmth        65.8%  28.4%   5.7%   0.1%   0.0%  · moved 42.1% · max 0.0%
+  fazheng.trust         66.7%  29.9%   3.4%   0.0%   0.0%  · moved 40.8% · max 0.0%
+  fazheng.esteem*       52.7%  22.6%  15.8%   7.6%   1.3%  · moved 51.2% · max 0.1%
+  huangzhong.warmth      7.6%  56.7%  19.1%  12.0%   4.6%  · moved 50.0% · max 0.7%
+  huangzhong.trust       0.1%  87.4%  12.4%   0.1%   0.0%  · moved 37.9% · max 0.0%
+  huangzhong.esteem*    52.6%  26.5%  15.3%   5.2%   0.4%  · moved 52.9% · max 0.0%
+
+ending fragments:
+  去处: dead 0.2% · hermit 8.2% · exposed 5.1% · left 41.0% · fancheng 24.2% · chengdu 21.3%
+  汉中王: high 3.6% · mid 12.7% · low 29.2%
+  关羽: soft 3.7% · apology 10.3% · warned 6.5% · pride 3.0% · close 2.2% · canon 8.4% · plain 14.8%
+  定军山: charge 16.8% · flags 15.9% · hz 4.0% · far 16.8% · plain 9.9%
+  温芷: together 2.9% · child 14.0% · jingzhou 0.0% · west 0.0% · far 82.9%
+  因你而不同的人: mifang 3.5% · spared 11.5% · mf_grudge 3.7% · weiyan 34.3% · zhaoyun 15.7% · yangxiu 17.9% · fazheng 5.8% · lusu 34.4% · pangtong 16.2%
+  名声: uncanny 24.6% · rash 50.8% · loyal 8.1% · cunning 13.3% · none 3.2%
+  天下: far 14.4% · hold 12.9% · near 72.7%
+
+echoes (registered → paid):
+  e_dandao: 260 → 208
+  e_lusu3: 282 → 136
+  e_jin: 1085 → 994
+  e_three: 991 → 929
+  e_xiang: 1534 → 1466
+  e_wakou: 910 → 891
+  e_hz: 1371 → 654
+  e_goad: 1336 → 1222
+  e_charge: 840 → 840
+  e_flags: 793 → 555
+  e_pride: 205 → 194
+  e_praise_hz: 203 → 194
+  e_hanshui: 783 → 703
+  e_jilei: 661 → 652
+  e_yangxiu: 896 → 869
+  e_mifang: 176 → 160
+  e_mf_told: 185 → 141
+  e_tiger: 585 → 580
+  e_envoy: 917 → 887
+  e_seal: 298 → 147
+  e_soft: 185 → 185
+  e_apology: 516 → 516
+
+debts: {"d_xiang:reroute":972,"d_tiger:reroute":580,"d_xiang:open":31,"d_tiger:open":5}
+
+side offers (times offered): {"c2_fazheng":2911,"c3_goad":2707,"c6_zhaoyun":2458,"c1_clinic":845,"c2_wz_letter":772,"c4_wz_wounded":657,"c7_wz_jing":603,"c8_wz_road":244,"c1_lusu_letter":849,"c3_guanping":753}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:married|with_you|together|cao_saved 85% · g_wenzhi:married|with_you|together|cao_saved|safe 85% · early end 0% · scenes 17.4
+  loyal    g_lord:liu_high 0% · g_name:loyal 63% · early end 0% · scenes 14.0
+  schemer  g_side:cao 0% · g_lord:cao_high 0% · g_name:cunning 27% · early end 0% · scenes 13.7
+  seer     g_name:uncanny 100% · g_side:exposed 0% · early end 0% · scenes 14.8
+  provoker g_lives:flogged 0% · g_lives:jail 0% · g_side:miheng 0% · g_name:rash 51% · early end 15% · scenes 20.8
+    on-the-spot breaks (scene:kind:who): {"c4_fazheng:walkout:fazheng":854,"c4_dingjun:walkout:fazheng":854,"c5_huangzhong:walkout:huangzhong":854}
+
+talk topics taken (random): {"c4_fazheng.health":1061,"c4_fazheng.debt":1047,"c5_huangzhong.guan":1084,"c5_huangzhong.age":1059,"c4_fazheng.hanzhong":1036,"c5_huangzhong.bow":1120,"c5_guanyu.east":187,"c5_guanyu.huarong":183,"c5_guanyu.north":176,"c5_guanyu.daughter":189}
+early endings (random): {"x_liu_break3":1093,"x_cold3":443,"x_guan_rage":399,"x_return3":411,"x_uncanny3":254,"x_guan_cold":116,"c1_lusu_letter":9}
+
+## findings (6)
+  WARN choice c2_wz_letter.write never available
+  WARN ending g_wenzhi.jingzhou never reached
+  WARN ending g_wenzhi.west never reached
+  WARN echo e_hz paid off in only 48% of runs that registered it
+  WARN echo e_seal paid off in only 49% of runs that registered it
+  WARN echo e_lusu3 paid off in only 48% of runs that registered it
+
+PASS: no blocking issues
+
+RUN node tools/check.js content/v4/campaign_v4.json 5000
+# 三国·谋士 · 卷四 · 荆州之殇
+nodes 32, chapters 6, echoes 13, debts 0
+
+## recipe relations: 6 scenes change with a relationship · approach x_rel_wzmap→c5_retreat.call_map · split 2 · offense guanyu✓ liubei✓
+
+## static: 0 errors, 44 warnings
+  warn  c1_wz: no place on the map
+  warn  c2_wz_note: no place on the map
+  warn  c3_wz_huatuo.go: major choice registers no echo (consequence may stay invisible)
+  warn  c3_cd.go: major choice registers no echo (consequence may stay invisible)
+  warn  c4_mifang.kind2: major choice registers no echo (consequence may stay invisible)
+  warn  c5_shangyong.ride: major choice registers no echo (consequence may stay invisible)
+  warn  c5_wz_jiangling: no place on the map
+  warn  c6_wz: no place on the map
+  warn  var flag.mf_kind: written but never read (drop it, or make it matter)
+  warn  var imp.liubei.offended: written but never read (drop it, or make it matter)
+  warn  var imp.fazheng.offended: written but never read (drop it, or make it matter)
+  warn  var imp.huangzhong.offended: written but never read (drop it, or make it matter)
+  warn  var imp.lusu.offended: written but never read (drop it, or make it matter)
+  warn  var flag.wenzhi_with_you: written but never read (drop it, or make it matter)
+  warn  var flag.promised_return: written but never read (drop it, or make it matter)
+  warn  var flag.liuqi_pretext: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.foresaw_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.zy_refused: written but never read (drop it, or make it matter)
+  warn  var flag.adou_kept: written but never read (drop it, or make it matter)
+  warn  var flag.pt_alive: written but never read (drop it, or make it matter)
+  warn  var flag.post_chengdu: written but never read (drop it, or make it matter)
+  warn  var flag.post_none: written but never read (drop it, or make it matter)
+  warn  var flag.v3_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v3_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.dd_lusu: written but never read (drop it, or make it matter)
+  warn  var flag.jin_honest: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_envoy: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_hold: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_obey: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_bargain: written but never read (drop it, or make it matter)
+  warn  var flag.wakou_go: written but never read (drop it, or make it matter)
+  warn  var flag.hz_goaded: written but never read (drop it, or make it matter)
+  warn  var flag.hz_backed: written but never read (drop it, or make it matter)
+  warn  var flag.dj_flags: written but never read (drop it, or make it matter)
+  warn  var flag.hs_open: written but never read (drop it, or make it matter)
+  warn  var flag.jl_chase: written but never read (drop it, or make it matter)
+  warn  var flag.mf_warned: written but never read (drop it, or make it matter)
+  warn  var flag.fs_helped: written but never read (drop it, or make it matter)
+  warn  var flag.fs_pushed: written but never read (drop it, or make it matter)
+  warn  var flag.v3_left: written but never read (drop it, or make it matter)
+  warn  var flag.v3_exposed: written but never read (drop it, or make it matter)
+  warn  var grudge.guanyu: read but never written
+  warn  var flag.fate_dead: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 9.4, distinct ending combinations 467
+track: liu 91.2%, cao 8.8%
+deviation: 0:13.7% 1:17.6% 2:0.7% 3:0.1% 4:15.6% 5:32.4% 6:17.7% 7:0.1% 8:1.5% 9:0.1% 10:0.1% 12:0.2%
+uncanny: 0:18.8% 1:31.3% 2:22.5% 3:8.2% 4:2.2% 5:0.2% 8:3.4% 9:4.9% 10:8.7%
+
+relationships at the end, starting from presets (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          1.0%  26.4%  64.0%   7.2%   1.5%  · moved 31.3% · max 0.1%
+  liubei.trust*         34.2%   7.1%  29.5%  29.2%   0.0%  · moved 68.2% · max 0.0%
+  liubei.esteem          0.0%  61.0%  29.2%   8.7%   1.1%  · moved 25.1% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*        82.3%   0.0%   0.0%  17.7%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.warmth         26.9%  20.3%  33.7%  13.0%   6.0%  · moved 42.6% · max 2.1%
+  guanyu.trust           0.0%  76.5%  19.4%   3.4%   0.7%  · moved 37.5% · max 0.1%
+  guanyu.esteem*        53.6%   7.5%  30.4%   7.4%   1.1%  · moved 57.5% · max 0.2%
+  zhuge.warmth          43.8%  49.7%   5.1%   1.3%   0.0%  · moved 10.7% · max 0.0%
+  zhuge.trust           16.7%   0.3%  41.3%  37.9%   3.9%  · moved 27.3% · max 0.0%
+  zhuge.esteem*         26.0%   6.4%  14.9%  43.5%   9.2%  · moved 46.8% · max 0.4%
+  wenzhi.warmth          0.0%  54.2%  22.8%  19.3%   3.6%  · moved 35.0% · max 0.0%
+  wenzhi.trust           0.0%  49.2%   4.9%  33.4%  12.4%  · moved 36.8% · max 0.4%
+  wenzhi.esteem          0.0%  59.0%  33.4%   7.6%   0.0%  · moved 31.2% · max 0.0%
+  wenzhi.intimacy*      49.2%   0.1%   1.2%   9.1%  40.4%  · moved 45.7% · max 21.7%
+  zhaoyun.warmth         0.0%  32.3%  16.9%  50.8%   0.0%  · moved 0.0% · max 0.0%
+  zhaoyun.trust*         0.0%  32.3%  33.9%  33.8%   0.0%  · moved 0.0% · max 0.0%
+  zhaoyun.esteem        83.1%  16.9%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.warmth            0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.trust*            0.0%  32.3%  67.7%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.warmth       32.3%   0.0%  67.7%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.trust       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.esteem*      83.1%   0.0%  16.9%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.warmth        35.0%  27.1%  31.8%   5.8%   0.2%  · moved 24.1% · max 0.0%
+  fazheng.trust         57.6%  42.4%   0.0%   0.0%   0.0%  · moved 14.8% · max 0.0%
+  fazheng.esteem*       26.5%  23.8%  45.7%   3.7%   0.4%  · moved 16.1% · max 0.0%
+  huangzhong.warmth      0.0%  49.0%  17.1%  33.9%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.trust       0.0%  66.1%  33.9%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.esteem*    32.3%   0.0%  67.7%   0.0%   0.0%  · moved 0.0% · max 0.0%
+
+ending fragments:
+  去处: hermit 8.8% · exposed 5.5% · left 46.3% · west 0.6% · with 19.9% · letter 13.7% · chengdu 5.1%
+  关羽: alive 0.6% · with 19.9% · letter 14.9% · canon 64.6%
+  汉中王: vow 6.4% · wait 5.4% · brother 0.6% · high 0.0% · low 26.9%
+  荆州: rear 4.2% · mifang 3.1% · call 0.1% · relief 2.7% · people 11.2% · canon 78.8%
+  温芷: huatuo 14.6% · jiangling 19.5% · letter 5.3% · child 11.4% · west 0.0% · far 49.2%
+  因你而不同的人: guanping 0.6% · pangde 8.2% · pow 13.0% · fazheng 6.0% · liaohua 2.7%
+  名声: uncanny 19.3% · rash 54.2% · loyal 9.1% · cunning 12.6% · none 4.8%
+  天下: alive 0.6% · far 19.1% · plain 80.2%
+
+echoes (registered → paid):
+  e_pd_guard: 734 → 626
+  e_pd_bow: 727 → 708
+  e_flood: 685 → 648
+  e_people: 675 → 370
+  e_pow: 649 → 419
+  e_bone: 663 → 375
+  e_rest: 568 → 475
+  e_lx: 561 → 514
+  e_rear: 209 → 162
+  e_mf_kind: 183 → 167
+  e_mf_press: 674 → 666
+  e_call: 412 → 412
+  e_sy: 135 → 135
+
+debts: {}
+
+side offers (times offered): {"c1_wz":2540,"c2_wz_note":2421,"c6_wz":1435,"c1_guanping":2275,"c2_pow":2222,"c3_wz_huatuo":1537,"c5_wz_jiangling":516}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:married|with_you|together|cao_saved 0% · g_wenzhi:married|with_you|together|cao_saved|safe 0% · early end 0% · scenes 14.2
+  loyal    g_lord:liu_high 0% · g_name:loyal 65% · early end 0% · scenes 11.9
+  schemer  g_side:cao 0% · g_lord:cao_high 0% · g_name:cunning 5% · early end 0% · scenes 11.8
+  seer     g_name:uncanny 100% · g_side:exposed 0% · early end 0% · scenes 11.7
+  provoker g_lives:flogged 0% · g_lives:jail 0% · g_side:miheng 0% · g_name:rash 80% · early end 0% · scenes 21.5
+    on-the-spot breaks (scene:kind:who): {"c1_fazheng:walkout:fazheng":472,"c4_zhuge:walkout:zhuge":270}
+
+talk topics taken (random): {"c3_guanyu.fame":708,"c3_guanyu.brother":704,"c3_guanyu.huarong":689,"c1_fazheng.rest":758,"c1_fazheng.ledger":843,"c3_guanyu.wu":692,"c4_zhuge.sleep":316,"c4_zhuge.plan":330,"c1_fazheng.jing":800,"c4_zhuge.guan":314}
+early endings (random): {"x_guan_rage4":1373,"x_uncanny4":277,"x_cold4":403,"x_return4":439,"x_liu_break4":490,"x_guan_cold4":49}
+
+## findings (5)
+  WARN choice c2_wz_note.write never available
+  WARN ending g_lord.high never reached
+  WARN ending g_wenzhi.west never reached
+  WARN echo e_people paid off in only 55% of runs that registered it
+  WARN echo e_bone paid off in only 57% of runs that registered it
+
+PASS: no blocking issues
+
+RUN node tools/check.js content/v5/campaign_v5.json 5000
+# 三国·谋士 · 卷五 · 夷陵与白帝
+nodes 31, chapters 8, echoes 10, debts 0
+
+## recipe relations: 6 scenes change with a relationship · approach x_rel_zypact→c7_burn.guard_pact · split 1 · offense liubei✓
+
+## static: 0 errors, 91 warnings
+  warn  c1_wz_huatuo: no place on the map
+  warn  c1_wz_huatuo.copy: major choice registers no echo (consequence may stay invisible)
+  warn  c2_liufeng.mengda: major choice registers no echo (consequence may stay invisible)
+  warn  c3_fei.go: major choice registers no echo (consequence may stay invisible)
+  warn  c3_fei.warn: major choice registers no echo (consequence may stay invisible)
+  warn  c4_langzhong.save: major choice registers no echo (consequence may stay invisible)
+  warn  c4_langzhong.drink: major choice registers no echo (consequence may stay invisible)
+  warn  c7_burn.rear: major choice registers no echo (consequence may stay invisible)
+  warn  c7_burn.stones: major choice registers no echo (consequence may stay invisible)
+  warn  c7_guan.stay: major choice registers no echo (consequence may stay invisible)
+  warn  c7_guan.go: major choice registers no echo (consequence may stay invisible)
+  warn  var flag.v5_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v5_mengda: written but never read (drop it, or make it matter)
+  warn  var imp.guanyu.offended: written but never read (drop it, or make it matter)
+  warn  var imp.liubei.offended: written but never read (drop it, or make it matter)
+  warn  var imp.fazheng.offended: written but never read (drop it, or make it matter)
+  warn  var imp.huangzhong.offended: written but never read (drop it, or make it matter)
+  warn  var imp.lusu.offended: written but never read (drop it, or make it matter)
+  warn  var flag.mi_saved: written but never read (drop it, or make it matter)
+  warn  var flag.wenzhi_with_you: written but never read (drop it, or make it matter)
+  warn  var flag.confessed: written but never read (drop it, or make it matter)
+  warn  var flag.vouched_guan: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_guan: written but never read (drop it, or make it matter)
+  warn  var flag.promised_return: written but never read (drop it, or make it matter)
+  warn  var flag.liuqi_pretext: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.foresaw_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.zy_refused: written but never read (drop it, or make it matter)
+  warn  var flag.adou_kept: written but never read (drop it, or make it matter)
+  warn  var flag.wz_child: written but never read (drop it, or make it matter)
+  warn  var flag.pt_alive: written but never read (drop it, or make it matter)
+  warn  var flag.post_chengdu: written but never read (drop it, or make it matter)
+  warn  var flag.post_jingzhou: written but never read (drop it, or make it matter)
+  warn  var flag.post_none: written but never read (drop it, or make it matter)
+  warn  var flag.guan_charge: written but never read (drop it, or make it matter)
+  warn  var flag.v3_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v3_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.dd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.dd_lusu: written but never read (drop it, or make it matter)
+  warn  var flag.jin_trick: written but never read (drop it, or make it matter)
+  warn  var flag.jin_honest: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_envoy: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_hold: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_obey: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_bargain: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_letter: written but never read (drop it, or make it matter)
+  warn  var flag.hz_backed: written but never read (drop it, or make it matter)
+  warn  var flag.dj_flags: written but never read (drop it, or make it matter)
+  warn  var flag.fed_pride: written but never read (drop it, or make it matter)
+  warn  var flag.praised_hz: written but never read (drop it, or make it matter)
+  warn  var flag.hs_open: written but never read (drop it, or make it matter)
+  warn  var flag.jl_chase: written but never read (drop it, or make it matter)
+  warn  var flag.jl_yangxiu: written but never read (drop it, or make it matter)
+  warn  var flag.mf_warned: written but never read (drop it, or make it matter)
+  warn  var flag.mf_told: written but never read (drop it, or make it matter)
+  warn  var flag.wh_ask: written but never read (drop it, or make it matter)
+  warn  var flag.v3_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.fs_helped: written but never read (drop it, or make it matter)
+  warn  var flag.fs_private: written but never read (drop it, or make it matter)
+  warn  var flag.fs_pushed: written but never read (drop it, or make it matter)
+  warn  var flag.hn_soft: written but never read (drop it, or make it matter)
+  warn  var flag.hn_canon: written but never read (drop it, or make it matter)
+  warn  var flag.hn_apology: written but never read (drop it, or make it matter)
+  warn  var flag.fire_spared: written but never read (drop it, or make it matter)
+  warn  var flag.warned_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v3_left: written but never read (drop it, or make it matter)
+  warn  var flag.v3_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v4_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.pd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.pd_bow: written but never read (drop it, or make it matter)
+  warn  var flag.flood_plan: written but never read (drop it, or make it matter)
+  warn  var flag.flood_people: written but never read (drop it, or make it matter)
+  warn  var flag.pd_spare: written but never read (drop it, or make it matter)
+  warn  var flag.pow_home: written but never read (drop it, or make it matter)
+  warn  var flag.bone_rest: written but never read (drop it, or make it matter)
+  warn  var flag.v4_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v4_order: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_sy: written but never read (drop it, or make it matter)
+  warn  var flag.lx_warned: written but never read (drop it, or make it matter)
+  warn  var flag.v4_kept_rear: written but never read (drop it, or make it matter)
+  warn  var flag.mf_pressed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_call: written but never read (drop it, or make it matter)
+  warn  var flag.v4_ride: written but never read (drop it, or make it matter)
+  warn  var flag.v4_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_counsel_wait: written but never read (drop it, or make it matter)
+  warn  var flag.v4_vow: written but never read (drop it, or make it matter)
+  warn  var flag.v4_wz_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_left: written but never read (drop it, or make it matter)
+  warn  var flag.v4_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.fate_dead: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 12.5, distinct ending combinations 669
+track: liu 92.6%, cao 7.4%
+deviation: 0:13.7% 1:14.9% 2:0.2% 3:0.5% 4:12.6% 5:37.1% 6:2.4% 7:0.6% 8:3.1% 9:0.6% 10:11.0% 11:0.6% 12:1.4% 13:0.9% 14:0.1% 15:0.3% 16:0.1%
+uncanny: 0:22.9% 1:36.5% 2:17.2% 3:6.8% 4:2.8% 5:0.4% 8:3.9% 9:1.8% 10:7.8%
+
+relationships at the end, starting from presets (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          8.5%  36.9%  40.5%   9.5%   4.7%  · moved 59.7% · max 1.5%
+  liubei.trust*         82.5%   6.7%   8.2%   2.4%   0.1%  · moved 78.9% · max 0.0%
+  liubei.esteem          0.2%  51.3%  32.5%  12.8%   3.2%  · moved 57.8% · max 0.5%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*        85.5%   0.0%  14.5%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.warmth         29.6%   0.0%   0.0%  62.3%   8.1%  · moved 8.1% · max 3.0%
+  guanyu.trust           0.0%  29.6%  41.9%  21.6%   6.9%  · moved 6.9% · max 0.0%
+  guanyu.esteem*        15.2%  14.3%  51.2%  19.1%   0.2%  · moved 6.6% · max 0.0%
+  zhuge.warmth          43.7%  55.8%   0.5%   0.0%   0.0%  · moved 24.7% · max 0.0%
+  zhuge.trust           10.9%   5.3%  69.5%  13.7%   0.6%  · moved 40.8% · max 0.0%
+  zhuge.esteem*         20.2%  12.0%  26.2%  29.2%  12.5%  · moved 64.5% · max 2.0%
+  wenzhi.warmth          0.0%  43.1%   0.0%  54.5%   2.5%  · moved 23.9% · max 0.0%
+  wenzhi.trust           0.0%  43.1%   4.7%  41.3%  10.9%  · moved 42.9% · max 0.0%
+  wenzhi.esteem          0.0%  82.3%  10.5%   7.2%   0.0%  · moved 20.5% · max 0.0%
+  wenzhi.intimacy*      43.1%   0.0%   0.6%  10.1%  46.2%  · moved 47.5% · max 17.6%
+  zhaoyun.warmth         0.0%  24.1%  34.0%  31.1%  10.7%  · moved 51.2% · max 0.5%
+  zhaoyun.trust*         1.2%  21.9%  29.2%  26.1%  21.6%  · moved 61.4% · max 5.1%
+  zhaoyun.esteem        67.8%  30.3%   1.9%   0.0%   0.0%  · moved 43.7% · max 0.0%
+  lusu.warmth            0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.trust*            0.0%  29.6%  70.4%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.warmth       29.6%   0.0%  70.4%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.trust       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.esteem*      86.6%   0.0%  13.4%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.warmth        50.7%  41.0%   7.0%   1.3%   0.0%  · moved 50.8% · max 0.0%
+  fazheng.trust         70.9%  29.1%   0.0%   0.0%   0.0%  · moved 31.4% · max 0.0%
+  fazheng.esteem*       28.4%  44.9%  24.4%   2.2%   0.1%  · moved 32.9% · max 0.0%
+  huangzhong.warmth      1.2%  23.2%  47.3%  19.4%   8.9%  · moved 40.0% · max 0.0%
+  huangzhong.trust       0.0%  29.6%  70.4%   0.0%   0.0%  · moved 0.5% · max 0.0%
+  huangzhong.esteem*    26.7%   3.6%  69.5%   0.2%   0.0%  · moved 13.6% · max 0.0%
+
+ending fragments:
+  去处: hermit 7.4% · exposed 6.7% · left 60.6% · charge 0.1% · baidi 25.3%
+  兄弟: both 0.9% · guan 10.4% · guan_last 1.6% · fei 5.3% · fei_night 6.8% · canon 75.1%
+  夷陵: break 5.7% · rear 7.7% · guard 8.5% · stones 14.4% · canon 63.6%
+  温芷: wed 5.0% · book 6.8% · near 45.1% · far 43.1%
+  因你而不同的人: liufeng 0.0% · hz 16.4% · hz_word 12.3% · fazheng 1.3% · masu 8.3%
+  名声: nearly 4.9% · uncanny 13.6% · loyal 64.1% · cunning 12.6% · none 4.8%
+  天下: far 18.0% · plain 82.0%
+
+echoes (registered → paid):
+  e_north: 1213 → 1038
+  e_liufeng: 1301 → 503
+  e_fei_letter: 1719 → 417
+  e_fei_vow: 1666 → 470
+  e_zy: 1160 → 897
+  e_peace: 833 → 739
+  e_hz: 820 → 778
+  e_firebreak: 287 → 214
+  e_map: 1065 → 822
+  e_guard: 481 → 452
+
+debts: {}
+
+side offers (times offered): {"c1_wz_clinic":2140,"c2_guan":644,"c2_fei_letter":3690,"c4_wz":1897,"c5_guan":461,"c1_wz_huatuo":707,"c6_xing":1761,"c8_wz":955,"c8_masu":1297,"c5_mifang":436}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:married|with_you|together|cao_saved 0% · g_wenzhi:married|with_you|together|cao_saved|safe 0% · early end 0% · scenes 19.1
+  loyal    g_lord:liu_high 0% · g_name:loyal 87% · early end 0% · scenes 18.8
+  schemer  g_side:cao 0% · g_lord:cao_high 0% · g_name:cunning 4% · early end 0% · scenes 19.0
+  seer     g_name:uncanny 85% · g_side:exposed 0% · early end 0% · scenes 17.9
+  provoker g_lives:flogged 0% · g_lives:jail 0% · g_side:miheng 0% · g_name:rash 0% · early end 0% · scenes 32.0
+    on-the-spot breaks (scene:kind:who): {"c1_fazheng_end:walkout:fazheng":1000,"c3_zhaoyun:walkout:zhaoyun":1000}
+
+talk topics taken (random): {"c1_fazheng_end.ledger":1768,"c1_fazheng_end.east":1729,"c3_zhaoyun.old":1298,"c1_fazheng_end.hand":1664,"c3_zhaoyun.why":1242,"c6_liubei.peach":730,"c6_liubei.adou":756,"c3_zhaoyun.rear":1255,"c6_liubei.why":726}
+early endings (random): {"x_cold5":757,"x_liu_break5":2271,"x_uncanny5":333,"x_return5":371}
+
+## findings (5)
+  WARN choice c2_liufeng.plead never available
+  WARN ending g_lives.liufeng never reached
+  WARN echo e_liufeng paid off in only 39% of runs that registered it
+  WARN echo e_fei_vow paid off in only 28% of runs that registered it
+  WARN echo e_fei_letter paid off in only 24% of runs that registered it
+
+PASS: no blocking issues
+
+RUN node tools/check.js content/v6/campaign_v6.json 5000
+# 三国·谋士 · 卷六 · 南中
+nodes 22, chapters 6, echoes 7, debts 0
+
+## recipe relations: 5 scenes change with a relationship · approach x_rel_wzherb→c4_spring.cure_herb · split 1 · offense zhuge✓
+
+## static: 0 errors, 116 warnings
+  warn  c4_spring.cure_herb: major choice registers no echo (consequence may stay invisible)
+  warn  c4_spring.order: major choice registers no echo (consequence may stay invisible)
+  warn  c5_rattan.plan: major choice registers no echo (consequence may stay invisible)
+  warn  var flag.v6_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v6_dengzhi: written but never read (drop it, or make it matter)
+  warn  var flag.v6_to_wu: written but never read (drop it, or make it matter)
+  warn  var flag.v6_water: written but never read (drop it, or make it matter)
+  warn  var imp.guanyu.offended: written but never read (drop it, or make it matter)
+  warn  var imp.liubei.offended: written but never read (drop it, or make it matter)
+  warn  var imp.fazheng.offended: written but never read (drop it, or make it matter)
+  warn  var imp.huangzhong.offended: written but never read (drop it, or make it matter)
+  warn  var imp.lusu.offended: written but never read (drop it, or make it matter)
+  warn  var flag.mi_saved: written but never read (drop it, or make it matter)
+  warn  var flag.wenzhi_with_you: written but never read (drop it, or make it matter)
+  warn  var flag.confessed: written but never read (drop it, or make it matter)
+  warn  var flag.vouched_guan: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_guan: written but never read (drop it, or make it matter)
+  warn  var flag.promised_return: written but never read (drop it, or make it matter)
+  warn  var flag.liuqi_pretext: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.foresaw_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.zy_refused: written but never read (drop it, or make it matter)
+  warn  var flag.adou_kept: written but never read (drop it, or make it matter)
+  warn  var flag.wz_child: written but never read (drop it, or make it matter)
+  warn  var flag.pt_alive: written but never read (drop it, or make it matter)
+  warn  var flag.post_chengdu: written but never read (drop it, or make it matter)
+  warn  var flag.post_jingzhou: written but never read (drop it, or make it matter)
+  warn  var flag.post_none: written but never read (drop it, or make it matter)
+  warn  var flag.guan_charge: written but never read (drop it, or make it matter)
+  warn  var flag.v3_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v3_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.dd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.dd_lusu: written but never read (drop it, or make it matter)
+  warn  var flag.jin_trick: written but never read (drop it, or make it matter)
+  warn  var flag.jin_honest: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_envoy: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_hold: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_obey: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_bargain: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_letter: written but never read (drop it, or make it matter)
+  warn  var flag.wakou_go: written but never read (drop it, or make it matter)
+  warn  var flag.hz_goaded: written but never read (drop it, or make it matter)
+  warn  var flag.hz_backed: written but never read (drop it, or make it matter)
+  warn  var flag.dj_flags: written but never read (drop it, or make it matter)
+  warn  var flag.dj_charge: written but never read (drop it, or make it matter)
+  warn  var flag.fed_pride: written but never read (drop it, or make it matter)
+  warn  var flag.praised_hz: written but never read (drop it, or make it matter)
+  warn  var flag.hs_open: written but never read (drop it, or make it matter)
+  warn  var flag.jl_chase: written but never read (drop it, or make it matter)
+  warn  var flag.jl_yangxiu: written but never read (drop it, or make it matter)
+  warn  var flag.mf_mended: written but never read (drop it, or make it matter)
+  warn  var flag.mf_warned: written but never read (drop it, or make it matter)
+  warn  var flag.mf_told: written but never read (drop it, or make it matter)
+  warn  var flag.wh_ask: written but never read (drop it, or make it matter)
+  warn  var flag.v3_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.fs_helped: written but never read (drop it, or make it matter)
+  warn  var flag.fs_private: written but never read (drop it, or make it matter)
+  warn  var flag.fs_pushed: written but never read (drop it, or make it matter)
+  warn  var flag.hn_soft: written but never read (drop it, or make it matter)
+  warn  var flag.hn_canon: written but never read (drop it, or make it matter)
+  warn  var flag.hn_apology: written but never read (drop it, or make it matter)
+  warn  var flag.fire_spared: written but never read (drop it, or make it matter)
+  warn  var flag.warned_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v3_left: written but never read (drop it, or make it matter)
+  warn  var flag.v3_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v4_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.pd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.pd_bow: written but never read (drop it, or make it matter)
+  warn  var flag.flood_plan: written but never read (drop it, or make it matter)
+  warn  var flag.flood_people: written but never read (drop it, or make it matter)
+  warn  var flag.pd_spare: written but never read (drop it, or make it matter)
+  warn  var flag.pow_home: written but never read (drop it, or make it matter)
+  warn  var flag.bone_rest: written but never read (drop it, or make it matter)
+  warn  var flag.v4_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v4_order: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_sy: written but never read (drop it, or make it matter)
+  warn  var flag.lx_warned: written but never read (drop it, or make it matter)
+  warn  var flag.v4_kept_rear: written but never read (drop it, or make it matter)
+  warn  var flag.mf_kind: written but never read (drop it, or make it matter)
+  warn  var flag.mf_pressed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_mf_path: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_call: written but never read (drop it, or make it matter)
+  warn  var flag.v4_relief: written but never read (drop it, or make it matter)
+  warn  var flag.v4_ride: written but never read (drop it, or make it matter)
+  warn  var flag.v4_with_guan: written but never read (drop it, or make it matter)
+  warn  var flag.v4_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_counsel_wait: written but never read (drop it, or make it matter)
+  warn  var flag.v4_vow: written but never read (drop it, or make it matter)
+  warn  var flag.v4_wz_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_left: written but never read (drop it, or make it matter)
+  warn  var flag.v4_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v5_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.v5_north: written but never read (drop it, or make it matter)
+  warn  var flag.liufeng_spared: written but never read (drop it, or make it matter)
+  warn  var flag.v5_mengda: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_vow: written but never read (drop it, or make it matter)
+  warn  var flag.v5_zhaoyun: written but never read (drop it, or make it matter)
+  warn  var flag.v5_nearly: written but never read (drop it, or make it matter)
+  warn  var flag.v5_langzhong: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_warned: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_night: written but never read (drop it, or make it matter)
+  warn  var flag.v5_peace: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hz_ride: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hz_word: written but never read (drop it, or make it matter)
+  warn  var flag.v5_firebreak: written but never read (drop it, or make it matter)
+  warn  var flag.v5_map: written but never read (drop it, or make it matter)
+  warn  var flag.v5_rear: written but never read (drop it, or make it matter)
+  warn  var flag.v5_guard: written but never read (drop it, or make it matter)
+  warn  var flag.v5_guan_last: written but never read (drop it, or make it matter)
+  warn  var flag.v5_left: written but never read (drop it, or make it matter)
+  warn  var flag.v5_exposed: written but never read (drop it, or make it matter)
+  warn  var grudge.zhuge: read but never written
+  warn  var flag.fate_dead: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 7.9, distinct ending combinations 400
+track: liu 100.0%
+deviation: 0:12.1% 1:0.8% 2:1.1% 3:0.5% 5:31.8% 6:27.3% 7:4.5% 8:3.3% 9:14.3% 10:2.3% 11:1.2% 12:0.7% 13:0.2%
+uncanny: 0:9.4% 1:39.4% 2:29.6% 3:3.6% 4:0.3% 8:6.0% 9:2.4% 10:9.3%
+
+relationships at the end, starting from presets (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          0.0%  14.5%  17.3%  68.3%   0.0%  · moved 0.0% · max 0.0%
+  liubei.trust*         17.3%  14.5%   0.0%  68.3%   0.0%  · moved 0.0% · max 0.0%
+  liubei.esteem          0.0%  14.5%  50.6%  34.9%   0.0%  · moved 0.0% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.warmth         14.5%   0.0%   0.0%  85.5%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.trust           0.0%  14.5%  85.5%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.esteem*        14.5%   0.0%  67.8%  17.7%   0.0%  · moved 0.0% · max 0.0%
+  zhuge.warmth          50.9%  34.3%   9.8%   3.5%   1.4%  · moved 67.4% · max 0.1%
+  zhuge.trust           60.1%  23.3%  12.1%   2.4%   2.1%  · moved 81.2% · max 0.4%
+  zhuge.esteem*         19.9%  23.8%  36.2%  11.2%   8.8%  · moved 63.7% · max 3.0%
+  wenzhi.warmth          0.0%  32.2%  15.0%  51.5%   1.4%  · moved 18.9% · max 0.0%
+  wenzhi.trust           0.0%  32.2%   0.7%  58.0%   9.2%  · moved 29.9% · max 0.0%
+  wenzhi.esteem          0.0%  81.5%  13.7%   4.6%   0.2%  · moved 30.2% · max 0.0%
+  wenzhi.intimacy*      32.2%   0.1%   0.7%  14.4%  52.6%  · moved 58.2% · max 10.4%
+  zhaoyun.warmth         0.0%  12.2%  33.3%  46.5%   8.1%  · moved 18.7% · max 0.2%
+  zhaoyun.trust*         0.3%  10.9%  19.4%  58.9%  10.4%  · moved 21.5% · max 1.1%
+  zhaoyun.esteem        59.6%  38.9%   1.5%   0.0%   0.0%  · moved 12.4% · max 0.0%
+  lusu.warmth            0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.trust*            0.0%  14.5%  85.5%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.warmth       14.5%   0.0%  85.5%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.trust       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.esteem*      82.3%   0.0%  17.7%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.warmth        31.7%  50.6%  17.7%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.trust         32.2%  67.8%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.esteem*       14.5%  50.6%  34.9%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.warmth      0.0%  14.5%  67.8%  17.7%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.trust       0.0%  14.5%  85.5%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.esteem*    14.5%   0.0%  85.5%   0.0%   0.0%  · moved 0.0% · max 0.0%
+
+ending fragments:
+  去处: hermit 8.3% · exposed 9.0% · left 65.3% · south 17.4%
+  南中: lushui 15.0% · cure 7.1% · mercy 8.5% · plan 7.6% · officials 6.7%
+  马谡: doubt 13.4% · praise 30.8% · plain 55.8%
+  温芷: wed 16.8% · near 51.0% · far 32.2%
+  名声: uncanny 17.7% · loyal 73.7% · cunning 5.5% · none 3.1%
+  天下: far 4.3% · plain 95.7%
+
+echoes (registered → paid):
+  e_wu: 2652 → 769
+  e_praise: 1539 → 1539
+  e_doubt: 670 → 222
+  e_release: 1129 → 775
+  e_lushui: 748 → 672
+  e_cure: 0 → 0
+  e_mercy: 427 → 423
+
+debts: {}
+
+side offers (times offered): {"c1_wz_south":2137,"c1_qinmi":3289,"c1_home":842,"c1_brothers":848,"c3_wz_fever":1590,"c5_wz":1030}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:married|with_you|together|cao_saved 0% · g_wenzhi:married|with_you|together|cao_saved|safe 0% · early end 0% · scenes 14.6
+  loyal    g_lord:liu_high 0% · g_name:loyal 85% · early end 0% · scenes 14.6
+  schemer  g_side:cao 0% · g_lord:cao_high 0% · g_name:cunning 16% · early end 0% · scenes 14.6
+  seer     g_name:uncanny 86% · g_side:exposed 0% · early end 0% · scenes 12.9
+  provoker g_lives:flogged 0% · g_lives:jail 0% · g_side:miheng 0% · g_name:rash 0% · early end 100% · scenes 2.9
+    on-the-spot breaks (scene:kind:who): {}
+
+talk topics taken (random): {"c2_zhuge.north":1190,"c2_zhuge.rest":1155,"c2_zhuge.charge":1130,"c4_zhaoyun.old":624,"c4_zhaoyun.lord":664,"c4_zhaoyun.north":647}
+early endings (random): {"c2_masu":397,"c2_first":1109,"x_return6":413,"c1_wu":110,"c3_lushui":146,"c5_rattan":190,"c6_seventh":142,"c2_zhuge":64,"c3_wz_fever":222,"x_loose6":102,"c5_wz":147,"c3_mengyou":208,"x_uncanny6":450,"c1_qinmi":97,"x_cold6":199,"x_rel_wzherb":16,"c4_zhaoyun":48,"c1_wz_south":32,"c1_home":22,"c1_brothers":14}
+
+## findings (3)
+  WARN choice c4_spring.cure never available
+  WARN echo e_wu paid off in only 29% of runs that registered it
+  WARN echo e_doubt paid off in only 33% of runs that registered it
+
+PASS: no blocking issues
+
+RUN node tools/check.js content/v7/campaign_v7.json 5000
+# 三国·谋士 · 卷七 · 出师
+nodes 30, chapters 8, echoes 9, debts 0
+
+## recipe relations: 6 scenes change with a relationship · approach x_rel_zgling→c8_lamp.guard_ling · split 1 · offense weiyan✓
+
+## static: 0 errors, 138 warnings
+  warn  c3_jieting.with: major choice registers no echo (consequence may stay invisible)
+  warn  c3_jieting.road: major choice registers no echo (consequence may stay invisible)
+  warn  c5_masu.plead: major choice registers no echo (consequence may stay invisible)
+  warn  c6_old.stay: major choice registers no echo (consequence may stay invisible)
+  warn  c6_old.story: major choice registers no echo (consequence may stay invisible)
+  warn  c6_student.yes: major choice registers no echo (consequence may stay invisible)
+  warn  c7_shangfang.warned: major choice registers no echo (consequence may stay invisible)
+  warn  c7_envoy.silent: major choice registers no echo (consequence may stay invisible)
+  warn  var flag.v7_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v7_biao: written but never read (drop it, or make it matter)
+  warn  var flag.v7_ziwu: written but never read (drop it, or make it matter)
+  warn  var imp.weiyan.offended: written but never read (drop it, or make it matter)
+  warn  var flag.v7_jt_road: written but never read (drop it, or make it matter)
+  warn  var flag.v7_feud: written but never read (drop it, or make it matter)
+  warn  var flag.v7_warned_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.v7_envoy: written but never read (drop it, or make it matter)
+  warn  var imp.guanyu.offended: written but never read (drop it, or make it matter)
+  warn  var imp.liubei.offended: written but never read (drop it, or make it matter)
+  warn  var imp.fazheng.offended: written but never read (drop it, or make it matter)
+  warn  var imp.huangzhong.offended: written but never read (drop it, or make it matter)
+  warn  var imp.lusu.offended: written but never read (drop it, or make it matter)
+  warn  var imp.jiangwei.offended: written but never read (drop it, or make it matter)
+  warn  var flag.mi_saved: written but never read (drop it, or make it matter)
+  warn  var flag.wenzhi_with_you: written but never read (drop it, or make it matter)
+  warn  var flag.confessed: written but never read (drop it, or make it matter)
+  warn  var flag.vouched_guan: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_guan: written but never read (drop it, or make it matter)
+  warn  var flag.promised_return: written but never read (drop it, or make it matter)
+  warn  var flag.liuqi_pretext: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.foresaw_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.zy_refused: written but never read (drop it, or make it matter)
+  warn  var flag.adou_kept: written but never read (drop it, or make it matter)
+  warn  var flag.wz_child: written but never read (drop it, or make it matter)
+  warn  var flag.pt_alive: written but never read (drop it, or make it matter)
+  warn  var flag.post_chengdu: written but never read (drop it, or make it matter)
+  warn  var flag.post_jingzhou: written but never read (drop it, or make it matter)
+  warn  var flag.post_none: written but never read (drop it, or make it matter)
+  warn  var flag.guan_charge: written but never read (drop it, or make it matter)
+  warn  var flag.v3_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v3_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.dd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.dd_lusu: written but never read (drop it, or make it matter)
+  warn  var flag.jin_trick: written but never read (drop it, or make it matter)
+  warn  var flag.jin_honest: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_envoy: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_hold: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_obey: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_bargain: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_letter: written but never read (drop it, or make it matter)
+  warn  var flag.wakou_go: written but never read (drop it, or make it matter)
+  warn  var flag.hz_goaded: written but never read (drop it, or make it matter)
+  warn  var flag.hz_backed: written but never read (drop it, or make it matter)
+  warn  var flag.dj_flags: written but never read (drop it, or make it matter)
+  warn  var flag.dj_charge: written but never read (drop it, or make it matter)
+  warn  var flag.fed_pride: written but never read (drop it, or make it matter)
+  warn  var flag.praised_hz: written but never read (drop it, or make it matter)
+  warn  var flag.hs_open: written but never read (drop it, or make it matter)
+  warn  var flag.jl_chase: written but never read (drop it, or make it matter)
+  warn  var flag.jl_yangxiu: written but never read (drop it, or make it matter)
+  warn  var flag.mf_mended: written but never read (drop it, or make it matter)
+  warn  var flag.mf_warned: written but never read (drop it, or make it matter)
+  warn  var flag.mf_told: written but never read (drop it, or make it matter)
+  warn  var flag.wh_ask: written but never read (drop it, or make it matter)
+  warn  var flag.v3_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.fs_helped: written but never read (drop it, or make it matter)
+  warn  var flag.fs_private: written but never read (drop it, or make it matter)
+  warn  var flag.fs_pushed: written but never read (drop it, or make it matter)
+  warn  var flag.hn_soft: written but never read (drop it, or make it matter)
+  warn  var flag.hn_canon: written but never read (drop it, or make it matter)
+  warn  var flag.hn_apology: written but never read (drop it, or make it matter)
+  warn  var flag.fire_spared: written but never read (drop it, or make it matter)
+  warn  var flag.warned_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v3_left: written but never read (drop it, or make it matter)
+  warn  var flag.v3_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v4_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.pd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.pd_bow: written but never read (drop it, or make it matter)
+  warn  var flag.flood_plan: written but never read (drop it, or make it matter)
+  warn  var flag.flood_people: written but never read (drop it, or make it matter)
+  warn  var flag.pd_spare: written but never read (drop it, or make it matter)
+  warn  var flag.pow_home: written but never read (drop it, or make it matter)
+  warn  var flag.bone_rest: written but never read (drop it, or make it matter)
+  warn  var flag.v4_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v4_order: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_sy: written but never read (drop it, or make it matter)
+  warn  var flag.lx_warned: written but never read (drop it, or make it matter)
+  warn  var flag.v4_kept_rear: written but never read (drop it, or make it matter)
+  warn  var flag.mf_kind: written but never read (drop it, or make it matter)
+  warn  var flag.mf_pressed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_mf_path: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_call: written but never read (drop it, or make it matter)
+  warn  var flag.v4_relief: written but never read (drop it, or make it matter)
+  warn  var flag.v4_ride: written but never read (drop it, or make it matter)
+  warn  var flag.v4_with_guan: written but never read (drop it, or make it matter)
+  warn  var flag.v4_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_counsel_wait: written but never read (drop it, or make it matter)
+  warn  var flag.v4_vow: written but never read (drop it, or make it matter)
+  warn  var flag.v4_wz_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_left: written but never read (drop it, or make it matter)
+  warn  var flag.v4_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v5_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.v5_north: written but never read (drop it, or make it matter)
+  warn  var flag.wz_qingnang: written but never read (drop it, or make it matter)
+  warn  var flag.liufeng_spared: written but never read (drop it, or make it matter)
+  warn  var flag.v5_mengda: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_vow: written but never read (drop it, or make it matter)
+  warn  var flag.v5_zhaoyun: written but never read (drop it, or make it matter)
+  warn  var flag.v5_nearly: written but never read (drop it, or make it matter)
+  warn  var flag.v5_langzhong: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_warned: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_night: written but never read (drop it, or make it matter)
+  warn  var flag.v5_peace: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hz_ride: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hz_word: written but never read (drop it, or make it matter)
+  warn  var flag.v5_firebreak: written but never read (drop it, or make it matter)
+  warn  var flag.v5_map: written but never read (drop it, or make it matter)
+  warn  var flag.v5_rear: written but never read (drop it, or make it matter)
+  warn  var flag.v5_guard: written but never read (drop it, or make it matter)
+  warn  var flag.v5_guan_last: written but never read (drop it, or make it matter)
+  warn  var flag.v5_left: written but never read (drop it, or make it matter)
+  warn  var flag.v5_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v6_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v6_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.v6_dengzhi: written but never read (drop it, or make it matter)
+  warn  var flag.v6_to_wu: written but never read (drop it, or make it matter)
+  warn  var flag.v6_lushui: written but never read (drop it, or make it matter)
+  warn  var flag.v6_cure: written but never read (drop it, or make it matter)
+  warn  var flag.v6_water: written but never read (drop it, or make it matter)
+  warn  var flag.v6_mercy: written but never read (drop it, or make it matter)
+  warn  var flag.v6_fire_plan: written but never read (drop it, or make it matter)
+  warn  var flag.v6_officials: written but never read (drop it, or make it matter)
+  warn  var flag.v6_left: written but never read (drop it, or make it matter)
+  warn  var flag.v6_exposed: written but never read (drop it, or make it matter)
+  warn  var grudge.weiyan: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 16.7, distinct ending combinations 393
+track: liu 100.0%
+deviation: 0:7.7% 1:6.6% 2:0.9% 5:21.4% 6:13.9% 7:17.9% 8:3.6% 9:8.2% 10:4.8% 11:0.5% 12:7.6% 13:6.3% 14:0.7%
+uncanny: 0:15.2% 1:42.4% 2:14.5% 6:7.0% 8:14.4% 10:6.5%
+
+relationships at the end, starting from presets (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          0.0%  15.2%  14.5%  70.3%   0.0%  · moved 0.0% · max 0.0%
+  liubei.trust*         14.5%  15.2%  70.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  liubei.esteem          0.0%  15.2%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.warmth         15.2%   0.0%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.trust           0.0%  15.2%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.esteem*        15.2%   0.0%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhuge.warmth           0.9%  16.7%  13.4%  11.7%  57.4%  · moved 77.6% · max 41.8%
+  zhuge.trust            0.1%   1.6%  24.1%  31.5%  42.7%  · moved 68.2% · max 15.3%
+  zhuge.esteem*          5.2%   5.7%  23.2%  18.2%  47.8%  · moved 73.6% · max 29.7%
+  wenzhi.warmth          0.0%  43.1%  12.5%  44.0%   0.3%  · moved 12.9% · max 0.0%
+  wenzhi.trust           0.0%  43.2%  18.8%  32.5%   5.6%  · moved 35.1% · max 0.0%
+  wenzhi.esteem          0.0%  55.8%  44.2%   0.0%   0.0%  · moved 8.2% · max 0.0%
+  wenzhi.intimacy*      43.2%   0.1%   9.8%  13.0%  33.9%  · moved 38.7% · max 13.8%
+  zhaoyun.warmth         0.0%   9.2%  15.7%  49.6%  25.5%  · moved 51.2% · max 0.8%
+  zhaoyun.trust*         0.9%   8.5%  22.4%  58.5%   9.7%  · moved 47.4% · max 0.3%
+  zhaoyun.esteem        57.0%  29.1%  13.8%   0.0%   0.0%  · moved 11.1% · max 0.0%
+  lusu.warmth            0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.trust*            0.0%  15.2%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.warmth       15.2%   0.0%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.trust       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.esteem*      72.1%   0.0%  27.9%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.warmth        29.7%  42.4%  27.9%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.trust         43.1%  56.9%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.esteem*       15.2%  42.4%  42.4%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.warmth      0.0%  15.2%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.trust       0.0%  15.2%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.esteem*    15.2%   0.0%  84.8%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  jiangwei.warmth       26.8%  17.2%  25.0%  18.9%  12.1%  · moved 74.8% · max 2.8%
+  jiangwei.trust*       29.3%  17.8%  23.9%  19.7%   9.3%  · moved 73.8% · max 1.1%
+  jiangwei.esteem       28.9%  26.1%  27.3%  14.6%   3.1%  · moved 71.1% · max 0.3%
+  simayi.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 17.3% · max 0.0%
+  simayi.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 22.0% · max 0.0%
+  simayi.esteem*        32.9%  35.6%  28.2%   3.2%   0.0%  · moved 71.3% · max 0.0%
+  weiyan.warmth         63.8%  27.8%   8.3%   0.0%   0.0%  · moved 36.2% · max 0.0%
+  weiyan.trust*         70.4%  17.7%   8.9%   2.7%   0.3%  · moved 62.9% · max 0.0%
+  weiyan.esteem         80.9%  18.3%   0.7%   0.0%   0.0%  · moved 58.2% · max 0.0%
+
+ending fragments:
+  去处: dead 17.7% · hermit 7.2% · exposed 13.4% · left 0.1% · coffin 61.7%
+  丞相: fan 17.9% · lamp 20.2% · wall 7.3% · canon 36.9%
+  街亭: masu 0.8% · road 10.4% · warned 13.8%
+  后来的人: child 11.7% · student 25.3% · jiangwei 7.0% · none 38.4%
+  魏延: letter 31.3% · friend 0.8% · feud 67.9%
+  老兄弟: peach 11.0% · zilong 61.3%
+  名声: simayi 31.4% · uncanny 22.0% · loyal 46.5% · none 0.0%
+  天下: far 14.6% · plain 85.4%
+
+echoes (registered → paid):
+  e_biao: 1309 → 692
+  e_ziwu: 1320 → 1319
+  e_mother: 1366 → 1173
+  e_road: 520 → 520
+  e_warned: 690 → 690
+  e_wall: 1335 → 1040
+  e_feud: 1261 → 1261
+  e_envoy: 2288 → 2053
+  e_child: 748 → 465
+
+debts: {}
+
+side offers (times offered): {"c1_houzhu":3970,"c2_wanglang":3970,"c5_wz_letter7":2477,"c5_jiangwei":3962,"c8_wz_home":2153,"c1_wz_north":1734}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:married|with_you|together|cao_saved 0% · g_wenzhi:married|with_you|together|cao_saved|safe 0% · early end 0% · scenes 20.5
+  loyal    g_lord:liu_high 0% · g_name:loyal 67% · early end 0% · scenes 20.8
+  schemer  g_side:cao 0% · g_lord:cao_high 0% · g_name:cunning 0% · early end 0% · scenes 20.4
+  seer     g_name:uncanny 46% · g_side:exposed 0% · early end 0% · scenes 20.2
+  provoker g_lives:flogged 0% · g_lives:jail 0% · g_side:miheng 0% · g_name:rash 0% · early end 100% · scenes 15.7
+    on-the-spot breaks (scene:kind:who): {"c1_zhuge:walkout:zhuge":1000,"c6_zilong:walkout:zhaoyun":1000}
+
+talk topics taken (random): {"c1_zhuge.win":1744,"c6_zilong.north":1737,"c6_zilong.spear":1730,"c1_zhuge.health":1778,"c7_jiangwei.teach":1498,"c7_jiangwei.mother":1564,"c1_zhuge.longzhong":1724,"c6_zilong.changban":1735,"c7_jiangwei.after":1525}
+early endings (random): {"x_weiyan_rage":883,"x_uncanny7":669,"x_return7":361,"x_cold7":3}
+
+## findings (2)
+  WARN choice x_cold7.mend never available
+  WARN echo e_biao paid off in only 53% of runs that registered it
+
+PASS: no blocking issues
+
+RUN node tools/check.js content/v8/campaign_v8.json 5000
+# 三国·谋士 · 卷八 · 归晋
+nodes 29, chapters 8, echoes 10, debts 0
+
+## recipe relations: 6 scenes change with a relationship · approach x_rel_jwbook→c5_jiange.guard_book · split 2 · offense jiangwei✓
+
+## static: 0 errors, 169 warnings
+  warn  c1_weiyan.letter_2: major choice registers no echo (consequence may stay invisible)
+  warn  c1_return.court: major choice registers no echo (consequence may stay invisible)
+  warn  c1_return.jiang: major choice registers no echo (consequence may stay invisible)
+  warn  c1_return.home: major choice registers no echo (consequence may stay invisible)
+  warn  c2_xiahouba.farm: major choice registers no echo (consequence may stay invisible)
+  warn  c2_simayi.reply: major choice registers no echo (consequence may stay invisible)
+  warn  c2_simayi.burn: major choice registers no echo (consequence may stay invisible)
+  warn  c2_heir.jiang: major choice registers no echo (consequence may stay invisible)
+  warn  c2_heir.court: major choice registers no echo (consequence may stay invisible)
+  warn  c2_heir.free: major choice registers no echo (consequence may stay invisible)
+  warn  c3_healer.work: major choice registers no echo (consequence may stay invisible)
+  warn  c3_healer.teach: major choice registers no echo (consequence may stay invisible)
+  warn  c4_huanghao.ally: major choice registers no echo (consequence may stay invisible)
+  warn  c5_jiange.memo: major choice registers no echo (consequence may stay invisible)
+  warn  c5_jiange.memo_r: major choice registers no echo (consequence may stay invisible)
+  warn  c5_jiange.guard: major choice registers no echo (consequence may stay invisible)
+  warn  c5_jiange.guard_book: major choice registers no echo (consequence may stay invisible)
+  warn  c5_jiange.hold: major choice registers no echo (consequence may stay invisible)
+  warn  c5_yinping.fight: major choice registers no echo (consequence may stay invisible)
+  warn  c6_mianzhu.pass: major choice registers no echo (consequence may stay invisible)
+  warn  c7_jw_letter.go: major choice registers no echo (consequence may stay invisible)
+  warn  c7_jw_letter.stay: major choice registers no echo (consequence may stay invisible)
+  warn  c7_jw_letter.warn: major choice registers no echo (consequence may stay invisible)
+  warn  var flag.v8_came_back: written but never read (drop it, or make it matter)
+  warn  var imp.guanyu.offended: written but never read (drop it, or make it matter)
+  warn  var imp.liubei.offended: written but never read (drop it, or make it matter)
+  warn  var imp.fazheng.offended: written but never read (drop it, or make it matter)
+  warn  var imp.huangzhong.offended: written but never read (drop it, or make it matter)
+  warn  var imp.lusu.offended: written but never read (drop it, or make it matter)
+  warn  var imp.weiyan.offended: written but never read (drop it, or make it matter)
+  warn  var imp.jiangwei.offended: written but never read (drop it, or make it matter)
+  warn  var flag.mi_saved: written but never read (drop it, or make it matter)
+  warn  var flag.wenzhi_with_you: written but never read (drop it, or make it matter)
+  warn  var flag.confessed: written but never read (drop it, or make it matter)
+  warn  var flag.vouched_guan: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_guan: written but never read (drop it, or make it matter)
+  warn  var flag.promised_return: written but never read (drop it, or make it matter)
+  warn  var flag.liuqi_pretext: written but never read (drop it, or make it matter)
+  warn  var flag.pleaded_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.foresaw_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.zy_refused: written but never read (drop it, or make it matter)
+  warn  var flag.adou_kept: written but never read (drop it, or make it matter)
+  warn  var flag.wz_child: written but never read (drop it, or make it matter)
+  warn  var flag.pt_alive: written but never read (drop it, or make it matter)
+  warn  var flag.post_chengdu: written but never read (drop it, or make it matter)
+  warn  var flag.post_jingzhou: written but never read (drop it, or make it matter)
+  warn  var flag.post_none: written but never read (drop it, or make it matter)
+  warn  var flag.guan_charge: written but never read (drop it, or make it matter)
+  warn  var flag.v3_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v3_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.dd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.dd_lusu: written but never read (drop it, or make it matter)
+  warn  var flag.jin_trick: written but never read (drop it, or make it matter)
+  warn  var flag.jin_honest: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_envoy: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_hold: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_obey: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_bargain: written but never read (drop it, or make it matter)
+  warn  var flag.xiang_letter: written but never read (drop it, or make it matter)
+  warn  var flag.wakou_go: written but never read (drop it, or make it matter)
+  warn  var flag.hz_goaded: written but never read (drop it, or make it matter)
+  warn  var flag.hz_backed: written but never read (drop it, or make it matter)
+  warn  var flag.dj_flags: written but never read (drop it, or make it matter)
+  warn  var flag.dj_charge: written but never read (drop it, or make it matter)
+  warn  var flag.fed_pride: written but never read (drop it, or make it matter)
+  warn  var flag.praised_hz: written but never read (drop it, or make it matter)
+  warn  var flag.hs_open: written but never read (drop it, or make it matter)
+  warn  var flag.jl_chase: written but never read (drop it, or make it matter)
+  warn  var flag.jl_yangxiu: written but never read (drop it, or make it matter)
+  warn  var flag.mf_mended: written but never read (drop it, or make it matter)
+  warn  var flag.mf_warned: written but never read (drop it, or make it matter)
+  warn  var flag.mf_told: written but never read (drop it, or make it matter)
+  warn  var flag.wh_ask: written but never read (drop it, or make it matter)
+  warn  var flag.v3_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.fs_helped: written but never read (drop it, or make it matter)
+  warn  var flag.fs_private: written but never read (drop it, or make it matter)
+  warn  var flag.fs_pushed: written but never read (drop it, or make it matter)
+  warn  var flag.hn_soft: written but never read (drop it, or make it matter)
+  warn  var flag.hn_canon: written but never read (drop it, or make it matter)
+  warn  var flag.hn_apology: written but never read (drop it, or make it matter)
+  warn  var flag.fire_spared: written but never read (drop it, or make it matter)
+  warn  var flag.warned_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v3_left: written but never read (drop it, or make it matter)
+  warn  var flag.v3_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v4_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.pd_guard: written but never read (drop it, or make it matter)
+  warn  var flag.pd_bow: written but never read (drop it, or make it matter)
+  warn  var flag.flood_plan: written but never read (drop it, or make it matter)
+  warn  var flag.flood_people: written but never read (drop it, or make it matter)
+  warn  var flag.pd_spare: written but never read (drop it, or make it matter)
+  warn  var flag.pow_home: written but never read (drop it, or make it matter)
+  warn  var flag.bone_rest: written but never read (drop it, or make it matter)
+  warn  var flag.v4_to_jing: written but never read (drop it, or make it matter)
+  warn  var flag.v4_order: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_sy: written but never read (drop it, or make it matter)
+  warn  var flag.lx_warned: written but never read (drop it, or make it matter)
+  warn  var flag.v4_kept_rear: written but never read (drop it, or make it matter)
+  warn  var flag.mf_kind: written but never read (drop it, or make it matter)
+  warn  var flag.mf_pressed: written but never read (drop it, or make it matter)
+  warn  var flag.v4_mf_path: written but never read (drop it, or make it matter)
+  warn  var flag.v4_early_call: written but never read (drop it, or make it matter)
+  warn  var flag.v4_relief: written but never read (drop it, or make it matter)
+  warn  var flag.v4_ride: written but never read (drop it, or make it matter)
+  warn  var flag.guan_alive: written but never read (drop it, or make it matter)
+  warn  var flag.v4_with_guan: written but never read (drop it, or make it matter)
+  warn  var flag.v4_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_counsel_wait: written but never read (drop it, or make it matter)
+  warn  var flag.v4_vow: written but never read (drop it, or make it matter)
+  warn  var flag.v4_wz_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v4_left: written but never read (drop it, or make it matter)
+  warn  var flag.v4_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v5_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.v5_north: written but never read (drop it, or make it matter)
+  warn  var flag.liufeng_spared: written but never read (drop it, or make it matter)
+  warn  var flag.v5_mengda: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_letter: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_vow: written but never read (drop it, or make it matter)
+  warn  var flag.v5_zhaoyun: written but never read (drop it, or make it matter)
+  warn  var flag.v5_nearly: written but never read (drop it, or make it matter)
+  warn  var flag.v5_langzhong: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_warned: written but never read (drop it, or make it matter)
+  warn  var flag.fei_alive: written but never read (drop it, or make it matter)
+  warn  var flag.v5_fei_night: written but never read (drop it, or make it matter)
+  warn  var flag.v5_peace: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hz_ride: written but never read (drop it, or make it matter)
+  warn  var flag.v5_hz_word: written but never read (drop it, or make it matter)
+  warn  var flag.v5_firebreak: written but never read (drop it, or make it matter)
+  warn  var flag.v5_map: written but never read (drop it, or make it matter)
+  warn  var flag.v5_rear: written but never read (drop it, or make it matter)
+  warn  var flag.v5_guard: written but never read (drop it, or make it matter)
+  warn  var flag.v5_guan_last: written but never read (drop it, or make it matter)
+  warn  var flag.v5_entrusted: written but never read (drop it, or make it matter)
+  warn  var flag.v5_masu: written but never read (drop it, or make it matter)
+  warn  var flag.v5_left: written but never read (drop it, or make it matter)
+  warn  var flag.v5_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v6_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v6_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.v6_dengzhi: written but never read (drop it, or make it matter)
+  warn  var flag.v6_to_wu: written but never read (drop it, or make it matter)
+  warn  var flag.v6_masu_praise: written but never read (drop it, or make it matter)
+  warn  var flag.v6_masu_doubt: written but never read (drop it, or make it matter)
+  warn  var flag.v6_lushui: written but never read (drop it, or make it matter)
+  warn  var flag.v6_cure: written but never read (drop it, or make it matter)
+  warn  var flag.v6_water: written but never read (drop it, or make it matter)
+  warn  var flag.v6_mercy: written but never read (drop it, or make it matter)
+  warn  var flag.v6_fire_plan: written but never read (drop it, or make it matter)
+  warn  var flag.v6_officials: written but never read (drop it, or make it matter)
+  warn  var flag.v6_left: written but never read (drop it, or make it matter)
+  warn  var flag.v6_exposed: written but never read (drop it, or make it matter)
+  warn  var flag.v7_came_back: written but never read (drop it, or make it matter)
+  warn  var flag.v7_hermit: written but never read (drop it, or make it matter)
+  warn  var flag.v7_biao: written but never read (drop it, or make it matter)
+  warn  var flag.v7_student: written but never read (drop it, or make it matter)
+  warn  var flag.v7_ziwu: written but never read (drop it, or make it matter)
+  warn  var flag.v7_jt_with: written but never read (drop it, or make it matter)
+  warn  var flag.v7_jt_warned: written but never read (drop it, or make it matter)
+  warn  var flag.v7_jt_road: written but never read (drop it, or make it matter)
+  warn  var flag.v7_jt_wangping: written but never read (drop it, or make it matter)
+  warn  var flag.v7_wall: written but never read (drop it, or make it matter)
+  warn  var flag.v7_old_farewell: written but never read (drop it, or make it matter)
+  warn  var flag.v7_feud: written but never read (drop it, or make it matter)
+  warn  var flag.v7_warned_weiyan: written but never read (drop it, or make it matter)
+  warn  var flag.v7_lamp_guard: written but never read (drop it, or make it matter)
+  warn  var flag.v7_left: written but never read (drop it, or make it matter)
+  warn  var flag.v7_exposed: written but never read (drop it, or make it matter)
+  warn  var grudge.jiangwei: read but never written
+  warn  var flag.fate_dead: read but never written
+
+## simulate: 5000 random players
+avg scenes per run 13.1, distinct ending combinations 1622
+track: liu 100.0%
+deviation: 0:7.5% 1:2.8% 2:1.0% 3:0.8% 4:0.9% 5:1.0% 6:4.9% 7:4.6% 8:1.9% 9:1.5% 10:1.8% 11:1.4% 12:17.0% 13:15.8% 14:10.7% 15:4.9% 16:6.1% 17:4.9% 18:4.1% 19:3.0% 20:1.6% 21:1.0% 22:0.4% 23:0.2% 24:0.1% 25:0.0%
+uncanny: 0:14.7% 1:85.3%
+
+relationships at the end, starting from presets (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads):
+  liubei.warmth          0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  liubei.trust*          0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  liubei.esteem          0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.warmth        100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  caocao.esteem*       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.warmth         14.7%   0.0%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.trust           0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  guanyu.esteem*        14.7%   0.0%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  zhuge.warmth          14.7%   0.0%   0.0%  85.3%   0.0%  · moved 0.0% · max 0.0%
+  zhuge.trust            0.0%   0.0%  14.7%  85.3%   0.0%  · moved 0.0% · max 0.0%
+  zhuge.esteem*         14.7%   0.0%   0.0%  85.3%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.warmth          0.0%  14.7%  16.4%  42.1%  26.8%  · moved 54.6% · max 0.5%
+  wenzhi.trust           0.0%  14.7%  32.0%  52.8%   0.5%  · moved 54.3% · max 0.0%
+  wenzhi.esteem          0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  wenzhi.intimacy*      11.7%   3.1%   0.9%  36.1%  48.2%  · moved 57.9% · max 5.8%
+  zhaoyun.warmth         0.0%  14.7%   0.0%  85.3%   0.0%  · moved 0.0% · max 0.0%
+  zhaoyun.trust*         0.0%  14.7%   0.0%  85.3%   0.0%  · moved 0.0% · max 0.0%
+  zhaoyun.esteem        32.0%  68.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.warmth            0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.trust*            0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  lusu.esteem          100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.warmth       14.7%   0.0%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.trust       100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  pangtong.esteem*     100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.warmth        14.7%  85.3%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.trust         14.7%  85.3%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  fazheng.esteem*       14.7%  85.3%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.warmth      0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.trust       0.0%  14.7%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  huangzhong.esteem*    14.7%   0.0%  85.3%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  jiangwei.warmth       28.9%  15.8%  20.1%  14.5%  20.7%  · moved 74.1% · max 5.4%
+  jiangwei.trust*       40.9%  27.0%  13.6%   6.7%  11.8%  · moved 80.1% · max 6.6%
+  jiangwei.esteem        9.0%   5.6%  45.3%  24.3%  15.9%  · moved 61.0% · max 4.0%
+  simayi.warmth         91.8%   8.2%   0.0%   0.0%   0.0%  · moved 8.2% · max 0.0%
+  simayi.trust         100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  simayi.esteem*        32.8%  33.9%  25.0%   8.4%   0.0%  · moved 8.4% · max 0.0%
+  weiyan.warmth         36.4%  26.2%  29.3%   7.0%   1.2%  · moved 29.9% · max 0.0%
+  weiyan.trust*         44.6%  23.8%  19.9%   8.9%   2.8%  · moved 60.6% · max 0.0%
+  weiyan.esteem         73.2%  26.7%   0.0%   0.0%   0.0%  · moved 21.7% · max 0.0%
+
+ending fragments:
+  去处: hermit 9.2% · exposed 0.0% · left 58.2% · luoyang 17.2% · stay 15.3%
+  子衡: wed 16.1% · fan 14.7% · jiang 16.1% · plain 31.2%
+  魏延: alive 3.9% · family 34.9% · read 7.0% · canon 54.2%
+  姜维: nearly 3.2% · family 12.3% · men 13.0% · end 7.3% · canon 100.0%
+  蜀亡的代价: yinping 3.6% · pass 5.1% · duangu 23.3% · mianzhu 12.6% · chengdu 12.5% · kids 19.2%
+  接班的人: healer 3.6% · book 10.0% · court 10.9% · child 10.4% · student 65.1%
+  名声: simayi 16.6% · uncanny 0.0% · loyal 76.4% · cunning 7.0% · none 0.0%
+  天下: far 26.4% · plain 73.6%
+
+echoes (registered → paid):
+  e_letter: 193 → 188
+  e_wy_family: 1745 → 1673
+  e_qingnang: 340 → 340
+  e_duangu: 1167 → 1167
+  e_tazhong: 732 → 727
+  e_hh: 746 → 627
+  e_yp: 817 → 812
+  e_mz_people: 631 → 631
+  e_cd_people: 626 → 538
+  e_kids: 962 → 826
+
+debts: {}
+
+side offers (times offered): {"c1_wz8":3804,"c2_simayi":830,"c3_xiahouba":3857,"c2_wz_letter8":2748,"c4_houzhu":2370,"c7_temple":1895,"c8_lebu":1010,"c3_healer":340}
+
+## archetype players (1000 runs each)
+  romance  g_wenzhi:married|with_you|together|cao_saved 0% · g_wenzhi:married|with_you|together|cao_saved|safe 0% · early end 0% · scenes 21.3
+  loyal    g_lord:liu_high 0% · g_name:loyal 84% · early end 0% · scenes 21.7
+  schemer  g_side:cao 0% · g_lord:cao_high 0% · g_name:cunning 0% · early end 0% · scenes 21.3
+  seer     g_name:uncanny 0% · g_side:exposed 0% · early end 0% · scenes 21.3
+  provoker g_lives:flogged 0% · g_lives:jail 0% · g_side:miheng 0% · g_name:rash 0% · early end 100% · scenes 2.5
+    on-the-spot breaks (scene:kind:who): {}
+
+talk topics taken (random): {"c2_wz_last.xuchang":331,"c2_wz_last.first":342,"c3_jiangwei.home":1226,"c3_jiangwei.why":1220,"c3_jiangwei.ziheng":1145,"c2_wz_last.book":340}
+early endings (random): {"c3_duangu":1093,"c7_jw_letter":118,"x_cold8":455,"c4_huanghao":243,"c2_wz_letter8":93,"c4_houzhu":165,"x_return8":460,"c8_lebu":148,"c3_xiahouba":336,"c1_wz8":167,"x_loose8":38,"c2_simayi":23,"c1_return":16,"c3_healer":15,"x_rel_jwbook":1}
+
+## findings (4)
+  WARN node x_uncanny8 never reached in 5000 runs
+  WARN ending g_side.exposed never reached
+  WARN ending g_name.uncanny never reached
+  WARN ending g_name.none never reached
+
+PASS: no blocking issues
+
+RUN python3 tools/art_audit.py --strict
+插画版缺图：0 处（8 卷）
+
+RUN python3 content/story.py
+nodes 39 -> /Users/zhouzy02/Documents/Codex/2026-11-03/storyloveai-ocai-codex-klein-image-eval/work/ocai/game/xichuan/content/campaign.json
+
+RUN python3 tools/build.py
+web/index.html · 39 scenes · 9 pictures
+
+RUN node ../engine/tools/check.mjs content/campaign.json 3000
+# 汐川的第七个春天 · spec storydate.campaign/0.4 · engine 0.4.7 · pack school-romance
+
+## static: 0 errors, 122 warnings
+  warn  p_return: no art
+  warn  p_return: no place on the map
+  warn  p_return.spring: major choice registers no echo (consequence may stay invisible)
+  warn  c1_fair: no art
+  warn  c1_fair: no place on the map
+  warn  c1_fair.join: major choice registers no echo (consequence may stay invisible)
+  warn  c1_fair.ask: major choice registers no echo (consequence may stay invisible)
+  warn  c1_poster: no art
+  warn  c1_poster: no place on the map
+  warn  c1_cafe: no art
+  warn  c1_cafe: no place on the map
+  warn  c1_cafe.childhood: major choice registers no echo (consequence may stay invisible)
+  warn  c1_booth: no art
+  warn  c1_booth: no place on the map
+  warn  c1_booth.look: major choice registers no echo (consequence may stay invisible)
+  warn  x_rumor: no art
+  warn  c2_screening: no art
+  warn  c2_screening: no place on the map
+  warn  c2_ledger: no art
+  warn  c2_ledger: no place on the map
+  warn  c2_ledger.money: major choice registers no echo (consequence may stay invisible)
+  warn  c2_ledger.call: major choice registers no echo (consequence may stay invisible)
+  warn  c2_seawall: no art
+  warn  c2_seawall: no place on the map
+  warn  c2_library: no art
+  warn  c2_library: no place on the map
+  warn  c3_member: no art
+  warn  c3_member: no place on the map
+  warn  c3_member.jibai: major choice registers no echo (consequence may stay invisible)
+  warn  c3_member.cheng: major choice registers no echo (consequence may stay invisible)
+  warn  c3_member.hang: major choice registers no echo (consequence may stay invisible)
+  warn  c3_rooftop: no art
+  warn  c3_rooftop: no place on the map
+  warn  c3_rooftop.ask_back: major choice registers no echo (consequence may stay invisible)
+  warn  c3_photo: no art
+  warn  c3_photo: no place on the map
+  warn  c3_photo.keep: major choice registers no echo (consequence may stay invisible)
+  warn  c3_storeroom: no art
+  warn  c3_storeroom: no place on the map
+  warn  c3_storeroom.together: major choice registers no echo (consequence may stay invisible)
+  warn  c4_eve: no art
+  warn  c4_eve: no place on the map
+  warn  c4_eve.zhiyao: major choice registers no echo (consequence may stay invisible)
+  warn  c4_eve.shencheng: major choice registers no echo (consequence may stay invisible)
+  warn  c4_eve.jibai: major choice registers no echo (consequence may stay invisible)
+  warn  c4_eve.alone: major choice registers no echo (consequence may stay invisible)
+  warn  c5_last: no art
+  warn  c5_last: no place on the map
+  warn  c5_last.stand: major choice registers no echo (consequence may stay invisible)
+  warn  c5_last.echo: major choice registers no echo (consequence may stay invisible)
+  warn  c5_after: no art
+  warn  c5_after: no place on the map
+  warn  c5_after.week: major choice registers no echo (consequence may stay invisible)
+  warn  c5_after.follow: major choice registers no echo (consequence may stay invisible)
+  warn  c5_after.nod: major choice registers no echo (consequence may stay invisible)
+  warn  c6_screen: no art
+  warn  c6_screen: no place on the map
+  warn  c6_screen.cut: major choice registers no echo (consequence may stay invisible)
+  warn  c6_screen.sign: major choice registers no echo (consequence may stay invisible)
+  warn  c6_beach: no art
+  warn  c6_beach: no place on the map
+  warn  c6_beach.shout: major choice registers no echo (consequence may stay invisible)
+  warn  c6_call: no art
+  warn  c6_call: no place on the map
+  warn  c6_call.tell: major choice registers no echo (consequence may stay invisible)
+  warn  c6_call.greet: major choice registers no echo (consequence may stay invisible)
+  warn  c6_roof: no art
+  warn  c6_roof: no place on the map
+  warn  c6_roof.photo: major choice registers no echo (consequence may stay invisible)
+  warn  c7_rain: no art
+  warn  c7_rain: no place on the map
+  warn  c7_station: no art
+  warn  c7_station: no place on the map
+  warn  c5_front: no art
+  warn  c5_front: no place on the map
+  warn  c5_front.ask: major choice registers no echo (consequence may stay invisible)
+  warn  c5_even: no art
+  warn  c5_even: no place on the map
+  warn  c5_even.undecided: major choice registers no echo (consequence may stay invisible)
+  warn  c5_even.promise: major choice registers no echo (consequence may stay invisible)
+  warn  c5_even.visit: major choice registers no echo (consequence may stay invisible)
+  warn  c6_tin: no art
+  warn  c6_tin: no place on the map
+  warn  c6_tin.wait: major choice registers no echo (consequence may stay invisible)
+  warn  c6_tin.ask: major choice registers no echo (consequence may stay invisible)
+  warn  c6_tin.read: major choice registers no echo (consequence may stay invisible)
+  warn  c6_cats: no art
+  warn  c6_cats: no place on the map
+  warn  c6_cats.adopt: major choice registers no echo (consequence may stay invisible)
+  warn  c6_house: no art
+  warn  c6_house: no place on the map
+  warn  c6_house.return: major choice registers no echo (consequence may stay invisible)
+  warn  c6_house.keep: major choice registers no echo (consequence may stay invisible)
+  warn  c6_cocoa: no art
+  warn  c6_cocoa: no place on the map
+  warn  c7_sign: no art
+  warn  c7_sign: no place on the map
+  warn  c7_letter: no art
+  warn  c7_letter: no place on the map
+  warn  c5_reel: no art
+  warn  c5_reel: no place on the map
+  warn  c5_reel.find: major choice registers no echo (consequence may stay invisible)
+  warn  c5_lastreel: no art
+  warn  c5_lastreel: no place on the map
+  warn  c5_lastreel.watch: major choice registers no echo (consequence may stay invisible)
+  warn  c6_scrap: no art
+  warn  c6_scrap: no place on the map
+  warn  c6_scrap.buy: major choice registers no echo (consequence may stay invisible)
+  warn  c6_paper: no art
+  warn  c6_paper: no place on the map
+  warn  c6_paper.once: major choice registers no echo (consequence may stay invisible)
+  warn  c6_cot: no art
+  warn  c6_cot: no place on the map
+  warn  c6_shelf: no art
+  warn  c6_shelf: no place on the map
+  warn  c6_shelf.tonight: major choice registers no echo (consequence may stay invisible)
+  warn  c6_shelf.keep: major choice registers no echo (consequence may stay invisible)
+  warn  c7_attic: no art
+  warn  c7_attic: no place on the map
+  warn  c7_run: no art
+  warn  c7_run: no place on the map
+  warn  var flag.sidelined: read but never written
+
+## 3000 random players: 9.5 scenes per run, 10 distinct endings
+
+relationships at the end (share of runs per tier 0–4 · moved at all · at 10; * = the axis the story reads)
+  zhiyao.warmth            0.5%  89.2%  10.3%   0.0%   0.0%  · moved 54.1% · max 0.0%
+  zhiyao.trust            16.8%  62.3%  19.7%   1.2%   0.1%  · moved 84.0% · max 0.0%
+  zhiyao.esteem           48.9%  48.7%   2.3%   0.1%   0.0%  · moved 62.8% · max 0.0%
+  zhiyao.intimacy*        44.0%  47.0%   4.9%   1.3%   2.8%  · moved 83.3% · max 1.5%
+  shencheng.warmth        23.8%  74.3%   1.9%   0.0%   0.0%  · moved 76.6% · max 0.0%
+  shencheng.trust         46.7%  50.1%   2.8%   0.4%   0.0%  · moved 62.1% · max 0.0%
+  shencheng.esteem        98.8%   1.2%   0.0%   0.0%   0.0%  · moved 1.2% · max 0.0%
+  shencheng.intimacy*     26.6%  55.9%   9.5%   2.7%   5.3%  · moved 76.7% · max 2.2%
+  jibai.warmth            48.6%  50.4%   1.0%   0.0%   0.0%  · moved 51.4% · max 0.0%
+  jibai.trust             25.2%  64.5%   6.8%   3.2%   0.3%  · moved 75.4% · max 0.0%
+  jibai.esteem            23.3%  75.7%   1.0%   0.0%   0.0%  · moved 76.7% · max 0.0%
+  jibai.intimacy*         38.5%  46.9%   7.4%   1.4%   5.9%  · moved 86.7% · max 3.0%
+  zhou.warmth              0.0%  98.5%   1.5%   0.0%   0.0%  · moved 34.4% · max 0.0%
+  zhou.trust*              1.5%  98.3%   0.2%   0.0%   0.0%  · moved 6.5% · max 0.0%
+  zhou.esteem            100.0%   0.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  chenghang.warmth*        1.1%  97.7%   1.2%   0.0%   0.0%  · moved 46.4% · max 0.0%
+  chenghang.trust          0.0% 100.0%   0.0%   0.0%   0.0%  · moved 0.0% · max 0.0%
+  chenghang.esteem        64.7%  35.3%   0.0%   0.0%   0.0%  · moved 35.3% · max 0.0%
+
+ending fragments:
+  尾声: zhiyao_good 0.7% · zhiyao_normal 3.3% · shencheng_good 0.4% · shencheng_normal 7.9% · jibai_good 0.8% · jibai_normal 6.9% · none 79.9%
+  这个春天: zhiyao 46.7% · shencheng 26.8% · jibai 5.0% · none 1.5%
+
+## findings (0)
+
+PASS: no blocking issues
+
+RUN npm run game:sync
+
+> ooc-replica@1.0.0 game:sync
+> node scripts/sync-game.mjs
+
