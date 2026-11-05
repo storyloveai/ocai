@@ -69,3 +69,7 @@ python3 -m http.server 8765 --directory ooc-replica/dist
 WebGAL 的横向画面、表情/CG、存读档、回想和鉴赏已经能用于比较；竖屏体验是旋转横屏，不是竖排阅读，底部工具栏在手机上偏小，需用户真机判断。小样没有做移动网速首载性能承诺。
 
 Ren’Py 由 Claude 在 [#130](https://github.com/storyloveai/ocai/pull/130) 提供；最新决策记录 v0.26 明确记载：模拟 iPhone 可运行，但用户真机打不开，决定不再投入 Ren’Py、等待 WebGAL。本 PR 按最新交接只交付 WebGAL，不重复构建或引入 Ren’Py 目录。
+
+## PR 与预览
+
+[PR #131](https://github.com/storyloveai/ocai/pull/131)，base `main`；[StoryDate 试玩入口](https://storydate-zhou-git-codex-xichuan-web-9f5f62-zhou-zeyas-projects.vercel.app/assets/xichuan-webgal/index.html)。三个 Vercel 部署均成功，GitHub 的 engine / sanguo / xichuan / site-copies 全部通过。预览启用 Vercel 登录保护，未登录浏览器访问得到 302 并进入 Vercel 登录页，因此未完成线上游戏流程复测；上表交互验收均为本机 HTTP 预览。未修改访问保护。
