@@ -29,3 +29,12 @@ test('xichuan talk handler returns the model output and refuses other origins', 
  const r2={setHeader(){},status(code){this.code=code;return this;},json(value){this.value=value;}};
  await sanguoApi({...req,headers:{...req.headers,origin:'https://evil.example'},body:{...req.body,game:'xichuan'}},r2);assert.equal(r2.code,403);
 });
+
+test('xichuan talk streams structured output like the Three Kingdoms scenes (the path the page uses)', async () => {
+ const output={reply:'……谢谢。',tone:'warm',mood:'shy',values:['ti']};let seen=null;
+ const handler=createXichuanHandler({config:()=>({name:'test',kind:'google'}),model:()=>'',stream:params=>{seen=params;return {partialOutputStream:(async function*(){yield {reply:'……'};yield output;})(),output:Promise.resolve(output)};}});
+ const req={method:'POST',headers:{origin:'https://test.example',host:'test.example','content-type':'application/json',accept:'application/x-ndjson','x-forwarded-for':'xichuan-stream'},body:{game:'xichuan',phase:'express',task:'talk',lang:'zh',context:{node:'c3_rooftop',target:'zhiyao',text:'辛苦了'}}};
+ const res={chunks:[],setHeader(){},status(code){this.code=code;return this;},json(value){this.value=value;},write(value){this.chunks.push(value);return true;},end(value){if(value)this.chunks.push(value);this.writableFinished=true;}};
+ await handler(req,res);assert.ok(seen.output,'structured output requested');
+ const done=res.chunks.join('').split('\n').filter(Boolean).map(l=>JSON.parse(l)).find(m=>m.type==='done');assert.deepEqual(done.output,output);
+});

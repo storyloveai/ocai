@@ -450,8 +450,10 @@ function talkBox(n, who) {
     const recent = V.log.slice(-10).map(l => (l.who ? l.who + "：" : "") + l.text);
     let out = null;
     try {
-      const r = await fetch("/api/sanguo", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ game: "xichuan", task: "talk", lang: LANG, context: { node: n.id, target: who, text, vars: G.v, recent } }) });
-      const d = await r.json().catch(() => ({})); if (r.ok && d.output && typeof d.output.reply === "string") out = d.output;
+      // 和三国走同一条通道：流式 + 结构化输出（模型的回答一定是合法的 JSON），读最后的 done
+      const r = await fetch("/api/sanguo", { method: "POST", headers: { "content-type": "application/json", accept: "application/x-ndjson" }, body: JSON.stringify({ game: "xichuan", phase: "express", task: "talk", lang: LANG, context: { node: n.id, target: who, text, vars: G.v, recent } }) });
+      const body = r.ok ? await r.text() : "";
+      for (const line of body.split("\n")) { try { const m = JSON.parse(line); if (m.type === "done" && m.output && typeof m.output.reply === "string") out = m.output; } catch {} }
     } catch {}
     m.hidden = true;
     const mine = { op: "say", who: "me", t: { zh: text, en: text } };
