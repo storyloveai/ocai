@@ -13,7 +13,7 @@ camp = json.loads((R / "content/campaign.json").read_text("utf-8"))
 OUT = R / "renpy/game"
 CHAPS = (sys.argv[sys.argv.index("--chapters") + 1] if "--chapters" in sys.argv else "p,c1").split(",")
 COLORS = {"zhiyao": "#ff9db8", "shencheng": "#8fc7ff", "jibai": "#c7b4ff", "zhou": "#c9b48a", "chenghang": "#9fe0a8"}
-SLOT = {"left": "left", "right": "right", "center": "center"}
+SLOT = {"left": "fig_left", "right": "fig_right", "center": "fig_center"}   # 立绘 1024×1536，缩到画面高度的 95%
 
 def var(name): return name.replace(".", "_")
 def text(s): return s.replace("\\", "\\\\").replace('"', '\\"').replace("[", "[[").replace("{", "{{").replace("%", "%%").replace("\n", " ")
@@ -93,6 +93,7 @@ def build():
     for p in (A / "sprites").glob("*/*.webp"): shutil.copy(p, OUT / f"images/{p.parent.name} {p.stem}.webp")
 
     head = ["# 由 tools/renpy_export.py 生成，不要手改", f'define me = Character("{camp["player"]["name"]["zh"]}")']
+    head += [f"transform fig_{k}:\n    zoom 0.67\n    xalign {x}\n    yalign 1.0" for k, x in (("left", 0.18), ("center", 0.5), ("right", 0.82))]
     head += [f'define {c} = Character("{v["name"]["zh"]}", color="{COLORS.get(c, "#ffffff")}")' for c, v in camp["chars"].items()]
     head += [f"default {var(k)} = {repr(False) if d['type'] == 'flag' else d['init']}" for k, d in camp["vars"].items() if d["type"] in ("num", "flag")]
     body = ["", "label start:", f"    jump ch_{CHAPS[0]}"]
@@ -118,13 +119,11 @@ def build():
     body += ["", "label fin:", '    "（小样到此结束。完整版里接下来是第二章《第一场放映》。）"', "    return"]
     (OUT / "script.rpy").write_text("\n".join(head + body) + "\n", "utf-8")
     (OUT / "xichuan_options.rpy").write_text("\n".join([
-        "# 小样的设置：中文字体（放在 game/fonts/ 下，开源字体如 Noto Sans SC）、标题",
-        'define config.name = "汐川的第七个春天"',
-        'define gui.text_font = "fonts/NotoSansSC-Regular.ttf"',
-        'define gui.name_text_font = "fonts/NotoSansSC-Regular.ttf"',
-        'define gui.interface_text_font = "fonts/NotoSansSC-Regular.ttf"',
-        'define gui.main_menu_background = "images/cg title.webp"',
-        "define config.menu_include_disabled = False", ""]), "utf-8")
+        "# 小样的设置：在 SDK 生成的工程（generate_gui --language schinese，自带思源黑体）之上覆盖标题和标题画面",
+        "init 5 python:",
+        '    config.name = "汐川的第七个春天"',
+        '    config.window_title = "汐川的第七个春天"',
+        "    config.menu_include_disabled = False", ""]), "utf-8")
     print("renpy/game ·", ", ".join(c["id"] for c in chapters), "·", sum(1 for _ in (OUT / "script.rpy").read_text("utf-8").splitlines()), "lines,",
           sum(1 for _ in (OUT / "images").glob("*")), "images")
 
