@@ -2115,6 +2115,10 @@
      ],
      "script": [
       {
+       "op": "cg",
+       "id": "cg_umbrella"
+      },
+      {
        "op": "say",
        "who": "zhiyao",
        "t": {
@@ -2130,6 +2134,10 @@
         "zh": "她没有躲开。",
         "en": "She doesn't step away."
        }
+      },
+      {
+       "op": "cg",
+       "id": null
       }
      ],
      "values": [
@@ -2780,12 +2788,20 @@
        "face": "normal"
       },
       {
+       "op": "cg",
+       "id": "cg_splice"
+      },
+      {
        "op": "say",
        "who": null,
        "t": {
         "zh": "她的手很稳。三分钟后，银幕重新亮了起来。",
         "en": "Her hands are steady. Three minutes later the screen lights up again."
        }
+      },
+      {
+       "op": "cg",
+       "id": null
       },
       {
        "op": "say",
@@ -3460,10 +3476,8 @@
      }
     },
     {
-     "op": "show",
-     "who": "shencheng",
-     "face": "normal",
-     "at": "center"
+     "op": "cg",
+     "id": "cg_cats"
     },
     {
      "op": "say",
@@ -3473,6 +3487,16 @@
       "en": "They're the grandkids of that calico. The year you left, she'd just had her litter."
      },
      "face": "normal"
+    },
+    {
+     "op": "cg",
+     "id": null
+    },
+    {
+     "op": "show",
+     "who": "shencheng",
+     "face": "normal",
+     "at": "center"
     },
     {
      "op": "say",
@@ -6060,6 +6084,10 @@
        "face": "normal"
       },
       {
+       "op": "cg",
+       "id": "cg_shout"
+      },
+      {
        "op": "say",
        "who": "zhiyao",
        "t": {
@@ -6084,6 +6112,10 @@
         "en": "…There. Done. Pretend you didn't hear that."
        },
        "face": "smile"
+      },
+      {
+       "op": "cg",
+       "id": null
       }
      ],
      "values": [
@@ -6497,6 +6529,10 @@
      ],
      "script": [
       {
+       "op": "cg",
+       "id": "cg_shoulder"
+      },
+      {
        "op": "say",
        "who": null,
        "t": {
@@ -6512,6 +6548,10 @@
         "en": "…Just for a minute."
        },
        "face": "shy"
+      },
+      {
+       "op": "cg",
+       "id": null
       }
      ],
      "values": [
@@ -7978,6 +8018,10 @@
      }
     },
     {
+     "op": "cg",
+     "id": "cg_letters"
+    },
+    {
      "op": "say",
      "who": null,
      "t": {
@@ -7992,6 +8036,10 @@
       "zh": "收信人那一栏，写的都是我的名字。没有地址。",
       "en": "In the space for the addressee, every one has my name. No address."
      }
+    },
+    {
+     "op": "cg",
+     "id": null
     },
     {
      "op": "show",
@@ -10164,6 +10212,10 @@
      ],
      "script": [
       {
+       "op": "cg",
+       "id": "cg_cot"
+      },
+      {
        "op": "say",
        "who": null,
        "t": {
@@ -10179,6 +10231,10 @@
         "en": "(waking) …You stayed the whole time?"
        },
        "face": "surprised"
+      },
+      {
+       "op": "cg",
+       "id": null
       }
      ],
      "values": [
@@ -10894,6 +10950,10 @@
      }
     },
     {
+     "op": "cg",
+     "id": "cg_grandpa"
+    },
+    {
      "op": "say",
      "who": null,
      "t": {
@@ -10924,6 +10984,10 @@
       "zh": "画面暗了。海堤上，没有人说话。",
       "en": "The picture fades. On the seawall, no one speaks."
      }
+    },
+    {
+     "op": "cg",
+     "id": null
     },
     {
      "op": "say",
@@ -10985,6 +11049,7 @@
    "fragments": [
     {
      "id": "zhiyao_good",
+     "cg": "cg_end_zhiyao_good",
      "title": {
       "zh": "夏知遥 · 好结局「第八个春天」",
       "en": "Xia Zhiyao · Good Ending: The Eighth Spring"
@@ -11001,6 +11066,7 @@
     },
     {
      "id": "zhiyao_normal",
+     "cg": "cg_end_zhiyao_normal",
      "title": {
       "zh": "夏知遥 · 普通结局「春天过去了」",
       "en": "Xia Zhiyao · Normal Ending: And Spring Passed"
@@ -11017,6 +11083,7 @@
     },
     {
      "id": "shencheng_good",
+     "cg": "cg_end_shencheng_good",
      "title": {
       "zh": "沈澄 · 好结局「第八封信」",
       "en": "Shen Cheng · Good Ending: The Eighth Letter"
@@ -11033,6 +11100,7 @@
     },
     {
      "id": "shencheng_normal",
+     "cg": "cg_end_shencheng_normal",
      "title": {
       "zh": "沈澄 · 普通结局「没有寄出的信」",
       "en": "Shen Cheng · Normal Ending: Letters Never Sent"
@@ -11049,6 +11117,7 @@
     },
     {
      "id": "jibai_good",
+     "cg": "cg_end_jibai_good",
      "title": {
       "zh": "季白 · 好结局「没有影院的电影院」",
       "en": "Ji Bai · Good Ending: A Cinema Without a Cinema"
@@ -11065,6 +11134,7 @@
     },
     {
      "id": "jibai_normal",
+     "cg": "cg_end_jibai_normal",
      "title": {
       "zh": "季白 · 普通结局「片尾字幕」",
       "en": "Ji Bai · Normal Ending: End Credits"
@@ -11081,6 +11151,7 @@
     },
     {
      "id": "none",
+     "cg": "cg_end_none",
      "title": {
       "zh": "普通结局「最后一排」",
       "en": "Normal Ending: The Back Row"
@@ -11325,6 +11396,22 @@
     "zh": "银幕下的女孩",
     "en": "The girl beneath the screen"
    },
+   "cg_umbrella": {
+    "zh": "雨里的伞",
+    "en": "An umbrella in the rain"
+   },
+   "cg_end_none": {
+    "zh": "最后一排",
+    "en": "The back row"
+   },
+   "cg_cats": {
+    "zh": "海堤上的猫",
+    "en": "Cats on the seawall"
+   },
+   "cg_splice": {
+    "zh": "接片",
+    "en": "Splicing the film"
+   },
    "cg_first_screening": {
     "zh": "第一场放映",
     "en": "The first screening"
@@ -11332,6 +11419,22 @@
    "cg_photo": {
     "zh": "那张旧照片",
     "en": "The old photo"
+   },
+   "cg_end_zhiyao_good": {
+    "zh": "第八个春天",
+    "en": "The eighth spring"
+   },
+   "cg_end_zhiyao_normal": {
+    "zh": "空着的第一排",
+    "en": "The empty front row"
+   },
+   "cg_shout": {
+    "zh": "对着海喊",
+    "en": "Shouting at the sea"
+   },
+   "cg_shoulder": {
+    "zh": "天台上的肩膀",
+    "en": "A shoulder on the roof"
    },
    "cg_last_screening": {
     "zh": "最后一场",
@@ -11341,6 +11444,18 @@
     "zh": "站台",
     "en": "The platform"
    },
+   "cg_end_shencheng_good": {
+    "zh": "第八封信",
+    "en": "The eighth letter"
+   },
+   "cg_end_shencheng_normal": {
+    "zh": "没有署名的明信片",
+    "en": "An unsigned postcard"
+   },
+   "cg_letters": {
+    "zh": "七个信封",
+    "en": "Seven envelopes"
+   },
    "cg_front_row": {
     "zh": "第一排",
     "en": "The front row"
@@ -11348,6 +11463,22 @@
    "cg_seawall": {
     "zh": "第七封信",
     "en": "The seventh letter"
+   },
+   "cg_end_jibai_good": {
+    "zh": "没有影院的电影院",
+    "en": "A cinema without a cinema"
+   },
+   "cg_end_jibai_normal": {
+    "zh": "片尾字幕",
+    "en": "End credits"
+   },
+   "cg_cot": {
+    "zh": "放映室的午睡",
+    "en": "A nap in the booth"
+   },
+   "cg_grandpa": {
+    "zh": "给远",
+    "en": "For Yuan"
    },
    "cg_booth": {
     "zh": "第七卷",

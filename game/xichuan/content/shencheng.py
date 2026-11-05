@@ -70,8 +70,10 @@ C6_TIN = scene("c6_tin", "c6", "main", T("可可罐", "The Cocoa Tin"), [
     show("shencheng", "normal", "right"),
     iff(F("flag.c_cold"), nar("那天晚上以后，她给我端咖啡，只说一句“请慢用”。和对任何一个客人都一样。", "Since that night, when she brings me coffee she says only 'Enjoy.' The same as with any other customer.")),
     nar("最上面一格，掉下来一个旧可可罐，盖子摔开了。里面是一叠信封。", "From the top shelf an old cocoa tin falls, and the lid pops off. Inside is a stack of envelopes."),
+    cg("cg_letters"),
     nar("七个。每一个上面写着一行字：“第一个春天”“第二个春天”……一直到“第七个春天”。最后一个，是空的，没有封口。", "Seven of them. Each one bears a single line: 'The first spring,' 'The second spring'… all the way to 'The seventh spring.' The last one is empty, and unsealed."),
     nar("收信人那一栏，写的都是我的名字。没有地址。", "In the space for the addressee, every one has my name. No address."),
+    cgoff(),
     show("shencheng", "surprised", "right"),
     say("shencheng", "……别看。", "…Don't look.", face="surprised"),
 ], [
@@ -209,13 +211,13 @@ FLAGS = [("flag.c_asked", "问她七年前为什么哭", "Asked why she cried se
          ("flag.c_umbrella", "找到了那把黄色的伞", "Found the yellow umbrella"), ("flag.c_keep", "没有卖老房子", "Didn't sell the old house"),
          ("flag.c_sold", "卖了老房子", "Sold the old house"), ("flag.c_good", "和她一起写第七封信", "Wrote the seventh letter with her"),
          ("flag.c_normal", "接过了可可罐", "Took the cocoa tin")]
-CG = {"cg_front_row": T("第一排", "The front row"), "cg_seawall": T("第七封信", "The seventh letter")}
+CG = {"cg_end_shencheng_good": T("第八封信", "The eighth letter"), "cg_end_shencheng_normal": T("没有署名的明信片", "An unsigned postcard"), "cg_letters": T("七个信封", "Seven envelopes"), "cg_front_row": T("第一排", "The front row"), "cg_seawall": T("第七封信", "The seventh letter")}
 ENDINGS = [
-    {"id": "shencheng_good", "title": T("沈澄 · 好结局「第八封信」", "Shen Cheng · Good Ending: The Eighth Letter"),
+    {"id": "shencheng_good", "cg": "cg_end_shencheng_good", "title": T("沈澄 · 好结局「第八封信」", "Shen Cheng · Good Ending: The Eighth Letter"),
      "text": T("第二年春天，咖啡馆重新开张，菜单最上面多了一行：“第一排——热可可，一块棉花糖”。可可罐还在柜子最高的那一格，里面有八个信封。第八封寄出去了，走了七百米，从咖啡馆到老房子。上面只写了一句：“今天也在。”",
                "The next spring the café reopens, with a new line at the top of the menu: 'The Front Row—hot cocoa, one marshmallow.' The cocoa tin still sits on the highest shelf, and now it holds eight envelopes. The eighth one was actually mailed: seven hundred meters, from the café to the old house. It says only: 'Still here today.'"),
      "when": F("flag.c_good")},
-    {"id": "shencheng_normal", "title": T("沈澄 · 普通结局「没有寄出的信」", "Shen Cheng · Normal Ending: Letters Never Sent"),
+    {"id": "shencheng_normal", "cg": "cg_end_shencheng_normal", "title": T("沈澄 · 普通结局「没有寄出的信」", "Shen Cheng · Normal Ending: Letters Never Sent"),
      "text": T("回到城里以后，我把七封信一封一封读完了。骂我的那些，骂得很准；别的那些，我读了很多遍。第二年春天，我收到一张明信片，背面是汐川的海，没有署名。我知道是谁。可是这一次，她没有写“等你”。",
                "Back in the city, I read the seven letters, one after another. The ones that call me names are accurate. The others, I read many times. The next spring, a postcard arrives: the sea at Xichuan on the front, no signature. I know who it's from. But this time, she didn't write 'waiting for you.'"),
      "when": F("flag.c_normal")},
