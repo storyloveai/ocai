@@ -14,7 +14,8 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 .layer { position: absolute; inset: 0 }
 #bg { background-size: cover; background-position: center; transition: opacity .6s }
 #bg .ph, #cg .ph { position: absolute; left: 16px; top: 14px; font-size: 13px; color: rgba(255,255,255,.75); letter-spacing: .08em; background: rgba(0,0,0,.25); padding: 2px 10px; border-radius: 99px }
-#sprites { pointer-events: none }
+#sprites { pointer-events: none; will-change: transform }
+.fx { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .35s; pointer-events: none; display: block }
 .sprite { position: absolute; bottom: 0; height: 96%; aspect-ratio: 2 / 3; transform: translateX(-50%); transition: left .35s, filter .25s, opacity .3s; display: flex; align-items: flex-end; justify-content: center }
 .sprite img { height: 100%; width: auto; object-fit: contain }
 .sprite.dim { filter: brightness(.62) saturate(.8) }
@@ -90,8 +91,8 @@ const store = { get(k, d) { try { const v = localStorage.getItem("xc." + k); ret
 let LANG = store.get("lang", (navigator.language || "").startsWith("zh") ? "zh" : "en");
 const t = x => x == null ? "" : typeof x === "string" ? x : (x[LANG] || x.zh || x.en || "");
 const UI = {
-  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", savedAt: n => `存档 ${n}` },
-  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", savedAt: n => `Slot ${n}` },
+  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", tilt: "立体", savedAt: n => `存档 ${n}` },
+  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", tilt: "3D", savedAt: n => `Slot ${n}` },
 };
 const ui = k => UI[LANG][k];
 const art = p => ART_FILES.has(p) ? ART_BASE + p : null;
@@ -112,16 +113,16 @@ function drawBg() {
   const el = $("#bg"), id = V.bg, url = id && art(`bg/${id}.webp`);
   const grad = id ? `linear-gradient(160deg, hsl(${hue(id)} 45% 32%), hsl(${(hue(id) + 40) % 360} 40% 14%))` : "none";
   el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;   // 图没到之前先垫一层颜色，不会是一片黑
-  el.innerHTML = !url && id ? `<span class="ph"></span>` : "";
-  if (!url && id) el.firstChild.textContent = t((CAMP.art.bg || {})[id]) || id;
+  ph(el, !url && id ? t((CAMP.art.bg || {})[id]) || id : null);
+  FX.bg && FX.bg.set(url, url && art(`depth/bg/${id}.webp`));
 }
 function drawCg() {
   const el = $("#cg"), id = V.cg, url = id && art(`cg/${id}.webp`);
   el.classList.toggle("on", !!id);
   const grad = id ? `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))` : "none";
   el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
-  el.innerHTML = !url && id ? `<span class="ph"></span>` : "";
-  if (!url && id) el.firstChild.textContent = "CG · " + (t((CAMP.art.cg || {})[id]) || id);
+  ph(el, !url && id ? "CG · " + (t((CAMP.art.cg || {})[id]) || id) : null);
+  FX.cg && FX.cg.set(url, url && art(`depth/cg/${id}.webp`));
 }
 const POS = { left: 24, center: 50, right: 76 };
 function silhouette(who, face) {
@@ -135,6 +136,7 @@ function silhouette(who, face) {
   svg.querySelectorAll("text")[1].textContent = f;
   return svg;
 }
+function ph(el, label) { el.querySelector(".ph")?.remove(); if (label) { const s = document.createElement("span"); s.className = "ph"; s.textContent = label; el.append(s); } }
 function drawSprites() {
   const box = $("#sprites"); box.replaceChildren();
   for (const [who, s] of Object.entries(V.sprites)) {
@@ -274,6 +276,7 @@ function renderBar() {
   const btn = (k, f, pressed) => { const b = document.createElement("button"); b.textContent = ui(k); if (pressed != null) b.setAttribute("aria-pressed", String(pressed)); b.onclick = e => { e.stopPropagation(); f(); }; bar.append(b); };
   btn("log", showLog); btn("auto", () => { auto = !auto; skip = false; renderBar(); if (auto && !typing && $("#menu").hidden) step(); }, auto);
   btn("skip", () => { skip = !skip; auto = false; renderBar(); if (skip && $("#menu").hidden) step(); }, skip);
+  btn("tilt", () => { TILT.on = !TILT.on; store.set("tilt", TILT.on); askTilt(); renderBar(); }, TILT.on);
   btn("save", () => slots("save")); btn("loadS", () => slots("load"));
   btn("lang", () => { LANG = LANG === "zh" ? "en" : "zh"; store.set("lang", LANG); document.documentElement.lang = LANG; renderBar(); draw(); const op = V.queue[V.i - 1]; if (op && op.op === "say") { clearInterval(typing); typing = null; $("#name").textContent = op.who ? nameOf(op.who) : ""; $("#text").textContent = t(op.t); $("#next").classList.add("on"); } });
   btn("title", title);
@@ -295,6 +298,7 @@ function title() {
   el.querySelector("button")?.focus();
 }
 function start() {
+  askTilt();
   ART_FILES.forEach(f => { if (f.startsWith("bg/") || f.endsWith("/normal.webp")) preload(ART_BASE + f); });
   G = CC.newGame(CAMP); V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null, started: null };
   $("#title").hidden = true; $("#endscreen").hidden = true; draw(); next();
@@ -307,6 +311,84 @@ document.addEventListener("keydown", e => {
   if (e.key === "Control") { skip = true; renderBar(); step(); }
 });
 document.addEventListener("keyup", e => { if (e.key === "Control") { skip = false; renderBar(); } });
+
+/* ---------- 2.5D：倾斜手机（电脑上移动鼠标），背景和 CG 按深度图错开，立绘是中间一层 ----------
+   深度图在 art/depth/（越亮越近），由开源的 Depth Anything V2 Small 生成；没有深度图或浏览器不支持 WebGL 时，照常显示平面图。 */
+const TILT = { on: store.get("tilt", true), x: 0, y: 0, tx: 0, ty: 0, base: null, asked: false };
+const clamp1 = v => Math.max(-1, Math.min(1, v));
+class DepthLayer {
+  constructor(host, k) {
+    this.k = k; this.host = host; this.c = document.createElement("canvas"); this.c.className = "fx"; host.prepend(this.c);
+    const gl = this.gl = this.c.getContext("webgl", { alpha: false, antialias: false, preserveDrawingBuffer: false });
+    if (!gl) return;
+    const sh = (type, src) => { const o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+    const pr = this.pr = gl.createProgram();
+    gl.attachShader(pr, sh(gl.VERTEX_SHADER, "attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; v.y = 1. - v.y; gl_Position = vec4(p, 0., 1.); }"));
+    gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, `precision mediump float; varying vec2 v; uniform sampler2D img, dep; uniform vec2 off; uniform vec4 cov;
+      void main(){ vec2 uv = cov.xy + v * cov.zw; vec2 u = uv;
+        for (int i = 0; i < 4; i++) { float d = texture2D(dep, u).r; u = uv + off * (d - .35); }
+        gl_FragColor = texture2D(img, clamp(u, 0., 1.)); }`));
+    gl.linkProgram(pr); gl.useProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { this.gl = null; return; }
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const tex = unit => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
+      for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, v); return t; };
+    this.ti = tex(0); this.td = tex(1);
+    gl.uniform1i(gl.getUniformLocation(pr, "img"), 0); gl.uniform1i(gl.getUniformLocation(pr, "dep"), 1);
+    this.uOff = gl.getUniformLocation(pr, "off"); this.uCov = gl.getUniformLocation(pr, "cov");
+  }
+  set(url, durl) {
+    if (!this.gl) return;
+    if (url === this.url && durl === this.durl) return;
+    this.url = url; this.durl = durl; this.ready = false; this.c.style.opacity = 0;
+    if (!url || !durl) return;
+    const a = new Image(), b = new Image(); let n = 0;
+    const done = () => { if (++n < 2 || this.url !== url) return; const gl = this.gl;
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, this.ti); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, a);
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, this.td); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, b);
+      this.iw = a.naturalWidth; this.ih = a.naturalHeight; this.ready = true; this.last = null; this.draw(TILT.x, TILT.y); this.c.style.opacity = 1; };
+    a.onload = b.onload = done; a.onerror = b.onerror = () => {}; a.src = url; b.src = durl;
+  }
+  draw(x, y) {
+    if (!this.ready) return;
+    const gl = this.gl, dpr = Math.min(devicePixelRatio || 1, 2), W = Math.round(this.host.clientWidth * dpr), H = Math.round(this.host.clientHeight * dpr);
+    if (!W || !H) return;
+    const key = `${W}x${H}:${x.toFixed(4)},${y.toFixed(4)}`; if (key === this.last) return; this.last = key;
+    if (this.c.width !== W || this.c.height !== H) { this.c.width = W; this.c.height = H; }
+    gl.viewport(0, 0, W, H);
+    const A = W / H, I = this.iw / this.ih, z = 1 / 1.05;          // cover the stage, with a little margin so the edges never show
+    let sx = 1, sy = 1; if (A > I) sy = I / A; else sx = A / I; sx *= z; sy *= z;
+    gl.uniform4f(this.uCov, (1 - sx) / 2, (1 - sy) / 2, sx, sy);
+    gl.uniform2f(this.uOff, x * this.k * sx, y * this.k * sy);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+}
+const FX = { bg: new DepthLayer($("#bg"), .05), cg: new DepthLayer($("#cg"), .04) };
+function askTilt() {                       // iPhone only lets a page read the tilt after a tap, and asks the player first
+  const D = window.DeviceOrientationEvent;
+  if (!TILT.asked && D && typeof D.requestPermission === "function") { TILT.asked = true; D.requestPermission().catch(() => {}); }
+}
+addEventListener("deviceorientation", e => {
+  if (e.beta == null || e.gamma == null) return;
+  const ang = (screen.orientation && screen.orientation.angle) ?? window.orientation ?? 0;
+  let gx = e.gamma, gy = e.beta;
+  if (ang === 90) { gx = e.beta; gy = -e.gamma; } else if (ang === -90 || ang === 270) { gx = -e.beta; gy = e.gamma; }
+  if (!TILT.base) TILT.base = { x: gx, y: gy };
+  TILT.base.x += (gx - TILT.base.x) * .006; TILT.base.y += (gy - TILT.base.y) * .006;   // whatever angle you hold settles back to "front" after a few seconds
+  TILT.tx = clamp1((gx - TILT.base.x) / 14); TILT.ty = clamp1((gy - TILT.base.y) / 14);
+});
+$("#stage").addEventListener("pointermove", e => {
+  if (e.pointerType !== "mouse") return;
+  const r = $("#stage").getBoundingClientRect(); TILT.tx = clamp1(((e.clientX - r.left) / r.width) * 2 - 1); TILT.ty = clamp1(((e.clientY - r.top) / r.height) * 2 - 1);
+});
+(function fxLoop() {
+  TILT.x += (TILT.tx - TILT.x) * .1; TILT.y += (TILT.ty - TILT.y) * .1;
+  const x = TILT.on ? TILT.x : 0, y = TILT.on ? TILT.y : 0;
+  FX.bg.draw(x, y); if (V && V.cg) FX.cg.draw(x, y);
+  const st = $("#stage"); $("#sprites").style.transform = `translate3d(${(-x * .05 * .6 * st.clientWidth / 1.05).toFixed(1)}px, ${(-y * .05 * .35 * st.clientHeight / 1.05).toFixed(1)}px, 0)`;
+  requestAnimationFrame(fxLoop);
+})();
 document.documentElement.lang = LANG; renderBar(); title();
 window.__xc = { get G() { return G; }, get V() { return V; }, step, start };
 </script>
