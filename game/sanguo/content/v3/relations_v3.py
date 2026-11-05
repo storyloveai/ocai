@@ -41,7 +41,7 @@ TOKEN = node("x_rel_token", "*", "interrupt", T("腰牌", "The Token"), "free", 
             T("关羽在灯下读《春秋》，听你说完，只点了点头：『收着就是。』", "Guan Yu is reading the Annals by lamplight. He hears you out and only nods. 'Just keep it.'"),
             [setv("flag.v3_token"), rel("guanyu", "trust", 1)])],
     when=ALL(LIU3, F("flag.dd_guard"), AT("guanyu", "warmth", 1), V("grudge.guanyu", "<=", 0), NF("flag.v3_token")), order=3)
-TOKEN["art"] = {"scene": "lamp", "layers": [], "illus": "v3_guan_hall"}; TOKEN["cast"] = [{"id": "guanyu"}]
+TOKEN["art"] = {"scene": "lamp", "layers": [], "illus": "v3_token"}; TOKEN["cast"] = [{"id": "guanyu"}]
 
 GUAN_OUT = T("关羽没有拔刀。他只说了一个字：『滚。』第二天一早，周仓把你的行李放在了城门外。荆州，你回不去了。",
              "Guan Yu doesn't draw his blade. He says only one word: 'Out.' Early the next morning Zhou Cang leaves your things outside the city gate. You can't go back to Jingzhou.")

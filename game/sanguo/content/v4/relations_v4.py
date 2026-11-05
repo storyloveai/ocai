@@ -37,7 +37,7 @@ MAP = node("x_rel_wzmap", "*", "interrupt", T("小路图", "The Map"), "free", T
             T("字条回来了，只有一个字：『好。』", "The note comes back with a single word: 'Yes.'"),
             [setv("flag.v4_wz_map"), rel("wenzhi", "warmth", 1)])],
     when=ALL(JING, AT("wenzhi", "intimacy", 1), NF("flag.v4_wz_map")), order=3)
-MAP["art"] = {"scene": "lamp", "layers": [], "illus": "v4_wz_letter"}; MAP["cast"] = [{"id": "wenzhi"}]
+MAP["art"] = {"scene": "lamp", "layers": [], "illus": "v4_wz_map"}; MAP["cast"] = [{"id": "wenzhi"}]
 
 GUAN_OUT = T("关羽没有拔刀。他只说了一个字：『滚。』第二天一早，周仓把你的行李放在了营门外。荆州，你回不去了。",
              "Guan Yu doesn't draw his blade. He says only one word: 'Out.' Early the next morning Zhou Cang leaves your things outside the camp gate. You can't go back to Jingzhou.")

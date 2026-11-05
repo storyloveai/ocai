@@ -32,7 +32,7 @@ HERB = node("x_rel_wzherb", "*", "interrupt", T("一包草", "A Bundle of Herbs"
     [choice("keep", "expression", T("收好，答应她会带回来。", "Keep it, and promise to bring it back."), T("她瞪了你一眼：『用完了才好。』", "She glares at you. 'Better if you use it up.'"),
             [setv("flag.v6_wz_herb"), rel("wenzhi", "intimacy", 1)])],
     when=ALL(AT("wenzhi", "intimacy", 1), NO_BOOK, NF("flag.v6_wz_herb")), order=3)
-HERB["art"] = {"scene": "lamp", "layers": [], "illus": "v6_wz_burns"}; HERB["cast"] = [{"id": "wenzhi"}]
+HERB["art"] = {"scene": "lamp", "layers": [], "illus": "v6_wz_herb"}; HERB["cast"] = [{"id": "wenzhi"}]
 
 
 def v6(N, VARS, CAMP_MOVES=None):
@@ -81,7 +81,7 @@ LING = node("x_rel_zgling", "*", "interrupt", T("令箭", "The Command Arrow"), 
     [choice("take", "expression", T("双手接过。", "Take it in both hands."), T("丞相点点头，又低头看他的文书了。灯芯爆了一下。", "The Chancellor nods and goes back to his papers. The wick sputters."),
             [setv("flag.v7_zg_ling"), rel("zhuge", "warmth", 1)])],
     when=ALL(AT("zhuge", "trust", 3), NF("flag.v7_zg_ling"), NF("flag.v7_after_lamp")), order=3)
-LING["art"] = {"scene": "lamp", "layers": [], "illus": "v7_lamp"}; LING["cast"] = [{"id": "zhuge"}]
+LING["art"] = {"scene": "lamp", "layers": [], "illus": "v7_zg_ling"}; LING["cast"] = [{"id": "zhuge"}]
 
 
 def v7(N, VARS, ENDINGS):
@@ -136,7 +136,7 @@ BOOK = node("x_rel_jwbook", "*", "interrupt", T("兵书", "The Book of War"), "f
     [choice("copy", "expression", T("连夜抄。", "Copy it through the night."), T("你抄到天亮。阴平那一页，你多看了两眼。", "You copy until dawn. You linger twice over the page about Yinping."),
             [setv("flag.v8_jw_book"), rel("jiangwei", "trust", 1)])],
     when=ALL(AT("jiangwei", "warmth", 2), NF("flag.v8_jw_book"), NF("flag.v8_after_jiange")), order=3)
-BOOK["art"] = {"scene": "lamp", "layers": [], "illus": "v8_jiangwei_night"}; BOOK["cast"] = [{"id": "jiangwei"}]
+BOOK["art"] = {"scene": "lamp", "layers": [], "illus": "v8_jw_book"}; BOOK["cast"] = [{"id": "jiangwei"}]
 
 
 def v8(N, VARS, CAMP_MOVES):
