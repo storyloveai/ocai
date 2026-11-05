@@ -24,5 +24,9 @@ WebGAL：https://github.com/OpenWebGAL/WebGAL ，MPL-2.0，可商用（只改引
 - 选项后的好感用 WebGAL 变量算，支线按条件全部列出（不是引擎的“挑三个”）。
 - 转换器只写剧本，不改 WebGAL 引擎。
 
-## 可选：Ren'Py 对比小样
-如果有时间：下载 Ren'Py SDK（https://www.renpy.org），用同一段序章做一个网页版（Build Distributions → Web），同样放到 `ooc-replica/dist/assets/xichuan-renpy/`，方便用户三个版本一起比。
+## Ren'Py 对比小样（剧本已经转好）
+1. `python3 game/xichuan/tools/renpy_export.py`：生成 `game/xichuan/renpy/game/`，里面有 `script.rpy`（序章 + 第一章，含条件、选项、数值、支线）、`xichuan_options.rpy` 和 `images/`（背景、CG、立绘，按 Ren'Py 的文件名规则命名，自动定义图片）。
+2. 下载 Ren'Py SDK 8.x（https://www.renpy.org/latest.html），启动器里新建工程 `xichuan`（语言选简体中文），把第 1 步生成的 `game/` 下的文件全部覆盖拷进新工程的 `game/`。
+3. 放一个中文字体：`game/fonts/NotoSansSC-Regular.ttf`（Noto Sans SC，SIL OFL 开源；从 Google Fonts 下载）。
+4. 启动器里先“启动工程”在桌面上点一遍，有报错把错误信息贴回给 Claude。
+5. 启动器里“Web（测试版）”构建网页版，把输出目录整个放到 `ooc-replica/dist/assets/xichuan-renpy/`，和 WebGAL 小样放进同一个 PR。手机上也打开试一下（第一次加载会比较慢，Ren'Py 网页版要下载整个引擎）。
