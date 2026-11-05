@@ -158,7 +158,8 @@ function step() {
     if (op.op === "bg") { V.bg = op.id; V.cg = null; V.sprites = {}; draw(); continue; }
     if (op.op === "show") { V.sprites[op.who] = { face: op.face, at: op.at || (V.sprites[op.who] || {}).at || "center" }; drawSprites(); continue; }
     if (op.op === "hide") { if (op.who) delete V.sprites[op.who]; else V.sprites = {}; drawSprites(); continue; }
-    if (op.op === "cg") { V.cg = op.id; if (op.id) unlock("cg", op.id); drawCg(); continue; }
+    if (op.op === "cg") { if (op.id && !art(`cg/${op.id}.webp`)) continue;   // 还没画的 CG 先跳过，不显示占位；图一到就会出现
+      V.cg = op.id; if (op.id) unlock("cg", op.id); drawCg(); continue; }
     if (op.op === "say") { say(op); return; }
   }
   next();                                        // the scene's lines are done: ask the engine what comes next
@@ -214,6 +215,11 @@ function sideMenu() {
 }
 function showEnd() {
   const es = CC.endings(CAMP, G), e = $("#endscreen"); e.replaceChildren(); e.hidden = false;
+  // 结局有自己的 CG 就铺在后面（压暗，字照样看得清）
+  const ecg = es.map(x => CAMP.endings.find(g => g.id === x.group).fragments.find(f => f.id === x.frag).cg).find(id => id && art(`cg/${id}.webp`));
+  e.style.backgroundImage = ecg ? `linear-gradient(rgba(6,8,18,.55), rgba(6,8,18,.82)), url("${art(`cg/${ecg}.webp`)}")` : "";
+  e.style.backgroundSize = "cover"; e.style.backgroundPosition = "center";
+  if (ecg) unlock("cg", ecg);
   es.forEach((x, i) => {   // 每一组一个小标题（结局有自己的名字就用它），下面是正文
     const g = CAMP.endings.find(g => g.id === x.group), f = g.fragments.find(f => f.id === x.frag);
     const h = document.createElement(i ? "h3" : "h2"); h.textContent = t(f.title || g.title); e.append(h);

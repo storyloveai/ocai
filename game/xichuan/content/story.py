@@ -152,8 +152,10 @@ S_ZHIYAO = scene("c1_poster", "c1", "side", T("雨里的海报", "Posters in the
     say("zhiyao", "可是我想在它拆掉之前，让它再满一次。哪怕就一次。", "But before it does, I want to see it full one more time. Even just once.", face="normal"),
 ], [
     choice("umbrella", "expression", T("把伞撑到她头顶。", "Hold your umbrella over her."), [
+        cg("cg_umbrella"),
         say("zhiyao", "……都湿透了还撑伞，你傻不傻。", "…We're already soaked and you open an umbrella. Are you an idiot?", face="shy"),
         nar("她没有躲开。", "She doesn't step away."),
+        cgoff(),
     ], [rel("zhiyao", "intimacy", 1)], values=["ti"]),
     choice("promise", "dilemma", T("“那就让它满一次。我帮你。”", "\"Then let's fill it once. I'll help.\""), [
         say("zhiyao", "说好了啊。说话不算数的人，我会记一辈子的。", "That's a promise. I'll remember anyone who breaks one for the rest of my life.", face="smile"),
@@ -221,8 +223,8 @@ NODES = [PROLOGUE, C1_FAIR, S_ZHIYAO, S_SHENCHENG, S_JIBAI, X_RUMOR] + common.NO
 for f, zh, en in common.FLAGS + zhiyao.FLAGS + shencheng.FLAGS + jibai.FLAGS: VARS[f] = {"type": "flag", "init": False, "label": T(zh, en)}
 
 ENDINGS = [
-    {"id": "g_end", "title": T("尾声", "Epilogue"), "fragments": [{"id": e["id"], "title": e["title"], "text": e["text"], "when": e["when"]} for e in zhiyao.ENDINGS + shencheng.ENDINGS + jibai.ENDINGS] + [
-        {"id": "none", "title": T("普通结局「最后一排」", "Normal Ending: The Back Row"), "text": T("最后一场放映，你坐在最后一排。散场的时候，银幕上的光一点一点暗下去。春天就这样过去了。", "At the last show you sit in the back row. As the crowd leaves, the light on the screen fades bit by bit. And so the spring passes."), "when": F("flag.route_none")}]},
+    {"id": "g_end", "title": T("尾声", "Epilogue"), "fragments": [{"id": e["id"], "cg": e["cg"], "title": e["title"], "text": e["text"], "when": e["when"]} for e in zhiyao.ENDINGS + shencheng.ENDINGS + jibai.ENDINGS] + [
+        {"id": "none", "cg": "cg_end_none", "title": T("普通结局「最后一排」", "Normal Ending: The Back Row"), "text": T("最后一场放映，你坐在最后一排。散场的时候，银幕上的光一点一点暗下去。春天就这样过去了。", "At the last show you sit in the back row. As the crowd leaves, the light on the screen fades bit by bit. And so the spring passes."), "when": F("flag.route_none")}]},
     {"id": "g_heart", "title": T("这个春天", "This spring"), "fragments": [  # 走完一条个人线的人不再显示这一组
         {"id": "zhiyao", "text": T("夏知遥在社团群里，第一次叫了你的名字。", "In the club chat, Xia Zhiyao calls you by name for the first time."), "when": WARM_("zhiyao")},
         {"id": "shencheng", "text": T("沈澄的咖啡馆，那几天打烊总比平时晚一个小时。", "Those nights, Shen Cheng's café always closes an hour late."), "when": WARM_("shencheng")},
@@ -237,7 +239,7 @@ ART = {
   "bg": {"train": T("列车车厢 · 黄昏", "Train carriage · dusk"), "station": T("汐川站", "Xichuan Station"), "oldhouse": T("老房子的院子", "The old house"),
          "cinema_dusk": T("潮声影院 · 黄昏", "Tidesound Cinema · dusk"), "campus": T("汐川大学 · 社团广场", "Xichuan University · club square"),
          "rain_street": T("雨中的校门", "School gate in the rain"), "cafe": T("海边咖啡馆", "Seaside café"), "projection": T("放映室", "Projection booth")},
-  "cg": {"cg_stage": T("银幕下的女孩", "The girl beneath the screen")},
+  "cg": {"cg_stage": T("银幕下的女孩", "The girl beneath the screen"), "cg_umbrella": T("雨里的伞", "An umbrella in the rain"), "cg_end_none": T("最后一排", "The back row")},
   "faces": {"normal": T("平常", "neutral"), "smile": T("笑", "smile"), "shy": T("害羞", "shy"), "angry": T("生气", "angry"), "sad": T("难过", "sad"), "surprised": T("吃惊", "surprised")},
 }
 
