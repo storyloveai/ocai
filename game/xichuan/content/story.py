@@ -211,7 +211,7 @@ X_RUMOR = scene("x_rumor", "*", "interrupt", T("流言", "Rumors"), [
     choice("ok", "expression", T("“……知道了。”", "\"…Got it.\""), [nar("这几天，路上遇见的人好像都在看我。", "For days after, everyone I pass seems to be looking at me.")], [add("rumor", -2)]),
 ], order=-1, when=V("rumor", ">=", 2))
 
-import common, zhiyao, shencheng, jibai
+import common, zhiyao, shencheng, jibai, talk
 
 CHAPTERS = [
     {"id": "p", "title": T("序章", "Prologue"), "intro": [P(T("三月，汐川。", "March, Xichuan."))], "offer": 0},
@@ -257,6 +257,10 @@ CAMPAIGN = {
 }
 # 自由对话（v0.18）：玩家对场上的女主说一句话，AI 只判断语气和这句话显出的品质（value_tags），好感由引擎规则决定
 CAMPAIGN["value_tags"] = CAMPAIGN["pack"]["values"]
+# 自由对话影响剧情（v0.20）：决裂、隐藏的门、承诺、说过的话被提起
+talk.extend(NODES, VARS, CAMPAIGN)
+CAMPAIGN["nodes"] = {n["id"]: n for n in NODES}
+ENDINGS.append(talk.WORDS_ENDING)
 
 if __name__ == "__main__":
     out = HERE / "campaign.json"

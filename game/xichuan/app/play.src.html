@@ -434,7 +434,7 @@ fetch("/api/config", { cache: "no-store" }).then(r => r.ok ? r.json() : null).th
 const MOODFACE = { neutral: "normal", warm: "smile", cold: "angry", sad: "sad", surprised: "surprised", shy: "shy" };
 function talkTarget(n) {
   const cast = (n.cast || []).map(c => c.id);
-  return Object.keys(V.sprites).find(w => CAMP.chars[w] && CAMP.chars[w].romance && cast.includes(w)) || null;
+  return Object.keys(V.sprites).find(w => CAMP.chars[w] && CAMP.chars[w].romance && cast.includes(w) && !G.v["flag.broken_" + w]) || null;
 }
 function talkBox(n, who) {
   const m = $("#menu"); m.replaceChildren(); m.hidden = false;
@@ -451,17 +451,25 @@ function talkBox(n, who) {
     let out = null;
     try {
       // 和三国走同一条通道：流式 + 结构化输出（模型的回答一定是合法的 JSON），读最后的 done
-      const r = await fetch("/api/sanguo", { method: "POST", headers: { "content-type": "application/json", accept: "application/x-ndjson" }, body: JSON.stringify({ game: "xichuan", phase: "express", task: "talk", lang: LANG, context: { node: n.id, target: who, text, vars: G.v, recent } }) });
+      const r = await fetch("/api/sanguo", { method: "POST", headers: { "content-type": "application/json", accept: "application/x-ndjson" }, body: JSON.stringify({ game: "xichuan", phase: "express", task: "talk", lang: LANG, context: { node: n.id, target: who, text, vars: G.v, recent, memories: ((V.said || {})[who] || []).slice(-6) } }) });
       const body = r.ok ? await r.text() : "";
       for (const line of body.split("\n")) { try { const m = JSON.parse(line); if (m.type === "done" && m.output && typeof m.output.reply === "string") out = m.output; } catch {} }
     } catch {}
     m.hidden = true;
     const mine = { op: "say", who: "me", t: { zh: text, en: text } };
     if (!out) { load([mine, { op: "say", who: null, t: { zh: UI.zh.noReply, en: UI.en.noReply } }], `t:${n.id}`); return step(); }
+    // 她记得你说过的话（之后的对话会带上）
+    V.said = V.said || {}; (V.said[who] = V.said[who] || []).push(text.slice(0, 80)); if (V.said[who].length > 12) V.said[who].shift();
     CC.chat(CAMP, G);
-    const e2 = CC.speak(CAMP, G, out.tone || "flat", text, who, Array.isArray(out.values) ? out.values : []);
+    // 这句话是不是剧本里的某条“走向”（决裂、隐藏的门、承诺）：AI 认出来的为准，离线时按语气标签兜底；后果由规则决定
+    const avail = CC.moves(CAMP, G).filter(m => m.to === who);
+    let mv = out.move && avail.find(m => m.id === out.move);
+    if (!mv) { const mm = CC.matchMove(CAMP, G, text, who, out.tone); if (mm && (mm.labels || []).includes(out.tone)) mv = mm; }
+    const e2 = mv ? CC.move(CAMP, G, mv.id, text) : CC.speak(CAMP, G, out.tone || "flat", text, who, Array.isArray(out.values) ? out.values : []);
     const up = !!(e2 && e2.changes && e2.changes.some(c => c.var === `rel.${who}.intimacy` && c.to > c.from));
-    load([mine, { op: "say", who, t: { zh: out.reply, en: out.reply }, face: MOODFACE[out.mood] || "normal", heart: up }], `t:${n.id}`);
+    const lines = [mine, { op: "say", who, t: { zh: out.reply, en: out.reply }, face: MOODFACE[out.mood] || "normal", heart: up }];
+    if (mv) (mv.out || []).forEach(p => { if (!p.when || CC.evalCond(G, p.when)) lines.push({ op: "say", who: null, t: p.text }); });
+    load(lines, `t:${n.id}`);
     step(); autosave();
   };
   setTimeout(() => inp.focus(), 50);
