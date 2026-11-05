@@ -1,0 +1,572 @@
+[
+  {
+    "id": "cg-cg_umbrella",
+    "candidate": 1,
+    "file": "cg-cg_umbrella-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "eccf6f619c2b917e62d5e2d0f48636360ff260cb27a5164587d889c85b1f2ff6",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "撑伞、抱海报及雨景成立，主角只见背部/手臂；未见文字。"
+  },
+  {
+    "id": "cg-cg_umbrella",
+    "candidate": 2,
+    "file": "cg-cg_umbrella-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "6900ef8eb70bbae9eaa9fe221bfccb742094b644165f85280438b8879e983dd8",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "撑伞、抱海报及雨景成立，主角只见背部/手臂；未见文字。"
+  },
+  {
+    "id": "cg-cg_cats",
+    "candidate": 1,
+    "file": "cg-cg_cats-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "0b3b7c4440a72fcc78ddcf5edb7e3e39422498a2490907709357632edb9a8355",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "成年沈澄蹲身喂猫，包含三花幼猫（动物）；衣服、刘海与夜景保持。"
+  },
+  {
+    "id": "cg-cg_cats",
+    "candidate": 2,
+    "file": "cg-cg_cats-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "58cba9affec77edb4efb4606db0b22fb80f5d054af5e553196c4ffb04e0869db",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "成年沈澄蹲身喂猫，包含三花幼猫（动物）；衣服、刘海与夜景保持。"
+  },
+  {
+    "id": "cg-cg_splice",
+    "candidate": 1,
+    "file": "cg-cg_splice-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "adbd21fc98b7b5c85f9410faf0c24f8e29b5044693702903c50fecc95e63cd6f",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "白手套、双人手部接片及眼镜可见；请精审手指与胶片/接片机的接触。"
+  },
+  {
+    "id": "cg-cg_splice",
+    "candidate": 2,
+    "file": "cg-cg_splice-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "e43436cd079b3d65e6e741f53b83e5e1ce6b82df761d03ac9440a70d36dc4d8d",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "白手套、双人手部接片及眼镜可见；请精审手指与胶片/接片机的接触。"
+  },
+  {
+    "id": "cg-cg_shout",
+    "candidate": 1,
+    "file": "cg-cg_shout-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "bfba6202c9cd7b19f62bdac844a79747b61516b563bd3c30d4a81a5e7c6f48cb",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "双手拢口喊海、风吹发衣成立；两候选均无其他人物。"
+  },
+  {
+    "id": "cg-cg_shout",
+    "candidate": 2,
+    "file": "cg-cg_shout-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "e1a9d2634a03607af0b6481feb21d3dcaf795f00fedc81addcbdfb040dca58e4",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "双手拢口喊海、风吹发衣成立；两候选均无其他人物。"
+  },
+  {
+    "id": "cg-cg_shoulder",
+    "candidate": 1,
+    "file": "cg-cg_shoulder-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "ccd856959c8a92cb527afa3c06e8cfb9f1bf4640371ae777a8163b2ce798195a",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "知遥闭眼靠肩、饭团可见；主角背影，脸不露。"
+  },
+  {
+    "id": "cg-cg_shoulder",
+    "candidate": 2,
+    "file": "cg-cg_shoulder-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "6a7097b5798bfdbc263d489dbabc11333e620bb20998910200ba17ec26a47bb4",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "知遥闭眼靠肩、饭团可见；主角背影，脸不露。"
+  },
+  {
+    "id": "cg-cg_letters",
+    "candidate": 1,
+    "file": "cg-cg_letters-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "fa7ea967ceef0f5ecb9cb11628ff86dcf7756f12b94ac1f0edfcc9de7e0f6ef0",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "可可罐与散落空白信封、慌张拾取动作成立；部分信封靠近手边/相叠，七封数量采用前建议放大核。"
+  },
+  {
+    "id": "cg-cg_letters",
+    "candidate": 2,
+    "file": "cg-cg_letters-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "2cef6aa1dee58bfca2ea3e5b3a68a3352a1d3fe8c5cae98b8f1736f1c7fd2ab1",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "可可罐与散落空白信封、慌张拾取动作成立；部分信封靠近手边/相叠，七封数量采用前建议放大核。"
+  },
+  {
+    "id": "cg-cg_cot",
+    "candidate": 1,
+    "file": "cg-cg_cot-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "c0a13d09f8bd8f34c259edbe18dd93a7db4063e04f48f24cc4e1ed3c1411b12e",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "蜷身午睡、海景、小床与床边摘下的眼镜可见；请精审闭眼脸型、眼镜是否完全离脸。"
+  },
+  {
+    "id": "cg-cg_cot",
+    "candidate": 2,
+    "file": "cg-cg_cot-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "8e73435baf0229704e7ba6e22916855e09b7df20df7cc0ff5e41dfe8660d4b7b",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "蜷身午睡、海景、小床与床边摘下的眼镜可见；请精审闭眼脸型、眼镜是否完全离脸。"
+  },
+  {
+    "id": "cg-cg_grandpa",
+    "candidate": 1,
+    "file": "cg-cg_grandpa-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "bb011af3c1e6644849e97c8fbab248ead497560f51687e89f2bd650819d3110c",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "老人作为银幕投影人物，床与放映室可辨；前景观众背影；请审投影光路。"
+  },
+  {
+    "id": "cg-cg_grandpa",
+    "candidate": 2,
+    "file": "cg-cg_grandpa-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "cbb467ae0d7cd3a8bdabc3f0e6e4efea3c6d296dff76e70e5680d83d2c9e217f",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "老人作为银幕投影人物，床与放映室可辨；前景观众背影；请审投影光路。"
+  },
+  {
+    "id": "cg-cg_end_zhiyao_good",
+    "candidate": 1,
+    "file": "cg-cg_end_zhiyao_good-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "8b39ecf516bdb7822e27736cbbe509c8980a0a04765a62b43e5f2096d2a15fc7",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "知遥提箱返场与空座成立；已打开两张原图核见右下异色缝补白布。"
+  },
+  {
+    "id": "cg-cg_end_zhiyao_good",
+    "candidate": 2,
+    "file": "cg-cg_end_zhiyao_good-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "d0a7f4e426b739fa3a1c6df6880a25f96738b275669ea6fa2a522f24d1e0b9c1",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "知遥提箱返场与空座成立；已打开两张原图核见右下异色缝补白布。"
+  },
+  {
+    "id": "cg-cg_end_zhiyao_normal",
+    "candidate": 1,
+    "file": "cg-cg_end_zhiyao_normal-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "f31442b80b2f7376744931e83dabb9952476b401bc50e1ba37d8ae4f31c73b7f",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "第一排中央空椅被光照亮、周围观众背影成立。"
+  },
+  {
+    "id": "cg-cg_end_zhiyao_normal",
+    "candidate": 2,
+    "file": "cg-cg_end_zhiyao_normal-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "0f57a243692b63b35fddf7763821d421f8bbffa60c68ad6c620eee55b91121f5",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "第一排中央空椅被光照亮、周围观众背影成立。"
+  },
+  {
+    "id": "cg-cg_end_shencheng_good",
+    "candidate": 1,
+    "file": "cg-cg_end_shencheng_good-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "15fa9a4aa972e9854359611f5ec1683c78fd9c36c110ddbe1a2a0d6f2c7e4d73",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "踮脚放信、热可可及柜上罐子成立；八封信总数与单块棉花糖建议采用前放大核。"
+  },
+  {
+    "id": "cg-cg_end_shencheng_good",
+    "candidate": 2,
+    "file": "cg-cg_end_shencheng_good-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "1f4de056c56e8b1e8dc9030bca74a9faba4282afa5a561dd5ffdb3449bae20e3",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "踮脚放信、热可可及柜上罐子成立；八封信总数与单块棉花糖建议采用前放大核。"
+  },
+  {
+    "id": "cg-cg_end_shencheng_normal",
+    "candidate": 1,
+    "file": "cg-cg_end_shencheng_normal-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "e98e24ac73a1b9bd9a8de044f1a94f6f42f0e75e0b030cf77807ad5557da2563",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "只有主角的手、海景明信片与可可罐可见，未露主角脸；七封数量建议放大核。"
+  },
+  {
+    "id": "cg-cg_end_shencheng_normal",
+    "candidate": 2,
+    "file": "cg-cg_end_shencheng_normal-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "860a17b959363d809678a31688cb707fd7c1fca23be61b8610b3de62a602acad",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "只有主角的手、海景明信片与可可罐可见，未露主角脸；七封数量建议放大核。"
+  },
+  {
+    "id": "cg-cg_end_jibai_good",
+    "candidate": 1,
+    "file": "cg-cg_end_jibai_good-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "3400006dec04b54917cf7e4b841502d5ebcf1e1a66b54ab76d1852131b478e52",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "季白回望、眼镜、绿色工作衬衫与白布放映场景成立；请精审放映机光路。"
+  },
+  {
+    "id": "cg-cg_end_jibai_good",
+    "candidate": 2,
+    "file": "cg-cg_end_jibai_good-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "4318808dabc17318f403d0272f1b74ff2b4d86a086710a626b055e30b08b67b3",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "季白回望、眼镜、绿色工作衬衫与白布放映场景成立；请精审放映机光路。"
+  },
+  {
+    "id": "cg-cg_end_jibai_normal",
+    "candidate": 1,
+    "file": "cg-cg_end_jibai_normal-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "35502b9488baa0e1c40c5c9e28d448723ef43fced64ad306133469bba6f55de1",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "资料馆金属片罐与白手套成立，片罐无可读标签。"
+  },
+  {
+    "id": "cg-cg_end_jibai_normal",
+    "candidate": 2,
+    "file": "cg-cg_end_jibai_normal-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "df8d3539a11eece52dace8baa6bd7cb3a71d350dae4feddc08ce6dfa888246f2",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "资料馆金属片罐与白手套成立，片罐无可读标签。"
+  },
+  {
+    "id": "cg-cg_end_none",
+    "candidate": 1,
+    "file": "cg-cg_end_none-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "00607568183db0143f1af93d25020b5daf3ab46ac95d8718ac2955190e61ff45",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "空座、渐暗银幕与离场背影符合；未见正面人脸。"
+  },
+  {
+    "id": "cg-cg_end_none",
+    "candidate": 2,
+    "file": "cg-cg_end_none-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "sha256": "179b930154a6408e3b959fb0185142659cfde7b94b5c71be0090229d10e70e52",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）：脸、发型、服装",
+      "主角不露脸",
+      "所有人都是成年人；画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和已有 CG 放一起不违和"
+    ],
+    "status": "mechanical checks passed; visually reviewed, awaiting Claude final accept",
+    "visualReview": "空座、渐暗银幕与离场背影符合；未见正面人脸。"
+  }
+]
