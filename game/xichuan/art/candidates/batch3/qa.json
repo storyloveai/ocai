@@ -1,0 +1,122 @@
+[
+  {
+    "id": "sprite-zhou-normal",
+    "candidate": 1,
+    "file": "sprite-zhou-normal-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "48cf2a0a9db8adf3a583eda5b0bf37730e73deae02b51cf9a6c95de05e2d99bc",
+    "status": "candidate pending Claude/user review"
+  },
+  {
+    "id": "sprite-zhou-normal",
+    "candidate": 2,
+    "file": "sprite-zhou-normal-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "8762f65c13ee9d5d96efeb342605b57671367ed32adf43168bbf36f8207658d9",
+    "status": "candidate pending Claude/user review"
+  },
+  {
+    "id": "sprite-zhou-normal",
+    "candidate": 3,
+    "file": "sprite-zhou-normal-3.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "99f8fa85056ff20e45ebf84a10988d16ea9390313129cc83dd83a328ef9c6c00",
+    "status": "candidate pending Claude/user review"
+  },
+  {
+    "id": "sprite-zhou-normal",
+    "candidate": 4,
+    "file": "sprite-zhou-normal-4.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "52caa71e327da247e7fd26c9c2c3bfb83fa516ba1c5565c1d2d7596aa673d647",
+    "status": "candidate pending Claude/user review"
+  },
+  {
+    "id": "sprite-chenghang-normal",
+    "candidate": 1,
+    "file": "sprite-chenghang-normal-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "c1f8005fb6aab7df28784000c300ac97483e36bc007135637e941eef7aba3b39",
+    "status": "candidate pending Claude/user review"
+  },
+  {
+    "id": "sprite-chenghang-normal",
+    "candidate": 2,
+    "file": "sprite-chenghang-normal-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "cdb18d27ed2d0f11d5541b7262039eda30b7af4b54d8cf1774e5ed1d15108522",
+    "status": "candidate pending Claude/user review"
+  },
+  {
+    "id": "sprite-chenghang-normal",
+    "candidate": 3,
+    "file": "sprite-chenghang-normal-3.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "3334b4adc53c8beecdb1739f8e1285b926bafee41ef7490d4fb83a17b400b994",
+    "status": "candidate pending Claude/user review"
+  },
+  {
+    "id": "sprite-chenghang-normal",
+    "candidate": 4,
+    "file": "sprite-chenghang-normal-4.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sha256": "2dad18326b0a550244924052cc118d474bd6b48be51c186454163cc7dd746e09",
+    "status": "candidate pending Claude/user review"
+  }
+]

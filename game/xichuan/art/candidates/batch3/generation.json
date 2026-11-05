@@ -1,0 +1,184 @@
+{
+  "tool": "image_gen.imagegen",
+  "model": "not exposed",
+  "seed": "not exposed",
+  "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+  "records": [
+    {
+      "id": "sprite-zhou-normal",
+      "candidate": 1,
+      "file": "sprite-zhou-normal-1.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an older man in his sixties. Old Zhou, caretaker of an old open-air seaside cinema: short grey crew-cut hair, weathered tanned face with deep smile lines, thick grey eyebrows, a little stubble; a faded navy work jacket over a grey undershirt, loose khaki work trousers, a ring of old keys clipped to his belt; sturdy, slightly stooped. Gruff but kind. Expression: calm, neutral, a faint gruff half-smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 1 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    },
+    {
+      "id": "sprite-zhou-normal",
+      "candidate": 2,
+      "file": "sprite-zhou-normal-2.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an older man in his sixties. Old Zhou, caretaker of an old open-air seaside cinema: short grey crew-cut hair, weathered tanned face with deep smile lines, thick grey eyebrows, a little stubble; a faded navy work jacket over a grey undershirt, loose khaki work trousers, a ring of old keys clipped to his belt; sturdy, slightly stooped. Gruff but kind. Expression: calm, neutral, a faint gruff half-smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 2 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    },
+    {
+      "id": "sprite-zhou-normal",
+      "candidate": 3,
+      "file": "sprite-zhou-normal-3.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an older man in his sixties. Old Zhou, caretaker of an old open-air seaside cinema: short grey crew-cut hair, weathered tanned face with deep smile lines, thick grey eyebrows, a little stubble; a faded navy work jacket over a grey undershirt, loose khaki work trousers, a ring of old keys clipped to his belt; sturdy, slightly stooped. Gruff but kind. Expression: calm, neutral, a faint gruff half-smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 3 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    },
+    {
+      "id": "sprite-zhou-normal",
+      "candidate": 4,
+      "file": "sprite-zhou-normal-4.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an older man in his sixties. Old Zhou, caretaker of an old open-air seaside cinema: short grey crew-cut hair, weathered tanned face with deep smile lines, thick grey eyebrows, a little stubble; a faded navy work jacket over a grey undershirt, loose khaki work trousers, a ring of old keys clipped to his belt; sturdy, slightly stooped. Gruff but kind. Expression: calm, neutral, a faint gruff half-smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 4 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    },
+    {
+      "id": "sprite-chenghang-normal",
+      "candidate": 1,
+      "file": "sprite-chenghang-normal-1.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an adult university student with adult proportions and an adult face; not a child, not a teenager. Cheng Hang, 21: messy short dark hair with a cowlick, lively dark eyes, a cheeky grin; an oversized orange hoodie over a graphic-free white T-shirt, dark jeans, sneakers, a phone in one hand; energetic, comic-relief best-friend type. Expression: calm, neutral, a faint cheeky smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 1 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    },
+    {
+      "id": "sprite-chenghang-normal",
+      "candidate": 2,
+      "file": "sprite-chenghang-normal-2.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an adult university student with adult proportions and an adult face; not a child, not a teenager. Cheng Hang, 21: messy short dark hair with a cowlick, lively dark eyes, a cheeky grin; an oversized orange hoodie over a graphic-free white T-shirt, dark jeans, sneakers, a phone in one hand; energetic, comic-relief best-friend type. Expression: calm, neutral, a faint cheeky smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 2 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    },
+    {
+      "id": "sprite-chenghang-normal",
+      "candidate": 3,
+      "file": "sprite-chenghang-normal-3.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an adult university student with adult proportions and an adult face; not a child, not a teenager. Cheng Hang, 21: messy short dark hair with a cowlick, lively dark eyes, a cheeky grin; an oversized orange hoodie over a graphic-free white T-shirt, dark jeans, sneakers, a phone in one hand; energetic, comic-relief best-friend type. Expression: calm, neutral, a faint cheeky smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 3 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    },
+    {
+      "id": "sprite-chenghang-normal",
+      "candidate": 4,
+      "file": "sprite-chenghang-normal-4.png",
+      "prompt": "Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. He is an adult university student with adult proportions and an adult face; not a child, not a teenager. Cheng Hang, 21: messy short dark hair with a cowlick, lively dark eyes, a cheeky grin; an oversized orange hoodie over a graphic-free white T-shirt, dark jeans, sneakers, a phone in one hand; energetic, comic-relief best-friend type. Expression: calm, neutral, a faint cheeky smile.\nAvoid: No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.\nThe three supplied female sprites are VISUAL STYLE REFERENCES ONLY. DO NOT draw any of those women. Create exactly ONE MALE character described above, adult male facial anatomy and shoulders. Match the fine line quality, soft cel colors and overall polish of those references. Candidate 4 of four; maintain the prescribed hair, clothing and neutral pose, explore subtle original masculine facial individuality. For the older man, clear age sixty-plus with wrinkles, grey hair and weathered hands, not a young face. For the university man, clearly age 21 with adult jaw and adult body proportions, not a schoolboy. Transparent PNG alpha, exact portrait canvas 1024x1536, knee-up framing, both hands and any keys or phone fully inside frame. No ground shadow, no letters, logos, watermark or extra people.",
+      "referenceRoles": [
+        {
+          "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+          "role": "style only; not identity"
+        },
+        {
+          "path": "game/xichuan/art/sprites/jibai/normal.webp",
+          "role": "style only; not identity"
+        }
+      ],
+      "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce",
+      "tool": "image_gen.imagegen"
+    }
+  ]
+}
