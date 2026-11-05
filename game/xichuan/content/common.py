@@ -29,7 +29,9 @@ C2_SCREEN = scene("c2_screening", "c2", "main", T("第一场放映", "The First 
     choice("splice", "dilemma", T("跑去放映室，帮季白接片。", "Run to the booth and help Ji Bai splice the film."), [
         bg("projection"), show("jibai", "normal", "center"),
         say("jibai", "按住这里。对，别抖。", "Hold it here. Yes. Don't shake.", face="normal"),
+        cg("cg_splice"),
         nar("她的手很稳。三分钟后，银幕重新亮了起来。", "Her hands are steady. Three minutes later the screen lights up again."),
+        cgoff(),
         say("jibai", "……你的手，比我想的稳。", "…Your hands are steadier than I expected.", face="smile"),
     ], [rel("jibai", "intimacy", 1), rel("jibai", "esteem", 1)], values=["ti"]),
     choice("stage", "dilemma", T("跳上台，陪夏知遥对观众说话救场。", "Jump onto the stage and help Zhiyao keep the audience."), [
@@ -72,8 +74,10 @@ S2_ZHIYAO = scene("c2_ledger", "c2", "side", T("社团活动室", "The Club Room
 S2_CHENG = scene("c2_seawall", "c2", "side", T("海堤上的猫", "Cats on the Seawall"), [
     bg("seawall_night"),
     nar("夜里的海堤上，沈澄蹲着喂几只流浪猫。", "On the seawall at night, Shen Cheng is crouched, feeding a few stray cats."),
-    show("shencheng", "normal", "center"),
+    cg("cg_cats"),
     say("shencheng", "它们是那只三花的孙子辈。你走的那年，它刚生。", "They're the grandkids of that calico. The year you left, she'd just had her litter.", face="normal"),
+    cgoff(),
+    show("shencheng", "normal", "center"),
     say("shencheng", "……你走的那天，你说过一句话。你还记得吗？", "…The day you left, you said something to me. Do you remember?", face="sad"),
     think("我拼命地想。只想得起那天下雨，站台上很多人。", "I search my memory as hard as I can. All I recall is that it rained, and the platform was crowded."),
 ], [
@@ -246,4 +250,4 @@ FLAGS = [("flag.poster_sale", "用爷爷的旧海报义卖", "Sold grandfather's
 BG = {"street": T("夜里的海边街道", "Seaside street at night"), "clubroom": T("社团活动室", "Club room"), "seawall_night": T("夜里的海堤", "The seawall at night"),
       "library": T("图书馆三楼", "Library, third floor"), "office": T("学生处", "Student Affairs office"), "rooftop": T("教学楼天台", "Rooftop"),
       "storeroom": T("影院仓库", "Cinema storeroom"), "cinema_night": T("潮声影院 · 夜", "Tidesound Cinema · night")}
-CG = {"cg_first_screening": T("第一场放映", "The first screening"), "cg_photo": T("那张旧照片", "The old photo")}
+CG = {"cg_cats": T("海堤上的猫", "Cats on the seawall"), "cg_splice": T("接片", "Splicing the film"), "cg_first_screening": T("第一场放映", "The first screening"), "cg_photo": T("那张旧照片", "The old photo")}

@@ -114,9 +114,11 @@ S6_BEACH = scene("c6_beach", "c6", "side", T("单子上的第七件", "Number Se
     choice("shout", "dilemma", T("对着海喊：“汐川——我回来了！”", "Shout at the sea: \"Xichuan—I'm back!\""), [
         nar("喊完，嗓子都哑了。几只海鸥被吓飞了。", "When I'm done my throat is raw. A few gulls take off in fright."),
         say("zhiyao", "到我了。", "My turn.", face="normal"),
+        cg("cg_shout"),
         say("zhiyao", "我——不——想——走——！", "I—don't—want—to—go!", face="sad"),
         nar("海浪把她的声音卷走了。她站了很久，然后转过身来，眼睛红红的，笑了。", "The waves carry her voice away. She stands there a long time, then turns around, eyes red, and smiles."),
         say("zhiyao", "……好了。说完了。你就当没听见。", "…There. Done. Pretend you didn't hear that.", face="smile"),
+        cgoff(),
     ], [rel("zhiyao", "intimacy", 2), setv("flag.z_shout")], values=["yong"]),
     choice("skip", "expression", T("“第七件就算了吧，太傻了。”", "\"Let's skip number seven. It's silly.\""), [
         say("zhiyao", "……也是。", "…I guess.", face="sad"),
@@ -154,8 +156,10 @@ S6_ROOF = scene("c6_roof", "c6", "side", T("天台上看不见的白点", "The W
         say("zhiyao", "说好了。少一周，我就把你从社员名单上删掉。", "It's a deal. Miss one week and I'm striking you off the membership list.", face="smile"),
     ], [rel("zhiyao", "intimacy", 1), rel("zhiyao", "trust", 1), setv("flag.z_photo")], values=["gu"]),
     choice("quiet", "expression", T("什么也不说，陪她坐着，把饭团吃完。", "Say nothing. Sit with her and finish the rice balls."), [
+        cg("cg_shoulder"),
         nar("风很大。吃到一半，她把头轻轻靠在了我的肩膀上。", "It's windy. Halfway through, she leans her head lightly against my shoulder."),
         say("zhiyao", "……就一会儿。", "…Just for a minute.", face="shy"),
+        cgoff(),
     ], [rel("zhiyao", "intimacy", 2)], values=["ti"]),
 ], order=3, salience=1, when=ON, cast=["zhiyao"])
 
@@ -234,13 +238,13 @@ FLAGS = [("flag.z_stage", "上台陪她念开场白", "Went on stage to say the 
          ("flag.z_stay", "雨夜说“我留下来”", "Said 'I'm staying' on the rainy night"), ("flag.z_letgo", "雨夜让她别回头", "Told her not to look back on the rainy night"),
          ("flag.z_good", "在站台上告白", "Confessed on the platform"), ("flag.z_normal", "在站台上只挥了手", "Only waved on the platform")]
 BG = {"beach": T("海边的沙滩", "The beach")}
-CG = {"cg_last_screening": T("最后一场", "The last show"), "cg_platform": T("站台", "The platform")}
+CG = {"cg_end_zhiyao_good": T("第八个春天", "The eighth spring"), "cg_end_zhiyao_normal": T("空着的第一排", "The empty front row"), "cg_shout": T("对着海喊", "Shouting at the sea"), "cg_shoulder": T("天台上的肩膀", "A shoulder on the roof"), "cg_last_screening": T("最后一场", "The last show"), "cg_platform": T("站台", "The platform")}
 ENDINGS = [
-    {"id": "zhiyao_good", "title": T("夏知遥 · 好结局「第八个春天」", "Xia Zhiyao · Good Ending: The Eighth Spring"),
+    {"id": "zhiyao_good", "cg": "cg_end_zhiyao_good", "title": T("夏知遥 · 好结局「第八个春天」", "Xia Zhiyao · Good Ending: The Eighth Spring"),
      "text": T("第二年三月，汐川的海堤上挂起了一块缝补过的白布，右下角的颜色和别处不一样。来了四十三个人。开场前五分钟，最早那班车进站了。一个扎着侧马尾的女孩拖着箱子一路跑过来，坐进了第一排正中间。“社长，你迟到了。”“……闭嘴。开始吧。”",
                "The next March, a patched white canvas goes up on the Xichuan seawall; its bottom-right corner is a different shade from the rest. Forty-three people come. Five minutes before the show, the first train of the morning pulls in. A girl with a side ponytail comes running all the way from the station, dragging a suitcase, and drops into the front row, dead center. 'You're late, President.' '…Shut up. Let's begin.'"),
      "when": F("flag.z_good")},
-    {"id": "zhiyao_normal", "title": T("夏知遥 · 普通结局「春天过去了」", "Xia Zhiyao · Normal Ending: And Spring Passed"),
+    {"id": "zhiyao_normal", "cg": "cg_end_zhiyao_normal", "title": T("夏知遥 · 普通结局「春天过去了」", "Xia Zhiyao · Normal Ending: And Spring Passed"),
      "text": T("一开始，她每周都会发来照片：老家的天空，医院窗外的树。后来，照片越来越少。第二年春天，我在海堤上放了一场电影，第一排的那个位置空着。散场的时候我才明白，有些话，在站台上不说，就再也说不出口了。",
                "At first she sends photos every week: the sky back home, the tree outside the hospital window. Then fewer, and fewer. The next spring I hold a screening on the seawall, and that front-row seat stays empty. Only as the crowd leaves do I understand: some words, if you don't say them on the platform, you never get to say at all."),
      "when": F("flag.z_normal")},
