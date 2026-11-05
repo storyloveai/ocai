@@ -96,3 +96,5 @@ jobs:
           git diff --exit-code -- content/campaign.json web/index.html || (echo "::error::Run 'python3 content/story.py && python3 tools/build.py' in game/xichuan and commit the results." && exit 1)
       - name: Static checks and simulated players
         run: node ../engine/tools/check.mjs content/campaign.json 3000
+      - name: Story keeps up with what the player said (break / grudge)
+        run: node tools/stance_check.mjs content/campaign.json 300

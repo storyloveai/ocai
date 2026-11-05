@@ -40,7 +40,7 @@ node tools/check.js content/v6/campaign_v6.json 5000   # 卷六，同上
 node tools/check.js content/v7/campaign_v7.json 5000   # 卷七，同上
 node tools/check.js content/v8/campaign_v8.json 5000   # 卷八，同上
 python3 tools/art_audit.py --strict                     # 插画版不能有退回水墨的画面；有缺口会列出来，交给 Codex 补画
-cd ../xichuan && python3 content/story.py && python3 tools/build.py && node ../engine/tools/check.mjs content/campaign.json 3000   # galgame，必须 PASS
+cd ../xichuan && python3 content/story.py && python3 tools/build.py && node ../engine/tools/check.mjs content/campaign.json 3000 && node tools/stance_check.mjs   # galgame，必须 PASS（后一项：决裂/记仇后剧本有没有跟上）
 cd ../../ooc-replica && npm run game:sync                  # 把引擎和三国的新版本复制给网站（CI 会检查）
 ```
 
