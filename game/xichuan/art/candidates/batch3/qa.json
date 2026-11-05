@@ -1,0 +1,282 @@
+[
+  {
+    "id": "bg-beach",
+    "candidate": 1,
+    "file": "bg-beach-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "80d34688f723a451cbbeda4a13d25fa6a983ca71d43add996579a1b742b0cce2",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ],
+    "visualQA": "无人物沙滩，留白与画风可交审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "bg-beach",
+    "candidate": 2,
+    "file": "bg-beach-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "1c3aa347f604c9fd354038fdfae39242bee1787291f1cdd2bbea686a6148e880",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ],
+    "visualQA": "无人物沙滩，留白与画风可交审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_last_screening",
+    "candidate": 1,
+    "file": "cg-cg_last_screening-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "1edf451f72b1d0f0c3cd2a9b254102652db496c24f1cbfec042f1326b15a0b36",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "知遥与观众、银幕海景齐全；投影光束起点与下三分之一人物遮挡需 Claude 重点审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_last_screening",
+    "candidate": 2,
+    "file": "cg-cg_last_screening-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "8f91fee06897abeaa589c940489a82bda1acd9da8a4a99aece37c577ad385dd2",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "知遥与观众、银幕海景齐全；投影光束起点与下三分之一人物遮挡需 Claude 重点审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_platform",
+    "candidate": 1,
+    "file": "cg-cg_platform-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "d1d0cd2522ef4e9b449f17ccf38f617fe5551561bf8abffb06cba26faa783a43",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "列车门回头与行李齐全，树木使用绿叶；表情的泪光和登车姿态需精审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_platform",
+    "candidate": 2,
+    "file": "cg-cg_platform-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "80ca9e49bdbf762ab1772550c54aa204c527d30401e8af347b1b68f54fcb1750",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "列车门回头与行李齐全，树木使用绿叶；表情的泪光和登车姿态需精审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_front_row",
+    "candidate": 1,
+    "file": "cg-cg_front_row-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "837a001a7007e74819cba925545bf7ff2b5858c6a0e2c86af6fa3e40a0753bd0",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "靠肩姿态与双人背侧视角清楚；椅背粉笔痕迹较弱，是否满足故事用途待审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_front_row",
+    "candidate": 2,
+    "file": "cg-cg_front_row-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "bfb082e011df4da4478873d82060db86230d88584808fe370c2c5c665721e8c2",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "靠肩姿态与双人背侧视角清楚；椅背粉笔痕迹较弱，是否满足故事用途待审。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_seawall",
+    "candidate": 1,
+    "file": "cg-cg_seawall-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "e1037e09cb43cc4e17f604a3f4c2da02a19d99fa235f271911bed967254f551d",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "递信与笔、海堤夜景齐全；旧可可容器的具体造型需核对。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_seawall",
+    "candidate": 2,
+    "file": "cg-cg_seawall-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "eba33c121c80ed38eb66c963280367f446a981f22638a133302a564bd2820f59",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "递信与笔、海堤夜景齐全；旧可可容器的具体造型需核对。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_booth",
+    "candidate": 1,
+    "file": "cg-cg_booth-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "c4010259418534c02ba3e081d46de3b51014846b00abfb29eb50a2cf5f27fc2c",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "需核对原标准立绘身份、眼镜、白手套及投影机光路。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_booth",
+    "candidate": 2,
+    "file": "cg-cg_booth-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "3d0d3aeac7e4c872387ee0ae2e58822ff0d517aac2714e217982d15e46184c58",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "需核对原标准立绘身份、眼镜、白手套及投影机光路。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_seawall_screen",
+    "candidate": 1,
+    "file": "cg-cg_seawall_screen-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "148be3f8074bc7b2bfc2fc113894ec84fa925889353335bfe1d00f2c77ea14de",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "需核对季白回头、泪笑、白布和小放映机的光路与空间关系。",
+    "status": "candidate_for_Claude_review"
+  },
+  {
+    "id": "cg-cg_seawall_screen",
+    "candidate": 2,
+    "file": "cg-cg_seawall_screen-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "bd1e9e7656e983820b64d717a7570ab284b9225fa0b07f13ee29308a86407f84",
+    "aspectRatio": 1.7768331562167907,
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ],
+    "visualQA": "需核对季白回头、泪笑、白布和小放映机的光路与空间关系。",
+    "status": "candidate_for_Claude_review"
+  }
+]
