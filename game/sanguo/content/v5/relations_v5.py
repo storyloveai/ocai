@@ -35,7 +35,7 @@ PACT = node("x_rel_zypact", "*", "interrupt", T("江州", "Jiangzhou"), "free", 
             T("赵云笑了笑：『那我就白等一场。』", "Zhao Yun smiles. 'Then I'll have waited for nothing.'"),
             [setv("flag.v5_zy_pact"), rel("zhaoyun", "warmth", 1)])],
     when=ALL(AT("zhaoyun", "trust", 2), NF("flag.v5_zy_pact"), NF("flag.v5_after_burn")), order=3)
-PACT["art"] = {"scene": "lamp", "layers": [], "illus": "v2_zhaoyun_night"}; PACT["cast"] = [{"id": "zhaoyun"}]
+PACT["art"] = {"scene": "lamp", "layers": [], "illus": "v5_zy_pact"}; PACT["cast"] = [{"id": "zhaoyun"}]
 
 
 def extend(N, VARS):
