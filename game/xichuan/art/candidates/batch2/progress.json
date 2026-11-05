@@ -1,0 +1,24 @@
+{
+  "status": "qa_pending",
+  "task": "sprite-zhiyao-smile",
+  "candidate": 1,
+  "tool": "image_gen.imagegen",
+  "reference": "game/xichuan/art/sprites/zhiyao/normal.webp",
+  "referenceCommit": "5cafd0b5c06b6124dbeccf71a3f9accfe2495941",
+  "dimensions": [
+    1024,
+    1536
+  ],
+  "hasAlpha": true,
+  "sha256": "2edfaf29388f9988321d602a388e4a7be4a12eac804f8a799d6d41040819d295",
+  "remainingQA": [
+    "alpha coverage and edges",
+    "unchanged outside expression",
+    "adult appearance and no text"
+  ],
+  "environmentBlockers": [
+    "gh not installed: terminal authentication and push authorization unverified",
+    "node not installed: required game checks unavailable"
+  ],
+  "taskConflict": "cg-cg_photo asks for children, user requires adult characters; awaiting clarification"
+}

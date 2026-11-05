@@ -1,0 +1,1528 @@
+[
+  {
+    "id": "sprite-zhiyao-smile",
+    "candidate": 1,
+    "file": "sprite-zhiyao-smile-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "2edfaf29388f9988321d602a388e4a7be4a12eac804f8a799d6d41040819d295",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      988,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-smile",
+    "candidate": 2,
+    "file": "sprite-zhiyao-smile-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "7d95d9184c28857b9e732ced3e20055d3a74b0ac4e42fa63bc32e5b0e29dd1ed",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1002,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-shy",
+    "candidate": 1,
+    "file": "sprite-zhiyao-shy-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "83386ff34ea6db7de82479c604be9cd6986d630afbdd3006490495fe1ef4c59b",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      990,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-shy",
+    "candidate": 2,
+    "file": "sprite-zhiyao-shy-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "675f2650b1f4b6b4cdbd5e2253238bcf317983d9366027c59024c8a87524833e",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      988,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-angry",
+    "candidate": 1,
+    "file": "sprite-zhiyao-angry-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "0beaa5a5c9d0439d7955db2ae19101a234ddd4924bac3080ffd2c01a808fe950",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1004,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-angry",
+    "candidate": 2,
+    "file": "sprite-zhiyao-angry-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "8866f2a549b49081815609142f5221bddac256f4800dfac086894a45c4937626",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      988,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-sad",
+    "candidate": 1,
+    "file": "sprite-zhiyao-sad-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "51169719743edb4c740be9026996688ca233e6a51eb65d60b944271375d5720e",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      990,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-sad",
+    "candidate": 2,
+    "file": "sprite-zhiyao-sad-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "0a0fa581aceb369ae79f6d276e91d0a4bfd50a79628c485141a7aa93b13d3fea",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1002,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-surprised",
+    "candidate": 1,
+    "file": "sprite-zhiyao-surprised-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "3d092df06786ef42c5ee9ed138695f60016324c45db7938d5f014defaa7bb479",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      988,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-zhiyao-surprised",
+    "candidate": 2,
+    "file": "sprite-zhiyao-surprised-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "5da82e6c616a5abae126ee1a90cda94932de252d21f71d1689b608fffd9b5bc7",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      988,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-smile",
+    "candidate": 1,
+    "file": "sprite-shencheng-smile-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "e1be40bfc2f4adedab08b052e0e71269f4cc879bce7da52bd54b735ff171eb01",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1000,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-smile",
+    "candidate": 2,
+    "file": "sprite-shencheng-smile-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "bf5f49b159180cc689f8cc6d1156984674c2ebc506772b2ae2986d9528b39330",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1006,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-shy",
+    "candidate": 1,
+    "file": "sprite-shencheng-shy-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "e960f83e573882a36f6890f05e8511b168f38b2bf2f22e5d68be6e39c2633bab",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1014,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-shy",
+    "candidate": 2,
+    "file": "sprite-shencheng-shy-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "41f51b85896dc5dd9b50df85691471e4487961a73945c3b84a95077efb912b24",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1000,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-angry",
+    "candidate": 1,
+    "file": "sprite-shencheng-angry-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "8c0a8d9a7ed8373a276ab59b6bbbacb1e52fad1a686922d8526486b1eeaac241",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1023,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-angry",
+    "candidate": 2,
+    "file": "sprite-shencheng-angry-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "396eb4e34cf9b2f22f74f925ba2941cce7075df2f752e77645d9cb65da58b5c0",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1000,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-sad",
+    "candidate": 1,
+    "file": "sprite-shencheng-sad-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "008b10f586c525b97eda8b702d27ea115f0e1ddf092248ef6c58a6b01b81dd06",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1000,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-sad",
+    "candidate": 2,
+    "file": "sprite-shencheng-sad-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "cc8c62b54630cae6c8630cded87d23241547b5e1cbbaa14c032a43f04569606c",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1000,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-surprised",
+    "candidate": 1,
+    "file": "sprite-shencheng-surprised-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "b67fa53dbab9f8e3d0ef4f024540526417f44fe10d6468034227b5b558e3ff6a",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1000,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-shencheng-surprised",
+    "candidate": 2,
+    "file": "sprite-shencheng-surprised-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "04fbb87f9f6c141d46296f32185b5163e61b7e83af5dbb3c0d507473e91986cd",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1000,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-smile",
+    "candidate": 1,
+    "file": "sprite-jibai-smile-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "f493cadf649c1c579ad46e037580a784cf50eacb45e197ac099bd421a2d55bbe",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-smile",
+    "candidate": 2,
+    "file": "sprite-jibai-smile-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "9d8e950fbc29aa5b7566c93dd7ed4e24315321a5b171af65f1e1968e2761b01d",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-shy",
+    "candidate": 1,
+    "file": "sprite-jibai-shy-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "db599d5728257e924c2c66ac609d63e41a988f572b4a0f2367eb348f6065ce0d",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-shy",
+    "candidate": 2,
+    "file": "sprite-jibai-shy-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "8690e9a96f8229ee927f04b89d17f1ee266e780370c192e4ea6f4980bc8605e1",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1004,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-angry",
+    "candidate": 1,
+    "file": "sprite-jibai-angry-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "3884dc7f004e265e738debdb4af7a82362c82d9dd6ec79f000bfa94309255c22",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-angry",
+    "candidate": 2,
+    "file": "sprite-jibai-angry-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "87213c8e88ff54327aef0cf3602a40eaa9fe063e874b916a0b3e4534d0cd58fc",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-sad",
+    "candidate": 1,
+    "file": "sprite-jibai-sad-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "191e906141bdd88a59a8e04c0f7ab7446e7c7435421b4ae75cac6d814560406d",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-sad",
+    "candidate": 2,
+    "file": "sprite-jibai-sad-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "cd04dfbcfffc76e0e77b7feaffd46a75fd886cccbbfa65f111d2a599b774ec83",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-surprised",
+    "candidate": 1,
+    "file": "sprite-jibai-surprised-1.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "7412313541c4eba47c62e0f79bebb6d1ad6ac858f056a44469fd0b9430f912ab",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      944,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "sprite-jibai-surprised",
+    "candidate": 2,
+    "file": "sprite-jibai-surprised-2.png",
+    "dimensions": [
+      1024,
+      1536
+    ],
+    "mode": "RGBA",
+    "sha256": "2021a866b212483f964d6a18305cbedfd77ada1feeeb41be3940c6a68cd103bc",
+    "accept": [
+      "和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变",
+      "只有一个人，透明背景（PNG 带透明通道）",
+      "成年人的脸和身材",
+      "画面里没有文字"
+    ],
+    "alphaRange": [
+      0,
+      254
+    ],
+    "sameCanvas": true,
+    "fullDiffBBox": [
+      0,
+      0,
+      1024,
+      1536
+    ],
+    "alphaDiffBBox": [
+      0,
+      0,
+      1006,
+      1536
+    ],
+    "strictFaceOnly": "FAIL: non-face pixels and alpha differ; awaiting authorized face-only compositing"
+  },
+  {
+    "id": "bg-train",
+    "candidate": 1,
+    "file": "bg-train-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "da5a42e5f6abdfe03590887a5e97559d691b0895ce391eb864ff103215032175",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-train",
+    "candidate": 2,
+    "file": "bg-train-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "8e40a7b6e81283bd7771f204255ca266cc6d4416cac2cca24da4ff31e4002fa1",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-rain_street",
+    "candidate": 1,
+    "file": "bg-rain_street-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "49a0c54b6f9eaafe610ee78bb62d7d049cc5880674c68b33b90275aeaae71832",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-rain_street",
+    "candidate": 2,
+    "file": "bg-rain_street-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "96e4f51c5dac6d9d83262d4bb45fc493aa249c84e9ebacd099687e3759666fd8",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-street",
+    "candidate": 1,
+    "file": "bg-street-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "e97f93622a3bcea3cc4f9319b7191e59198e36f38fd2d81337f69097defe199f",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-street",
+    "candidate": 2,
+    "file": "bg-street-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "474bc8eb1d71351fcf52580a1182cf4376d7bed2632ccc220ac23cf292945488",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-clubroom",
+    "candidate": 1,
+    "file": "bg-clubroom-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "ab06f0bb48d3a1b004c4084d74ea07fea7f2c415cb6fce74fa7de604409109b6",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-clubroom",
+    "candidate": 2,
+    "file": "bg-clubroom-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "ede124d73932b406faf818b3941f03e2e30beccfb9952f2fb10b32f847642dff",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-seawall_night",
+    "candidate": 1,
+    "file": "bg-seawall_night-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "74ec4f86f4d7123a4022b4c142143e1d1f6d01e5580c53bcad0901c1dfdff956",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-seawall_night",
+    "candidate": 2,
+    "file": "bg-seawall_night-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "ec4b7b2cd9cc49388b4e4a5eb1a16bde2c1222a03a254f916c1528a5f1ae646d",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-library",
+    "candidate": 1,
+    "file": "bg-library-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "2d91328088ff047085b2eefc5664aaa38a7b0236b39b24ebb93556205f1ec6c6",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-library",
+    "candidate": 2,
+    "file": "bg-library-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "7a6aa6a6fcb5f22dc25a538fc173d1ba71f3d9fb5bbdf3fdd3ade666b174a075",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-office",
+    "candidate": 1,
+    "file": "bg-office-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "7e8fdaa15203d15924fcee062473264bbbe8267b28f3b6b61a0d90c60dd03847",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-office",
+    "candidate": 2,
+    "file": "bg-office-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "3f4970b76d5e479982b67db809da54e2c39950d6bc6b8eb17509b0f34fde1068",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-rooftop",
+    "candidate": 1,
+    "file": "bg-rooftop-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "86afb9b0b626c43cca307dfd2bc5d7857fd1f2d8c0ea58f5e6fe0d822b8bfcfe",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-rooftop",
+    "candidate": 2,
+    "file": "bg-rooftop-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "52806a94ff52bd6c5e7ecd2e396d3cd05160c4301c2da5d46c1a7f89dc7ab55c",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-storeroom",
+    "candidate": 1,
+    "file": "bg-storeroom-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "7373f4383ad80da381b1e85d130bdd4ff65086c7eba67ceb16e8ebd25dcb2842",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-storeroom",
+    "candidate": 2,
+    "file": "bg-storeroom-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "72ebb512c81309c90db648d2fa44b45b036c40598e573dfe35a67b36c94ac2c6",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-cinema_night",
+    "candidate": 1,
+    "file": "bg-cinema_night-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "a664c7d6d975c1f465f4312c3538d7250f111efe2771b7c64f753444e46664d1",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "bg-cinema_night",
+    "candidate": 2,
+    "file": "bg-cinema_night-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "15baa08a081b767bdf67e16b4d707af137dccb98381579257287f2e3ae9bc82c",
+    "accept": [
+      "没有任何人物",
+      "画面里没有文字、招牌字、标志",
+      "16:9，下面三分之一留给对话框（不放关键内容）",
+      "日式动画背景画风，和立绘放在一起不违和"
+    ]
+  },
+  {
+    "id": "cg-cg_stage",
+    "candidate": 1,
+    "file": "cg-cg_stage-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "3c2713082ed4325f35445ace9d7bee044d06e47dcea6bb79129800efe1436383",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ]
+  },
+  {
+    "id": "cg-cg_stage",
+    "candidate": 2,
+    "file": "cg-cg_stage-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "58e2688fed647110ff776b6806add98a8481cd81f1150dd6c0818f84b0ecd09b",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ]
+  },
+  {
+    "id": "cg-cg_first_screening",
+    "candidate": 1,
+    "file": "cg-cg_first_screening-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "2c76c9e531096d9a494b6a540f9bb7c6f297e9dfda6fe5000a4f1bcb9e182e37",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ]
+  },
+  {
+    "id": "cg-cg_first_screening",
+    "candidate": 2,
+    "file": "cg-cg_first_screening-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "124ac7ccdd0176a1cab20948dac087a4fb8a1549ed66235e1a783a6df3bc89e6",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ]
+  },
+  {
+    "id": "cg-cg_photo",
+    "candidate": 1,
+    "file": "cg-cg_photo-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "e0bec97c7248767bed427294c3b2c63947705b19ea04676883e9b139e96745f2",
+    "accept": [
+      "画面里没有任何人（照片背面朝上，看不到照片内容）",
+      "画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和背景放一起不违和"
+    ]
+  },
+  {
+    "id": "cg-cg_photo",
+    "candidate": 2,
+    "file": "cg-cg_photo-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "f52e940995eed8bed6f43a4b6464eaffdd7fbef318721780262b7e3851203323",
+    "accept": [
+      "画面里没有任何人（照片背面朝上，看不到照片内容）",
+      "画面里没有文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和背景放一起不违和"
+    ]
+  },
+  {
+    "id": "ui-title",
+    "candidate": 1,
+    "file": "ui-title-1.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "288ac1b22784564962b6cd0c0a085bf5077c4a3b9123252628ff4087cd1dc451",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ]
+  },
+  {
+    "id": "ui-title",
+    "candidate": 2,
+    "file": "ui-title-2.png",
+    "dimensions": [
+      1672,
+      941
+    ],
+    "mode": "RGB",
+    "sha256": "3481f4d4d5c6de202bd1474fcdb1626d69fe872728af357b603cbd83208daeee",
+    "accept": [
+      "人物和参考立绘是同一个人（有参考图时）",
+      "画面里没有任何文字",
+      "16:9，下面三分之一不放关键内容",
+      "日式 galgame CG 画风，和立绘、背景放一起不违和"
+    ]
+  }
+]

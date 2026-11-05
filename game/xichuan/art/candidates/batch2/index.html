@@ -1,0 +1,751 @@
+<!doctype html><html lang="zh"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>汐川第二批候选</title><style>body{background:#18202b;color:#eee;max-width:1400px;margin:auto;padding:24px;font:16px/1.6 system-ui}.pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}figure{margin:0;min-width:0}img{width:100%;max-height:720px;object-fit:contain;background:repeating-conic-gradient(#adbbc8 0 25%,#c5ced8 0 50%) 0/24px 24px}.reference{max-height:600px;width:auto;max-width:100%}section{margin:48px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere}figcaption{color:#edc49a}@media(max-width:650px){.pair{grid-template-columns:1fr}}a{color:#c5deff}</style><h1>汐川第二批 · 候选审图</h1><p>29 项各两个候选。表情差分的生成原图存在脸外重绘与 Alpha 漂移，尚未达到严格“只改脸”；明确标为待修，不能当作通过稿。背景、CG 与标题图供 Claude 按清单审图，未采用正式资源。点击图片查看原始 PNG。</p><section><h2>sprite-zhiyao-smile · 表情差分：笑。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/zhiyao.png"></details><div class="pair"><figure><a href="sprite-zhiyao-smile-1.png"><img src="sprite-zhiyao-smile-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-zhiyao-smile-2.png"><img src="sprite-zhiyao-smile-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-zhiyao-smile&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/zhiyao/smile&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：笑。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: a warm, open smile, eyes slightly narrowed with happiness.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-zhiyao-shy · 表情差分：害羞。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/zhiyao.png"></details><div class="pair"><figure><a href="sprite-zhiyao-shy-1.png"><img src="sprite-zhiyao-shy-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-zhiyao-shy-2.png"><img src="sprite-zhiyao-shy-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-zhiyao-shy&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/zhiyao/shy&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：害羞。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: shy and flustered, a light blush across the cheeks, gaze glancing aside, a small embarrassed smile.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-zhiyao-angry · 表情差分：生气（不凶，是闹别扭的那种）。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/zhiyao.png"></details><div class="pair"><figure><a href="sprite-zhiyao-angry-1.png"><img src="sprite-zhiyao-angry-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-zhiyao-angry-2.png"><img src="sprite-zhiyao-angry-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-zhiyao-angry&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/zhiyao/angry&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：生气（不凶，是闹别扭的那种）。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: mildly annoyed and pouting, brows drawn together, cheeks puffed slightly — cross, not frightening.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-zhiyao-sad · 表情差分：难过。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/zhiyao.png"></details><div class="pair"><figure><a href="sprite-zhiyao-sad-1.png"><img src="sprite-zhiyao-sad-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-zhiyao-sad-2.png"><img src="sprite-zhiyao-sad-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-zhiyao-sad&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/zhiyao/sad&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：难过。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: quietly sad, eyes lowered and a little glossy, lips pressed together.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-zhiyao-surprised · 表情差分：吃惊。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/zhiyao.png"></details><div class="pair"><figure><a href="sprite-zhiyao-surprised-1.png"><img src="sprite-zhiyao-surprised-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-zhiyao-surprised-2.png"><img src="sprite-zhiyao-surprised-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-zhiyao-surprised&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/zhiyao/surprised&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：吃惊。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Xia Zhiyao, 21: shoulder-length chestnut-brown hair tied in a short side ponytail with a small hair clip shaped like a film reel, bright amber eyes, energetic open expression; light-wash denim jacket over a plain white T-shirt, navy pleated knee-length skirt, white sneakers; palette of warm pink, denim blue and white. Expression: surprised, eyes wide, lips slightly parted, brows raised.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-shencheng-smile · 表情差分：笑。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/shencheng.png"></details><div class="pair"><figure><a href="sprite-shencheng-smile-1.png"><img src="sprite-shencheng-smile-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-shencheng-smile-2.png"><img src="sprite-shencheng-smile-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-shencheng-smile&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/shencheng/smile&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：笑。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: a warm, open smile, eyes slightly narrowed with happiness.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-shencheng-shy · 表情差分：害羞。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/shencheng.png"></details><div class="pair"><figure><a href="sprite-shencheng-shy-1.png"><img src="sprite-shencheng-shy-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-shencheng-shy-2.png"><img src="sprite-shencheng-shy-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-shencheng-shy&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/shencheng/shy&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：害羞。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: shy and flustered, a light blush across the cheeks, gaze glancing aside, a small embarrassed smile.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-shencheng-angry · 表情差分：生气（不凶，是闹别扭的那种）。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/shencheng.png"></details><div class="pair"><figure><a href="sprite-shencheng-angry-1.png"><img src="sprite-shencheng-angry-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-shencheng-angry-2.png"><img src="sprite-shencheng-angry-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-shencheng-angry&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/shencheng/angry&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：生气（不凶，是闹别扭的那种）。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: mildly annoyed and pouting, brows drawn together, cheeks puffed slightly — cross, not frightening.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-shencheng-sad · 表情差分：难过。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/shencheng.png"></details><div class="pair"><figure><a href="sprite-shencheng-sad-1.png"><img src="sprite-shencheng-sad-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-shencheng-sad-2.png"><img src="sprite-shencheng-sad-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-shencheng-sad&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/shencheng/sad&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：难过。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: quietly sad, eyes lowered and a little glossy, lips pressed together.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-shencheng-surprised · 表情差分：吃惊。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/shencheng.png"></details><div class="pair"><figure><a href="sprite-shencheng-surprised-1.png"><img src="sprite-shencheng-surprised-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-shencheng-surprised-2.png"><img src="sprite-shencheng-surprised-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-shencheng-surprised&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/shencheng/surprised&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/shencheng/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：吃惊。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Shen Cheng, 21: long straight black hair with blunt bangs, cool grey-blue eyes, composed and slightly guarded; cream cable-knit cardigan over a pale blue collared shirt, a brown canvas café apron, long beige skirt, hands lightly clasped in front; palette of cream, sea blue and brown. Expression: surprised, eyes wide, lips slightly parted, brows raised.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-jibai-smile · 表情差分：笑。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/jibai.png"></details><div class="pair"><figure><a href="sprite-jibai-smile-1.png"><img src="sprite-jibai-smile-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-jibai-smile-2.png"><img src="sprite-jibai-smile-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-jibai-smile&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/jibai/smile&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/jibai/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/jibai/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：笑。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: a warm, open smile, eyes slightly narrowed with happiness.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-jibai-shy · 表情差分：害羞。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/jibai.png"></details><div class="pair"><figure><a href="sprite-jibai-shy-1.png"><img src="sprite-jibai-shy-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-jibai-shy-2.png"><img src="sprite-jibai-shy-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-jibai-shy&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/jibai/shy&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/jibai/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/jibai/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：害羞。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: shy and flustered, a light blush across the cheeks, gaze glancing aside, a small embarrassed smile.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-jibai-angry · 表情差分：生气（不凶，是闹别扭的那种）。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/jibai.png"></details><div class="pair"><figure><a href="sprite-jibai-angry-1.png"><img src="sprite-jibai-angry-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-jibai-angry-2.png"><img src="sprite-jibai-angry-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-jibai-angry&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/jibai/angry&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/jibai/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/jibai/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：生气（不凶，是闹别扭的那种）。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: mildly annoyed and pouting, brows drawn together, cheeks puffed slightly — cross, not frightening.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-jibai-sad · 表情差分：难过。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/jibai.png"></details><div class="pair"><figure><a href="sprite-jibai-sad-1.png"><img src="sprite-jibai-sad-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-jibai-sad-2.png"><img src="sprite-jibai-sad-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-jibai-sad&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/jibai/sad&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/jibai/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/jibai/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：难过。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: quietly sad, eyes lowered and a little glossy, lips pressed together.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>sprite-jibai-surprised · 表情差分：吃惊。以已采用的标准立绘为参考图，只改脸</h2><details><summary>标准立绘与差分核对</summary><img class="reference" src="references/jibai.png"></details><div class="pair"><figure><a href="sprite-jibai-surprised-1.png"><img src="sprite-jibai-surprised-1.png" loading="lazy"></a><figcaption>候选 1 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure><figure><a href="sprite-jibai-surprised-2.png"><img src="sprite-jibai-surprised-2.png" loading="lazy"></a><figcaption>候选 2 · 脸外像素/透明边缘有漂移，严格差分不通过；待本机脸部合成授权</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;sprite-jibai-surprised&quot;,
+  &quot;kind&quot;: &quot;sprite&quot;,
+  &quot;name&quot;: &quot;sprites/jibai/surprised&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/jibai/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/jibai/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;表情差分：吃惊。以已采用的标准立绘为参考图，只改脸&quot;,
+  &quot;accept&quot;: [
+    &quot;和参考图是同一个人：发型、衣服、姿势、构图、画风、大小位置完全一致，只有脸上的表情变&quot;,
+    &quot;只有一个人，透明背景（PNG 带透明通道）&quot;,
+    &quot;成年人的脸和身材&quot;,
+    &quot;画面里没有文字&quot;
+  ],
+  &quot;prompt&quot;: &quot;Edit the reference sprite: keep the exact same character, outfit, pose, framing, canvas size, position, line art and colors; change ONLY the facial expression. Transparent background. Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, large expressive eyes with detailed highlights, finely layered hair strands, soft pastel spring lighting, polished high-quality anime art. Standing character sprite for a visual novel: one character only, knee-up framing, facing the viewer at a slight three-quarter angle, neutral relaxed pose with arms that will be reused for other expressions, centered, head near the top with a little margin, fully transparent background (PNG with alpha), no shadow on the ground, no props cut off at the frame edge. She is an adult university student with adult proportions and an adult face; not a child, not a teenager. Ji Bai, 23, a graduate student: ash-grey hair in a loose low bun with a few loose strands, thin round glasses, calm violet eyes, quiet and thoughtful; an oversized dark green work shirt with rolled sleeves over a black turtleneck, dark slacks, a pair of white cotton film-handling gloves tucked into her shirt pocket; palette of deep green, charcoal and violet. Expression: surprised, eyes wide, lips slightly parted, brows raised.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1024x1536&quot;,
+  &quot;background&quot;: &quot;transparent&quot;,
+  &quot;out&quot;: [
+    900,
+    1600
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-train · 列车车厢 · 黄昏：开往海边小城的慢车</h2><div class="pair"><figure><a href="bg-train-1.png"><img src="bg-train-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-train-2.png"><img src="bg-train-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-train&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/train&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;列车车厢 · 黄昏：开往海边小城的慢车&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. The interior of a slow local train carriage at dusk heading to a seaside town: rows of empty fabric seats, warm orange sunset light through the windows, the sea visible outside, luggage rack overhead, a calm and slightly lonely mood.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-rain_street · 雨中的校门：大学正门，下着春雨</h2><div class="pair"><figure><a href="bg-rain_street-1.png"><img src="bg-rain_street-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-rain_street-2.png"><img src="bg-rain_street-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-rain_street&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/rain_street&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;雨中的校门：大学正门，下着春雨&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. The main gate of a small seaside university in spring rain: wet pavement reflecting lights, cherry trees by the gate, a covered bus stop, soft grey-blue overcast light, umbrellas absent.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-street · 夜里的海边街道：小城老街，路灯和小店</h2><div class="pair"><figure><a href="bg-street-1.png"><img src="bg-street-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-street-2.png"><img src="bg-street-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-street&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/street&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;夜里的海边街道：小城老街，路灯和小店&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A narrow old street in a seaside town at night: warm street lamps, closed shop shutters, a convenience store glowing at the corner, the sea at the end of the slope, quiet and gentle.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-clubroom · 社团活动室：电影社的小房间</h2><div class="pair"><figure><a href="bg-clubroom-1.png"><img src="bg-clubroom-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-clubroom-2.png"><img src="bg-clubroom-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-clubroom&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/clubroom&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;社团活动室：电影社的小房间&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A small university film club room in the afternoon: a long table with scattered flyers and a laptop, old film posters with no readable text, a shelf of DVDs and film cans, a whiteboard with no writing, warm window light.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-seawall_night · 夜里的海堤</h2><div class="pair"><figure><a href="bg-seawall_night-1.png"><img src="bg-seawall_night-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-seawall_night-2.png"><img src="bg-seawall_night-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-seawall_night&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/seawall_night&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;夜里的海堤&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A long concrete seawall at night: the dark sea and gentle waves, a distant lighthouse beam, the town lights behind, a starry sky, a lone lamp post — romantic and quiet.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-library · 图书馆三楼：靠窗的阅览区</h2><div class="pair"><figure><a href="bg-library-1.png"><img src="bg-library-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-library-2.png"><img src="bg-library-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-library&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/library&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;图书馆三楼：靠窗的阅览区&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. The third-floor reading area of a university library in late afternoon: tall shelves, a long wooden desk by a big window overlooking the sea, dust in the sunbeams, a stack of old newspapers and ledgers.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-office · 学生处办公室</h2><div class="pair"><figure><a href="bg-office-1.png"><img src="bg-office-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-office-2.png"><img src="bg-office-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-office&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/office&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;学生处办公室&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. A plain university administration office: a counter, filing cabinets, a desk with neat stacks of forms, a potted plant, fluorescent light mixed with daylight — slightly bureaucratic and stiff.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-rooftop · 教学楼天台：傍晚</h2><div class="pair"><figure><a href="bg-rooftop-1.png"><img src="bg-rooftop-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-rooftop-2.png"><img src="bg-rooftop-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-rooftop&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/rooftop&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;教学楼天台：傍晚&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. The rooftop of a university teaching building at golden hour: a green chain-link fence, water tanks, a view over the town to the sea, long shadows, a few pigeons.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-storeroom · 影院仓库：旧胶片和杂物</h2><div class="pair"><figure><a href="bg-storeroom-1.png"><img src="bg-storeroom-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-storeroom-2.png"><img src="bg-storeroom-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-storeroom&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/storeroom&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;影院仓库：旧胶片和杂物&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. The dusty storeroom of an old open-air cinema: metal film canisters stacked on shelves, an old projector under a cloth, folding chairs, a single bulb and light through a small window, motes in the air.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>bg-cinema_night · 潮声影院 · 夜：露天影院，银幕亮着</h2><div class="pair"><figure><a href="bg-cinema_night-1.png"><img src="bg-cinema_night-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="bg-cinema_night-2.png"><img src="bg-cinema_night-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;bg-cinema_night&quot;,
+  &quot;kind&quot;: &quot;bg&quot;,
+  &quot;name&quot;: &quot;bg/cinema_night&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;潮声影院 · 夜：露天影院，银幕亮着&quot;,
+  &quot;accept&quot;: [
+    &quot;没有任何人物&quot;,
+    &quot;画面里没有文字、招牌字、标志&quot;,
+    &quot;16:9，下面三分之一留给对话框（不放关键内容）&quot;,
+    &quot;日式动画背景画风，和立绘放在一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Visual novel background art, 16:9, no people and no characters anywhere, nothing written anywhere (no signs, no lettering, no logos), painterly anime background with clean perspective and soft light, room left in the lower third for a dialogue box. An open-air cinema by the sea at night: a large white screen glowing with projector light (no image on it), rows of old iron seats, string lights along the fence, the projection booth window lit, stars and a dark sea behind.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>cg-cg_stage · 银幕下的女孩：夏知遥在黄昏的露天影院台子上对着空座位大声念宣传词</h2><div class="pair"><figure><a href="cg-cg_stage-1.png"><img src="cg-cg_stage-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="cg-cg_stage-2.png"><img src="cg-cg_stage-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;cg-cg_stage&quot;,
+  &quot;kind&quot;: &quot;cg&quot;,
+  &quot;name&quot;: &quot;cg/cg_stage&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;银幕下的女孩：夏知遥在黄昏的露天影院台子上对着空座位大声念宣传词&quot;,
+  &quot;accept&quot;: [
+    &quot;人物和参考立绘是同一个人（有参考图时）&quot;,
+    &quot;画面里没有任何文字&quot;,
+    &quot;16:9，下面三分之一不放关键内容&quot;,
+    &quot;日式 galgame CG 画风，和立绘、背景放一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Event CG for a visual novel, 16:9, full illustration. Xia Zhiyao (see reference sprite: same face, hair, film-reel hair clip and outfit) stands on the small stage beneath a huge white outdoor cinema screen at sunset, holding a sheet of paper and calling out energetically toward rows of empty rusty iron seats; the screen glows orange, the sea behind; seen from the back rows, she is small but clearly lit.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>cg-cg_first_screening · 第一场放映：夜里露天影院，几个人看电影，银幕的光照在夏知遥脸上</h2><div class="pair"><figure><a href="cg-cg_first_screening-1.png"><img src="cg-cg_first_screening-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="cg-cg_first_screening-2.png"><img src="cg-cg_first_screening-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;cg-cg_first_screening&quot;,
+  &quot;kind&quot;: &quot;cg&quot;,
+  &quot;name&quot;: &quot;cg/cg_first_screening&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [
+    &quot;sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;ref_paths&quot;: [
+    &quot;game/xichuan/art/sprites/zhiyao/normal.webp&quot;
+  ],
+  &quot;composition&quot;: &quot;第一场放映：夜里露天影院，几个人看电影，银幕的光照在夏知遥脸上&quot;,
+  &quot;accept&quot;: [
+    &quot;人物和参考立绘是同一个人（有参考图时）&quot;,
+    &quot;画面里没有任何文字&quot;,
+    &quot;16:9，下面三分之一不放关键内容&quot;,
+    &quot;日式 galgame CG 画风，和立绘、背景放一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Event CG for a visual novel, 16:9. Night at the open-air seaside cinema: the big screen glows with projector light (no recognizable film image, just soft light), a handful of audience members seen from behind as silhouettes, and in the foreground Xia Zhiyao (same as the reference sprite) sits in the front row looking up at the screen with shining, moved eyes; projector beam visible through the sea wind.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>cg-cg_photo · 那张旧照片：打烊后咖啡馆的桌上，一张褪色的旧照片背面朝上，旁边一杯放着一块棉花糖的热可可；窗外是夜里的海。画面里没有任何人</h2><div class="pair"><figure><a href="cg-cg_photo-1.png"><img src="cg-cg_photo-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="cg-cg_photo-2.png"><img src="cg-cg_photo-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;cg-cg_photo&quot;,
+  &quot;kind&quot;: &quot;cg&quot;,
+  &quot;name&quot;: &quot;cg/cg_photo&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;那张旧照片：打烊后咖啡馆的桌上，一张褪色的旧照片背面朝上，旁边一杯放着一块棉花糖的热可可；窗外是夜里的海。画面里没有任何人&quot;,
+  &quot;accept&quot;: [
+    &quot;画面里没有任何人（照片背面朝上，看不到照片内容）&quot;,
+    &quot;画面里没有文字&quot;,
+    &quot;16:9，下面三分之一不放关键内容&quot;,
+    &quot;日式 galgame CG 画风，和背景放一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Event CG for a visual novel, 16:9: a quiet seaside café after closing, warm lamplight; on a wooden table lies a faded old photograph turned face-down (only its yellowed blank back is visible, corners slightly curled), beside it a cup of hot cocoa with a single marshmallow; through the window, the night sea and a distant lighthouse. Nostalgic and tender. No people anywhere in the image, no faces, no text or writing.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section><section><h2>ui-title · 标题画面：黄昏的潮声影院全景，留出标题的位置（不画字）</h2><div class="pair"><figure><a href="ui-title-1.png"><img src="ui-title-1.png" loading="lazy"></a><figcaption>候选 1 · 人工检查候选，待 Claude 审图</figcaption></figure><figure><a href="ui-title-2.png"><img src="ui-title-2.png" loading="lazy"></a><figcaption>候选 2 · 人工检查候选，待 Claude 审图</figcaption></figure></div><details><summary>原始提示词和验收清单</summary><pre>{
+  &quot;id&quot;: &quot;ui-title&quot;,
+  &quot;kind&quot;: &quot;ui&quot;,
+  &quot;name&quot;: &quot;cg/title&quot;,
+  &quot;batch&quot;: 2,
+  &quot;status&quot;: &quot;pending&quot;,
+  &quot;refs&quot;: [],
+  &quot;ref_paths&quot;: [],
+  &quot;composition&quot;: &quot;标题画面：黄昏的潮声影院全景，留出标题的位置（不画字）&quot;,
+  &quot;accept&quot;: [
+    &quot;人物和参考立绘是同一个人（有参考图时）&quot;,
+    &quot;画面里没有任何文字&quot;,
+    &quot;16:9，下面三分之一不放关键内容&quot;,
+    &quot;日式 galgame CG 画风，和立绘、背景放一起不违和&quot;
+  ],
+  &quot;prompt&quot;: &quot;Art style: modern Japanese visual novel (bishoujo game) illustration — clean thin line art, soft cel shading with gentle gradients, soft pastel spring lighting, polished high-quality anime art. Title screen illustration for a visual novel, 16:9: a wide view of an open-air cinema on a seaside cliff at the moment between sunset and dusk, the big white screen, cherry blossom petals drifting, the sea and a small town below, a few lit string lights; leave clean empty sky in the upper left for a logo that will be added later — do not draw any text.&quot;,
+  &quot;negative_prompt&quot;: &quot;No text, lettering, captions, logos, watermark, frame, signature, recognizable copyrighted characters, celebrity likeness, sexual content, nudity, minors, childlike proportions.&quot;,
+  &quot;size&quot;: &quot;1536x1024&quot;,
+  &quot;out&quot;: [
+    1920,
+    1080
+  ],
+  &quot;candidates&quot;: 2
+}</pre></details></section></html>
