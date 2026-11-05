@@ -1,0 +1,20 @@
+[
+  {
+    "path": "game/xichuan/art/sprites/jibai/normal.webp",
+    "snapshot": "references/jibai-normal.webp",
+    "sha256": "4d48df5907e181c0b4b77c2a0f2106df6f22c3f8b309af0f2c6b750919fa9f45",
+    "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce"
+  },
+  {
+    "path": "game/xichuan/art/sprites/shencheng/normal.webp",
+    "snapshot": "references/shencheng-normal.webp",
+    "sha256": "1f37ca914bcd1ad5fe8b89432fea8faa25a95bc4994b38f9b025f472878b1c35",
+    "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce"
+  },
+  {
+    "path": "game/xichuan/art/sprites/zhiyao/normal.webp",
+    "snapshot": "references/zhiyao-normal.webp",
+    "sha256": "c58390aed1f49441a29344440754cead12629405aa518d45d730939bf25d1da9",
+    "sourceCommit": "eecbf7930566e745037b4c5e1cab3999e01c61ce"
+  }
+]
