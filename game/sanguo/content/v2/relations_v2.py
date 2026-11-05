@@ -41,7 +41,7 @@ JINNANG = node("x_rel_jinnang", "*", "interrupt", T("锦囊", "The Pouch"), "fre
             T("诸葛亮摇着扇子笑了：『子龙的是给子龙的。这一个，是给你的。』", "Zhuge Liang smiles behind his fan. 'Zilong's are for Zilong. This one is for you.'"),
             [setv("flag.v2_jinnang"), rel("zhuge", "esteem", 1)])],
     when=ALL(LIU2, AT("zhuge", "trust", 3), NF("flag.v2_jinnang"), NF("flag.v2_after_ganlu")), order=3)
-JINNANG["art"] = {"scene": "lamp", "layers": [], "illus": "v2_nanjun"}; JINNANG["cast"] = [{"id": "zhuge"}]
+JINNANG["art"] = {"scene": "lamp", "layers": [], "illus": "v2_jinnang"}; JINNANG["cast"] = [{"id": "zhuge"}]
 
 # 周瑜：在他营里第二次冒犯他，就是死
 DEAD2 = T("你没有走出周瑜的大营。那年冬天，江上的风很冷。", "You never left Zhou Yu's camp. The wind on the river was very cold that winter.")
