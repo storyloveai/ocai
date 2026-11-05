@@ -28,6 +28,16 @@ for (const dir of ['portraits', 'scenes', 'cg', 'ending', 'fate']) {
   const names = await readdir(new URL(`game/sanguo/art/${dir}/`, repo)).catch(() => []);
   for (const name of names.filter(n => n.endsWith('.webp')).sort()) FILES.push([`game/sanguo/art/${dir}/${name}`, `dist/assets/sanguo-art/${dir}/${name}`]);
 }
+// 《汐川的第七个春天》（galgame）：页面和图，网站上在 /assets/xichuan/。
+FILES.push(['game/xichuan/web/index.html', 'dist/assets/xichuan/index.html']);
+async function walk(rel) {
+  const out = [];
+  for (const e of await readdir(new URL(rel, repo), { withFileTypes: true }).catch(() => [])) {
+    if (e.isDirectory()) out.push(...await walk(`${rel}${e.name}/`)); else if (e.name.endsWith('.webp')) out.push(`${rel}${e.name}`);
+  }
+  return out;
+}
+for (const f of (await walk('game/xichuan/art/')).filter(f => !f.includes('/candidates/')).sort()) FILES.push([f, f.replace('game/xichuan/art/', 'dist/assets/xichuan/art/')]);
 for (const name of ['cover.webp']) if (await readFile(new URL(`game/sanguo/art/${name}`, repo)).catch(() => null)) FILES.push([`game/sanguo/art/${name}`, `dist/assets/sanguo-art/${name}`]);
 const blob = b => createHash('sha1').update('blob ' + b.length + '\0').update(b).digest('hex');
 const check = process.argv.includes('--check');

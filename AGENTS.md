@@ -6,6 +6,7 @@
 |---|---|---|---|
 | 网站 | `ooc-replica/`（现在的网站）；`src/` `api/` `netlify/` `server/` `scripts/` `data/` `dist/` `supabase/` `tests/`（早期版本） | zhouzeya（@666ZHOUZEYA） | `ooc-replica/README.md` |
 | 故事和角色内容 | `ooc-replica/content/`（原创书目、角色）、`ooc-replica/book-campaigns/`（名著互动） | 兰馨（@allliiita / @Lindsey-cyber） | `ooc-replica/content/original-catalog/README.md`、`game/engine/README.md` |
+| galgame | `game/xichuan/`：《汐川的第七个春天》，原创校园纯爱 galgame（剧本 + 播放页） | zhouzeya（@666ZHOUZEYA） | `game/xichuan/README.md`、`game/xichuan/docs/决策记录.md` |
 | 互动小说玩法 | `game/engine/`：所有书共用的引擎、五档、题材包、检查和升级工具；`game/sanguo/`：三国·谋士，卷一至卷八（全书）已完成 | zhouzeya（@666ZHOUZEYA） | `game/engine/README.md`、`game/sanguo/README.md`、`game/sanguo/docs/决策记录.md`、`game/sanguo/docs/接入约定.md` |
 
 ## 分支和部署
@@ -39,6 +40,7 @@ node tools/check.js content/v6/campaign_v6.json 5000   # 卷六，同上
 node tools/check.js content/v7/campaign_v7.json 5000   # 卷七，同上
 node tools/check.js content/v8/campaign_v8.json 5000   # 卷八，同上
 python3 tools/art_audit.py --strict                     # 插画版不能有退回水墨的画面；有缺口会列出来，交给 Codex 补画
+cd ../xichuan && python3 content/story.py && python3 tools/build.py && node ../engine/tools/check.mjs content/campaign.json 3000   # galgame，必须 PASS
 cd ../../ooc-replica && npm run game:sync                  # 把引擎和三国的新版本复制给网站（CI 会检查）
 ```
 

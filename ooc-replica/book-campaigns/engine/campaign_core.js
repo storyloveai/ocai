@@ -914,6 +914,8 @@
       checkCond(f.when, `ending ${g.id}.${f.id}`);
       if (f.when && !condVars(f.when).some(v => writes.has(v))) E(`ending ${g.id}.${f.id}: depends on nothing a choice can change (untraceable)`);
     }
+    // a book's own line-by-line script (e.g. a visual novel's `script`) may show lines only when a condition holds
+    for (const n of Object.values(camp.nodes)) [n].concat(n.choices).forEach((x, i) => (x.script || []).forEach((op, k) => { if (op && op.when) checkCond(op.when, `${n.id}${i ? "." + x.id : ""}.script[${k}]`); }));
     ["flag.sidelined"].concat((camp.situations || []).map(x => x.flag)).forEach(v => reads.add(v)); // read by the engine in code
     // relationship axes are always on screen and carry into later volumes, so an axis no condition reads still matters
     for (const v of writes) if (!reads.has(v) && !v.startsWith("debt.") && !(v.startsWith("rel.") && CC.AXES.concat("intimacy").includes(v.split(".")[2]))) W(`var ${v}: written but never read (drop it, or make it matter)`);
