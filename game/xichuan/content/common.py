@@ -246,4 +246,4 @@ FLAGS = [("flag.poster_sale", "用爷爷的旧海报义卖", "Sold grandfather's
 BG = {"street": T("夜里的海边街道", "Seaside street at night"), "clubroom": T("社团活动室", "Club room"), "seawall_night": T("夜里的海堤", "The seawall at night"),
       "library": T("图书馆三楼", "Library, third floor"), "office": T("学生处", "Student Affairs office"), "rooftop": T("教学楼天台", "Rooftop"),
       "storeroom": T("影院仓库", "Cinema storeroom"), "cinema_night": T("潮声影院 · 夜", "Tidesound Cinema · night")}
-CG = {"cg_first_screening": T("第一场放映", "The first screening"), "cg_photo": T("第一排的两个孩子", "Two kids in the front row")}
+CG = {"cg_first_screening": T("第一场放映", "The first screening"), "cg_photo": T("那张旧照片", "The old photo")}
