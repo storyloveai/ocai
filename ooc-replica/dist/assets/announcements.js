@@ -1,6 +1,10 @@
 // StoryDate's own notices, newest first. The notification bar on the home page shows the first item.
 // Each entry carries English and Chinese; the site language picks one (see site-i18n.js).
 export default {"items":[
+ {"date":"11/10/2026","href":"/announcement/sd-2026-11-10-ashen","type":"Update",
+  "title":"New: The Ashen Crown, a 3-chapter demo","title_zh":"新作《灰烬王冠》三章试玩上线",
+  "body":"An original modern-magic visual novel. Every relic you mend costs one of your own memories, and what you forget stays forgotten. Play it from Top Ranked on the home page, in anime or realistic art.",
+  "body_zh":"原创现代魔术题材视觉小说。每修好一件遗物，就要拿你自己的一段记忆去换，忘掉的不会回来。在首页“热门榜”打开，动漫和写实两种画风可切换。"},
  {"date":"10/22/2026","href":"/announcement/sd-2026-10-22-illustrated","type":"Update",
   "title":"Three Kingdoms: The Strategist now comes illustrated","title_zh":"《三国演义 · 谋士》插画版上线",
   "body":"The Strategist now has an illustrated edition: new character portraits, scenes and key moments. The ink-wash edition stays available, and both share your progress.",

@@ -9,6 +9,7 @@ import {bindCarousels} from './carousels.js';
 import {paintBrand} from './brand.js';
 import {sortStories} from './catalog-sort.js';
 import {threeKingdoms,threeKingdomsInk} from './three-kingdoms.js';
+import {ashenCrown} from './ashen-crown.js';
 import {storydateOriginals,storydateCharacters} from './storydate-originals.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
@@ -331,6 +332,10 @@ function pinThreeKingdoms(){
    const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(bookCard);slot.append(wrap);placed.after(slot);}else card.after(bookCard);
    cardMarkup.set(book.id,bookCard.outerHTML);
   }
+  {const ashen=card.cloneNode(true);ashen.href=ashenCrown.href;ashen.target='_top';ashen.querySelector('[data-name]').textContent=ashenCrown.title;
+   ashen.querySelectorAll('img').forEach(img=>{if(img.alt==='ORIGINAL')return;img.src=ashenCrown.image;img.alt=ashenCrown.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');});
+   const note=ashen.querySelector('p:not([data-name])');if(note)note.textContent=ashenCrown.plays;
+   const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(ashen);slot.append(wrap);placed.after(slot);}else card.after(ashen);}
   const section=first.closest('section');section.querySelectorAll('span.typo-text-base_leading-none_semibold').forEach((rank,i)=>rank.textContent=String(i+1));
   card.querySelectorAll('img').forEach(img=>{if(img.alt!=='ORIGINAL'){img.alt=threeKingdoms.title;img.src=threeKingdoms.image;img.removeAttribute('data-asset');img.removeAttribute('srcset');}});
   cardMarkup.set(threeKingdoms.id,card.outerHTML);
