@@ -27,7 +27,7 @@ const FILES = [
 // rewrites these from sanguo/upstream on every deploy; listing them here lets --check catch a stale committed copy.
 FILES.push(['game/sanguo/content/campaign.json', 'server/sanguo-campaign.json']);
 for (const v of [2, 3, 4, 5, 6, 7, 8]) FILES.push([`game/sanguo/content/v${v}/campaign_v${v}.json`, `server/sanguo-campaign-v${v}.json`]);
-FILES.push(['game/engine/campaign_core.js', 'server/sanguo-core.cjs'], ['game/engine/campaign_core.js', 'server/book-core.cjs']);
+// server/sanguo-core.cjs 和 server/book-core.cjs 不进仓库（.gitignore），只在构建时生成，所以不列在这里。
 // The illustrated edition's pictures, served to the site at /assets/sanguo-art/.
 for (const dir of ['portraits', 'scenes', 'cg', 'ending', 'fate']) {
   const names = await readdir(new URL(`game/sanguo/art/${dir}/`, repo)).catch(() => []);
