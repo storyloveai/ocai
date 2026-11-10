@@ -81,6 +81,22 @@ PACKS = {
                T("分歧点总有一条路可走：谁都不够时进普通结局，不卡死", "Every branch point has a way forward: if no one is close enough, the normal ending, never a dead end"),
                T("每条个人线都有好结局和普通结局，通关全部个人线后开启真结局", "Every route has a good and a normal ending; clearing all routes opens the true ending")],
 },
+"relic-war": {
+ "title": T("遗器之争", "Relic war"),
+ "premise": T("现代都市里的魔法战争：十二件遗器，十二个持有者，谁先握住五件谁就能改写世界的一条规则。每一次全力出手都要付一段记忆。好玩在“赢下来的那个人，还记不记得自己为什么要赢”。",
+              "A modern-city magic war: twelve relics, twelve holders, and whoever holds five may rewrite one rule of the world. Every all-out use costs a memory. The fun is whether the one who wins still remembers why they wanted to."),
+ "values": {"xiu": T("修", "mending"), "shou": T("守", "protecting"), "ji": T("记", "remembering"), "xin": T("信", "trust"), "yong": T("勇", "nerve"), "duo": T("夺", "ambition")},
+ "roles": {
+   "power": {"required": True, "earned": True, **T("力量：读懂对手、看清结构攒下来的余裕。靠它出手能少付代价；结局不能只看它。", "Power: the margin earned by reading opponents and structures. It lets you pay less; an ending never rests on it alone.")},
+   "memory": {"required": True, **T("记忆：主角还剩下的回忆。全力出手就要交出一段，交出去的拿不回来，后面的选项和台词跟着变。", "Memory: what the protagonist still remembers. Going all out gives one up for good, and later choices and lines change with it.")},
+   "risk": {"required": True, **T("注意：守秘局和对手对你的注意。到线必须出事（上门盘问、被盯上），不能只是一个数字。", "Notice: how closely the Secrecy Bureau and rivals are watching. Crossing the line must cause something (a visit, a tail), not just change a number.")}},
+ "failures": [T("空壳：交出去的记忆太多，赢了也想不起为什么要赢", "Hollow: so many memories given up that winning means nothing"),
+              T("读错招：对手的意图看错了，代价来不及付", "Misread: the opponent's intent was wrong and the price comes too late"),
+              T("暴露：在普通人面前用了遗器，守秘局先动手", "Exposed: a relic used before ordinary people, and the Bureau moves first")],
+ "checklist": [T("魔法是剧情规则，代价写清楚：拿走什么、拿不拿得回来", "Magic is a story rule; its price is explicit: what is taken, and whether it comes back"),
+               T("坏结局要能学到东西：每个坏结局后给出回到哪一步、为什么", "A bad ending teaches: each one says which step to revisit, and why"),
+               T("全力出手总有一个不全力的走法，只是更难、更慢，或者要先看懂结构", "Every all-out moment has a way that isn't, only harder, slower, or needing the structure read first")],
+},
 }
 
 if __name__ == "__main__":
