@@ -2853,7 +2853,7 @@ function renderTop() {
     G ? h("span", { class: "savedot", title: CAN_SAVE ? L().autoSaved : L().noSave }, CAN_SAVE ? "✓ " + L().autoSaved : L().noSaveShort) : "",
     h("span", { class: "top-sp" }),
     G ? h("button", { type: "button", class: "tbtn", onclick: goHome }, L().toc) : "",
-    h("span", { class: "seg", role: "group", "aria-label": "Language" }, ["zh", "en"].map(l => h("button", { type: "button", "aria-pressed": String(settings.lang === l), onclick: () => setLang(l) }, l === "zh" ? "中" : "EN"))),
+    h("span", { class: "seg", role: "group", "aria-label": "语言 / Language" }, ["zh", "en"].map(l => h("button", { type: "button", "aria-pressed": String(settings.lang === l), onclick: () => setLang(l) }, l === "zh" ? "中" : "EN"))),
     creatorAllowed() ? h("button", { type: "button", class: "tbtn", "aria-pressed": String(!!settings.creator), onclick: () => setCreator(!settings.creator) }, L().creator) : "");
   if (settings.creator && !creatorAllowed()) settings.creator = false;
 }

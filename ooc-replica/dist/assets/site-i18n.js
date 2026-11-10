@@ -73,6 +73,17 @@ const UI = [
   ['Academy', '学院'], ['Heroes', '英雄'], ['Superpowers', '超能力'], ['Villains', '反派'],
   ['Romance of the Three Kingdoms', '三国演义'], ['Ink edition', '水墨版'], ['Illustrated edition', '插画版'], ['Classic (3 chapters)', '经典三章'],
   ['The Strategist (8 chapters)', '谋士八章'], ['Progress saves automatically', '进度自动保存'], ['‹ Back', '‹ 返回'],
+  ['‹ Story Information', '‹ 故事信息'], ['Bookmark', '收藏'], ['plays', '次游玩'], ['Default avatar', '默认形象'],
+  // Model tiers in the chat header; the stored tier value stays English (data-tier).
+  ['Max', '旗舰'], ['Superb', '卓越'], ['Skillful', '娴熟'], ['Extensive', '详尽'], ['Basic', '基础'], ['Demo', '演示'],
+  ['Uncompromising realism', '极致真实'], ['Best quality, most immersive', '质量最好，最有代入感'], ['Vivid and descriptive narratives', '叙述生动细腻'],
+  ['Strong details and long narratives', '细节丰富，篇幅更长'], ['Light and cheap', '轻量、省积分'],
+  ['‹ Character Information', '‹ 角色信息'], ['Situation image', '情景图片'],
+  ["Independent local preview. This character's complete information has not been captured.", '角色资料预览：完整资料还在整理中。'],
+  ['Notifications alt+T', '通知 alt+T'], ['Title type', '作品类型'], ['Title visibility', '作品可见范围'], ['Sort titles', '作品排序'], ['Search type', '搜索类型'],
+  ['Credit bundles are one-time purchases in USD. Your final total is shown before payment.', '积分套餐为一次性购买，以美元计价。付款前会显示最终金额。'],
+  ['You will continue to Stripe’s secure checkout to pay, then return here. Credits are added after payment is confirmed.', '付款会跳转到 Stripe 的安全结账页面，完成后回到这里。确认到账后积分会加到你的账户。'],
+  ['For a payment or refund question, keep your Stripe receipt and contact the site owner.', '如有付款或退款问题，请保留 Stripe 收据并联系站点管理员。'],
 ];
 // StoryDate's own catalog: titles and blurbs come in both languages.
 const OWN = [
@@ -85,7 +96,7 @@ const OWN = [
 ].filter(([en, zh]) => en && zh);
 const PATTERNS = [
   [/^(\d+) stories$/, '$1 个故事', /^(\d+) 个故事$/, '$1 stories'], [/^(\d+) characters$/, '$1 个角色', /^(\d+) 个角色$/, '$1 characters'],
-  [/^(\d+) Images$/, '$1 张图片', /^(\d+) 张图片$/, '$1 Images'], [/^Reply (\d+)$/, '回复 $1', /^回复 (\d+)$/, 'Reply $1'],
+  [/^(\d+) Images$/, '$1 张图片', /^(\d+) 张图片$/, '$1 Images'], [/^([\d.,]+[KMB]?) plays$/i, '$1 次游玩', /^([\d.,]+[KMB]?) 次游玩$/, '$1 plays'], [/^([\d,]+) Credits$/, '$1 积分', /^([\d,]+) 积分$/, '$1 Credits'], [/^Reply (\d+)$/, '回复 $1', /^回复 (\d+)$/, 'Reply $1'],
 ];
 const TAG_WORDS = new Map(UI.map(([en, zh]) => [en.replace(/\s+/g, '').toLowerCase(), zh]));
 
@@ -103,6 +114,8 @@ export function translate(text, lang) {
     if (lang === 'zh' && re.test(key)) { out = key.replace(re, zh); break; }
     if (lang === 'en' && reZh.test(key)) { out = key.replace(reZh, en); break; }
   }
+  if (out === undefined && lang === 'zh' && / carousel$/.test(key)) { const head = toZh.get(key.slice(0, -9)); if (head) out = head + '轮播'; }
+  if (out === undefined && lang === 'en' && /轮播$/.test(key)) { const head = toEn.get(key.slice(0, -2)); if (head) out = head + ' carousel'; }
   if (out === undefined && /^#\S+$/.test(key)) {
     const word = key.slice(1), zh = TAG_WORDS.get(word.toLowerCase()), en = UI.find(([, z]) => z === word)?.[0];
     if (lang === 'zh' && zh) out = '#' + zh; else if (lang === 'en' && en) out = '#' + en.replace(/\s+/g, '');

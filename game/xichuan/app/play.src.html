@@ -14,7 +14,8 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 .layer { position: absolute; inset: 0 }
 #bg { background-size: cover; background-position: center; transition: opacity .6s }
 #bg .ph, #cg .ph { position: absolute; left: 16px; top: 14px; font-size: 13px; color: rgba(255,255,255,.75); letter-spacing: .08em; background: rgba(0,0,0,.25); padding: 2px 10px; border-radius: 99px }
-#sprites { pointer-events: none }
+#sprites { pointer-events: none; will-change: transform }
+.fx { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity .35s; pointer-events: none; display: block }
 .sprite { position: absolute; bottom: 0; height: 96%; aspect-ratio: 2 / 3; transform: translateX(-50%); transition: left .35s, filter .25s, opacity .3s; display: flex; align-items: flex-end; justify-content: center }
 .sprite img { height: 100%; width: auto; object-fit: contain }
 .sprite.dim { filter: brightness(.62) saturate(.8) }
@@ -33,12 +34,20 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 #bar { position: absolute; right: 4%; bottom: calc(3% + 4px); display: flex; gap: 4px; z-index: 3 }
 #bar button, .menu button, .panel button { font: inherit; font-size: 12.5px; color: var(--muted); background: none; border: 0; padding: 4px 8px; border-radius: 6px; cursor: pointer }
 #bar button[aria-pressed="true"] { color: var(--accent) }
+#bar button { white-space: nowrap }
+@media (max-width: 520px) { #bar { left: 4%; right: 4%; justify-content: space-between; gap: 0 } #bar button { padding: 4px 2px; font-size: 12px } }
 #bar button:hover { color: var(--ink) }
 .menu { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: rgba(6, 8, 18, .35); z-index: 4 }
 .menu .prompt { color: var(--muted); font-size: 14px; letter-spacing: .1em; margin-bottom: 4px }
 .menu .opt { min-width: min(560px, 82%); font-size: clamp(14px, 1.8vw, 18px); color: var(--ink); background: var(--box); border: 1px solid var(--edge); border-radius: 12px; padding: 12px 22px; text-align: center; transition: background .15s, border-color .15s }
 .menu .opt:hover, .menu .opt:focus-visible { border-color: var(--accent); background: rgba(58, 29, 39, .85); outline: none }
 .menu .opt[disabled] { opacity: .45; cursor: default }
+.menu .opt.talk-opt { border-style: dashed; color: var(--accent) }
+.menu form.talk { display: flex; gap: 8px; width: min(560px, 86%); flex-wrap: wrap; justify-content: center }
+.menu form.talk input { flex: 1 1 260px; min-width: 0; font: inherit; font-size: 16px; color: var(--ink); background: var(--box); border: 1px solid var(--accent); border-radius: 12px; padding: 12px 16px; outline: none }
+.menu form.talk button { font-size: 15px; color: var(--ink); border: 1px solid var(--edge); background: var(--box); border-radius: 12px; padding: 10px 18px }
+.heart { position: absolute; z-index: 3; font-size: clamp(22px, 3vw, 34px); color: #ff8fb1; pointer-events: none; animation: heart 1.6s ease-out forwards; text-shadow: 0 0 12px rgba(255,143,177,.7) }
+@keyframes heart { 0% { opacity: 0; transform: translateY(10px) scale(.6) } 20% { opacity: 1; transform: translateY(0) scale(1.1) } 100% { opacity: 0; transform: translateY(-60px) scale(1) } }
 .panel { position: absolute; inset: 4%; background: rgba(10, 13, 26, .94); border: 1px solid var(--edge); border-radius: 14px; z-index: 6; display: flex; flex-direction: column; padding: 18px 22px }
 .panel h2 { margin: 0 0 10px; font-size: 18px; letter-spacing: .1em }
 .panel .body { overflow: auto; flex: 1; padding-right: 6px }
@@ -82,19 +91,37 @@ const CAMP = /*__CAMPAIGN__*/null;
 const ART_FILES = new Set(/*__ART__*/[]);
 // 不管页面是以 /assets/xichuan、/assets/xichuan/ 还是 /assets/xichuan/index.html 打开，图都从同一个目录取
 const ART_BASE = (() => { const u = new URL(location.href); u.search = u.hash = ""; let p = u.pathname; if (/\.html?$/.test(p)) p = p.replace(/[^/]*$/, ""); else if (!p.endsWith("/")) p += "/"; return u.origin + p + "art/"; })();
-const PRELOADED = new Set(); function preload(url) { if (url && !PRELOADED.has(url)) { PRELOADED.add(url); const i = new Image(); i.src = url; } }
+const IMGS = new Map();          // url -> Promise<Image>，同一张图只下一次
+function preload(url) {
+  if (!url) return Promise.resolve(null);
+  if (!IMGS.has(url)) IMGS.set(url, new Promise(res => { const i = new Image(); i.onload = () => (i.decode ? i.decode().catch(() => {}) : Promise.resolve()).then(() => res(i)); i.onerror = () => res(null); i.src = url; }));
+  return IMGS.get(url);
+}
 CC.validate(CAMP);
 const $ = s => document.querySelector(s);
 const store = { get(k, d) { try { const v = localStorage.getItem("xc." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
                 set(k, v) { try { localStorage.setItem("xc." + k, JSON.stringify(v)); } catch {} } };
-let LANG = store.get("lang", (navigator.language || "").startsWith("zh") ? "zh" : "en");
+// 网站（StoryDate）选过的语言优先：localStorage 的 sd.lang；游戏里切换时也写回去，两边一致。
+const siteLang = () => { try { const v = localStorage.getItem("sd.lang"); return v === "zh" || v === "en" ? v : null; } catch { return null; } };
+const saveLang = l => { store.set("lang", l); try { localStorage.setItem("sd.lang", l); } catch {} };
+let LANG = siteLang() || store.get("lang", (navigator.language || "").startsWith("zh") ? "zh" : "en");
 const t = x => x == null ? "" : typeof x === "string" ? x : (x[LANG] || x.zh || x.en || "");
 const UI = {
-  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", savedAt: n => `存档 ${n}` },
-  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", savedAt: n => `Slot ${n}` },
+  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", tilt: "立体", music: "音乐", talk: n => `（对${n}说点什么……）`, talkHint: "想对她说什么？", send: "说", cancel: "算了", noReply: "（她好像没听清，看了你一眼。）", savedAt: n => `存档 ${n}` },
+  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", tilt: "3D", music: "Music", talk: n => `(Say something to ${n}…)`, talkHint: "What do you want to say?", send: "Say", cancel: "Never mind", noReply: "(She doesn't seem to catch it, and just glances at you.)", savedAt: n => `Slot ${n}` },
 };
 const ui = k => UI[LANG][k];
-const art = p => ART_FILES.has(p) ? ART_BASE + p : null;
+// 手机屏幕用 1280 宽的小图（art/m/ 下），体积约一半
+const SMALL = Math.max(screen.width || 0, screen.height || 0) <= 1000;
+const art = p => SMALL && ART_FILES.has("m/" + p) ? ART_BASE + "m/" + p : ART_FILES.has(p) ? ART_BASE + p : null;
+// 提前下好接下来要用的图：背景（连深度图）、CG、立绘
+function prefetch(ops) {
+  for (const op of (ops || []).slice(0, 60)) {
+    if (op.op === "bg" && op.id) { preload(art(`bg/${op.id}.webp`)); preload(art(`depth/bg/${op.id}.webp`)); }
+    else if (op.op === "cg" && op.id) { preload(art(`cg/${op.id}.webp`)); preload(art(`depth/cg/${op.id}.webp`)); }
+    else if ((op.op === "show" || op.op === "say") && op.who && op.who !== "me") preload(art(`sprites/${op.who}/${op.face || "normal"}.webp`));
+  }
+}
 const hue = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 7);
 const COLORS = { zhiyao: "#ff9db8", shencheng: "#8fc7ff", jibai: "#c7b4ff", zhou: "#c9b48a", chenghang: "#9fe0a8" };
 const nameOf = who => who === "me" ? t(CAMP.player.name) : who ? t(CAMP.chars[who].name) : "";
@@ -111,17 +138,30 @@ const unlock = (kind, id) => { const u = store.get(kind, []); if (!u.includes(id
 function drawBg() {
   const el = $("#bg"), id = V.bg, url = id && art(`bg/${id}.webp`);
   const grad = id ? `linear-gradient(160deg, hsl(${hue(id)} 45% 32%), hsl(${(hue(id) + 40) % 360} 40% 14%))` : "none";
-  el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;   // 图没到之前先垫一层颜色，不会是一片黑
-  el.innerHTML = !url && id ? `<span class="ph"></span>` : "";
-  if (!url && id) el.firstChild.textContent = t((CAMP.art.bg || {})[id]) || id;
+  audioMood(id);
+  const apply = () => {
+    if (V.bg !== id || el.dataset.shown === (id || "")) return; el.dataset.shown = id || "";
+    el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
+    ph(el, !url && id ? t((CAMP.art.bg || {})[id]) || id : null);
+    FX.bg && FX.bg.set(url, url && art(`depth/bg/${id}.webp`));
+  };
+  if (!url) return apply();
+  // 新背景下好之前继续显示上一张，不露出底色；太久没到（网慢）才先垫颜色
+  preload(url).then(apply); setTimeout(apply, el.dataset.shown ? 2500 : 1500);
 }
 function drawCg() {
   const el = $("#cg"), id = V.cg, url = id && art(`cg/${id}.webp`);
-  el.classList.toggle("on", !!id);
-  const grad = id ? `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))` : "none";
-  el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
-  el.innerHTML = !url && id ? `<span class="ph"></span>` : "";
-  if (!url && id) el.firstChild.textContent = "CG · " + (t((CAMP.art.cg || {})[id]) || id);
+  if (!id) { el.classList.remove("on"); return; }
+  const grad = `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))`;
+  const apply = () => {
+    if (V.cg !== id || (el.dataset.shown === id && el.classList.contains("on"))) return; el.dataset.shown = id;
+    el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
+    ph(el, !url ? "CG · " + (t((CAMP.art.cg || {})[id]) || id) : null);
+    FX.cg && FX.cg.set(url, url && art(`depth/cg/${id}.webp`));
+    el.classList.add("on");
+  };
+  if (!url) return apply();
+  preload(url).then(apply); setTimeout(apply, 2500);   // CG 下好了才淡入
 }
 const POS = { left: 24, center: 50, right: 76 };
 function silhouette(who, face) {
@@ -135,20 +175,22 @@ function silhouette(who, face) {
   svg.querySelectorAll("text")[1].textContent = f;
   return svg;
 }
+function ph(el, label) { el.querySelector(".ph")?.remove(); if (label) { const s = document.createElement("span"); s.className = "ph"; s.textContent = label; el.append(s); } }
 function drawSprites() {
   const box = $("#sprites"); box.replaceChildren();
   for (const [who, s] of Object.entries(V.sprites)) {
     const d = document.createElement("div"); d.className = "sprite" + (V.speaker && V.speaker !== who ? " dim" : "");
     d.style.left = (POS[s.at] ?? 50) + "%";
     const url = art(`sprites/${who}/${s.face}.webp`) || art(`sprites/${who}/normal.webp`);   // an expression not drawn yet: the standard sprite
-    if (url) { const img = new Image(); img.src = url; img.alt = ""; d.append(img); } else d.append(silhouette(who, s.face));
+    if (!url) continue;   // 还没画立绘的人（配角）不放占位轮廓，只在对话框上显示名字
+    const img = new Image(); img.src = url; img.alt = ""; d.append(img);
     box.append(d);
   }
 }
 function draw() { drawBg(); drawSprites(); drawCg(); }
 
 /* ---------- the script runner ---------- */
-function load(lines, src) { V.queue = lines.map((l, k) => ({ ...l, src: `${src}:${k}` })); V.i = 0; }
+function load(lines, src) { V.queue = lines.map((l, k) => ({ ...l, src: `${src}:${k}` })); V.i = 0; prefetch(lines); }
 function step() {
   clearTimeout(timer);
   if (typing) { finishTyping(); return; }
@@ -156,15 +198,20 @@ function step() {
     const op = V.queue[V.i++];
     if (op.when && !CC.evalCond(G, op.when)) continue;
     if (op.op === "bg") { V.bg = op.id; V.cg = null; V.sprites = {}; draw(); continue; }
-    if (op.op === "show") { V.sprites[op.who] = { face: op.face, at: op.at || (V.sprites[op.who] || {}).at || "center" }; drawSprites(); continue; }
+    if (op.op === "show") {
+      const at = op.at || (V.sprites[op.who] || {}).at || "center";
+      for (const w of Object.keys(V.sprites)) if (w !== op.who && V.sprites[w].at === at) delete V.sprites[w];   // 同一个位置只站一个人：后上来的把前面的人换下去
+      V.sprites[op.who] = { face: op.face, at }; drawSprites(); continue; }
     if (op.op === "hide") { if (op.who) delete V.sprites[op.who]; else V.sprites = {}; drawSprites(); continue; }
-    if (op.op === "cg") { V.cg = op.id; if (op.id) unlock("cg", op.id); drawCg(); continue; }
+    if (op.op === "cg") { if (op.id && !art(`cg/${op.id}.webp`)) continue;   // 还没画的 CG 先跳过，不显示占位；图一到就会出现
+      V.cg = op.id; if (op.id) unlock("cg", op.id); drawCg(); continue; }
     if (op.op === "say") { say(op); return; }
   }
   next();                                        // the scene's lines are done: ask the engine what comes next
 }
 function say(op) {
   if (op.face && op.who && V.sprites[op.who]) V.sprites[op.who].face = op.face;
+  if (op.heart) { const h = document.createElement("div"); h.className = "heart"; h.textContent = "♡"; const at = (V.sprites[op.who] && POS[V.sprites[op.who].at]) ?? 50; h.style.left = `calc(${at}% + 9%)`; h.style.top = "18%"; $("#stage").append(h); setTimeout(() => h.remove(), 1700); }
   V.speaker = op.who && op.who !== "me" ? op.who : null; drawSprites();
   $("#name").textContent = op.who ? nameOf(op.who) : "";
   const el = $("#text"), full = t(op.t);
@@ -202,18 +249,31 @@ function menu(prompt, opts) {
 }
 function choiceMenu(n) {
   const os = CC.choices(CAMP, G).filter(o => !o.locked);
+  os.forEach(o => prefetch((o.c.script || []).slice(0, 12)));
   menu(ui("prompt"), os.map(o => ({ label: t(o.c.label), go: () => {
     V.log.push({ who: "", text: "▸ " + t(o.c.label) });
     const lines = o.c.script || []; CC.choose(CAMP, G, o.id); V.started = null;
     load(lines, `c:${n.id}.${o.id}`); step();
   } })));
+  // 自由对话：场上有女主、这一幕还有说话的机会、网站接了 AI，就多一个“对她说点什么”
+  const who = talkTarget(n);
+  if (who && TALK.ai && CC.freeLeft(CAMP, G) > 0) {
+    const b = document.createElement("button"); b.className = "opt talk-opt"; b.textContent = ui("talk")(nameOf(who));
+    b.onclick = () => talkBox(n, who); $("#menu").insertBefore(b, $("#menu .opt"));
+  }
 }
 function sideMenu() {
   const ch = CAMP.chapters[G.ch];
+  G.offer.forEach(id => prefetch((CAMP.nodes[id].script || []).slice(0, 12)));
   menu(t(ch.side_prompt || CAMP.side_prompt), G.offer.map(id => ({ label: t(CAMP.nodes[id].title), go: () => { CC.pickSide(CAMP, G, id); V.started = null; next(); } })));
 }
 function showEnd() {
   const es = CC.endings(CAMP, G), e = $("#endscreen"); e.replaceChildren(); e.hidden = false;
+  // 结局有自己的 CG 就铺在后面（压暗，字照样看得清）
+  const ecg = es.map(x => CAMP.endings.find(g => g.id === x.group).fragments.find(f => f.id === x.frag).cg).find(id => id && art(`cg/${id}.webp`));
+  e.style.backgroundImage = ecg ? `linear-gradient(rgba(6,8,18,.55), rgba(6,8,18,.82)), url("${art(`cg/${ecg}.webp`)}")` : "";
+  e.style.backgroundSize = "cover"; e.style.backgroundPosition = "center";
+  if (ecg) unlock("cg", ecg);
   es.forEach((x, i) => {   // 每一组一个小标题（结局有自己的名字就用它），下面是正文
     const g = CAMP.endings.find(g => g.id === x.group), f = g.fragments.find(f => f.id === x.frag);
     const h = document.createElement(i ? "h3" : "h2"); h.textContent = t(f.title || g.title); e.append(h);
@@ -226,7 +286,7 @@ function showEnd() {
 /* ---------- saves ---------- */
 const snapshot = () => JSON.parse(JSON.stringify({ G, V: { ...V, log: V.log.slice(-60) }, at: Date.now(), label: nameOf(null) + t(CAMP.chapters[Math.max(0, G.ch)]?.title) }));
 function autosave() { if (G && G.phase !== "end") store.set("auto", snapshot()); }
-function restore(s) { G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); }
+function restore(s) { askTilt(); audioStart(); G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); }
 function slots(mode) {
   const p = $("#panel"); p.replaceChildren(); p.hidden = false;
   const h = document.createElement("h2"); h.textContent = mode === "save" ? ui("save") : ui("loadS");
@@ -268,14 +328,18 @@ function renderBar() {
   const btn = (k, f, pressed) => { const b = document.createElement("button"); b.textContent = ui(k); if (pressed != null) b.setAttribute("aria-pressed", String(pressed)); b.onclick = e => { e.stopPropagation(); f(); }; bar.append(b); };
   btn("log", showLog); btn("auto", () => { auto = !auto; skip = false; renderBar(); if (auto && !typing && $("#menu").hidden) step(); }, auto);
   btn("skip", () => { skip = !skip; auto = false; renderBar(); if (skip && $("#menu").hidden) step(); }, skip);
+  btn("music", () => { AUDIO.on = !AUDIO.on; store.set("music", AUDIO.on); AUDIO.on ? audioStart() : audioStop(); renderBar(); }, AUDIO.on);
+  btn("tilt", () => { TILT.on = !TILT.on; store.set("tilt", TILT.on); askTilt(); renderBar(); }, TILT.on);
   btn("save", () => slots("save")); btn("loadS", () => slots("load"));
-  btn("lang", () => { LANG = LANG === "zh" ? "en" : "zh"; store.set("lang", LANG); document.documentElement.lang = LANG; renderBar(); draw(); const op = V.queue[V.i - 1]; if (op && op.op === "say") { clearInterval(typing); typing = null; $("#name").textContent = op.who ? nameOf(op.who) : ""; $("#text").textContent = t(op.t); $("#next").classList.add("on"); } });
+  btn("lang", () => { LANG = LANG === "zh" ? "en" : "zh"; saveLang(LANG); document.documentElement.lang = LANG; renderBar(); draw(); const op = V.queue[V.i - 1]; if (op && op.op === "say") { clearInterval(typing); typing = null; $("#name").textContent = op.who ? nameOf(op.who) : ""; $("#text").textContent = t(op.t); $("#next").classList.add("on"); } });
   btn("title", title);
 }
 function title() {
   auto = skip = false; clearTimeout(timer);
   const el = $("#title"); el.hidden = false; el.replaceChildren();
   const url = art("cg/title.webp") || art("bg/cinema_dusk.webp");
+  // 停在标题画面时，先把开场要用的图下好
+  const first = Object.values(CAMP.nodes).find(n => n.chapter === CAMP.chapters[0].id && n.kind === "main"); if (first) prefetch(first.script);
   el.style.backgroundImage = url ? `url("${url}")` : "linear-gradient(160deg, #2a3c6b, #f2a6b8 140%)";
   const h = document.createElement("h1"); h.textContent = t(CAMP.title);
   const sub = document.createElement("div"); sub.className = "sub"; sub.textContent = ui("sub");
@@ -285,11 +349,12 @@ function title() {
   if (a) b("cont", () => restore(a));
   b("start", start); b("load", () => { el.hidden = true; slots("load"); $("#panel").querySelector(".close").onclick = () => { $("#panel").hidden = true; title(); }; });
   b("gallery", () => { showGallery(); });
-  const l = document.createElement("button"); l.className = "lang"; l.textContent = ui("lang"); l.onclick = () => { LANG = LANG === "zh" ? "en" : "zh"; store.set("lang", LANG); title(); renderBar(); }; el.append(l);
+  const l = document.createElement("button"); l.className = "lang"; l.textContent = ui("lang"); l.onclick = () => { LANG = LANG === "zh" ? "en" : "zh"; saveLang(LANG); title(); renderBar(); }; el.append(l);
   el.querySelector("button")?.focus();
 }
 function start() {
-  ART_FILES.forEach(f => { if (f.startsWith("bg/") || f.endsWith("/normal.webp")) preload(ART_BASE + f); });
+  askTilt(); audioStart();
+  ["zhiyao", "shencheng", "jibai"].forEach(w => preload(art(`sprites/${w}/normal.webp`)));
   G = CC.newGame(CAMP); V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null, started: null };
   $("#title").hidden = true; $("#endscreen").hidden = true; draw(); next();
 }
@@ -301,6 +366,198 @@ document.addEventListener("keydown", e => {
   if (e.key === "Control") { skip = true; renderBar(); step(); }
 });
 document.addEventListener("keyup", e => { if (e.key === "Control") { skip = false; renderBar(); } });
+
+/* ---------- 背景音乐（实验版，v0.18）：页面里实时合成，不用音频文件 ----------
+   轻柔的钢琴琶音 + 和弦铺底，按场景分白天、黄昏、夜里、雨天；海边的场景加海浪，下雨的场景加雨声。
+   确认“有声音”值得做以后，换成正式授权的配乐。 */
+const AUDIO = { on: store.get("music", true), ctx: null, out: null, mood: "day", sea: false, rain: false, beat: 0, next: 0, timer: null, amb: null };
+const MOODS = {   // 每小节一个和弦（MIDI 音高）、每分钟拍数、音量
+  day:   { bpm: 76, vol: .9, chords: [[60, 64, 67, 71], [57, 60, 64, 67], [53, 57, 60, 64], [55, 59, 62, 67]] },
+  dusk:  { bpm: 68, vol: .8, chords: [[53, 57, 60, 64], [52, 55, 59, 62], [50, 53, 57, 60], [48, 52, 55, 59]] },
+  night: { bpm: 58, vol: .65, chords: [[57, 60, 64, 67], [53, 57, 60, 64], [48, 52, 55, 59], [55, 59, 62, 65]] },
+};
+const BGMOOD = { cinema_night: "night", seawall_night: "night", street: "night", rain_street: "night", projection: "night", train: "dusk", cinema_dusk: "dusk", rooftop: "dusk", library: "dusk", oldhouse: "dusk" };
+const SEA = new Set(["station", "cinema_dusk", "cinema_night", "seawall_night", "beach", "train", "street"]);
+function audioMood(id) { if (!id) return; AUDIO.mood = BGMOOD[id] || "day"; AUDIO.sea = SEA.has(id); AUDIO.rain = id === "rain_street"; audioAmb(); }
+function audioStart() {
+  if (!AUDIO.on) return;
+  const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+  if (!AUDIO.ctx) {
+    const c = AUDIO.ctx = new AC(), out = AUDIO.out = c.createGain(); out.gain.value = 0;
+    const lp = c.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2600;
+    const dl = c.createDelay(); dl.delayTime.value = .33; const fb = c.createGain(); fb.gain.value = .32; const wet = c.createGain(); wet.gain.value = .35;
+    out.connect(lp); lp.connect(c.destination); lp.connect(dl); dl.connect(fb); fb.connect(dl); dl.connect(wet); wet.connect(c.destination);
+    const n = c.createBuffer(1, c.sampleRate * 2, c.sampleRate), d = n.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+    AUDIO.noise = n;
+  }
+  const c = AUDIO.ctx; c.resume && c.resume();
+  AUDIO.out.gain.cancelScheduledValues(c.currentTime); AUDIO.out.gain.setTargetAtTime(.16, c.currentTime, 1.2);
+  if (!AUDIO.timer) { AUDIO.next = c.currentTime + .2; AUDIO.timer = setInterval(audioTick, 120); }
+  audioAmb();
+}
+function audioStop() {
+  if (!AUDIO.ctx) return; const c = AUDIO.ctx;
+  AUDIO.out.gain.setTargetAtTime(0, c.currentTime, .4); clearInterval(AUDIO.timer); AUDIO.timer = null; audioAmb(true);
+}
+function note(midi, t, len, vol, type) {
+  const c = AUDIO.ctx, o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(), f = 440 * Math.pow(2, (midi - 69) / 12);
+  o.type = type || "sine"; o.frequency.value = f; o2.type = "sine"; o2.frequency.value = f * 2; const g2 = c.createGain(); g2.gain.value = .18;
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(vol, t + .015); g.gain.exponentialRampToValueAtTime(.0008, t + len);
+  o.connect(g); o2.connect(g2); g2.connect(g); g.connect(AUDIO.out); o.start(t); o2.start(t); o.stop(t + len + .05); o2.stop(t + len + .05);
+}
+function audioTick() {
+  const c = AUDIO.ctx; if (!c || document.hidden) return;
+  while (AUDIO.next < c.currentTime + .4) {
+    const m = MOODS[AUDIO.mood], spb = 60 / m.bpm, t = AUDIO.next, bar = Math.floor(AUDIO.beat / 4) % 4, b = AUDIO.beat % 4, ch = m.chords[bar];
+    if (b === 0) { ch.forEach(n => note(n - 12, t, spb * 4.2, .05 * m.vol, "triangle")); note(ch[0] - 24, t, spb * 4, .07 * m.vol, "sine"); }
+    const pat = [0, 2, 1, 3, 2, 3, 1, 2][(AUDIO.beat % 8)];
+    if (!(AUDIO.mood === "night" && b === 3)) note(ch[pat] + 12, t, spb * 2.6, .07 * m.vol);
+    if (AUDIO.beat % 16 === 14) note(ch[3] + 24, t + spb / 2, spb * 2, .03 * m.vol);
+    AUDIO.beat++; AUDIO.next += spb;
+  }
+}
+function audioAmb(stop) {        // 海浪、雨声：滤过的噪声，海浪带慢起伏
+  const c = AUDIO.ctx; if (!c) return;
+  const want = stop || !AUDIO.on ? null : AUDIO.rain ? "rain" : AUDIO.sea ? "sea" : null;
+  if (AUDIO.amb && AUDIO.amb.kind === want) return;
+  if (AUDIO.amb) { const a = AUDIO.amb; a.g.gain.setTargetAtTime(0, c.currentTime, .6); setTimeout(() => { try { a.src.stop(); a.lfo && a.lfo.stop(); } catch {} }, 3000); AUDIO.amb = null; }
+  if (!want) return;
+  const src = c.createBufferSource(); src.buffer = AUDIO.noise; src.loop = true;
+  const f = c.createBiquadFilter(), g = c.createGain(); g.gain.value = 0;
+  let lfo = null;
+  if (want === "sea") { f.type = "lowpass"; f.frequency.value = 520; lfo = c.createOscillator(); lfo.frequency.value = .11; const lg = c.createGain(); lg.gain.value = .025; lfo.connect(lg); lg.connect(g.gain); lfo.start(); g.gain.setTargetAtTime(.035, c.currentTime, 1.5); }
+  else { f.type = "highpass"; f.frequency.value = 1400; g.gain.setTargetAtTime(.03, c.currentTime, 1); }
+  src.connect(f); f.connect(g); g.connect(c.destination); src.start();
+  AUDIO.amb = { kind: want, src, g, lfo };
+}
+document.addEventListener("visibilitychange", () => { if (!AUDIO.ctx) return; document.hidden ? AUDIO.ctx.suspend() : AUDIO.on && AUDIO.ctx.resume(); });
+
+/* ---------- 自由对话（v0.18）：对场上的女主说一句话 ----------
+   AI 回一句台词，并只给你的话打标签（语气、显出的品质）；好感怎么变由引擎规则决定（CC.speak），每幕最多两句。
+   网站没接 AI（或本地打开页面）时不出现这个入口。 */
+const TALK = { ai: false };
+fetch("/api/config", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(d => { TALK.ai = !!(d && d.configured); }).catch(() => {});
+const MOODFACE = { neutral: "normal", warm: "smile", cold: "angry", sad: "sad", surprised: "surprised", shy: "shy" };
+function talkTarget(n) {
+  const cast = (n.cast || []).map(c => c.id);
+  return Object.keys(V.sprites).find(w => CAMP.chars[w] && CAMP.chars[w].romance && cast.includes(w) && !G.v["flag.broken_" + w]) || null;
+}
+function talkBox(n, who) {
+  const m = $("#menu"); m.replaceChildren(); m.hidden = false;
+  const p = document.createElement("div"); p.className = "prompt"; p.textContent = ui("talk")(nameOf(who)); m.append(p);
+  const f = document.createElement("form"); f.className = "talk";
+  const inp = document.createElement("input"); inp.maxLength = 120; inp.placeholder = ui("talkHint"); inp.autocomplete = "off"; inp.enterKeyHint = "send";
+  const send = document.createElement("button"); send.type = "submit"; send.textContent = ui("send");
+  const back = document.createElement("button"); back.type = "button"; back.textContent = ui("cancel"); back.onclick = () => choiceMenu(n);
+  f.append(inp, send, back); m.append(f);
+  f.onsubmit = async e => {
+    e.preventDefault(); const text = inp.value.trim(); if (!text) return;
+    inp.disabled = send.disabled = back.disabled = true; send.textContent = "…";
+    const recent = V.log.slice(-10).map(l => (l.who ? l.who + "：" : "") + l.text);
+    let out = null;
+    try {
+      // 和三国走同一条通道：流式 + 结构化输出（模型的回答一定是合法的 JSON），读最后的 done
+      const r = await fetch("/api/sanguo", { method: "POST", headers: { "content-type": "application/json", accept: "application/x-ndjson" }, body: JSON.stringify({ game: "xichuan", phase: "express", task: "talk", lang: LANG, context: { node: n.id, target: who, text, vars: G.v, recent, memories: ((V.said || {})[who] || []).slice(-6) } }) });
+      const body = r.ok ? await r.text() : "";
+      for (const line of body.split("\n")) { try { const m = JSON.parse(line); if (m.type === "done" && m.output && typeof m.output.reply === "string") out = m.output; } catch {} }
+    } catch {}
+    m.hidden = true;
+    const mine = { op: "say", who: "me", t: { zh: text, en: text } };
+    if (!out) { load([mine, { op: "say", who: null, t: { zh: UI.zh.noReply, en: UI.en.noReply } }], `t:${n.id}`); return step(); }
+    // 她记得你说过的话（之后的对话会带上）
+    V.said = V.said || {}; (V.said[who] = V.said[who] || []).push(text.slice(0, 80)); if (V.said[who].length > 12) V.said[who].shift();
+    CC.chat(CAMP, G);
+    // 这句话是不是剧本里的某条“走向”（决裂、隐藏的门、承诺）：AI 认出来的为准，离线时按语气标签兜底；后果由规则决定
+    const avail = CC.moves(CAMP, G).filter(m => m.to === who);
+    let mv = out.move && avail.find(m => m.id === out.move);
+    if (!mv) { const mm = CC.matchMove(CAMP, G, text, who, out.tone); if (mm && (mm.labels || []).includes(out.tone)) mv = mm; }
+    const e2 = mv ? CC.move(CAMP, G, mv.id, text) : CC.speak(CAMP, G, out.tone || "flat", text, who, Array.isArray(out.values) ? out.values : []);
+    const up = !!(e2 && e2.changes && e2.changes.some(c => c.var === `rel.${who}.intimacy` && c.to > c.from));
+    const lines = [mine, { op: "say", who, t: { zh: out.reply, en: out.reply }, face: MOODFACE[out.mood] || "normal", heart: up }];
+    if (mv) (mv.out || []).forEach(p => { if (!p.when || CC.evalCond(G, p.when)) lines.push({ op: "say", who: null, t: p.text }); });
+    load(lines, `t:${n.id}`);
+    step(); autosave();
+  };
+  setTimeout(() => inp.focus(), 50);
+}
+
+/* ---------- 2.5D：倾斜手机（电脑上移动鼠标），背景和 CG 按深度图错开，立绘是中间一层 ----------
+   深度图在 art/depth/（越亮越近），由开源的 Depth Anything V2 Small 生成；没有深度图或浏览器不支持 WebGL 时，照常显示平面图。 */
+const TILT = { on: store.get("tilt", true), x: 0, y: 0, tx: 0, ty: 0, base: null, asked: false };
+const clamp1 = v => Math.max(-1, Math.min(1, v));
+class DepthLayer {
+  constructor(host, k) {
+    this.k = k; this.host = host; this.c = document.createElement("canvas"); this.c.className = "fx"; host.prepend(this.c);
+    const gl = this.gl = this.c.getContext("webgl", { alpha: false, antialias: false, preserveDrawingBuffer: false });
+    if (!gl) return;
+    const sh = (type, src) => { const o = gl.createShader(type); gl.shaderSource(o, src); gl.compileShader(o); return o; };
+    const pr = this.pr = gl.createProgram();
+    gl.attachShader(pr, sh(gl.VERTEX_SHADER, "attribute vec2 p; varying vec2 v; void main(){ v = p * .5 + .5; v.y = 1. - v.y; gl_Position = vec4(p, 0., 1.); }"));
+    gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, `precision mediump float; varying vec2 v; uniform sampler2D img, dep; uniform vec2 off; uniform vec4 cov;
+      void main(){ vec2 uv = cov.xy + v * cov.zw; vec2 u = uv;
+        for (int i = 0; i < 4; i++) { float d = texture2D(dep, u).r; u = uv + off * (d - .35); }
+        gl_FragColor = texture2D(img, clamp(u, 0., 1.)); }`));
+    gl.linkProgram(pr); gl.useProgram(pr);
+    if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { this.gl = null; return; }
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer()); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(pr, "p"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    const tex = unit => { const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unit); gl.bindTexture(gl.TEXTURE_2D, t);
+      for (const [k, v] of [[gl.TEXTURE_MIN_FILTER, gl.LINEAR], [gl.TEXTURE_MAG_FILTER, gl.LINEAR], [gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE], [gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE]]) gl.texParameteri(gl.TEXTURE_2D, k, v); return t; };
+    this.ti = tex(0); this.td = tex(1);
+    gl.uniform1i(gl.getUniformLocation(pr, "img"), 0); gl.uniform1i(gl.getUniformLocation(pr, "dep"), 1);
+    this.uOff = gl.getUniformLocation(pr, "off"); this.uCov = gl.getUniformLocation(pr, "cov");
+  }
+  set(url, durl) {
+    if (!this.gl) return;
+    if (url === this.url && durl === this.durl) return;
+    this.url = url; this.durl = durl; this.ready = false; this.c.style.opacity = 0;
+    if (!url || !durl) return;
+    const a = new Image(), b = new Image(); let n = 0;
+    const done = () => { if (++n < 2 || this.url !== url) return; const gl = this.gl;
+      gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, this.ti); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, a);
+      gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, this.td); gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, b);
+      this.iw = a.naturalWidth; this.ih = a.naturalHeight; this.ready = true; this.last = null; this.draw(TILT.x, TILT.y); this.c.style.opacity = 1; };
+    a.onload = b.onload = done; a.onerror = b.onerror = () => {}; a.src = url; b.src = durl;
+  }
+  draw(x, y) {
+    if (!this.ready) return;
+    const gl = this.gl, dpr = Math.min(devicePixelRatio || 1, 2), W = Math.round(this.host.clientWidth * dpr), H = Math.round(this.host.clientHeight * dpr);
+    if (!W || !H) return;
+    const key = `${W}x${H}:${x.toFixed(4)},${y.toFixed(4)}`; if (key === this.last) return; this.last = key;
+    if (this.c.width !== W || this.c.height !== H) { this.c.width = W; this.c.height = H; }
+    gl.viewport(0, 0, W, H);
+    const A = W / H, I = this.iw / this.ih, z = 1 / 1.05;          // cover the stage, with a little margin so the edges never show
+    let sx = 1, sy = 1; if (A > I) sy = I / A; else sx = A / I; sx *= z; sy *= z;
+    gl.uniform4f(this.uCov, (1 - sx) / 2, (1 - sy) / 2, sx, sy);
+    gl.uniform2f(this.uOff, x * this.k * sx, y * this.k * sy);
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+  }
+}
+const FX = { bg: new DepthLayer($("#bg"), .05), cg: new DepthLayer($("#cg"), .04) };
+function askTilt() {                       // iPhone only lets a page read the tilt after a tap, and asks the player first
+  const D = window.DeviceOrientationEvent;
+  if (!TILT.asked && D && typeof D.requestPermission === "function") { TILT.asked = true; D.requestPermission().catch(() => {}); }
+}
+addEventListener("deviceorientation", e => {
+  if (e.beta == null || e.gamma == null) return;
+  const ang = (screen.orientation && screen.orientation.angle) ?? window.orientation ?? 0;
+  let gx = e.gamma, gy = e.beta;
+  if (ang === 90) { gx = e.beta; gy = -e.gamma; } else if (ang === -90 || ang === 270) { gx = -e.beta; gy = e.gamma; }
+  if (!TILT.base) TILT.base = { x: gx, y: gy };
+  TILT.base.x += (gx - TILT.base.x) * .006; TILT.base.y += (gy - TILT.base.y) * .006;   // whatever angle you hold settles back to "front" after a few seconds
+  TILT.tx = clamp1((gx - TILT.base.x) / 14); TILT.ty = clamp1((gy - TILT.base.y) / 14);
+});
+$("#stage").addEventListener("pointermove", e => {
+  if (e.pointerType !== "mouse") return;
+  const r = $("#stage").getBoundingClientRect(); TILT.tx = clamp1(((e.clientX - r.left) / r.width) * 2 - 1); TILT.ty = clamp1(((e.clientY - r.top) / r.height) * 2 - 1);
+});
+(function fxLoop() {
+  TILT.x += (TILT.tx - TILT.x) * .1; TILT.y += (TILT.ty - TILT.y) * .1;
+  const x = TILT.on ? TILT.x : 0, y = TILT.on ? TILT.y : 0;
+  FX.bg.draw(x, y); if (V && V.cg) FX.cg.draw(x, y);
+  const st = $("#stage"); $("#sprites").style.transform = `translate3d(${(-x * .05 * .6 * st.clientWidth / 1.05).toFixed(1)}px, ${(-y * .05 * .35 * st.clientHeight / 1.05).toFixed(1)}px, 0)`;
+  requestAnimationFrame(fxLoop);
+})();
 document.documentElement.lang = LANG; renderBar(); title();
 window.__xc = { get G() { return G; }, get V() { return V; }, step, start };
 </script>

@@ -115,8 +115,10 @@ S6_COT = scene("c6_cot", "c6", "side", T("放映室的小床", "The Cot in the B
     say("jibai", "……原来，我一直睡在你的床上。", "…So all this time, I've been sleeping in your bed.", face="shy"),
 ], [
     choice("nap", "expression", T("“那今天，你再睡最后一次。我替你守着。”", "\"Then sleep there one last time today. I'll keep watch.\""), [
+        cg("cg_cot"),
         nar("她蜷在小床上，很快就睡着了。我坐在放映机旁边，听了一下午的海。", "She curls up on the cot and falls asleep almost at once. I sit by the projector and listen to the sea all afternoon."),
         say("jibai", "（醒来）……你一直在？", "(waking) …You stayed the whole time?", face="surprised"),
+        cgoff(),
     ], [rel("jibai", "intimacy", 2)], values=["ti"]),
     choice("sign", "dilemma", T("在床板背面刻下两个人的名字。", "Carve both your names into the underside of the cot."), [
         say("jibai", "……你在破坏文物。", "…You're vandalizing a historical artifact.", face="surprised"),
@@ -169,10 +171,12 @@ C7_RUN = scene("c7_run", "c7", "main", T("海堤上的放映", "A Screening on t
     iff(NF("flag.j_whole"), nar("那一段，我一个人看完以后，还是交给了她。她接得很整齐，看不出接缝。", "After I watched that section alone, I gave it to her in the end. She spliced it so neatly you can't see the join.")),
     iff(F("flag.j_once"), think("报纸上说，这部片子只放一次。今晚，就是那一次。", "The newspaper said this film would be shown only once. Tonight is that once.")),
     nar("放映机转起来了。第一格，是一片海。", "The projector starts to turn. The first frame is the sea."),
+    cg("cg_grandpa"),
     nar("所有的春天放完以后，接缝过去，画面上出现了一个人。是爷爷。他坐在放映室的小床旁边，对着镜头，有点不好意思。", "After all the springs have played, the splice goes by, and a man appears on screen. It's my grandfather. He's sitting beside the cot in the booth, facing the camera, a little embarrassed."),
     nar("“远。你要是看到这个，说明你回来了。那年你爸带你走，我没有留你。对不起。”", "'Yuan. If you're watching this, it means you came back. The year your dad took you away, I didn't ask you to stay. I'm sorry.'"),
     nar("“这部片子，我只想放一次。最后一场，留给你放。”", "'I only ever wanted this film shown once. The last show is yours to run.'"),
     nar("画面暗了。海堤上，没有人说话。", "The picture fades. On the seawall, no one speaks."),
+    cgoff(),
     iff(F("flag.j_watched"), nar("季白一直看到了最后一格。这一次，她没有转过身去。", "Ji Bai watched all the way to the last frame. This time, she didn't turn away.")),
     say("jibai", "……陆同学。他说，最后一场，留给你放。", "…Mr. Lu. He said the last show is yours to run.", face="sad"),
     say("jibai", "那我呢？七月以后，我去哪里放？", "And what about me? After July, where do I run films?", face="sad"),
@@ -196,13 +200,13 @@ FLAGS = [("flag.j_search", "答应找回剪掉的那一段", "Promised to find t
          ("flag.j_projector", "买下了放映机", "Bought the projector"), ("flag.j_once", "知道了那部片子只放一次", "Learned the film was meant to be shown once"),
          ("flag.j_clue", "找到了“剩下的，在家里”", "Found 'The rest is at home'"), ("flag.j_whole", "把第七卷接完整", "Restored reel seven in full"),
          ("flag.j_good", "海堤上，她留下来", "On the seawall, she stayed"), ("flag.j_normal", "让她去资料馆", "Told her to go to the archive")]
-CG = {"cg_booth": T("第七卷", "Reel seven"), "cg_seawall_screen": T("海堤上的银幕", "The screen on the seawall")}
+CG = {"cg_end_jibai_good": T("没有影院的电影院", "A cinema without a cinema"), "cg_end_jibai_normal": T("片尾字幕", "End credits"), "cg_cot": T("放映室的午睡", "A nap in the booth"), "cg_grandpa": T("给远", "For Yuan"), "cg_booth": T("第七卷", "Reel seven"), "cg_seawall_screen": T("海堤上的银幕", "The screen on the seawall")}
 ENDINGS = [
-    {"id": "jibai_good", "title": T("季白 · 好结局「没有影院的电影院」", "Ji Bai · Good Ending: A Cinema Without a Cinema"),
+    {"id": "jibai_good", "cg": "cg_end_jibai_good", "title": T("季白 · 好结局「没有影院的电影院」", "Ji Bai · Good Ending: A Cinema Without a Cinema"),
      "text": T("后来，汐川的海堤上每个周六都放电影，下雨就停。放映员是个戴圆眼镜的研究生，她现在会看完每一部片子的最后一卷，看完了，就去找坐在第一排的那个人。第七卷没有再放过。它说过只放一次，我们答应了它。",
                "After that, there's a film on the Xichuan seawall every Saturday, cancelled only by rain. The projectionist is a graduate student in round glasses. These days she watches the final reel of every film, and when it's over, she goes to find the person sitting in the front row. Reel seven is never shown again. It said it would be shown only once, and we promised."),
      "when": F("flag.j_good")},
-    {"id": "jibai_normal", "title": T("季白 · 普通结局「片尾字幕」", "Ji Bai · Normal Ending: End Credits"),
+    {"id": "jibai_normal", "cg": "cg_end_jibai_normal", "title": T("季白 · 普通结局「片尾字幕」", "Ji Bai · Normal Ending: End Credits"),
      "text": T("七月，季白去了北京。第七卷跟着她，住进了恒温恒湿的库房。秋天，她寄来一张照片：她站在一排排胶片架中间，笑得很安静。照片背面写着：“这里的每一部，我都会看完。”我把照片夹进了爷爷的报纸里。",
                "In July, Ji Bai left for Beijing. Reel seven went with her, into a vault kept at constant temperature and humidity. In autumn she sent a photo: standing among rows and rows of film racks, smiling quietly. On the back: 'Every film here, I'll watch to the end.' I tucked the photo into my grandfather's newspaper."),
      "when": F("flag.j_normal")},
