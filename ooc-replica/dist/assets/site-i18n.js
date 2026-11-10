@@ -4,7 +4,7 @@
 // Language: the visitor's pick (localStorage sd.lang), otherwise the browser language.
 import {storydateOriginals, storydateCharacters} from './storydate-originals.js';
 import {threeKingdoms, threeKingdomsInk} from './three-kingdoms.js';
-import {ashenCrown, ashenCrownEn} from './ashen-crown.js';
+import {ashenCrown, ashenCrownEn, bakerStreet, bakerStreetEn} from './ashen-crown.js';
 import announcements from './announcements.js';
 
 export const LANGS = ['en', 'zh'];
@@ -91,6 +91,7 @@ const OWN = [
   ...[...storydateOriginals, ...storydateCharacters].flatMap(d => [[d.title, d.title_zh], [d.description, d.description_zh]]),
   ['Three Kingdoms: The Strategist', threeKingdoms.title], ['Three Kingdoms: The Strategist (Ink Edition)', threeKingdomsInk.title],
   [ashenCrownEn.title, ashenCrown.title], [ashenCrownEn.plays, ashenCrown.plays],
+  [bakerStreetEn.title, bakerStreet.title], [bakerStreetEn.plays, bakerStreet.plays],
   ['8-chapter journey · Illustrated', threeKingdoms.plays], ['8-chapter journey · Ink', threeKingdomsInk.plays],
   ['Become Ziheng, a young strategist from Yingchuan, and travel from Xuchang to Huarong. Win over Liu Bei, Cao Cao, Guan Yu, Zhuge Liang and Wen Zhi; your words become promises, and early choices echo across eight chapters.', threeKingdoms.description],
   ['The same story in ink-wash painting. Progress is shared with the illustrated edition.', threeKingdomsInk.description],
