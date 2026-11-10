@@ -1,0 +1,5 @@
+WebGAL 4.6.6 — OpenWebGAL contributors — MPL-2.0 (LICENSE-WebGAL.txt).
+Unmodified engine source: https://github.com/OpenWebGAL/WebGAL/tree/15173bc21339a65da34b78463fca8a304e4d503a
+Engine includes its upstream UI, fonts and dependencies. Their notices remain in the compiled distribution.
+The Xichuan story and art are separate StoryDate game content; the engine license does not grant rights to them.
+Build provenance: SOURCE.json. This spike does not include the optional Live2D SDK.
