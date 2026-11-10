@@ -80,7 +80,7 @@ C3_AUGUST = scene("c3_august", "c3", "main", T("林记修复 · 凌晨 03:05", "
 
 X_NOTICE = scene("x_notice", "*", "interrupt", T("凌晨一点 · 坡底", "1 a.m. · foot of the slope"), [
     bg("harbor_street"),
-    nar("回家的路上，坡底停着两辆没有标志的车。两个穿黑西装的人拦住我：“您好，市政燃气检测。北岸那边刚才有点异常。”", "On the way home, two unmarked cars wait at the foot of the slope. Two men in black suits stop me. 'Good evening, city gas inspection. Something odd on the north shore just now.'"),
+    nar("回家的路上，坡底停着两辆没有标志的车。两个穿黑西装的人拦住我：“您好，市政燃气检测。这一带刚才有点异常。”", "On the way home, two unmarked cars wait at the foot of the slope. Two men in black suits stop me. 'Good evening, city gas inspection. Something odd around here just now.'"),
     nar("他们不看燃气表。他们一直在看我腰上的灯。", "They don't look at any meter. They keep looking at the lamp on my belt."),
 ], [
     choice("cooperate", "expression", T("站在路灯底下，问什么答什么", "Stand under the streetlight and answer everything"), [

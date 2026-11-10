@@ -442,8 +442,8 @@ const MOODS = {   // 每小节一个和弦（MIDI 音高）、每分钟拍数、
   dusk:  { bpm: 68, vol: .8, chords: [[53, 57, 60, 64], [52, 55, 59, 62], [50, 53, 57, 60], [48, 52, 55, 59]] },
   night: { bpm: 58, vol: .65, chords: [[57, 60, 64, 67], [53, 57, 60, 64], [48, 52, 55, 59], [55, 59, 62, 65]] },
 };
-const BGMOOD = { clocktower: "night", shop_rain: "night", basement: "night", bar: "night", eiche_top: "night", ferris: "night", lighthouse: "night", shop_night: "night", harbor_street: "night", oldhouse: "dusk", shop_day: "dusk", park_gate: "dusk" };
-const SEA = new Set(["bar", "ferris", "lighthouse", "park_gate"]);
+const BGMOOD = { clocktower: "night", shop_rain: "night", basement: "night", bar: "night", eiche_top: "night", ferris: "night", lighthouse: "night", shop_night: "night", harbor_street: "night", oldhouse: "dusk", shop_day: "dusk", park_gate: "dusk", mural_alley: "night", metro: "night", train: "night", clock_plaza: "night", hawke_study: "night", lamp_inside: "night", ward: "day" };
+const SEA = new Set(["bar", "ferris", "lighthouse", "park_gate", "mural_alley"]);
 const RAIN = new Set(["shop_rain", "clocktower"]);
 function audioMood(id) { if (!id) return; AUDIO.mood = BGMOOD[id] || "day"; AUDIO.sea = SEA.has(id); AUDIO.rain = RAIN.has(id); audioAmb(); }
 function audioStart() {

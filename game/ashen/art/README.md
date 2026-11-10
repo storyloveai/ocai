@@ -13,7 +13,7 @@
 
 ## 出图单
 
-`python3 game/ashen/art/make_jobs.py` 生成 `jobs-anime.jsonl` 和 `jobs-real.jsonl`，各 46 条：6 个人的立绘（先标准立绘，再按剧本实际用到的表情出差分）、13 张背景、8 张 CG（含标题）。清单从剧本里算出来，剧本加了场景就重跑。
+`python3 game/ashen/art/make_jobs.py` 生成 `jobs-anime.jsonl` 和 `jobs-real.jsonl`，各 76 条（卷一七章）：人物立绘（先标准立绘，再按剧本实际用到的表情出差分）、背景、CG（含标题）。清单从剧本里算出来，剧本加了场景就重跑。
 
 - 两版的提示词只写画风特征，不写任何画师、公司、作品的名字。
 - 所有人物都是成年人。写实版的人脸不能是真人照片、不能像名人。
