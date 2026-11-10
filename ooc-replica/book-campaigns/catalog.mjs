@@ -12,8 +12,8 @@ const flag=label=>({type:'bool',init:false,label});
 const rel=(id,by=1)=>add('rel.'+id+'.trust',by);
 
 export const bookMetadata=[
- {id:'mortal-path',title:'凡人修仙传 · 谷外微尘',subtitle:'原创玩家支线 · 卷一',genre:'Oriental Fantasy',author:'StoryDate · 名著互动',type:'story',original:false,plays:'八章规则战役 · 修行与代价',image:'/assets/mortal-path-cover.svg',description:'你是新入黄枫谷的沈微尘。灵根平常，月例微薄，一张能预支灵力的借息契却让你看见捷径。药田断供、试炼失约与撤离名册连在一起：你可以求快，也可以守住同伴，但没有一条路不付代价。',href:'/story/mortal-path'},
- {id:'monte-cristo',title:'基督山伯爵 · 余烬与潮汐',subtitle:'原创见证人视角 · 卷一',genre:'History',author:'StoryDate · 名著互动',type:'story',original:false,plays:'八章规则战役 · 证据与复仇',image:'/assets/monte-cristo-cover.svg',description:'一封从未入档的信，把档案修复员诺埃尔带到基督山伯爵面前。马赛的旧案与巴黎的财富暗流彼此印证。当证据足以摧毁一个人，你还要查清谁会和他一起倒下。',href:'/story/monte-cristo'}
+ {id:'mortal-path',title:'凡人修仙传 · 谷外微尘',subtitle:'原创玩家支线 · 卷一',genre:'Oriental Fantasy',author:'StoryDate · 名著互动',type:'story',original:false,plays:'八章规则战役 · 修行与代价',image:'/assets/mortal-path-cover.webp',description:'你是新入黄枫谷的沈微尘。灵根平常，月例微薄，一张能预支灵力的借息契却让你看见捷径。药田断供、试炼失约与撤离名册连在一起：你可以求快，也可以守住同伴，但没有一条路不付代价。',href:'/story/mortal-path'},
+ {id:'monte-cristo',title:'基督山伯爵 · 余烬与潮汐',subtitle:'原创见证人视角 · 卷一',genre:'History',author:'StoryDate · 名著互动',type:'story',original:false,plays:'八章规则战役 · 证据与复仇',image:'/assets/monte-cristo-cover.webp',description:'一封从未入档的信，把档案修复员诺埃尔带到基督山伯爵面前。马赛的旧案与巴黎的财富暗流彼此印证。当证据足以摧毁一个人，你还要查清谁会和他一起倒下。',href:'/story/monte-cristo'}
 ];
 
 function shell(meta,player,cast,resources,notes){
