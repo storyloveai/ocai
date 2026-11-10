@@ -1165,7 +1165,10 @@ CC.validate(CAMP);
 const $ = s => document.querySelector(s);
 const store = { get(k, d) { try { const v = localStorage.getItem("xc." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
                 set(k, v) { try { localStorage.setItem("xc." + k, JSON.stringify(v)); } catch {} } };
-let LANG = store.get("lang", (navigator.language || "").startsWith("zh") ? "zh" : "en");
+// 网站（StoryDate）选过的语言优先：localStorage 的 sd.lang；游戏里切换时也写回去，两边一致。
+const siteLang = () => { try { const v = localStorage.getItem("sd.lang"); return v === "zh" || v === "en" ? v : null; } catch { return null; } };
+const saveLang = l => { store.set("lang", l); try { localStorage.setItem("sd.lang", l); } catch {} };
+let LANG = siteLang() || store.get("lang", (navigator.language || "").startsWith("zh") ? "zh" : "en");
 const t = x => x == null ? "" : typeof x === "string" ? x : (x[LANG] || x.zh || x.en || "");
 const UI = {
   zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", tilt: "立体", music: "音乐", talk: n => `（对${n}说点什么……）`, talkHint: "想对她说什么？", send: "说", cancel: "算了", noReply: "（她好像没听清，看了你一眼。）", savedAt: n => `存档 ${n}` },
@@ -1392,7 +1395,7 @@ function renderBar() {
   btn("music", () => { AUDIO.on = !AUDIO.on; store.set("music", AUDIO.on); AUDIO.on ? audioStart() : audioStop(); renderBar(); }, AUDIO.on);
   btn("tilt", () => { TILT.on = !TILT.on; store.set("tilt", TILT.on); askTilt(); renderBar(); }, TILT.on);
   btn("save", () => slots("save")); btn("loadS", () => slots("load"));
-  btn("lang", () => { LANG = LANG === "zh" ? "en" : "zh"; store.set("lang", LANG); document.documentElement.lang = LANG; renderBar(); draw(); const op = V.queue[V.i - 1]; if (op && op.op === "say") { clearInterval(typing); typing = null; $("#name").textContent = op.who ? nameOf(op.who) : ""; $("#text").textContent = t(op.t); $("#next").classList.add("on"); } });
+  btn("lang", () => { LANG = LANG === "zh" ? "en" : "zh"; saveLang(LANG); document.documentElement.lang = LANG; renderBar(); draw(); const op = V.queue[V.i - 1]; if (op && op.op === "say") { clearInterval(typing); typing = null; $("#name").textContent = op.who ? nameOf(op.who) : ""; $("#text").textContent = t(op.t); $("#next").classList.add("on"); } });
   btn("title", title);
 }
 function title() {
@@ -1410,7 +1413,7 @@ function title() {
   if (a) b("cont", () => restore(a));
   b("start", start); b("load", () => { el.hidden = true; slots("load"); $("#panel").querySelector(".close").onclick = () => { $("#panel").hidden = true; title(); }; });
   b("gallery", () => { showGallery(); });
-  const l = document.createElement("button"); l.className = "lang"; l.textContent = ui("lang"); l.onclick = () => { LANG = LANG === "zh" ? "en" : "zh"; store.set("lang", LANG); title(); renderBar(); }; el.append(l);
+  const l = document.createElement("button"); l.className = "lang"; l.textContent = ui("lang"); l.onclick = () => { LANG = LANG === "zh" ? "en" : "zh"; saveLang(LANG); title(); renderBar(); }; el.append(l);
   el.querySelector("button")?.focus();
 }
 function start() {
