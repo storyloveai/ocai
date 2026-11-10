@@ -93,8 +93,15 @@ def node_text(n, st, then):
     """one scene → WebGAL lines, ending with `then` (the next thing to happen)"""
     out = [f"; ==== {n['id']} · {n['title']['zh']}"] + lines(n.get("script", []), st)
     opts = []
+    def flat_cond(c, tag):
+        # WebGAL 用 | 分隔选项，条件里的 || 会把选项切断：先把条件算进一个变量，选项里只读这个变量（决策记录 holmes v0.7）
+        e = cond(c)
+        if not e or "|" not in e: return e
+        v = f"__c_{n['id']}_{tag}"
+        out.extend([f"setVar:{v}=false;", f"setVar:{v}=true -when={e};"])
+        return f"{v}==true"
     for c in n["choices"]:
-        show = cond(c.get("when")); lock = cond(c.get("req"))
+        show = flat_cond(c.get("when"), c["id"] + "_w"); lock = flat_cond(c.get("req"), c["id"] + "_r")
         lab = esc(c["label"]["zh"]).replace(":", "：").replace("|", "／")
         pre = (f"({show})" if show else "") + (f"[{lock}]" if lock else "")
         if pre: pre += "->"
