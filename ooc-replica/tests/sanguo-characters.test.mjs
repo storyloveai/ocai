@@ -4,6 +4,7 @@ import {readFile, access} from 'node:fs/promises';
 import {parseHTML} from 'linkedom';
 import {sanguoCharacters, characterById, mergeSanguoCharacters} from '../dist/assets/sanguo-characters.js';
 import {storydateCharacters} from '../dist/assets/storydate-originals.js';
+import {generatedCharacters} from '../dist/assets/generated-characters.js';
 import {characterHubMarkup, characterDetailMarkup} from '../dist/assets/sanguo-character-hub.js';
 import {roleFor, siteTitles} from '../server/roles.js';
 import {buildPrompt} from '../server/prompt-engine.js';
@@ -25,6 +26,17 @@ test('character extraction keeps the eight existing IDs and adds Wen Zhi exactly
   assert.equal(merged[0].replaces, 'old-id');
   assert.equal(merged[0].story_id, 'sg-002');
   assert.deepEqual(merged[1], before[1]);
+});
+
+test('generated character covers are complete and have local assets', async () => {
+  assert.equal(generatedCharacters.length, 200);
+  assert.equal(new Set(generatedCharacters.map(c => c.id)).size, 200);
+  for (const c of generatedCharacters) {
+    assert.ok(c.title && c.description && c.image);
+    assert.ok(c.site === 'tipsy' || c.site === 'chai' || c.site === 'zeta');
+    assert.ok(['female', 'male', 'nonbinary'].includes(c.gender));
+    await access(new URL('../dist' + c.image, import.meta.url));
+  }
 });
 
 for (const c of sanguoCharacters) test(`${c.title}: server canon uses the adopted persona and a distinct conversation opening`, async () => {

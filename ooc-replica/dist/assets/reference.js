@@ -15,6 +15,8 @@ import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
 import {characterById} from './character-profiles.js';
 import {mountCharacterPage,characterPreview} from './sanguo-character-hub.js';
+import {generatedCharacters} from './generated-characters.js';
+import {mountGeneratedCharacterShelf} from './generated-character-shelf.js';
 import {getLang} from './site-i18n.js';
 // Public DOM snapshots supply layout; this module supplies independent interactions.
 const style=document.createElement('link');
@@ -362,19 +364,16 @@ function grid(items,ranked=false){
  }).join('')}</div>`;
 }
 // Keep the established character landing page, hero, filters and card design.
-// Additional people join its existing Explore shelf rather than replacing it.
+// The Explore shelf now shows the 200 generated covers, while the existing
+// Three Kingdoms characters stay below it.
 function extendCharacterShelf(){
- const section=all('h2').find(h=>text(h)==='Explore')?.closest('section'),container=section?.children[1];
+ const section=all('h2').find(h=>text(h)==='Explore'||text(h)==='探索')?.closest('section'),container=section?.children[1];
  const template=container?.firstElementChild;
  if(!template?.querySelector('a[href^="/character/"]'))return;
- for(const d of storydateCharacters){
-  if(container.querySelector(`a[href="/character/${d.id}"]`))continue;
-  const node=template.cloneNode(true),anchor=node.querySelector('a');anchor.href='/character/'+d.id;
-  node.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
-  anchor.querySelectorAll('img.object-cover').forEach(img=>{img.src=source(d);img.alt=d.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');img.style.visibility='';});
-  const ps=anchor.querySelectorAll('p');if(ps[0])ps[0].textContent=d.title;if(ps[1])ps[1].textContent=d.description;if(ps[2])ps[2].textContent=d.author;
-  container.append(node);cardMarkup.set(d.id,anchor.outerHTML);
- }
+ mountGeneratedCharacterShelf(section,container,template,{
+  generated:generatedCharacters,
+  featured:storydateCharacters.filter(c=>c.id.startsWith('sgc-'))
+ });
 }
 function bindSearch() {
   const inputs=all('input');
