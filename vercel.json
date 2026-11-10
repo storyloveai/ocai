@@ -5,6 +5,14 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/replica",
+      "destination": "/replica.html"
+    },
+    {
+      "source": "/replica/",
+      "destination": "/replica.html"
+    },
+    {
       "source": "/((?!api/|.*\\.).*)",
       "destination": "/index.html"
     }

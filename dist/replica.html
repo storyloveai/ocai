@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="theme-color" content="#141715" />
+    <meta
+      name="description"
+      content="OC Replica：200 个原创角色样本，覆盖 Tipsy、Chai、Zeta 的媒介与构图风格。"
+    />
+    <title>OC Replica · 200 个原创角色样本 · StoryLove</title>
+    <link rel="icon" href="assets/storylove-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/replica.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="返回 StoryLove 首页">
+        <img src="assets/storylove-mark.svg" alt="" width="28" height="28" />
+        <span>StoryLove</span>
+      </a>
+      <div class="crumbs"><b>OC Replica</b><span>200 samples</span></div>
+      <a class="back" href="/">返回站点 <span aria-hidden="true">→</span></a>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <span class="eyebrow">OC REPLICA · 200 SYNTHETIC CHARACTERS</span>
+          <h1>200 个原创角色，<br /><em>三种平台风格。</em></h1>
+          <p>
+            从 Tipsy、Chai、Zeta 的 5,202 个角色和 5,180 张封面里提炼 pattern，
+            再组合 <strong>11 种媒介</strong> × <strong>6 种构图</strong>，生成可复刻的页面样本。
+          </p>
+          <div class="hero-actions">
+            <a class="primary" href="#gallery">浏览图库 <span aria-hidden="true">↓</span></a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <img class="hero-a" src="/replica/images/T01.webp" alt="" />
+          <img class="hero-b" src="/replica/images/C06.webp" alt="" />
+          <img class="hero-c" src="/replica/images/Z03.webp" alt="" />
+        </div>
+        <div class="hero-stats">
+          <div><b>200</b><span>角色样本</span></div>
+          <div><b>45 / 55 / 100</b><span>Tipsy / Chai / Zeta</span></div>
+          <div><b>11</b><span>媒介风格</span></div>
+          <div><b>6</b><span>构图类型</span></div>
+        </div>
+      </section>
+
+      <section class="gallery-wrap" id="gallery">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">THE REPLICA SHELF</span>
+            <h2>按平台、风格、构图筛选</h2>
+          </div>
+          <span class="quiet" id="resultCount">正在加载…</span>
+        </div>
+
+        <div class="toolbar" role="region" aria-label="筛选图库">
+          <div class="site-tabs" role="tablist" aria-label="平台">
+            <button class="site-tab selected" data-site="all" role="tab" aria-selected="true">全部 <small>200</small></button>
+            <button class="site-tab" data-site="tipsy" role="tab" aria-selected="false">Tipsy <small>45</small></button>
+            <button class="site-tab" data-site="chai" role="tab" aria-selected="false">Chai <small>55</small></button>
+            <button class="site-tab" data-site="zeta" role="tab" aria-selected="false">Zeta <small>100</small></button>
+          </div>
+          <div class="filters">
+            <label>媒介
+              <select id="styleFilter"><option value="all">全部</option></select>
+            </label>
+            <label>构图
+              <select id="compositionFilter"><option value="all">全部</option></select>
+            </label>
+            <label>层级
+              <select id="tierFilter"><option value="all">全部</option></select>
+            </label>
+            <label class="search">搜索
+              <input id="searchInput" type="search" placeholder="名字、标题、标签…" />
+            </label>
+            <button class="reset" id="resetFilters" type="button">重置</button>
+          </div>
+        </div>
+
+        <div class="grid" id="grid"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <b>没有匹配的角色</b>
+          <p>试试换一个平台、风格或关键词。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>OC Replica · synthetic character study</span>
+      <span>Tipsy / Chai / Zeta pattern study · 2026</span>
+    </footer>
+
+    <dialog id="lightbox" aria-label="角色详情">
+      <button class="modal-close" id="modalClose" aria-label="关闭">×</button>
+      <div class="modal-grid">
+        <div class="modal-art"><img id="modalImg" alt="" /></div>
+        <div class="modal-copy">
+          <div class="modal-meta" id="modalMeta"></div>
+          <h2 id="modalTitle"></h2>
+          <p class="modal-tagline" id="modalTagline"></p>
+          <div class="tags" id="modalTags"></div>
+          <p class="modal-greeting" id="modalGreeting"></p>
+          <details>
+            <summary>Image prompt</summary>
+            <pre id="modalPrompt"></pre>
+          </details>
+        </div>
+      </div>
+    </dialog>
+
+    <script src="/replica.js" defer></script>
+  </body>
+</html>
