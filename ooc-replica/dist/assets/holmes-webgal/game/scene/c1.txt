@@ -6,6 +6,8 @@ changeFigure:none -right -next;
 changeBg:bg_lab.webp -next;
 :实验室又高又大，四壁摆满了瓶瓶罐罐。桌上是曲颈瓶、试管和冒着蓝色火苗的本生灯。;
 :屋里只有一个人。听见脚步声，他回头一看，高兴地跳了起来。;
+changeFigure:holmes_normal.webp -next;
+changeFigure:holmes_normal.webp -next;
 歇洛克·福尔摩斯:我找到了！我找到了！一种只和血红蛋白起反应的试剂，别的什么都不行！;
 斯坦福:华生医生，这位是歇洛克·福尔摩斯先生。;
 changeFigure:none -left -next;

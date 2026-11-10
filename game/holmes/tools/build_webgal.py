@@ -44,10 +44,15 @@ def main():
         (src / "content").mkdir(parents=True)
         shutil.copy(HERE / "content/campaign.json", src / "content/campaign.json")
         if (HERE / "art").exists(): shutil.copytree(HERE / "art", src / "art", ignore=shutil.ignore_patterns("candidates", "*.jsonl", "*.py", "*.md"))
+        # CG 还没画时，先借同一场景的背景顶上（不进 art/）；连背景都没有才用占位图
+        CG_FALLBACK = {"cg_meet": "lab", "cg_lens": "lauriston_in", "cg_arrest": "baker_day", "cg_journal": "baker_night", "title": "baker_night"}
         for kind in ("bg", "cg"):
             for k, name in camp["art"][kind].items():
                 p = src / "art" / kind / f"{k}.webp"
-                if not p.exists(): placeholder(p, name["zh"], cg=kind == "cg")
+                if p.exists(): continue
+                fb = src / "art" / "bg" / f"{CG_FALLBACK.get(k, '')}.webp"
+                if kind == "cg" and fb.is_file(): p.parent.mkdir(parents=True, exist_ok=True); shutil.copy(fb, p)
+                else: placeholder(p, name["zh"], cg=kind == "cg")
         chapters = ",".join(c["id"] for c in camp["chapters"])
         subprocess.run([sys.executable, str(EXPORT), "--source-root", str(src), "--out", str(game), "--chapters", chapters], check=True)
 
