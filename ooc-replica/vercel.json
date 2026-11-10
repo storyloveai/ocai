@@ -15,7 +15,7 @@
       "maxDuration": 120
     },
     "api/sanguo.js": {
-      "includeFiles": "server/sanguo-*"
+      "includeFiles": "server/{sanguo-*,xichuan-*}"
     }
   },
   "buildCommand": "npm run build && npm run check",
