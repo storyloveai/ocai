@@ -1,0 +1,89 @@
+{
+ "id": "relic-war",
+ "version": 1,
+ "title": {
+  "zh": "遗器之争",
+  "en": "Relic war"
+ },
+ "premise": {
+  "zh": "现代都市里的魔法战争：十二件遗器，十二个持有者，谁先握住五件谁就能改写世界的一条规则。每一次全力出手都要付一段记忆。好玩在“赢下来的那个人，还记不记得自己为什么要赢”。",
+  "en": "A modern-city magic war: twelve relics, twelve holders, and whoever holds five may rewrite one rule of the world. Every all-out use costs a memory. The fun is whether the one who wins still remembers why they wanted to."
+ },
+ "values": {
+  "xiu": {
+   "zh": "修",
+   "en": "mending"
+  },
+  "shou": {
+   "zh": "守",
+   "en": "protecting"
+  },
+  "ji": {
+   "zh": "记",
+   "en": "remembering"
+  },
+  "xin": {
+   "zh": "信",
+   "en": "trust"
+  },
+  "yong": {
+   "zh": "勇",
+   "en": "nerve"
+  },
+  "duo": {
+   "zh": "夺",
+   "en": "ambition"
+  }
+ },
+ "roles": {
+  "power": {
+   "required": true,
+   "earned": true,
+   "zh": "力量：读懂对手、看清结构攒下来的余裕。靠它出手能少付代价；结局不能只看它。",
+   "en": "Power: the margin earned by reading opponents and structures. It lets you pay less; an ending never rests on it alone."
+  },
+  "memory": {
+   "required": true,
+   "zh": "记忆：主角还剩下的回忆。全力出手就要交出一段，交出去的拿不回来，后面的选项和台词跟着变。",
+   "en": "Memory: what the protagonist still remembers. Going all out gives one up for good, and later choices and lines change with it."
+  },
+  "risk": {
+   "required": true,
+   "zh": "注意：守秘局和对手对你的注意。到线必须出事（上门盘问、被盯上），不能只是一个数字。",
+   "en": "Notice: how closely the Secrecy Bureau and rivals are watching. Crossing the line must cause something (a visit, a tail), not just change a number."
+  }
+ },
+ "failures": [
+  {
+   "zh": "空壳：交出去的记忆太多，赢了也想不起为什么要赢",
+   "en": "Hollow: so many memories given up that winning means nothing"
+  },
+  {
+   "zh": "读错招：对手的意图看错了，代价来不及付",
+   "en": "Misread: the opponent's intent was wrong and the price comes too late"
+  },
+  {
+   "zh": "暴露：在普通人面前用了遗器，守秘局先动手",
+   "en": "Exposed: a relic used before ordinary people, and the Bureau moves first"
+  }
+ ],
+ "checklist": [
+  {
+   "zh": "魔法是剧情规则，代价写清楚：拿走什么、拿不拿得回来",
+   "en": "Magic is a story rule; its price is explicit: what is taken, and whether it comes back"
+  },
+  {
+   "zh": "坏结局要能学到东西：每个坏结局后给出回到哪一步、为什么",
+   "en": "A bad ending teaches: each one says which step to revisit, and why"
+  },
+  {
+   "zh": "全力出手总有一个不全力的走法，只是更难、更慢，或者要先看懂结构",
+   "en": "Every all-out moment has a way that isn't, only harder, slower, or needing the structure read first"
+  }
+ ],
+ "rules": [
+  "alt_path",
+  "earned_victory",
+  "risk_bites"
+ ]
+}
