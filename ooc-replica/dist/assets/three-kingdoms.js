@@ -3,7 +3,7 @@
 // three-chapter version. ?lang=zh|en opens the game in that language (the home banner passes it).
 import {track,gameTracker} from './analytics.js';
 export const threeKingdoms={id:'three-kingdoms',title:'三国演义 · 谋士',author:'StoryDate · 三国互动',genre:'History',type:'story',original:true,plays:'八章连续旅程 · 插画版',image:'/assets/sanguo-art/cover.webp',description:'化身颍川谋士子衡，从许都走到华容。结交刘备、曹操、关羽、诸葛亮与温芷，让你的话成为承诺，让早先的选择在八章旅程中回响。',href:'/story/three-kingdoms'};
-export const threeKingdomsInk={...threeKingdoms,id:'three-kingdoms-ink',title:'三国演义 · 谋士（水墨版）',plays:'八章连续旅程 · 水墨版',image:'/assets/three-kingdoms-cover.svg',description:'同一个故事的水墨版：画面全部是水墨淡彩。进度与插画版共用。',href:'/story/three-kingdoms-ink'};
+export const threeKingdomsInk={...threeKingdoms,id:'three-kingdoms-ink',title:'三国演义 · 谋士（水墨版）',plays:'八章连续旅程 · 水墨版',image:'/assets/three-kingdoms-ink-cover.webp',description:'同一个故事的水墨版：画面全部是水墨淡彩。进度与插画版共用。',href:'/story/three-kingdoms-ink'};
 const EDITION_PATHS=['/story/three-kingdoms','/play/three-kingdoms','/story/three-kingdoms-ink','/play/three-kingdoms-ink'];
 export const isThreeKingdomsPath=path=>EDITION_PATHS.includes(path);
 // The game's own usage events (choices, free lines by tone and length, endings, shares), renamed sg_<name>.

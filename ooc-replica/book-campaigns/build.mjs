@@ -10,6 +10,7 @@ export async function buildBooks(){
  for(const meta of bookMetadata){
   const c=previewCampaign(campaigns[meta.id]);
   await writeFile(new URL('dist/assets/book-campaigns/'+c.id+'.json',base),JSON.stringify(c));
-  await writeFile(new URL('dist'+meta.image,base),bookCovers[c.id]());
+  // 文字封面只作后备，写到固定的 .svg 路径；书目里的 image 可能已换成插画（webp），不能被覆盖。
+  await writeFile(new URL('dist/assets/'+c.id+'-cover.svg',base),bookCovers[c.id]());
  }
 }

@@ -28,7 +28,7 @@ test('all title kinds float, search preserves background, tabs update only conte
  const reference=await import('../dist/assets/reference.js');h.data=reference.extraStories;reference.show('/',h);
  for(const id of ['mortal-path','monte-cristo']){
   const card=document.querySelector('a[href="/story/'+id+'"]');assert.ok(card);assert.ok(!card.querySelector('img[alt="ORIGINAL"]'));
-  for(const img of card.querySelectorAll('img'))assert.equal(img.getAttribute('src'),'/assets/'+id+'-cover.svg');
+  for(const img of card.querySelectorAll('img'))assert.equal(img.getAttribute('src'),'/assets/'+id+'-cover.webp');
  }
  const hero=document.querySelector('[data-hero-desktop]');
  const ranking=[...document.querySelectorAll('button')].find(b=>b.textContent==='Rankings');ranking.click();assert.equal(document.querySelector('[data-hero-desktop]'),hero);assert.equal(routes.length,0);assert.ok(document.querySelector('[data-category-panel] [data-category-grid] a'));assert.ok(!document.querySelector('[data-category-panel]').closest('.sticky'));
