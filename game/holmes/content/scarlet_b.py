@@ -62,9 +62,12 @@ C3_ROOM = scene("c3_room", "c3", "main", T("前厅", "The Front Room"), [
 
 C3_RACHEL = scene("c3_rachel", "c3", "main", T("“蕾切尔”", "'Rachel'"), [
     bg("lauriston_in"),
+    cg("cg_rache"),
     show("lestrade", "smile", "right"),
     say("lestrade", "写字的人本来要写“Rachel”这个女人的名字，还没写完就被打断了。等着瞧吧，这个案子查清楚，准有个叫蕾切尔的女人。", "It means that the writer was going to put the female name Rachel, but was disturbed before he or she had time to finish. You mark my words, when this case comes to be cleared up, you will find that a woman named Rachel has something to do with it.", face="smile"),
+    cg("cg_lens"),
     nar("福尔摩斯掏出卷尺和一个大放大镜，在屋里无声地走来走去，时而跪下，时而趴在地上，又从地板上小心地收起一小撮灰。", "Holmes whipped a tape measure and a large round magnifying glass from his pocket and trotted noiselessly about the room, sometimes stopping, occasionally kneeling, and once lying flat upon his face. He gathered up very carefully a little pile of grey dust from the floor."),
+    cgoff(),
     show("holmes", "normal", "center"),
     say("holmes", "这里发生了凶杀，凶手是个男人。他身高六英尺以上，正当壮年，以身高来说脚偏小，穿方头粗皮靴，抽特里奇诺波利雪茄。", "There has been murder done, and the murderer was a man. He was more than six feet high, was in the prime of life, had small feet for his height, wore coarse, square-toed boots and smoked a Trichinopoly cigar.", face="normal"),
     say("holmes", "他和死者坐一辆四轮马车来，拉车的马有三只旧蹄铁，右前腿上是新的。凶手多半脸色红润，右手指甲很长。", "He came here with his victim in a four-wheeled cab, which was drawn by a horse with three old shoes and one new one on his off fore-leg. In all probability the murderer had a florid face, and the finger-nails of his right hand were remarkably long.", face="normal"),

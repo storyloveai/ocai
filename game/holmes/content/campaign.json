@@ -1617,6 +1617,10 @@
      }
     },
     {
+     "op": "cg",
+     "id": "cg_meet"
+    },
+    {
      "op": "say",
      "who": "holmes",
      "t": {
@@ -1641,6 +1645,10 @@
       "en": "Never mind. The question now is about haemoglobin."
      },
      "face": "smile"
+    },
+    {
+     "op": "cg",
+     "id": null
     },
     {
      "op": "say",
@@ -2774,6 +2782,10 @@
      "id": "lauriston_in"
     },
     {
+     "op": "cg",
+     "id": "cg_rache"
+    },
+    {
      "op": "show",
      "who": "lestrade",
      "face": "smile",
@@ -2789,12 +2801,20 @@
      "face": "smile"
     },
     {
+     "op": "cg",
+     "id": "cg_lens"
+    },
+    {
      "op": "say",
      "who": null,
      "t": {
       "zh": "福尔摩斯掏出卷尺和一个大放大镜，在屋里无声地走来走去，时而跪下，时而趴在地上，又从地板上小心地收起一小撮灰。",
       "en": "Holmes whipped a tape measure and a large round magnifying glass from his pocket and trotted noiselessly about the room, sometimes stopping, occasionally kneeling, and once lying flat upon his face. He gathered up very carefully a little pile of grey dust from the floor."
      }
+    },
+    {
+     "op": "cg",
+     "id": null
     },
     {
      "op": "show",
@@ -5146,6 +5166,10 @@
        "face": "smile"
       },
       {
+       "op": "cg",
+       "id": "cg_journal"
+      },
+      {
        "op": "say",
        "who": "me",
        "think": true,
@@ -5586,9 +5610,29 @@
    }
   },
   "cg": {
+   "cg_meet": {
+    "zh": "“你到过阿富汗”",
+    "en": "'You have been in Afghanistan'"
+   },
+   "cg_rache": {
+    "zh": "墙上的字",
+    "en": "The word on the wall"
+   },
+   "cg_lens": {
+    "zh": "卷尺与放大镜",
+    "en": "Tape measure and lens"
+   },
    "cg_arrest": {
     "zh": "杰弗逊·霍普落网",
     "en": "The arrest of Jefferson Hope"
+   },
+   "cg_journal": {
+    "zh": "日记",
+    "en": "The journal"
+   },
+   "title": {
+    "zh": "标题",
+    "en": "Title"
    }
   },
   "faces": {

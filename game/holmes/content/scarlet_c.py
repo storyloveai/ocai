@@ -61,6 +61,7 @@ C8_END = scene("c8_end", "c8", "main", T("倒着推理", "Reasoning Backwards"),
 ], [
     choice("journal", "dilemma", T("“没关系。事情的经过都在我的日记里，大家总会知道的。”", "\"Never mind. I have all the facts in my journal, and the public shall know them.\""), [
         say("holmes", "……随你吧，医生。", "…Do as you please, Doctor.", face="smile"),
+        cg("cg_journal"),
         think("就这样，我开始写下我和歇洛克·福尔摩斯的故事。", "And so I began to write down my adventures with Sherlock Holmes."),
     ], [setv("flag.journal"), rel("holmes", "warmth", 1)], values=["zhen"], ends=True),
     choice("laugh", "expression", T("“你一点也不在乎？”", "\"You don't mind at all?\""), [

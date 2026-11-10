@@ -77,7 +77,8 @@ ART = {
   "bg": {"street_fog": T("伦敦街道 · 雾", "London street · fog"), "lab": T("巴茨医院化学实验室", "Barts chemical laboratory"), "baker_day": T("贝克街 221B · 白天", "221B Baker Street · day"),
          "baker_night": T("贝克街 221B · 夜晚", "221B Baker Street · night"), "lauriston_out": T("劳瑞斯顿花园 3 号", "No. 3 Lauriston Gardens"),
          "lauriston_in": T("空屋前厅", "The empty front room"), "station": T("警察局", "Police station"), "utah": T("北美大荒原", "The great alkali plain")},
-  "cg": {"cg_arrest": T("杰弗逊·霍普落网", "The arrest of Jefferson Hope")},
+  "cg": {"cg_meet": T("“你到过阿富汗”", "'You have been in Afghanistan'"), "cg_rache": T("墙上的字", "The word on the wall"), "cg_lens": T("卷尺与放大镜", "Tape measure and lens"),
+         "cg_arrest": T("杰弗逊·霍普落网", "The arrest of Jefferson Hope"), "cg_journal": T("日记", "The journal"), "title": T("标题", "Title")},
   "faces": {"normal": T("平常", "neutral"), "smile": T("笑", "smile"), "angry": T("生气", "angry"), "sad": T("难过", "sad"), "surprised": T("吃惊", "surprised")},
 }
 

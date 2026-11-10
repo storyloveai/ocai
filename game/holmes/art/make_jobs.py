@@ -69,3 +69,61 @@ for bid, (zh, desc) in BGS.items():
                  "size": "1536x1024", "out": [1920, 1080], "candidates": 2})
 (HERE / "jobs-batch1.jsonl").write_text("".join(json.dumps(j, ensure_ascii=False) + "\n" for j in jobs), "utf-8")
 print(len(jobs), "jobs")
+
+# ---------------- 第二批：新人物的标准立绘、剧本用到的表情差分、关键 CG ----------------
+NEW_SPRITES = {
+  "rance": ("约翰·兰斯，巡警，30 岁左右", "Constable John Rance, about 30, a London beat policeman of 1881: a sturdy, slightly slow-witted young man with a round ruddy face and a "
+            "light moustache; dark blue police tunic buttoned to the throat, custodian helmet held under one arm, a lantern at his belt. Expression: neutral, a little anxious."),
+  "sawyer": ("“索耶太太”，看上去 70 岁左右的老妇人（其实是霍普的同伙乔装）", "'Mrs Sawyer', who looks like a very old woman of about seventy: wrinkled face, bent back, "
+             "grey wisps of hair under a shabby black bonnet, a worn shawl and a faded dark dress, a cane; the disguise should look slightly theatrical, "
+             "her eyes too sharp for her age. Expression: neutral, mumbling, evasive."),
+  "stamford": ("斯坦福，医院的包扎员，25 岁左右", "Young Stamford, about 25, a dresser at Barts hospital: thin, eager and friendly, clean-shaven, light brown hair, "
+               "a plain brown suit and a medical bag. Expression: neutral, friendly."),
+}
+FACES = {"smile": ("笑", "smiling"), "surprised": ("吃惊", "surprised, eyebrows raised"), "angry": ("生气", "angry, jaw set"), "sad": ("难过", "sad, eyes lowered")}
+# 剧本里实际用到的表情（python3 content/story.py 以后从 campaign.json 算出来的结果）
+USED = {"holmes": ["smile", "surprised", "angry", "sad"], "lestrade": ["smile", "surprised", "angry", "sad"], "gregson": ["smile", "surprised"],
+        "hope": ["smile", "angry", "sad"], "rance": ["smile"], "sawyer": ["surprised", "sad"]}
+EXPR_ACC = ["和标准立绘是同一张图换表情：脸型、发型、衣服、姿势、构图、大小、位置都不变", "透明背景（PNG 带透明通道），1024×1536",
+            "只改面部表情（必要时手势），整体不能挪位，叠在原图上切换时人不会跳"] + SP_ACC[3:]
+CGS = {
+  "cg_meet": ("初次见面：巴茨医院化学实验室", "Event CG: the hospital chemistry laboratory; Sherlock Holmes (as in his standard sprite) has just turned from a table of retorts and "
+              "a blue Bunsen flame, a test tube in one hand, offering his other hand for a handshake with a keen, appraising look. The viewer is Dr Watson: only Watson's "
+              "own hand reaching out from the lower edge of the frame, first-person view, no face. Morning light from tall windows."),
+  "cg_rache": ("墙上的字（不血腥）", "Event CG: a bare corner of the empty house at night; on the peeling, mildewed wallpaper, five rough capital letters in dark crimson "
+               "spell R A C H E (if the letters cannot be drawn cleanly, keep them half in shadow so no wrong letters show); below, on the mantelpiece, a stump of red wax "
+               "candle with a small flame. No body, no blood drips, no gore. Eerie, quiet."),
+  "cg_lens": ("卷尺与放大镜：福尔摩斯伏地勘察", "Event CG: Sherlock Holmes on one knee on the dusty bare floorboards of the empty house, a large round magnifying glass in one hand "
+              "and a tape measure stretched in the other, eyes intent, coat tails on the floor; inspectors Lestrade and Gregson watching from the doorway, half in shadow. "
+              "Grey window light, dust in the air. No body in frame."),
+  "cg_arrest": ("杰弗逊·霍普落网", "Event CG: the sitting room of 221B in daylight; at the moment of the arrest, the powerful cabman Jefferson Hope struggles as Holmes snaps a pair "
+                "of steel handcuffs on his wrists, Lestrade and Gregson grabbing his arms, a travelling trunk with its strap half fastened on the floor. Dynamic, tense, no blood."),
+  "cg_journal": ("日记（结局）", "Event CG: night at 221B Baker Street; in the foreground, Dr Watson's hands (no face) writing in an open leather-bound journal with a dip pen "
+                 "by lamplight; in the soft-focus background, Holmes stands at the rain-streaked window playing the violin, his tall lean silhouette against the gaslit street. "
+                 "The journal pages show only illegible handwriting scribbles. Warm, quiet, nostalgic."),
+  "title": ("标题画面", "Title screen key art: a foggy gaslit Baker Street at dusk seen from street level, a tall lean figure in a dark frock coat (Holmes, seen from behind and "
+            "slightly to the side, no face) walking into the fog beside a shorter figure carrying a cane (Watson, from behind); hansom cab lamps glowing; leave the upper third "
+            "fairly empty for the title. No text anywhere."),
+}
+CG_ACC = ["1920×1080（16:9），下面三分之一不放关键内容（留给对话框）", "人物外形和已定的标准立绘一致", "华生是玩家：只出现手或背影，不画脸",
+          "不血腥、不出现尸体", "画面里没有可读的文字（cg_rache 的字母除外）", "画风：现代日式 galgame，和第一批一致"]
+jobs2 = []
+for cid, (zh, desc) in NEW_SPRITES.items():
+    jobs2.append({"id": f"sprite-{cid}-normal", "kind": "sprite", "name": f"sprites/{cid}/normal", "batch": 2, "status": "pending", "refs": [], "ref_paths": [],
+                  "composition": f"标准立绘（平常表情）：{zh}。采用后作为这个人其余表情的参考图", "accept": SP_ACC,
+                  "prompt": f"{STYLE} {SPRITE}{desc}", "negative_prompt": NEG, "size": "1024x1536", "out": [1024, 1536], "candidates": 4})
+for cid, faces in USED.items():
+    for f in faces:
+        zh, en = FACES[f]
+        jobs2.append({"id": f"sprite-{cid}-{f}", "kind": "expression", "name": f"sprites/{cid}/{f}", "batch": 2, "status": "pending",
+                      "refs": [f"sprites/{cid}/normal"], "ref_paths": [f"game/holmes/art/sprites/{cid}/normal.webp"],
+                      "composition": f"表情差分：{f}（{zh}）", "accept": EXPR_ACC,
+                      "prompt": f"{STYLE} Edit the reference sprite: keep the exact same character, face shape, hair, costume, pose, framing, size and position; "
+                                f"change only the facial expression to: {en}. Transparent background.", "negative_prompt": NEG,
+                      "size": "1024x1536", "out": [1024, 1536], "candidates": 2})
+for cid, (zh, desc) in CGS.items():
+    jobs2.append({"id": f"cg-{cid}", "kind": "cg", "name": f"cg/{cid}", "batch": 2, "status": "pending",
+                  "refs": [f"sprites/{w}/normal" for w in ("holmes", "lestrade", "gregson", "hope") if w in desc.lower() or (w == "holmes" and "Holmes" in desc)],
+                  "composition": zh, "accept": CG_ACC, "prompt": f"{STYLE} {desc}", "negative_prompt": NEG, "size": "1536x1024", "out": [1920, 1080], "candidates": 2})
+(HERE / "jobs-batch2.jsonl").write_text("".join(json.dumps(j, ensure_ascii=False) + "\n" for j in jobs2), "utf-8")
+print(len(jobs2), "jobs (batch 2)")
