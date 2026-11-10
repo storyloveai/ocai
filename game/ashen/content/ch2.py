@@ -3,7 +3,7 @@ from lib import *
 
 BG = {"shop_day": T("林记修复 · 晚上", "Lin's Repairs · evening"), "park_gate": T("星期日乐园 · 大门", "Sunday Park · the gate"),
       "ferris": T("摩天轮下", "Under the Ferris wheel"), "lighthouse": T("北岸旧灯塔顶", "Top of the old north lighthouse")}
-CG = {"cg_cut": T("断剑斩向摩天轮", "The Sword cuts the wheel"), "cg_wheel": T("自己转起来的摩天轮", "The wheel that turned on its own")}
+CG = {"cg_f_approach": T("走进旧游乐园", "Into the old park"), "cg_f_bench": T("长椅与断剑", "The bench and the Sword"), "cg_f_summon": T("赫拉显形", "Hera appears"), "cg_f_rails": T("重接栏杆", "Rejoining the rails"), "cg_lighthouse": T("灯塔上的人", "Watchers on the lighthouse"), "cg_restore": T("白光接住车厢", "White light catches the cars"), "cg_cut": T("断剑斩向摩天轮", "The Sword cuts the wheel"), "cg_wheel": T("自己转起来的摩天轮", "The wheel that turned on its own")}
 FLAGS = [("flag.scouted", "提前看过摩天轮的结构", "Read the Ferris wheel's structure in advance"), ("flag.album", "翻过父亲的旧相册", "Went through Dad's old albums"),
          ("flag.know_cut", "读过灯塔上的那一夜（知道葛兰要砍摩天轮）", "Read the lighthouse night (knew Gran would cut the wheel)"),
          ("flag.gran_plan", "读过葛兰在摩天轮下的盘算", "Read Gran's plan under the wheel"),
@@ -24,8 +24,10 @@ C2_SHOP = scene("c2_shop", "c2", "main", T("林记修复 · 第二天 21:15", "L
 ], [
     choice("scout", "strategy", T("先去游乐园看场地", "Go to the park early and look at the ground"), [
         bg("park_gate"),
+        cg("cg_f_approach"),
         nar("锈死的过山车，倒在地上的碰碰车，停摆的旋转木马，还有正中间那座巨大的摩天轮。", "A rusted coaster, overturned bumper cars, a stalled carousel, and in the middle, a huge Ferris wheel."),
         nar("我用指尖碰了碰它的底座。四十八个车厢，三百八十四根辐条，几千颗螺栓——全都连在中间那根轴上。", "I touch its base with a fingertip. Forty-eight cars, three hundred and eighty-four spokes, thousands of bolts—all tied to the hub at the center."),
+        cgoff(),
         think("修东西之前，先看结构。有人这么教过我。", "Before you fix anything, read the structure. Someone taught me that."),
         say("lamp", "这个习惯不错。", "Good habit.", face="smile"),
     ], [setv("flag.scouted"), add("light", 1)], values=["xiu"]),
@@ -37,11 +39,13 @@ C2_SHOP = scene("c2_shop", "c2", "main", T("林记修复 · 第二天 21:15", "L
 
 S2_LIGHT = scene("s2_light", "c2", "side", T("北岸旧灯塔顶（伊芙琳）", "Top of the old lighthouse (Evelyn)"), [
     bg("lighthouse"),
-    show("evelyn", "serious", "center"),
+    cg("cg_lighthouse"),
     nar("一公里外，伊芙琳放下了望远镜。", "A kilometer away, Evelyn lowers her binoculars."),
     say("evelyn", "她在等。她接得比他砍得快，只要不停地接，他就永远砍不到她。", "She's waiting. She mends faster than he cuts; as long as she keeps mending, he never lands a blow."),
     say("evelyn", "所以葛兰会换个砍法。他要砍摩天轮。", "So Gran will change what he cuts. He'll cut the Ferris wheel."),
     say("evelyn", "几十个车厢，几千颗螺栓，全靠中间那根轴连着。断剑一刀斩开所有的连结——除非她全力出手，否则修不过来。", "Dozens of cars, thousands of bolts, all held by the hub. One stroke severs every link—she can't mend it unless she goes all out."),
+    cgoff(),
+    show("evelyn", "serious", "center"),
     nar("诗人在空白的书上写了一个红色的字。", "The poet writes one red word on the blank page."),
 ], [choice("ok", "expression", T("（合上这一页）", "(Close this page)"), [], [setv("flag.know_cut"), setv("flag.know_evelyn")], values=["ji"])], salience=2, cast=["evelyn"])
 
@@ -56,15 +60,20 @@ S2_GRAN = scene("s2_gran", "c2", "side", T("摩天轮下（葛兰）", "Under th
 
 C2_DUEL = scene("c2_duel", "c2", "main", T("北岸 · 摩天轮下 23:40", "North shore · under the wheel, 23:40"), [
     bg("ferris"),
-    show("gran", "normal", "left"),
+    cg("cg_f_bench"),
     say("gran", "来早了。还有十八分钟。喝吗？", "You're early. Eighteen minutes. Beer?"),
     me("打完再说。", "After."),
     say("gran", "也是。不管谁赢。", "Fair. Whoever wins."),
     *iff(F("flag.talked_down"), say("gran", "昨晚那句话，我想了一整天。今天还是要打。", "I thought about what you said all day. We still fight.", face="serious")),
-    show("sword", "battle", "right"),
+    cg("cg_f_summon"),
+    say("sword", "在呢。", "Here.", face="battle"),
     nar("他动了。块头大，却快得像一辆没开灯的货车。断剑横扫，铁栏杆一节一节散开——不是被切断，是“连结”没了。", "He moves. Big, but fast as an unlit truck. The Sword sweeps; the railings come apart—not cut, their connections simply gone."),
+    cg("cg_f_rails"),
     nar("我蹲下去，手按在地上。断开的栏杆往回长。", "I crouch, palm to the ground. The severed railings grow back."),
     say("sword", "她接得比昨天还快。", "She's joining faster than yesterday."),
+    cgoff(),
+    show("gran", "battle", "left"),
+    show("sword", "battle", "right"),
     nar("葛兰的目光越过我，落在我身后那座摩天轮上。", "Gran's eyes go past me, to the Ferris wheel at my back."),
 ], [
     choice("block", "strategy", T("抢先一步，挡在摩天轮的中心轴前面", "Get there first and stand in front of the hub"), [
@@ -94,6 +103,7 @@ C2_WHEEL = scene("c2_wheel", "c2", "main", T("摩天轮下 · 断剑——斩", 
         say("lamp", "只断了一根。你不用全力。", "Only one. You don't need to go all out.", face="normal")),
 ], [
     choice("full", "dilemma", T("“全部……修好！”——全力（会交出一段记忆）", "'Mend—all of it!'—all out (costs a memory)"), [
+        cg("cg_restore"),
         nar("灯火炸开，像一个太阳。四千六百个断口在光里一颗一颗地亮起来，又熄灭。下坠的车厢停在了半空。", "The light bursts like a sun. Four thousand six hundred breaks light up one by one, then go dark. The falling cars stop in midair."),
         nar("那种被抽走的感觉，比昨天更重。台灯下拆开的闹钟。它重新走起来的时候，一只带着机油味的大手揉了揉我的头。“栖栖，你的手真巧。”", "The feeling of being emptied, heavier than yesterday. An alarm clock in pieces under a desk lamp. When it ticks again, a big hand smelling of machine oil ruffles my hair. 'Qiqi, your hands are so clever.'"),
         nar("那天晚上是什么时候？父亲说了什么来着？", "When was that night? What did Dad say?"),

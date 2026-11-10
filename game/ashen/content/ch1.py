@@ -4,7 +4,7 @@ from lib import *
 BG = {"clocktower": T("钟楼顶层 · 雨夜", "Clock tower top · rainy night"), "shop_rain": T("林记修复 · 雨夜", "Lin's Repairs · rainy night"),
       "oldhouse": T("林家祖宅 · 客厅", "The Lin house · parlor"), "basement": T("祖宅地下室", "The basement workshop"),
       "bar": T("锚链酒吧", "The Anchor Chain bar"), "eiche_top": T("艾希大厦顶层", "Top of the Eiche Tower")}
-CG = {"cg_photo": T("港口的照片", "The harbor photo"), "cg_lamp_lit": T("灯亮了", "The lamp lights"), "cg_reconnect": T("接上！", "Reconnect!")}
+CG = {"cg_photo": T("港口的照片", "The harbor photo"), "cg_mend_lamp": T("修灯", "Mending the lamp"), "cg_bar_pov": T("锚链酒吧的两个人", "Two at the Anchor Chain"), "cg_lamp_lit": T("灯亮了", "The lamp lights"), "cg_reconnect": T("接上！", "Reconnect!")}
 FLAGS = [("flag.tools", "带上了父亲的工具包", "Brought Dad's toolkit"), ("flag.contract", "和提灯结了契", "Bound to the Lamp"),
          ("flag.met_gran", "见过葛兰和断剑", "Met Gran and the Sword"), ("flag.know_gran", "读过葛兰的那一夜", "Read Gran's night"),
          ("flag.know_evelyn", "读过伊芙琳的那一夜", "Read Evelyn's night"), ("flag.saw_initials", "看见灯座底下的字母", "Saw the letters under the base"),
@@ -52,7 +52,9 @@ S1_BAR = scene("s1_bar", "c1", "side", T("旧港 · 锚链酒吧（葛兰）", "
     show("gran", "normal", "left"),
     say("gran", "你今晚已经喝了七杯了。", "That's seven tonight."),
     say("sword", "我是剑，喝不醉。喝的时候，我会觉得自己像个活人。", "I'm a sword. I don't get drunk. When I drink, I feel like I'm alive."),
+    cg("cg_bar_pov"),
     nar("十年前，他在码头的淤泥里捞起一截断剑。她醒了一半，说：等到第六十年，帮我一个忙。", "Ten years ago he pulled a broken sword out of the harbor mud. She half-woke and said: in the sixtieth year, do me a favor."),
+    cgoff(),
     say("sword", "灯亮了。老城区，坡顶。", "A lamp just lit. Old town, top of the hill.", face="normal"),
     say("gran", "……那就去拿。", "…Then let's go take it."),
     think("他不是为了自己要遗器。是为了她。", "He doesn't want relics for himself. He wants them for her."),
@@ -77,6 +79,7 @@ C1_BASEMENT = scene("c1_basement", "c1", "main", T("林家祖宅 · 地下室", 
     *iff(F("flag.tools"),
         nar("我把父亲的工具一样一样摆出来，像在手术台边摆器械。", "I lay out Dad's tools one by one, like instruments beside an operating table.")),
     nar("灯座底下刻着两个很潦草的字母：M. & S.", "Scratched under the base, two scrawled letters: M. & S."),
+    cg("cg_mend_lamp"),
     nar("磨锈，掰正，点焊，换玻璃。最后是灯芯。我捏着那一小截焦黑的棉线，闭上眼睛——", "Sand the rust, straighten the frame, solder, new glass. Last, the wick. I pinch the scorched stub and close my eyes—"),
     nar("有什么东西在灯的深处醒了，一把抓住我，往里拉。成千上万盏灯，浮在黑暗里。", "Something deep in the lamp wakes and pulls me in. Thousands of lamps, floating in the dark."),
     cg("cg_lamp_lit"),

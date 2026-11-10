@@ -1,0 +1,340 @@
+{
+ "release": "ashen-crown-art-2026-11-10",
+ "images": {
+  "anime/sprites/lamp/normal": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "characters/lantern-spirit.png",
+   "sha256": "e3d2142d6dce776c4229ae2691806efbb79351618f9330cbeee56c51d5d997be"
+  },
+  "anime/sprites/gran/normal": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "characters/garlan.png",
+   "sha256": "67b71e1573fea6d4749ddb81a7a9545f19e725a917ce6fb23fafd31a07688dd3"
+  },
+  "anime/sprites/gran/battle": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-garlan-guard.png",
+   "sha256": "b4d37bbe0fea80e13d9a71e7d29ed7bc3d1b2cc55b9a82c2c7c39bd3a0dc0918"
+  },
+  "anime/sprites/gran/serious": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-garlan-guard.png",
+   "sha256": "b4d37bbe0fea80e13d9a71e7d29ed7bc3d1b2cc55b9a82c2c7c39bd3a0dc0918"
+  },
+  "anime/sprites/gran/sad": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-garlan-relief.png",
+   "sha256": "12fd8033b0cc0b6d3161477c1ba3511bec5609b2ae2d42c440966368abe00681"
+  },
+  "anime/sprites/sword/normal": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "characters/broken-sword.png",
+   "sha256": "122da087a749598497a68b8049867dd7a5efdc40df24a812388442091b6cfb6a"
+  },
+  "anime/sprites/sword/smile": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-broken-sword-grin.png",
+   "sha256": "a4483ee40b24d019e116f4d8ec1d94193b331beb5d766c3538c964830586e26e"
+  },
+  "anime/sprites/sword/battle": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-broken-sword-grin.png",
+   "sha256": "a4483ee40b24d019e116f4d8ec1d94193b331beb5d766c3538c964830586e26e"
+  },
+  "anime/sprites/sword/sad": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-broken-sword-somber.png",
+   "sha256": "e0dea9ed4b67e5f29f434977a215c775ea3dc03b0d389766882eed4ae97b6489"
+  },
+  "anime/sprites/evelyn/normal": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "characters/evelyn.png",
+   "sha256": "8222c09767742d82ddc832af64c67820a10261704e46d543a13752761ad23612"
+  },
+  "anime/sprites/evelyn/serious": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-evelyn-command.png",
+   "sha256": "82c0fff4f1c86b843c33721813ef0a428a929be7a410276c524a2e7615581966"
+  },
+  "anime/sprites/august/normal": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "characters/august.png",
+   "sha256": "d21d806133ea22ce730ed1894c7aa4c53407b77f66aaf3509d87ffc26120e7e3"
+  },
+  "anime/sprites/baiqiu/normal": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "characters/bai-qiu.png",
+   "sha256": "4c050245dd519e58024f2c1c69990aa8768d31d203ff60b41bc80f9174628717"
+  },
+  "anime/sprites/baiqiu/smile": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-bai-qiu-smile.png",
+   "sha256": "43dc6b0683aa2e712b4472040b9df39518449bcce93a72afc77790e93be4c519"
+  },
+  "anime/sprites/baiqiu/serious": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "expressions/expr-bai-qiu-suspicion.png",
+   "sha256": "809f94116eca670a79303a5bbc5cceb0bae32c0dc2dd51043a5919a525b8b5be"
+  },
+  "real/sprites/lamp/normal": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "characters/lantern-spirit.png",
+   "sha256": "0084fd405bbb41623917b740bb87a0cdda43fccb683277eb17b18daa8cd99e29"
+  },
+  "real/sprites/gran/normal": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "characters/garlan.png",
+   "sha256": "91dc02bbb7f1b5dc9adea9eb56b3ec9bb902ca61f676506a0259cdaa051ddd2e"
+  },
+  "real/sprites/gran/serious": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/garlan-concern.png",
+   "sha256": "b7650a7186a01f05deb964b4a475ac016af887f2a4edd738ceea0a525d9c7135"
+  },
+  "real/sprites/gran/sad": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/garlan-concern.png",
+   "sha256": "b7650a7186a01f05deb964b4a475ac016af887f2a4edd738ceea0a525d9c7135"
+  },
+  "real/sprites/gran/battle": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/garlan-grin.png",
+   "sha256": "902ce5ea026ec8e9fd84e46d489ed347246e92ffa089ea142124fe063492e96d"
+  },
+  "real/sprites/sword/normal": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "characters/broken-sword.png",
+   "sha256": "0056b09ac2b09380cd78aa0362e015f2e535503fb98ba612d3e7b5ebb6433887"
+  },
+  "real/sprites/sword/smile": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/broken-sword-smile.png",
+   "sha256": "37e934383ff7763b930039ccda49950fb24ce28edd8a6abaed05ee1b9c5099f3"
+  },
+  "real/sprites/sword/battle": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/broken-sword-smile.png",
+   "sha256": "37e934383ff7763b930039ccda49950fb24ce28edd8a6abaed05ee1b9c5099f3"
+  },
+  "real/sprites/sword/sad": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/broken-sword-somber.png",
+   "sha256": "aa4daf1bd82c25d7ae86d8246fad679cafcdb3132b80d76d4dbe3158e0448213"
+  },
+  "real/sprites/evelyn/normal": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "characters/evelyn.png",
+   "sha256": "416a9c6b782dae5d81978bbc4b36a192bf0a67eb8f2c62adfb6d24d67f51b570"
+  },
+  "real/sprites/august/normal": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "characters/august.png",
+   "sha256": "398d7a5a7b6427e68c6b68634e81a969cbfeab4a81ae74704c99cfc9e840d5d6"
+  },
+  "real/sprites/baiqiu/normal": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "characters/bai-qiu.png",
+   "sha256": "fb6f305f94d9f36c01ce76584740f8e1788c4da2cec9a868e8060e683f20f55a"
+  },
+  "real/sprites/baiqiu/smile": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/bai-qiu-smile.png",
+   "sha256": "db5331887df07f51fdb0c7e3a195126a5b142f0a2e7c718e7aacc5373f09b526"
+  },
+  "real/sprites/baiqiu/serious": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "expressions/bai-qiu-suspicion.png",
+   "sha256": "c74d6e043f8c06608779b6326e129d404807e5e82b096aa086d497dcc5b2a08a"
+  },
+  "anime/bg/shop_rain": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-repair-rain.png",
+   "sha256": "add5d49206fe585051b5088ef028d1e82b35f96662fa5d091cb02e4d41500349"
+  },
+  "anime/bg/shop_night": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-repair-rain.png",
+   "sha256": "add5d49206fe585051b5088ef028d1e82b35f96662fa5d091cb02e4d41500349"
+  },
+  "anime/bg/shop_day": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-repair-sun.png",
+   "sha256": "7ffdb5594cdde63d8a4f63f1c73c382220d341c45d9c255a028f4fcc388cbdfb"
+  },
+  "anime/bg/bar": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-anchor-bar.png",
+   "sha256": "d1a62bc44317e7b21136544c4be9087a81dc09e51c80d98b1f7d34626943078a"
+  },
+  "anime/bg/eiche_top": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-penthouse-dawn.png",
+   "sha256": "d92089e4e9cb6003efe02323613a608bf160471d3ca735d7ae5b07e9e096d90b"
+  },
+  "anime/bg/ferris": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-ferris-yard.png",
+   "sha256": "ac359630e7395f88ab11e45cd453c784d547485c085d06af7947d702a8796c69"
+  },
+  "anime/bg/park_gate": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-ferris-yard.png",
+   "sha256": "ac359630e7395f88ab11e45cd453c784d547485c085d06af7947d702a8796c69"
+  },
+  "anime/bg/lighthouse": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-lighthouse-view.png",
+   "sha256": "f595c952e7646c85c4202d7ad2f75b50696bc048329b0e56758587b66841348c"
+  },
+  "anime/bg/teahouse": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-tea-room.png",
+   "sha256": "a49300af282fa085f2d8530a82c44859ecebd2d71d1ef68d15bd608f19816421"
+  },
+  "real/bg/clocktower": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/clocktower-room.png",
+   "sha256": "7900881617303f5724df0a576a2ea092716dd4e7e7f68b712cc4e00c2ffde7dc"
+  },
+  "real/bg/shop_rain": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/repair-night-empty.png",
+   "sha256": "3e386ef7961c831ce6b5ae8f72a8d7560400c6394f3b4c992d07e275e81e43dd"
+  },
+  "real/bg/shop_night": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/repair-night-empty.png",
+   "sha256": "3e386ef7961c831ce6b5ae8f72a8d7560400c6394f3b4c992d07e275e81e43dd"
+  },
+  "real/bg/shop_day": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/repair-day.png",
+   "sha256": "e6436539e221365964d64e71efb60c5304009a6d1564e4d99dbd5b7a285999e5"
+  },
+  "real/bg/oldhouse": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/family-attic.png",
+   "sha256": "3628e651d84142b274491b280d44de381f3ba2627f88d43bee34e056309790c6"
+  },
+  "real/bg/basement": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/ancestral-cellar.png",
+   "sha256": "1a0081415f7486f48f73a5d20570d469b26427a1a67a4c08842a2dc9d0c5bfba"
+  },
+  "real/bg/bar": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/anchor-bar.png",
+   "sha256": "0af2256ac85ad22c2d75b05041abe692eb0da26780b5207f799270b0d2906d6e"
+  },
+  "real/bg/park_gate": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/funfair.png",
+   "sha256": "1d53511841c3766a9e65953ccda5633e61c61f704c8124de955bc6c9e0d3a773"
+  },
+  "real/bg/ferris": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/funfair.png",
+   "sha256": "1d53511841c3766a9e65953ccda5633e61c61f704c8124de955bc6c9e0d3a773"
+  },
+  "real/bg/lighthouse": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/lighthouse-attic.png",
+   "sha256": "3be0d8476fadc9bac80b77e83ff5ebd63c211be224f08a2378f058b8e01ff429"
+  },
+  "real/bg/teahouse": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/tea-room.png",
+   "sha256": "e7b1312a3917f2504d493665160d2f72cacf6f5ff3e14b6f52065a5ef4b48db1"
+  },
+  "real/bg/harbor_street": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "backgrounds/old-town.png",
+   "sha256": "ca7907adf6bc015830472bad38b667593424a4225484253287d61668f82119af"
+  },
+  "anime/cg/title": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "keyart/cover-wide.png",
+   "sha256": "c3edc5e720b44b75e2c269f99f4365ff3b211ea133b40dd2db486a982f3c303b"
+  },
+  "anime/cg/cg_lamp_lit": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "backgrounds/bg-lantern-memory.png",
+   "sha256": "8ea55d209548fec0abde8610dda2b7852f92b5cc4e7d69d8cc511099b267606f"
+  },
+  "anime/cg/cg_f_approach": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "battles/01-ferris-wheel/01-approach.png",
+   "sha256": "2502f91a1546196338946cd213c6cab764675e3d78619a2904533f60605213dc"
+  },
+  "anime/cg/cg_f_bench": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "battles/01-ferris-wheel/02-bench.png",
+   "sha256": "5222b0fcfa9b19eb38ad8fbb1cf3eaa695c6fe66ae76ca83d16dcb2447c95411"
+  },
+  "anime/cg/cg_f_summon": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "battles/01-ferris-wheel/03-summon.png",
+   "sha256": "89fafc0d2211678aec00a27b7f1bb2b6f6051496aed86ccf7df82e0b58c67462"
+  },
+  "anime/cg/cg_f_rails": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "battles/01-ferris-wheel/05-repair-rails.png",
+   "sha256": "15e508533a11c16979a17f1a37adf88952123083f2828795939fa5e7c4c0c6ba"
+  },
+  "anime/cg/cg_lighthouse": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "battles/01-ferris-wheel/06-lighthouse.png",
+   "sha256": "9fe0f43803de131c7f72733521adb97e94a05d6e41a868175a18b64de174dbd3"
+  },
+  "anime/cg/cg_cut": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "battles/01-ferris-wheel/07-wheel-collapse.png",
+   "sha256": "48a18d1c48a23d7297b4c0da43eddd69cbbda51d3225de2bd03a9d84eda9a719"
+  },
+  "anime/cg/cg_restore": {
+   "pack": "ashen-crown-anime.zip",
+   "file": "battles/01-ferris-wheel/08-restore-price.png",
+   "sha256": "4648cb7452071be5cee3d0a320d1c079de1b86cfcb2f1fd7fbe188b6969be456"
+  },
+  "real/cg/title": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "keyart/harbor-title-wide.png",
+   "sha256": "bfe84aac5d78c5a0f3ee9fd159f1cb7574318db75e46aea070c15e5976e989bb"
+  },
+  "real/cg/cg_mend_lamp": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "events/lantern-cleaning.png",
+   "sha256": "149531c1e1dfb5b81be8623e50fafe406c5cdd295ace97a30a8103c501fbc458"
+  },
+  "real/cg/cg_lamp_lit": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "events/lantern-memory-space.png",
+   "sha256": "9b53bba7aa4bd5d03bc4bd4ce65afb7a398ad78e482aa977637f801d17a84aa0"
+  },
+  "real/cg/cg_bar_pov": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "events/old-seam.png",
+   "sha256": "dd09d484949e96022e1975c159411109b6a7ab93492f52916a930686d922547c"
+  },
+  "real/cg/cg_restore": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "events/ferris-repair.png",
+   "sha256": "935defe29e35a5977bcfbc91d968a350edcf268a58ef984fd2ae9f156a98937c"
+  },
+  "real/cg/cg_wheel": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "events/ferris-afterglow.png",
+   "sha256": "f18c67d5de71a71207a9e88f9211ba66f3c6c365845950da2e0df4c5cae8d8d2"
+  },
+  "real/cg/cg_register": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "events/registry.png",
+   "sha256": "4788f80559e67daf8f5ff3c0d21a9264d1e0440c493b4d1af67ff4cd02c88058"
+  },
+  "real/cg/cg_scales": {
+   "pack": "ashen-crown-realistic.zip",
+   "file": "events/teahouse-bai-qiu.png",
+   "sha256": "af60d7c8018d2c29c15cc6e199b3f24ab9126bd3ed8650726e89cd0bb1f57a7a"
+  }
+ }
+}

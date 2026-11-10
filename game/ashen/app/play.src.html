@@ -134,11 +134,14 @@ const art1 = p => SMALL && ART_FILES.has("m/" + p) ? ART_BASE + "m/" + p : ART_F
 const STYLES = ["anime", "real"];
 let STYLE = STYLES.includes(store.get("style", "anime")) ? store.get("style", "anime") : "anime";
 const art = p => art1(`${STYLE}/${p}`) || art1(`${STYLE === "anime" ? "real" : "anime"}/${p}`) || art1(p);
+// CG 不跨画风：写实模式里突然出现一张动漫 CG 会很跳，所以只在当前画风里找，没有就跳过这张 CG
+const isCg = p => p.startsWith("cg/") || p.startsWith("depth/cg/");
+const artOf = p => isCg(p) && !p.startsWith("cg/title") ? art1(`${STYLE}/${p}`) || art1(p) : art(p);
 // 提前下好接下来要用的图：背景（连深度图）、CG、立绘
 function prefetch(ops) {
   for (const op of (ops || []).slice(0, 60)) {
     if (op.op === "bg" && op.id) { preload(art(`bg/${op.id}.webp`)); preload(art(`depth/bg/${op.id}.webp`)); }
-    else if (op.op === "cg" && op.id) { preload(art(`cg/${op.id}.webp`)); preload(art(`depth/cg/${op.id}.webp`)); }
+    else if (op.op === "cg" && op.id) { preload(artOf(`cg/${op.id}.webp`)); preload(artOf(`depth/cg/${op.id}.webp`)); }
     else if ((op.op === "show" || op.op === "say") && op.who && op.who !== "me") preload(art(`sprites/${op.who}/${op.face || "normal"}.webp`));
   }
 }
@@ -170,14 +173,14 @@ function drawBg() {
   preload(url).then(apply); setTimeout(apply, el.dataset.shown ? 2500 : 1500);
 }
 function drawCg() {
-  const el = $("#cg"), id = V.cg, url = id && art(`cg/${id}.webp`);
+  const el = $("#cg"), id = V.cg, url = id && artOf(`cg/${id}.webp`);
   if (!id) { el.classList.remove("on"); return; }
   const grad = `radial-gradient(circle at 60% 40%, hsl(${hue(id)} 60% 55%), hsl(${(hue(id) + 200) % 360} 40% 12%))`;
   const apply = () => {
     if (V.cg !== id || (el.dataset.shown === id && el.classList.contains("on"))) return; el.dataset.shown = id;
     el.style.backgroundImage = url ? `url("${url}"), ${grad}` : grad;
     ph(el, !url ? "CG · " + (t((CAMP.art.cg || {})[id]) || id) : null);
-    FX.cg && FX.cg.set(url, url && art(`depth/cg/${id}.webp`));
+    FX.cg && FX.cg.set(url, url && artOf(`depth/cg/${id}.webp`));
     el.classList.add("on");
   };
   if (!url) return apply();
@@ -201,7 +204,8 @@ function drawSprites() {
   for (const [who, s] of Object.entries(V.sprites)) {
     const d = document.createElement("div"); d.className = "sprite" + (V.speaker && V.speaker !== who ? " dim" : "");
     d.style.left = (POS[s.at] ?? 50) + "%";
-    const url = art(`sprites/${who}/${s.face}.webp`) || art(`sprites/${who}/normal.webp`);   // an expression not drawn yet: the standard sprite
+    const own = x => art1(`${STYLE}/sprites/${who}/${x}.webp`);   // 先在当前画风里找（这个表情 → 标准立绘），都没有才借另一版
+    const url = own(s.face) || own("normal") || art(`sprites/${who}/${s.face}.webp`) || art(`sprites/${who}/normal.webp`);   // an expression not drawn yet: the standard sprite
     if (!url) { d.append(silhouette(who, s.face)); box.append(d); continue; }   // 图还没到：先放剪影
     const img = new Image(); img.src = url; img.alt = ""; d.append(img);
     box.append(d);
@@ -223,7 +227,7 @@ function step() {
       for (const w of Object.keys(V.sprites)) if (w !== op.who && V.sprites[w].at === at) delete V.sprites[w];   // 同一个位置只站一个人：后上来的把前面的人换下去
       V.sprites[op.who] = { face: op.face, at }; drawSprites(); continue; }
     if (op.op === "hide") { if (op.who) delete V.sprites[op.who]; else V.sprites = {}; drawSprites(); continue; }
-    if (op.op === "cg") { if (op.id && !art(`cg/${op.id}.webp`)) continue;   // 还没画的 CG 先跳过，不显示占位；图一到就会出现
+    if (op.op === "cg") { if (op.id && !artOf(`cg/${op.id}.webp`)) continue;   // 还没画的 CG 先跳过，不显示占位；图一到就会出现
       V.cg = op.id; if (op.id) unlock("cg", op.id); drawCg(); continue; }
     if (op.op === "say") { say(op); return; }
   }
@@ -291,8 +295,8 @@ function sideMenu() {
 function showEnd() {
   const es = CC.endings(CAMP, G), e = $("#endscreen"); e.replaceChildren(); e.hidden = false;
   // 结局有自己的 CG 就铺在后面（压暗，字照样看得清）
-  const ecg = es.map(x => CAMP.endings.find(g => g.id === x.group).fragments.find(f => f.id === x.frag).cg).find(id => id && art(`cg/${id}.webp`));
-  e.style.backgroundImage = ecg ? `linear-gradient(rgba(6,8,18,.55), rgba(6,8,18,.82)), url("${art(`cg/${ecg}.webp`)}")` : "";
+  const ecg = es.map(x => CAMP.endings.find(g => g.id === x.group).fragments.find(f => f.id === x.frag).cg).find(id => id && artOf(`cg/${id}.webp`));
+  e.style.backgroundImage = ecg ? `linear-gradient(rgba(6,8,18,.55), rgba(6,8,18,.82)), url("${artOf(`cg/${ecg}.webp`)}")` : "";
   e.style.backgroundSize = "cover"; e.style.backgroundPosition = "center";
   if (ecg) unlock("cg", ecg);
   es.forEach((x, i) => {   // 每一组一个小标题（结局有自己的名字就用它），下面是正文
@@ -339,7 +343,7 @@ function showGallery() {
   const body = document.createElement("div"); body.className = "body";
   const got = store.get("cg", []), ends = store.get("ends", []);
   const sec = (title, items) => { const s = document.createElement("h2"); s.textContent = title; s.style.fontSize = "14px"; const g = document.createElement("div"); g.className = "gallery"; items.forEach(([open, label, url]) => { const d = document.createElement("div"); d.textContent = open ? label : ui("locked"); if (!open) d.className = "locked"; else if (url) d.style.backgroundImage = `url("${url}")`; g.append(d); }); body.append(s, g); };
-  sec(ui("cgs"), Object.entries(CAMP.art.cg || {}).map(([id, n]) => [got.includes(id), t(n), art(`cg/${id}.webp`)]));
+  sec(ui("cgs"), Object.entries(CAMP.art.cg || {}).map(([id, n]) => [got.includes(id), t(n), artOf(`cg/${id}.webp`)]));
   sec(ui("ends"), CAMP.endings.flatMap(g => g.fragments.filter(f => !f.dead).map(f => [ends.includes(g.id + "." + f.id), f.title ? t(f.title) : t(f.text).slice(0, 26) + "…", null])));
   sec(ui("clinic"), CAMP.endings.flatMap(g => g.fragments.filter(f => f.dead).map(f => [ends.includes(g.id + "." + f.id), t(f.title), null])));
   p.append(h, close, body);

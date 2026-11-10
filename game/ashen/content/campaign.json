@@ -1538,12 +1538,20 @@
      }
     },
     {
+     "op": "cg",
+     "id": "cg_bar_pov"
+    },
+    {
      "op": "say",
      "who": null,
      "t": {
       "zh": "十年前，他在码头的淤泥里捞起一截断剑。她醒了一半，说：等到第六十年，帮我一个忙。",
       "en": "Ten years ago he pulled a broken sword out of the harbor mud. She half-woke and said: in the sixtieth year, do me a favor."
      }
+    },
+    {
+     "op": "cg",
+     "id": null
     },
     {
      "op": "say",
@@ -1873,6 +1881,10 @@
       "zh": "灯座底下刻着两个很潦草的字母：M. & S.",
       "en": "Scratched under the base, two scrawled letters: M. & S."
      }
+    },
+    {
+     "op": "cg",
+     "id": "cg_mend_lamp"
     },
     {
      "op": "say",
@@ -2405,6 +2417,10 @@
        "id": "park_gate"
       },
       {
+       "op": "cg",
+       "id": "cg_f_approach"
+      },
+      {
        "op": "say",
        "who": null,
        "t": {
@@ -2419,6 +2435,10 @@
         "zh": "我用指尖碰了碰它的底座。四十八个车厢，三百八十四根辐条，几千颗螺栓——全都连在中间那根轴上。",
         "en": "I touch its base with a fingertip. Forty-eight cars, three hundred and eighty-four spokes, thousands of bolts—all tied to the hub at the center."
        }
+      },
+      {
+       "op": "cg",
+       "id": null
       },
       {
        "op": "say",
@@ -2630,10 +2650,8 @@
      "id": "lighthouse"
     },
     {
-     "op": "show",
-     "who": "evelyn",
-     "face": "serious",
-     "at": "center"
+     "op": "cg",
+     "id": "cg_lighthouse"
     },
     {
      "op": "say",
@@ -2666,6 +2684,16 @@
       "zh": "几十个车厢，几千颗螺栓，全靠中间那根轴连着。断剑一刀斩开所有的连结——除非她全力出手，否则修不过来。",
       "en": "Dozens of cars, thousands of bolts, all held by the hub. One stroke severs every link—she can't mend it unless she goes all out."
      }
+    },
+    {
+     "op": "cg",
+     "id": null
+    },
+    {
+     "op": "show",
+     "who": "evelyn",
+     "face": "serious",
+     "at": "center"
     },
     {
      "op": "say",
@@ -2940,10 +2968,8 @@
      "id": "ferris"
     },
     {
-     "op": "show",
-     "who": "gran",
-     "face": "normal",
-     "at": "left"
+     "op": "cg",
+     "id": "cg_f_bench"
     },
     {
      "op": "say",
@@ -2984,10 +3010,17 @@
      }
     },
     {
-     "op": "show",
+     "op": "cg",
+     "id": "cg_f_summon"
+    },
+    {
+     "op": "say",
      "who": "sword",
-     "face": "battle",
-     "at": "right"
+     "t": {
+      "zh": "在呢。",
+      "en": "Here."
+     },
+     "face": "battle"
     },
     {
      "op": "say",
@@ -2996,6 +3029,10 @@
       "zh": "他动了。块头大，却快得像一辆没开灯的货车。断剑横扫，铁栏杆一节一节散开——不是被切断，是“连结”没了。",
       "en": "He moves. Big, but fast as an unlit truck. The Sword sweeps; the railings come apart—not cut, their connections simply gone."
      }
+    },
+    {
+     "op": "cg",
+     "id": "cg_f_rails"
     },
     {
      "op": "say",
@@ -3012,6 +3049,22 @@
       "zh": "她接得比昨天还快。",
       "en": "She's joining faster than yesterday."
      }
+    },
+    {
+     "op": "cg",
+     "id": null
+    },
+    {
+     "op": "show",
+     "who": "gran",
+     "face": "battle",
+     "at": "left"
+    },
+    {
+     "op": "show",
+     "who": "sword",
+     "face": "battle",
+     "at": "right"
     },
     {
      "op": "say",
@@ -3098,6 +3151,10 @@
       }
      ],
      "script": [
+      {
+       "op": "cg",
+       "id": "cg_restore"
+      },
       {
        "op": "say",
        "who": null,
@@ -5237,6 +5294,14 @@
     "zh": "港口的照片",
     "en": "The harbor photo"
    },
+   "cg_mend_lamp": {
+    "zh": "修灯",
+    "en": "Mending the lamp"
+   },
+   "cg_bar_pov": {
+    "zh": "锚链酒吧的两个人",
+    "en": "Two at the Anchor Chain"
+   },
    "cg_lamp_lit": {
     "zh": "灯亮了",
     "en": "The lamp lights"
@@ -5244,6 +5309,30 @@
    "cg_reconnect": {
     "zh": "接上！",
     "en": "Reconnect!"
+   },
+   "cg_f_approach": {
+    "zh": "走进旧游乐园",
+    "en": "Into the old park"
+   },
+   "cg_f_bench": {
+    "zh": "长椅与断剑",
+    "en": "The bench and the Sword"
+   },
+   "cg_f_summon": {
+    "zh": "赫拉显形",
+    "en": "Hera appears"
+   },
+   "cg_f_rails": {
+    "zh": "重接栏杆",
+    "en": "Rejoining the rails"
+   },
+   "cg_lighthouse": {
+    "zh": "灯塔上的人",
+    "en": "Watchers on the lighthouse"
+   },
+   "cg_restore": {
+    "zh": "白光接住车厢",
+    "en": "White light catches the cars"
    },
    "cg_cut": {
     "zh": "断剑斩向摩天轮",

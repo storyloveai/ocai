@@ -45,6 +45,8 @@ CGS = {
  "title": ("标题画面：雨夜的钟楼，上空悬着一顶由灰烬聚成的灰色冠冕，钟楼下的坡道上一个提着灯的短发女人的背影", "林栖背影 + 灰烬王冠，留出上方写标题的空间"),
 }
 
+def done(style, name): return (R / "art" / style / f"{name}.webp").exists()
+
 def jobs(style):
     s = STYLE[style]; out = []
     faces = {}
@@ -72,10 +74,16 @@ def jobs(style):
             "composition": zh, "cast": who, "refs": [],
             "accept": ["1920×1080", s["zh"], "人物外形和立绘一致（" + LIN[0] + "）"] + COMMON_ACCEPT,
             "prompt": f"{s['en']}. Event CG, 16:9. {zh}. Lin Qi looks like: {LIN[1]}."})
+    # 剧本里有、上面没写构图的 CG（比如战斗分镜）：按名字补一条
+    for cid, name in camp["art"]["cg"].items():
+        if cid not in CGS:
+            out.append({"id": f"{style}-cg-{cid}", "style": style, "kind": "cg", "name": f"cg/{cid}", "status": "pending",
+                "composition": name["zh"], "accept": ["1920×1080", s["zh"]] + COMMON_ACCEPT, "prompt": f"{s['en']}. Event CG, 16:9. {name['en']}."})
+    for j in out: j["status"] = "done" if done(style, j["name"]) else "pending"
     return out
 
 if __name__ == "__main__":
     for style in STYLE:
         js = jobs(style)
         (R / f"art/jobs-{style}.jsonl").write_text("".join(json.dumps(j, ensure_ascii=False) + "\n" for j in js), "utf-8")
-        print(style, len(js), "jobs")
+        print(style, len(js), "jobs,", sum(j["status"] == "done" for j in js), "done")
