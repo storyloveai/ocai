@@ -14,6 +14,8 @@ ENGINE = REPO / "ooc-replica/dist/assets/xichuan-webgal"
 DEST = REPO / "ooc-replica/dist/assets/holmes-webgal"
 EXPORT = REPO / "game/xichuan/tools/webgal_export.py"
 camp = json.loads((HERE / "content/campaign.json").read_text("utf-8"))
+CUES = json.loads((HERE / "audio/cues.json").read_text("utf-8"))
+TITLE_BGM = CUES["title_bgm"] if (HERE / "audio" / CUES["bgm"][CUES["title_bgm"]]["file"]).is_file() else None   # 配乐到了才放
 
 def font(size):
     for f in ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc", "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc"):
@@ -43,6 +45,7 @@ def main():
         src = pathlib.Path(tmp) / "src"; game = pathlib.Path(tmp) / "game"
         (src / "content").mkdir(parents=True)
         shutil.copy(HERE / "content/campaign.json", src / "content/campaign.json")
+        if (HERE / "audio").exists(): shutil.copytree(HERE / "audio", src / "audio")
         if (HERE / "art").exists(): shutil.copytree(HERE / "art", src / "art", ignore=shutil.ignore_patterns("candidates", "*.jsonl", "*.py", "*.md"))
         # CG 还没画时，先借同一场景的背景顶上（不进 art/）；连背景都没有才用占位图
         CG_FALLBACK = {"cg_meet": "lab", "cg_lens": "lauriston_in", "cg_arrest": "baker_day", "cg_journal": "baker_night", "title": "baker_night"}
@@ -58,16 +61,17 @@ def main():
 
         # 结局：按碎片条件显示
         fin = ["changeFigure:none -left -next;", "changeFigure:none -next;", "changeFigure:none -right -next;", "changeBg:bg_baker_night.webp -next;",
+               *([f"bgm:{TITLE_BGM}.mp3 -enter=2500 -volume=55 -next;"] if TITLE_BGM else []), "playEffect:parlour.mp3 -id=amb -volume=40 -next;",
                f":—— {esc(camp['volume']['zh'])} · 完 ——;"]
         for g in camp["endings"]:
             fin.append(f":【{esc(g['title']['zh'])}】;")
             for f in g["fragments"]:
                 head = f"「{esc(f['title']['zh'])}」" if f.get("title") else ""
                 fin.append(f":{head}{esc(f['text']['zh'])} -when={cond(f['when'])};")
-        fin += [":（卷一试样到此结束。下一卷：《四签名》。）;", "end;"]
+        fin += [":（卷一试样到此结束。下一卷：《四签名》。）;", f":{esc(CUES['credits']['zh'])};", "end;"]
         (game / "scene/fin.txt").write_text("\n".join(fin) + "\n", "utf-8")
         (game / "config.txt").write_text("\n".join([f"Game_name:{camp['title']['zh']};", "Game_key:storydate-bakerstreet-v1;", "Title_img:bg_baker_night.webp;",
-                                                    "Enable_Appreciation:true;", "Enable_Continue:true;", "Enable_flowchart:false;"]) + "\n", "utf-8")
+                                                    *([f"Title_bgm:{TITLE_BGM}.mp3;"] if TITLE_BGM else []), "Enable_Appreciation:true;", "Enable_Continue:true;", "Enable_flowchart:false;"]) + "\n", "utf-8")
 
         if DEST.exists(): shutil.rmtree(DEST)
         shutil.copytree(ENGINE, DEST, ignore=shutil.ignore_patterns("game"))
@@ -78,7 +82,8 @@ def main():
     m.update(name="贝克街 · 卷一 血字的研究", short_name="贝克街", description="福尔摩斯全本 galgame · WebGAL")
     (DEST / "manifest.json").write_text(json.dumps(m, ensure_ascii=False, indent=2) + "\n", "utf-8")
     (DEST / "NOTICE.txt").write_text("WebGAL 4.6.6 — OpenWebGAL contributors — MPL-2.0 (LICENSE-WebGAL.txt). Engine unmodified; copied from the xichuan-webgal build (see its SOURCE.json).\n"
-                                     "Story: adapted from Arthur Conan Doyle, A Study in Scarlet (1887, public domain). Chinese text and adaptation: StoryDate.\n", "utf-8")
+                                     "Story: adapted from Arthur Conan Doyle, A Study in Scarlet (1887, public domain). Chinese text and adaptation: StoryDate.\n"
+                                     "Ambience and sound effects: synthesized in code by StoryDate (game/engine/audio/synth.py), no third-party recordings. Music: Kevin MacLeod (incompetech.com), CC BY 4.0 — trimmed and loudness-normalized; see game/holmes/audio/CREDITS.md.\n", "utf-8")
     print("WebGAL →", DEST, f"{sum(p.stat().st_size for p in DEST.rglob('*') if p.is_file()) / 1e6:.1f} MB")
 
 if __name__ == "__main__":

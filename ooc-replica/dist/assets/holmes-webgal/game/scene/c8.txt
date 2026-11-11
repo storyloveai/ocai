@@ -1,15 +1,19 @@
 intro:尾声|几天以后。;
 ; ==== c8_end · 倒着推理
+bgm:h_title.mp3 -enter=2500 -volume=55 -next;
+unlockBgm:h_title.mp3 -name=贝克街;
 changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:bg_baker_night.webp -next;
+playEffect:parlour.mp3 -id=amb -volume=40 -next;
 :那天夜里，杰弗逊·霍普的动脉瘤破了。第二天早上，人们发现他躺在牢房的地板上，脸上带着平静的笑。;
 changeFigure:holmes_normal.webp -next;
 changeFigure:holmes_normal.webp -next;
 歇洛克·福尔摩斯:解这类问题，最要紧的是能倒着推理。这本事很有用，也很简单，可人们很少练。;
 changeFigure:holmes_normal.webp -next;
 歇洛克·福尔摩斯:你看看这个。;
+playEffect:paper.mp3 -volume=75 -next;
 :他递给我一份《回声报》：“……这次破案，全靠苏格兰场的雷斯垂德和葛莱森两位探长精明能干……一位叫歇洛克·福尔摩斯的业余人士也提供了些许协助。”;
 changeFigure:holmes_normal.webp -next;
 歇洛克·福尔摩斯:这就是我们这项血字研究的结果：给他们挣了一份表彰！;
@@ -26,6 +30,7 @@ changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:cg_cg_journal.webp -next;
 unlockCg:cg_cg_journal.webp -name=日记;
+playEffect:pen.mp3 -volume=75 -next;
 :（就这样，我开始写下我和歇洛克·福尔摩斯的故事。）;
 changeScene:fin.txt;
 label:c8_end__laugh;

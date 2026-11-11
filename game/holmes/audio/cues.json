@@ -1,0 +1,195 @@
+{
+  "_说明": "《贝克街》的声音：哪里放什么配乐、环境音、音效。格式见 game/engine/audio/README.md。环境音和音效的名字指 game/engine/audio/lib/ 里合成的声音。",
+  "volume": {
+    "bgm": 55,
+    "amb": 45,
+    "sfx": 75
+  },
+  "title_bgm": "h_title",
+  "bgm": {
+    "h_title": {
+      "file": "bgm/h_title.mp3",
+      "zh": "贝克街"
+    },
+    "h_baker": {
+      "file": "bgm/h_baker.mp3",
+      "zh": "221B 的炉火"
+    },
+    "h_fog": {
+      "file": "bgm/h_fog.mp3",
+      "zh": "雾中伦敦"
+    },
+    "h_search": {
+      "file": "bgm/h_search.mp3",
+      "zh": "勘查"
+    },
+    "h_deduce": {
+      "file": "bgm/h_deduce.mp3",
+      "zh": "演绎法"
+    },
+    "h_chase": {
+      "file": "bgm/h_chase.mp3",
+      "zh": "落网"
+    },
+    "h_utah": {
+      "file": "bgm/h_utah.mp3",
+      "zh": "圣徒之国"
+    }
+  },
+  "scenes": {
+    "street_fog": {
+      "bgm": "h_fog",
+      "amb": "fog"
+    },
+    "lab": {
+      "bgm": "h_search",
+      "amb": "lab"
+    },
+    "baker_day": {
+      "bgm": "h_baker",
+      "amb": "parlour"
+    },
+    "baker_night": {
+      "bgm": "h_baker",
+      "amb": "parlour",
+      "amb_vol": 40
+    },
+    "lauriston_out": {
+      "bgm": "h_fog",
+      "amb": "rain",
+      "amb_vol": 35
+    },
+    "lauriston_in": {
+      "bgm": "h_search",
+      "amb": "rain_in",
+      "amb_vol": 35
+    },
+    "station": {
+      "bgm": "h_utah",
+      "amb": "clock_room",
+      "amb_vol": 30
+    },
+    "utah": {
+      "bgm": "h_utah",
+      "amb": "prairie"
+    }
+  },
+  "cg": {
+    "cg_rache": {
+      "sfx": "reveal"
+    },
+    "cg_arrest": {
+      "bgm": "h_chase"
+    },
+    "cg_journal": {
+      "bgm": "h_title"
+    }
+  },
+  "nodes": {
+    "p_return": {
+      "amb": "street_victorian"
+    },
+    "x_alert": {
+      "sfx": "paper"
+    },
+    "c6_q1": {
+      "bgm": "h_deduce"
+    },
+    "c6_q2": {
+      "bgm": "h_deduce"
+    },
+    "c6_q3": {
+      "bgm": "h_deduce"
+    },
+    "c8_end": {
+      "bgm": "h_title"
+    }
+  },
+  "lines": [
+    {
+      "node": "c1_lab",
+      "match": "听见脚步声",
+      "sfx": "steps"
+    },
+    {
+      "node": "c2_baker",
+      "match": "敲门声",
+      "sfx": "knock"
+    },
+    {
+      "node": "c2_baker",
+      "match": "把信拆开",
+      "sfx": "paper"
+    },
+    {
+      "node": "c3_arrive",
+      "match": "葛莱森来信了",
+      "sfx": "paper"
+    },
+    {
+      "node": "c3_arrive",
+      "match": "那是一座阴森的空屋",
+      "sfx": "cab_arrive"
+    },
+    {
+      "node": "c3_room",
+      "match": "叮的一声",
+      "sfx": "glass"
+    },
+    {
+      "node": "c4_rance",
+      "match": "我出来吹哨子",
+      "sfx": "whistle",
+      "vol": 55
+    },
+    {
+      "node": "c5_visitor",
+      "match": "门铃响了",
+      "sfx": "doorbell"
+    },
+    {
+      "node": "c5_visitor",
+      "match": "跟着下了楼",
+      "sfx": "door_close"
+    },
+    {
+      "node": "c6_gregson",
+      "match": "一封电报",
+      "sfx": "paper"
+    },
+    {
+      "node": "c6_arrest",
+      "match": "门上轻轻一敲",
+      "sfx": "knock"
+    },
+    {
+      "node": "c6_arrest",
+      "match": "咔嗒一声",
+      "sfx": "cuffs"
+    },
+    {
+      "node": "c7_heart",
+      "match": "我把手放在他胸口",
+      "sfx": "heartbeat"
+    },
+    {
+      "node": "c7_night",
+      "match": "点上蜡烛",
+      "sfx": "match"
+    },
+    {
+      "node": "c8_end",
+      "match": "《回声报》",
+      "sfx": "paper"
+    },
+    {
+      "node": "c8_end",
+      "match": "开始写下",
+      "sfx": "pen"
+    }
+  ],
+  "credits": {
+    "zh": "配乐：Kevin MacLeod（incompetech.com），CC BY 4.0 许可。环境音与音效：StoryDate 合成。",
+    "en": "Music by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0. Ambience and sound effects synthesized by StoryDate."
+  }
+}

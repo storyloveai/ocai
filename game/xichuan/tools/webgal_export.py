@@ -25,6 +25,41 @@ NAMES = {c: v["name"]["zh"] for c, v in camp["chars"].items()}
 PLAYER = camp["player"]["name"]["zh"]
 SLOT = {"left": "-left", "right": "-right", "center": ""}
 
+# ---- 声音（决策记录 holmes v0.8）：书目录下 audio/cues.json 写“哪里放什么”，没有这个文件就不出声 ----
+LIB = pathlib.Path(__file__).resolve().parents[2] / "engine/audio/lib"   # 合成的环境音和音效
+CUES = json.loads((R / "audio/cues.json").read_text("utf-8")) if (R / "audio/cues.json").exists() else {}
+VOL = {"bgm": 60, "amb": 45, "sfx": 80, **CUES.get("volume", {})}
+def bgm_file(name):
+    f = CUES.get("bgm", {}).get(name, {}).get("file")
+    return R / "audio" / f if f and (R / "audio" / f).is_file() else None     # 配乐还没到时，先不放
+def snd_file(name):
+    local = R / "audio/sfx" / f"{name}.mp3"
+    return local if local.is_file() else LIB / f"{name}.mp3"
+def a_bgm(name, st, w=""):
+    if not name or st.bgm == name or not bgm_file(name): return []
+    if not w: st.bgm = name
+    out = [f"bgm:{name}.mp3 -enter=2500 -volume={CUES['bgm'][name].get('volume', VOL['bgm'])} -next{w};"]
+    title = CUES["bgm"][name].get("zh")
+    if title: out.append(f"unlockBgm:{name}.mp3 -name={esc(title)}{w};")
+    return out
+def a_amb(name, st, vol=None, w=""):
+    if st.amb == name: return []
+    if not w: st.amb = name
+    if not name: return [f"playEffect:none -id=amb -next{w};"]
+    return [f"playEffect:{name}.mp3 -id=amb -volume={vol or VOL['amb']} -next{w};"]
+def a_sfx(name, vol=None, w=""): return [f"playEffect:{name}.mp3 -volume={vol or VOL['sfx']} -next{w};"] if name else []
+def a_scene(kind, key, st, w=""):
+    c = CUES.get("scenes" if kind == "bg" else "cg", {}).get(key)
+    if not c: return []
+    out = [] if st.node_bgm else a_bgm(c.get("bgm"), st, w)
+    if "amb" in c and not st.node_amb: out += a_amb(c["amb"], st, c.get("amb_vol"), w)
+    return out + a_sfx(c.get("sfx"), c.get("sfx_vol"), w)
+def a_line(text, st, w=""):
+    out = []
+    for c in CUES.get("lines", []):
+        if c["node"] == st.node and c["match"] in text: out += a_sfx(c["sfx"], c.get("vol"), w)
+    return out
+
 def var(name): return name.replace(".", "_")
 def esc(s): return s.replace(";", "；").replace("\n", " ")
 
@@ -42,7 +77,7 @@ def cond(c):
 def when(c): e = cond(c); return f" -when={e}" if e else ""
 
 class Stage:
-    def __init__(self): self.slots = {}; self.bg = None
+    def __init__(self): self.slots = {}; self.bg = None; self.bgm = None; self.amb = None; self.node = None; self.node_bgm = None; self.node_amb = None
     def fig(self, who, face, at):
         face = face if (OUT / f"figure/{who}_{face}.webp").exists() else "normal"
         if not (OUT / f"figure/{who}_{face}.webp").exists(): return []          # 没有立绘的配角：只显示名字
@@ -58,10 +93,12 @@ def lines(ops, st):
         w = when(op.get("when")); k = op["op"]
         if k == "bg":
             st.bg = op["id"]; out += [f"changeFigure:none -left -next{w};", f"changeFigure:none -next{w};", f"changeFigure:none -right -next{w};", f"changeBg:bg_{op['id']}.webp -next{w};"]; st.slots = {}
+            out += a_scene("bg", op["id"], st, w)
         elif k == "cg":
             if op["id"] and (OUT / f"background/cg_{op['id']}.webp").exists():
                 out += [f"changeFigure:none -left -next{w};", f"changeFigure:none -next{w};", f"changeFigure:none -right -next{w};",
                         f"changeBg:cg_{op['id']}.webp -next{w};", f"unlockCg:cg_{op['id']}.webp -name={esc(camp['art']['cg'].get(op['id'], {}).get('zh', op['id']))}{w};"]; st.slots = {}
+                out += a_scene("cg", op["id"], st, w)
             elif not op["id"] and st.bg: out.append(f"changeBg:bg_{st.bg}.webp -next{w};")
         elif k == "show":
             out += [x[:-1] + w + ";" for x in st.fig(op["who"], op.get("face", "normal"), op.get("at") or next((s for s, x in st.slots.items() if x == op["who"]), "center"))]
@@ -70,6 +107,7 @@ def lines(ops, st):
                 if not op.get("who") or x == op["who"]: out.append(f"changeFigure:none {SLOT[slot]} -next{w};".replace("  ", " ")); del st.slots[slot]
         elif k == "say":
             who, text = op.get("who"), esc(op["t"]["zh"])
+            out += a_line(op["t"]["zh"], st, w)
             if who and who != "me" and op.get("face"):
                 slot = next((s for s, x in st.slots.items() if x == who), None)
                 if slot: out += [x[:-1] + w + ";" for x in st.fig(who, op["face"], slot)]
@@ -91,7 +129,10 @@ def effects(effs):
 
 def node_text(n, st, then):
     """one scene → WebGAL lines, ending with `then` (the next thing to happen)"""
-    out = [f"; ==== {n['id']} · {n['title']['zh']}"] + lines(n.get("script", []), st)
+    nc = CUES.get("nodes", {}).get(n["id"], {})
+    st.node = n["id"]; st.node_bgm = nc.get("bgm") if nc.get("bgm") and bgm_file(nc["bgm"]) else None
+    st.node_amb = nc.get("amb")
+    out = [f"; ==== {n['id']} · {n['title']['zh']}"] + a_bgm(st.node_bgm, st) + (a_amb(st.node_amb, st, nc.get("amb_vol")) if st.node_amb else []) + a_sfx(nc.get("sfx"), nc.get("sfx_vol")) + lines(n.get("script", []), st)
     opts = []
     def flat_cond(c, tag):
         # WebGAL 用 | 分隔选项，条件里的 || 会把选项切断：先把条件算进一个变量，选项里只读这个变量（决策记录 holmes v0.7）
@@ -123,6 +164,10 @@ def build():
         if p.name != "title.webp": shutil.copy(p, OUT / f"background/cg_{p.name}")
     if (A / "cg/title.webp").exists(): shutil.copy(A / "cg/title.webp", OUT / "background/title.webp")
     for p in (A / "sprites").glob("*/*.webp"): shutil.copy(p, OUT / f"figure/{p.parent.name}_{p.name}")
+    for name in CUES.get("bgm", {}):
+        if bgm_file(name): shutil.copy(bgm_file(name), OUT / f"bgm/{name}.mp3")
+    used = {c.get(k) for g in ("scenes", "cg", "nodes") for c in CUES.get(g, {}).values() for k in ("amb", "sfx")} | {c["sfx"] for c in CUES.get("lines", [])} | set(CUES.get("extra_sfx", []))
+    for name in sorted(x for x in used if x): shutil.copy(snd_file(name), OUT / f"vocal/{name}.mp3")
 
     init = [f"setVar:{var(k)}={('true' if d.get('init', False) else 'false') if d['type'] == 'flag' else d['init']};" for k, d in camp["vars"].items() if d["type"] in ("num", "flag")]
     chapters = [c for c in camp["chapters"] if c["id"] in CHAPS]
@@ -154,7 +199,7 @@ def build():
     (OUT / "scene/start.txt").write_text(f"changeScene:{chapters[0]['id']}.txt;\n", "utf-8")
     (OUT / "scene/fin.txt").write_text(":（小样到此结束。完整版里接下来是第二章《第一场放映》。）;\nend;\n", "utf-8")
     (OUT / "config.txt").write_text("\n".join([f"Game_name:{camp['title']['zh']};", "Game_key:storydate-xichuan-webgal-spike-v1;", "Title_img:title.webp;",
-        "Enable_Appreciation:true;", "Enable_Continue:true;", "Enable_flowchart:false;"]) + "\n", "utf-8")
+        "Enable_Appreciation:true;", *([f"Title_bgm:{CUES['title_bgm']}.mp3;"] if CUES.get("title_bgm") and bgm_file(CUES["title_bgm"]) else []), "Enable_Continue:true;", "Enable_flowchart:false;"]) + "\n", "utf-8")
     print("webgal/game ·", ", ".join(c["id"] for c in chapters), "·", sum(1 for _ in (OUT / "scene").glob("*.txt")), "scenes,",
           sum(1 for _ in (OUT / "background").glob("*")), "backgrounds,", sum(1 for _ in (OUT / "figure").glob("*")), "figures")
 

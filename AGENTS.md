@@ -27,6 +27,7 @@
 
 ```
 python3 game/engine/packs/make_packs.py  # 改了题材包时
+python3 game/engine/audio/synth.py        # 改了合成声音时（game/engine/audio/README.md）
 node --test game/engine/test/engine.test.mjs           # 改了引擎时
 cd game/sanguo
 python3 content/campaign.py              # 内容 → content/campaign.json
@@ -40,8 +41,9 @@ node tools/check.js content/v6/campaign_v6.json 5000   # 卷六，同上
 node tools/check.js content/v7/campaign_v7.json 5000   # 卷七，同上
 node tools/check.js content/v8/campaign_v8.json 5000   # 卷八，同上
 python3 tools/art_audit.py --strict                     # 插画版不能有退回水墨的画面；有缺口会列出来，交给 Codex 补画
-cd ../ashen && python3 content/story.py && python3 tools/build.py && python3 art/make_jobs.py && node ../engine/tools/check.mjs content/campaign.json 3000   # 灰烬王冠（galgame 试样），必须 PASS
+cd ../ashen && python3 content/story.py && python3 tools/build.py && python3 art/make_jobs.py && node ../engine/tools/check.mjs content/campaign.json 3000 && python3 ../engine/tools/audio_check.py .   # 灰烬王冠（galgame 试样），必须 PASS
 cd ../xichuan && python3 content/story.py && python3 tools/build.py && node ../engine/tools/check.mjs content/campaign.json 3000 && node tools/stance_check.mjs   # galgame，必须 PASS（后一项：决裂/记仇后剧本有没有跟上）
+cd ../holmes && python3 tools/build_webgal.py && python3 ../engine/tools/audio_check.py .   # 贝克街（WebGAL 版），声音提示表必须 PASS
 cd ../../ooc-replica && npm run game:sync                  # 把引擎和三国的新版本复制给网站（CI 会检查）
 ```
 

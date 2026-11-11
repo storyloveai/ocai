@@ -1,0 +1,301 @@
+{
+  "_说明": "《灰烬王冠》的声音：哪里放什么配乐、环境音、音效。格式见 game/engine/audio/README.md。环境音和音效的名字指 game/engine/audio/lib/ 里合成的声音。",
+  "volume": {
+    "bgm": 55,
+    "amb": 45,
+    "sfx": 75
+  },
+  "title_bgm": "a_title",
+  "bgm": {
+    "a_title": {
+      "file": "bgm/a_title.mp3",
+      "zh": "灰烬王冠"
+    },
+    "a_shop": {
+      "file": "bgm/a_shop.mp3",
+      "zh": "林记修复"
+    },
+    "a_night": {
+      "file": "bgm/a_night.mp3",
+      "zh": "维斯特林之夜"
+    },
+    "a_park": {
+      "file": "bgm/a_park.mp3",
+      "zh": "星期日乐园"
+    },
+    "a_tense": {
+      "file": "bgm/a_tense.mp3",
+      "zh": "守秘局"
+    },
+    "a_battle": {
+      "file": "bgm/a_battle.mp3",
+      "zh": "遗器之战"
+    },
+    "a_memory": {
+      "file": "bgm/a_memory.mp3",
+      "zh": "提灯记得"
+    },
+    "a_tunnel": {
+      "file": "bgm/a_tunnel.mp3",
+      "zh": "〇号线"
+    }
+  },
+  "scenes": {
+    "clocktower": {
+      "bgm": "a_night",
+      "amb": "rain"
+    },
+    "shop_rain": {
+      "bgm": "a_shop",
+      "amb": "rain_in"
+    },
+    "oldhouse": {
+      "bgm": "a_shop",
+      "amb": "clock_room",
+      "amb_vol": 35
+    },
+    "basement": {
+      "bgm": "a_tense",
+      "amb": "cellar"
+    },
+    "bar": {
+      "bgm": "a_night",
+      "amb": "bar_room"
+    },
+    "eiche_top": {
+      "bgm": "a_tense",
+      "amb": "wind"
+    },
+    "shop_day": {
+      "bgm": "a_shop",
+      "amb": "clock_room",
+      "amb_vol": 35
+    },
+    "park_gate": {
+      "bgm": "a_park",
+      "amb": "park_dusk"
+    },
+    "ferris": {
+      "bgm": "a_park",
+      "amb": "park_dusk"
+    },
+    "lighthouse": {
+      "bgm": "a_memory",
+      "amb": "harbor"
+    },
+    "shop_night": {
+      "bgm": "a_shop",
+      "amb": "clock_room",
+      "amb_vol": 30
+    },
+    "teahouse": {
+      "bgm": "a_tense",
+      "amb": "sea",
+      "amb_vol": 30
+    },
+    "harbor_street": {
+      "bgm": "a_night",
+      "amb": "harbor"
+    },
+    "mural_alley": {
+      "bgm": "a_night",
+      "amb": "city_night"
+    },
+    "hawke_study": {
+      "bgm": "a_tense",
+      "amb": "clock_room",
+      "amb_vol": 35
+    },
+    "ward": {
+      "bgm": "a_memory",
+      "amb": "hospital"
+    },
+    "metro": {
+      "bgm": "a_tunnel",
+      "amb": "tunnel"
+    },
+    "train": {
+      "bgm": "a_tunnel",
+      "amb": "tunnel"
+    },
+    "clock_plaza": {
+      "bgm": "a_night",
+      "amb": "city_night"
+    },
+    "lamp_inside": {
+      "bgm": "a_memory",
+      "amb": "ethereal"
+    }
+  },
+  "cg": {
+    "cg_lamp_lit": {
+      "sfx": "lamp_light"
+    },
+    "cg_f_summon": {
+      "bgm": "a_battle",
+      "sfx": "magic"
+    },
+    "cg_cut": {
+      "bgm": "a_battle",
+      "sfx": "blade"
+    },
+    "cg_restore": {
+      "sfx": "magic"
+    },
+    "cg_wheel": {
+      "sfx": "magic"
+    },
+    "cg_reconnect": {
+      "sfx": "magic"
+    },
+    "cg_sealed": {
+      "sfx": "paper"
+    },
+    "cg_register": {
+      "sfx": "paper"
+    },
+    "cg_m_whale": {
+      "sfx": "magic"
+    },
+    "cg_m_challenge": {
+      "bgm": "a_battle"
+    },
+    "cg_m_inkfire": {
+      "sfx": "ink_fire"
+    },
+    "cg_t_ambush": {
+      "bgm": "a_battle"
+    },
+    "cg_t_beam": {
+      "sfx": "magic"
+    },
+    "cg_t_intercept": {
+      "sfx": "blade"
+    },
+    "cg_t_reconnect": {
+      "sfx": "magic"
+    },
+    "cg_plaza": {
+      "bgm": "a_battle"
+    }
+  },
+  "nodes": {
+    "p_tower": {
+      "bgm": "a_title"
+    },
+    "c1_fight": {
+      "bgm": "a_battle"
+    },
+    "c2_duel": {
+      "bgm": "a_battle"
+    },
+    "c2_wheel": {
+      "bgm": "a_battle"
+    },
+    "c5_gran": {
+      "bgm": "a_battle"
+    },
+    "c7_end": {
+      "bgm": "a_title"
+    }
+  },
+  "events": {
+    "forget": "memory_take"
+  },
+  "lines": [
+    {
+      "node": "p_tower",
+      "match": "钟楼上空亮起",
+      "sfx": "bell_tower"
+    },
+    {
+      "node": "c1_basement",
+      "match": "门自己开了",
+      "sfx": "door_open"
+    },
+    {
+      "node": "c1_fight",
+      "match": "红发的女人一步跨出来",
+      "sfx": "blade"
+    },
+    {
+      "node": "c1_fight",
+      "match": "被一层白光挡住了",
+      "sfx": "magic"
+    },
+    {
+      "node": "c2_wheel",
+      "match": "——斩！",
+      "sfx": "blade"
+    },
+    {
+      "node": "c2_wheel",
+      "match": "车厢砸下来的声音",
+      "sfx": "thunder"
+    },
+    {
+      "node": "c3_note",
+      "match": "有人敲了三下",
+      "sfx": "knock"
+    },
+    {
+      "node": "c3_end",
+      "match": "钟楼敲了十二下",
+      "sfx": "bell_toll"
+    },
+    {
+      "node": "s4_hawke",
+      "match": "墨绿色的信封",
+      "sfx": "paper"
+    },
+    {
+      "node": "c5_alley",
+      "match": "红色的字迹变成了火",
+      "sfx": "ink_fire"
+    },
+    {
+      "node": "c5_gran",
+      "match": "弦嗡的一声",
+      "sfx": "blade"
+    },
+    {
+      "node": "c6_train",
+      "match": "列车在隧道里突然停下了",
+      "sfx": "train_brake"
+    },
+    {
+      "node": "c6_train",
+      "match": "冷白色的刃从隧道深处",
+      "sfx": "blade"
+    },
+    {
+      "node": "c6_after",
+      "match": "列车缓缓开走",
+      "sfx": "train_pass"
+    },
+    {
+      "node": "s7_chess",
+      "match": "钟楼的钟敲响了十一点",
+      "sfx": "bell_toll"
+    },
+    {
+      "node": "c7_talk",
+      "match": "忽然跳了起来",
+      "sfx": "lamp_light"
+    },
+    {
+      "node": "c7_plaza",
+      "match": "钟楼的钟敲响了十二点",
+      "sfx": "bell_toll"
+    },
+    {
+      "node": "c7_end",
+      "match": "钟楼的钟敲响了十二点十分",
+      "sfx": "bell_tower"
+    }
+  ],
+  "credits": {
+    "zh": "配乐：Kevin MacLeod（incompetech.com），CC BY 4.0 许可。环境音与音效：StoryDate 合成。",
+    "en": "Music by Kevin MacLeod (incompetech.com), licensed under Creative Commons: By Attribution 4.0. Ambience and sound effects synthesized by StoryDate."
+  }
+}
