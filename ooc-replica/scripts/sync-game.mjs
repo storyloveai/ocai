@@ -38,13 +38,14 @@ FILES.push(['game/xichuan/web/index.html', 'dist/assets/xichuan/index.html']);
 // 《灰烬王冠》（galgame 试样）：页面和两版画风的图，网站上在 /assets/ashen/。
 FILES.push(['game/ashen/web/index.html', 'dist/assets/ashen/index.html']);
 for (const f of (await walk('game/ashen/art/')).filter(f => !f.includes('/candidates/')).sort()) FILES.push([f, f.replace('game/ashen/art/', 'dist/assets/ashen/art/')]);
+for (const f of (await walk('game/ashen/web/audio/', '.mp3')).sort()) FILES.push([f, f.replace('game/ashen/web/audio/', 'dist/assets/ashen/audio/')]);
 // 汐川的自由对话（api/xichuan.js）在服务端读剧本、用引擎判断状态
 FILES.push(['game/xichuan/content/campaign.json', 'server/xichuan-campaign.json']);
 FILES.push(['game/engine/campaign_core.js', 'server/xichuan-core.cjs']);
-async function walk(rel) {
+async function walk(rel, ext = '.webp') {
   const out = [];
   for (const e of await readdir(new URL(rel, repo), { withFileTypes: true }).catch(() => [])) {
-    if (e.isDirectory()) out.push(...await walk(`${rel}${e.name}/`)); else if (e.name.endsWith('.webp')) out.push(`${rel}${e.name}`);
+    if (e.isDirectory()) out.push(...await walk(`${rel}${e.name}/`, ext)); else if (e.name.endsWith(ext)) out.push(`${rel}${e.name}`);
   }
   return out;
 }

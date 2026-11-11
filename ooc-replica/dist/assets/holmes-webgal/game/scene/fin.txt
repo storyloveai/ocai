@@ -2,6 +2,7 @@ changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:bg_baker_night.webp -next;
+playEffect:parlour.mp3 -id=amb -volume=40 -next;
 :—— 卷一 · 血字的研究 · 完 ——;
 :【这一案，华生看穿了多少】;
 :「抢先看穿」福尔摩斯揭晓之前，你已经说出了答案。他看了你很久，说：“华生，你在进步。”这是他第一次这么说。 -when=(deduce>=4) && (proof>=4);

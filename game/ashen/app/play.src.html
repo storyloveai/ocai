@@ -228,12 +228,13 @@ function step() {
       V.sprites[op.who] = { face: op.face, at }; drawSprites(); continue; }
     if (op.op === "hide") { if (op.who) delete V.sprites[op.who]; else V.sprites = {}; drawSprites(); continue; }
     if (op.op === "cg") { if (op.id && !artOf(`cg/${op.id}.webp`)) continue;   // 还没画的 CG 先跳过，不显示占位；图一到就会出现
-      V.cg = op.id; if (op.id) unlock("cg", op.id); drawCg(); continue; }
+      V.cg = op.id; if (op.id) { unlock("cg", op.id); sndCg(op.id); } drawCg(); continue; }
     if (op.op === "say") { say(op); return; }
   }
   next();                                        // the scene's lines are done: ask the engine what comes next
 }
 function say(op) {
+  sndLine(op);
   if (op.face && op.who && V.sprites[op.who]) V.sprites[op.who].face = op.face;
   if (op.heart) { const h = document.createElement("div"); h.className = "heart"; h.textContent = "♡"; const at = (V.sprites[op.who] && POS[V.sprites[op.who].at]) ?? 50; h.style.left = `calc(${at}% + 9%)`; h.style.top = "18%"; $("#stage").append(h); setTimeout(() => h.remove(), 1700); }
   V.speaker = op.who && op.who !== "me" ? op.who : null; drawSprites();
@@ -262,7 +263,7 @@ function next() {
   if (G.phase === "side") return sideMenu();
   if (G.phase === "node") {
     const n = CAMP.nodes[G.cur];
-    if (V.started !== G.cur) { V.started = G.cur; load(n.script || [], "n:" + n.id); autosave(); return step(); }
+    if (V.started !== G.cur) { V.started = G.cur; load(n.script || [], "n:" + n.id); sndNode(n.id); autosave(); return step(); }
     return choiceMenu(n);
   }
 }
@@ -445,7 +446,13 @@ const MOODS = {   // 每小节一个和弦（MIDI 音高）、每分钟拍数、
 const BGMOOD = { clocktower: "night", shop_rain: "night", basement: "night", bar: "night", eiche_top: "night", ferris: "night", lighthouse: "night", shop_night: "night", harbor_street: "night", oldhouse: "dusk", shop_day: "dusk", park_gate: "dusk", mural_alley: "night", metro: "night", train: "night", clock_plaza: "night", hawke_study: "night", lamp_inside: "night", ward: "day" };
 const SEA = new Set(["bar", "ferris", "lighthouse", "park_gate", "mural_alley"]);
 const RAIN = new Set(["shop_rain", "clocktower"]);
-function audioMood(id) { if (!id) return; AUDIO.mood = BGMOOD[id] || "day"; AUDIO.sea = SEA.has(id); AUDIO.rain = RAIN.has(id); audioAmb(); }
+function audioMood(id) {
+  if (!id) return;
+  const c = SND.cues.scenes && SND.cues.scenes[id];
+  if (c) { if (!SND.nodeBgm) sndBgm(c.bgm); sndAmb(c.amb, c.amb_vol); AUDIO.sea = AUDIO.rain = false; }   // 有提示表就用音频文件
+  else { sndAmb(null); AUDIO.sea = SEA.has(id); AUDIO.rain = RAIN.has(id); }
+  AUDIO.mood = BGMOOD[id] || "day"; audioAmb();
+}
 function audioStart() {
   if (!AUDIO.on) return;
   const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
@@ -460,11 +467,11 @@ function audioStart() {
   const c = AUDIO.ctx; c.resume && c.resume();
   AUDIO.out.gain.cancelScheduledValues(c.currentTime); AUDIO.out.gain.setTargetAtTime(.16, c.currentTime, 1.2);
   if (!AUDIO.timer) { AUDIO.next = c.currentTime + .2; AUDIO.timer = setInterval(audioTick, 120); }
-  audioAmb();
+  audioAmb(); sndResume();
 }
 function audioStop() {
   if (!AUDIO.ctx) return; const c = AUDIO.ctx;
-  AUDIO.out.gain.setTargetAtTime(0, c.currentTime, .4); clearInterval(AUDIO.timer); AUDIO.timer = null; audioAmb(true);
+  AUDIO.out.gain.setTargetAtTime(0, c.currentTime, .4); clearInterval(AUDIO.timer); AUDIO.timer = null; audioAmb(true); sndHush();
 }
 function note(midi, t, len, vol, type) {
   const c = AUDIO.ctx, o = c.createOscillator(), o2 = c.createOscillator(), g = c.createGain(), f = 440 * Math.pow(2, (midi - 69) / 12);
@@ -474,6 +481,7 @@ function note(midi, t, len, vol, type) {
 }
 function audioTick() {
   const c = AUDIO.ctx; if (!c || document.hidden) return;
+  if (SND.bgm) { AUDIO.next = c.currentTime + .2; return; }      // 正在放配乐文件时，合成音乐让开
   while (AUDIO.next < c.currentTime + .4) {
     const m = MOODS[AUDIO.mood], spb = 60 / m.bpm, t = AUDIO.next, bar = Math.floor(AUDIO.beat / 4) % 4, b = AUDIO.beat % 4, ch = m.chords[bar];
     if (b === 0) { ch.forEach(n => note(n - 12, t, spb * 4.2, .05 * m.vol, "triangle")); note(ch[0] - 24, t, spb * 4, .07 * m.vol, "sine"); }
@@ -496,6 +504,72 @@ function audioAmb(stop) {        // 海浪、雨声：滤过的噪声，海浪�
   else { f.type = "highpass"; f.frequency.value = 1400; g.gain.setTargetAtTime(.03, c.currentTime, 1); }
   src.connect(f); f.connect(g); g.connect(c.destination); src.start();
   AUDIO.amb = { kind: want, src, g, lfo };
+}
+/* ---------- 声音文件（v0.13）：配乐、环境音、音效，按 audio/cues.json 播放 ----------
+   环境音和音效是 game/engine/audio/synth.py 合成的；配乐是 AI 作曲（见 audio/CREDITS.md），还没到的配乐先用上面的合成音乐顶着。
+   三条通道各自有音量；换场景时淡入淡出。 */
+const SND = { data: /*__AUDIO__*/{ cues: {}, files: [] }, buf: {}, bus: null, bgm: false, bgmName: null, bgmSrc: null, ambName: null, ambSrc: null, nodeBgm: null };
+SND.cues = SND.data.cues || {}; SND.files = new Set(SND.data.files || []);
+const AUD_BASE = ART_BASE.replace(/art\/$/, "audio/");
+const sndUrl = (kind, name) => SND.files.has(`${kind}/${name}.mp3`) ? AUD_BASE + `${kind}/${name}.mp3` : null;
+const VOLS = { bgm: 55, amb: 45, sfx: 75, ...(SND.cues.volume || {}) };
+function sndBus() {
+  if (!AUDIO.ctx) return null;
+  if (!SND.bus) { const c = AUDIO.ctx, b = SND.bus = {}; for (const k of ["bgm", "amb", "sfx"]) { b[k] = c.createGain(); b[k].gain.value = k === "bgm" ? .5 : k === "amb" ? .7 : .8; b[k].connect(c.destination); } }
+  return SND.bus;
+}
+function sndLoad(url) {
+  if (!SND.buf[url]) SND.buf[url] = fetch(url).then(r => r.ok ? r.arrayBuffer() : Promise.reject(r.status)).then(a => new Promise((ok, no) => AUDIO.ctx.decodeAudioData(a, ok, no))).catch(() => null);
+  return SND.buf[url];
+}
+function sndLoop(slot, url, vol, bus) {   // 循环播放，旧的淡出、新的淡入
+  const c = AUDIO.ctx, old = SND[slot];
+  if (old) { if (old.g) { old.g.gain.setTargetAtTime(0, c.currentTime, .8); setTimeout(() => { try { old.src.stop(); } catch {} }, 4000); } SND[slot] = null; }
+  if (!url) return;
+  const me = {}; SND[slot] = me;
+  sndLoad(url).then(b => {
+    if (!b || SND[slot] !== me || !AUDIO.on) return;
+    const src = c.createBufferSource(), g = c.createGain(); src.buffer = b; src.loop = true; g.gain.value = 0;
+    src.connect(g); g.connect(bus); src.start(); g.gain.setTargetAtTime(vol / 100, c.currentTime, 1);
+    me.src = src; me.g = g;
+  });
+  SND[slot] = me;
+}
+function sndBgm(name) {
+  const url = name && sndUrl("bgm", name);
+  if (name && !url) return;                       // 配乐还没到：保持合成音乐
+  if (SND.bgmName === (name || null)) return; SND.bgmName = name || null; SND.bgm = !!url;
+  if (!AUDIO.on || !sndBus()) return;
+  sndLoop("bgmSrc", url, name && ((SND.cues.bgm || {})[name] || {}).volume || VOLS.bgm, SND.bus.bgm);
+  if (url) unlock("bgm", name);
+}
+function sndAmb(name, vol) {
+  if (SND.ambName === (name || null)) return; SND.ambName = name || null; SND.ambVol = vol;
+  if (!AUDIO.on || !sndBus()) return;
+  sndLoop("ambSrc", name && sndUrl("snd", name), vol || VOLS.amb, SND.bus.amb);
+}
+function sndFx(name, vol) {
+  const url = name && sndUrl("snd", name); if (!url || !AUDIO.on || skip || !sndBus()) return;
+  sndLoad(url).then(b => { if (!b) return; const c = AUDIO.ctx, src = c.createBufferSource(), g = c.createGain(); src.buffer = b; g.gain.value = (vol || VOLS.sfx) / 100; src.connect(g); g.connect(SND.bus.sfx); src.start(); });
+}
+function sndResume() {                            // 打开声音 / 读档后：按当前状态重新起播
+  const b = SND.bgmName, a = SND.ambName; SND.bgmName = SND.ambName = undefined;
+  if (b) sndBgm(b); if (a) sndAmb(a, SND.ambVol);
+}
+function sndHush() { if (AUDIO.ctx) { sndLoop("bgmSrc", null); sndLoop("ambSrc", null); } }
+function sndNode(id) {                             // 进入一个场景：场景自带的配乐（盖过背景的配乐）、音效
+  const c = (SND.cues.nodes || {})[id] || {}, had = SND.nodeBgm;
+  SND.nodeBgm = c.bgm && sndUrl("bgm", c.bgm) ? c.bgm : null;
+  if (SND.nodeBgm) sndBgm(SND.nodeBgm);
+  else if (had) { const sc = (SND.cues.scenes || {})[V.bg]; if (sc && sc.bgm) sndBgm(sc.bgm); }   // 上一场的专属配乐结束，回到这个背景的配乐
+  if (c.amb) sndAmb(c.amb, c.amb_vol);
+  sndFx(c.sfx, c.sfx_vol);
+}
+function sndCg(id) { const c = (SND.cues.cg || {})[id]; if (!c) return; if (c.bgm) sndBgm(c.bgm); if (c.amb) sndAmb(c.amb, c.amb_vol); sndFx(c.sfx, c.sfx_vol); }
+function sndLine(op) {
+  const node = String(V.queue[V.i - 1] && V.queue[V.i - 1].src || "").replace(/^[nct]:/, "").split(/[.:]/)[0], zh = (op.t && op.t.zh) || "";
+  for (const c of SND.cues.lines || []) if (c.node === node && zh.includes(c.match)) sndFx(c.sfx, c.vol);
+  if (op.forget) sndFx((SND.cues.events || {}).forget, ((SND.cues.events || {}).forget_vol));
 }
 document.addEventListener("visibilitychange", () => { if (!AUDIO.ctx) return; document.hidden ? AUDIO.ctx.suspend() : AUDIO.on && AUDIO.ctx.resume(); });
 

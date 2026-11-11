@@ -94,9 +94,14 @@ jobs:
           python3 art/make_jobs.py
       - name: Committed build outputs are up to date
         run: |
-          git diff --exit-code -- content/campaign.json web/index.html art/jobs-anime.jsonl art/jobs-real.jsonl || (echo "::error::Run 'python3 content/story.py && python3 tools/build.py && python3 art/make_jobs.py' in game/ashen and commit the results." && exit 1)
+          git diff --exit-code -- content/campaign.json web/index.html web/audio art/jobs-anime.jsonl art/jobs-real.jsonl || (echo "::error::Run 'python3 content/story.py && python3 tools/build.py && python3 art/make_jobs.py' in game/ashen and commit the results." && exit 1)
+          test -z "$(git status --porcelain -- web/audio)" || (echo "::error::game/ashen/web/audio is out of date: run tools/build.py and commit it." && exit 1)
       - name: Static checks and simulated players
         run: node ../engine/tools/check.mjs content/campaign.json 3000
+      - name: Sound cues match the script
+        run: |
+          python3 ../engine/tools/audio_check.py .
+          python3 ../engine/tools/audio_check.py ../holmes
 
   xichuan:
     runs-on: ubuntu-latest

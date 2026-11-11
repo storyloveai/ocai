@@ -42,6 +42,7 @@ setVar:flag_hope_warned=false;
 setVar:flag_journal=false;
 intro:序章 · 伦敦|1881 年，伦敦。;
 ; ==== p_return · 序章 · 回到伦敦
+playEffect:street_victorian.mp3 -id=amb -volume=45 -next;
 changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;

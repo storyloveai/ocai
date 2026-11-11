@@ -1,2 +1,3 @@
 WebGAL 4.6.6 — OpenWebGAL contributors — MPL-2.0 (LICENSE-WebGAL.txt). Engine unmodified; copied from the xichuan-webgal build (see its SOURCE.json).
 Story: adapted from Arthur Conan Doyle, A Study in Scarlet (1887, public domain). Chinese text and adaptation: StoryDate.
+Ambience and sound effects: synthesized in code by StoryDate (game/engine/audio/synth.py), no third-party recordings. Music: see game/holmes/audio/CREDITS.md.
