@@ -1,5 +1,7 @@
 intro:尾声|几天以后。;
 ; ==== c8_end · 倒着推理
+bgm:h_title.mp3 -enter=2500 -volume=55 -next;
+unlockBgm:h_title.mp3 -name=贝克街;
 changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;

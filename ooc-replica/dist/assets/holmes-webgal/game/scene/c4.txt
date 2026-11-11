@@ -4,6 +4,8 @@ changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:bg_street_fog.webp -next;
+bgm:h_fog.mp3 -enter=2500 -volume=55 -next;
+unlockBgm:h_fog.mp3 -name=雾中伦敦;
 playEffect:fog.mp3 -id=amb -volume=45 -next;
 :发现尸体的是警员约翰·兰斯。我们在他家门口把他从床上叫了起来，他一脸不高兴。;
 changeFigure:rance_normal.webp -next;

@@ -1,6 +1,7 @@
 Game_name:贝克街;
 Game_key:storydate-bakerstreet-v1;
 Title_img:bg_baker_night.webp;
+Title_bgm:h_title.mp3;
 Enable_Appreciation:true;
 Enable_Continue:true;
 Enable_flowchart:false;

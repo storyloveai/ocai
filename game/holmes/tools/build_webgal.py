@@ -68,7 +68,7 @@ def main():
             for f in g["fragments"]:
                 head = f"「{esc(f['title']['zh'])}」" if f.get("title") else ""
                 fin.append(f":{head}{esc(f['text']['zh'])} -when={cond(f['when'])};")
-        fin += [":（卷一试样到此结束。下一卷：《四签名》。）;", "end;"]
+        fin += [":（卷一试样到此结束。下一卷：《四签名》。）;", f":{esc(CUES['credits']['zh'])};", "end;"]
         (game / "scene/fin.txt").write_text("\n".join(fin) + "\n", "utf-8")
         (game / "config.txt").write_text("\n".join([f"Game_name:{camp['title']['zh']};", "Game_key:storydate-bakerstreet-v1;", "Title_img:bg_baker_night.webp;",
                                                     *([f"Title_bgm:{TITLE_BGM}.mp3;"] if TITLE_BGM else []), "Enable_Appreciation:true;", "Enable_Continue:true;", "Enable_flowchart:false;"]) + "\n", "utf-8")
@@ -83,7 +83,7 @@ def main():
     (DEST / "manifest.json").write_text(json.dumps(m, ensure_ascii=False, indent=2) + "\n", "utf-8")
     (DEST / "NOTICE.txt").write_text("WebGAL 4.6.6 — OpenWebGAL contributors — MPL-2.0 (LICENSE-WebGAL.txt). Engine unmodified; copied from the xichuan-webgal build (see its SOURCE.json).\n"
                                      "Story: adapted from Arthur Conan Doyle, A Study in Scarlet (1887, public domain). Chinese text and adaptation: StoryDate.\n"
-                                     "Ambience and sound effects: synthesized in code by StoryDate (game/engine/audio/synth.py), no third-party recordings. Music: see game/holmes/audio/CREDITS.md.\n", "utf-8")
+                                     "Ambience and sound effects: synthesized in code by StoryDate (game/engine/audio/synth.py), no third-party recordings. Music: Kevin MacLeod (incompetech.com), CC BY 4.0 — trimmed and loudness-normalized; see game/holmes/audio/CREDITS.md.\n", "utf-8")
     print("WebGAL →", DEST, f"{sum(p.stat().st_size for p in DEST.rglob('*') if p.is_file()) / 1e6:.1f} MB")
 
 if __name__ == "__main__":

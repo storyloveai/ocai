@@ -47,6 +47,8 @@ changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:bg_street_fog.webp -next;
+bgm:h_fog.mp3 -enter=2500 -volume=55 -next;
+unlockBgm:h_fog.mp3 -name=雾中伦敦;
 :1878 年，我在伦敦大学拿到医学博士学位，随后作为军医去了阿富汗。;
 :迈万德一战，一颗子弹打碎了我的肩胛骨。后来又染上伤寒，几个月里生死难料。;
 :军方给了我九个月的病假，送我回国。我在世界上无亲无故，就像所有闲人一样，被冲进了伦敦这个大污水坑。;

@@ -4,6 +4,8 @@ changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:bg_baker_day.webp -next;
+bgm:h_baker.mp3 -enter=2500 -volume=55 -next;
+unlockBgm:h_baker.mp3 -name=221B 的炉火;
 playEffect:parlour.mp3 -id=amb -volume=45 -next;
 :贝克街 221B：两间舒适的卧室，一间宽敞通风的起居室，两扇大窗。我们当天就搬了进去。;
 changeFigure:hudson_normal.webp -left -next;

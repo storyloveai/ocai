@@ -29,6 +29,7 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 #text { font-size: clamp(15px, 2.1vw, 21px); line-height: 1.75; min-height: 3.5em; white-space: pre-wrap }
 #text.think { color: #cfe3ff; font-style: italic }
 #text.forget { color: #8f8a83; letter-spacing: .04em }
+.end .credits { font-size: 12px; opacity: .6; margin-top: 2em }
 .toast { position: absolute; left: 50%; top: 8%; transform: translateX(-50%); background: rgba(10,10,14,.9); border: 1px solid var(--edge); color: var(--muted); padding: 6px 16px; border-radius: 99px; font-size: 13px; z-index: 7; animation: toast 3.2s forwards }
 @keyframes toast { 0% { opacity: 0 } 10%, 80% { opacity: 1 } 100% { opacity: 0 } }
 .mem { border-bottom: 1px solid var(--edge); padding: 10px 2px }
@@ -306,7 +307,9 @@ function showEnd() {
     const p = document.createElement("p"); p.textContent = t(f.text); e.append(p); unlock("ends", x.group + "." + x.frag);
     if (f.clinic) { const c = document.createElement("div"); c.className = "clinic"; const h4 = document.createElement("h4"); h4.textContent = ui("clinic"); const q = document.createElement("p"); q.textContent = t(f.clinic); c.append(h4, q); e.append(c); }
   });
+  if (SND.cues.credits) { const cr = document.createElement("p"); cr.className = "credits"; cr.textContent = t(SND.cues.credits); e.append(cr); }   // 配乐署名（CC BY 要求）
   const b = document.createElement("button"); b.textContent = ui("back"); b.onclick = () => { e.hidden = true; title(); }; e.append(b);
+  sndBgm(SND.cues.title_bgm);
   store.set("auto", null);
 }
 
@@ -506,7 +509,7 @@ function audioAmb(stop) {        // 海浪、雨声：滤过的噪声，海浪�
   AUDIO.amb = { kind: want, src, g, lfo };
 }
 /* ---------- 声音文件（v0.13）：配乐、环境音、音效，按 audio/cues.json 播放 ----------
-   环境音和音效是 game/engine/audio/synth.py 合成的；配乐是 AI 作曲（见 audio/CREDITS.md），还没到的配乐先用上面的合成音乐顶着。
+   环境音和音效是 game/engine/audio/synth.py 合成的；配乐是 Kevin MacLeod 的 CC BY 4.0 曲子（署名见 audio/CREDITS.md，结局画面也显示）；某首文件不在时，退回上面的合成音乐。
    三条通道各自有音量；换场景时淡入淡出。 */
 const SND = { data: /*__AUDIO__*/{ cues: {}, files: [] }, buf: {}, bus: null, bgm: false, bgmName: null, bgmSrc: null, ambName: null, ambSrc: null, nodeBgm: null };
 SND.cues = SND.data.cues || {}; SND.files = new Set(SND.data.files || []);

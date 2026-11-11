@@ -4,6 +4,8 @@ changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:bg_lab.webp -next;
+bgm:h_search.mp3 -enter=2500 -volume=55 -next;
+unlockBgm:h_search.mp3 -name=勘查;
 playEffect:lab.mp3 -id=amb -volume=45 -next;
 :实验室又高又大，四壁摆满了瓶瓶罐罐。桌上是曲颈瓶、试管和冒着蓝色火苗的本生灯。;
 playEffect:steps.mp3 -volume=75 -next;

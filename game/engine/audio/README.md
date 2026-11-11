@@ -6,7 +6,7 @@
 
 | 通道 | 是什么 | 从哪来 |
 |---|---|---|
-| 配乐 `bgm` | 循环的背景音乐，换场景时淡入淡出 | 每本书自己的 `audio/bgm/*.mp3`，用 AI 作曲生成，出处写在 `audio/CREDITS.md`。文件没到时不放（灰烬王冠退回页面里合成的音乐） |
+| 配乐 `bgm` | 循环的背景音乐，换场景时淡入淡出 | 每本书自己的 `audio/bgm/*.mp3`，开放许可的曲子（见下面“配乐怎么来”），出处写在 `audio/CREDITS.md`。文件不在时不放（灰烬王冠退回页面里合成的音乐） |
 | 环境音 `amb` | 循环的雨、雾、炉火、街道…… | `game/engine/audio/lib/`，由 `synth.py` 用代码合成 |
 | 音效 `sfx` | 单次的敲门、钟声、手铐…… | 同上；某本书要专用的音效，放 `audio/sfx/<名字>.mp3`，同名时优先用它 |
 
@@ -36,4 +36,6 @@
 
 ## 配乐怎么来
 
-用 Suno 生成纯音乐。只用付费订阅期间、通过官方 Download 下载的曲子（2026-09-03 起的条款：Pro 每月 20 首可商用），每首在 `audio/CREDITS.md` 记一行：文件、生成日期、账号订阅档、提示词。不用任何现成的有版权的音乐，提示词里也不写在世音乐人的名字。
+只用可以商用的开放许可音乐，现在全部是 Kevin MacLeod（incompetech.com）的 CC BY 4.0 曲子：免费，条件是署名。每本书的 `audio/CREDITS.md` 逐首记原曲名和改动（截取、响度统一），`cues.json` 的 `credits` 是游戏结局画面上显示的署名，不能删。不用 CC BY-NC（不能商用）、CC BY-ND（不能改）的曲子，也不用任何来源不明的音乐。
+
+取曲：本环境只能连 GitHub。`seanpm2001/Kevin-MacLeod_SoftwareRadioLIBrary` 收了一千多首，按电台（风格）分目录。仓库 7 GB，只做不下载内容的克隆（`git clone --depth 1 --filter=blob:none --no-checkout`），再用 `git cat-file -p HEAD:<路径>` 一首一首取；不要跑 `git ls-tree -l` 之类会读取文件大小的命令，那会把整个仓库下载下来。转码：`loudnorm=I=-18:TP=-2`、最长 150 秒、96 kbps、去掉封面图（`-vn`）。

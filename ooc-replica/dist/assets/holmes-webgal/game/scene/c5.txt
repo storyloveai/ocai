@@ -4,6 +4,8 @@ changeFigure:none -left -next;
 changeFigure:none -next;
 changeFigure:none -right -next;
 changeBg:bg_baker_night.webp -next;
+bgm:h_baker.mp3 -enter=2500 -volume=55 -next;
+unlockBgm:h_baker.mp3 -name=221B 的炉火;
 playEffect:parlour.mp3 -id=amb -volume=40 -next;
 changeFigure:holmes_normal.webp -next;
 changeFigure:holmes_normal.webp -next;
