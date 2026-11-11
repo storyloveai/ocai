@@ -1,0 +1,55 @@
+{
+  "service": "Local static review page; real generated images, no provider or analytics requests",
+  "checks": [
+    {
+      "size": "desktop",
+      "lang": "zh",
+      "imagesDecode": [
+        1672,
+        941
+      ],
+      "dialoguePreview": "pass",
+      "languageSwitch": "pass",
+      "noHorizontalOverflow": true,
+      "noSessionStorageChanges": true
+    },
+    {
+      "size": "desktop",
+      "lang": "en",
+      "imagesDecode": [
+        1672,
+        941
+      ],
+      "dialoguePreview": "pass",
+      "languageSwitch": "pass",
+      "noHorizontalOverflow": true,
+      "noSessionStorageChanges": true
+    },
+    {
+      "size": "mobile",
+      "lang": "zh",
+      "imagesDecode": [
+        1672,
+        941
+      ],
+      "dialoguePreview": "pass",
+      "languageSwitch": "pass",
+      "noHorizontalOverflow": true,
+      "noSessionStorageChanges": true
+    },
+    {
+      "size": "mobile",
+      "lang": "en",
+      "imagesDecode": [
+        1672,
+        941
+      ],
+      "dialoguePreview": "pass",
+      "languageSwitch": "pass",
+      "noHorizontalOverflow": true,
+      "noSessionStorageChanges": true
+    }
+  ],
+  "errors": [],
+  "nonGetRequests": []
+}

@@ -1,0 +1,420 @@
+{
+  "sourceCommit": "49078fe48c9d920b2d4b472773e8cb0218f941a7",
+  "status": "candidates, not adopted",
+  "groups": [
+    {
+      "id": "sprite-zhiyao-normal",
+      "kind": "sprite",
+      "target": [
+        900,
+        1600
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "sprite-zhiyao-normal-a.webp",
+          "source": "sprite-zhiyao-normal-1.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "sprite-zhiyao-normal-b.webp",
+          "source": "sprite-zhiyao-normal-2.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 2
+        },
+        {
+          "variant": "c",
+          "preview": "sprite-zhiyao-normal-c.webp",
+          "source": "sprite-zhiyao-normal-3.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 3
+        },
+        {
+          "variant": "d",
+          "preview": "sprite-zhiyao-normal-d.webp",
+          "source": "sprite-zhiyao-normal-4.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 4
+        }
+      ]
+    },
+    {
+      "id": "sprite-shencheng-normal",
+      "kind": "sprite",
+      "target": [
+        900,
+        1600
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "sprite-shencheng-normal-a.webp",
+          "source": "sprite-shencheng-normal-1.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "sprite-shencheng-normal-b.webp",
+          "source": "sprite-shencheng-normal-2.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 2
+        },
+        {
+          "variant": "c",
+          "preview": "sprite-shencheng-normal-c.webp",
+          "source": "sprite-shencheng-normal-3.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 3
+        },
+        {
+          "variant": "d",
+          "preview": "sprite-shencheng-normal-d.webp",
+          "source": "sprite-shencheng-normal-4.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 4
+        }
+      ]
+    },
+    {
+      "id": "sprite-jibai-normal",
+      "kind": "sprite",
+      "target": [
+        900,
+        1600
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "sprite-jibai-normal-a.webp",
+          "source": "sprite-jibai-normal-1.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "sprite-jibai-normal-b.webp",
+          "source": "sprite-jibai-normal-2.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 2
+        },
+        {
+          "variant": "c",
+          "preview": "sprite-jibai-normal-c.webp",
+          "source": "sprite-jibai-normal-3.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 3
+        },
+        {
+          "variant": "d",
+          "preview": "sprite-jibai-normal-d.webp",
+          "source": "sprite-jibai-normal-4.png",
+          "dimensions": [
+            1024,
+            1536
+          ],
+          "alpha": [
+            0,
+            254
+          ],
+          "adopted": false,
+          "sequence": 4
+        }
+      ]
+    },
+    {
+      "id": "bg-station",
+      "kind": "bg",
+      "target": [
+        1920,
+        1080
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "bg-station-a.webp",
+          "source": "bg-station-1.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "bg-station-b.webp",
+          "source": "bg-station-2.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 2
+        }
+      ]
+    },
+    {
+      "id": "bg-oldhouse",
+      "kind": "bg",
+      "target": [
+        1920,
+        1080
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "bg-oldhouse-a.webp",
+          "source": "bg-oldhouse-1.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "bg-oldhouse-b.webp",
+          "source": "bg-oldhouse-2.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 2
+        }
+      ]
+    },
+    {
+      "id": "bg-cinema_dusk",
+      "kind": "bg",
+      "target": [
+        1920,
+        1080
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "bg-cinema_dusk-a.webp",
+          "source": "bg-cinema_dusk-1.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "bg-cinema_dusk-b.webp",
+          "source": "bg-cinema_dusk-2.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 2
+        }
+      ]
+    },
+    {
+      "id": "bg-campus",
+      "kind": "bg",
+      "target": [
+        1920,
+        1080
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "bg-campus-a.webp",
+          "source": "bg-campus-1.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "bg-campus-b.webp",
+          "source": "bg-campus-2.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 2
+        }
+      ]
+    },
+    {
+      "id": "bg-cafe",
+      "kind": "bg",
+      "target": [
+        1920,
+        1080
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "bg-cafe-a.webp",
+          "source": "bg-cafe-1.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "bg-cafe-b.webp",
+          "source": "bg-cafe-2.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 2
+        }
+      ]
+    },
+    {
+      "id": "bg-projection",
+      "kind": "bg",
+      "target": [
+        1920,
+        1080
+      ],
+      "candidates": [
+        {
+          "variant": "a",
+          "preview": "bg-projection-a.webp",
+          "source": "bg-projection-1.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 1
+        },
+        {
+          "variant": "b",
+          "preview": "bg-projection-b.webp",
+          "source": "bg-projection-2.png",
+          "dimensions": [
+            1672,
+            941
+          ],
+          "alpha": null,
+          "adopted": false,
+          "sequence": 2
+        }
+      ]
+    }
+  ]
+}
