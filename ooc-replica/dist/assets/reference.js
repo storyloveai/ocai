@@ -9,7 +9,7 @@ import {bindCarousels} from './carousels.js';
 import {paintBrand} from './brand.js';
 import {sortStories} from './catalog-sort.js';
 import {threeKingdoms,threeKingdomsInk} from './three-kingdoms.js';
-import {ashenCrown,bakerStreet} from './ashen-crown.js';
+import {ashenCrown,bakerStreet,xichuan} from './ashen-crown.js';
 import {storydateOriginals,storydateCharacters} from './storydate-originals.js';
 import {paintSidebar} from './site-shell.js';
 import {openTitlePreview,closeTitlePreview} from './title-preview.js';
@@ -332,8 +332,8 @@ function pinThreeKingdoms(){
    const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(bookCard);slot.append(wrap);placed.after(slot);}else card.after(bookCard);
    cardMarkup.set(book.id,bookCard.outerHTML);
   }
-  // 首页“热门榜”里放两部独立页面的游戏，排在三国之后：灰烬王冠、贝克街。整页跳转（target=_top），不经过站内路由。
-  for(const g of [bakerStreet,ashenCrown]){const ashen=card.cloneNode(true);ashen.href=g.href;ashen.target='_top';ashen.querySelector('[data-name]').textContent=g.title;
+  // 首页“热门榜”里放三部独立页面的游戏，排在三国之后：汐川、灰烬王冠、贝克街。整页跳转（target=_top），不经过站内路由。
+  for(const g of [bakerStreet,ashenCrown,xichuan]){const ashen=card.cloneNode(true);ashen.href=g.href;ashen.target='_top';ashen.querySelector('[data-name]').textContent=g.title;
    ashen.querySelectorAll('img').forEach(img=>{if(img.alt==='ORIGINAL')return;img.src=g.image;img.alt=g.title;img.removeAttribute('data-asset');img.removeAttribute('srcset');});
    const note=ashen.querySelector('p:not([data-name])');if(note)note.textContent=g.plays;
    const placed=card.closest('[aria-roledescription="slide"]');if(placed){const slot=placed.cloneNode(false);const wrap=document.createElement('div');wrap.className='w-full';wrap.append(ashen);slot.append(wrap);placed.after(slot);}else card.after(ashen);}
