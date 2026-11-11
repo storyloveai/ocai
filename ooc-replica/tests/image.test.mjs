@@ -4,7 +4,9 @@ import handler,{imageConfig,imagePrompt} from '../api/image.js';
 test('image config reads the OpenAI key/model names and falls back to an image model',()=>{
  assert.equal(imageConfig({}),null);
  assert.deepEqual(imageConfig({OPENAI_API_KEY:'k',OPENAI_MODEL:'gpt-image-1.5'}),{key:'k',model:'gpt-image-1.5'});
- assert.equal(imageConfig({OPENAI_API_KEY:'k',OPENAI_MODEL:'gpt-4o'}).model,'gpt-image-1');
+ assert.equal(imageConfig({OPENAI_API_KEY:'k',OPENAI_MODEL:'gpt-4o'}).model,'gpt-image-2.5-flare');
+ assert.equal(imageConfig({OPENAI_API_KEY:'k'}).model,'gpt-image-2.5-flare');
+ assert.equal(imageConfig({OPENAI_API_KEY:'k',OPENAI_MODEL:'gpt-image-1'}).model,'gpt-image-2.5-flare');
  assert.equal(imageConfig({'OpenAI API Key':'k2'}).key,'k2');
 });
 test('image prompt forbids text and keeps user direction',()=>{
