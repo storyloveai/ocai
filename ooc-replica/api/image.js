@@ -1,12 +1,13 @@
 // Cover-art generation through the OpenAI Images API. Key and model come from the Vercel environment:
 // OPENAI_API_KEY and OPENAI_MODEL (spaced/camel-case spellings of the same names are also accepted).
+// Default model: gpt-image-2.5-flare (fast everyday generation). gpt-image-1 was shut down on 2026-10-23, so it is never used as a fallback.
 const windows=new Map();let active=0;
 const pick=(env,pattern)=>{const key=Object.keys(env).find(k=>pattern.test(k)&&env[k]);return key?String(env[key]).trim():'';};
 export function imageConfig(env=process.env){
  const key=pick(env,/^openai[_ ]?api[_ ]?key$/i);if(!key)return null;
  const requested=pick(env,/^openai[_ ]?model$/i);
  // OPENAI_MODEL may name a chat model; the Images API only accepts image models.
- const model=/^(gpt-image|dall-e|chatgpt-image)/i.test(requested)?requested:'gpt-image-1';
+ const model=/^(gpt-image|chatgpt-image)/i.test(requested)&&!/^gpt-image-1$/i.test(requested)?requested:'gpt-image-2.5-flare';
  return {key,model};
 }
 export function imagePrompt(body){
