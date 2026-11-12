@@ -1,6 +1,6 @@
 # 夏知遥：聊天与汐川剧情进度互通
 
-日期：2026-11-12。任务：[#148](https://github.com/storyloveai/ocai/issues/148)。从 GitHub main `c688a97e905ca6ee2dedd68d718411593e7eee82` 开始，分支 `codex/zhiyao-story-loop-20261112`。接续 #146 / #147 的网站体检。本轮由 Codex 接手播放页工程，未修改剧本、机制或决策记录。
+日期：2026-11-12。任务：[#148](https://github.com/storyloveai/ocai/issues/148)，PR：[#149](https://github.com/storyloveai/ocai/pull/149)。从 GitHub main `c688a97e905ca6ee2dedd68d718411593e7eee82` 开始，分支 `codex/zhiyao-story-loop-20261112`。接续 #146 / #147 的网站体检。本轮由 Codex 接手播放页工程，未修改剧本、机制或决策记录。
 
 ## 用户可体验的变化
 
@@ -30,3 +30,9 @@
 - 对话的走向分支与游戏存档分开管理；本轮所有聊天走向引用当前正在玩的那一份游戏进度，没有建立多世界/多角色迁移系统。
 - PR #140 的两个目录数量测试与本轮小幅重叠，已在该 PR 留言说明；未改其生成角色目录和 reference.js。PR #144 角色卡讨论稿已知会本轮采用现有 persona 的接入方式。
 - 停在 PR Preview，未合并 main。
+
+## PR 预览
+
+Vercel 主项目 storydate-zhou 已 Ready。入口：[夏知遥聊天](https://storydate-zhou-git-codex-zhiyao-stor-35d9dc-zhou-zeyas-projects.vercel.app/play/xc-zhiyao)、[汐川游戏](https://storydate-zhou-git-codex-zhiyao-stor-35d9dc-zhou-zeyas-projects.vercel.app/play/xichuan)。
+
+部署版在浏览器可直接访问，已验证角色入口、完整游戏初始化、序章自动保存和手机竖屏布局；截图 07—09。界面显示模型为 DeepSeek Flash，本轮未发送真实模型请求，也未进行 Firebase 登录或支付。完整剧情往返在本地模拟接口环境验证，不能把部署成功等同于真实模型/云存档验收。
