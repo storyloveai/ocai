@@ -4,7 +4,7 @@ import {responseLanguage,languageInstruction} from './response-language.js';
 
 export function suggestionPrompt(body){
  if(typeof body.titleId!=='string'||body.titleId.length>64||!Array.isArray(body.messages)||!body.messages.length||body.messages.length>80)throw Error('Invalid suggestions request');
- const role=isCustomId(body.titleId)?customRole(body.custom):roleFor(body.titleId,{sceneId:body.characterScene});
+ const role=isCustomId(body.titleId)?customRole(body.custom):roleFor(body.titleId,{sceneId:body.characterScene,xichuan:body.xichuan});
  const language=responseLanguage(body);
  const history=body.messages.map(m=>{
   if(!m||!['user','assistant'].includes(m.role)||typeof m.content!=='string'||!m.content.trim()||m.content.length>4000)throw Error('Invalid suggestion history');

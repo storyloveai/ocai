@@ -91,7 +91,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
         client.subscribe(async user => {
           const current = ++generation; hydrating = true;
           clearTimeout(timer); pending.clear();
-          uid = null; a.busy = true; a.user = null; cache.useAccount(null);
+          uid = null; a.busy = true; a.restored = false; a.user = null; cache.useAccount(null);
           changed();
           let rows = [], syncError = '';
           if (user) {

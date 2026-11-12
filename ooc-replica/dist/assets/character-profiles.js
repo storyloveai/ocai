@@ -1,7 +1,8 @@
 import {sanguoCharacters} from './sanguo-characters.js';
 import {originalCharacters} from './original-characters.js';
 
-export const characterProfiles = [...originalCharacters, ...sanguoCharacters];
+import {xichuanCharacters} from './xichuan-character.js';
+export const characterProfiles = [...originalCharacters, ...sanguoCharacters, ...xichuanCharacters];
 export const characterById = new Map(characterProfiles.map(c => [c.id, c]));
 export function characterScene(profile, id) {
   if (!profile?.scenes) return profile;
