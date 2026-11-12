@@ -1,3 +1,4 @@
+import {xichuanAction} from './loop-events.js';
 import {track} from './analytics.js';
 import {escapeHTML as esc} from './stream.js';
 import {XICHUAN_KEY, LATEST, cleanSaves, latestSave, legacySaves, validSave, progressText} from './xichuan-state.js';
@@ -21,7 +22,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     .xc-transfer{padding:12px 16px;background:#25232b}.xc-transfer button{margin-left:10px;padding:8px;border:1px solid #6b626f;border-radius:8px;background:#38313b;color:#fff}
     #xichuan-frame{display:block;width:100%;height:calc(100dvh - 120px);min-height:380px;border:0;background:#111522}
     @media(max-width:600px){.xc-header{gap:8px;padding:8px 12px}.xc-status{width:100%;margin:0}#xichuan-frame{height:calc(100dvh - 175px);min-height:300px}}
-  </style><header class="xc-header" data-no-i18n><a href="/play/xc-zhiyao">‹ ${t('和夏知遥聊聊', 'Chat with Zhiyao')}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
+  </style><header class="xc-header" data-no-i18n><a href="/play/xc-zhiyao?from=xichuan">‹ ${t('和夏知遥聊聊', 'Chat with Zhiyao')}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
   ${importable ? `<div class="xc-transfer" data-no-i18n>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}<button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
   <iframe id="xichuan-frame" title="${t('汐川互动故事', 'Xichuan visual novel')}" src="/assets/xichuan/index.html?site=1&lang=${lang}" allow="autoplay"></iframe>`, h, 'xichuan');
   const frame = root.querySelector('#xichuan-frame'), status = root.querySelector('.xc-status');
@@ -50,6 +51,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
       const initial = {...snapshot, latest: snapshot[LATEST], lang}; delete initial[LATEST];
       frame.contentWindow.postMessage({type: 'xc-init', snapshot: initial}, location.origin);
     }
+    if(d?.type === 'xc-action' && initialized){xichuanAction(d);return;}
     if (d?.type !== 'xc-save' || !initialized || !validSave(d.key, d.value)) return;
     const next = {...snapshot}, key = d.key === 'latest' ? LATEST : d.key;
     if (d.value === null) delete next[key]; else next[key] = d.value;
@@ -68,5 +70,5 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
 }
 export function zhiyaoStoryLink(h, lang) {
   const raw = h.read(XICHUAN_KEY, {}), played = Boolean(latestSave(raw));
-  return `<aside class="xc-chat-bridge" data-no-i18n style="flex-shrink:0;margin:8px 12px;padding:10px 12px;border:1px solid #62546b;border-radius:12px;font-size:13px"><p style="margin:0 0 8px">${esc(progressText(raw, lang))}</p><a href="/play/xichuan" style="color:#ead6a2">${lang === 'zh' ? played ? '继续她的故事 →' : '走进她的故事 →' : played ? 'Continue her story →' : 'Step into her story →'}</a><small style="display:block;color:#aaa;margin-top:6px">${lang === 'zh' ? '故事里的选择会带回聊天。聊天不会改写游戏选项和存档。' : 'Story choices carry back to chat. Chat does not change game choices or saves.'}</small></aside>`;
+  return `<aside class="xc-chat-bridge" data-no-i18n style="flex-shrink:0;margin:8px 12px;padding:10px 12px;border:1px solid #62546b;border-radius:12px;font-size:13px"><p style="margin:0 0 8px">${esc(progressText(raw, lang))}</p><a href="/play/xichuan" data-xichuan-entry style="color:#ead6a2">${lang === 'zh' ? played ? '继续她的故事 →' : '走进她的故事 →' : played ? 'Continue her story →' : 'Step into her story →'}</a><small style="display:block;color:#aaa;margin-top:6px">${lang === 'zh' ? '故事里的选择会带回聊天。聊天不会改写游戏选项和存档。' : 'Story choices carry back to chat. Chat does not change game choices or saves.'}</small></aside>`;
 }
