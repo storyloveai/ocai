@@ -31,7 +31,7 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 #next { position: absolute; right: 2.4%; top: 34%; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 10px solid var(--accent); animation: bob 1s infinite; opacity: 0 }
 #next.on { opacity: 1 }
 @keyframes bob { 50% { transform: translateY(4px) } }
-#bar { position: absolute; right: 4%; bottom: calc(3% + 4px); display: flex; gap: 4px; z-index: 3 }
+#bar { position: absolute; right: 4%; bottom: calc(3% + 4px); display: flex; gap: 4px; z-index: 5 }
 #bar button, .menu button, .panel button { font: inherit; font-size: 12.5px; color: var(--muted); background: none; border: 0; padding: 4px 8px; border-radius: 6px; cursor: pointer }
 #bar button[aria-pressed="true"] { color: var(--accent) }
 #bar button { white-space: nowrap }
@@ -48,7 +48,7 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 .menu form.talk button { font-size: 15px; color: var(--ink); border: 1px solid var(--edge); background: var(--box); border-radius: 12px; padding: 10px 18px }
 .heart { position: absolute; z-index: 3; font-size: clamp(22px, 3vw, 34px); color: #ff8fb1; pointer-events: none; animation: heart 1.6s ease-out forwards; text-shadow: 0 0 12px rgba(255,143,177,.7) }
 @keyframes heart { 0% { opacity: 0; transform: translateY(10px) scale(.6) } 20% { opacity: 1; transform: translateY(0) scale(1.1) } 100% { opacity: 0; transform: translateY(-60px) scale(1) } }
-.panel { position: absolute; inset: 4%; background: rgba(10, 13, 26, .94); border: 1px solid var(--edge); border-radius: 14px; z-index: 6; display: flex; flex-direction: column; padding: 18px 22px }
+.panel { position: absolute; inset: 4%; background: rgba(10, 13, 26, .94); border: 1px solid var(--edge); border-radius: 14px; z-index: 9; display: flex; flex-direction: column; padding: 18px 22px }
 .panel h2 { margin: 0 0 10px; font-size: 18px; letter-spacing: .1em }
 .panel .body { overflow: auto; flex: 1; padding-right: 6px }
 .panel .close { position: absolute; top: 10px; right: 12px; font-size: 14px }
@@ -100,8 +100,11 @@ function preload(url) {
 }
 CC.validate(CAMP);
 const $ = s => document.querySelector(s);
-const store = { get(k, d) { try { const v = localStorage.getItem("xc." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
-                set(k, v) { try { localStorage.setItem("xc." + k, JSON.stringify(v)); } catch {} } };
+const HOSTED = parent !== window && new URLSearchParams(location.search).get("site") === "1";
+let hostStore = {};
+const hostAction = (action, node, choice) => { if (HOSTED) parent.postMessage({type: "xc-action", action, node, choice}, location.origin); };
+const store = { get(k, d) { if (HOSTED) return hostStore[k] ?? d; try { const v = localStorage.getItem("xc." + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+                set(k, v) { if (HOSTED) { hostStore[k] = v; parent.postMessage({ type: "xc-save", key: k, value: v }, location.origin); return; } try { localStorage.setItem("xc." + k, JSON.stringify(v)); } catch {} } };
 // 网站（StoryDate）选过的语言优先：localStorage 的 sd.lang；游戏里切换时也写回去，两边一致。
 const siteLang = () => { try { const v = localStorage.getItem("sd.lang"); return v === "zh" || v === "en" ? v : null; } catch { return null; } };
 const saveLang = l => { store.set("lang", l); try { localStorage.setItem("sd.lang", l); } catch {} };
@@ -206,7 +209,7 @@ function step() {
     if (op.op === "hide") { if (op.who) delete V.sprites[op.who]; else V.sprites = {}; drawSprites(); continue; }
     if (op.op === "cg") { if (op.id && !art(`cg/${op.id}.webp`)) continue;   // 还没画的 CG 先跳过，不显示占位；图一到就会出现
       V.cg = op.id; if (op.id) unlock("cg", op.id); drawCg(); continue; }
-    if (op.op === "say") { say(op); return; }
+    if (op.op === "say") { say(op); autosave(); return; }
   }
   next();                                        // the scene's lines are done: ask the engine what comes next
 }
@@ -246,14 +249,14 @@ function menu(prompt, opts) {
   const m = $("#menu"); m.replaceChildren(); m.hidden = false; skip = false; renderBar();
   if (prompt) { const p = document.createElement("div"); p.className = "prompt"; p.textContent = prompt; m.append(p); }
   opts.forEach(o => { const b = document.createElement("button"); b.className = "opt"; b.textContent = o.label; b.disabled = !!o.disabled; b.onclick = () => { m.hidden = true; o.go(); }; m.append(b); });
-  m.querySelector("button:not([disabled])")?.focus();
+  m.querySelector("button:not([disabled])")?.focus(); autosave();
 }
 function choiceMenu(n) {
   const os = CC.choices(CAMP, G).filter(o => !o.locked);
   os.forEach(o => prefetch((o.c.script || []).slice(0, 12)));
   menu(ui("prompt"), os.map(o => ({ label: t(o.c.label), go: () => {
     V.log.push({ who: "", text: "▸ " + t(o.c.label) });
-    const lines = o.c.script || []; CC.choose(CAMP, G, o.id); V.started = null;
+    const lines = o.c.script || []; CC.choose(CAMP, G, o.id); hostAction("choice", n.id, o.id); V.started = null;
     load(lines, `c:${n.id}.${o.id}`); step();
   } })));
   // 自由对话：场上有女主、这一幕还有说话的机会、网站接了 AI，就多一个“对她说点什么”
@@ -283,13 +286,13 @@ function showEnd() {
   const cr = document.createElement("p"); cr.className = "credits"; cr.textContent = ui("song"); e.append(cr);
   const b = document.createElement("button"); b.textContent = ui("back"); b.onclick = () => { songStop(); e.hidden = true; title(); }; e.append(b);
   songPlay();
-  store.set("auto", null);
+  store.set("latest", snapshot()); store.set("auto", null);
 }
 
 /* ---------- saves ---------- */
 const snapshot = () => JSON.parse(JSON.stringify({ G, V: { ...V, log: V.log.slice(-60) }, at: Date.now(), label: nameOf(null) + t(CAMP.chapters[Math.max(0, G.ch)]?.title) }));
 function autosave() { if (G && G.phase !== "end") store.set("auto", snapshot()); }
-function restore(s) { askTilt(); songStop(); audioStart(); G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); }
+function restore(s) { hostAction("resume", s.G.cur); askTilt(); songStop(); audioStart(); G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); if (G.phase !== "end") autosave(); }
 function slots(mode) {
   const p = $("#panel"); p.replaceChildren(); p.hidden = false;
   const h = document.createElement("h2"); h.textContent = mode === "save" ? ui("save") : ui("loadS");
@@ -358,7 +361,7 @@ function title() {
 function start() {
   askTilt(); audioStart();
   ["zhiyao", "shencheng", "jibai"].forEach(w => preload(art(`sprites/${w}/normal.webp`)));
-  G = CC.newGame(CAMP); V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null, started: null };
+  G = CC.newGame(CAMP); hostAction("start", G.cur); V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null, started: null };
   $("#title").hidden = true; $("#endscreen").hidden = true; draw(); next();
 }
 $("#box").addEventListener("click", () => { if ($("#menu").hidden && $("#panel").hidden) { skip = false; step(); } });
@@ -575,7 +578,18 @@ $("#stage").addEventListener("pointermove", e => {
   const st = $("#stage"); $("#sprites").style.transform = `translate3d(${(-x * .05 * .6 * st.clientWidth / 1.05).toFixed(1)}px, ${(-y * .05 * .35 * st.clientHeight / 1.05).toFixed(1)}px, 0)`;
   requestAnimationFrame(fxLoop);
 })();
-document.documentElement.lang = LANG; renderBar(); title();
+function boot() { document.documentElement.lang = LANG; renderBar(); title(); }
+if (HOSTED) {
+  let ready = false;
+  window.addEventListener("message", event => {
+    if (ready || event.origin !== location.origin || event.source !== parent || event.data?.type !== "xc-init") return;
+    ready = true; hostStore = event.data.snapshot || {};
+    LANG = ["zh", "en"].includes(hostStore.lang) ? hostStore.lang : LANG;
+    AUDIO.on = store.get("music", true); TILT.on = store.get("tilt", true);
+    seen.clear(); store.get("seen", []).forEach(k => seen.add(k)); boot();
+  });
+  parent.postMessage({ type: "xc-ready" }, location.origin);
+} else boot();
 window.__xc = { get G() { return G; }, get V() { return V; }, step, start };
 </script>
 </body>

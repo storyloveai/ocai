@@ -4,10 +4,60 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
   const cache = createAccountStorage(storage);
   let client, uid = null, generation = 0, hydrating = false;
   const pending = new Map();
-  let timer, inFlight;
+  let timer, inFlight, writeError = '', sending = [];
+  const unverified = new Set(), conflicts = new Map();
   const dirtyKey = id => `ooc-sync-pending:${id}`;
+  const reviewKey = id => `ooc-sync-review:${id}`;
   function persistPending(id) {
-    if (id) storage.setItem(dirtyKey(id), JSON.stringify([...pending].filter(([, item]) => item.uid === id).map(([key]) => key)));
+    if (id) {
+      storage.setItem(dirtyKey(id), JSON.stringify([...new Set([...sending, ...pending].filter(([, item]) => item.uid === id).map(([key]) => key))]));
+      storage.setItem(reviewKey(id), JSON.stringify([...unverified]));
+    }
+  }
+  function status() {
+    a.pendingCount = new Set([...sending, ...pending].filter(([, item]) => item.uid === uid).map(([key]) => key)).size;
+    a.conflictKeys = [...conflicts.keys()];
+    a.syncError = a.restoreError || (conflicts.size ? '本设备与云端都有待确认的修改，请选择要继续的版本。' : writeError);
+  }
+  async function loadRows(id) {
+    let loadTimer;
+    try { return await Promise.race([client.load(id), new Promise((_, reject) => { loadTimer = setTimeout(() => reject(Error('Cloud state timed out')), cloudLoadTimeoutMs); })]); }
+    finally { clearTimeout(loadTimer); }
+  }
+  async function hydrate(user) {
+    const current = ++generation; hydrating = true;
+    clearTimeout(timer); pending.clear(); unverified.clear(); conflicts.clear(); writeError = '';
+    uid = null; a.busy = true; a.restored = false; a.user = null; a.syncError = ''; a.restoreError = ''; a.conflictKeys = []; a.pendingCount = 0; a.syncing = false; cache.useAccount(null);
+    changed();
+    let rows = [], restoreError = '';
+    if (user) {
+      try { rows = await loadRows(user.uid); }
+      catch { restoreError = '无法读取云端进度，目前仅保存在此设备。请重试连接后再同步。'; }
+    }
+    if (current !== generation) return;
+    uid = user?.uid || null; cache.useAccount(uid);
+    if (uid) {
+      let dirty = [], review = [];
+      try { dirty = JSON.parse(storage.getItem(dirtyKey(uid))) || []; review = JSON.parse(storage.getItem(reviewKey(uid))) || []; } catch {}
+      for (const key of Array.isArray(dirty) ? dirty : []) if (cloudKey(key)) pending.set(key, {uid, value: cache.read(key, null)});
+      for (const key of Array.isArray(review) ? review : []) if (pending.has(key)) unverified.add(key);
+    }
+    if (!restoreError) {
+      const cloud = new Map(rows.filter(([key]) => cloudKey(key)));
+      for (const [key, value] of cloud) {
+        if (!pending.has(key)) cache.save(key, value);
+        else if (unverified.has(key)) {
+          const device = pending.get(key).value;
+          if (JSON.stringify(device) === JSON.stringify(value)) { pending.delete(key); unverified.delete(key); }
+          else conflicts.set(key, {device, cloud: value});
+        }
+      }
+      for (const key of [...unverified]) if (!cloud.has(key)) unverified.delete(key);
+      persistPending(uid);
+    }
+    a.user = user; a.restoreError = restoreError; hydrating = false; a.busy = false; a.restored = true; status();
+    changed(true);
+    if (uid && pending.size && !restoreError) void a.flush();
   }
   const a = {
     paymentConfig: {},
@@ -22,7 +72,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
       if (!response.ok) throw Error(result.error || '请求失败，请重试。');
       return result;
     },
-    user: null, ready: false, restored: false, busy: true, providers: {}, error: '', syncError: '',
+    user: null, ready: false, restored: false, busy: true, providers: {}, error: '', syncError: '', restoreError: '', conflictKeys: [], pendingCount: 0, syncing: false,
     read: (key, fallback) => cache.read(key, fallback),
     scope() {
       const version = generation;
@@ -31,28 +81,62 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
     save(key, value) {
       cache.save(key, value);
       if (uid && cloudKey(key)) {
-        // Snapshot values now; streaming callers may mutate their arrays later.
-        pending.set(key, { uid, value: JSON.parse(JSON.stringify(value)) });
-        persistPending(uid);
+        pending.set(key, {uid, value: JSON.parse(JSON.stringify(value))});
+        if (a.restoreError) unverified.add(key);
+        persistPending(uid); status();
         clearTimeout(timer); timer = setTimeout(() => a.flush(), 800);
       }
     },
+    async retrySync() {
+      if (a.busy) return false;
+      if (a.restoreError && a.user) { await hydrate(a.user); return !a.syncError; }
+      return a.flush();
+    },
+    conflictCopies() { return [...conflicts].map(([key, value]) => ({key, ...JSON.parse(JSON.stringify(value)), device: cache.read(key, value.device)})); },
+    async resolveConflicts(prefer) {
+      if (!['device', 'cloud'].includes(prefer) || !uid || a.busy || !conflicts.size) return false;
+      // Keep the local copies on this device before any replacement. Never upload the backup.
+      const backupKey = `ooc-sync-backup:${uid}`;
+      let backups = []; try { backups = JSON.parse(storage.getItem(backupKey)) || []; } catch {}
+      storage.setItem(backupKey, JSON.stringify([...(Array.isArray(backups) ? backups.slice(-2) : []), {at: Date.now(), values: Object.fromEntries([...conflicts].map(([key, value]) => [key, cache.read(key, value.device)]))}]));
+      if (prefer === 'cloud') {
+        const originals = new Map([...conflicts].map(([key]) => [key, cache.read(key, null)]));
+        try { for (const [key, value] of conflicts) cache.save(key, value.cloud); }
+        catch (error) { for (const [key, value] of originals) { try { cache.save(key, value); } catch {} } throw error; }
+      }
+      for (const [key] of conflicts) {
+        if (prefer === 'cloud') pending.delete(key);
+        unverified.delete(key);
+      }
+      conflicts.clear(); persistPending(uid); status();
+      ++generation; changed(true); // invalidate any view still holding the replaced snapshot
+      return a.flush();
+    },
     async flush() {
+      if (hydrating || a.restoreError || conflicts.size) return false;
       if (inFlight) { await inFlight; return a.flush(); }
       inFlight = a.writePending();
       try { return await inFlight; } finally { inFlight = null; }
     },
     async writePending() {
       clearTimeout(timer);
-      const writes = [...pending]; pending.clear();
+      const owner = uid, current = generation;
+      const writes = [...pending].filter(([key]) => !conflicts.has(key) && !unverified.has(key));
+      sending = writes;
+      for (const [key] of writes) pending.delete(key);
+      if (writes.length) { a.syncing = true; changed(); }
       let failed = false;
       await Promise.all(writes.map(async ([key, item]) => {
         try { await client.save(item.uid, key, item.value); }
         catch { failed = true; if (uid === item.uid && !pending.has(key)) pending.set(key, item); }
       }));
-      for (const id of new Set(writes.map(([, item]) => item.uid))) if(id === uid) persistPending(id);
-      if (writes.length) { a.syncError = failed ? '云端保存失败，数据仍保存在此设备。请重试同步后再退出。' : ''; changed(); }
-      return !failed;
+      sending = [];
+      // An old account's late network result cannot change the current account's status.
+      if (current === generation && owner === uid) {
+        if (writes.length) writeError = failed ? '云端保存失败，数据仍保存在此设备。请重试同步后再退出。' : '';
+        a.syncing = false; persistPending(uid); status(); if (writes.length) changed();
+      }
+      return !failed && !conflicts.size && !unverified.size;
     },
     async login(provider = 'google') {
       if (!a.ready) { notify(a.error || '账户服务正在初始化。'); return; }
@@ -88,36 +172,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
         a.providers = auth.providers;
         const sdk = await loadClient();
         client = await sdk.connectFirebase(auth.config);
-        client.subscribe(async user => {
-          const current = ++generation; hydrating = true;
-          clearTimeout(timer); pending.clear();
-          uid = null; a.busy = true; a.user = null; cache.useAccount(null);
-          changed();
-          let rows = [], syncError = '';
-          if (user) {
-            let loadTimer;
-            try {
-              rows = await Promise.race([
-                client.load(user.uid),
-                new Promise((_, reject) => { loadTimer = setTimeout(() => reject(Error('Cloud state timed out')), cloudLoadTimeoutMs); }),
-              ]);
-            }
-            catch { syncError = '无法读取云端数据，暂时使用本设备缓存。请检查网络和 Firestore 规则。'; }
-            finally { clearTimeout(loadTimer); }
-          }
-          if (current !== generation) return;
-          uid = user?.uid || null; cache.useAccount(uid);
-          if (uid) {
-            let dirty = [];
-            try { dirty = JSON.parse(storage.getItem(dirtyKey(uid))) || []; } catch {}
-            for (const key of dirty) if (cloudKey(key)) pending.set(key, { uid, value: cache.read(key, null) });
-          }
-          // Local unsynced values win over an older cloud copy.
-          for (const [key, value] of rows) if (cloudKey(key) && !pending.has(key)) cache.save(key, value);
-          a.user = user; a.syncError = syncError; hydrating = false; a.busy = false; a.restored = true;
-          changed(true);
-          if (uid && pending.size) a.flush();
-        });
+        client.subscribe(hydrate);
         a.ready = true;
       } catch (e) { a.error = e.message; a.busy = false; a.restored = true; }
       changed();

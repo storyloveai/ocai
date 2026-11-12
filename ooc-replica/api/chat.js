@@ -1,3 +1,4 @@
+import {usageRecord} from '../server/usage-meter.js';
 import {randomUUID} from 'node:crypto';
 import {once} from 'node:events';
 import {streamText,Output} from 'ai';
@@ -21,7 +22,7 @@ export default async function handler(req,res){
  const origin=req.headers.origin,host=req.headers.host;
  if(!origin||!host||origin!==`https://${host}`)return res.status(403).json({error:'Same-origin browser requests only'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({error:'JSON required'});
- let packet;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>110000)throw new Error('Request too large');packet=buildPrompt(body);}catch(error){return res.status(error?.code==='UNKNOWN_TITLE'?404:400).json({code:error?.code==='UNKNOWN_TITLE'?'UNKNOWN_TITLE':'INVALID_CONVERSATION',error:error?.code==='UNKNOWN_TITLE'?'Unknown title':'Invalid title or conversation'});}
+ let packet,usageTask;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>110000)throw new Error('Request too large');usageTask=body.task;packet=buildPrompt(body);}catch(error){return res.status(error?.code==='UNKNOWN_TITLE'?404:400).json({code:error?.code==='UNKNOWN_TITLE'?'UNKNOWN_TITLE':'INVALID_CONVERSATION',error:error?.code==='UNKNOWN_TITLE'?'Unknown title':'Invalid title or conversation'});}
  let config=providerConfig();if(!config)return res.status(503).json({error:'AI configuration is incomplete'});
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [key,v]of windows)if(v.until<now)windows.delete(key);
  const window=windows.get(ip)||{until:now+60000,count:0};if(window.count>=8||active>=4||windows.size>=5000)return res.status(429).json({error:'Please wait before trying again'});window.count++;windows.set(ip,window);
@@ -43,6 +44,7 @@ export default async function handler(req,res){
   const candidates=(packet.mode==='author-catalog'?[config]:[config,fallbackConfig(config)]).filter(Boolean);
   for(let attempt=0;attempt<candidates.length;attempt++){
   config=candidates[attempt];
+  let usage, attemptOutcome='failed';
   const attemptAbort=new AbortController(),attemptTimer=attempt<candidates.length-1?setTimeout(()=>attemptAbort.abort(),20000):null;
   try{
   const result=streamText({model:createModel(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...(packet.mode==='author-catalog'?{output:Output.json()}:{}),...generationOptions(config),maxRetries:0,abortSignal:AbortSignal.any([abort.signal,attemptAbort.signal]),onError:()=>{}});
@@ -50,18 +52,18 @@ export default async function handler(req,res){
    if(abort.signal.aborted)break;
    if(part.type==='error')throw part.error;
    if(part.type==='reasoning-delta'){reasoningChunks++;phase='thinking';}
-   if(part.type==='finish-step'||part.type==='finish'){finishReason=part.finishReason;reasoningTokens=part.usage?.outputTokens?.reasoning||part.totalUsage?.outputTokens?.reasoning||reasoningTokens;}
+   if(part.type==='finish-step'||part.type==='finish'){finishReason=part.finishReason;usage=part.totalUsage||part.usage||usage;reasoningTokens=usage?.outputTokenDetails?.reasoningTokens??reasoningTokens;}
    if(part.type==='text-delta'&&part.text){if(!hasText){clearTimeout(attemptTimer);hasText=true;firstTextMs=Date.now()-started;if(!framed)headers();}phase='streaming';await emit({type:'text',text:part.text});}
   }
   if(timedOut)throw new Error('Request deadline reached');
   if(abort.signal.aborted)return;
   if(!hasText)throw Object.assign(new Error('No response text'),{code:'AI_EMPTY_RESPONSE'});
-  break;
+  attemptOutcome='completed';break;
   }catch(error){
    if(hasText||abort.signal.aborted||attempt===candidates.length-1)throw error;
    console.warn(JSON.stringify({event:'ai_provider_fallback',from:config.name,to:candidates[attempt+1].name}));
    phase='connecting';finishReason=undefined;reasoningTokens=0;
-  }finally{clearTimeout(attemptTimer);}
+  }finally{clearTimeout(attemptTimer);console.info(JSON.stringify(usageRecord({requestId,provider:config.name,model:config.model,attempt:attempt+1,task:usageTask,usage,outcome:timedOut?'failed':abort.signal.aborted?'cancelled':attemptOutcome})));}
   }
   await emit({type:'done',requestId,finishReason,...(packet.mode==='author-catalog'?{model:config.model,provider:config.name}: {})});res.end();
   console.info(JSON.stringify({event:'ai_response_complete',requestId,model:config.model,promptVersion:packet.promptVersion,firstTextMs,durationMs:Date.now()-started,finishReason,reasoningTokens}));
