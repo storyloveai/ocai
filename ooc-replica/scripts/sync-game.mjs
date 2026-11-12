@@ -50,6 +50,7 @@ async function walk(rel, ext = '.webp') {
   return out;
 }
 for (const f of (await walk('game/xichuan/art/')).filter(f => !f.includes('/candidates/')).sort()) FILES.push([f, f.replace('game/xichuan/art/', 'dist/assets/xichuan/art/')]);
+for (const f of (await walk('game/xichuan/web/audio/', '.mp3')).sort()) FILES.push([f, f.replace('game/xichuan/web/audio/', 'dist/assets/xichuan/audio/')]);
 for (const name of ['cover.webp']) if (await readFile(new URL(`game/sanguo/art/${name}`, repo)).catch(() => null)) FILES.push([`game/sanguo/art/${name}`, `dist/assets/sanguo-art/${name}`]);
 const blob = b => createHash('sha1').update('blob ' + b.length + '\0').update(b).digest('hex');
 const check = process.argv.includes('--check');

@@ -10,4 +10,8 @@ src = (R / "app/play.src.html").read_text("utf-8")
 src = src.replace("/*__ENGINE__*/", ENGINE.read_text("utf-8")).replace("/*__CAMPAIGN__*/null", json.dumps(camp, ensure_ascii=False)).replace("/*__ART__*/[]", json.dumps(art))
 (R / "web").mkdir(exist_ok=True)
 (R / "web/index.html").write_text(src, "utf-8")
+# 片尾曲（决策记录 v0.29）：audio/ 里的歌复制到 web/audio/，网站同步到 /assets/xichuan/audio/
+import shutil
+(R / "web/audio").mkdir(exist_ok=True)
+for f in (R / "audio").glob("*.mp3"): shutil.copy(f, R / "web/audio" / f.name)
 print(f"web/index.html · {len(camp['nodes'])} scenes · {len(art)} pictures")

@@ -69,6 +69,7 @@ html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); 
 #title .lang { position: absolute; top: 16px; right: 20px; font-size: 13px }
 .end { position: absolute; inset: 0; z-index: 5; background: rgba(6, 8, 18, .88); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 8%; text-align: center }
 .end h2 { margin: 0; letter-spacing: .12em; text-wrap: balance } .end h3 { margin: 10px 0 0; font-size: 14px; font-weight: 500; letter-spacing: .2em; color: var(--muted) } .end p { margin: 0; color: var(--muted); max-width: 640px; line-height: 1.8 }
+.end .credits { font-size: 12px; opacity: .6; margin-top: 6px }
 .end button { font: inherit; color: var(--ink); background: var(--box); border: 1px solid var(--edge); border-radius: 10px; padding: 8px 20px; cursor: pointer; margin-top: 10px }
 [hidden] { display: none !important }
 </style>
@@ -107,8 +108,8 @@ const saveLang = l => { store.set("lang", l); try { localStorage.setItem("sd.lan
 let LANG = siteLang() || store.get("lang", (navigator.language || "").startsWith("zh") ? "zh" : "en");
 const t = x => x == null ? "" : typeof x === "string" ? x : (x[LANG] || x.zh || x.en || "");
 const UI = {
-  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", again: "从头再来", prompt: "怎么做？", tilt: "立体", music: "音乐", talk: n => `（对${n}说点什么……）`, talkHint: "想对她说什么？", send: "说", cancel: "算了", noReply: "（她好像没听清，看了你一眼。）", savedAt: n => `存档 ${n}` },
-  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", again: "Play again", prompt: "What do you do?", tilt: "3D", music: "Music", talk: n => `(Say something to ${n}…)`, talkHint: "What do you want to say?", send: "Say", cancel: "Never mind", noReply: "(She doesn't seem to catch it, and just glances at you.)", savedAt: n => `Slot ${n}` },
+  zh: { start: "开始游戏", cont: "继续", load: "读取存档", gallery: "回想", log: "回看", auto: "自动", skip: "跳过", save: "存档", loadS: "读档", lang: "EN", title: "标题", close: "关闭", empty: "空", saved: "已存档", sub: "THE SEVENTH SPRING OF XICHUAN", cgs: "CG", ends: "结局", locked: "未解锁", back: "回到标题", song: "片尾曲《第七个春天》", again: "从头再来", prompt: "怎么做？", tilt: "立体", music: "音乐", talk: n => `（对${n}说点什么……）`, talkHint: "想对她说什么？", send: "说", cancel: "算了", noReply: "（她好像没听清，看了你一眼。）", savedAt: n => `存档 ${n}` },
+  en: { start: "Start", cont: "Continue", load: "Load", gallery: "Gallery", log: "Log", auto: "Auto", skip: "Skip", save: "Save", loadS: "Load", lang: "中", title: "Title", close: "Close", empty: "Empty", saved: "Saved", sub: "汐川的第七个春天", cgs: "CG", ends: "Endings", locked: "Locked", back: "Back to title", song: "Ending song \"The Seventh Spring\"", again: "Play again", prompt: "What do you do?", tilt: "3D", music: "Music", talk: n => `(Say something to ${n}…)`, talkHint: "What do you want to say?", send: "Say", cancel: "Never mind", noReply: "(She doesn't seem to catch it, and just glances at you.)", savedAt: n => `Slot ${n}` },
 };
 const ui = k => UI[LANG][k];
 // 手机屏幕用 1280 宽的小图（art/m/ 下），体积约一半
@@ -279,14 +280,16 @@ function showEnd() {
     const h = document.createElement(i ? "h3" : "h2"); h.textContent = t(f.title || g.title); e.append(h);
     const p = document.createElement("p"); p.textContent = t(f.text); e.append(p); unlock("ends", x.group + "." + x.frag);
   });
-  const b = document.createElement("button"); b.textContent = ui("back"); b.onclick = () => { e.hidden = true; title(); }; e.append(b);
+  const cr = document.createElement("p"); cr.className = "credits"; cr.textContent = ui("song"); e.append(cr);
+  const b = document.createElement("button"); b.textContent = ui("back"); b.onclick = () => { songStop(); e.hidden = true; title(); }; e.append(b);
+  songPlay();
   store.set("auto", null);
 }
 
 /* ---------- saves ---------- */
 const snapshot = () => JSON.parse(JSON.stringify({ G, V: { ...V, log: V.log.slice(-60) }, at: Date.now(), label: nameOf(null) + t(CAMP.chapters[Math.max(0, G.ch)]?.title) }));
 function autosave() { if (G && G.phase !== "end") store.set("auto", snapshot()); }
-function restore(s) { askTilt(); audioStart(); G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); }
+function restore(s) { askTilt(); songStop(); audioStart(); G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); }
 function slots(mode) {
   const p = $("#panel"); p.replaceChildren(); p.hidden = false;
   const h = document.createElement("h2"); h.textContent = mode === "save" ? ui("save") : ui("loadS");
@@ -328,7 +331,7 @@ function renderBar() {
   const btn = (k, f, pressed) => { const b = document.createElement("button"); b.textContent = ui(k); if (pressed != null) b.setAttribute("aria-pressed", String(pressed)); b.onclick = e => { e.stopPropagation(); f(); }; bar.append(b); };
   btn("log", showLog); btn("auto", () => { auto = !auto; skip = false; renderBar(); if (auto && !typing && $("#menu").hidden) step(); }, auto);
   btn("skip", () => { skip = !skip; auto = false; renderBar(); if (skip && $("#menu").hidden) step(); }, skip);
-  btn("music", () => { AUDIO.on = !AUDIO.on; store.set("music", AUDIO.on); AUDIO.on ? audioStart() : audioStop(); renderBar(); }, AUDIO.on);
+  btn("music", () => { AUDIO.on = !AUDIO.on; store.set("music", AUDIO.on); AUDIO.on ? audioStart() : (audioStop(), SONG.el && SONG.el.pause()); renderBar(); }, AUDIO.on);
   btn("tilt", () => { TILT.on = !TILT.on; store.set("tilt", TILT.on); askTilt(); renderBar(); }, TILT.on);
   btn("save", () => slots("save")); btn("loadS", () => slots("load"));
   btn("lang", () => { LANG = LANG === "zh" ? "en" : "zh"; saveLang(LANG); document.documentElement.lang = LANG; renderBar(); draw(); const op = V.queue[V.i - 1]; if (op && op.op === "say") { clearInterval(typing); typing = null; $("#name").textContent = op.who ? nameOf(op.who) : ""; $("#text").textContent = t(op.t); $("#next").classList.add("on"); } });
@@ -379,6 +382,20 @@ const MOODS = {   // 每小节一个和弦（MIDI 音高）、每分钟拍数、
 const BGMOOD = { cinema_night: "night", seawall_night: "night", street: "night", rain_street: "night", projection: "night", train: "dusk", cinema_dusk: "dusk", rooftop: "dusk", library: "dusk", oldhouse: "dusk" };
 const SEA = new Set(["station", "cinema_dusk", "cinema_night", "seawall_night", "beach", "train", "street"]);
 function audioMood(id) { if (!id) return; AUDIO.mood = BGMOOD[id] || "day"; AUDIO.sea = SEA.has(id); AUDIO.rain = id === "rain_street"; audioAmb(); }
+/* 片尾曲（决策记录 v0.29）：结局画面放一首歌，合成音乐让开；回到标题时停掉，合成音乐回来 */
+const SONG = { el: null };
+function songPlay() {
+  if (!AUDIO.on) return;
+  try {
+    if (!SONG.el) { SONG.el = new Audio(ART_BASE.replace(/art\/$/, "audio/") + "seventh_spring.mp3"); SONG.el.volume = .85; }
+    SONG.el.currentTime = 0; SONG.el.play().catch(() => {});
+    if (AUDIO.ctx) AUDIO.out.gain.setTargetAtTime(0, AUDIO.ctx.currentTime, .6);
+  } catch {}
+}
+function songStop() {
+  if (SONG.el) SONG.el.pause();
+  if (AUDIO.on && AUDIO.ctx && AUDIO.timer) AUDIO.out.gain.setTargetAtTime(.16, AUDIO.ctx.currentTime, 1.2);
+}
 function audioStart() {
   if (!AUDIO.on) return;
   const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
