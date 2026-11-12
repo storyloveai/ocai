@@ -1,0 +1,66 @@
+[
+ {
+  "id": "no-001",
+  "title": "The Tale of Odin",
+  "title_zh": "奥丁传",
+  "summary": "He gave an eye for wisdom and knows exactly how the world ends. Sit by his fire and learn what a god does with a future he cannot change.",
+  "summary_zh": "他用一只眼睛换来智慧，并清楚世界如何终结。坐到他的火堆边，看看一位神如何对待一个无法更改的未来。",
+  "character_brief": "Odin, ageless, male, grey beard, one eye with a leather patch, wide-brimmed hat, dark blue cloak, two ravens, spear in hand, grave and wry"
+ },
+ {
+  "id": "no-002",
+  "title": "The Tale of Loki",
+  "title_zh": "洛基传",
+  "summary": "Trickster, thief, blood-brother of gods, and the author of half their troubles. Stay close to the funniest liar in Asgard and notice which of his jokes are confessions.",
+  "summary_zh": "骗子，窃贼，诸神的结义兄弟，也是他们一半麻烦的作者。守在阿斯加德最有趣的说谎者身边，留意他哪些玩笑其实是自白。",
+  "character_brief": "Loki, ageless, male, red-gold hair, green eyes, slim, black and green coat, crooked smile, nimble hands, charming and unreliable"
+ },
+ {
+  "id": "no-003",
+  "title": "The Tale of Thor",
+  "title_zh": "托尔传",
+  "summary": "The strongest of the gods is also the one who has never been allowed to be afraid. Ride in his goat-drawn cart and find out what a thunderer does with a quiet evening.",
+  "summary_zh": "诸神里最强的那位，也是从不被允许害怕的那位。坐上他的山羊车，看看雷神在一个安静的夜晚会做什么。",
+  "character_brief": "Thor, ageless, male, broad, red beard, braided hair, leather vest, iron-banded hammer at his belt, booming laugh, gentle hands"
+ },
+ {
+  "id": "no-004",
+  "title": "The Tale of Freya",
+  "title_zh": "弗蕾亚传",
+  "summary": "Goddess of love and of war, she keeps half the dead and wears a necklace that cost her dearly. Meet her where the cat-drawn chariot rests and learn what she values above both.",
+  "summary_zh": "爱与战争的女神，收下一半阵亡者，颈上的项链代价不菲。在猫拉的战车歇息处见她，看看她把什么看得比两者更重。",
+  "character_brief": "Freya, appears late 20s, female, golden hair, amber necklace, feathered cloak over a fitted russet dress, two grey cats at her heels, bold and playful"
+ },
+ {
+  "id": "no-005",
+  "title": "The Tale of Hel",
+  "title_zh": "赫尔传",
+  "summary": "Half alive, half dead, and the only ruler who has never lied about her realm. Visit the cold hall of the dead and see what kindness looks like where nothing grows.",
+  "summary_zh": "半生半死，是唯一从不隐瞒自己国度的统治者。到亡者的寒冷大厅拜访她，看看寸草不生之地的善意是什么模样。",
+  "character_brief": "Hel, appears 20s, female, half her face pale and living, half dark and still, black hair streaked white, long grey gown, solemn and exact"
+ },
+ {
+  "id": "no-006",
+  "title": "The Tale of Skadi",
+  "title_zh": "丝卡蒂传",
+  "summary": "A mountain huntress who walked into Asgard to demand justice for her father, and then refused to be paid in gold. Ski beside her and learn what she thinks a god can be made to owe.",
+  "summary_zh": "山地女猎手为父亲讨公道，独自走进阿斯加德，并拒绝以黄金作赔。陪她滑雪，看她认为一位神应当亏欠什么。",
+  "character_brief": "Skadi, appears mid-20s, female, white-blonde braid, snow-white fur-lined coat, skis over her shoulder, bow, sharp blue eyes, direct and cold-humoured"
+ },
+ {
+  "id": "no-007",
+  "title": "The Tale of Tyr",
+  "title_zh": "提尔传",
+  "summary": "He put his hand in a wolf's mouth to keep a promise and has been the god of justice ever since. Stand with him at the court of the gods and learn what honesty costs.",
+  "summary_zh": "为了守住一个承诺，他把手放进狼口，从此成了正义之神。陪他站在诸神的法庭上，看看诚实要付出什么。",
+  "character_brief": "Tyr, ageless, male, one hand missing, short dark beard, plain iron mail, steady brown eyes, quiet and unshowy"
+ },
+ {
+  "id": "no-008",
+  "title": "The Tale of Brynhild",
+  "title_zh": "布伦希尔德传",
+  "summary": "A valkyrie who chose the wrong warrior to save and was punished with sleep inside a ring of fire. Wake her, or walk with her through the memory of why she disobeyed.",
+  "summary_zh": "她救下了不该救的战士，被罚沉睡在火圈之中。唤醒她，或者陪她走回自己为何违命的记忆。",
+  "character_brief": "Brynhild, appears late 20s, female, long fair hair, winged silver helm, mail shirt over a blue tunic, spear, battle-weary but upright"
+ }
+]

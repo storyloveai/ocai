@@ -1,0 +1,66 @@
+[
+ {
+  "id": "gr-001",
+  "title": "The Tale of Athena",
+  "title_zh": "雅典娜传",
+  "summary": "The goddess of wisdom wins every argument and trusts no victory. Stand at her shoulder on the Acropolis and learn what it costs to be right when gods and mortals both resent it.",
+  "summary_zh": "智慧女神辩无不胜，却不信任何一场胜利。站到她身边，在卫城上看看：当神与凡人都嫌她正确时，正确要付出什么。",
+  "character_brief": "Athena, ageless, female, grey eyes, crested bronze helm tucked under one arm, owl perched on her shoulder, composed and exacting"
+ },
+ {
+  "id": "gr-002",
+  "title": "The Tale of Hades",
+  "title_zh": "哈迪斯传",
+  "summary": "Lord of the dead, he is the only god who keeps every promise and the only one nobody thanks. Walk his silent halls and find out what a ruler owes the people no one else will govern.",
+  "summary_zh": "冥王是唯一遵守每一个承诺的神，也是唯一没人道谢的神。走进他寂静的大厅，看看一个统治者该为没人愿意管的亡者担起什么。",
+  "character_brief": "Hades, ageless, male, pale, black hair, dark iron crown, long charcoal robes, tired eyes, dry and courteous"
+ },
+ {
+  "id": "gr-003",
+  "title": "The Tale of Persephone",
+  "title_zh": "珀耳塞福涅传",
+  "summary": "Half the year she is spring, half the year she is queen of the dead, and she is tired of being told which she really is. Follow her up and down the stair between worlds and help her decide.",
+  "summary_zh": "一年一半是春天，一半是亡者之后，她厌倦了别人替她决定哪个才是“真的她”。跟着她在两个世界的台阶上来回，帮她做个决定。",
+  "character_brief": "Persephone, appears mid-20s, female, wheat-gold braid, pomegranate-red cloak over a dark gown, bare feet, warm and watchful"
+ },
+ {
+  "id": "gr-004",
+  "title": "The Tale of Odysseus",
+  "title_zh": "奥德修斯传",
+  "summary": "Ten years of war, ten more of the road home, and a lie ready for every harbor. Sail with the cleverest man alive and see what is left of him when the lies run out.",
+  "summary_zh": "战争十年，归途又十年，每座港口都备着一个谎。与最聪明的人同船，看谎话用完之后，他还剩下什么。",
+  "character_brief": "Odysseus, 40s, male, salt-grey curls, weathered tanned skin, scar on the thigh, patched travelling cloak, easy smile that never reaches his eyes"
+ },
+ {
+  "id": "gr-005",
+  "title": "The Tale of Medusa",
+  "title_zh": "美杜莎传",
+  "summary": "They called her a monster so no one had to ask what was done to her. Share her island, keep your eyes on her words, and decide who the real monster was.",
+  "summary_zh": "人们叫她怪物，这样就没人需要追问她遭遇了什么。住进她的小岛，盯着她的话而不是她的眼睛，由你判断谁才是怪物。",
+  "character_brief": "Medusa, appears late 20s, female, dark green-bronze skin, living serpents for hair, gold eyes behind a veil of grey cloth, wry and wounded"
+ },
+ {
+  "id": "gr-006",
+  "title": "The Tale of Hermes",
+  "title_zh": "赫尔墨斯传",
+  "summary": "Messenger of the gods, patron of thieves, and the one deity who actually reads the mail. Run beside him through Olympus and learn which secrets are worth delivering.",
+  "summary_zh": "诸神的信使，盗贼的守护神，也是唯一真会拆信看的神。陪他在奥林匹斯上奔跑，看看哪些秘密值得送到。",
+  "character_brief": "Hermes, ageless, male, winged sandals, wide-brimmed traveller's hat, satchel full of sealed scrolls, mischievous grin, quick hands"
+ },
+ {
+  "id": "gr-007",
+  "title": "The Tale of Artemis",
+  "title_zh": "阿尔忒弥斯传",
+  "summary": "Goddess of the hunt, sworn to the wild and wary of every promise made indoors. Track with her through moonlit forest and learn what she will and will not protect.",
+  "summary_zh": "狩猎女神，向荒野立过誓，对所有在屋里许下的承诺保持戒心。随她踏进月下森林，看看她愿意守护什么、不愿守护什么。",
+  "character_brief": "Artemis, appears early 20s, female, copper hair in a practical braid, short pale tunic, silver bow, quiver, sunburnt nose, blunt and loyal"
+ },
+ {
+  "id": "gr-008",
+  "title": "The Tale of Prometheus",
+  "title_zh": "普罗米修斯传",
+  "summary": "He stole fire for people who did not ask and is chained to a rock for it. Keep him company on the cliff, and decide whether a gift is still a gift when it costs someone else everything.",
+  "summary_zh": "他为没求过他的人偷来了火，为此被锁在岩石上。到悬崖上陪他，想一想：当赠礼让别人付出一切，它还算赠礼吗。",
+  "character_brief": "Prometheus, 30s appearance, male, bare-chested, iron chains at wrists, ash-streaked dark hair, rueful humour, scarred but upright"
+ }
+]

@@ -1,0 +1,66 @@
+[
+ {
+  "id": "yk-001",
+  "title": "The Tale of Tamamo-no-Mae",
+  "title_zh": "玉藻前传",
+  "summary": "A nine-tailed fox who became the emperor's favorite and was hunted for it. Share tea in her lamplit chamber and decide whether a fox who loves is still a fox.",
+  "summary_zh": "九尾狐成了天皇最宠爱的人，也因此遭到追杀。在她灯火通明的内室喝一盏茶，想想一只会爱人的狐狸，还算不算狐狸。",
+  "character_brief": "Tamamo-no-Mae, appears 30s, female, long black hair with a fox-ear glimpse, layered crimson and white court robes, nine pale tails half-hidden behind her, composed and amused"
+ },
+ {
+  "id": "yk-002",
+  "title": "The Tale of Yuki-onna",
+  "title_zh": "雪女传",
+  "summary": "She spares travellers who promise to keep her secret and marries the one who keeps it. Wait out the blizzard in her cottage, and learn what a promise weighs in snow.",
+  "summary_zh": "她放过答应替她保密的旅人，嫁给了守住秘密的那个。在她的小屋里挨过暴雪，看看一个承诺在雪中有多重。",
+  "character_brief": "Yuki-onna, appears late 20s, female, pale skin, long white-blue hair, white kimono edged in frost, breath visible, gentle and distant"
+ },
+ {
+  "id": "yk-003",
+  "title": "The Tale of Karasu-Tengu",
+  "title_zh": "乌天狗传",
+  "summary": "A crow-masked mountain guardian who teaches swordsmanship to the people who never ask. Climb his cedar-shrouded slope and learn the one move he refuses to teach.",
+  "summary_zh": "戴乌鸦面具的山中守护者，专教那些从不开口求教的人剑术。爬上他杉树笼罩的山坡，看看他唯一不肯教的那一招是什么。",
+  "character_brief": "Karasu-Tengu, ageless, male, black feathered wings, crow-beaked mask pushed up on his forehead, white yamabushi robe, staff, lean and watchful"
+ },
+ {
+  "id": "yk-004",
+  "title": "The Tale of Kappa",
+  "title_zh": "河童传",
+  "summary": "A river-dwelling trickster who loves cucumbers, sumo, and strict manners; spill the water from his head and he owes you a favor. Cross his river and learn what a rival is worth.",
+  "summary_zh": "住在河里的捣蛋鬼，爱黄瓜、相扑，也爱讲规矩；头顶的水洒了，他就欠你一个人情。渡过他的河，看看一个对手有多大的价值。",
+  "character_brief": "Kappa, ageless, male-presenting, green skin, turtle shell on his back, a plate of water on his head, webbed hands, beak-like mouth, courteous and sharp-toothed"
+ },
+ {
+  "id": "yk-005",
+  "title": "The Tale of Jorōgumo",
+  "title_zh": "女郎蜘蛛传",
+  "summary": "A spider who takes the form of a woman and weaves music into webs; her victims never see the thread. Sit at her loom and decide whether she is the hunter or the hunted.",
+  "summary_zh": "化作女子的蜘蛛，把音乐织进蛛网；受害者从不见到那根丝。坐到她的织机前，看看谁是猎手，谁是猎物。",
+  "character_brief": "Jorōgumo, appears 30s, female, long black hair, indigo kimono embroidered with silver web patterns, eight faint spider-leg shadows behind her, courteous and unhurried"
+ },
+ {
+  "id": "yk-006",
+  "title": "The Tale of Bake-danuki",
+  "title_zh": "化狸传",
+  "summary": "A raccoon-dog who turns into a kettle, a monk, a banquet, and an excuse. Stay in his temple and see which shape he never shows.",
+  "summary_zh": "会变成茶釜、僧人、宴席和借口的狸猫。住进他的寺院，看看哪一种形态是他从不展示的。",
+  "character_brief": "Bake-danuki, ageless, male-presenting, round belly, tanuki ears and tail, straw hat, sake gourd, striped haori, jolly and evasive"
+ },
+ {
+  "id": "yk-007",
+  "title": "The Tale of Shuten-dōji",
+  "title_zh": "酒吞童子传",
+  "summary": "King of the oni of Mount Ōe, host of the finest banquets and the cruelest rumors. Drink with him at his mountain feast and decide what an outcast owes the court that made him.",
+  "summary_zh": "大江山鬼王，宴席最盛，传闻最毒。在他的山中酒宴上与他对饮，想一想：一个被放逐的人，欠把他逼成这样的朝廷什么。",
+  "character_brief": "Shuten-dōji, appears 40s, male, towering, crimson skin, two short horns, red-black hair tied loosely, dark lacquered armor, a huge sake cup, genial and dangerous"
+ },
+ {
+  "id": "yk-008",
+  "title": "The Tale of Nekomata",
+  "title_zh": "猫又传",
+  "summary": "A cat who lived so long her tail split in two and she learned to speak. Share her warm veranda and discover what a very old animal thinks of very young people.",
+  "summary_zh": "一只活得太久的猫，尾巴分成了两条，学会了说话。陪她坐在暖和的廊下，听听一只很老的动物怎么看待很年轻的人。",
+  "character_brief": "Nekomata, appears late 20s, female, cat ears, amber eyes, ginger-tabby hair, two tails, soft indigo kimono, languid, blunt and secretly affectionate"
+ }
+]
