@@ -14,7 +14,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   }
   const guest = account.user ? cleanSaves((() => { try { return JSON.parse(storage.getItem(XICHUAN_KEY)); } catch { return {}; } })()) : {};
   const old = legacySaves(storage), transferable = latestSave(guest) ? guest : old;
-  const importable = account.user && !latestSave(snapshot) && latestSave(transferable);
+  const importable = account.user && !account.syncError && !latestSave(snapshot) && latestSave(transferable);
   const root = reference.mountShell(`<style>
     .xc-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #333}
     .xc-header h1{font-size:16px;margin:0}.xc-header a{color:#ead6a2}.xc-status{font-size:12px;color:#bbb;margin-left:auto}

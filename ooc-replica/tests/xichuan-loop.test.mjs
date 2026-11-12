@@ -89,13 +89,13 @@ test('account hydration blocks a previous frame scope before cloud data arrives'
   assert.equal(a.read(XICHUAN_KEY, null), null);
 });
 
-function fixture({signedIn = false, storage = memory()} = {}) {
+function fixture({signedIn = false, syncError = '', storage = memory()} = {}) {
   const {window, document} = parseHTML('<html lang="zh"><body><main></main></body></html>');
   Object.assign(globalThis, {window, document, location: {origin: 'https://test.example'}});
   const values = new Map(), messages = [];
   const h = {read: (k, f) => values.get(k) ?? f, save: (k, v) => values.set(k, structuredClone(v))};
   const reference = {mountShell(html) {document.querySelector('main').innerHTML = html; return document.querySelector('main');}};
-  mountXichuan({reference, account: {user: signedIn ? {uid: 'alice'} : null}, helpers: h, storage});
+  mountXichuan({reference, account: {user: signedIn ? {uid: 'alice'} : null, syncError}, helpers: h, storage});
   const frame = document.querySelector('iframe'), peer = {postMessage: (...args) => messages.push(args)};
   Object.defineProperty(frame, 'contentWindow', {value: peer});
   const send = (data, extra = {}) => {const event = new window.Event('message'); Object.assign(event, {data, origin: location.origin, source: peer, ...extra}); window.dispatchEvent(event);};
@@ -130,5 +130,16 @@ test('signed-in account never automatically imports device progress; explicit im
     f.document.querySelector('[data-import]').click();
     assert.deepEqual(f.values.get(XICHUAN_KEY)[LATEST], s);
     assert.deepEqual(JSON.parse(storage.getItem(XICHUAN_KEY))[LATEST], s);
+  } finally {stopXichuan();}
+});
+
+
+test('cloud restore failure does not offer to overwrite an unknown cloud save with device progress', () => {
+  const storage = memory(), s = save();
+  storage.setItem(XICHUAN_KEY, JSON.stringify({[LATEST]: s, auto: s}));
+  const f = fixture({signedIn: true, syncError: 'Cloud unavailable', storage});
+  try {
+    assert.equal(f.document.querySelector('[data-import]'), null);
+    assert.equal(f.values.has(XICHUAN_KEY), false);
   } finally {stopXichuan();}
 });
