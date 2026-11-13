@@ -57,6 +57,8 @@ test("game AI requires explicit opt-in and forwards only authenticated quoted re
     check.onchange();
     const response = await peer.fetch("/api/sanguo", init);
     await response.text();
+    assert.match(document.body.textContent,/已完成，本阶段结算 1/);
+    assert.doesNotMatch(document.body.textContent,/正在生成/);
     assert.equal(calls.length, 1);
     assert.equal(calls[0].init.headers.Authorization, "Bearer test-token");
     assert.equal(JSON.parse(calls[0].init.body).billing.amount, 1);

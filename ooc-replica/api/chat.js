@@ -1,5 +1,5 @@
 import {beginChatBilling,billingError} from '../server/chat-billing.js';
-import {usageRecord} from '../server/usage-meter.js';
+import {logUsage} from '../server/usage-meter.js';
 import {randomUUID} from 'node:crypto';
 import {once} from 'node:events';
 import {streamText,Output} from 'ai';
@@ -19,12 +19,12 @@ export function classifyError(error,{timedOut=false,finishReason,reasoningTokens
  if(error?.code==='AI_EMPTY_RESPONSE')return {status:502,code:reasoningTokens?'AI_REASONING_ONLY':'AI_EMPTY_RESPONSE',error:'模型没有返回可显示的正文，请重试。',retryable:true};
  return {status:502,code:'AI_UPSTREAM',error:'模型连接暂时失败，请重试。',retryable:true};
 }
-export function createChatHandler({bill=beginChatBilling,stream=streamText,model=createModel,provider=providerConfig}={}){return async function handler(req,res){
+export function createChatHandler({bill=beginChatBilling,stream=streamText,model=createModel,provider=providerConfig,meter=logUsage}={}){return async function handler(req,res){
  if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
  const origin=req.headers.origin,host=req.headers.host;
  if(!origin||!host||origin!==`https://${host}`)return res.status(403).json({error:'Same-origin browser requests only'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({error:'JSON required'});
- let packet,usageTask,body;try{body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>110000)throw new Error('Request too large');usageTask=body.task;packet=buildPrompt(body);}catch(error){return res.status(error?.code==='UNKNOWN_TITLE'?404:400).json({code:error?.code==='UNKNOWN_TITLE'?'UNKNOWN_TITLE':'INVALID_CONVERSATION',error:error?.code==='UNKNOWN_TITLE'?'Unknown title':'Invalid title or conversation'});}
+ let packet,usageTask,body;try{body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>110000)throw new Error('Request too large');packet=buildPrompt(body);usageTask=body.task==='author'?'author':body.task==='suggestions'?'suggestions':'chat';}catch(error){return res.status(error?.code==='UNKNOWN_TITLE'?404:400).json({code:error?.code==='UNKNOWN_TITLE'?'UNKNOWN_TITLE':'INVALID_CONVERSATION',error:error?.code==='UNKNOWN_TITLE'?'Unknown title':'Invalid title or conversation'});}
  let config=provider();if(!config)return res.status(503).json({error:'AI configuration is incomplete'});
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [key,v]of windows)if(v.until<now)windows.delete(key);
  const window=windows.get(ip)||{until:now+60000,count:0};if(window.count>=8||active>=4||windows.size>=5000)return res.status(429).json({error:'Please wait before trying again'});window.count++;windows.set(ip,window);
@@ -48,7 +48,7 @@ export function createChatHandler({bill=beginChatBilling,stream=streamText,model
   const candidates=(packet.mode==='author-catalog'?[config]:[config,fallbackConfig(config)]).filter(Boolean);
   for(let attempt=0;attempt<candidates.length;attempt++){
   config=candidates[attempt];
-  let usage, attemptOutcome='failed';
+  let usage, attemptOutcome='failed';const attemptStarted=Date.now();
   const attemptAbort=new AbortController(),attemptTimer=attempt<candidates.length-1?setTimeout(()=>attemptAbort.abort(),20000):null;
   try{
   const result=stream({model:model(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...(packet.mode==='author-catalog'?{output:Output.json()}:{}),...generationOptions(config),maxRetries:0,abortSignal:AbortSignal.any([abort.signal,attemptAbort.signal]),onError:()=>{}});
@@ -68,7 +68,7 @@ export function createChatHandler({bill=beginChatBilling,stream=streamText,model
    if(hasText||abort.signal.aborted||attempt===candidates.length-1)throw error;
    console.warn(JSON.stringify({event:'ai_provider_fallback',from:config.name,to:candidates[attempt+1].name}));
    phase='connecting';finishReason=undefined;reasoningTokens=0;
-  }finally{clearTimeout(attemptTimer);console.info(JSON.stringify(usageRecord({requestId,provider:config.name,model:config.model,attempt:attempt+1,task:usageTask,usage,outcome:timedOut?'failed':abort.signal.aborted?'cancelled':attemptOutcome})));}
+  }finally{clearTimeout(attemptTimer);meter({requestId,provider:config.name,model:config.model,attempt:attempt+1,task:usageTask,usage,durationMs:Date.now()-attemptStarted,outcome:timedOut?'failed':abort.signal.aborted?'cancelled':attemptOutcome});}
   }
   if(billing){const receipt=await billing.finish(true,fullReply);if(receipt.status!=='settled')throw Object.assign(Error('Reservation expired'),{code:'BILLING_EXPIRED'});settled=true;await emit({type:'billing',...receipt,requestId});}
   await emit({type:'done',requestId,finishReason,...(packet.mode==='author-catalog'?{model:config.model,provider:config.name}: {})});res.end();

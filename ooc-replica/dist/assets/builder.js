@@ -72,7 +72,7 @@ export function showBuilder(path,h){
    if(!idea.value.trim()){feedback.textContent='Enter one sentence to begin.';idea.focus();return;}
    const controller=new AbortController();aiController=controller;generate.disabled=true;apply.disabled=true;stop.hidden=false;feedback.textContent='Checking generation price…';
    try{const context={task:'author',type,field,idea:idea.value,draft:Object.fromEntries(Object.keys(fieldLimits).map(key=>[key,draft[key]]))},payment=await creditClient.prepare({...context,messages:[]});if(controller.signal.aborted||!dialog.open)return;result.value='';for await(const chunk of httpStream([],controller.signal,context,event=>{feedback.textContent=event.phase==='thinking'?'AI is writing…':'Waiting for AI…';},payment)){if(!dialog.open||!root.isConnected){controller.abort();break;}result.value=(result.value+chunk).slice(0,fieldLimits[field]);feedback.textContent='Generating…';}feedback.textContent=controller.signal.aborted?'Stopped. Review the partial text or try again.':'Ready. Review the text before using it.';}
-   catch(error){feedback.textContent=controller.signal.aborted?'Stopped. You can try again.':error.message||'Generation failed. Please try again.';}
+   catch(error){feedback.textContent=controller.signal.aborted?'Stopped. You can try again.':error instanceof TypeError?'Connection interrupted. Your original field is unchanged. Retry to check the same request, or view Credits for its status.':error.message||'Generation failed. Please try again.';}
    finally{if(aiController===controller)aiController=null;generate.disabled=false;stop.hidden=true;apply.disabled=!result.value.trim();}
   };
   apply.onclick=()=>{if(aiController||!result.value.trim())return;if(field==='suggestions')draft.suggestions=result.value.split('\n').map(v=>v.replace(/^[-*\d.)\s]+/,'').trim()).filter(Boolean).slice(0,3).map(v=>v.slice(0,200));else draft[field]=result.value.trim().slice(0,fieldLimits[field]);changed();renderStep();dialog.close();};
@@ -93,7 +93,7 @@ export function showBuilder(path,h){
     const blob=await (await fetch(`data:${data.mime||'image/png'};base64,${data.b64}`)).blob(),image=await createImageBitmap(blob),canvas=document.createElement('canvas'),scale=Math.min(1,768/Math.max(image.width,image.height));
     canvas.width=Math.max(1,Math.round(image.width*scale));canvas.height=Math.max(1,Math.round(image.height*scale));canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);image.close();
     picked=canvas.toDataURL('image/webp',.85);box.innerHTML=`<img src="${picked}" alt="Generated cover preview">`;box.hidden=false;status.textContent='Ready. Use it, or adjust the direction and generate again.';
-   }catch(error){status.textContent=controller.signal.aborted?'Stopped.':error.message||'Cover generation failed. Please try again.';}
+   }catch(error){status.textContent=controller.signal.aborted?'Stopped.':error instanceof TypeError?'Connection interrupted. Your existing cover is unchanged. Retry to check the same request, or view Credits for its status.':error.message||'Cover generation failed. Please try again.';}
    finally{controller=null;go.disabled=false;stop.hidden=true;apply.disabled=!picked;}
   };
   apply.onclick=()=>{if(!picked)return;draft.image=picked;changed();renderStep();dialog.close();};

@@ -1,4 +1,6 @@
 import {beginChatBilling,billingError} from '../server/chat-billing.js';
+import {randomUUID} from 'node:crypto';
+import {logUsage,resultUsage} from '../server/usage-meter.js';
 import {generateText,streamText,Output,jsonSchema} from 'ai';
 import {once} from 'node:events';
 import {providerConfig,fallbackConfig,createModel,generationOptions} from '../server/provider.js';
@@ -21,7 +23,7 @@ export function buildStage(body){
  if(body.phase==='express'&&body.lang==='en')system=system.replace('1 to 4 blocks. 120 words or fewer in total.','4 to 7 blocks. 220 to 350 words. Add concrete scene atmosphere and observable gestures without inventing facts or player decisions.');
  return {system,prompt:JSON.stringify(context)};
 }
-export function createHandler({bill=beginChatBilling,config=providerConfig,model=createModel,generate=generateText,stream=streamText,stage=buildStage,outputSchema=null,validateOutput=null,hasVisible=out=>out?.blocks?.some(b=>b?.text)}={}){return async(req,res)=>{
+export function createHandler({bill=beginChatBilling,config=providerConfig,fallback=fallbackConfig,model=createModel,generate=generateText,stream=streamText,stage=buildStage,outputSchema=null,validateOutput=null,hasVisible=out=>out?.blocks?.some(b=>b?.text),meter=logUsage}={}){return async(req,res)=>{
  res.setHeader('Cache-Control','no-store');
  if(req.method!=='POST')return res.status(405).json({code:'method_not_allowed'});
  if(req.headers.origin!==`https://${req.headers.host}`)return res.status(403).json({code:'same_origin_required'});
@@ -31,13 +33,15 @@ export function createHandler({bill=beginChatBilling,config=providerConfig,model
  const now=Date.now(),ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0];for(const [key,w]of windows)if(w.until<now)windows.delete(key);
  const window=windows.get(ip)||{count:0,until:now+60000};if(window.count>=30||active>=4||windows.size>5000)return res.status(429).json({code:'rate_limited'});window.count++;windows.set(ip,window);
  let billing;try{billing=await bill(req,body,'game');}catch(e){const detail=billingError(e);return res.status(detail.status).json(detail);}let settled=false;active++;
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),body.phase==='express'?22000:14000);const close=()=>{if(!res.writableFinished)controller.abort();};res.on?.('close',close);
- const candidates=[cfg,fallbackConfig(cfg)].filter(Boolean);let visible=false;
+ let timedOut=false;const requestId=billing?.reservation?.id||billing?.replay?.id||randomUUID();
+ const controller=new AbortController(),timer=setTimeout(()=>{timedOut=true;controller.abort();},body.phase==='express'?22000:14000);const close=()=>{if(!res.writableFinished)controller.abort();};res.on?.('close',close);
+ const candidates=[cfg,fallback(cfg)].filter(Boolean);let visible=false;
  try{
   if(billing?.replay){const output=JSON.parse(billing.replay.reply);if(body.phase==='express'&&String(req.headers.accept||'').includes('application/x-ndjson')){res.setHeader('Content-Type','application/x-ndjson; charset=utf-8');res.end(JSON.stringify({type:'done',output,billing:{id:billing.replay.id,status:'settled'},replayed:true})+'\n');return;}return res.status(200).json({output,billing:{id:billing.replay.id,status:'settled'},replayed:true});}
   const complete=async(output,result)=>{if(!billing)return undefined;const reason=await result.finishReason;if(reason!=='stop')throw Error('Incomplete output');if(body.phase==='express'&&!hasVisible(output)){const released=await billing.finish(false);return {id:billing.reservation.id,status:released.status,wallet:released.wallet};}const receipt=await billing.finish(true,JSON.stringify(output));if(receipt.status!=='settled')throw Error('Reservation expired');settled=true;return {id:billing.reservation.id,status:receipt.status,wallet:receipt.wallet};};
   for(let attempt=0;attempt<candidates.length;attempt++){
   const current=candidates[attempt];
+  let result,usage,attemptOutcome='failed';const attemptStarted=Date.now();
   const attemptAbort=new AbortController(),attemptTimer=attempt<candidates.length-1?setTimeout(()=>attemptAbort.abort(),body.phase==='express'?10000:6000):null;
   try{
   const options=generationOptions(current);
@@ -45,20 +49,20 @@ export function createHandler({bill=beginChatBilling,config=providerConfig,model
   if(body.phase==='express'&&String(req.headers.accept||'').includes('application/x-ndjson')){
    res.setHeader('Content-Type','application/x-ndjson; charset=utf-8');res.setHeader('X-Content-Type-Options','nosniff');
    const schema=outputSchema||jsonSchema({type:'object',properties:{blocks:{type:'array',items:{type:'object',properties:{type:{type:'string',enum:['narration','dialogue']},speaker:{type:['string','null']},text:{type:'string'}},required:['type','speaker','text'],additionalProperties:false}}},required:['blocks'],additionalProperties:false});
-   const result=stream({...params,output:Output.object({schema}),onError:()=>{}});
+   result=stream({...params,output:Output.object({schema}),onError:()=>{},onFinish:event=>{usage=event.totalUsage||event.usage;}});
    const emit=async value=>{if(res.destroyed)return; if(!res.write(JSON.stringify(value)+'\n'))await once(res,'drain',{signal:controller.signal});res.flush?.();};
    await emit({type:'status'});
    for await(const partial of result.partialOutputStream){if(controller.signal.aborted)break;if(hasVisible(partial)){visible=true;clearTimeout(attemptTimer);}await emit({type:'partial',output:partial});}
    if(controller.signal.aborted)throw Error('Stopped');
-   const output=await result.output;if(validateOutput)validateOutput(output,body);const receipt=await complete(output,result);await emit({type:'done',output,...(receipt?{billing:receipt}:{})});res.end();return;
+   const output=await result.output;if(validateOutput)validateOutput(output,body);const receipt=await complete(output,result);attemptOutcome='completed';await emit({type:'done',output,...(receipt?{billing:receipt}:{})});res.end();return;
   }
-  const result=await generate(params);
+  result=await generate(params);
   const output=parseModelJSON(result.text);
   if(validateOutput)validateOutput(output,body);
   if(!validateOutput&&body.phase==='understand'&&!['talk','action','accuse','clarify','unsupported','contradiction','unclear','meta'].includes(output?.kind))throw Error('Invalid intent');
   if(!validateOutput&&body.phase==='express'&&!Array.isArray(output?.blocks))throw Error('Invalid blocks');
-  const receipt=await complete(output,result);return res.status(200).json({output,...(receipt?{billing:receipt}:{})});
-  }catch(error){if(visible||controller.signal.aborted||attempt===candidates.length-1)throw error;console.warn(JSON.stringify({event:'three_kingdoms_provider_fallback',from:current.name,to:candidates[attempt+1].name}));}finally{clearTimeout(attemptTimer);}
+  const receipt=await complete(output,result);attemptOutcome='completed';return res.status(200).json({output,...(receipt?{billing:receipt}:{})});
+  }catch(error){if(visible||controller.signal.aborted||attempt===candidates.length-1)throw error;console.warn(JSON.stringify({event:'three_kingdoms_provider_fallback',from:current.name,to:candidates[attempt+1].name}));}finally{clearTimeout(attemptTimer);usage ||= await resultUsage(result);meter({requestId,provider:current.name,model:current.model,attempt:attempt+1,task:'game.'+body.phase,game:body.game||'sanguo',usage,durationMs:Date.now()-attemptStarted,outcome:timedOut?'failed':controller.signal.aborted?'cancelled':attemptOutcome});}
   }
  }catch(error){const status=Number(error?.statusCode||error?.cause?.statusCode)||null;const code=controller.signal.aborted?'model_timeout':[400,404,422].includes(status)?'model_configuration':'model_unavailable';console.warn(JSON.stringify({event:'three_kingdoms_model_failed',phase:body.phase,status,code}));if(res.headersSent){if(!res.destroyed)res.end(JSON.stringify({type:'error',code})+'\n');return;}return res.status(503).json({code});}
  finally{if(billing&&!billing.replay&&!settled)try{await billing.finish(false);}catch{console.warn(JSON.stringify({event:'credit_release_pending',requestId:billing.reservation.id}));}active--;clearTimeout(timer);res.off?.('close',close);}

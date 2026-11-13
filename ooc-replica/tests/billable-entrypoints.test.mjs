@@ -1,4 +1,5 @@
 import test from "node:test";
+import {coverImage} from "./fixtures/cover-image.mjs";
 import assert from "node:assert/strict";
 import { EventEmitter } from "node:events";
 import { randomUUID } from "node:crypto";
@@ -79,18 +80,19 @@ test("game stages settle independently at their displayed prices and replay with
     { phase: "express", context: { player_input: "hello" }, lang: "zh" },
     "game",
   );
-  let calls = 0;
+  let calls = 0;const metered=[];
   const output = {
     blocks: [{ type: "dialogue", speaker: "npc", text: "Hello" }],
   };
   const handler = createHandler({
     bill: f.bill,
+    meter: row=>metered.push(row),
     config: () => ({ kind: "google", name: "fixture", model: "fixture" }),
     model: () => ({}),
     stage: () => ({}),
     generate: async () => {
       calls++;
-      return { text: JSON.stringify(output), finishReason: "stop" };
+      return { text: JSON.stringify(output), finishReason: "stop", totalUsage:{inputTokens:80,outputTokens:20} };
     },
   });
   let r = response();
@@ -101,6 +103,7 @@ test("game stages settle independently at their displayed prices and replay with
   await handler(f.req(), r);
   assert.deepEqual(r.result.output, output);
   assert.equal(calls, 1);
+  assert.equal(metered.length,1);assert.equal(metered[0].task,'game.express');assert.equal(metered[0].usage.inputTokens,80);
   assert.equal((await f.store.read("alice")).balance, 199);
 });
 test("game structured-stream errors and truncated results release their own reservation", async () => {
@@ -132,18 +135,18 @@ test("image success is cached/replayed, failures do not charge, and wrong quotes
     { type: "story", prompt: "A quiet harbor", title: "test" },
     "image",
   );
-  let calls = 0;
-  const b64 =
-    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aXioAAAAASUVORK5CYII=";
+  let calls = 0;const metered=[];
+  const b64 = coverImage;
   const handler = createImageHandler({
     bill: f.bill,
+    meter: row=>metered.push(row),
     configuration: () => ({
       key: "fake-provider-key",
       model: "gpt-image-fixture",
     }),
     fetchImpl: async () => {
       calls++;
-      return Response.json({ data: [{ b64_json: b64 }] });
+      return Response.json({ data: [{ b64_json: b64 }],usage:{input_tokens:100,output_tokens:2000} });
     },
   });
   let r = response();
@@ -154,6 +157,8 @@ test("image success is cached/replayed, failures do not charge, and wrong quotes
   await handler(f.req(), r);
   assert.equal(r.result.b64, b64);
   assert.equal(calls, 1);
+  assert.equal(metered.length,1);assert.equal(metered[0].task,'image');assert.equal(metered[0].imageCount,1);assert.equal(metered[0].usage.outputTokens,2000);
+  assert.doesNotMatch(JSON.stringify(metered),/quiet harbor|b64_json|fake-provider-key/);
   const g = await fixture({ type: "story", prompt: "Another" }, "image");
   g.body.billing.amount = 0;
   r = response();
@@ -243,4 +248,28 @@ test("large recovery results are chunked, integrity checked, and inaccessible to
     undefined,
   );
   assert.equal((await f.store.read("alice")).balance, 199);
+});
+test('game fallback attempts remain separately observable and do not double-charge',async()=>{
+ const f=await fixture({phase:'understand',context:{player_input:'hello'},lang:'zh'},'game'),rows=[];
+ let calls=0;
+ const handler=createHandler({bill:f.bill,stage:()=>({}),config:()=>({name:'first',model:'first',kind:'google'}),fallback:()=>({name:'second',model:'second',kind:'google'}),model:()=>({}),meter:r=>rows.push(r),generate:async()=>{
+  calls++;if(calls===1)throw Error('private provider detail');
+  return {text:'{"kind":"talk"}',finishReason:'stop',usage:{inputTokens:120,outputTokens:4}};
+ }});
+ const r=response();await handler(f.req(),r);
+ assert.equal(r.statusCode,200);assert.equal(calls,2);
+ assert.deepEqual(rows.map(x=>[x.attempt,x.task,x.outcome]),[[1,'game.understand','failed'],[2,'game.understand','completed']]);
+ assert.equal(rows[0].usage,undefined);assert.equal(rows[1].usage.inputTokens,120);
+ assert.equal(rows[0].requestId,rows[1].requestId);
+ assert.equal((await f.store.read('alice')).balance,199);
+ assert.doesNotMatch(JSON.stringify(rows),/private provider detail|player_input|Bearer/);
+});
+test('an upstream 200 with corrupt image bytes releases credits and retains an unknown-cost attempt',async()=>{
+ const f=await fixture({type:'story',prompt:'private cover idea'},'image'),rows=[];
+ const handler=createImageHandler({bill:f.bill,meter:r=>rows.push(r),configuration:()=>({key:'fixture-only',model:'image-fixture'}),fetchImpl:async()=>Response.json({data:[{b64_json:'aW52YWxpZCBpbWFnZQ=='}],usage:{input_tokens:10,output_tokens:20}})});
+ const r=response();await handler(f.req(),r);
+ assert.equal(r.statusCode,502);assert.equal((await f.store.read('alice')).balance,200);
+ assert.equal((await f.store.read('alice')).reserved,0);
+ assert.equal(rows[0].outcome,'failed');assert.equal(rows[0].imageCount,1);
+ assert.equal(rows[0].usage.outputTokens,20);
 });

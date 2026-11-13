@@ -76,6 +76,14 @@ export function attachGameCredits(frame, account, { lang = "zh" } = {}) {
           }),
         }),
         payment,
+        state => {
+          if (!active || !frame.isConnected || !payment?.current()) return;
+          status.textContent = state === 'settled'
+            ? (zh ? ` 已完成，本阶段结算 ${payment.billing.amount} 点。` : ` Completed; ${payment.billing.amount} credits charged for this stage.`)
+            : state === 'released'
+              ? (zh ? ' 本次未结算，预留积分已释放。' : ' Not charged; reserved credits released.')
+              : (zh ? ' 生成未完成或结算待核对，请查看积分记录后重试。' : ' Generation or settlement unconfirmed; check your credit history before retrying.');
+        },
       );
     } catch (e) {
       status.textContent = e.message;
