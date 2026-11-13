@@ -23,7 +23,7 @@ jobs:
         working-directory: ooc-replica
     # Tests supply in-memory accounts, wallets and providers; no secrets needed.
     env:
-      CREDIT_BILLING_MODE: off
+      CREDIT_BILLING_MODE: "off"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
