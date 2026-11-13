@@ -7,14 +7,15 @@ import {join} from 'node:path';
 import {historyIds,lastSessionText} from '../dist/assets/history.js';
 import {buildPrompt} from '../server/prompt-engine.js';
 import {cloudKey} from '../dist/assets/account-storage.js';
+import {clearAccountDialog} from '../dist/assets/account-sync-ui.js';
 const dist=fileURLToPath(new URL('../dist/',import.meta.url));
 test('creator AI streams into a review field and only applies when chosen, without transmitting cover data',async()=>{
  const {document,window}=parseHTML('<html><head><link href="/style.css"></head><body><dialog id="modal"></dialog></body></html>');
  const append=window.HTMLElement.prototype.append;window.HTMLElement.prototype.append=function(...nodes){const r=append.apply(this,nodes);for(const n of nodes)if(n.tagName==='LINK')queueMicrotask(()=>n.onload?.());return r;};
  Object.defineProperty(window.HTMLElement.prototype,'open',{configurable:true,get(){return this.hasAttribute('open');}});
  window.HTMLElement.prototype.close=function(){this.removeAttribute('open');this.dispatchEvent(new window.Event('close'));};
- let request,fail=false;const values=new Map([['ooc-custom',[{id:'author-test',type:'story',title:'雾城',description:'一句话',image:'data:image/webp;base64,PRIVATE_COVER',details:'原有设定'}]]]);
- Object.assign(globalThis,{document,window,DOMParser,location:{pathname:'/builder/story/author-test',search:''},matchMedia:()=>({matches:true}),fetch:async(path,options)=>{if(path==='/api/chat'){request=JSON.parse(options.body);if(fail)return new Response(JSON.stringify({error:'Try again'}),{status:503,headers:{'Content-Type':'application/json'}});return new Response('{"type":"text","text":"雾里的钟楼守护着失落的故事。"}\n{"type":"done"}\n',{headers:{'Content-Type':'application/x-ndjson'}});}return new Response(await readFile(join(dist,path)));}});
+ let request,fail=false,pendingSignal,started;const values=new Map([['ooc-custom',[{id:'author-test',type:'story',title:'雾城',description:'一句话',image:'data:image/webp;base64,PRIVATE_COVER',details:'原有设定'}]]]);
+ Object.assign(globalThis,{document,window,DOMParser,location:{pathname:'/builder/story/author-test',search:''},matchMedia:()=>({matches:true}),fetch:async(path,options)=>{if(path==='/api/config')return Response.json({billing:{enabled:false}});if(path==='/api/chat'){request=JSON.parse(options.body);if(fail)return new Response(JSON.stringify({error:'Try again'}),{status:503,headers:{'Content-Type':'application/json'}});return new Response('{"type":"text","text":"雾里的钟楼守护着失落的故事。"}\n{"type":"done"}\n',{headers:{'Content-Type':'application/x-ndjson'}});}return new Response(await readFile(join(dist,path)));}});
  const {showBuilder}=await import('../dist/assets/builder.js');
  const h={read:(k,f)=>values.get(k)??f,save:(k,v)=>values.set(k,structuredClone(v)),navigate(){},data:[],categories:[],show:html=>{const d=document.querySelector('#modal');d.innerHTML=html;d.setAttribute('open','');}};
  showBuilder('/builder/story/author-test',h);
@@ -22,4 +23,21 @@ test('creator AI streams into a review field and only applies when chosen, witho
  assert.equal(request.task,'author');assert.ok(!JSON.stringify(request).includes('PRIVATE_COVER'));assert.equal(document.querySelector('[name=title]').value,'雾城');assert.match(document.querySelector('#ai-result').value,/钟楼/);assert.equal(document.querySelector('[data-ai-apply]').disabled,false);
  document.querySelector('[data-ai-apply]').click();assert.match(document.querySelector('[name=title]').value,/钟楼/);assert.equal(values.get('ooc-custom')[0].title,'雾城','applying AI does not silently save or publish');
  document.querySelector('[data-expand-field=description]').click();fail=true;await document.querySelector('[data-ai-generate]').onclick();assert.match(document.querySelector('[data-ai-status]').textContent,/Try again/);assert.equal(document.querySelector('[data-ai-apply]').disabled,true);
+ // Switch identity while the real author dialog awaits a response. Its close
+ // listener must abort the request, clear private content and leave the draft.
+ const originalFetch=globalThis.fetch;
+ globalThis.fetch=async(path,options)=>{
+  if(path!=='/api/chat')return originalFetch(path,options);
+  pendingSignal=options.signal;started();
+  return new Promise((_resolve,reject)=>options.signal.addEventListener('abort',()=>reject(new DOMException('Aborted','AbortError')),{once:true}));
+ };
+ const originalTitle=document.querySelector('[name=title]').value;
+ document.querySelector('#modal').close();document.querySelector('[data-expand-field=title]').click();
+ const ready=new Promise(r=>{started=r;});
+ const pending=document.querySelector('[data-ai-generate]').onclick();await ready;
+ clearAccountDialog(document.querySelector('#modal'));await pending;
+ assert.equal(pendingSignal.aborted,true);assert.equal(document.querySelector('#modal').open,false);
+ assert.equal(document.querySelector('#modal').textContent,'');assert.equal(document.querySelector('[name=title]').value,originalTitle);
+ assert.equal(values.get('ooc-custom')[0].title,'雾城');
+ globalThis.fetch=originalFetch;
 });

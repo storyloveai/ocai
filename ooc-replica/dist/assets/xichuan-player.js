@@ -1,3 +1,4 @@
+import {attachGameCredits} from './game-credit-bridge.js';
 import {xichuanAction} from './loop-events.js';
 import {track} from './analytics.js';
 import {escapeHTML as esc} from './stream.js';
@@ -25,7 +26,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   </style><header class="xc-header" data-no-i18n><a href="/play/xc-zhiyao?from=xichuan">‹ ${t('和夏知遥聊聊', 'Chat with Zhiyao')}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
   ${importable ? `<div class="xc-transfer" data-no-i18n>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}<button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
   <iframe id="xichuan-frame" title="${t('汐川互动故事', 'Xichuan visual novel')}" src="/assets/xichuan/index.html?site=1&lang=${lang}" allow="autoplay"></iframe>`, h, 'xichuan');
-  const frame = root.querySelector('#xichuan-frame'), status = root.querySelector('.xc-status');
+  const frame = root.querySelector('#xichuan-frame'),gameCredits=attachGameCredits(frame,account,{lang}), status = root.querySelector('.xc-status');
   const setStatus = () => status.textContent = (account.user ? t('账号进度 · ', 'Account progress · ') : t('本设备进度 · ', 'Device progress · ')) + progressText(snapshot, lang);
   setStatus();
   function persist(next) {
@@ -47,7 +48,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     if (!active || !frame.isConnected || event.origin !== location.origin || event.source !== frame.contentWindow) return;
     const d = event.data;
     if (d?.type === 'xc-ready' && !initialized) {
-      initialized = true;
+      gameCredits.install();initialized = true;
       const initial = {...snapshot, latest: snapshot[LATEST], lang}; delete initial[LATEST];
       frame.contentWindow.postMessage({type: 'xc-init', snapshot: initial}, location.origin);
     }
@@ -65,7 +66,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   };
   window.addEventListener('message', receive);
   track('game_opened', {game: 'xichuan', lang});
-  dispose = () => { active = false; window.removeEventListener('message', receive); };
+  dispose = () => { gameCredits.dispose();active = false; window.removeEventListener('message', receive); };
   document.title = t('汐川的第七个春天', 'The Seventh Spring of Xichuan') + ' · StoryDate';
 }
 export function zhiyaoStoryLink(h, lang) {

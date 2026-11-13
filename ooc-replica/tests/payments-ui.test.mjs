@@ -30,6 +30,13 @@ test('return URL queries fulfillment but cannot mutate balance locally',async()=
 test('guest page receives catalog after async public config without an identity change',async()=>{
  const f=setup();f.account.user=null;const config=f.account.paymentConfig;f.account.paymentConfig={};f.payments.sync();f.payments.mount(f.root);assert.equal(f.root.querySelectorAll('[name=credits-pack]').length,0);f.account.paymentConfig=config;f.payments.sync();assert.equal(f.root.querySelectorAll('[name=credits-pack]').length,1);assert.match(f.root.textContent,/\$1\.99/);
 });
+test('signed-in wallet loads when configuration arrives after mount without another identity event',async()=>{
+ const f=setup(),config=f.account.paymentConfig;f.account.paymentConfig={};
+ let reads=0;f.account.api=async()=>{reads++;return {balance:72,ledger:[]};};
+ f.payments.sync();f.payments.mount(f.root);await tick();assert.equal(reads,0);
+ f.account.paymentConfig=config;f.payments.sync();await tick();
+ assert.equal(reads,1);assert.match(f.root.textContent,/72/);
+});
 
 test('initial guest mount before account sync never reads a payment session',async()=>{
  const {document}=parseHTML('<html><body><div id="wallet"></div><dialog></dialog></body></html>');
@@ -75,4 +82,11 @@ test('expired checkout is cleared without crediting or redirecting',async()=>{
  f.account.api=async path=>path.startsWith('checkout-status')?{paid:false,credited:false,status:'expired'}:{balance:0,ledger:[]};
  f.payments.sync();f.payments.mount(f.root);await tick();
  assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);assert.match(f.root.textContent,/checkout expired/);assert.deepEqual(f.redirects,[]);
+});
+
+test('billing view separates promotional, purchased and historical credits and shows policy before checkout',async()=>{
+ const f=setup();f.account.paymentConfig.billing={enabled:true,mode:'test',version:'v1',prices:{standard:1,long:2},checkinCredits:3};
+ f.account.api=async()=>({balance:42,reserved:2,breakdown:{grant:12,purchased:20,legacy:10},ledger:[],nextExpiry:Date.now()+10000});
+ f.payments.sync();f.payments.mount(f.root);await tick();assert.match(f.root.textContent,/赠送 12/);assert.match(f.root.textContent,/购买 20/);assert.match(f.root.textContent,/历史余额 10/);assert.match(f.root.textContent,/预留 2/);assert.match(f.root.textContent,/长回复 2/);
+ f.root.querySelector('[data-credit-tab=free]').click();assert.match(f.root.textContent,/daily for 3/);assert.match(f.root.textContent,/expire after 7 days/);assert.ok(f.root.querySelector('[data-credit-claim]'));assert.doesNotMatch(f.root.textContent,/Chat currently does not deduct/);
 });

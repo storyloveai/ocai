@@ -1,5 +1,12 @@
 import {escapeHTML as esc} from './stream.js';
 import {progressText} from './xichuan-state.js';
+// Identity changes must also remove private content outside the route root.
+// close fires the creator's cancellation listener before its DOM is discarded.
+export function clearAccountDialog(dialog) {
+  if (!dialog) return;
+  if (dialog.open) dialog.close();
+  dialog.replaceChildren();
+}
 export function syncSummary(value, lang) {
   if (value?.['game.xichuan']) return progressText(value, lang);
   if (Array.isArray(value)) return lang === 'zh' ? `${value.length} 条记录` : `${value.length} records`;

@@ -1,5 +1,7 @@
 // Adapted from server/platform.mjs: same Stripe catalog, signed fulfillment and ownership checks.
 import Stripe from "stripe";
+import {creditPolicy,quote,CreditError} from "./credit-policy.js";
+import {createCredits} from "./credits.js";
 import { firebaseServices, adminConfigured } from "./firebase-admin.js";
 import { firebaseConfig } from "./firebase-config.js";
 import { createWallet } from "./wallet.js";
@@ -66,7 +68,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
   }
   const rpc = async (name, body) => {
     if (!configured()) throw new HttpError(503, "账户钱包尚未配置。");
-    try { const result=await createWallet(services().db, stripeMode(env)).rpc(name, body);return result; }
+    try { const result=await createWallet(services().db, stripeMode(env),creditPolicy(env)).rpc(name, body);return result; }
     catch(error) {
       const raw = error?.code;
       const code = Number.isInteger(raw) ? raw : typeof raw === 'string' && /^[a-zA-Z0-9_/-]{1,80}$/.test(raw) ? raw : 'unknown';
@@ -77,7 +79,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
   async function stripe(path, params, idempotencyKey) {
     if (!modeAllowed()) throw new HttpError(503, "预览环境仅支持测试付款。");
     if (!env.STRIPE_SECRET_KEY) throw new HttpError(503, "付款服务尚未配置。");
-    if (stripeMode(env) === "live" && env.STRIPE_LIVE_ENABLED !== "true")
+    if (params && stripeMode(env) === "live" && env.STRIPE_LIVE_ENABLED !== "true")
       throw new HttpError(503, "正式付款尚未启用。");
     const client = new Stripe(env.STRIPE_SECRET_KEY.trim(), {
       apiVersion: "2026-08-26.dahlia",
@@ -86,6 +88,10 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
       timeout: 12000,
     });
     try {
+      if(path.startsWith('disputes-for-charge/'))return await client.disputes.list({charge:path.slice(20),limit:2});
+      if(path.startsWith('charges/'))return await client.charges.retrieve(path.slice(8));
+      if(path.startsWith('disputes/'))return await client.disputes.retrieve(path.slice(9));
+      if(path.startsWith('sessions-for-payment/'))return await client.checkout.sessions.list({payment_intent:path.slice(21),limit:2});
       if (params)
         return await client.checkout.sessions.create(params, {
           idempotencyKey,
@@ -139,8 +145,9 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
     } catch (e) {
       return response(
         {
+          code:e instanceof CreditError?e.code:undefined,
           error:
-            e instanceof HttpError ? e.message : "服务暂时不可用，请重试。",
+            (e instanceof HttpError || e instanceof CreditError) ? e.message : "服务暂时不可用，请重试。",
         },
         e.status || 503,
       );
@@ -171,11 +178,24 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
         creditPacks: Object.entries(packs).map(([credits, p]) => ({ credits: Number(credits), amount: p.amount, label: p.label })),
         walletConfigured: configured(),
         checkinTimezone: "Asia/Shanghai",
+        billing:creditPolicy(env),
       });
     }),
     wallet: safely(async (req) => {
-      if (req.method !== "GET") throw new HttpError(405, "只支持 GET。");
+      if (!["GET","POST"].includes(req.method)) throw new HttpError(405,"只支持 GET 或 POST。");
       const u = await user(req);
+      const policy=creditPolicy(env);
+      if(req.method==='POST'){
+        sameOrigin(req);
+        let body;try{body=JSON.parse(await readLimited(req,2000));}catch(e){if(e instanceof HttpError)throw e;throw new HttpError(400,'无效请求。');}
+        if(!body||typeof body!=='object'||Array.isArray(body))throw new HttpError(400,'Invalid wallet request.');
+        if(!policy.enabled||!policy.ready||policy.mode!==stripeMode(env))throw new HttpError(503,'积分消费尚未启用。');
+        const store=createCredits(services().db,policy.mode);
+        if(body.action==='status')return response(await store.status(u.id,body.id));
+        if(body.action==='claim')return response(await store.grant(u.id,body.campaign));
+        if(body.action==='quote')return response({...quote(body,env,body.route||'chat'),wallet:await store.read(u.id)});
+        throw new HttpError(400,'不支持的钱包操作。');
+      }
       const wallet=await rpc("storylove_wallet", { p_user: u.id });return response({...wallet,checkoutReady:readyReceipt(u.id)});
     }),
     checkin: safely(async (req) => {
@@ -322,6 +342,27 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
       if (!event || typeof event !== "object" || Array.isArray(event)) throw new HttpError(400, "无效付款事件。");
       if (event.livemode !== (stripeMode(env) === "live"))
         throw new HttpError(400, "付款环境不匹配。");
+      if(event.type==='charge.refunded'||event.type.startsWith('charge.dispute.')){
+        let dispute,charge;
+        if(event.type.startsWith('charge.dispute.')){
+          const id=event.data?.object?.id;if(!/^du_[\w]+$/.test(id||''))throw new HttpError(400,'无效争议事件。');
+          dispute=await stripe('disputes/'+id);const chargeId=typeof dispute.charge==='string'?dispute.charge:dispute.charge?.id;if(!/^ch_[\w]+$/.test(chargeId||''))throw new HttpError(400,'无效支付关联。');charge=await stripe('charges/'+chargeId);
+        }else{
+          const id=event.data?.object?.id;if(!/^ch_[\w]+$/.test(id||''))throw new HttpError(400,'无效退款事件。');charge=await stripe('charges/'+id);
+          if(charge.disputed){const current=await stripe('disputes-for-charge/'+charge.id);if(current.has_more||current.data?.length!==1)throw new HttpError(503,'Dispute requires reconciliation');dispute=current.data[0];}
+        }
+        const payment=typeof charge.payment_intent==='string'?charge.payment_intent:charge.payment_intent?.id;
+        if(charge.livemode!==(stripeMode(env)==='live')||!/^pi_[\w]+$/.test(payment||''))throw new HttpError(400,'支付环境或关联不匹配。');
+        const sessions=await stripe('sessions-for-payment/'+payment);
+        if(sessions.has_more)throw new HttpError(503,'Payment requires reconciliation');const owned=(sessions.data||[]).filter(s=>s.metadata?.wallet_backend==='firebase-replica-v1'&&s.metadata?.firebase_project===env.FIREBASE_PROJECT_ID);
+        if(!owned.length)return response({received:true});if(owned.length!==1)throw new HttpError(400,'支付关联不唯一。');
+        const s=await stripe('checkout/sessions/'+owned[0].id+'?expand[]=line_items'),{credits,uid}=validateCheckout(s);
+        if(s.payment_status!=='paid'||s.livemode!==charge.livemode||s.metadata?.wallet_mode!==stripeMode(env)||s.payment_intent!==payment||charge.currency!=='usd'||charge.amount!==s.amount_total||!Number.isInteger(charge.amount_refunded)||charge.amount_refunded<0||charge.amount_refunded>charge.amount)throw new HttpError(400,'退款订单不匹配。');
+        if(dispute&&(dispute.livemode!==charge.livemode||dispute.currency!==charge.currency||(typeof dispute.charge==='string'?dispute.charge:dispute.charge?.id)!==charge.id||!Number.isInteger(dispute.amount)||dispute.amount<0||dispute.amount>charge.amount))throw new HttpError(400,'争议订单不匹配。');
+        const scaled=amount=>Math.floor(credits*amount/s.amount_total);
+        await createCredits(services().db,stripeMode(env)).reconcilePurchase(uid,s.id,credits,{refundCredits:scaled(charge.amount_refunded),disputeCredits:dispute?scaled(dispute.amount):0,disputeStatus:dispute?.status||null,revision:Number.isSafeInteger(event.created)?event.created:0});
+        return response({received:true});
+      }
       if (
         ![
           "checkout.session.completed",
