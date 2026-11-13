@@ -10,8 +10,10 @@ export function createAccount({changed}) {
  scope(){const owner=generation;return {account:a,read:(key,fallback)=>owner===generation?a.read(key,fallback):fallback,save:(key,value)=>{if(owner===generation)a.save(key,value);}};},
  async api(route,body){const owner=a.user;if(!owner)throw Error('请先登录模拟账号');const r=await fetch('/api/'+route,{method:body?'POST':'GET',headers:{'Content-Type':'application/json',Authorization:'Bearer '+await owner.getIdToken()},...(body?{body:JSON.stringify(body)}:{})});const data=await r.json();if(owner!==a.user)throw Error('账号已更换，请重试。');if(!r.ok)throw Object.assign(Error(data.error||'模拟请求失败'),{code:data.code,status:r.status});return data;},
  async init(){a.paymentConfig=await(await fetch('/api/config')).json();changed(false);},
- switchUser(id){generation++;a.user=id?makeUser(id):null;changed(true);},
+ switchUser(id,broadcast=true){generation++;a.user=id?makeUser(id):null;changed(true);if(broadcast)localStorage.setItem('qa:identity-switch',JSON.stringify({id,nonce:crypto.randomUUID()}));},
  login(){a.switchUser('qa-alice');},logout(){a.switchUser(null);},retrySync(){changed(false);},flush:async()=>{}
  };
+ // Reproduce the auth SDK's cross-tab identity notification, fixture IDs only.
+ globalThis.addEventListener?.('storage',event=>{if(event.key!=='qa:identity-switch')return;try{const {id}=JSON.parse(event.newValue);if(['qa-alice','qa-bob',''].includes(id))a.switchUser(id,false);}catch{}});
  current=a;return a;
 }

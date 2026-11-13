@@ -30,6 +30,13 @@ test('return URL queries fulfillment but cannot mutate balance locally',async()=
 test('guest page receives catalog after async public config without an identity change',async()=>{
  const f=setup();f.account.user=null;const config=f.account.paymentConfig;f.account.paymentConfig={};f.payments.sync();f.payments.mount(f.root);assert.equal(f.root.querySelectorAll('[name=credits-pack]').length,0);f.account.paymentConfig=config;f.payments.sync();assert.equal(f.root.querySelectorAll('[name=credits-pack]').length,1);assert.match(f.root.textContent,/\$1\.99/);
 });
+test('signed-in wallet loads when configuration arrives after mount without another identity event',async()=>{
+ const f=setup(),config=f.account.paymentConfig;f.account.paymentConfig={};
+ let reads=0;f.account.api=async()=>{reads++;return {balance:72,ledger:[]};};
+ f.payments.sync();f.payments.mount(f.root);await tick();assert.equal(reads,0);
+ f.account.paymentConfig=config;f.payments.sync();await tick();
+ assert.equal(reads,1);assert.match(f.root.textContent,/72/);
+});
 
 test('initial guest mount before account sync never reads a payment session',async()=>{
  const {document}=parseHTML('<html><body><div id="wallet"></div><dialog></dialog></body></html>');

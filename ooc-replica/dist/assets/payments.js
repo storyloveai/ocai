@@ -99,7 +99,8 @@ export function createPayments({ account, show, modal, notify, storage = session
   return {
     mount(element) { const requestedTab=new URL(location.href).searchParams.get('creditTab');tab=['buy','auto','free'].includes(requestedTab)?requestedTab:'buy';root = element; root.classList.add('credits-root'); const doc=root.ownerDocument;if (!doc.querySelector('link[data-credits-style]')) { const link=doc.createElement('link');link.rel='stylesheet';link.href='/assets/credits.css';link.dataset.creditsStyle='';doc.head.append(link); } draw(); void refresh(); void verify(); },
     sync() {
-      if (observedConfig !== cfg()) { observedConfig = cfg(); draw(); }
+      const configChanged = observedConfig !== cfg();
+      if (configChanged) { observedConfig = cfg(); draw(); }
       if (owner !== account.user?.uid) {
         owner = account.user?.uid; generation++; wallet = null; error = ''; notice = ''; busy = false; polling = false;
         const url = new URL(location.href), session = url.searchParams.get('session_id');
@@ -109,6 +110,8 @@ export function createPayments({ account, show, modal, notify, storage = session
           url.searchParams.delete('session_id'); url.searchParams.delete('checkout'); history.replaceState({}, '', url);
         }
         draw(); void refresh(); void verify();
+      } else if (configChanged && account.user && cfg().walletConfigured) {
+        void refresh(); void verify();
       }
     },
   };
