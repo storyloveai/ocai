@@ -20,7 +20,17 @@ export function creditPolicy(env = process.env) {
     enabled: mode !== "off",
     ready: !invalid,
     version: PRICE_VERSION,
-    prices: { short: 1, standard: 1, long: 2 },
+    prices: {
+      short: 1,
+      standard: 1,
+      long: 2,
+      author: 3,
+      authorLong: 8,
+      authorCatalog: 20,
+      image: 80,
+      gameUnderstand: 1,
+      gameExpress: 1,
+    },
     checkinCredits: mode === "off" ? 100 : 3,
     checkinDays: 7,
     holdSeconds: 600,
@@ -31,13 +41,39 @@ export function quote(body, env = process.env, route = "chat") {
   const policy = creditPolicy(env);
   if (!policy.ready)
     fail(503, "BILLING_CONFIGURATION", "积分配置尚未就绪，请稍后重试。");
-  // Clients without a visible quote cannot become a free paid-model bypass.
-  if (route !== "chat" || body?.task === "author")
-    fail(
-      503,
-      "BILLING_NOT_AVAILABLE",
-      "此 AI 功能正在接入积分报价，请先使用角色聊天。",
-    );
+  if (route === "image")
+    return { ...policy, sku: "image.cover", amount: policy.prices.image };
+  if (route === "game") {
+    if (!["understand", "express"].includes(body?.phase))
+      fail(400, "INVALID_QUOTE", "无效游戏阶段。");
+    return {
+      ...policy,
+      sku: "game." + body.phase,
+      amount:
+        body.phase === "understand"
+          ? policy.prices.gameUnderstand
+          : policy.prices.gameExpress,
+    };
+  }
+  if (route !== "chat") fail(400, "INVALID_QUOTE", "未知生成类型。");
+  if (body?.task === "author") {
+    const kind =
+      body.format === "catalog"
+        ? "catalog"
+        : body.field === "details"
+          ? "long"
+          : "field";
+    return {
+      ...policy,
+      sku: "author." + kind,
+      amount:
+        kind === "catalog"
+          ? policy.prices.authorCatalog
+          : kind === "long"
+            ? policy.prices.authorLong
+            : policy.prices.author,
+    };
+  }
   if (body?.task === "suggestions")
     return { ...policy, sku: "suggestions", amount: 0 };
   const length = ["short", "standard", "long"].includes(

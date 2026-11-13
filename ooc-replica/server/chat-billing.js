@@ -32,17 +32,30 @@ export function createChatBilling({
     };
     if (stripeMode(effective) !== q.mode)
       fail(503, "BILLING_CONFIGURATION", "积分与支付环境不一致。");
-    if (
-      body.billing?.version !== q.version ||
-      body.billing?.amount !== q.amount
-    )
-      fail(409, "PRICE_CHANGED", "价格已更新，请核对价格后重新发送。");
     const u = await authenticate(req),
       store = createCredits(services().db, q.mode, {
         holdSeconds: q.holdSeconds,
       });
-    const { billing, ...input } = body;
-    const fingerprint = digest(JSON.stringify(input));
+    const { billing, ...input } = body,
+      fingerprint = digest(JSON.stringify({ route, input }));
+    if (billing?.id) {
+      const previous = await store.inspect(u.id, billing.id);
+      if (previous) {
+        if (previous.fingerprint !== fingerprint || previous.sku !== q.sku)
+          fail(409, "IDEMPOTENCY_CONFLICT", "请求编号已用于另一条消息。");
+        if (previous.status === "settled") {
+          const cached = await store.status(u.id, billing.id);
+          if (cached.reply) return { replay: cached };
+          fail(
+            409,
+            "OPERATION_SETTLED",
+            "这条生成已结算，恢复窗口已过，请核对记录。",
+          );
+        }
+      }
+    }
+    if (billing?.version !== q.version || billing?.amount !== q.amount)
+      fail(409, "PRICE_CHANGED", "价格已更新，请核对价格后重新发送。");
     let reservation;
     try {
       reservation = await store.reserve(u.id, {
@@ -73,12 +86,17 @@ export function createChatBilling({
 }
 export const beginChatBilling = createChatBilling();
 export function billingError(error) {
-  const known=error instanceof CreditError;
-  const auth=error instanceof HttpError;
+  const known = error instanceof CreditError;
+  const auth = error instanceof HttpError;
   return {
-    status:known||auth?error.status:[401,403].includes(error.status)?error.status:503,
-    code:known?error.code:'BILLING_UNAVAILABLE',
-    error:known||auth?error.message:'积分暂时无法核对，请稍后重试。',
-    retryable:false,
+    status:
+      known || auth
+        ? error.status
+        : [401, 403].includes(error.status)
+          ? error.status
+          : 503,
+    code: known ? error.code : "BILLING_UNAVAILABLE",
+    error: known || auth ? error.message : "积分暂时无法核对，请稍后重试。",
+    retryable: false,
   };
 }

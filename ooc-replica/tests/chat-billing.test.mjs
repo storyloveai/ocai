@@ -177,13 +177,13 @@ test("client disconnect during generation releases the hold", async () => {
   assert.equal((await f.store.read("alice")).balance, 200);
   assert.equal((await f.store.read("alice")).reserved, 0);
 });
-test("enabled mode blocks unpriced creator/game/image routes and free model suggestions", async () => {
+test("enabled mode requires prices on creator/game routes and rejects free model suggestions", async () => {
   const f = await fixture();
   await assert.rejects(f.bill(f.req(), { ...f.body, task: "author" }), {
-    code: "BILLING_NOT_AVAILABLE",
+    code: "PRICE_CHANGED",
   });
   await assert.rejects(f.bill(f.req(), f.body, "game"), {
-    code: "BILLING_NOT_AVAILABLE",
+    code: "INVALID_QUOTE",
   });
   await assert.rejects(f.bill(f.req(), { ...f.body, task: "suggestions" }), {
     code: "INCLUDED_SUGGESTIONS",

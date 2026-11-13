@@ -8,7 +8,7 @@ export function createCreditClient(
   } = {},
 ) {
   return {
-    async prepare(body) {
+    async prepare(body, { route = "chat" } = {}) {
       const cfg = await config();
       if (!cfg?.billing?.enabled) return null;
       const owner = account?.user;
@@ -18,6 +18,11 @@ export function createCreditClient(
       }
       const q = await account.api("wallet", {
         action: "quote",
+        route,
+        task: body.task,
+        field: body.field,
+        format: body.format,
+        phase: body.phase,
         outputLength: body.outputLength,
       });
       if (account.user !== owner)
@@ -26,14 +31,15 @@ export function createCreditClient(
         new Uint8Array(
           await crypto.subtle.digest(
             "SHA-256",
-            new TextEncoder().encode(JSON.stringify(body)),
+            new TextEncoder().encode(JSON.stringify({ route, body })),
           ),
         ),
       )
         .map((x) => x.toString(16).padStart(2, "0"))
         .join("");
       const key = `sd-credit-request:${cfg.walletMode}:${owner.uid}:${fingerprint}`;
-      let id;
+      let id,
+        replaying = false;
       try {
         id = storage?.getItem(key);
       } catch {}
@@ -48,6 +54,7 @@ export function createCreditClient(
               "OPERATION_RESERVED",
               "回复仍在处理中。请稍后重试；预留积分最迟 10 分钟释放。",
             );
+          if (previous.status === "settled" && previous.reply) replaying = true;
           if (previous.status === "released") {
             id = null;
           } else if (previous.status === "settled" && !previous.reply)
@@ -60,6 +67,11 @@ export function createCreditClient(
         }
       }
       // A settled operation can replay even if the remaining balance is now zero.
+      if (q.wallet.fundingPaused && !replaying)
+        throw error(
+          "FUNDING_REVIEW_REQUIRED",
+          "有退款或支付争议需要核对，暂时停止 AI 消费。历史内容和存档仍可查看。",
+        );
       if (!id && q.wallet.balance < q.amount)
         throw error(
           "INSUFFICIENT_CREDITS",
@@ -81,8 +93,8 @@ export function createCreditClient(
         get settled() {
           return settled;
         },
-        complete: () => {
-          settled = true;
+        complete: (charged = true) => {
+          settled = charged;
           try {
             storage?.removeItem(key);
           } catch {}

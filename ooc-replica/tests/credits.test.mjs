@@ -61,10 +61,8 @@ test("pricing is server-owned and unsafe live/Preview activation fails closed", 
     }).ready,
     true,
   );
-  assert.throws(
-    () => quote({ task: "author" }, { CREDIT_BILLING_MODE: "test" }),
-    { code: "BILLING_NOT_AVAILABLE" },
-  );
+  assert.equal(quote({task:"author"},{CREDIT_BILLING_MODE:"test"}).amount,3);
+  assert.equal(quote({phase:"express"},{CREDIT_BILLING_MODE:"test"},"game").amount,1);
 });
 test("old balance survives migration unclassified, purchase and daily writes preserve holds", async () => {
   const { db, store } = await fixture();

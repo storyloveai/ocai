@@ -34,3 +34,26 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run build
       - run: npm run check
+
+  firebase-emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ooc-replica
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ooc-replica/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - run: npm ci --ignore-scripts
+      - name: Real SDK auth, Firestore concurrency, rules and recovery (demo project only)
+        env:
+          GCLOUD_PROJECT: demo-storydate-credits
+        run: npm exec --yes --package=firebase-tools@15.36.0 -- firebase emulators:exec --config firebase.emulators.json --project demo-storydate-credits --only auth,firestore 'node --test tests/integration/*.test.mjs'

@@ -33,6 +33,17 @@ function record(data, entry, now) {
     50,
   );
 }
+function repay(data, amount, now, id) {
+  const paid = Math.min(data.debt || 0, amount);
+  data.debt = (data.debt || 0) - paid;
+  if (paid)
+    record(
+      data,
+      { type: "funding_offset", id, source: "purchased", amount: -paid },
+      now,
+    );
+  return amount - paid;
+}
 function restore(data, hold, now) {
   for (const a of hold.allocations) {
     if (a.expiresAt && a.expiresAt <= now) {
@@ -50,13 +61,15 @@ function restore(data, hold, now) {
       );
       continue;
     }
+    const restored =
+      a.source === "purchased" ? repay(data, a.amount, now, a.id) : a.amount;
     let lot = data.lots.find((l) => l.id === a.id);
     if (!lot) {
       lot = { ...a, remaining: 0 };
       delete lot.amount;
       data.lots.push(lot);
     }
-    lot.remaining += a.amount;
+    lot.remaining += restored;
   }
   data.stats.released += hold.amount;
 }
@@ -97,6 +110,9 @@ function normalize(raw, now) {
       expired: 0,
     };
   }
+  data.debt ??= 0;
+  data.fundingHolds ??= {};
+  data.stats.reversed ??= { purchased: 0 };
   // During a rolling deploy an older wallet writer can increment the scalar
   // balance without adding a lot. Preserve that credit as unclassified legacy.
   const lotTotal = data.lots.reduce((sum, l) => sum + l.remaining, 0);
@@ -141,6 +157,9 @@ function normalize(raw, now) {
 function view(data, now) {
   return {
     schema: 2,
+    debt: data.debt || 0,
+    fundingPaused:
+      (data.debt || 0) > 0 || Object.keys(data.fundingHolds || {}).length > 0,
     balance: data.balance,
     available: data.balance,
     reserved: Object.values(data.holds).reduce((n, h) => n + h.amount, 0),
@@ -155,21 +174,28 @@ function view(data, now) {
   };
 }
 function add(data, { id, source, amount, expiresAt = null }, now) {
+  const available =
+    source === "purchased" ? repay(data, amount, now, id) : amount;
   const lot = data.lots.find((l) => l.id === id);
-  if (lot) lot.remaining += amount;
+  if (lot) lot.remaining += available;
   else {
     if (data.lots.length >= 128)
       fail(409, "TOO_MANY_GRANTS", "请先使用已有活动积分。");
-    data.lots.push({ id, source, remaining: amount, expiresAt });
+    data.lots.push({ id, source, remaining: available, expiresAt });
   }
   data.stats.issued[source] += amount;
-  data.balance += amount;
+  data.balance += available;
   record(
     data,
     {
       id,
       source,
-      type: source === "purchased" ? "purchase" : source === "grant" ? "grant" : "migration",
+      type:
+        source === "purchased"
+          ? "purchase"
+          : source === "grant"
+            ? "grant"
+            : "migration",
       amount,
       expiresAt,
     },
@@ -187,7 +213,8 @@ export function createCredits(
     receipts = db.collection(`replica-receipts-${mode}`),
     campaigns = db.collection(`replica-credit-campaigns-${mode}`),
     responses = db.collection(`replica-credit-responses-${mode}`),
-    events = db.collection(`replica-credit-ledger-${mode}`);
+    events = db.collection(`replica-credit-ledger-${mode}`),
+    parts = db.collection(`replica-credit-response-parts-${mode}`);
   const ref = (uid) => wallets.doc(uidKey(uid));
   const opRef = (uid, id) => {
     if (
@@ -237,6 +264,143 @@ export function createCredits(
         tx.create(r, { uid, credits: amount, at: iso(now) });
       });
     },
+    async reconcilePurchase(
+      uid,
+      session,
+      credits,
+      {
+        refundCredits = 0,
+        disputeCredits = 0,
+        disputeStatus = null,
+        revision = 0,
+      } = {},
+    ) {
+      if (
+        !/^cs_[\w]+$/.test(session || "") ||
+        ![200, 2500, 5000].includes(credits) ||
+        ![refundCredits, disputeCredits].every(
+          (v) => Number.isInteger(v) && v >= 0 && v <= credits,
+        ) ||
+        !Number.isSafeInteger(revision) ||
+        revision < 0 ||
+        (disputeStatus !== null &&
+          ![
+            "warning_needs_response",
+            "warning_under_review",
+            "warning_closed",
+            "needs_response",
+            "under_review",
+            "appeal_needs_response",
+            "appeal_under_review",
+            "won",
+            "lost",
+            "prevented",
+          ].includes(disputeStatus))
+      )
+        throw Error("Invalid funding adjustment");
+      return mutate(uid, async (tx, data, now) => {
+        const r = receipts.doc(session),
+          s = await tx.get(r),
+          old = s.exists ? s.data() : { uid, credits, at: iso(now) };
+        if (old.uid !== uid || old.credits !== credits)
+          throw Error("Receipt conflict");
+        if (!s.exists)
+          add(
+            data,
+            { id: "purchased", source: "purchased", amount: credits },
+            now,
+          );
+        const nextRefund = Math.max(old.refundCredits || 0, refundCredits);
+        let risk = old.disputeCredits || 0,
+          disputed = old.disputed || false,
+          status = old.disputeStatus || null,
+          disputeRevision = old.disputeRevision || 0;
+        const closed = ["won", "lost", "warning_closed", "prevented"];
+        if (
+          disputeStatus &&
+          (revision > disputeRevision ||
+            (revision === disputeRevision &&
+              (!closed.includes(status) || closed.includes(disputeStatus))))
+        ) {
+          status = disputeStatus;
+          disputeRevision = revision;
+          disputed = !closed.includes(status);
+          risk = ["won", "warning_closed", "prevented"].includes(status)
+            ? 0
+            : disputeCredits;
+        }
+        const reversedCredits = Math.max(nextRefund, risk),
+          delta = reversedCredits - (old.reversedCredits || 0);
+        if (disputed) data.fundingHolds[session] = true;
+        else delete data.fundingHolds[session];
+        if (delta > 0) {
+          let remaining = delta;
+          for (const lot of data.lots) {
+            if (lot.source !== "purchased") continue;
+            const taken = Math.min(lot.remaining, remaining);
+            lot.remaining -= taken;
+            remaining -= taken;
+            if (!remaining) break;
+          }
+          data.debt += remaining;
+          data.balance -= delta - remaining;
+          data.stats.reversed.purchased += delta;
+          record(
+            data,
+            {
+              type: "funding_reversal",
+              id: session,
+              source: "purchased",
+              amount: -(delta - remaining),
+              reversed: delta,
+              uncovered: remaining,
+            },
+            now,
+          );
+        } else if (delta < 0) {
+          const restored = -delta,
+            covered = Math.min(data.debt, restored);
+          data.debt -= covered;
+          const available = restored - covered;
+          let lot = data.lots.find((l) => l.id === "purchased");
+          if (!lot) {
+            lot = {
+              id: "purchased",
+              source: "purchased",
+              remaining: 0,
+              expiresAt: null,
+            };
+            data.lots.push(lot);
+          }
+          lot.remaining += available;
+          data.balance += available;
+          data.stats.reversed.purchased += delta;
+          record(
+            data,
+            {
+              type: "funding_restored",
+              id: session,
+              source: "purchased",
+              amount: available,
+              restored,
+              uncoveredCleared: covered,
+            },
+            now,
+          );
+        }
+        tx.set(r, {
+          ...old,
+          reversedCredits,
+          refundCredits: nextRefund,
+          disputeCredits: risk,
+          disputeStatus: status,
+          disputeRevision,
+          disputed,
+          updatedAt: iso(now),
+        });
+        return view(data, now);
+      });
+    },
     async purchased(uid, session) {
       uidKey(uid);
       if (!/^cs_[\w]+$/.test(session || "")) throw Error("Invalid session");
@@ -270,7 +434,9 @@ export function createCredits(
         typeof fingerprint !== "string" ||
         !/^[a-f0-9]{64}$/.test(fingerprint) ||
         version !== PRICE_VERSION ||
-        !/^chat\.(short|standard|long)$/.test(sku || "")
+        !/^(chat\.(short|standard|long)|author\.(field|long|catalog)|image\.cover|game\.(understand|express))$/.test(
+          sku || "",
+        )
       )
         fail(400, "INVALID_QUOTE", "无效报价。");
       const op = opRef(uid, id);
@@ -297,6 +463,12 @@ export function createCredits(
               : "该请求已处理或仍在处理中，请先核对账单。",
           );
         }
+        if (data.debt > 0 || Object.keys(data.fundingHolds).length)
+          fail(
+            403,
+            "FUNDING_REVIEW_REQUIRED",
+            "有退款或支付争议需要核对，暂时停止 AI 消费。历史内容和存档仍可查看。",
+          );
         if (data.balance < amount)
           fail(402, "INSUFFICIENT_CREDITS", "积分不足，请领取赠送积分或充值。");
         if (Object.keys(data.holds).length >= 4)
@@ -352,7 +524,7 @@ export function createCredits(
         const hold = data.holds[id];
         let status = "released";
         if (hold) {
-          if (success) {
+          if (success && !data.debt && !Object.keys(data.fundingHolds).length) {
             status = "settled";
             for (const a of hold.allocations)
               data.stats.spent[a.source] += a.amount;
@@ -395,19 +567,47 @@ export function createCredits(
               )
             : null,
         });
-        if (
-          status === "settled" &&
-          typeof reply === "string" &&
-          reply.length <= 50000
-        )
-          tx.set(responses.doc(digest(uidKey(uid) + ":" + id)), {
-            uid,
-            reply,
-            expiresAt: new Date(now + 86400000),
-          });
+        if (status === "settled" && typeof reply === "string") {
+          const bytes = Buffer.from(reply, "utf8");
+          if (bytes.length > 6 * 1024 * 1024)
+            fail(502, "RESULT_TOO_LARGE", "生成结果过大，本次不结算积分。");
+          const key = digest(uidKey(uid) + ":" + id),
+            expiresAt = new Date(now + 86400000);
+          if (bytes.length <= 48000)
+            tx.set(responses.doc(key), { uid, reply, expiresAt });
+          else {
+            const count = Math.ceil(bytes.length / 240000);
+            for (let i = 0; i < count; i++)
+              tx.set(parts.doc(key + "-" + i), {
+                uid,
+                data: bytes
+                  .subarray(i * 240000, (i + 1) * 240000)
+                  .toString("base64"),
+                expiresAt,
+              });
+            tx.set(responses.doc(key), {
+              uid,
+              partCount: count,
+              sha256: digest(reply),
+              expiresAt,
+            });
+          }
+        }
         data.balance = data.lots.reduce((n, l) => n + l.remaining, 0);
         return { status, wallet: view(data, now) };
       });
+    },
+    async inspect(uid, id) {
+      const s = await opRef(uid, id).get();
+      if (!s.exists) return null;
+      const o = s.data();
+      return {
+        status: o.status,
+        fingerprint: o.fingerprint,
+        sku: o.sku,
+        amount: o.amount,
+        version: o.version,
+      };
     },
     async status(uid, id) {
       const op = opRef(uid, id);
@@ -419,12 +619,34 @@ export function createCredits(
         if (!s.exists) fail(404, "UNKNOWN_OPERATION", "找不到这条消费记录。");
         const o = s.data(),
           cached = r.exists ? r.data() : null;
-        return {
-          ...(cached &&
+        let reply;
+        if (
+          cached &&
           new Date(cached.expiresAt?.toDate?.() || cached.expiresAt).getTime() >
             now
-            ? { reply: cached.reply }
-            : {}),
+        ) {
+          if (typeof cached.reply === "string") reply = cached.reply;
+          else if (
+            Number.isInteger(cached.partCount) &&
+            cached.partCount > 0 &&
+            cached.partCount <= 27
+          ) {
+            const key = digest(uidKey(uid) + ":" + id),
+              chunks = await Promise.all(
+                Array.from({ length: cached.partCount }, (_, i) =>
+                  tx.get(parts.doc(key + "-" + i)),
+                ),
+              );
+            if (chunks.every((c) => c.exists && c.data().uid === uid)) {
+              const value = Buffer.concat(
+                chunks.map((c) => Buffer.from(c.data().data, "base64")),
+              ).toString("utf8");
+              if (digest(value) === cached.sha256) reply = value;
+            }
+          }
+        }
+        return {
+          ...(reply !== undefined ? { reply } : {}),
           id,
           amount: o.amount,
           sku: o.sku,

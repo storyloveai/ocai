@@ -19,6 +19,7 @@ export function createPayments({ account, show, modal, notify, storage = session
   const current = version => version === generation && owner === account.user?.uid;
   function draw() {
     if (!root?.isConnected) return;
+    if(cfg().billing?.enabled&&tab==='auto')tab='buy';
     const packs = cfg().creditPacks || [];
     if (!packs.some(p => p.credits === selected)) selected = packs[1]?.credits || packs[0]?.credits;
     root.innerHTML = renderCredits({config:cfg(),wallet,user:account.user,error,notice,busy,tab,selected});
@@ -26,7 +27,7 @@ export function createPayments({ account, show, modal, notify, storage = session
     root.querySelectorAll('[data-credit-tab]').forEach(button=>button.addEventListener('click',()=>selectTab(button.dataset.creditTab)));
     root.querySelector('[role=tablist]')?.addEventListener('keydown',event=>{
       if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-      event.preventDefault();const tabs=['buy','auto','free'];selectTab(event.key==='Home'?'buy':event.key==='End'?'free':tabs[(tabs.indexOf(tab)+(event.key==='ArrowRight'?1:2))%3]);
+      event.preventDefault();const tabs=cfg().billing?.enabled?['buy','free']:['buy','auto','free'];selectTab(event.key==='Home'?'buy':event.key==='End'?'free':tabs[(tabs.indexOf(tab)+(event.key==='ArrowRight'?1:tabs.length-1))%tabs.length]);
     });
     root.querySelectorAll('[name=credits-pack]').forEach(input=>input.addEventListener('change',()=>{selected=Number(input.value);root.querySelectorAll('.credits-pack').forEach(row=>row.classList.toggle('is-selected',Number(row.querySelector('input').value)===selected));}));
     root.querySelector('[data-buy-selected]')?.addEventListener('click',()=>checkout(selected));
