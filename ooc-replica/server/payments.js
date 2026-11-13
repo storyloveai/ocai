@@ -1,5 +1,7 @@
 // Adapted from server/platform.mjs: same Stripe catalog, signed fulfillment and ownership checks.
 import Stripe from "stripe";
+import {creditPolicy,quote,CreditError} from "./credit-policy.js";
+import {createCredits} from "./credits.js";
 import { firebaseServices, adminConfigured } from "./firebase-admin.js";
 import { firebaseConfig } from "./firebase-config.js";
 import { createWallet } from "./wallet.js";
@@ -66,7 +68,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
   }
   const rpc = async (name, body) => {
     if (!configured()) throw new HttpError(503, "账户钱包尚未配置。");
-    try { const result=await createWallet(services().db, stripeMode(env)).rpc(name, body);return result; }
+    try { const result=await createWallet(services().db, stripeMode(env),creditPolicy(env)).rpc(name, body);return result; }
     catch(error) {
       const raw = error?.code;
       const code = Number.isInteger(raw) ? raw : typeof raw === 'string' && /^[a-zA-Z0-9_/-]{1,80}$/.test(raw) ? raw : 'unknown';
@@ -139,8 +141,9 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
     } catch (e) {
       return response(
         {
+          code:e instanceof CreditError?e.code:undefined,
           error:
-            e instanceof HttpError ? e.message : "服务暂时不可用，请重试。",
+            (e instanceof HttpError || e instanceof CreditError) ? e.message : "服务暂时不可用，请重试。",
         },
         e.status || 503,
       );
@@ -171,11 +174,24 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
         creditPacks: Object.entries(packs).map(([credits, p]) => ({ credits: Number(credits), amount: p.amount, label: p.label })),
         walletConfigured: configured(),
         checkinTimezone: "Asia/Shanghai",
+        billing:creditPolicy(env),
       });
     }),
     wallet: safely(async (req) => {
-      if (req.method !== "GET") throw new HttpError(405, "只支持 GET。");
+      if (!["GET","POST"].includes(req.method)) throw new HttpError(405,"只支持 GET 或 POST。");
       const u = await user(req);
+      const policy=creditPolicy(env);
+      if(req.method==='POST'){
+        sameOrigin(req);
+        let body;try{body=JSON.parse(await readLimited(req,2000));}catch(e){if(e instanceof HttpError)throw e;throw new HttpError(400,'无效请求。');}
+        if(!body||typeof body!=='object'||Array.isArray(body))throw new HttpError(400,'Invalid wallet request.');
+        if(!policy.enabled||!policy.ready||policy.mode!==stripeMode(env))throw new HttpError(503,'积分消费尚未启用。');
+        const store=createCredits(services().db,policy.mode);
+        if(body.action==='status')return response(await store.status(u.id,body.id));
+        if(body.action==='claim')return response(await store.grant(u.id,body.campaign));
+        if(body.action==='quote')return response({...quote(body,env),wallet:await store.read(u.id)});
+        throw new HttpError(400,'不支持的钱包操作。');
+      }
       const wallet=await rpc("storylove_wallet", { p_user: u.id });return response({...wallet,checkoutReady:readyReceipt(u.id)});
     }),
     checkin: safely(async (req) => {

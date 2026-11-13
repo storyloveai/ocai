@@ -1,5 +1,7 @@
 # OOC interface replica
 
+Optional credits v1: [product rules and rollout](../docs/product/2026-11-13-credits-v1.md), [verification](../docs/verification/2026-11-13-credits-v1.md). Billing defaults to off. A localhost-only mock acceptance page is available with `node scripts/credits-lab.mjs`; it cannot charge real funds or contact a model.
+
 Latest responsiveness pass (2026-10-20): hero motion is 320 ms, background blend 420 ms and text fade 200 ms. Ordinary AI story/character sessions generate three context-aware next actions independently of narration and cache them per reply. [API and batch content handoff](content/original-catalog/API-HANDOFF.md).
 
 Latest brand/layout pass (2026-10-20): [book badges, notification navigation, smooth hero shelf and 80 original catalogue drafts](docs/verification/2026-10-20-brand-layout-catalog.md). [Batch content and image-job instructions](content/original-catalog/README.md). Cover generation and live catalogue replacement are pending the user’s image API.

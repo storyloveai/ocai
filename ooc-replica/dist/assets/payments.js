@@ -1,3 +1,4 @@
+import {ledgerLabel} from './credit-details.js';
 function paymentError(error){
  const message=String(error?.message||'');
  if(!/[\u3400-\u9fff]/.test(message))return message||'Something went wrong. Please try again.';
@@ -29,10 +30,11 @@ export function createPayments({ account, show, modal, notify, storage = session
     });
     root.querySelectorAll('[name=credits-pack]').forEach(input=>input.addEventListener('change',()=>{selected=Number(input.value);root.querySelectorAll('.credits-pack').forEach(row=>row.classList.toggle('is-selected',Number(row.querySelector('input').value)===selected));}));
     root.querySelector('[data-buy-selected]')?.addEventListener('click',()=>checkout(selected));
-    root.querySelector('[data-credit-history]')?.addEventListener('click',()=>show(`<div class="credits-history-dialog"><h2>Credit History</h2>${error?`<p role="alert">${esc(error)}</p>`:''}${wallet?`<p>Current balance: ${wallet.balance.toLocaleString()} Credits</p>`:'<p>Balance unavailable. Sign in or refresh your balance to load your history.</p>'}${(wallet?.ledger||[]).map(item=>`<div class="credits-ledger-row"><span>${item.type==='purchase'?'Credit purchase':'Daily check-in'}<small>${esc(item.at)}</small></span><strong>+${esc(item.amount)}</strong></div>`).join('')||'<p>No transactions to show.</p>'}</div>`));
-    root.querySelector('[data-credit-info]')?.addEventListener('click',()=>show('<h2>About Credits</h2><p>Credits belong to your signed-in account. Payments are securely processed by Stripe. Current chats do not deduct credits.</p>'));
+    root.querySelector('[data-credit-history]')?.addEventListener('click',()=>show(`<div class="credits-history-dialog"><h2>Credit History</h2>${error?`<p role="alert">${esc(error)}</p>`:''}${wallet?`<p>Current balance: ${wallet.balance.toLocaleString()} Credits</p>`:'<p>Balance unavailable. Sign in or refresh your balance to load your history.</p>'}${(wallet?.ledger||[]).map(item=>`<div class="credits-ledger-row"><span>${ledgerLabel(item)}<small>${esc(item.at)}</small></span><strong>${item.type==='spend'?esc(item.charged)+' settled':(item.amount>0?'+':'')+esc(item.amount)}</strong></div>`).join('')||'<p>No transactions to show.</p>'}</div>`));
+    root.querySelector('[data-credit-info]')?.addEventListener('click',()=>show('<h2>About Credits</h2><p>'+ (cfg().billing?.enabled?'Replies use the price shown before sending. Gifts are spent first; purchases do not expire. The latest 50 ledger entries are shown.':'Credits belong to your account. Chat currently does not deduct credits.')+'</p>'));
     root.querySelector('[data-wallet-refresh]')?.addEventListener('click', async () => { await refresh(true); await verify(); });
     root.querySelector('[data-checkin]')?.addEventListener('click', checkin);
+    root.querySelector('[data-credit-claim]')?.addEventListener('submit',async event=>{event.preventDefault();if(busy)return;const campaign=new FormData(event.target).get('campaign'),version=generation;busy=true;draw();try{const result=await account.api('wallet',{action:'claim',campaign});if(current(version)){wallet=result;error='';notice=result.claimed?'Bonus credits added.':'Already claimed; no duplicate grant.';}}catch(e){if(current(version))error=e.message;}finally{if(current(version)){busy=false;draw();}}});
     root.querySelectorAll('[data-pack]').forEach(button => button.addEventListener('click', () => checkout(Number(button.dataset.pack))));
   }
   async function refresh(force=false) {
@@ -46,6 +48,7 @@ export function createPayments({ account, show, modal, notify, storage = session
     if (current(version)) draw();
     })();walletRequest=request;try{await request;}finally{if(walletRequest===request)walletRequest=null;}
   }
+  globalThis.addEventListener?.('sd-wallet-changed',()=>{if(account.user)void refresh(true);});
   async function checkin() {
     if (busy) return;
     const version = generation; busy = true; draw();

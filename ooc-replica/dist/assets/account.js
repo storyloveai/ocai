@@ -69,7 +69,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
       const response = await fetchImpl('/api/' + path, { method: body ? 'POST' : 'GET', headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' }, ...(body ? { body: JSON.stringify(body) } : {}) });
       const result = await response.json();
       if (a.user !== user) throw Error('账户已更换，请重试。');
-      if (!response.ok) throw Error(result.error || '请求失败，请重试。');
+      if (!response.ok) throw Object.assign(Error(result.error || '请求失败，请重试。'),{code:result.code,status:response.status});
       return result;
     },
     user: null, ready: false, restored: false, busy: true, providers: {}, error: '', syncError: '', restoreError: '', conflictKeys: [], pendingCount: 0, syncing: false,

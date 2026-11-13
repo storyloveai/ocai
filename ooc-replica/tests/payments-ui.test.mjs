@@ -76,3 +76,10 @@ test('expired checkout is cleared without crediting or redirecting',async()=>{
  f.payments.sync();f.payments.mount(f.root);await tick();
  assert.equal(f.storage.getItem('replica-payment:fixture:test:alice'),null);assert.match(f.root.textContent,/checkout expired/);assert.deepEqual(f.redirects,[]);
 });
+
+test('billing view separates promotional, purchased and historical credits and shows policy before checkout',async()=>{
+ const f=setup();f.account.paymentConfig.billing={enabled:true,mode:'test',version:'v1',prices:{standard:1,long:2},checkinCredits:3};
+ f.account.api=async()=>({balance:42,reserved:2,breakdown:{grant:12,purchased:20,legacy:10},ledger:[],nextExpiry:Date.now()+10000});
+ f.payments.sync();f.payments.mount(f.root);await tick();assert.match(f.root.textContent,/赠送 12/);assert.match(f.root.textContent,/购买 20/);assert.match(f.root.textContent,/历史余额 10/);assert.match(f.root.textContent,/预留 2/);assert.match(f.root.textContent,/长回复 2/);
+ f.root.querySelector('[data-credit-tab=free]').click();assert.match(f.root.textContent,/daily for 3/);assert.match(f.root.textContent,/expire after 7 days/);assert.ok(f.root.querySelector('[data-credit-claim]'));assert.doesNotMatch(f.root.textContent,/Chat currently does not deduct/);
+});

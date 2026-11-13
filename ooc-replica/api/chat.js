@@ -1,3 +1,4 @@
+import {beginChatBilling,billingError} from '../server/chat-billing.js';
 import {usageRecord} from '../server/usage-meter.js';
 import {randomUUID} from 'node:crypto';
 import {once} from 'node:events';
@@ -8,6 +9,7 @@ import {providerConfig,fallbackConfig,createModel,generationOptions} from '../se
 const windows=new Map();let active=0;
 export function classifyError(error,{timedOut=false,finishReason,reasoningTokens=0}={}){
  const upstream=Number(error?.statusCode||error?.cause?.statusCode)||null;
+ if(error?.code==='AI_INCOMPLETE')return {status:502,code:'AI_INCOMPLETE',error:'回复未完整生成，请重试；本次不结算积分。',retryable:true};
  if(timedOut)return {status:504,code:'AI_TIMEOUT',error:'模型响应超时，请重试。',retryable:true};
  if(upstream===401||upstream===403)return {status:502,code:'AI_AUTH',error:'模型服务拒绝了当前密钥或访问权限，请检查服务端配置。',retryable:false};
  if(upstream===402)return {status:502,code:'AI_BALANCE',error:'模型账户余额不足，请检查供应商账户。',retryable:false};
@@ -17,13 +19,13 @@ export function classifyError(error,{timedOut=false,finishReason,reasoningTokens
  if(error?.code==='AI_EMPTY_RESPONSE')return {status:502,code:reasoningTokens?'AI_REASONING_ONLY':'AI_EMPTY_RESPONSE',error:'模型没有返回可显示的正文，请重试。',retryable:true};
  return {status:502,code:'AI_UPSTREAM',error:'模型连接暂时失败，请重试。',retryable:true};
 }
-export default async function handler(req,res){
+export function createChatHandler({bill=beginChatBilling,stream=streamText,model=createModel,provider=providerConfig}={}){return async function handler(req,res){
  if(req.method!=='POST')return res.status(405).json({error:'Method not allowed'});
  const origin=req.headers.origin,host=req.headers.host;
  if(!origin||!host||origin!==`https://${host}`)return res.status(403).json({error:'Same-origin browser requests only'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({error:'JSON required'});
- let packet,usageTask;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>110000)throw new Error('Request too large');usageTask=body.task;packet=buildPrompt(body);}catch(error){return res.status(error?.code==='UNKNOWN_TITLE'?404:400).json({code:error?.code==='UNKNOWN_TITLE'?'UNKNOWN_TITLE':'INVALID_CONVERSATION',error:error?.code==='UNKNOWN_TITLE'?'Unknown title':'Invalid title or conversation'});}
- let config=providerConfig();if(!config)return res.status(503).json({error:'AI configuration is incomplete'});
+ let packet,usageTask,body;try{body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>110000)throw new Error('Request too large');usageTask=body.task;packet=buildPrompt(body);}catch(error){return res.status(error?.code==='UNKNOWN_TITLE'?404:400).json({code:error?.code==='UNKNOWN_TITLE'?'UNKNOWN_TITLE':'INVALID_CONVERSATION',error:error?.code==='UNKNOWN_TITLE'?'Unknown title':'Invalid title or conversation'});}
+ let config=provider();if(!config)return res.status(503).json({error:'AI configuration is incomplete'});
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [key,v]of windows)if(v.until<now)windows.delete(key);
  const window=windows.get(ip)||{until:now+60000,count:0};if(window.count>=8||active>=4||windows.size>=5000)return res.status(429).json({error:'Please wait before trying again'});window.count++;windows.set(ip,window);
 
@@ -32,7 +34,8 @@ export default async function handler(req,res){
   config=providerConfig({...process.env,AI_PROVIDER:'deepseek',DEEPSEEK_MODEL:'deepseek-flash'});
   if(!config)return res.status(503).json({error:'DeepSeek configuration is incomplete'});
  }
- const requestId=randomUUID(),started=Date.now();let timedOut=false,finishReason,reasoningTokens=0,reasoningChunks=0,upstreamStatus=null,upstreamHeadersMs=null,firstTextMs=null,phase='connecting',hasText=false;
+ let billing;try{billing=await bill(req,body);}catch(error){const detail=billingError(error);return res.status(detail.status).json(detail);}
+ const requestId=billing?.reservation?.id||billing?.replay?.id||randomUUID(),started=Date.now();let settled=false,fullReply='';let timedOut=false,finishReason,reasoningTokens=0,reasoningChunks=0,upstreamStatus=null,upstreamHeadersMs=null,firstTextMs=null,phase='connecting',hasText=false;
  const framed=String(req.headers.accept||'').includes('application/x-ndjson');
  const abort=new AbortController();const disconnect=()=>{if(!res.writableFinished)abort.abort();};res.on('close',disconnect);const timeout=setTimeout(()=>{timedOut=true;abort.abort();},165000);active++;
  const headers=()=>{res.setHeader('Cache-Control','no-store');res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('X-Prompt-Version',packet.promptVersion);res.setHeader('X-Request-Id',requestId);res.setHeader('Content-Type',framed?'application/x-ndjson; charset=utf-8':'text/plain; charset=utf-8');};
@@ -40,6 +43,7 @@ export default async function handler(req,res){
  const status=()=>emit({type:'status',phase,elapsedSeconds:Math.floor((Date.now()-started)/1000),requestId});
  let heartbeat;
  try{
+  if(billing?.replay){headers();await emit({type:'text',text:billing.replay.reply});await emit({type:'billing',...billing.replay,reply:undefined});await emit({type:'done',requestId,replayed:true});res.end();return;}
   if(framed){headers();await status();heartbeat=setInterval(()=>status().catch(()=>{}),10000);}
   const candidates=(packet.mode==='author-catalog'?[config]:[config,fallbackConfig(config)]).filter(Boolean);
   for(let attempt=0;attempt<candidates.length;attempt++){
@@ -47,16 +51,17 @@ export default async function handler(req,res){
   let usage, attemptOutcome='failed';
   const attemptAbort=new AbortController(),attemptTimer=attempt<candidates.length-1?setTimeout(()=>attemptAbort.abort(),20000):null;
   try{
-  const result=streamText({model:createModel(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...(packet.mode==='author-catalog'?{output:Output.json()}:{}),...generationOptions(config),maxRetries:0,abortSignal:AbortSignal.any([abort.signal,attemptAbort.signal]),onError:()=>{}});
+  const result=stream({model:model(config,{onConnecting:()=>{phase='connecting';},onHeaders:status=>{upstreamStatus=status;upstreamHeadersMs=Date.now()-started;phase='waiting-model';}}),system:packet.system,messages:packet.messages,maxOutputTokens:packet.maxOutputTokens,...(packet.mode==='author-catalog'?{output:Output.json()}:{}),...generationOptions(config),maxRetries:0,abortSignal:AbortSignal.any([abort.signal,attemptAbort.signal]),onError:()=>{}});
   for await(const part of result.stream){
    if(abort.signal.aborted)break;
    if(part.type==='error')throw part.error;
    if(part.type==='reasoning-delta'){reasoningChunks++;phase='thinking';}
    if(part.type==='finish-step'||part.type==='finish'){finishReason=part.finishReason;usage=part.totalUsage||part.usage||usage;reasoningTokens=usage?.outputTokenDetails?.reasoningTokens??reasoningTokens;}
-   if(part.type==='text-delta'&&part.text){if(!hasText){clearTimeout(attemptTimer);hasText=true;firstTextMs=Date.now()-started;if(!framed)headers();}phase='streaming';await emit({type:'text',text:part.text});}
+   if(part.type==='text-delta'&&part.text){if(!hasText){clearTimeout(attemptTimer);hasText=true;firstTextMs=Date.now()-started;if(!framed)headers();}phase='streaming';fullReply+=part.text;await emit({type:'text',text:part.text});}
   }
   if(timedOut)throw new Error('Request deadline reached');
   if(abort.signal.aborted)return;
+  if(billing&&hasText&&finishReason!=='stop')throw Object.assign(new Error('Incomplete reply'),{code:'AI_INCOMPLETE'});
   if(!hasText)throw Object.assign(new Error('No response text'),{code:'AI_EMPTY_RESPONSE'});
   attemptOutcome='completed';break;
   }catch(error){
@@ -65,8 +70,10 @@ export default async function handler(req,res){
    phase='connecting';finishReason=undefined;reasoningTokens=0;
   }finally{clearTimeout(attemptTimer);console.info(JSON.stringify(usageRecord({requestId,provider:config.name,model:config.model,attempt:attempt+1,task:usageTask,usage,outcome:timedOut?'failed':abort.signal.aborted?'cancelled':attemptOutcome})));}
   }
+  if(billing){const receipt=await billing.finish(true,fullReply);if(receipt.status!=='settled')throw Object.assign(Error('Reservation expired'),{code:'BILLING_EXPIRED'});settled=true;await emit({type:'billing',...receipt,requestId});}
   await emit({type:'done',requestId,finishReason,...(packet.mode==='author-catalog'?{model:config.model,provider:config.name}: {})});res.end();
   console.info(JSON.stringify({event:'ai_response_complete',requestId,model:config.model,promptVersion:packet.promptVersion,firstTextMs,durationMs:Date.now()-started,finishReason,reasoningTokens}));
  }catch(error){if(abort.signal.aborted&&!timedOut)return;const failure=classifyError(error,{timedOut,finishReason,reasoningTokens});console.error(JSON.stringify({event:'ai_response_failed',requestId,code:failure.code,upstreamStatus,upstreamHeadersMs,phase,reasoningChunks,finishReason,reasoningTokens,outputTokenLimit:packet.maxOutputTokens,durationMs:Date.now()-started,model:config.model,promptVersion:packet.promptVersion}));if(framed&&!res.destroyed){await emit({type:'error',...failure,requestId});res.end();}else if(!res.headersSent&&!res.destroyed)res.status(failure.status).json({...failure,requestId});else if(!res.writableEnded)res.destroy();}
- finally{clearTimeout(timeout);clearInterval(heartbeat);res.off('close',disconnect);abort.abort();active--;}
-}
+ finally{if(billing&&!billing.replay&&!settled){try{await billing.finish(false);}catch{console.warn(JSON.stringify({event:'credit_release_pending',requestId}));}}clearTimeout(timeout);clearInterval(heartbeat);res.off('close',disconnect);abort.abort();active--;}
+};}
+export default createChatHandler();

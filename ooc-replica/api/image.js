@@ -1,3 +1,4 @@
+import {creditPolicy,quote} from '../server/credit-policy.js';
 // Cover-art generation through the OpenAI Images API. Key and model come from the Vercel environment:
 // OPENAI_API_KEY and OPENAI_MODEL (spaced/camel-case spellings of the same names are also accepted).
 // Default model: gpt-image-2.5-flare (fast everyday generation). gpt-image-1 was shut down on 2026-10-23, so it is never used as a fallback.
@@ -23,6 +24,7 @@ export default async function handler(req,res){
  const origin=req.headers.origin,host=req.headers.host;
  if(!origin||!host||origin!==`https://${host}`)return res.status(403).json({error:'Same-origin browser requests only'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({error:'JSON required'});
+ if(creditPolicy().enabled){try{quote({},process.env,'image');}catch(e){return res.status(e.status||503).json({code:e.code,error:e.message});}}
  const config=imageConfig();if(!config)return res.status(503).json({error:'Image generation is not configured on the server.'});
  let prompt;try{const body=typeof req.body==='string'?JSON.parse(req.body):req.body;if(Buffer.byteLength(JSON.stringify(body)||'')>8000)throw Error('too large');prompt=imagePrompt(body);}catch{return res.status(400).json({error:'Invalid image request'});}
  const ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0],now=Date.now();for(const [k,v]of windows)if(v.until<now)windows.delete(k);

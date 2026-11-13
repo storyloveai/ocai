@@ -1,3 +1,4 @@
+import {creditPolicy,quote} from '../server/credit-policy.js';
 import {generateText,streamText,Output,jsonSchema} from 'ai';
 import {once} from 'node:events';
 import {providerConfig,fallbackConfig,createModel,generationOptions} from '../server/provider.js';
@@ -26,6 +27,7 @@ export function createHandler({config=providerConfig,model=createModel,generate=
  if(req.headers.origin!==`https://${req.headers.host}`)return res.status(403).json({code:'same_origin_required'});
  if(!String(req.headers['content-type']||'').startsWith('application/json'))return res.status(415).json({code:'json_required'});
  let packet,body;try{if(Buffer.byteLength(JSON.stringify(req.body)||'')>48000)throw Error();body=typeof req.body==='string'?JSON.parse(req.body):req.body;packet=stage(body);}catch{return res.status(400).json({code:'invalid_request'});}
+ if(creditPolicy().enabled){try{quote({},process.env,'game');}catch(e){return res.status(e.status||503).json({code:e.code,error:e.message});}}
  const cfg=config();if(!cfg)return res.status(503).json({code:'sampling_disabled'});
  const now=Date.now(),ip=String(req.headers['x-forwarded-for']||'unknown').split(',')[0];for(const [key,w]of windows)if(w.until<now)windows.delete(key);
  const window=windows.get(ip)||{count:0,until:now+60000};if(window.count>=30||active>=4||windows.size>5000)return res.status(429).json({code:'rate_limited'});window.count++;windows.set(ip,window);active++;
