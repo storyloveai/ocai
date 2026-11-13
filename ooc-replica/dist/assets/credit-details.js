@@ -20,6 +20,7 @@ export function claimForm(config, user, busy) {
 export const ledgerLabel = (item) =>
   ({
     purchase: "购买积分",
+    migration: "历史余额接续",
     grant: "赠送积分",
     reserve: "生成预留",
     spend: "已完成结算",

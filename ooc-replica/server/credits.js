@@ -169,7 +169,7 @@ function add(data, { id, source, amount, expiresAt = null }, now) {
     {
       id,
       source,
-      type: source === "purchased" ? "purchase" : "grant",
+      type: source === "purchased" ? "purchase" : source === "grant" ? "grant" : "migration",
       amount,
       expiresAt,
     },
