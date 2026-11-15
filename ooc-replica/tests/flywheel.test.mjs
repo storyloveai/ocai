@@ -165,6 +165,14 @@ test('flywheel pages work end to end on a single boot', async () => {
   assert.equal(stored.length, 1);
   assert.equal(stored[0].name.zh, '夜航');
   assert.ok(document.querySelector('#fw-drafts:not([hidden])'), 'draft list appears after save');
+  document.querySelector('[data-fw-edit]').click();
+  assert.equal(document.getElementById('fw-f-zh').value, '夜航', 'editing a draft reloads it into the form');
+  assert.ok(document.getElementById('fw-form-note').textContent.includes('编辑') || document.getElementById('fw-form-note').textContent.includes('Editing'), 'editing state is announced');
+  document.getElementById('fw-f-zh').value = '夜航二号';
+  document.querySelector('[data-fw-save]').click();
+  const stored2 = JSON.parse(values.get('sd-flywheel-drafts'));
+  assert.equal(stored2.length, 1, 'saving an edit replaces the draft instead of duplicating');
+  assert.equal(stored2[0].name.zh, '夜航二号');
   document.querySelector('[data-fw-stab="mix"]').click();
   assert.equal(document.querySelector('[data-fw-spane="mix"]').hidden, false);
   document.querySelector('[data-fw-mix]').click();

@@ -46,7 +46,7 @@ const copy = {
     fAuth: '这个角色给不给别人用？', auth0: '只自己用', auth1: '同宇宙的故事可用', auth2: '可被其他创作者组合',
     authNote: '授权是创作者自己的决定，别人不能替你打开。这是原型演示，开关暂不生效。',
     preview: '实时预览', saveDraft: '保存草稿', drafts: '我的草稿', noDrafts: '还没有草稿。填一张卡，保存看看。', exportJ: '导出 JSON', del: '删除',
-    next: '下一步', prev: '上一步', required: '名字先填好，再继续。', saved: '已保存',
+    next: '下一步', prev: '上一步', required: '名字先填好，再继续。', saved: '已保存', edit: '编辑', editingNote: '正在编辑草稿，保存后替换原稿。',
     mixH: '拼角色', mixSub: '勾选两张以上的卡，看它们在一个前提下相遇。', mixGo: '生成相遇前提', mixPick: (n) => `已选 ${n} 张`,
     mixOut: '相遇前提（模板拼装，非 AI 生成）', mixEmpty: '至少选两张卡。', mixAuth: '授权规则生效中：这里只列出允许被组合的角色。',
     builderLink: '要正式创作故事或角色？去创作工坊 →',
@@ -80,7 +80,7 @@ const copy = {
     fAuth: 'May others use this character?', auth0: 'Only me', auth1: 'Usable in this universe\u2019s stories', auth2: 'Open for other creators to combine',
     authNote: "Authorization is the creator's own decision. This is a prototype; the switch changes nothing yet.",
     preview: 'Live preview', saveDraft: 'Save draft', drafts: 'My drafts', noDrafts: 'No drafts yet. Fill a card and save it.', exportJ: 'Export JSON', del: 'Delete',
-    next: 'Next', prev: 'Back', required: 'Fill the name first.', saved: 'Saved',
+    next: 'Next', prev: 'Back', required: 'Fill the name first.', saved: 'Saved', edit: 'Edit', editingNote: 'Editing a draft; saving replaces it.',
     mixH: 'Mix characters', mixSub: 'Pick two or more cards and watch them meet under one premise.', mixGo: 'Generate the premise', mixPick: (n) => `${n} selected`,
     mixOut: 'The premise (template-made, no AI)', mixEmpty: 'Pick at least two cards.', mixAuth: 'Authorization honored: only characters opened for combining are listed.',
     builderLink: 'Ready to author for real? Open the workshop →',
@@ -307,17 +307,20 @@ function renderDemoLine(index) {
 const readDrafts = () => { try { const v = JSON.parse(localStorage.getItem(DRAFT_KEY) || '[]'); return Array.isArray(v) ? v : []; } catch { return []; } };
 const writeDrafts = (list) => { try { localStorage.setItem(DRAFT_KEY, JSON.stringify(list)); } catch {} };
 let studioStep = 0;
+let editingDraft = null;
 const studioMix = new Set();
 const AUTH_LABELS = () => [L().auth0, L().auth1, L().auth2];
 const draftsMarkup = () => {
   const l = L();
   const saved = readDrafts();
   return `<section class="fw-section" id="fw-drafts" ${saved.length ? '' : 'hidden'}><h2>${l.drafts} · ${saved.length}</h2>
-    ${saved.length ? `<div class="fw-appearances">${saved.map((d, i) => `<div class="fw-appearance fw-draft"><strong>${safe(d.name?.zh || d.name?.en || '—')}</strong><span>${safe(uniName(d.universe))} · ${safe(fwName(d.framework))}</span><button type="button" class="fw-chip" data-fw-del="${i}">${safe(l.del)}</button></div>`).join('')}</div><button type="button" class="fw-btn" data-fw-export>${safe(l.exportJ)}</button>` : ''}
+    ${saved.length ? `<div class="fw-appearances">${saved.map((d, i) => `<div class="fw-appearance fw-draft"><strong>${safe(d.name?.zh || d.name?.en || '—')}</strong><span>${safe(uniName(d.universe))} · ${safe(fwName(d.framework))}</span><button type="button" class="fw-chip" data-fw-edit="${i}">${safe(l.edit)}</button><button type="button" class="fw-chip" data-fw-del="${i}">${safe(l.del)}</button></div>`).join('')}</div><button type="button" class="fw-btn" data-fw-export>${safe(l.exportJ)}</button>` : ''}
   </section>`;
 };
 function studioMarkup() {
   const l = L();
+  const editing = editingDraft != null ? readDrafts()[editingDraft] : null;
+  const val = (k, ph) => safe((editing && editing[k]) || '');
   const portraits = CHARACTER_CARDS.slice(0, 12).map((c) => `<label class="fw-pick"><input type="radio" name="fw-portrait" value="${safe(c.portrait)}"><img src="${safe(c.portrait)}" alt="" loading="lazy"></label>`).join('');
   const uniOpts = Object.keys(UNIVERSES).map((id) => `<option value="${id}">${safe(uniName(id))}</option>`).join('');
   const fwOpts = Object.keys(FRAMEWORKS).map((id) => `<option value="${id}">${safe(fwName(id))}</option>`).join('');
@@ -336,8 +339,8 @@ function studioMarkup() {
       <div class="fw-builder">
         <div class="fw-form">
           ${pane(0, `
-            <label>${safe(l.fName)}<input id="fw-f-zh" maxlength="24" placeholder="夏知遥"></label>
-            <label>${safe(l.fNameEn)}<input id="fw-f-en" maxlength="40" placeholder="Xia Zhiyao"></label>
+            <label>${safe(l.fName)}<input id="fw-f-zh" maxlength="24" placeholder="夏知遥" value="${val('name') && safe(editing.name.zh || '')}"></label>
+            <label>${safe(l.fNameEn)}<input id="fw-f-en" maxlength="40" placeholder="Xia Zhiyao" value="${val('name') && safe(editing.name.en || '')}"></label>
             <label>${safe(l.fUniverse)}<select id="fw-f-uni">${uniOpts}</select></label>
             <label>${safe(l.fFramework)}<select id="fw-f-fw">${fwOpts}</select></label>
             <fieldset><legend>${safe(l.fPortrait)}</legend><div class="fw-pickgrid">${portraits}</div></fieldset>`)}
@@ -482,7 +485,20 @@ function renderRoute(path) {
 }
 
 // —— 交互绑定 ——
+function bindTabKeys(wrap) {
+  wrap.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    const tabs = [...wrap.querySelectorAll('[role=tab]')];
+    const at = tabs.indexOf(document.activeElement);
+    if (at < 0) return;
+    e.preventDefault();
+    const next = tabs[(at + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+    next.focus();
+    next.click();
+  });
+}
 function bindCommon(root) {
+  root.querySelectorAll('.fw-tabs').forEach(bindTabKeys);
   root.querySelectorAll('[data-fw-filter]').forEach((b) => b.addEventListener('click', () => { libFilter.universe = b.dataset.fwFilter; renderRoute('/characters'); }));
   root.querySelectorAll('#fw-search').forEach((input) => input.addEventListener('input', () => {
     libQuery = input.value;
@@ -511,56 +527,60 @@ function bindCommon(root) {
   }));
 }
 let studioInputBound = false;
+let studioBound = false;
 function bindStudio() {
   bindCommon(document);
   document.querySelectorAll('[data-fw-stab]').forEach((b) => b.addEventListener('click', () => {
     document.querySelectorAll('[data-fw-stab]').forEach((x) => { x.classList.toggle('active', x === b); x.setAttribute('aria-selected', String(x === b)); });
     document.querySelectorAll('[data-fw-spane]').forEach((p) => { p.hidden = p.dataset.fwSpane !== b.dataset.fwStab; });
   }));
-  document.querySelectorAll('[data-fw-wstep]').forEach((b) => b.addEventListener('click', () => {
-    studioStep = Math.max(0, Math.min(2, studioStep + Number(b.dataset.fwWstep)));
-    // 就地换步：不重渲染，保住已填内容
-    document.querySelectorAll('[data-fw-sstep]').forEach((p) => { p.hidden = Number(p.dataset.fwSstep) !== studioStep; });
-    document.querySelectorAll('[data-fw-stepdot]').forEach((s) => { const i = Number(s.dataset.fwStepdot); s.classList.toggle('active', i === studioStep); s.classList.toggle('done', i < studioStep); });
-    const nav = document.querySelector('.fw-wizard-nav');
-    if (nav) {
-      const l = L();
-      nav.innerHTML = `${studioStep > 0 ? `<button type="button" class="fw-btn" data-fw-wstep="-1">${safe(l.prev)}</button>` : ''}${studioStep < 2 ? `<button type="button" class="fw-btn" data-fw-wstep="1">${safe(l.next)}</button>` : ''}<button type="button" class="fw-btn fw-btn-gold" data-fw-save>${safe(l.saveDraft)}</button>`;
-      bindStudioButtons();
-    }
-  }));
-  bindStudioButtons();
-  if (!studioInputBound) {
-    studioInputBound = true;
-    document.addEventListener('input', (e) => {
-      if (!e.target.closest?.('.fw-builder')) return;
-      const card = document.querySelector('#fw-live-card');
-      if (card) card.innerHTML = liveCardMarkup();
+  // 工作台按钮全部走一次性事件委托：重渲染/局部替换后不会叠加监听器
+  if (!studioBound) {
+    studioBound = true;
+    document.addEventListener('click', (e) => {
+      const b = e.target.closest?.('[data-fw-save],[data-fw-wstep],[data-fw-edit],[data-fw-del],[data-fw-export],[data-fw-mix],[data-fw-mixgo]');
+      if (!b || !document.querySelector('[data-fw-page="studio"]')) return;
+      if (b.dataset.fwWstep) { stepMove(Number(b.dataset.fwWstep)); return; }
+      if (b.dataset.fwSave !== undefined) { saveDraft(); return; }
+      if (b.dataset.fwEdit !== undefined) { editingDraft = Number(b.dataset.fwEdit); studioStep = 0; renderRoute('/studio'); return; }
+      if (b.dataset.fwDel !== undefined) { const list = readDrafts(); list.splice(Number(b.dataset.fwDel), 1); editingDraft = null; writeDrafts(list); const slot = document.getElementById('fw-drafts'); if (slot) slot.outerHTML = draftsMarkup(); return; }
+      if (b.dataset.fwExport !== undefined) { exportDrafts(); return; }
+      if (b.dataset.fwMix) { const id = b.dataset.fwMix; if (studioMix.has(id)) studioMix.delete(id); else studioMix.add(id); b.classList.toggle('active', studioMix.has(id)); b.setAttribute('aria-pressed', String(studioMix.has(id))); const count = document.querySelector('[data-fw-mixgo]')?.nextElementSibling; if (count) count.textContent = L().mixPick(studioMix.size); return; }
+      if (b.dataset.fwMixgo !== undefined) { const out = document.querySelector('#fw-mix-out'); if (out) out.innerHTML = mixPremiseMarkup(); }
     });
   }
+  prefillEditing();
 }
-function bindStudioButtons() {
-  document.querySelectorAll('[data-fw-save]').forEach((b) => b.addEventListener('click', saveDraft));
-  document.querySelectorAll('[data-fw-del]').forEach((b) => b.addEventListener('click', () => {
-    const list = readDrafts();
-    list.splice(Number(b.dataset.fwDel), 1);
-    writeDrafts(list);
-    const slot = document.getElementById('fw-drafts');
-    if (slot) { slot.outerHTML = draftsMarkup(); bindStudioButtons(); }
-  }));
-  document.querySelectorAll('[data-fw-export]').forEach((b) => b.addEventListener('click', exportDrafts));
-  document.querySelectorAll('[data-fw-mix]').forEach((b) => b.addEventListener('click', () => {
-    const id = b.dataset.fwMix;
-    if (studioMix.has(id)) studioMix.delete(id); else studioMix.add(id);
-    b.classList.toggle('active', studioMix.has(id));
-    b.setAttribute('aria-pressed', String(studioMix.has(id)));
-    const count = document.querySelector('[data-fw-mixgo]')?.nextElementSibling;
-    if (count) count.textContent = L().mixPick(studioMix.size);
-  }));
-  document.querySelectorAll('[data-fw-mixgo]').forEach((b) => b.addEventListener('click', () => {
-    const out = document.querySelector('#fw-mix-out');
-    if (out) out.innerHTML = mixPremiseMarkup();
-  }));
+function stepMove(delta) {
+  studioStep = Math.max(0, Math.min(2, studioStep + delta));
+  document.querySelectorAll('[data-fw-sstep]').forEach((p) => { p.hidden = Number(p.dataset.fwSstep) !== studioStep; });
+  document.querySelectorAll('[data-fw-stepdot]').forEach((s2) => { const i = Number(s2.dataset.fwStepdot); s2.classList.toggle('active', i === studioStep); s2.classList.toggle('done', i < studioStep); });
+  const nav = document.querySelector('.fw-wizard-nav');
+  if (nav) {
+    const l = L();
+    nav.innerHTML = `${studioStep > 0 ? `<button type="button" class="fw-btn" data-fw-wstep="-1">${safe(l.prev)}</button>` : ''}${studioStep < 2 ? `<button type="button" class="fw-btn" data-fw-wstep="1">${safe(l.next)}</button>` : ''}<button type="button" class="fw-btn fw-btn-gold" data-fw-save>${safe(l.saveDraft)}</button>`;
+  }
+}
+function prefillEditing() {
+  if (editingDraft == null) return;
+  const d = readDrafts()[editingDraft];
+  if (!d) { editingDraft = null; return; }
+  const set = (id, v) => { const el = document.getElementById(id); if (!el || v == null) return; try { el.value = v; } catch { /* linkedom 的 select.value 只有 getter */ } };
+  set('fw-f-zh', d.name?.zh);
+  set('fw-f-en', d.name?.en);
+  set('fw-f-uni', d.universe);
+  set('fw-f-fw', d.framework);
+  set('fw-f-tagline', d.tagline);
+  set('fw-f-persona', d.persona);
+  set('fw-f-voice', d.voice);
+  set('fw-f-locked', d.locked);
+  if (d.portrait) { const r = document.querySelector(`input[name="fw-portrait"][value="${d.portrait}"]`); if (r) r.checked = true; }
+  const auth = document.querySelectorAll('input[name="fw-auth"]');
+  if (auth[d.auth || 0]) auth[d.auth || 0].checked = true;
+  const card = document.querySelector('#fw-live-card');
+  if (card) card.innerHTML = liveCardMarkup();
+  const note = document.getElementById('fw-form-note');
+  if (note) note.textContent = L().editingNote;
 }
 function saveDraft() {
   const note = document.getElementById('fw-form-note');
@@ -568,7 +588,7 @@ function saveDraft() {
   const nameEn = document.getElementById('fw-f-en')?.value?.trim();
   if (!nameZh && !nameEn) { if (note) note.textContent = L().required; return; }
   const list = readDrafts();
-  list.push({
+  const entry = {
     name: { zh: nameZh, en: nameEn },
     universe: document.getElementById('fw-f-uni')?.value,
     framework: document.getElementById('fw-f-fw')?.value,
@@ -579,16 +599,24 @@ function saveDraft() {
     locked: document.getElementById('fw-f-locked')?.value?.trim() || '',
     auth: Number(document.querySelector('input[name="fw-auth"]:checked')?.value || 0),
     savedAt: new Date().toISOString(),
-  });
+  };
+  if (editingDraft != null && list[editingDraft]) list[editingDraft] = entry; else list.push(entry);
+  editingDraft = null;
   writeDrafts(list);
   if (note) note.textContent = `${L().saved} ✓`;
   const slot = document.getElementById('fw-drafts');
   if (slot) slot.outerHTML = draftsMarkup();
-  bindStudioButtons();
 }
 function exportDrafts() {
-  const w = window.open ? window.open('', '_blank') : null;
-  if (w) { w.document.write(`<pre>${safe(JSON.stringify(readDrafts(), null, 2))}</pre>`); w.document.title = 'flywheel-drafts.json'; }
+  const blob = new Blob([JSON.stringify(readDrafts(), null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'flywheel-drafts.json';
+  document.body.append(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 // —— 入口（app.js 在 community.show 之后调用） ——
