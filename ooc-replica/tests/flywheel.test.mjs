@@ -81,6 +81,28 @@ test('flywheel pages work end to end on a single boot', async () => {
   go('/characters/sg-caocao');
   page = document.querySelector('[data-fw-page="profile"]');
   assert.ok(page.querySelector('.fw-ctas a[href="/play/sgc-002"]'), 'sanguo chat CTA uses the whitelisted profile id');
+  assert.ok(page.querySelector('.fw-quote'), 'sanguo opening line becomes a voice quote');
+  assert.ok(page.querySelector('.fw-quote cite').textContent.includes('许都'), 'quote cites the scene');
+  assert.ok(page.querySelectorAll('.fw-starters li').length >= 3, 'sanguo starters render as conversation topics');
+  go('/characters');
+  go('/characters/oc-shen-yanzhou');
+  page = document.querySelector('[data-fw-page="profile"]');
+  assert.ok(page.querySelectorAll('.fw-quote').length >= 1, 'original opening becomes a voice quote');
+  const encounters = page.querySelectorAll('a[href*="encounter="]');
+  assert.ok(encounters.length >= 2, 'original encounter links render');
+  go('/characters');
+  go('/characters/xc-zhiyao');
+  page = document.querySelector('[data-fw-page="profile"]');
+  const exprButtons = page.querySelectorAll('[data-fw-expr]');
+  assert.equal(exprButtons.length, 6, 'zhiyao exposes six expressions');
+  const mainImg = document.getElementById('fw-portrait-main');
+  const beforeSrc = mainImg.getAttribute('src');
+  exprButtons[2].click();
+  assert.notEqual(document.getElementById('fw-portrait-main').getAttribute('src'), beforeSrc, 'clicking an expression swaps the portrait');
+  assert.equal(exprButtons[2].getAttribute('aria-pressed'), 'true');
+  go('/characters');
+  go('/characters/wn-lamp');
+  assert.equal(document.querySelectorAll('[data-fw-expr]').length, 0, 'single-expression characters render no switcher');
 
   // —— 宇宙 ——
   go('/universe');

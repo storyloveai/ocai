@@ -861,3 +861,49 @@ export function cardsByFramework(frameworkId) {
 export function cardsByWork(workId) {
   return CHARACTER_CARDS.filter((c) => c.source.work === workId || c.appearances.some((a) => a.work === workId));
 }
+
+// —— 派生数据（保持“一处数据多处引用”，不在本文件手抄站点已有内容）——
+import {sanguoCharacters} from '../sanguo-characters.js';
+import {originalCharacters} from '../original-characters.js';
+
+// 立绘可用表情（2026-11-16 扫描 dist/assets 内 sprite 目录所得；站内现成资源，不新增图）
+const EXPRESSIONS = {
+  'xc-zhiyao': ['normal', 'smile', 'shy', 'sad', 'angry', 'surprised'],
+  'xc-shencheng': ['normal', 'smile', 'shy', 'sad', 'angry', 'surprised'],
+  'xc-jibai': ['normal', 'smile', 'shy', 'sad', 'angry', 'surprised'],
+  'wn-baiqiu': ['normal', 'serious', 'smile'],
+  'wn-carlo': ['angry', 'normal', 'smile'],
+  'wn-evelyn': ['normal', 'sad', 'serious'],
+  'wn-gran': ['battle', 'normal', 'sad', 'serious'],
+  'wn-sword': ['battle', 'normal', 'sad', 'smile'],
+  'wn-suman': ['normal', 'sad', 'serious'],
+};
+const stripDirections = (s) => String(s || '').replace(/\*[^*]*\*/g, '').replace(/\s+/g, ' ').trim();
+
+for (const card of CHARACTER_CARDS) {
+  // 表情差分：多表情的角色给出切换列表（档案页渲染缩略图）
+  const expressions = EXPRESSIONS[card.id];
+  if (expressions && expressions.length > 1) {
+    card.expressions = expressions;
+    card.expressionUrl = (expr) => card.portrait.replace(/[^/]+$/, `${expr}.webp`);
+  }
+  // 三国卡：开场白即例句（开场白本来就是站内真实首句，出处=场景名）
+  if (card.source.work === 'sanguo' && card.chat && card.voice && card.voice.samples.length === 0) {
+    const site = sanguoCharacters.find((x) => x.id === card.chat.split('/').pop());
+    if (site?.opening?.zh) {
+      card.voice.samples.push({ zh: stripDirections(site.opening.zh), en: stripDirections(site.opening.en), from: `${site.scene?.zh || '三国·谋士'} · 角色开场` });
+    }
+    if (site?.starters?.zh?.length) card.starters = site.starters;
+  }
+  // 原创卡：开场白例句 + 两场相遇入口（encounter 链接走站内现有参数）
+  if (card.source.work === 'character' && card.voice && card.voice.samples.length === 0) {
+    const site = originalCharacters.find((x) => x.id === card.id);
+    if (site?.scenes?.length) {
+      const first = site.scenes[0];
+      if (first?.opening?.zh) {
+        card.voice.samples.push({ zh: stripDirections(first.opening.zh), en: stripDirections(first.opening.en), from: `${site.scenes[0].title?.zh || '原创相遇'} · 相遇开场` });
+      }
+      card.encounters = site.scenes.map((s) => ({ title: s.title, url: `/play/${card.id}?encounter=${s.id}` }));
+    }
+  }
+}

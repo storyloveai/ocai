@@ -19,6 +19,7 @@ const copy = {
     chatCta: '去聊天', storyCta: '去 TA 的故事', openCta: '打开',
     profileBack: '返回角色库', personaH: '人设', voiceH: '说话方式', lockedH: '不能违背的设定', appearH: 'TA 的出场',
     samplesFrom: '摘自', noSamples: '暂无例句。', sameUniverseH: '同一宇宙的其他角色', noChat: '这个角色的聊天入口暂未开放，可以先读 TA 的故事。',
+    exprH: '表情', encounterH: '选择一场相遇', encounterCta: '从这里进入', topicsH: '可以从这里聊起',
     uniTitle: '宇宙', uniSub: '厨房的规矩：世界规则、地点、势力、时间线。规则清楚，角色再多也不会乱。',
     placesH: '地点', factionsH: '势力', timelineH: '时间线', rulesH: '世界规则', magicH: '这个宇宙怎么运作',
     storyH: '这个宇宙的故事', charsH: '这个宇宙的角色', rolesH: '角色',
@@ -51,6 +52,7 @@ const copy = {
     chatCta: 'Chat', storyCta: 'Enter their story', openCta: 'Open',
     profileBack: 'Back to characters', personaH: 'Persona', voiceH: 'Voice', lockedH: 'What must never break', appearH: 'Appearances',
     samplesFrom: 'from', noSamples: 'No quotes yet.', sameUniverseH: 'Others in this universe', noChat: 'Chat is not open for this character yet — start with their story.',
+    exprH: 'Expressions', encounterH: 'Choose an encounter', encounterCta: 'Start here', topicsH: 'A place to start',
     uniTitle: 'Universes', uniSub: "The kitchen's rules: world rules, places, factions, timelines. Clear rules keep any number of characters coherent.",
     placesH: 'Places', factionsH: 'Factions', timelineH: 'Timeline', rulesH: 'World rules', magicH: 'How this universe works',
     storyH: 'Stories in this universe', charsH: 'Characters in this universe', rolesH: 'roles',
@@ -133,18 +135,26 @@ function libMarkup() {
 }
 
 // —— /characters/<id> ——
+const quoted = (x) => (/^[“"「]/.test(x) ? x : `“${x}”`);
 function profileMarkup(c) {
   const l = L();
-  const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>“${safe(t(s))}”</p><cite>${safe(l.samplesFrom)} · ${safe(s.from || workName(c.source.work))}</cite></blockquote>`).join('');
+  const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>${safe(quoted(t(s)))}</p><cite>${safe(l.samplesFrom)} · ${safe(s.from || workName(c.source.work))}</cite></blockquote>`).join('');
   const appears = c.appearances.map((a) => `<a class="fw-appearance" href="${safe(a.url)}"${ext(a.url)}><strong>${safe(workName(a.work))}</strong><span>${safe(t(a.role))}</span><span aria-hidden="true">↗</span></a>`).join('');
+  const encounters = (c.encounters || []).map((e) => `<a class="fw-appearance" href="${safe(e.url)}"><strong>${safe(t(e.title))}</strong><span>${safe(l.encounterCta)}</span><span aria-hidden="true">↗</span></a>`).join('');
+  const starters = (c.starters?.[getLang() === 'zh' ? 'zh' : 'en'] || []).map((x) => `<li>${safe(x)}</li>`).join('');
   const others = cardsByUniverse(c.source.universe).filter((x) => x.id !== c.id).slice(0, 8);
   const w = WORKS[c.source.work];
   const ctas = `${c.chat ? `<a class="fw-btn fw-btn-gold" href="${safe(c.chat)}">${safe(l.chatCta)} ↗</a>` : ''}${w ? `<a class="fw-btn" href="${safe(w.url)}"${ext(w.url)}>${safe(l.storyCta)} ↗</a>` : ''}`;
+  const multi = (c.expressions || []).length > 1;
+  const portraitBlock = multi
+    ? `<div class="fw-profile-portrait"><img id="fw-portrait-main" src="${safe(c.portrait)}" alt="" onerror="this.style.visibility='hidden'">
+       <div class="fw-expressions" role="group" aria-label="${safe(l.exprH)}">${c.expressions.map((e, i) => `<button type="button" class="fw-expr${i === 0 ? ' active' : ''}" data-fw-expr="${safe(c.expressionUrl(e))}" aria-pressed="${i === 0}" aria-label="${safe(e)}"><img src="${safe(c.expressionUrl(e))}" alt="" loading="lazy"></button>`).join('')}</div></div>`
+    : `<div class="fw-profile-portrait">${cardArt(c)}</div>`;
   return `<main class="fw-page" data-no-i18n data-fw-page="profile">
     <a class="fw-back" href="/characters">‹ ${l.profileBack}</a>
     <article class="fw-profile">
       <div class="fw-profile-top">
-        <div class="fw-profile-portrait">${cardArt(c)}</div>
+        ${portraitBlock}
         <div class="fw-profile-head">
           <p class="fw-eyebrow">${safe(uniName(c.source.universe))} · ${safe(fwName(c.source.framework))}</p>
           <h1>${safe(t(c.name))}</h1>
@@ -156,7 +166,9 @@ function profileMarkup(c) {
       </div>
       <section class="fw-section"><h2>${l.voiceH}</h2>${c.voice ? `<p>${safe(t(c.voice))}</p>` : ''}${samples || `<p class="fw-note">${safe(l.noSamples)}</p>`}</section>
       <section class="fw-section"><h2>${l.lockedH}</h2><p>${safe(t(c.locked))}</p></section>
-      <section class="fw-section"><h2>${l.appearH}</h2><div class="fw-appearances">${appears}</div></section>
+      <section class="fw-section"><h2>${l.appearH}</h2><div class="fw-appearances">${appears}</div>
+      ${encounters ? `<h3 class="fw-subhead">${safe(l.encounterH)}</h3><div class="fw-appearances">${encounters}</div>` : ''}
+      ${starters ? `<h3 class="fw-subhead">${safe(l.topicsH)}</h3><ul class="fw-rules fw-starters">${starters}</ul>` : ''}</section>
       ${others.length ? `<section class="fw-section"><h2>${l.sameUniverseH}</h2><div class="fw-hscroll">${others.map(cardMarkup).join('')}</div></section>` : ''}
     </article>
   </main>`;
@@ -457,6 +469,11 @@ function bindCommon(root) {
     root.querySelectorAll('[data-fw-line]').forEach((x) => x.classList.toggle('active', x === b));
     const out = root.querySelector('#fw-demo-out');
     if (out) out.innerHTML = renderDemoLine(Number(b.dataset.fwLine));
+  }));
+  root.querySelectorAll('[data-fw-expr]').forEach((b) => b.addEventListener('click', () => {
+    const main = document.getElementById('fw-portrait-main');
+    if (main) main.src = b.dataset.fwExpr;
+    root.querySelectorAll('[data-fw-expr]').forEach((x) => { x.classList.toggle('active', x === b); x.setAttribute('aria-pressed', String(x === b)); });
   }));
 }
 let studioInputBound = false;
