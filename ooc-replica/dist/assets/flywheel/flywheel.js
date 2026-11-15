@@ -251,13 +251,16 @@ function universeMarkup(id) {
 const DEMO_LINES = [
   { zh: '“我要取你性命。”', en: '"I will take your life."',
     strategist: { zh: ['打标：move=对抗，values=威胁', '交情不动，信任 -1，看重 -1', '对方记仇：下次见面先发难', '军前放话：处境有“被逐出”的风险'], en: ['tagged: move=confront, values=threat', 'warmth unchanged, trust -1, esteem -1', 'a grudge is kept: they strike first next meeting', 'said before the army: risk of an "expelled" standing'] },
-    galgame: { zh: ['打标：表达=尖锐，好感变化=负', '好感隐藏：对方不表现，只记下', '记仇入账，本线结局向下偏移', '不锁死：用行动补过仍能回头'], en: ['tagged: expression=sharp, affection=negative', 'affection stays hidden; she only remembers', 'the grudge is booked; the route ending drifts down', 'not a lock: actions can still mend it'] } },
+    galgame: { zh: ['打标：表达=尖锐，好感变化=负', '好感隐藏：对方不表现，只记下', '记仇入账，本线结局向下偏移', '不锁死：用行动补过仍能回头'], en: ['tagged: expression=sharp, affection=negative', 'affection stays hidden; she only remembers', 'the grudge is booked; the route ending drifts down', 'not a lock: actions can still mend it'] },
+    detective: { zh: ['对证人出言威胁：被赶出去，此人不再配合', '福尔摩斯的评价随你的分寸变化', '线索不会因此消失，但证词少一条', '下次盘问要换个门路'], en: ['threaten a witness: thrown out; they stop cooperating', "Holmes' regard shifts with your tact", 'the clues remain, but that testimony is lost', 'next time, find another way in'] } },
   { zh: '“其实我不是本地人。”', en: '"I am not actually from here."',
     strategist: { zh: ['打标：move=示弱，values=坦白', '信任 +1（这位吃坦白）', '解锁一句更近的回话', '对方可能拿它去验证你别处的话'], en: ['tagged: move=open-up, values=honesty', 'trust +1 (this one rewards candor)', 'unlocks a warmer follow-up', 'they may verify your other words against it'] },
-    galgame: { zh: ['打标：表达=坦白，好感变化=正', '对方回自己秘密的一半', '共通线多一个小约定', '个人线的门槛悄悄近了一格'], en: ['tagged: expression=honest, affection=positive', 'she answers with half of her own secret', 'one more small promise on the common route', 'the personal-route threshold quietly nears'] } },
+    galgame: { zh: ['打标：表达=坦白，好感变化=正', '对方回自己秘密的一半', '共通线多一个小约定', '个人线的门槛悄悄近了一格'], en: ['tagged: expression=honest, affection=positive', 'she answers with half of her own secret', 'one more small promise on the common route', 'the personal-route threshold quietly nears'] },
+    detective: { zh: ['坦白换信任：证人多给一条证词', '福尔摩斯记下你的进展', '可用于推理问答的证据多一项', '关系带到下一卷'], en: ['candor buys trust: one more testimony unlocked', 'Holmes notes your progress', 'one more piece for the deduction stage', 'the relationship carries into later volumes'] } },
   { zh: '“先生真乃神人。”', en: '"You are truly extraordinary, sir."',
     strategist: { zh: ['打标：move=奉承，values=空话', '看重 +0：空话不算数', '对方接一句自谦的反问', '连吹三次：被看穿，信任 -1'], en: ['tagged: move=flatter, values=empty words', 'esteem +0: flattery does not count', 'a self-deprecating counter-question', 'three in a row: seen through, trust -1'] },
-    galgame: { zh: ['打标：表达=客套，好感变化=零', '对方笑着岔开话题', '连着客套会收到“你别扭”的吐槽', '行动比好话涨得多'], en: ['tagged: expression=polite, affection=zero', 'she laughs it off and changes the subject', 'three in a row earns an "you are being odd" jab', 'actions raise affection far more than words'] } },
+    galgame: { zh: ['打标：表达=客套，好感变化=零', '对方笑着岔开话题', '连着客套会收到“你别扭”的吐槽', '行动比好话涨得多'], en: ['tagged: expression=polite, affection=zero', 'she laughs it off and changes the subject', 'three in a row earns an "you are being odd" jab', 'actions raise affection far more than words'] },
+    detective: { zh: ['奉承对福尔摩斯无效：他会当场纠正你的措辞', '证词不含新线索', '雷斯垂德倒是受用，但功劳归他', '观察力才是这里的人气货币'], en: ['flattery slides off Holmes; he corrects your wording on the spot', 'the testimony yields no new clue', 'Lestrade enjoys it — and keeps the credit', 'observation is the local currency'] } },
 ];
 function frameworksMarkup() {
   const l = L();
@@ -300,7 +303,7 @@ function renderDemoLine(index) {
   if (!d) return '';
   const lang = getLang() === 'zh' ? 'zh' : 'en';
   const col = (key) => `<div class="fw-demo-col"><h3>${safe(fwName(key))}</h3><ul>${d[key][lang].map((x) => `<li>${safe(x)}</li>`).join('')}</ul></div>`;
-  return col('strategist') + col('galgame');
+  return col('strategist') + col('galgame') + (d.detective ? col('detective') : '');
 }
 
 // —— /studio ——

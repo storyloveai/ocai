@@ -144,7 +144,7 @@ test('flywheel pages work end to end on a single boot', async () => {
   for (const id of ['strategist', 'galgame', 'detective', 'chat']) {
     assert.ok(page.querySelector(`#fw-${id}`), `framework ${id} section missing`);
   }
-  assert.equal(page.querySelectorAll('#fw-demo-out .fw-demo-col').length, 2);
+  assert.equal(page.querySelectorAll('#fw-demo-out .fw-demo-col').length, 3, 'three pots respond to the same line');
   const before = document.querySelector('#fw-demo-out').textContent;
   document.querySelector('[data-fw-line="2"]').click();
   const after = document.querySelector('#fw-demo-out').textContent;

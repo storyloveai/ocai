@@ -131,7 +131,7 @@
 .fw-fw-body { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; margin-top: 16px; }
 @media (max-width: 767px) { .fw-fw-body { grid-template-columns: 1fr; } }
 .fw-fw-body h3 { font-size: 14px; color: #c5a46c; margin: 0 0 10px; }
-.fw-demo-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fw-demo-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; }
 @media (max-width: 767px) { .fw-demo-cols { grid-template-columns: 1fr; } }
 .fw-demo-col { background: #191918; border: 1px solid #ffffff0b; border-radius: 12px; padding: 14px 16px; }
 .fw-demo-col h3 { margin: 0 0 10px; font-size: 15px; color: #c5a46c; }
