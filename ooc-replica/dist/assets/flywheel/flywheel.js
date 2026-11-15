@@ -10,6 +10,24 @@ import {escapeHTML as safe} from '../stream.js';
 import {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS, cardById, cardsByUniverse} from './cards-data.js';
 
 const DRAFT_KEY = 'sd-flywheel-drafts';
+// 氛围层素材：与原站 sd-hero 同配方的模糊背景 + 蒙版人像（资源全部现成）
+const HERO_ART = {
+  characters: { figure: '/assets/xichuan/art/sprites/zhiyao/normal.webp', blur: '/assets/xichuan/art/cg/cg_stage.webp' },
+  universes: { figure: '/assets/ashen/art/anime/sprites/lamp/normal.webp', blur: '/assets/ashen/art/real/cg/cg_lamp_lit.webp' },
+  westlin: { figure: '/assets/ashen/art/anime/sprites/lamp/normal.webp', blur: '/assets/ashen/art/real/cg/cg_lamp_lit.webp' },
+  sanguo: { figure: '/assets/sanguo-art/portraits/caocao.webp', blur: '/assets/sanguo-art/cover.webp' },
+  xichuan: { figure: '/assets/xichuan/art/sprites/zhiyao/normal.webp', blur: '/assets/xichuan/art/cg/cg_stage.webp' },
+  baker: { figure: '/assets/holmes-webgal/game/figure/holmes_normal.webp', blur: '/assets/holmes-webgal/game/background/bg_baker_day.webp' },
+  original: { figure: '/assets/characters/shen-yanzhou.webp', blur: '/assets/characters/lu-wensheng.webp' },
+  frameworks: { figure: '/assets/ashen/art/anime/sprites/baiqiu/normal.webp', blur: '/assets/ashen/art/real/cg/cg_scales.webp' },
+  studio: { figure: '/assets/ashen/art/anime/sprites/carlo/normal.webp', blur: '/assets/ashen/art/real/cg/cg_wheel.webp' },
+};
+
+// 氛围 hero：与原站 sd-hero 同配方（blur 48px/brightness .25、右侧蒙版人像、底部渐隐）
+function heroMarkup(key, meta, quote, lead) {
+  const art = HERO_ART[key] || HERO_ART.characters;
+  return `<div class="fw-hero"><div class="fw-hero-art" aria-hidden="true"><img class="fw-hero-blur" src="${safe(art.blur)}" alt=""><img class="fw-hero-figure" src="${safe(art.figure)}" alt="" loading="eager"></div><div class="fw-hero-fade" aria-hidden="true"></div><div class="fw-hero-copy"><p class="fw-hero-meta"><span class="fw-hero-badge">STORYDATE · ${safe(meta)}</span></p><h1 class="fw-hero-quote">${safe(quote)}</h1>${lead ? `<p class="fw-hero-lead">${safe(lead)}</p>` : ''}</div></div>`;
+}
 
 // 手机端顶栏（≤1023px 显示；桌面由侧栏承担），沿用 hub 的 sd-lang 按钮模式
 const mobileBar = () => {
@@ -23,6 +41,7 @@ const copy = {
     libSub: '老板说：角色是食材，故事是菜。在这里，每个角色从书里走出来，成为可以被很多故事反复使用的食材。',
     all: '全部', chatOnly: '可聊天', empty: '这个筛选下还没有角色。', count: (n) => `${n} 个角色`,
     searchPh: '搜名字或关键词，比如“影院”',
+    heroLibQuote: '角色是食材，故事是菜。', heroUniQuote: '宇宙是厨房的规矩。', heroFwQuote: '同样的锅和规矩，换一批食材就是一道新菜。', heroStQuote: '工具先被我们自己用顺。',
     chatCta: '去聊天', storyCta: '去 TA 的故事', openCta: '打开',
     profileBack: '返回角色库', personaH: '人设', voiceH: '说话方式', lockedH: '不能违背的设定', appearH: 'TA 的出场',
     samplesFrom: '摘自', noSamples: '暂无例句。', sameUniverseH: '同一宇宙的其他角色', noChat: '这个角色的聊天入口暂未开放，可以先读 TA 的故事。',
@@ -57,6 +76,7 @@ const copy = {
     libSub: "The boss's analogy: characters are the ingredients, stories are the dishes. Here every character steps out of its book and becomes an ingredient many stories can reuse.",
     all: 'All', chatOnly: 'Chat available', empty: 'No characters under this filter.', count: (n) => `${n} characters`,
     searchPh: 'Search a name or a keyword, e.g. cinema',
+    heroLibQuote: 'Characters are the ingredients; stories are the dishes.', heroUniQuote: 'Universes are the kitchen\u2019s rules.', heroFwQuote: 'Same pot, same rules — new ingredients make a new dish.', heroStQuote: 'Our own tools, used by us first.',
     chatCta: 'Chat', storyCta: 'Enter their story', openCta: 'Open',
     profileBack: 'Back to characters', personaH: 'Persona', voiceH: 'Voice', lockedH: 'What must never break', appearH: 'Appearances',
     samplesFrom: 'from', noSamples: 'No quotes yet.', sameUniverseH: 'Others in this universe', noChat: 'Chat is not open for this character yet — start with their story.',
@@ -114,9 +134,8 @@ const ext = (url) => (isStandalone(url) ? ' target="_top" rel="noopener"' : '');
 function cardMarkup(c) {
   const l = L();
   return `<a class="fw-card" href="/characters/${safe(c.id)}">
-    <span class="fw-card-portrait">${cardArt(c)}</span>
+    <span class="fw-card-portrait">${cardArt(c)}<span class="fw-card-scrim" aria-hidden="true"></span><strong class="fw-card-name">${safe(t(c.name))}</strong></span>
     <span class="fw-card-body">
-      <strong>${safe(t(c.name))}</strong>
       <em>${safe(t(c.tagline))}</em>
       <span class="fw-card-badges"><span class="fw-badge">${safe(workName(c.source.work))}</span><span class="fw-badge fw-badge-dim">${safe(fwName(c.source.framework))}</span>${c.chat ? `<span class="fw-badge fw-badge-gold">${safe(l.chatCta)} ↗</span>` : ''}</span>
     </span>
@@ -146,9 +165,9 @@ function libMarkup() {
     return `<button type="button" class="fw-chip${libFilter.universe === id ? ' active' : ''}" data-fw-filter="${id}">${safe(label)} <small>${n}</small></button>`;
   }).join('');
   const items = libItems();
-  return `<main class="fw-page" data-no-i18n data-fw-page="characters">
+  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="characters">
     ${mobileBar()}
-    <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.libTitle}</h1><p class="fw-sub">${l.libSub}</p></header>
+    ${heroMarkup('characters', l.libTitle, l.heroLibQuote, l.libSub)}
     <div class="fw-toolbar" role="group">${chips}<button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button><span class="fw-count" role="status">${l.count(items.length)}</span></div>
     <label class="fw-search"><span aria-hidden="true">⌕</span><input type="search" id="fw-search" placeholder="${safe(l.searchPh)}" value="${safe(libQuery)}" aria-label="${safe(l.searchPh)}" autocomplete="off"></label>
     <div id="fw-lib-results">${libResults(items)}</div>
@@ -210,9 +229,9 @@ function universesMarkup() {
       <span class="fw-card-badges"><span class="fw-badge">${chars.length} ${safe(l.rolesH)}</span><span class="fw-badge fw-badge-dim">${works} ${safe(l.storyH)}</span>${u.rules ? '<span class="fw-badge fw-badge-gold">✦</span>' : ''}</span>
     </a>`;
   }).join('');
-  return `<main class="fw-page" data-no-i18n data-fw-page="universes">
+  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="universes">
     ${mobileBar()}
-    <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.uniTitle}</h1><p class="fw-sub">${l.uniSub}</p></header>
+    ${heroMarkup('universes', l.uniTitle, l.heroUniQuote, l.uniSub)}
     <div class="fw-uni-grid">${cards}</div>
   </main>`;
 }
@@ -282,9 +301,9 @@ function frameworksMarkup() {
     </section>`;
   }).join('');
   const lineButtons = DEMO_LINES.map((d, i) => `<button type="button" class="fw-chip${i === 0 ? ' active' : ''}" data-fw-line="${i}">${safe(t(d))}</button>`).join('');
-  return `<main class="fw-page" data-no-i18n data-fw-page="frameworks">
+  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="frameworks">
     ${mobileBar()}
-    <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.fwTitle}</h1><p class="fw-sub">${l.fwSub}</p></header>
+    ${heroMarkup('frameworks', l.fwTitle, l.heroFwQuote, l.fwSub)}
     <blockquote class="fw-boss">${safe(l.bossQuote)}</blockquote>
     <div class="fw-pots">${pots}</div>
     ${fwSections}
@@ -329,9 +348,9 @@ function studioMarkup() {
   const fwOpts = Object.keys(FRAMEWORKS).map((id) => `<option value="${id}">${safe(fwName(id))}</option>`).join('');
   const mixCards = CHARACTER_CARDS.map((c) => `<button type="button" class="fw-mix-card${studioMix.has(c.id) ? ' active' : ''}" data-fw-mix="${safe(c.id)}" aria-pressed="${studioMix.has(c.id)}">${cardArt(c)}<strong>${safe(t(c.name))}</strong></button>`).join('');
   const pane = (i, body) => `<div class="fw-step-pane" data-fw-sstep="${i}" ${studioStep !== i ? 'hidden' : ''}>${body}</div>`;
-  return `<main class="fw-page" data-no-i18n data-fw-page="studio">
+  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="studio">
     ${mobileBar()}
-    <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.stTitle}</h1><p class="fw-sub">${l.stSub}</p></header>
+    ${heroMarkup('studio', l.stTitle, l.heroStQuote, l.stSub)}
     <p class="fw-proto" role="note">⚠️ ${safe(l.protoBanner)}</p>
     <div class="fw-tabs" role="tablist">
       <button type="button" role="tab" aria-selected="true" class="active" data-fw-stab="build">${safe(l.stepBuild)}</button>
