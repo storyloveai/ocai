@@ -57,13 +57,65 @@ export const UNIVERSES = {
     id: "xichuan",
     name: { zh: "汐川", en: "Xichuan" },
     tagline: { zh: "海边小城，一座要拆的露天影院，和一个约定的春天。", en: "A seaside town, an open-air cinema awaiting demolition, and a promised spring." },
-    rules: null, // 汐川不设共享宇宙规则页（单故事世界），展示层给“本宇宙角色与故事”
+    // 摘自 game/xichuan/content/story.py 序章与人物设定
+    rules: {
+      world: {
+        zh: "三月，陆远沿着海岸线回到汐川：祖父的潮声影院五月拆除，老房子和院子里的枇杷树还在。三位女主的“第七件事”，都系在这最后一个春天里。",
+        en: "In March, Lu Yuan returns along the coast: his grandfather's Tidesound Cinema comes down in May, the old house and the loquat tree remain. Each heroine's 'seventh thing' is tied to this last spring.",
+      },
+      magic: [
+        { zh: "共通线走向个人线：夏知遥的第七件事、沈澄的第七封信、季白的第七卷。", en: "A common route branches into three: Zhiyao's seventh thing, Shen Cheng's seventh letter, Ji Bai's seventh reel." },
+        { zh: "好感隐藏：角色不说破，行动才算数；说错话会被记住。", en: "Affection stays hidden; actions count, wrong words are remembered." },
+        { zh: "7 个结局、39 个场景；决裂与记仇由规则计算，AI 只演。", en: "7 endings across 39 scenes; falling-out and grudges are computed, the AI only acts." },
+      ],
+      places: [
+        { name: { zh: "潮声影院", en: "The Tidesound Cinema" }, desc: { zh: "白银幕背对着海的露天影院，季白的放映室在这里。", en: "The open-air cinema, screen turned to the sea; Ji Bai's booth." } },
+        { name: { zh: "老房子与枇杷树", en: "The Old House & the Loquat Tree" }, desc: { zh: "祖父留下的房子，门锁锈了，树比记忆里高。", en: "The inherited house; the lock rusted, the tree taller than memory." } },
+        { name: { zh: "海边的咖啡馆", en: "The Seaside Café" }, desc: { zh: "沈澄家里开的店，小时候那杯还在单子上。", en: "Shen Cheng's family café; the childhood order is still on the menu." } },
+        { name: { zh: "汐川站", en: "Xichuan Station" }, desc: { zh: "只有一个站台，风里有咸味。", en: "One platform; the wind tastes of salt." } },
+      ],
+      timeline: [
+        { t: { zh: "三月 · 返乡", en: "March · Coming Back" }, d: { zh: "列车沿着海岸线往南开；律师的信与老周的邀约。", en: "The train south; the lawyer's letter and Old Zhou's note." } },
+        { t: { zh: "序章 · 影院初遇", en: "Prologue · First Meeting" }, d: { zh: "“你是来拆它的，还是来救它的？”", en: "\"Are you here to tear it down, or to save it?\"" } },
+        { t: { zh: "春季放映会", en: "The Spring Screenings" }, d: { zh: "最后一季，每周六晚七点，免费入场。", en: "The final season: Saturdays, seven p.m., free admission." } },
+        { t: { zh: "五月 · 最后一场", en: "May · The Last Screening" }, d: { zh: "影院拆除前的最后一个春天，也是告别。", en: "The last spring before the demolition — and the farewell." } },
+      ],
+    },
   },
   sanguo: {
     id: "sanguo",
     name: { zh: "三国", en: "Three Kingdoms" },
     tagline: { zh: "许都到赤壁。你以谋士的身份，走进这段历史。", en: "From Xudu to Chibi. You walk into this history as a strategist." },
-    rules: null,
+    // 摘自 game/sanguo/README.md（时间跨度、名场面节点）与八卷卷名
+    rules: {
+      world: {
+        zh: "玩家扮演原创谋士子衡，时间跨度是许都到赤壁（原著第 20–50 回）。煮酒论英雄、土山约三事、三顾茅庐、长坂坡、华容道，都是玩家可以插手的节点；玩家不扮演其中的主角。",
+        en: "You play Ziheng, an original strategist, from Xudu to Chibi (chapters 20–50 of the original). Moments like the wine-tasting hero debate, the three visits to the thatched cottage, Changban and Huarong Trail are nodes you can step into — you never play the heroes themselves.",
+      },
+      magic: [
+        { zh: "前面的选择通过事件账本、回响、叙事债务一路影响到结局。", en: "Earlier choices reach the ending through the event ledger, echoes and narrative debts." },
+        { zh: "关系三轴加五档门槛：说话的走向由关系与处境决定。", en: "Three relationship axes with five thresholds: how a line lands depends on standing." },
+        { zh: "每卷上线前跑 5,000 局随机玩家模拟，零阻塞才放行。", en: "Each volume passes 5,000 simulated playthroughs before release." },
+      ],
+      places: [
+        { name: { zh: "许都", en: "Xudu" }, desc: { zh: "起点。酒后灯下，煮酒论英雄。", en: "Where it begins, over warm wine and a hero debate." } },
+        { name: { zh: "荆州", en: "Jingzhou" }, desc: { zh: "卷四《荆州之殇》：关羽能救，荆州必丢。", en: "Vol.4 The Fall of Jingzhou: Guan Yu can be saved; the province cannot." } },
+        { name: { zh: "夷陵与白帝", en: "Yiling & Baidi" }, desc: { zh: "卷五：东征劝不住，代价可改。", en: "Vol.5: the eastern campaign cannot be stopped, but its price can change." } },
+        { name: { zh: "南中", en: "Nanzhong" }, desc: { zh: "卷六《南中》。", en: "Vol.6." } },
+        { name: { zh: "出师与归晋", en: "The Northern Campaign & the Return" }, desc: { zh: "卷七《出师》到卷八《归晋》，全书收束。", en: "Vol.7 The Northern Campaign through Vol.8 The Return of Jin." } },
+      ],
+      factions: [
+        { name: { zh: "曹魏", en: "Cao Wei" }, desc: { zh: "曹操帐下。爱才与多疑并行。", en: "Cao Cao's court: talent loved and suspected in the same breath." } },
+        { name: { zh: "蜀汉", en: "Shu Han" }, desc: { zh: "刘备、诸葛亮、关羽、赵云。仁义与隐忍。", en: "Liu Bei, Zhuge Liang, Guan Yu, Zhao Yun: mercy and endurance." } },
+        { name: { zh: "东吴", en: "Eastern Wu" }, desc: { zh: "周瑜、貂蝉走过的宫廷。", en: "Zhou Yu's river courts — and the corridors Diaochan walks." } },
+      ],
+      timeline: [
+        { t: { zh: "卷一 · 煮酒论英雄", en: "Vol.1 · Heroes over Wine" }, d: { zh: "新玩家从煮酒论英雄直接进戏。", en: "New players start straight at the hero debate." } },
+        { t: { zh: "卷四 · 荆州之殇", en: "Vol.4 · The Fall of Jingzhou" }, d: { zh: "关羽能救，荆州必丢。", en: "Guan Yu can be saved; the province cannot." } },
+        { t: { zh: "卷五 · 夷陵与白帝", en: "Vol.5 · Yiling & Baidi" }, d: { zh: "信任到心腹，受托孤。", en: "Reach confidant standing and receive the dying charge." } },
+        { t: { zh: "卷八 · 归晋", en: "Vol.8 · The Return of Jin" }, d: { zh: "第三章起玩家换成接班人，全书尾声“这一生”。", en: "From chapter 3 you play the successor; the book closes with \"This Life\"." } },
+      ],
+    },
   },
   westlin: {
     id: "westlin",
@@ -104,7 +156,35 @@ export const UNIVERSES = {
     id: "baker",
     name: { zh: "贝克街", en: "Baker Street" },
     tagline: { zh: "1880 年代的伦敦。你是华生，真相在原著里，破案靠你。", en: "London, 1880s. You are Watson; the truth is canon, the deduction is yours." },
-    rules: null,
+    // 摘自 game/holmes/docs/设计方案.md（全本结构、一个案子的玩法循环、恋爱边界）
+    rules: {
+      world: {
+        zh: "柯南·道尔全部 60 个故事（4 部长篇 + 56 短篇），原著已进入公版；英文用原文，中文自译。玩家是华生：凶手、真相和结局都不改，玩家改变的是自己看穿了多少、和谁的关系怎么样。",
+        en: "All 60 Conan Doyle stories (4 novels, 56 shorts) — the canon is public domain; English quotes the original, Chinese is our own translation. You are Watson: the culprit and the truth never change; what changes is how much you see, and whom you grow close to.",
+      },
+      magic: [
+        { zh: "一个案子 = 一卷：委托 → 勘查 → 盘问 → 推理 → 揭晓。", en: "One case = one volume: commission, examination, questioning, deduction, reveal." },
+        { zh: "线索不全也能往下走，只是推理时可用的少。", en: "Incomplete clues still let the case move; your deduction just has less to stand on." },
+        { zh: "嫌疑人会撒谎；说话出格被赶出去，那个人不再配合。", en: "Suspects lie; overstep and they stop cooperating." },
+        { zh: "推理评级：抢先看穿 / 跟上了 / 被蒙在鼓里。", en: "Deduction grades: ahead of Holmes / keeping up / left behind." },
+      ],
+      places: [
+        { name: { zh: "贝克街 221B", en: "221B Baker Street" }, desc: { zh: "哈德森太太的房子，福尔摩斯的琴声从这里传出。", en: "Mrs Hudson's house; the violin sounds from here." } },
+        { name: { zh: "苏格兰场", en: "Scotland Yard" }, desc: { zh: "雷斯垂德与葛莱森互相嫉妒的地方。", en: "Where Lestrade and Gregson compete." } },
+        { name: { zh: "布里克斯顿路空屋", en: "The Brixton Road Empty House" }, desc: { zh: "卷一案发地：没有伤口的尸体，墙上的 RACHE。", en: "Vol.1's crime scene: a body without a wound, RACHE on the wall." } },
+      ],
+      factions: [
+        { name: { zh: "贝克街", en: "Baker Street" }, desc: { zh: "福尔摩斯、华生与哈德森太太。", en: "Holmes, Watson and Mrs Hudson." } },
+        { name: { zh: "苏格兰场", en: "Scotland Yard" }, desc: { zh: "两位探长：功劳要分清楚。", en: "Two inspectors: the credit must be kept straight." } },
+        { name: { zh: "案中人", en: "The People in the Case" }, desc: { zh: "证人与嫌疑人：每个人都知道一部分，也瞒着一部分。", en: "Witnesses and suspects: each knows a piece and hides a piece." } },
+      ],
+      timeline: [
+        { t: { zh: "委托上门", en: "The Commission" }, d: { zh: "委托人交代案情——原著开场。", en: "A client lays out the case — the original opening." } },
+        { t: { zh: "勘查", en: "Examination" }, d: { zh: "每查到一样东西就记一条线索。", en: "Every find becomes a clue in the book." } },
+        { t: { zh: "盘问", en: "Questioning" }, d: { zh: "问到点子上解锁证词；说错话被赶出去。", en: "The right question unlocks testimony; the wrong one gets you thrown out." } },
+        { t: { zh: "推理与揭晓", en: "Deduction & Reveal" }, d: { zh: "华生先答，福尔摩斯再讲真相——用原著对白。", en: "Watson answers first; Holmes then tells the truth in canon dialogue." } },
+      ],
+    },
   },
   original: {
     id: "original",

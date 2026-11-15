@@ -120,6 +120,10 @@ test('flywheel pages work end to end on a single boot', async () => {
   go('/universe');
   go('/universe/xichuan');
   assert.ok(document.querySelector('[data-fw-page="universe"]'), 'universe without shared rules still renders');
+  assert.ok(document.querySelector('[data-fw-tab="timeline"]'), 'xichuan now carries its own timeline');
+  go('/universe');
+  go('/universe/sanguo');
+  assert.ok(document.querySelector('[data-fw-pane="rules"]').textContent.includes('子衡'), 'sanguo universe quotes the strategist premise');
 
   // —— 框架 ——
   go('/frameworks');
