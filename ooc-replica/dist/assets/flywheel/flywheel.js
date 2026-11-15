@@ -208,10 +208,10 @@ function universeMarkup(id) {
       <button type="button" role="tab" aria-selected="false" data-fw-tab="timeline">${safe(l.timelineH)}</button>
     </div>
     <div class="fw-tabpanes">
-      <section class="fw-pane" data-fw-pane="rules"><h2>${l.magicH}</h2><p class="fw-world">${safe(t(u.rules.world))}</p><ul class="fw-rules">${u.rules.magic.map((m) => `<li>${safe(t(m))}</li>`).join('')}</ul></section>
-      <section class="fw-pane" data-fw-pane="places" hidden><ul class="fw-factions">${u.rules.places.map((p) => `<li><strong>${safe(t(p.name))}</strong><span>${safe(t(p.desc))}</span></li>`).join('')}</ul></section>
-      <section class="fw-pane" data-fw-pane="factions" hidden><ul class="fw-factions">${u.rules.factions.map((f) => `<li><strong>${safe(t(f.name))}</strong><span>${safe(t(f.desc))}</span></li>`).join('')}</ul></section>
-      <section class="fw-pane" data-fw-pane="timeline" hidden><div class="fw-timeline">${u.rules.timeline.map((e) => `<div class="fw-era"><strong>${safe(t(e.t))}</strong><p>${safe(t(e.d))}</p></div>`).join('')}</div></section>
+      <section class="fw-pane" data-fw-pane="rules"><h2>${l.magicH}</h2><p class="fw-world">${safe(t(u.rules.world))}</p><ul class="fw-rules">${(u.rules.magic || []).map((m) => `<li>${safe(t(m))}</li>`).join('')}</ul></section>
+      <section class="fw-pane" data-fw-pane="places" hidden><ul class="fw-factions">${(u.rules.places || []).map((p) => `<li><strong>${safe(t(p.name))}</strong><span>${safe(t(p.desc))}</span></li>`).join('')}</ul></section>
+      <section class="fw-pane" data-fw-pane="factions" hidden><ul class="fw-factions">${(u.rules.factions || []).map((f) => `<li><strong>${safe(t(f.name))}</strong><span>${safe(t(f.desc))}</span></li>`).join('')}</ul></section>
+      <section class="fw-pane" data-fw-pane="timeline" hidden><div class="fw-timeline">${(u.rules.timeline || []).map((e) => `<div class="fw-era"><strong>${safe(t(e.t))}</strong><p>${safe(t(e.d))}</p></div>`).join('')}</div></section>
     </div>` : '';
   const workCards = works.map((w) => `<a class="fw-appearance" href="${safe(w.url)}"${ext(w.url)}><strong>${safe(t(w.title))}</strong><span>${safe(t(w.kind))}</span><span aria-hidden="true">↗</span></a>`).join('');
   return `<main class="fw-page" data-no-i18n data-fw-page="universe">
