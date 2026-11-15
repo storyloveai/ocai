@@ -6,6 +6,18 @@
 @media (max-width: 1250px) { .fw-page { padding-left: 48px; padding-right: 48px; } }
 @media (max-width: 1023px) { .fw-page { padding: 24px 24px 56px; } }
 
+.fw-mobile-bar { display: none; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 18px; }
+.fw-mobile-bar img { display: block; }
+.fw-mobile-bar .sd-lang { display: flex; gap: 6px; }
+.fw-mobile-bar .sd-lang button { appearance: none; background: #191918; border: 1px solid #ffffff14; color: #a1a1a1; border-radius: 999px; padding: 5px 12px; font-size: 12.5px; cursor: pointer; }
+.fw-mobile-bar .sd-lang button[aria-pressed="true"] { color: #c5a46c; border-color: #c5a46c66; }
+@media (max-width: 1023px) { .fw-mobile-bar { display: flex; } }
+
+.fw-search { display: flex; align-items: center; gap: 10px; background: #1f1f1f; border: 1px solid #3a3a3a; border-radius: 10px; padding: 0 14px; margin: 0 0 22px; max-width: 460px; transition: border-color .18s ease; }
+.fw-search:focus-within { border-color: #c5a46c; }
+.fw-search span { color: #737373; }
+.fw-search input { flex: 1; background: transparent; border: 0; outline: none; color: #fafafa; font-size: 14px; padding: 10px 0; font-family: inherit; }
+
 .fw-heading { margin-bottom: 28px; }
 .fw-eyebrow { font-size: 12px; letter-spacing: .18em; color: #c5a46c; text-transform: uppercase; margin: 0 0 8px; }
 .fw-heading h1 { font-size: 34px; font-weight: 650; margin: 0 0 10px; letter-spacing: .01em; }

@@ -11,11 +11,18 @@ import {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS, cardById, cardsByUniverse
 
 const DRAFT_KEY = 'sd-flywheel-drafts';
 
+// 手机端顶栏（≤1023px 显示；桌面由侧栏承担），沿用 hub 的 sd-lang 按钮模式
+const mobileBar = () => {
+  const lang = getLang();
+  return `<header class="fw-mobile-bar"><a href="/" aria-label="StoryDate"><img src="/assets/storydate-dialogue-logo.svg" alt="StoryDate" width="120" height="24"></a><div class="sd-lang sd-lang-top" role="group" aria-label="${lang === 'zh' ? '语言' : 'Language'}">${['en', 'zh'].map((x) => `<button type="button" data-sd-lang="${x}" aria-pressed="${x === lang}">${x === 'zh' ? '中文' : 'EN'}</button>`).join('')}</div></header>`;
+};
+
 const copy = {
   zh: {
     libEyebrow: 'STORYDATE · 飞轮', libTitle: '角色库',
     libSub: '老板说：角色是食材，故事是菜。在这里，每个角色从书里走出来，成为可以被很多故事反复使用的食材。',
     all: '全部', chatOnly: '可聊天', empty: '这个筛选下还没有角色。', count: (n) => `${n} 个角色`,
+    searchPh: '搜名字或关键词，比如“影院”',
     chatCta: '去聊天', storyCta: '去 TA 的故事', openCta: '打开',
     profileBack: '返回角色库', personaH: '人设', voiceH: '说话方式', lockedH: '不能违背的设定', appearH: 'TA 的出场',
     samplesFrom: '摘自', noSamples: '暂无例句。', sameUniverseH: '同一宇宙的其他角色', noChat: '这个角色的聊天入口暂未开放，可以先读 TA 的故事。',
@@ -49,6 +56,7 @@ const copy = {
     libEyebrow: 'STORYDATE · FLYWHEEL', libTitle: 'Characters',
     libSub: "The boss's analogy: characters are the ingredients, stories are the dishes. Here every character steps out of its book and becomes an ingredient many stories can reuse.",
     all: 'All', chatOnly: 'Chat available', empty: 'No characters under this filter.', count: (n) => `${n} characters`,
+    searchPh: 'Search a name or a keyword, e.g. cinema',
     chatCta: 'Chat', storyCta: 'Enter their story', openCta: 'Open',
     profileBack: 'Back to characters', personaH: 'Persona', voiceH: 'Voice', lockedH: 'What must never break', appearH: 'Appearances',
     samplesFrom: 'from', noSamples: 'No quotes yet.', sameUniverseH: 'Others in this universe', noChat: 'Chat is not open for this character yet — start with their story.',
@@ -118,6 +126,18 @@ const grid = (cards) => `<div class="fw-grid">${cards.map(cardMarkup).join('')}<
 
 // —— /characters ——
 let libFilter = { universe: 'all', chat: false };
+let libQuery = '';
+function libItems() {
+  let items = libFilter.universe === 'all' ? CHARACTER_CARDS : cardsByUniverse(libFilter.universe);
+  if (libFilter.chat) items = items.filter((c) => c.chat);
+  const q = libQuery.trim().toLowerCase();
+  if (q) items = items.filter((c) => `${t(c.name)} ${t(c.tagline)} ${t(c.persona)}`.toLowerCase().includes(q));
+  return items;
+}
+function libResults(items) {
+  const l = L();
+  return items.length ? grid(items) : `<div class="fw-empty">${l.empty}</div>`;
+}
 function libMarkup() {
   const l = L();
   const chips = ['all', ...Object.keys(UNIVERSES)].map((id) => {
@@ -125,12 +145,13 @@ function libMarkup() {
     const n = id === 'all' ? CHARACTER_CARDS.length : cardsByUniverse(id).length;
     return `<button type="button" class="fw-chip${libFilter.universe === id ? ' active' : ''}" data-fw-filter="${id}">${safe(label)} <small>${n}</small></button>`;
   }).join('');
-  let items = libFilter.universe === 'all' ? CHARACTER_CARDS : cardsByUniverse(libFilter.universe);
-  if (libFilter.chat) items = items.filter((c) => c.chat);
+  const items = libItems();
   return `<main class="fw-page" data-no-i18n data-fw-page="characters">
+    ${mobileBar()}
     <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.libTitle}</h1><p class="fw-sub">${l.libSub}</p></header>
     <div class="fw-toolbar" role="group">${chips}<button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button><span class="fw-count" role="status">${l.count(items.length)}</span></div>
-    ${items.length ? grid(items) : `<div class="fw-empty">${l.empty}</div>`}
+    <label class="fw-search"><span aria-hidden="true">⌕</span><input type="search" id="fw-search" placeholder="${safe(l.searchPh)}" value="${safe(libQuery)}" aria-label="${safe(l.searchPh)}" autocomplete="off"></label>
+    <div id="fw-lib-results">${libResults(items)}</div>
   </main>`;
 }
 
@@ -151,6 +172,7 @@ function profileMarkup(c) {
        <div class="fw-expressions" role="group" aria-label="${safe(l.exprH)}">${c.expressions.map((e, i) => `<button type="button" class="fw-expr${i === 0 ? ' active' : ''}" data-fw-expr="${safe(c.expressionUrl(e))}" aria-pressed="${i === 0}" aria-label="${safe(e)}"><img src="${safe(c.expressionUrl(e))}" alt="" loading="lazy"></button>`).join('')}</div></div>`
     : `<div class="fw-profile-portrait">${cardArt(c)}</div>`;
   return `<main class="fw-page" data-no-i18n data-fw-page="profile">
+    ${mobileBar()}
     <a class="fw-back" href="/characters">‹ ${l.profileBack}</a>
     <article class="fw-profile">
       <div class="fw-profile-top">
@@ -189,6 +211,7 @@ function universesMarkup() {
     </a>`;
   }).join('');
   return `<main class="fw-page" data-no-i18n data-fw-page="universes">
+    ${mobileBar()}
     <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.uniTitle}</h1><p class="fw-sub">${l.uniSub}</p></header>
     <div class="fw-uni-grid">${cards}</div>
   </main>`;
@@ -215,6 +238,7 @@ function universeMarkup(id) {
     </div>` : '';
   const workCards = works.map((w) => `<a class="fw-appearance" href="${safe(w.url)}"${ext(w.url)}><strong>${safe(t(w.title))}</strong><span>${safe(t(w.kind))}</span><span aria-hidden="true">↗</span></a>`).join('');
   return `<main class="fw-page" data-no-i18n data-fw-page="universe">
+    ${mobileBar()}
     <a class="fw-back" href="/universe">‹ ${l.uniTitle}</a>
     <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${safe(t(u.name))}</h1><p class="fw-sub">${safe(t(u.tagline))}</p></header>
     ${tabs}
@@ -256,6 +280,7 @@ function frameworksMarkup() {
   }).join('');
   const lineButtons = DEMO_LINES.map((d, i) => `<button type="button" class="fw-chip${i === 0 ? ' active' : ''}" data-fw-line="${i}">${safe(t(d))}</button>`).join('');
   return `<main class="fw-page" data-no-i18n data-fw-page="frameworks">
+    ${mobileBar()}
     <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.fwTitle}</h1><p class="fw-sub">${l.fwSub}</p></header>
     <blockquote class="fw-boss">${safe(l.bossQuote)}</blockquote>
     <div class="fw-pots">${pots}</div>
@@ -299,6 +324,7 @@ function studioMarkup() {
   const mixCards = CHARACTER_CARDS.map((c) => `<button type="button" class="fw-mix-card${studioMix.has(c.id) ? ' active' : ''}" data-fw-mix="${safe(c.id)}" aria-pressed="${studioMix.has(c.id)}">${cardArt(c)}<strong>${safe(t(c.name))}</strong></button>`).join('');
   const pane = (i, body) => `<div class="fw-step-pane" data-fw-sstep="${i}" ${studioStep !== i ? 'hidden' : ''}>${body}</div>`;
   return `<main class="fw-page" data-no-i18n data-fw-page="studio">
+    ${mobileBar()}
     <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${l.stTitle}</h1><p class="fw-sub">${l.stSub}</p></header>
     <p class="fw-proto" role="note">⚠️ ${safe(l.protoBanner)}</p>
     <div class="fw-tabs" role="tablist">
@@ -458,6 +484,14 @@ function renderRoute(path) {
 // —— 交互绑定 ——
 function bindCommon(root) {
   root.querySelectorAll('[data-fw-filter]').forEach((b) => b.addEventListener('click', () => { libFilter.universe = b.dataset.fwFilter; renderRoute('/characters'); }));
+  root.querySelectorAll('#fw-search').forEach((input) => input.addEventListener('input', () => {
+    libQuery = input.value;
+    // 只重绘结果区，保住输入框焦点
+    const results = document.getElementById('fw-lib-results');
+    if (results) results.innerHTML = libResults(libItems());
+    const count = document.querySelector('[data-fw-page="characters"] .fw-count');
+    if (count) count.textContent = L().count(libItems().length);
+  }));
   root.querySelectorAll('[data-fw-chat]').forEach((b) => b.addEventListener('click', () => { libFilter.chat = !libFilter.chat; renderRoute('/characters'); }));
   root.querySelectorAll('[data-fw-tab]').forEach((b) => b.addEventListener('click', () => {
     const wrap = b.closest('.fw-tabs');

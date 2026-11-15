@@ -52,6 +52,7 @@ test('flywheel pages work end to end on a single boot', async () => {
   assert.equal(location.pathname, '/characters');
   assert.ok(document.querySelector('[data-fw-page="characters"]'));
   assert.ok(document.querySelector('[data-fw-page="characters"]').hasAttribute('data-no-i18n'));
+  assert.ok(document.querySelector('[data-fw-page="characters"] .fw-mobile-bar img'), 'mobile toolbar carries the brand logo');
 
   // —— 角色库：筛选 ——
   const {CHARACTER_CARDS, UNIVERSES} = await import('../dist/assets/flywheel/cards-data.js');
@@ -64,6 +65,15 @@ test('flywheel pages work end to end on a single boot', async () => {
   assert.ok(document.querySelector('[data-fw-page="characters"] .fw-empty'));
   document.querySelector('[data-fw-filter="all"]').click();
   assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length, 'chat filter stays on across universe switches');
+  const search = document.getElementById('fw-search');
+  assert.ok(search, 'library search box renders');
+  search.value = '一盏酒';
+  search.dispatchEvent(new window.Event('input', {bubbles: true}));
+  const hits = document.querySelectorAll('#fw-lib-results .fw-card').length;
+  assert.ok(hits >= 1 && hits < CHARACTER_CARDS.filter(c => c.chat).length, `search narrows the grid (${hits} hits)`);
+  search.value = '';
+  search.dispatchEvent(new window.Event('input', {bubbles: true}));
+  assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length, 'clearing search restores the filtered set');
   document.querySelector('[data-fw-chat]').click();
   assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, CHARACTER_CARDS.length);
 
