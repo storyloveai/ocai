@@ -256,10 +256,10 @@ function universeMarkup(id) {
       <section class="fw-pane" data-fw-pane="timeline" hidden><div class="fw-timeline">${(u.rules.timeline || []).map((e) => `<div class="fw-era"><strong>${safe(t(e.t))}</strong><p>${safe(t(e.d))}</p></div>`).join('')}</div></section>
     </div>` : '';
   const workCards = works.map((w) => `<a class="fw-appearance" href="${safe(w.url)}"${ext(w.url)}><strong>${safe(t(w.title))}</strong><span>${safe(t(w.kind))}</span><span aria-hidden="true">↗</span></a>`).join('');
-  return `<main class="fw-page" data-no-i18n data-fw-page="universe">
+  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="universe">
     ${mobileBar()}
+    ${heroMarkup(id, t(u.name), t(u.tagline), '')}
     <a class="fw-back" href="/universe">‹ ${l.uniTitle}</a>
-    <header class="fw-heading"><p class="fw-eyebrow">${l.libEyebrow}</p><h1>${safe(t(u.name))}</h1><p class="fw-sub">${safe(t(u.tagline))}</p></header>
     ${tabs}
     <section class="fw-section"><h2>${l.charsH} · ${chars.length}</h2>${chars.length ? grid(chars) : `<div class="fw-empty">${l.empty}</div>`}</section>
     <section class="fw-section"><h2>${l.storyH}</h2><div class="fw-appearances">${workCards}</div></section>
