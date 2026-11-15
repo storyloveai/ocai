@@ -223,11 +223,12 @@ function universesMarkup() {
     const u = UNIVERSES[id];
     const chars = cardsByUniverse(id);
     const works = [...new Set(chars.map((c) => c.source.work))].length;
+    const art = HERO_ART[id] || null;
+    const cover = art ? `<img src="${safe(art.blur)}" alt="" loading="lazy">` : (chars[0] ? `<img src="${safe(chars[0].portrait)}" alt="" loading="lazy">` : '');
     return `<a class="fw-uni-card" href="/universe/${safe(id)}">
-      <span class="fw-uni-covers">${chars.slice(0, 4).map((c) => cardArt(c)).join('') || '<span class="fw-uni-blank"></span>'}</span>
-      <strong>${safe(t(u.name))}</strong>
+      <span class="fw-uni-cover">${cover ? cover : '<span class="fw-uni-blank"></span>'}<span class="fw-card-scrim" aria-hidden="true"></span><strong class="fw-card-name">${safe(t(u.name))}</strong></span>
       <em>${safe(t(u.tagline))}</em>
-      <span class="fw-card-badges"><span class="fw-badge">${chars.length} ${safe(l.rolesH)}</span><span class="fw-badge fw-badge-dim">${works} ${safe(l.storyH)}</span>${u.rules ? '<span class="fw-badge fw-badge-gold">✦</span>' : ''}</span>
+      <span class="fw-card-badges"><span class="fw-badge">${chars.length} ${safe(l.rolesH)}</span><span class="fw-badge fw-badge-dim">${works} ${safe(l.storyH)}</span>${u.rules ? '<span class="fw-badge fw-badge-gold">✦ ' + safe(l.rulesH) + '</span>' : ''}</span>
     </a>`;
   }).join('');
   return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="universes">
