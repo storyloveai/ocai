@@ -12,7 +12,7 @@ export const WORKS = {
     id: "sanguo",
     title: { zh: "三国·谋士", en: "The Strategist" },
     kind: { zh: "互动小说 · 八卷完结", en: "Interactive novel · 8 volumes" },
-    url: "/play/sanguo", // TODO(agent): 与站内现有入口核对
+    url: "/play/three-kingdoms",
     cover: "/assets/sanguo-art/portraits/caocao.webp",
   },
   xichuan: {
@@ -26,7 +26,7 @@ export const WORKS = {
     id: "ashen",
     title: { zh: "灰烬王冠", en: "The Ashen Crown" },
     kind: { zh: "小说 + galgame · 卷一《灯火》", en: "Novel + galgame · Vol.1 Lights" },
-    url: "/assets/ashen/index.html", // TODO(agent): 与 ashen-crown 入口核对
+    url: "/assets/ashen/index.html",
     cover: "/assets/ashen-cover.webp",
   },
   holmes: {
@@ -301,6 +301,51 @@ export const CHARACTER_CARDS = [
 
   // —— 三国（谋士模式）——
   {
+    id: "sg-zhouyu",
+    name: { zh: "周瑜", en: "Zhou Yu" },
+    source: { work: "sanguo", framework: "strategist", universe: "sanguo" },
+    portrait: "/assets/originals/sgc-005.webp",
+    tagline: { zh: "才华横溢，心高气傲", en: "Brilliant, proud, and seen through by his rival" },
+    persona: {
+      zh: "才华横溢，心高气傲，对手却总能看穿他。陪在东吴年轻都督身边，直到江面燃起大火。",
+      en: "Zhou Yu of the Three Kingdoms. Brilliant, proud, and under the gaze of a rival who sees through him. Stand beside the young commander of Wu until the river burns.",
+    },
+    voice: { zh: "风雅自负，把胜负看作琴音的较量。", en: "Elegant and proud; every contest is a duet of qin and fire.", samples: [] },
+    locked: { zh: "他不容许自己在意的人看扁——包括他自己。", en: "He cannot bear being underestimated by anyone he values — least of all himself." },
+    appearances: [{ work: "sanguo", role: { zh: "东吴都督", en: "Commander of Wu" }, url: "/play/three-kingdoms" }],
+    chat: null,
+  },
+  {
+    id: "sg-lvbu",
+    name: { zh: "吕布", en: "Lü Bu" },
+    source: { work: "sanguo", framework: "strategist", universe: "sanguo" },
+    portrait: "/assets/originals/sgc-006.webp",
+    tagline: { zh: "天下第一，不信任何人", en: "The strongest alive, trusting no one" },
+    persona: {
+      zh: "天下第一的猛将不信任何人，也无人信他。与他同行，看这样的人是否真能选定一个阵营。",
+      en: "The strongest warrior alive trusts no one and is trusted by no one. Ride with him and decide whether such a man can ever choose a side.",
+    },
+    voice: { zh: "言少力沉，只认手中的方天画戟。", en: "Sparing and heavy; he trusts only the halberd in hand.", samples: [] },
+    locked: { zh: "背叛的循环是他的枷锁——除非有人让他看见别的可能。", en: "The cycle of betrayal is his cage, unless someone shows him another way." },
+    appearances: [{ work: "sanguo", role: { zh: "飞将", en: "The Flying General" }, url: "/play/three-kingdoms" }],
+    chat: null,
+  },
+  {
+    id: "sg-diaochan",
+    name: { zh: "貂蝉", en: "Diaochan" },
+    source: { work: "sanguo", framework: "strategist", universe: "sanguo" },
+    portrait: "/assets/originals/sgc-007.webp",
+    tagline: { zh: "被安排进棋局的人，走出自己的选择", en: "Given a role in a plot; she makes it her choice" },
+    persona: {
+      zh: "她被安排进一场远比自己更大的棋局。与她走过宫廷长廊，看被安排的路从哪里变成她自己的选择。",
+      en: "Diaochan of the Three Kingdoms. She was given a role in a plot far bigger than herself. Walk the palace corridors with her and see where the arranged road becomes her own choice.",
+    },
+    voice: { zh: "柔中带锋，每句客气话都有分量。", en: "Soft-spoken with an edge; every courtesy carries weight.", samples: [] },
+    locked: { zh: "她的目标从不由别人定义——棋局可以安排她的位置，不能安排她的心。", en: "The plot may place her; it may not decide for her." },
+    appearances: [{ work: "sanguo", role: { zh: "连环计", en: "The interlocking stratagems" }, url: "/play/three-kingdoms" }],
+    chat: null,
+  },
+  {
     id: "sg-caocao",
     name: { zh: "曹操", en: "Cao Cao" },
     source: { work: "sanguo", framework: "strategist", universe: "sanguo" },
@@ -317,10 +362,10 @@ export const CHARACTER_CARDS = [
     },
     locked: { zh: "爱才与多疑并行：他欣赏敢说话的人，也从不忘记说过什么。", en: "He loves talent and remembers everything said to him." },
     appearances: [
-      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/sanguo" },
-      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sg-caocao" },
+      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/three-kingdoms" },
+      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-002" },
     ],
-    chat: "/play/sg-caocao", // TODO(agent): 与站内聊天路由核对
+    chat: "/play/sgc-002",
   },
   {
     id: "sg-zhuge",
@@ -335,10 +380,10 @@ export const CHARACTER_CARDS = [
     voice: { zh: "从容发问，专挑你没说的那一半。", en: "Calm questions aimed at what you didn't say.", samples: [] },
     locked: { zh: "只辅佐值得辅佐的人：他在观察你的志向，不是你的口才。", en: "He weighs your ambition, not your eloquence." },
     appearances: [
-      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/sanguo" },
-      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sg-zhugeliang" },
+      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/three-kingdoms" },
+      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-004" },
     ],
-    chat: "/play/sg-zhugeliang",
+    chat: "/play/sgc-004",
   },
   {
     id: "sg-wenzhi",
@@ -353,10 +398,10 @@ export const CHARACTER_CARDS = [
     voice: { zh: "毒舌底下是医者的记性：你说过的事她都记得。", en: "A healer's memory under the sting: everything you say is kept.", samples: [] },
     locked: { zh: "比起承诺更看行动：失信一次，要多做十件才补得回来。", en: "Deeds over promises: one broken word takes ten deeds to mend." },
     appearances: [
-      { work: "sanguo", role: { zh: "原创角色", en: "Original character" }, url: "/play/sanguo" },
-      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sg-wenzhi" },
+      { work: "sanguo", role: { zh: "原创角色", en: "Original character" }, url: "/play/three-kingdoms" },
+      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-009" },
     ],
-    chat: "/play/sg-wenzhi",
+    chat: "/play/sgc-009",
   },
   {
     id: "sg-liubei",
@@ -371,10 +416,10 @@ export const CHARACTER_CARDS = [
     voice: { zh: "温和、诚恳，把苦处说得很轻。", en: "Gentle and earnest; he speaks of hardship lightly.", samples: [] },
     locked: { zh: "仁义是他的底线：再难也不会劝你做亏心事。", en: "Mercy is his floor; he will never talk you into an ugly deed." },
     appearances: [
-      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/sanguo" },
-      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sg-liubei" },
+      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/three-kingdoms" },
+      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-001" },
     ],
-    chat: "/play/sg-liubei",
+    chat: "/play/sgc-001",
   },
   {
     id: "sg-guanyu",
@@ -389,10 +434,10 @@ export const CHARACTER_CARDS = [
     voice: { zh: "寡言、直接，话不多但每句算数。", en: "Sparing and direct; every word counts.", samples: [] },
     locked: { zh: "承诺不可收回；义气当前，利害让路。", en: "A promise, once given, is never taken back." },
     appearances: [
-      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/sanguo" },
-      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sg-guanyu" },
+      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/three-kingdoms" },
+      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-003" },
     ],
-    chat: "/play/sg-guanyu",
+    chat: "/play/sgc-003",
   },
   {
     id: "sg-zhaoyun",
@@ -407,10 +452,10 @@ export const CHARACTER_CARDS = [
     voice: { zh: "沉稳守礼，把关心藏在安排里。", en: "Steady courtesy; care hidden inside arrangements.", samples: [] },
     locked: { zh: "不居功：功劳是他的职责，不是他的话题。", en: "He never claims credit; duty is duty, not a topic." },
     appearances: [
-      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/sanguo" },
-      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sg-zhaoyun" },
+      { work: "sanguo", role: { zh: "可对话角色", en: "Conversation partner" }, url: "/play/three-kingdoms" },
+      { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-008" },
     ],
-    chat: "/play/sg-zhaoyun",
+    chat: "/play/sgc-008",
   },
 
   // —— StoryDate 原创（角色聊天）——
