@@ -253,3 +253,10 @@
   .fw-card:hover, .fw-uni-card:hover { transform: none; }
   .fw-hscroll, .fw-timeline { scroll-behavior: auto; }
 }
+
+/* 档案页氛围：角色自己的立绘做模糊底（同 hero 配方，更收敛） */
+.fw-hero-slim { min-height: 300px; padding: 56px var(--sd-gutter, 80px) 40px; margin-bottom: -250px; pointer-events: none; }
+.fw-hero-slim .fw-hero-blur { height: 460px; filter: blur(56px) brightness(.32) saturate(1.1); }
+.fw-hero-slim .fw-hero-fade { background: linear-gradient(180deg, transparent 120px, #121212 360px); }
+.fw-profile, .fw-sections, .fw-back { position: relative; z-index: 2; }
+@media (max-width: 1023px) { .fw-hero-slim { min-height: 240px; padding: 32px 24px 28px; margin-bottom: -200px; } }

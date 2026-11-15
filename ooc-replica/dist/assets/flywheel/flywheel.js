@@ -190,8 +190,9 @@ function profileMarkup(c) {
     ? `<div class="fw-profile-portrait"><img id="fw-portrait-main" src="${safe(c.portrait)}" alt="" onerror="this.style.visibility='hidden'">
        <div class="fw-expressions" role="group" aria-label="${safe(l.exprH)}">${c.expressions.map((e, i) => `<button type="button" class="fw-expr${i === 0 ? ' active' : ''}" data-fw-expr="${safe(c.expressionUrl(e))}" aria-pressed="${i === 0}" aria-label="${safe(e)}"><img src="${safe(c.expressionUrl(e))}" alt="" loading="lazy"></button>`).join('')}</div></div>`
     : `<div class="fw-profile-portrait">${cardArt(c)}</div>`;
-  return `<main class="fw-page" data-no-i18n data-fw-page="profile">
+  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="profile">
     ${mobileBar()}
+    <div class="fw-hero fw-hero-slim" aria-hidden="true"><div class="fw-hero-art"><img class="fw-hero-blur" src="${safe(c.portrait)}" alt=""></div><div class="fw-hero-fade"></div></div>
     <a class="fw-back" href="/characters">‹ ${l.profileBack}</a>
     <article class="fw-profile">
       <div class="fw-profile-top">
