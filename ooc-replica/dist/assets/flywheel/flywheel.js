@@ -388,8 +388,8 @@ function appendStrip() {
   const wrap = document.createElement('div');
   wrap.id = 'fw-home-strip';
   wrap.innerHTML = homeStrip();
-  const anchor = [...host.querySelectorAll('section, footer')].pop();
-  if (anchor?.parentElement) anchor.parentElement.insertBefore(wrap, anchor.nextSibling);
+  const footer = [...host.querySelectorAll('footer')].pop();
+  if (footer?.parentElement) footer.parentElement.insertBefore(wrap, footer);
   else host.append(wrap);
   return true;
 }
@@ -547,11 +547,21 @@ export function show(path, helpers) {
   if (path === '/') {
     // 先让 reference 渲染首页，再在末尾追加“从故事认识角色”动线（不改其内容，避开既有测试锁定区）
     let ok = false;
-    try { ok = Boolean(referenceShow(path, helpers)); } catch { ok = false; }
+    try { ok = Boolean(referenceShow(path, helpers)); } catch (error) {
+      globalThis.__fwError = String((error && error.stack) || error);
+      if (globalThis.console?.warn) console.warn('[flywheel] home render failed:', error);
+      return false;
+    }
     if (!ok) return ok;
-    appendStrip();
-    paintNav();
-    bindLangRerender();
+    try {
+      appendStrip();
+      paintNav();
+      bindLangRerender();
+    } catch (error) {
+      globalThis.__fwError = String((error && error.stack) || error);
+      if (globalThis.console?.warn) console.warn('[flywheel] home strip failed:', error);
+      return true; // 首页本体已渲染成功，动线失败只留痕
+    }
     return true;
   }
   const handled = renderRoute(path);
