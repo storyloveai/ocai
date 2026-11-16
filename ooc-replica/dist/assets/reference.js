@@ -1,3 +1,4 @@
+import {syncCharacterLinks} from './character-links.js';
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
@@ -194,6 +195,7 @@ function hydrate() {
       toggle.setAttribute('aria-expanded',String(!shrink));
     };
   }
+  syncCharacterLinks(host);
 }
 
 function updateHero(step) {
@@ -470,7 +472,7 @@ export function show(path, helpers) {
 }
 
 // Authenticated layouts use the same captured stylesheet and asset map.
-export function mountInteraction(html,helpers){closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;patchOriginals(host,['69f414d90abbab6f6a2c8131','6a808dbe8cc39ab3d8abaf5e']);paintBrand(host);all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});return host;}
+export function mountInteraction(html,helpers){closeTitlePreview();clearInterval(carousel);context=helpers;host.hidden=false;style.media='all';legacy.disabled=true;document.body.dataset.reference='true';host.dataset.page='interaction';host.innerHTML=html;patchOriginals(host,['69f414d90abbab6f6a2c8131','6a808dbe8cc39ab3d8abaf5e']);paintBrand(host);all('img').forEach(img=>{const original=img.getAttribute('src');const packed=Object.entries(assets).find(([key])=>key===original);if(packed)img.src=packed[1];});syncCharacterLinks(host);return host;}
 
 export function preview(path,helpers){
  const match=/^\/(story|character)\/([^/?]+)$/.exec(path);if(!match)return false;

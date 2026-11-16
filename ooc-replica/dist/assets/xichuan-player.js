@@ -1,3 +1,4 @@
+import {characterProfileUrl} from './character-links.js';
 import {attachGameCredits} from './game-credit-bridge.js';
 import {xichuanAction} from './loop-events.js';
 import {track} from './analytics.js';
@@ -19,11 +20,11 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   const importable = account.user && !account.syncError && !latestSave(snapshot) && latestSave(transferable);
   const root = reference.mountShell(`<style>
     .xc-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #333}
-    .xc-header h1{font-size:16px;margin:0}.xc-header a{color:#ead6a2}.xc-status{font-size:12px;color:#bbb;margin-left:auto}
+    .xc-header h1{font-size:16px;margin:0}.xc-header a{display:inline-flex;align-items:center;min-height:44px;padding:9px 12px;border:1px solid #3a3a3a;border-radius:8px;color:#fafafa;text-decoration:none}.xc-status{font-size:12px;color:#bbb;margin-left:auto}
     .xc-transfer{padding:12px 16px;background:#25232b}.xc-transfer button{margin-left:10px;padding:8px;border:1px solid #6b626f;border-radius:8px;background:#38313b;color:#fff}
     #xichuan-frame{display:block;width:100%;height:calc(100dvh - 120px);min-height:380px;border:0;background:#111522}
     @media(max-width:600px){.xc-header{gap:8px;padding:8px 12px}.xc-status{width:100%;margin:0}#xichuan-frame{height:calc(100dvh - 175px);min-height:300px}}
-  </style><header class="xc-header" data-no-i18n><a href="/play/xc-zhiyao?from=xichuan">‹ ${t('和夏知遥聊聊', 'Chat with Zhiyao')}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
+  </style><header class="xc-header" data-no-i18n><a href="${characterProfileUrl('xc-zhiyao')}">${t('人物档案', 'Character profile')}</a><a href="/play/xc-zhiyao?from=xichuan" data-xichuan-return>‹ ${t('和夏知遥聊聊', 'Chat with Zhiyao')}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
   ${importable ? `<div class="xc-transfer" data-no-i18n>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}<button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
   <iframe id="xichuan-frame" title="${t('汐川互动故事', 'Xichuan visual novel')}" src="/assets/xichuan/index.html?site=1&lang=${lang}" allow="autoplay"></iframe>`, h, 'xichuan');
   const frame = root.querySelector('#xichuan-frame'),gameCredits=attachGameCredits(frame,account,{lang}), status = root.querySelector('.xc-status');
@@ -71,5 +72,5 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
 }
 export function zhiyaoStoryLink(h, lang) {
   const raw = h.read(XICHUAN_KEY, {}), played = Boolean(latestSave(raw));
-  return `<aside class="xc-chat-bridge" data-no-i18n style="flex-shrink:0;margin:8px 12px;padding:10px 12px;border:1px solid #62546b;border-radius:12px;font-size:13px"><p style="margin:0 0 8px">${esc(progressText(raw, lang))}</p><a href="/play/xichuan" data-xichuan-entry style="color:#ead6a2">${lang === 'zh' ? played ? '继续她的故事 →' : '走进她的故事 →' : played ? 'Continue her story →' : 'Step into her story →'}</a><small style="display:block;color:#aaa;margin-top:6px">${lang === 'zh' ? '故事里的选择会带回聊天。聊天不会改写游戏选项和存档。' : 'Story choices carry back to chat. Chat does not change game choices or saves.'}</small></aside>`;
+  return `<aside class="xc-chat-bridge" data-no-i18n style="flex-shrink:0;margin:8px 12px;padding:10px 12px;border:1px solid #333;border-radius:8px;font-size:13px"><p style="margin:0 0 8px">${esc(progressText(raw, lang))}</p><a href="${characterProfileUrl('xc-zhiyao')}" style="display:inline-flex;align-items:center;min-height:44px;margin-right:10px;color:inherit">${lang==='zh'?'人物档案':'Character profile'}</a><a href="/play/xichuan" data-xichuan-entry style="display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;background:#fafafa;color:#171717;border-radius:8px;font-weight:500;text-decoration:none">${lang === 'zh' ? played ? '继续她的故事 →' : '走进她的故事 →' : played ? 'Continue her story →' : 'Step into her story →'}</a><small style="display:block;color:#aaa;margin-top:6px">${lang === 'zh' ? '故事里的选择会带回聊天。聊天不会改写游戏选项和存档。' : 'Story choices carry back to chat. Chat does not change game choices or saves.'}</small></aside>`;
 }

@@ -1,7 +1,9 @@
+import {CHARACTER_HOME, canonicalCharacterUrl, isCharacterArea} from './character-links.js';
 import {historyIds,lastSessionText} from './history.js';
 import {escapeHTML as safe} from './stream.js';
 export const symbol=(name,size=20)=>`<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">${({bell:'<path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/>',arrow:'<path d="m9 5 7 7-7 7"/>',gear:'<path d="m9 3-1 3-3 1 1 3-2 2 2 2-1 3 3 1 1 3h6l1-3 3-1-1-3 2-2-2-2 1-3-3-1-1-3Z"/><circle cx="12" cy="12" r="3"/>',credit:'<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M2 8V2h6m8 0h6v6M2 16v6h6m8 0h6v-6"/><circle cx="12" cy="12" r="4"/>',person:'<circle cx="12" cy="7" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',chat:'<path d="M3 4h18v13H10l-5 4v-4H3Z"/><path d="M8 8h8m-8 4h5"/>',heart:'<path d="M20 5c-3-3-6-1-8 1-2-2-5-4-8-1s-1 7 8 14c9-7 11-11 8-14Z"/>',shield:'<path d="m12 2 9 4v6c0 6-9 10-9 10S3 18 3 12V6Z"/>',star:'<path d="m12 2 3 6 7 1-5 5 1 8-6-4-6 4 1-8-5-5 7-1Z"/>',ticket:'<path d="M3 5h18v5a2 2 0 0 0 0 4v5H3v-5a2 2 0 0 0 0-4Z"/><path d="M15 5v14"/>',edit:'<path d="m14 4 6 6-9 9-7 1 1-7Z"/>',book:'<path d="M4 3h14v18H4ZM8 7h6m-6 4h6m-6 4h4"/>',close:'<path d="m6 6 12 12M18 6 6 18"/>'})[name]||'<circle cx="12" cy="12" r="8"/>'}</svg>`;
 export function paintSidebar(host,account,{read,data,navigate,show}){
+ host.querySelectorAll('a[href]').forEach(a=>{const before=a.getAttribute('href');const after=canonicalCharacterUrl(before);if(after!==before)a.setAttribute('href',after);});
  const side=host.querySelector('[data-shrink]');if(!side)return false;
  const desktop=side.children[1];if(!desktop)return false;
  const user=account.user,profile=read('ooc-profile',{});
@@ -26,7 +28,7 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
  }
  if(user){bottom.classList.add('shell-account-slot');bottom.innerHTML=`<a class="shell-account" href="/profile"><span class="shell-avatar">✱</span><span>${safe(profile.name||user.displayName||'My account')}</span>${symbol('arrow',14)}</a>`;}
  else {bottom.classList.remove('shell-account-slot');bottom.innerHTML=bottom.dataset.guestMarkup.replaceAll('Sign up and get 500 credits!','Sign in to save your stories');bottom.querySelectorAll('button').forEach(b=>{b.dataset.action='login';b.dataset.provider=/Apple/.test(b.textContent)?'apple':'google';b.hidden=b.dataset.provider==='apple'&&!account.providers.apple;});}
- side.querySelectorAll('a[href]').forEach(a=>{const selected=a.getAttribute('href')===location.pathname;a.dataset.status=selected?'active':'inactive';if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
+ side.querySelectorAll('a[href]').forEach(a=>{const selected=a.getAttribute('href')===location.pathname||(a.getAttribute('href')===CHARACTER_HOME&&isCharacterArea(location.pathname));a.dataset.status=selected?'active':'inactive';if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  return true;
 }
 export function showNotifications(show){

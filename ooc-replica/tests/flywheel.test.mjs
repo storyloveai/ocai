@@ -8,8 +8,9 @@ const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 
 test('flywheel card data is complete, bilingual, and points at real assets and routes', async () => {
   const {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS} = await import('../dist/assets/flywheel/cards-data.js');
-  const {characterProfiles} = await import('../dist/assets/character-profiles.js');
-  const chatIds = new Set(characterProfiles.map((c) => c.id));
+  const {storydateCharacters} = await import('../dist/assets/storydate-originals.js');
+  const {roleFor} = await import('../server/roles.js');
+  const chatIds = new Set(storydateCharacters.map((c) => c.id));
   assert.equal(CHARACTER_CARDS.length, 33);
   const ids = new Set();
   for (const c of CHARACTER_CARDS) {
@@ -25,7 +26,11 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
     assert.ok(WORKS[c.source.work] && UNIVERSES[c.source.universe] && FRAMEWORKS[c.source.framework], `${c.id} references unknown work/universe/framework`);
     const portrait = join(dist, c.portrait.replace(/^\//, ''));
     await assert.doesNotReject(() => readFile(portrait), `${c.id} portrait missing: ${c.portrait}`);
-    if (c.chat) assert.ok(chatIds.has(c.chat.split('/').pop()), `${c.id} chat target ${c.chat} is not in the chat whitelist`);
+    if (c.chat) {
+      assert.ok(chatIds.has(c.chat.split('/').pop()), `${c.id} chat target ${c.chat} is not in the chat whitelist`);
+      assert.equal(c.chatId, c.chat.split('/').pop(), `${c.id} retains its existing chat storage identity`);
+      assert.equal(roleFor(c.chatId).mode, 'character', `${c.id} resolves to a real character role`);
+    }
     for (const a of c.appearances) {
       assert.ok(a.url.startsWith('/'), `${c.id} appearance URL must be site-relative`);
       if (a.url.startsWith('/assets/')) {
@@ -39,6 +44,11 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
       await assert.doesNotReject(() => readFile(join(dist, WORKS[w].url.replace(/^\//, ''))), `work ${w} entry missing: ${WORKS[w].url}`);
     }
   }
+  const xichuan = CHARACTER_CARDS.filter(c => c.source.work === 'xichuan');
+  assert.equal(xichuan.length, 5);
+  assert.equal(WORKS.xichuan.url, '/play/xichuan');
+  assert.ok(xichuan.every(c => c.appearances.every(a => a.url === '/play/xichuan')), 'every Xichuan appearance uses the account-aware host');
+  assert.equal(xichuan.find(c => c.id === 'xc-zhiyao').chat, '/play/xc-zhiyao');
 });
 
 test('character discovery stays useful without duplicate navigation or demo editors', async (t) => {
@@ -55,21 +65,27 @@ test('character discovery stays useful without duplicate navigation or demo edit
   };
   const language = lang => setLang(lang, {win: globalThis, doc: document});
 
-  await t.test('home offers one character discovery action and keeps the original sidebar', () => {
+  await t.test('home offers one character discovery action and one canonical sidebar entry', () => {
     const strip = document.querySelector('#fw-home-strip .fw-strip');
     assert.ok(strip);
     assert.equal(strip.querySelectorAll('.fw-strip-row').length, 4);
     assert.equal(strip.querySelectorAll('.fw-btn:not(.fw-btn-secondary)').length, 1, 'one primary action');
     assert.ok(strip.querySelector('a[href="/characters"]'));
-    assert.ok(document.querySelector('[data-shrink] a[href="/character"]'), 'existing Character entry remains');
+    assert.equal(document.querySelectorAll('[data-shrink] a[href="/characters"]').length, 1, 'existing Character entry uses the canonical library');
+    assert.equal(document.querySelector('[data-shrink] a[href="/character"]'), null);
     assert.equal(document.querySelectorAll('[data-shell-flywheel]').length, 0);
-    for (const href of ['/characters', '/universe', '/frameworks', '/studio']) {
+    for (const href of ['/universe', '/frameworks', '/studio']) {
       assert.equal(document.querySelector(`[data-shrink] a[href="${href}"]`), null, `no duplicate sidebar entry ${href}`);
     }
   });
 
   await t.test('library filters, empty states and bilingual search work without losing focus', () => {
     go('/characters');
+    const assertCharacterNavigation = () => {
+      assert.equal(document.querySelectorAll('[data-shrink] a[href="/characters"][aria-current="page"]').length, 1, 'the canonical Character entry stays selected exactly once');
+      assert.equal(document.querySelectorAll('[data-shrink] a[href="/"][aria-current="page"]').length, 0);
+    };
+    assertCharacterNavigation();
     assert.ok(page('characters').hasAttribute('data-no-i18n'));
     assert.ok(page('characters').querySelector('.fw-mobile-bar img'));
     for (const href of ['/characters', '/universe', '/builder']) {
@@ -77,15 +93,18 @@ test('character discovery stays useful without duplicate navigation or demo edit
     }
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
     document.querySelector('[data-fw-filter="xichuan"]').click();
+    assertCharacterNavigation();
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
     document.querySelector('[data-fw-chat]').click();
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 0, 'no fabricated Xichuan chat entry');
-    assert.ok(page('characters').querySelector('.fw-empty'));
+    assertCharacterNavigation();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1, 'only the established Xia Zhiyao chat is available');
+    assert.ok(page('characters').querySelector('.fw-card[href="/characters/xc-zhiyao"]'));
     document.querySelector('[data-fw-filter="all"]').click();
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length);
     input('一盏酒');
     assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
     language('en');
+    assertCharacterNavigation();
     assert.equal(document.getElementById('fw-search').value, '一盏酒', 'language change preserves the query');
     assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1, 'Chinese query still works in English');
     input('Cao Cao');
@@ -106,9 +125,10 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(profile.querySelector('.fw-quote cite').textContent.trim());
     assert.ok(profile.querySelector('details.fw-details'));
     assert.equal(profile.querySelector('details.fw-details').hasAttribute('open'), false);
-    const story = profile.querySelector('.fw-ctas a[href="/assets/xichuan/index.html"]');
+    const story = profile.querySelector('.fw-ctas a[href="/play/xichuan"]');
     assert.ok(story);
-    assert.equal(story.getAttribute('target'), '_top', 'standalone game leaves SPA');
+    assert.equal(story.getAttribute('target'), null, 'Xichuan enters the shared account-aware host');
+    assert.ok(profile.querySelector('.fw-ctas a[href="/play/xc-zhiyao"]'));
     let expressions = profile.querySelectorAll('[data-fw-expr]');
     assert.equal(expressions.length, 6);
     for (const button of expressions) {

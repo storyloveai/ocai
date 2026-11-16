@@ -84,6 +84,20 @@
 .fw-tagline { margin: 0 0 12px; color: #d4d4d4; font-size: 15px; line-height: 1.6; }
 .fw-persona { margin: 0 0 20px; color: #a1a1a1; font-size: 14px; line-height: 1.8; }
 .fw-ctas, .fw-appearances { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.fw-progress-scope { margin: 0 0 12px; color: #a1a1a1; font-size: 12px; line-height: 1.6; }
+.fw-journey { display: grid; gap: 0; margin: 0; padding-left: 22px; }
+.fw-journey li { padding: 0 0 16px 4px; color: #a1a1a1; font-size: 13px; }
+.fw-journey li:last-child { padding-bottom: 0; }
+.fw-journey h2 { margin: 0; color: #d4d4d4; font-size: 15px; line-height: 1.6; font-weight: 500; }
+.fw-journey .fw-note { margin: 4px 0 8px; }
+.fw-review-link { display: inline-flex; align-items: center; min-height: 44px; color: #fafafa; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
+.fw-experiences { margin-top: 24px; padding-top: 20px; border-top: 1px solid #2b2b2b; scroll-margin-top: 24px; }
+.fw-experiences h2 { margin: 0 0 12px; font-size: 18px; line-height: 1.5; font-weight: 600; }
+.fw-experiences h3 { margin: 16px 0 8px; color: #d4d4d4; font-size: 13px; line-height: 1.6; font-weight: 500; }
+.fw-experiences > p, .fw-experience-facts { color: #a1a1a1; font-size: 13px; line-height: 1.7; }
+.fw-experience-facts { display: grid; gap: 6px; margin: 8px 0; padding-left: 18px; }
+.fw-memory-notes { white-space: pre-wrap; overflow-wrap: anywhere; }
+.fw-experiences .fw-quote p { overflow-wrap: anywhere; }
 .fw-section { margin: 32px 0; }
 .fw-section h2 { margin: 0 0 16px; color: #fafafa; font-size: 20px; line-height: 1.4; font-weight: 600; }
 .fw-section > p { margin: 0 0 12px; color: #a1a1a1; font-size: 14px; line-height: 1.8; }

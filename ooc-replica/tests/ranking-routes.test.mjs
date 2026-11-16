@@ -11,6 +11,7 @@ test('home ranking destinations populate story and character collections and kee
  window.HTMLElement.prototype.append=function(...nodes){const result=append.apply(this,nodes);for(const node of nodes)if(node.tagName==='LINK')queueMicrotask(()=>node.onload?.());return result;};
  Object.assign(globalThis,{document,window,DOMParser,location:{pathname:'/collection',search:'',href:'https://replica.example/collection'},matchMedia:()=>({matches:true}),fetch:async path=>new Response(await readFile(join(dist,path)),{headers:{'Content-Type':'application/json'}})});
  const reference=await import('../dist/assets/reference.js');
+ const {canonicalCharacterUrl,characterProfileUrl}=await import('../dist/assets/character-links.js');
  const helpers={read:(_key,fallback)=>fallback,save(){},navigate(){},show(){},data:reference.extraStories,categories:['Main','New Ranking','Rankings','Today']};
  for(const type of ['story','character'])for(const name of ['New Ranking','Rankings','Today']){
   location.search='?name='+encodeURIComponent(name)+(type==='character'?'&type=character':'');
@@ -19,7 +20,13 @@ test('home ranking destinations populate story and character collections and kee
   const links=[...document.querySelectorAll('[data-collection-grid] a')];
   assert.ok(count>0,`${type} ${name} must not be an empty genre filter`);
   assert.equal(links.length,count);
-  assert.ok(links.every(link=>link.getAttribute('href').startsWith('/'+type+'/')));
+  const prefix=type==='character'?'/characters/':'/story/';
+  assert.ok(links.every(link=>link.getAttribute('href').startsWith(prefix)),`${type} ${name}: ${links.map(link=>link.getAttribute('href')).join(', ')}`);
+  if(type==='character')for(const link of links){
+   const href=link.getAttribute('href'),id=href.split('/').pop();
+   assert.equal(characterProfileUrl(id),href);
+   assert.equal(canonicalCharacterUrl('/character/'+id),href,'old ranking bookmarks still resolve to the same character');
+  }
   const select=document.querySelector('[aria-label="Sort collection"]');
   select.querySelector('[value=featured]').removeAttribute('selected');select.querySelector('[value=title]').setAttribute('selected','');select.onchange();
   assert.equal(document.querySelectorAll('[data-collection-grid] a').length,count,'changing order preserves every title');

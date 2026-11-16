@@ -1,7 +1,8 @@
 import {mountShell, show as referenceShow} from '../reference.js';
 import {getLang} from '../site-i18n.js';
 import {escapeHTML as safe} from '../stream.js';
-import {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS, cardById, cardsByUniverse} from './cards-data.js';
+import {XICHUAN_KEY, latestSave, legacySaves, progressText, storyContext} from '../xichuan-state.js';
+import {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS, XICHUAN_FACT_LABELS, cardById, cardsByUniverse} from './cards-data.js';
 
 const DRAFT_KEY = 'sd-flywheel-drafts';
 // Existing artwork: compact page introductions and story-world covers.
@@ -35,7 +36,8 @@ const copy = {
  zh: {
   imageUnavailable: '图片暂不可用', libTitle: '认识故事里的人', libSub: '从一个让你好奇的角色开始，走进 TA 的故事。',
   all: '全部', chatOnly: '可聊天', empty: '没有找到角色，试试其他名字或筛选。', count: n => `${n} 个角色`, storyCount: n => `${n} 个故事`, searchPh: '搜索角色名字或关键词',
-  chatCta: '和 TA 聊聊', storyCta: '进入故事', profileBack: '返回角色', personaH: '人物背景', voiceH: '听 TA 说话', lockedH: '人物设定', appearH: '出场故事',
+  chatCta: '开始聊天', continueChat: '继续聊天', storyCta: '进入故事', continueStory: '继续故事', profileBack: '返回角色', personaH: '人物背景', voiceH: '听 TA 说话', lockedH: '人物设定', appearH: '出场故事',
+  restoring: '正在恢复账号进度…', stateUnavailable: '暂时无法读取此设备上的经历。请稍后刷新重试。', accountProgress: '当前账号的经历', deviceProgress: '本设备的经历', restoreFailed: '云端进度尚未恢复，以下为当前账号在本设备上的记录。', reviewH: '共同经历', reviewCta: '查看已有经历', noChatYet: '还没有对话，可以从第一次相遇开始。', chatSaved: n => `当前对话已有 ${n} 条消息。`, storyFacts: '当前剧情', memoriesH: '当前对话的记事', memoryNotesH: '聊天中的补充记忆', memoryYou: '你记下的话', memoryCharacter: '角色说过的话', noMemories: '还没有记事。在聊天中把想留下的话记下来，回来就能回顾。', noStoryFacts: '尚未开始故事。进入汐川后，经历会随当前存档更新。', storySync: '故事里的选择会带回聊天；聊天不会改写故事存档。', chatStep: '先和她聊聊', storyStep: '再走进她的故事', reviewStep: '回来看共同经历', reviewGuide: '只回顾当前存档和当前对话中保留的记事。',
   detailsH: '人物详细设定（含剧透）', samplesFrom: '原作节选', noSamples: '暂无原作节选。', sameUniverseH: '故事里的其他人', noChat: '可以先进入故事认识 TA，独立聊天暂未开放。', standalone: '将打开独立游戏页面。此入口的进度尚未与角色聊天同步。',
   exprH: '切换表情', encounterH: '选择一场相遇', encounterCta: '进入相遇', topicsH: '可以从这里聊起',
   uniTitle: '故事世界', uniSub: '了解故事发生的地方，再选一个人同行。', placesH: '地点', factionsH: '人物与势力', timelineH: '时间线', rulesH: '世界背景', magicH: '故事背景', storyH: '相关故事', charsH: '出场角色', rolesH: '位角色', worldDetails: '故事世界介绍',
@@ -48,7 +50,8 @@ const copy = {
  en: {
   imageUnavailable: 'Image unavailable', libTitle: 'Meet the people in our stories', libSub: 'Start with someone who intrigues you. Discover the story they belong to.',
   all: 'All', chatOnly: 'Chat available', empty: 'No characters found. Try another name or filter.', count: n => `${n} ${n === 1 ? 'character' : 'characters'}`, storyCount: n => `${n} ${n === 1 ? 'story' : 'stories'}`, searchPh: 'Search names or keywords',
-  chatCta: 'Start a conversation', storyCta: 'Enter the story', profileBack: 'Back to characters', personaH: 'Background', voiceH: 'In their own words', lockedH: 'Character details', appearH: 'Their stories',
+  chatCta: 'Start chatting', continueChat: 'Continue chatting', storyCta: 'Enter the story', continueStory: 'Continue the story', profileBack: 'Back to characters', personaH: 'Background', voiceH: 'In their own words', lockedH: 'Character details', appearH: 'Their stories',
+  restoring: 'Restoring account progress…', stateUnavailable: 'Could not read experiences on this device. Refresh and try again.', accountProgress: 'Experiences for this account', deviceProgress: 'Experiences on this device', restoreFailed: 'Cloud progress has not been restored. These are this account’s records on this device.', reviewH: 'Shared experiences', reviewCta: 'Review experiences', noChatYet: 'No conversation yet. Begin with your first meeting.', chatSaved: n => `${n} messages in the current conversation.`, storyFacts: 'Current story', memoriesH: 'Memories from this conversation', memoryNotesH: 'Additional chat memories', memoryYou: 'Words you kept', memoryCharacter: 'Words the character said', noMemories: 'No memories kept yet. Keep a line in chat to revisit it here.', noStoryFacts: 'The story has not started. Experiences will follow your active save when you enter Xichuan.', storySync: 'Story choices carry back to chat. Chat does not change story saves.', chatStep: 'Talk with her first', storyStep: 'Step into her story', reviewStep: 'Return to shared experiences', reviewGuide: 'Review only the active save and memories kept in the current conversation.',
   detailsH: 'More about this character (spoilers)', samplesFrom: 'Story excerpt', noSamples: 'No excerpts available yet.', sameUniverseH: 'Others in this world', noChat: 'Meet them in their story first. Standalone chat is not available yet.', standalone: 'Opens a standalone game. Progress here does not yet sync with character chat.',
   exprH: 'Change expression', encounterH: 'Choose an encounter', encounterCta: 'Start here', topicsH: 'Conversation starters',
   uniTitle: 'Story worlds', uniSub: 'Explore where each story unfolds, then choose someone to meet.', placesH: 'Places', factionsH: 'People & factions', timelineH: 'Timeline', rulesH: 'Background', magicH: 'About this world', storyH: 'Related stories', charsH: 'Meet the cast', rolesH: 'characters', worldDetails: 'About this story world',
@@ -75,10 +78,10 @@ let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261116-polish2"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261116-loop"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261116-polish2';
+    link.href = '/assets/flywheel/flywheel.css?v=20261116-loop';
     document.head.append(link);
   }
 }
@@ -137,6 +140,74 @@ function libMarkup() {
 
 // —— /characters/<id> ——
 const quoted = (x) => (/^[“"「]/.test(x) ? x : `“${x}”`);
+const validMessages = value => Array.isArray(value) && value.every(m => m && ['user','assistant'].includes(m.role) && typeof m.text === 'string');
+const memoryExcerpt = value => { let text = ''; for (const c of String(value || '')) { if (text.length + c.length > 200) break; text += c; } return text; };
+const memoryStamp = text => {
+ let a = 2166136261, b = 5381;
+ for (let i = 0; i < text.length; i++) { a = Math.imul(a ^ text.charCodeAt(i), 16777619); b = Math.imul(b, 33) ^ text.charCodeAt(i); }
+ return text.length + ':' + (a >>> 0).toString(16) + ':' + (b >>> 0).toString(16);
+};
+// Read the same active branch and validated pins as character-threads.js,
+// without opening a thread manager, changing its active view, or writing keys.
+function chatProgress(c, read) {
+ if (!c.chatId) return {messages: [], pins: [], notes: ''};
+ const key = 'ooc-session-v2-' + c.chatId, index = read(key + '-threads', null);
+ const validIndex = index?.version === 1 && Array.isArray(index.threads) && index.threads.length &&
+  index.threads.every(t => t && typeof t.id === 'string' && /^[a-z0-9-]{1,60}$/i.test(t.id) && Array.isArray(t.pins)) &&
+  index.threads.some(t => t.id === index.active);
+ const thread = validIndex ? index.threads.find(t => t.id === index.active) : {id:'main', pins:[]};
+ const archive = read(key + '-branch-' + thread.id, null), legacy = read(key, []);
+ const messages = validMessages(archive) ? archive : validMessages(legacy) ? legacy : [];
+ const pins = thread.pins.filter(p => {
+  if (!p || !Number.isInteger(p.turn) || p.turn < 0) return false;
+  const m = messages[p.turn];
+  return m && m.role === p.role && memoryExcerpt(m.text) === p.text && !m.failed && !m.streaming &&
+   (!p.sourceStamp || p.sourceStamp === memoryStamp(m.text));
+ }).slice(0, 6);
+ const notes = read('ooc-Memories-' + c.chatId, '');
+ return {messages, pins, notes: typeof notes === 'string' ? notes.slice(0,350).trim() : ''};
+}
+function experiencesMarkup(c, raw, chat) {
+ const l = L(), context = storyContext(raw);
+ const facts = Object.entries(XICHUAN_FACT_LABELS).filter(([key]) => context?.flags[key] === true);
+ const story = c.source.work === 'xichuan' ? `<h3>${safe(l.storyFacts)}</h3>${context ? `<p>${safe(progressText(raw,getLang()))}</p>${facts.length ? `<ul class="fw-experience-facts">${facts.map(([,label]) => `<li>${safe(t(label))}</li>`).join('')}</ul>` : ''}` : `<p class="fw-note">${safe(l.noStoryFacts)}</p>`}` : '';
+ const memories = c.chat ? `<h3>${safe(l.memoriesH)}</h3>${chat.pins.length ? chat.pins.map(p => `<blockquote class="fw-quote"><p>${safe(p.text)}</p><cite>${safe(p.role === 'user' ? l.memoryYou : l.memoryCharacter)}</cite></blockquote>`).join('') : `<p class="fw-note">${safe(l.noMemories)}</p>`}${chat.notes ? `<h3>${safe(l.memoryNotesH)}</h3><p class="fw-memory-notes">${safe(chat.notes)}</p>` : ''}` : '';
+ return `<section class="fw-experiences" id="fw-experiences" data-fw-experiences aria-labelledby="fw-experiences-title"><h2 id="fw-experiences-title">${safe(l.reviewH)}</h2>${story}${memories}</section>`;
+}
+function profileStateMarkup(c, account = currentHelpers?.account) {
+ const l = L(), w = WORKS[c.source.work];
+ if (account && (account.busy || !account.restored)) return `<p class="fw-note" role="status" data-fw-restoring>${safe(l.restoring)}</p>`;
+ try {
+  const read = currentHelpers?.read || ((_key, fallback) => fallback), chat = chatProgress(c, read);
+  let raw = c.source.work === 'xichuan' ? read(XICHUAN_KEY,{}) : {};
+  // Match the existing player’s guest import preview without writing its keys.
+  // Signed-in accounts only show their own save, until an explicit import there.
+  if (c.source.work === 'xichuan' && !account?.user && !latestSave(raw)) {
+   const old = legacySaves(globalThis.localStorage);
+   if (latestSave(old)) raw = old;
+  }
+  const played = Boolean(latestSave(raw)), chatting = chat.messages.length > 0;
+  const chatLink = c.chat ? `<a class="fw-btn" data-fw-chat-entry href="${safe(c.chat)}">${safe(chatting ? l.continueChat : l.chatCta)} →</a>` : '';
+  const storyLink = w && c.source.work !== 'character' ? `<a class="fw-btn${c.chat ? ' fw-btn-secondary' : ''}" data-fw-story-entry href="${safe(w.url)}"${ext(w.url)}>${safe(played ? l.continueStory : l.storyCta)} →</a>` : '';
+  const chatStatus = `<p class="fw-note" data-fw-chat-status>${safe(chatting ? l.chatSaved(chat.messages.length) : l.noChatYet)}</p>`;
+  const storyStatus = c.source.work === 'xichuan' ? `<p class="fw-note" data-fw-progress>${safe(progressText(raw,getLang()))}</p>` : '';
+  const scope = c.chat || c.source.work === 'xichuan' ? `<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}` : '';
+  if (c.id === 'xc-zhiyao') return `${scope}<ol class="fw-journey"><li><div><h2>${safe(l.chatStep)}</h2>${chatStatus}</div><div class="fw-ctas">${chatLink}</div></li><li><div><h2>${safe(l.storyStep)}</h2>${storyStatus}</div><div class="fw-ctas">${storyLink}</div></li><li><div><h2>${safe(l.reviewStep)}</h2><p class="fw-note">${safe(l.reviewGuide)}</p></div><a class="fw-review-link" href="#fw-experiences">${safe(l.reviewCta)} ↓</a></li></ol><p class="fw-note">${safe(l.storySync)}</p>${experiencesMarkup(c,raw,chat)}`;
+  return `${scope}<div class="fw-ctas">${chatLink}${storyLink}</div>${c.chat ? chatStatus : `<p class="fw-note">${safe(l.noChat)}</p>`}${storyStatus}${w && isStandalone(w.url) ? `<p class="fw-note">${safe(l.standalone)}</p>` : ''}${c.chat ? experiencesMarkup(c,raw,chat) : ''}`;
+ } catch { return `<p class="fw-note" role="status">${safe(l.stateUnavailable)}</p>`; }
+}
+const profileStateCache = new WeakMap();
+// Account hydration and sync updates replace only private state, preserving the
+// library search, portrait expression, and the rest of the current profile.
+export function syncAccount(account) {
+ const host = document.querySelector('[data-fw-profile-state]');
+ const c = cardById(host?.closest('[data-fw-character]')?.dataset.fwCharacter);
+ if (!host || !c) return;
+ const markup = profileStateMarkup(c,account);
+ if (profileStateCache.get(host) === markup) return;
+ host.innerHTML = markup;
+ profileStateCache.set(host,markup);
+}
 function profileMarkup(c) {
   const l = L();
   const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>${safe(quoted(t(s)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(s.from) || workName(c.source.work))}</cite></blockquote>`).join('');
@@ -144,8 +215,6 @@ function profileMarkup(c) {
   const encounters = (c.encounters || []).map((e) => `<a class="fw-appearance" href="${safe(e.url)}"><strong>${safe(t(e.title))}</strong><span>${safe(l.encounterCta)}</span><span aria-hidden="true">↗</span></a>`).join('');
   const starters = (c.starters?.[getLang() === 'zh' ? 'zh' : 'en'] || []).map((x) => `<li>${safe(x)}</li>`).join('');
   const others = cardsByUniverse(c.source.universe).filter((x) => x.id !== c.id).slice(0, 8);
-  const w = WORKS[c.source.work];
-  const ctas = `${c.chat ? `<a class="fw-btn" href="${safe(c.chat)}">${safe(l.chatCta)} ↗</a>` : ''}${w ? `<a class="fw-btn${c.chat ? ' fw-btn-secondary' : ''}" href="${safe(w.url)}"${ext(w.url)}>${safe(l.storyCta)} ↗</a>` : ''}`;
   const multi = (c.expressions || []).length > 1;
   const portraitBlock = multi
     ? `<div class="fw-profile-portrait"><img id="fw-portrait-main" src="${safe(c.expressionUrl(expressionFor(c)))}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span>
@@ -162,8 +231,7 @@ function profileMarkup(c) {
           <h1>${safe(t(c.name))}</h1>
           <p class="fw-tagline">${safe(t(c.tagline))}</p>
           <p class="fw-persona">${safe(workName(c.source.work))}</p>${c.portraitNote ? `<p class="fw-note">${safe(t(c.portraitNote))}</p>` : ''}
-          <div class="fw-ctas">${ctas}</div>
-          ${c.chat ? '' : `<p class="fw-note">${safe(l.noChat)}</p>`}${w && isStandalone(w.url) ? `<p class="fw-note">${safe(l.standalone)}</p>` : ''}
+          <div data-fw-profile-state aria-live="polite">${profileStateMarkup(c)}</div>
         </div>
       </div>
       <section class="fw-section"><h2>${l.voiceH}</h2>${c.voice ? `<p>${safe(t(c.voice))}</p>` : ''}${samples || `<p class="fw-note">${safe(l.noSamples)}</p>`}</section>
@@ -319,8 +387,7 @@ function renderRoute(path) {
  else if (path === '/studio') { markup = studioMarkup(); title = L().createNav; }
  else return false;
  mountShell(markup,currentHelpers,'flywheel');
- // Hydration uses the home shell. Never leave its Home item highlighted on a nested route.
- document.querySelectorAll('[data-shrink] a[aria-current="page"]').forEach(a => { a.removeAttribute('aria-current'); a.dataset.status = 'inactive'; });
+ // Shared shell hydration marks the canonical character navigation item.
  bindCommon(); document.title = `${title} · StoryDate`; return true;
 }
 function bindLangRerender() {

@@ -19,7 +19,7 @@ export const WORKS = {
     id: "xichuan",
     title: { zh: "汐川的第七个春天", en: "The Seventh Spring of Xichuan" },
     kind: { zh: "galgame · 全本", en: "Galgame · full story" },
-    url: "/assets/xichuan/index.html",
+    url: "/play/xichuan",
     cover: "/assets/xichuan/art/cg/cg_stage.webp",
   },
   ashen: {
@@ -47,7 +47,7 @@ export const WORKS = {
     id: "character",
     title: { zh: "角色页原创相遇", en: "Character Originals" },
     kind: { zh: "角色聊天", en: "Character chat" },
-    url: "/character",
+    url: "/characters",
     cover: "/assets/characters/shen-yanzhou.webp",
   },
 };
@@ -286,8 +286,9 @@ export const CHARACTER_CARDS = [
       zh: "毕业要去照顾母亲这件事，她不会主动说破；影院五月要拆，她比谁都清楚。",
       en: "She never volunteers the truth about her mother; she knows better than anyone the cinema falls in May.",
     },
-    appearances: [{ work: "xichuan", role: { zh: "电影社社长", en: "Film club president" }, url: "/assets/xichuan/index.html" }],
-    chat: null,
+    appearances: [{ work: "xichuan", role: { zh: "电影社社长", en: "Film club president" }, url: "/play/xichuan" }],
+    chat: "/play/xc-zhiyao",
+    chatId: "xc-zhiyao",
   },
   {
     id: "xc-shencheng",
@@ -310,7 +311,7 @@ export const CHARACTER_CARDS = [
       zh: "那个约定她不会先提；家里的咖啡馆和她留在汐川的理由，她也不解释。",
       en: "She never brings up the promise first, and never explains why she stayed.",
     },
-    appearances: [{ work: "xichuan", role: { zh: "青梅竹马", en: "Childhood friend" }, url: "/assets/xichuan/index.html" }],
+    appearances: [{ work: "xichuan", role: { zh: "青梅竹马", en: "Childhood friend" }, url: "/play/xichuan" }],
     chat: null,
   },
   {
@@ -334,7 +335,7 @@ export const CHARACTER_CARDS = [
       zh: "那盘没有标签的胶片，她不会主动放给别人看。",
       en: "She will not run the unlabeled reel for anyone, unprompted.",
     },
-    appearances: [{ work: "xichuan", role: { zh: "放映员", en: "Projectionist" }, url: "/assets/xichuan/index.html" }],
+    appearances: [{ work: "xichuan", role: { zh: "放映员", en: "Projectionist" }, url: "/play/xichuan" }],
     chat: null,
   },
   {
@@ -355,7 +356,7 @@ export const CHARACTER_CARDS = [
       ],
     },
     locked: { zh: "对老友的承诺：影院的东西，一件都不会让人乱动。", en: "A promise to an old friend: nothing in the cinema gets touched carelessly." },
-    appearances: [{ work: "xichuan", role: { zh: "看门人", en: "Caretaker" }, url: "/assets/xichuan/index.html" }],
+    appearances: [{ work: "xichuan", role: { zh: "看门人", en: "Caretaker" }, url: "/play/xichuan" }],
     chat: null,
   },
   {
@@ -376,7 +377,7 @@ export const CHARACTER_CARDS = [
       ],
     },
     locked: { zh: "军师人设不倒：哪怕没谈过，也绝不承认。", en: "The strategist persona never cracks; he will never admit he's never dated." },
-    appearances: [{ work: "xichuan", role: { zh: "室友", en: "Roommate" }, url: "/assets/xichuan/index.html" }],
+    appearances: [{ work: "xichuan", role: { zh: "室友", en: "Roommate" }, url: "/play/xichuan" }],
     chat: null,
   },
 
@@ -395,7 +396,8 @@ export const CHARACTER_CARDS = [
     voice: { zh: "风雅自负，把胜负看作琴音的较量。", en: "Elegant and proud; every contest is a duet of qin and fire.", samples: [] },
     locked: { zh: "他不容许自己在意的人看扁——包括他自己。", en: "He cannot bear being underestimated by anyone he values — least of all himself." },
     appearances: [{ work: "sanguo", role: { zh: "东吴都督", en: "Commander of Wu" }, url: "/play/three-kingdoms" }],
-    chat: null,
+    chat: "/play/sgc-005",
+    chatId: "sgc-005",
   },
   {
     id: "sg-lvbu",
@@ -411,7 +413,8 @@ export const CHARACTER_CARDS = [
     voice: { zh: "言少力沉，只认手中的方天画戟。", en: "Sparing and heavy; he trusts only the halberd in hand.", samples: [] },
     locked: { zh: "背叛的循环是他的枷锁——除非有人让他看见别的可能。", en: "The cycle of betrayal is his cage, unless someone shows him another way." },
     appearances: [{ work: "sanguo", role: { zh: "飞将", en: "The Flying General" }, url: "/play/three-kingdoms" }],
-    chat: null,
+    chat: "/play/sgc-006",
+    chatId: "sgc-006",
   },
   {
     id: "sg-diaochan",
@@ -427,7 +430,8 @@ export const CHARACTER_CARDS = [
     voice: { zh: "柔中带锋，每句客气话都有分量。", en: "Soft-spoken with an edge; every courtesy carries weight.", samples: [] },
     locked: { zh: "她的目标从不由别人定义——棋局可以安排她的位置，不能安排她的心。", en: "The plot may place her; it may not decide for her." },
     appearances: [{ work: "sanguo", role: { zh: "连环计", en: "The interlocking stratagems" }, url: "/play/three-kingdoms" }],
-    chat: null,
+    chat: "/play/sgc-007",
+    chatId: "sgc-007",
   },
   {
     id: "sg-caocao",
@@ -450,6 +454,7 @@ export const CHARACTER_CARDS = [
       { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-002" },
     ],
     chat: "/play/sgc-002",
+    chatId: "sgc-002",
   },
   {
     id: "sg-zhuge",
@@ -468,6 +473,7 @@ export const CHARACTER_CARDS = [
       { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-004" },
     ],
     chat: "/play/sgc-004",
+    chatId: "sgc-004",
   },
   {
     id: "sg-wenzhi",
@@ -486,6 +492,7 @@ export const CHARACTER_CARDS = [
       { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-009" },
     ],
     chat: "/play/sgc-009",
+    chatId: "sgc-009",
   },
   {
     id: "sg-liubei",
@@ -504,6 +511,7 @@ export const CHARACTER_CARDS = [
       { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-001" },
     ],
     chat: "/play/sgc-001",
+    chatId: "sgc-001",
   },
   {
     id: "sg-guanyu",
@@ -522,6 +530,7 @@ export const CHARACTER_CARDS = [
       { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-003" },
     ],
     chat: "/play/sgc-003",
+    chatId: "sgc-003",
   },
   {
     id: "sg-zhaoyun",
@@ -540,6 +549,7 @@ export const CHARACTER_CARDS = [
       { work: "character", role: { zh: "角色聊天", en: "Character chat" }, url: "/play/sgc-008" },
     ],
     chat: "/play/sgc-008",
+    chatId: "sgc-008",
   },
 
   // —— StoryDate 原创（角色聊天）——
@@ -557,6 +567,7 @@ export const CHARACTER_CARDS = [
     locked: { zh: "当年的离开不解释清楚，他不会让自己靠近。", en: "Until the old departure is explained, he won't let himself come closer." },
     appearances: [{ work: "character", role: { zh: "原创相遇", en: "Original meeting" }, url: "/play/oc-shen-yanzhou" }],
     chat: "/play/oc-shen-yanzhou",
+    chatId: "oc-shen-yanzhou",
   },
   {
     id: "oc-lu-wensheng",
@@ -572,6 +583,7 @@ export const CHARACTER_CARDS = [
     locked: { zh: "嘴硬是习惯：他不会先低头，但会重弹那一个音。", en: "The stubbornness is habit; he won't apologize first, but he will replay that one note." },
     appearances: [{ work: "character", role: { zh: "原创相遇", en: "Original meeting" }, url: "/play/oc-lu-wensheng" }],
     chat: "/play/oc-lu-wensheng",
+    chatId: "oc-lu-wensheng",
   },
   {
     id: "oc-lin-zhaowan",
@@ -587,6 +599,7 @@ export const CHARACTER_CARDS = [
     locked: { zh: "她不替客户决定取舍：留下什么，永远由你说了算。", en: "She never decides for you what stays and what goes." },
     appearances: [{ work: "character", role: { zh: "原创相遇", en: "Original meeting" }, url: "/play/oc-lin-zhaowan" }],
     chat: "/play/oc-lin-zhaowan",
+    chatId: "oc-lin-zhaowan",
   },
 
   // —— 维斯特林（galgame/小说）——
@@ -945,6 +958,38 @@ export function cardsByFramework(frameworkId) {
 export function cardsByWork(workId) {
   return CHARACTER_CARDS.filter((c) => c.source.work === workId || c.appearances.some((a) => a.work === workId));
 }
+
+// Current-save fact labels from server/xichuan-campaign.json vars. These are
+// displayed only when storyContext exposes the matching true flag.
+export const XICHUAN_FACT_LABELS = {
+  'flag.saw_last_spring': {zh:'对知遥说“来看它最后一个春天”', en:'Told Zhiyao he came to see its last spring'},
+  'flag.joined_club': {zh:'加入了电影社', en:'Joined the film club'},
+  'flag.poster_sale': {zh:'用爷爷的旧海报义卖', en:"Sold grandfather's old posters for charity"},
+  'flag.knows_mom': {zh:'知道了知遥妈妈的事', en:"Learned about Zhiyao's mother"},
+  'flag.zhiyao_secret': {zh:'知道知遥毕业要回家', en:'Knows Zhiyao is going home after graduation'},
+  'flag.route_zhiyao': {zh:'进入夏知遥线', en:"Entered Zhiyao's route"},
+  'flag.route_shencheng': {zh:'进入沈澄线', en:"Entered Shen Cheng's route"},
+  'flag.route_jibai': {zh:'进入季白线', en:"Entered Ji Bai's route"},
+  'flag.route_none': {zh:'前夜一个人回家', en:'Went home alone on the eve'},
+  'flag.z_stage': {zh:'上台陪她念开场白', en:'Went on stage to say the opening with her'},
+  'flag.z_echo': {zh:'把“五个人也是观众”喊回给她', en:"Shouted 'five people is still an audience' back at her"},
+  'flag.z_week': {zh:'答应陪她做完单子上的事', en:'Promised to do everything on her list'},
+  'flag.z_rash': {zh:'说要跟她一起回去', en:"Said he'd go home with her"},
+  'flag.z_distance': {zh:'散场后和她保持距离', en:'Kept his distance after the show'},
+  'flag.z_screen': {zh:'剪下了一块银幕', en:'Cut a piece from the screen'},
+  'flag.z_signed': {zh:'社员在银幕背面签了名', en:'The members signed the back of the screen'},
+  'flag.z_shout': {zh:'在海边听见她喊“我不想走”', en:"Heard her shout 'I don't want to go' at the sea"},
+  'flag.z_mom': {zh:'和她妈妈视频过', en:'Talked with her mother on a video call'},
+  'flag.z_photo': {zh:'约好每周六发一张海的照片', en:'Promised a photo of the sea every Saturday'},
+  'flag.z_stay': {zh:'雨夜说“我留下来”', en:"Said 'I'm staying' on the rainy night"},
+  'flag.z_letgo': {zh:'雨夜让她别回头', en:'Told her not to look back on the rainy night'},
+  'flag.z_good': {zh:'在站台上告白', en:'Confessed on the platform'},
+  'flag.z_normal': {zh:'在站台上只挥了手', en:'Only waved on the platform'},
+  'flag.broken_zhiyao': {zh:'和夏知遥决裂', en:'Broke with Xia Zhiyao'},
+  'flag.z_promised': {zh:'答应夏知遥最后一场站在她身边', en:'Promised Zhiyao to stand beside her at the last show'},
+  'flag.z_broke_promise': {zh:'最后一场没有站在她身边', en:"Didn't stand beside her at the last show"},
+  'flag.z_firstday': {zh:'告诉夏知遥记得第一天见到她', en:'Told Zhiyao he remembers the first day he saw her'},
+};
 
 // —— 派生数据（保持“一处数据多处引用”，不在本文件手抄站点已有内容）——
 import {sanguoCharacters} from '../sanguo-characters.js';
