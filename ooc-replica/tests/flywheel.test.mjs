@@ -4,6 +4,7 @@ import {parseHTML, DOMParser} from 'linkedom';
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createHistory} from './fixtures/character-loop-dom.mjs';
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 
 test('flywheel card data is complete, bilingual, and points at real assets and routes', async () => {
@@ -135,6 +136,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
       button.click();
       assert.equal(navigations.length, before + 1, 'each recommendation has one bound navigation');
       assertDestination(reply);
+      assert.equal(feature().querySelector('input').value, '', 'choosing a recommendation consumes the directory copy of the draft');
     };
     const submit = (lang, reply) => {
       const hero = assertFeature(lang);
@@ -145,23 +147,31 @@ test('character discovery stays useful without duplicate navigation or demo edit
       assert.equal(event.defaultPrevented, true);
       assert.equal(navigations.length, before + 1);
       assertDestination(reply);
+      assert.equal(feature().querySelector('input').value, '', 'submitting a reply clears the directory copy after handing it to chat');
     };
     choose('zh');
     submit('zh', '我想听你的故事，貂蝉。 & 然后呢？');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
     const unfinishedZh = '  还没说完：那张旧票根 & 后来的事……  ';
     feature().querySelector('input').value = unfinishedZh;
+    const directory = location.pathname + location.search + location.hash;
+    go('/characters/xc-zhiyao'); go(directory);
+    assert.equal(feature().querySelector('input').value, unfinishedZh, 'ordinary profile browsing preserves an unsent directory draft');
     document.querySelector('[data-fw-filter="xichuan"]').click();
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
     assert.equal(assertFeature('zh').querySelector('input').value, unfinishedZh, 'filtering preserves the unfinished reply exactly');
     choose('zh', 1);
+    feature().querySelector('input').value = unfinishedZh;
     input('夏知遥');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
     assert.equal(feature().querySelector('input').value, unfinishedZh, 'searching the directory leaves the separate hero draft intact');
+    const activeReply = feature().querySelector('input'); activeReply.focus(); activeReply.setSelectionRange(3, 9, 'forward');
     language('en');
     assert.equal(document.getElementById('fw-search').value, '夏知遥');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
     assert.equal(assertFeature('en').querySelector('input').value, unfinishedZh, 'changing language preserves typed words without translating or trimming them');
+    assert.ok(document.activeElement === feature().querySelector('input'), 'language changes restore the focused hero draft');
+    assert.equal(document.activeElement.selectionStart, 3); assert.equal(document.activeElement.selectionEnd, 9);
     choose('en');
     submit('en', 'What would you choose? & why?');
     const unfinishedEn = '  A half-written reply: what if… & why?  ';
@@ -172,7 +182,9 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(assertFeature('en').querySelector('input').value, unfinishedEn);
     choose('en', 1);
     language('zh');
-    assert.equal(assertFeature('zh').querySelector('input').value, unfinishedEn, 'switching back also retains the unsent draft');
+    assert.equal(assertFeature('zh').querySelector('input').value, '', 'a consumed draft does not return on a later repaint');
+    go('/characters/xc-zhiyao'); go('/characters');
+    assert.equal(feature().querySelector('input').value, '', 'returning from ordinary browsing after handoff does not resurrect the old reply');
     choose('zh');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
     assert.deepEqual(requests.filter(path => path.startsWith('/api/')), apiBefore, 'hero actions only hand off navigation, without model or payment operations');
@@ -181,6 +193,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
 
   await t.test('directory names stay below their artwork and only transparent portraits receive separate scene layers', async () => {
     const {characterArt} = await import('../dist/assets/flywheel/character-art.js');
+    language('zh');
     go('/characters');
     for (const card of CHARACTER_CARDS) {
       const node = page('characters').querySelector(`.fw-card[href="/characters/${card.id}"]`);
@@ -247,6 +260,65 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
   });
 
+  await t.test('directory URL, mobile selector, bilingual story search and reset share the same state', () => {
+    go('/characters?source=home&world=xichuan&chat=1&q=夏知遥#cast');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
+    assert.equal(document.getElementById('fw-search').value, '夏知遥');
+    assert.equal(document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'true');
+    const beforeWorld = history.length;
+    document.querySelector('[data-fw-filter="sanguo"]').click();
+    assert.equal(history.length, beforeWorld + 1, 'a discrete world choice adds a history entry');
+    assert.equal(new URL(location.href).searchParams.get('world'), 'sanguo');
+    assert.equal(document.getElementById('fw-search').value, '夏知遥', 'world changes preserve the query');
+    assert.ok(document.querySelector('#fw-lib-results [data-fw-reset]'));
+    const beforeTyping = history.length;
+    input('  Cao Cao  ');
+    assert.equal(history.length, beforeTyping, 'typing replaces the current URL without adding history per key');
+    assert.equal(new URL(location.href).searchParams.get('q'), '  Cao Cao  ');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
+    const select = document.querySelector('[data-fw-world-select]');
+    select.querySelectorAll('option').forEach(option => option.removeAttribute('selected'));
+    select.querySelector('option[value="xichuan"]').setAttribute('selected', '');
+    select.dispatchEvent(new window.Event('change', {bubbles: true}));
+    assert.equal(new URL(location.href).searchParams.get('world'), 'xichuan');
+    assert.equal(document.querySelector('[data-fw-filter="xichuan"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(document.querySelector('[data-fw-world-select]').value, 'xichuan');
+    assert.equal(document.activeElement, document.querySelector('[data-fw-world-select]'));
+    language('en');
+    assert.ok(document.activeElement === document.querySelector('[data-fw-world-select]'), 'language changes keep keyboard focus on the mobile selector');
+    language('zh');
+    input('The Seventh Spring of Xichuan');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1, 'English story title matches in the Chinese directory');
+    document.querySelector('[data-fw-chat]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
+    const search = document.getElementById('fw-search'); search.focus(); search.setSelectionRange(4, 12, 'backward');
+    language('en');
+    const restored = document.getElementById('fw-search');
+    assert.equal(document.activeElement, restored, 'language repaint restores the focused search');
+    assert.equal(restored.selectionStart, 4); assert.equal(restored.selectionEnd, 12); assert.equal(restored.selectionDirection, 'backward');
+    input('汐川的第七个春天');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5, 'Chinese story title matches in the English directory');
+    document.querySelector('[data-fw-chat]').click();
+    input('no-character-matches-this');
+    assert.ok(document.querySelector('#fw-lib-results .fw-empty'));
+    document.querySelector('[data-fw-reset]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    assert.equal(document.activeElement, document.getElementById('fw-search'));
+    assert.equal(document.getElementById('fw-search').value, '');
+    assert.equal(document.querySelector('[data-fw-filter="all"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
+    const url = new URL(location.href);
+    for (const key of ['world', 'chat', 'q']) assert.equal(url.searchParams.has(key), false, 'reset removes ' + key);
+    assert.equal(url.searchParams.get('source'), 'home'); assert.equal(url.hash, '#cast');
+    language('zh');
+    for (const world of ['__proto__', 'constructor', 'toString', 'unknown-world']) {
+      go('/characters?world=' + world);
+      assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length, world + ' never inherits a prior filter');
+      assert.equal(document.querySelector('[data-fw-filter="all"]').getAttribute('aria-pressed'), 'true');
+    }
+    go('/characters');
+  });
+
   await t.test('profiles preserve real entry points and expose details only on request', () => {
     go('/characters/xc-zhiyao');
     let profile = page('profile');
@@ -259,6 +331,15 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(story);
     assert.equal(story.getAttribute('target'), null, 'Xichuan enters the shared account-aware host');
     assert.ok(profile.querySelector('.fw-ctas a[href="/play/xc-zhiyao"]'));
+    const identity = profile.querySelector('.fw-profile-head');
+    assert.equal(identity.querySelector('[data-fw-profile-state],[data-fw-experiences],.fw-ctas'), null, 'identity and current actions are separate regions');
+    assert.ok(identity.querySelector('.fw-persona a[href="/play/xichuan"]'));
+    const summary = profile.querySelector('.fw-profile-summary');
+    assert.equal(summary.getAttribute('role'), 'status'); assert.equal(summary.getAttribute('aria-live'), 'polite');
+    assert.equal(summary.querySelector('[data-fw-experiences]'), null, 'long memories are outside the live status');
+    assert.equal(profile.querySelector('[data-fw-experiences]').closest('[aria-live],[role="status"]'), null);
+    assert.equal(profile.querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), false, 'the first unplayed action is chat');
+    assert.equal(profile.querySelector('[data-fw-story-entry]').classList.contains('fw-btn-secondary'), true);
     let expressions = profile.querySelectorAll('[data-fw-expr]');
     assert.equal(expressions.length, 6);
     for (const button of expressions) {
@@ -287,6 +368,20 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(profile.querySelectorAll('.fw-starters li').length >= 3);
     go('/characters/oc-shen-yanzhou');
     assert.ok(page('profile').querySelectorAll('a[href*="encounter="]').length >= 2);
+    go('/characters/sg-diaochan');
+    const genericMemories = page('profile').querySelector('[data-fw-experiences]');
+    assert.match(genericMemories.textContent, /supplementary memory/i);
+    assert.match(genericMemories.textContent, /conversation settings/i);
+    assert.doesNotMatch(genericMemories.textContent, /Keep a line|Remember this line/i, 'generic chat does not advertise unavailable pin controls');
+    const legacyKey = 'ooc-session-v2-sgc-007', legacyLine = 'A real line kept in an earlier conversation.';
+    const legacyMessages = JSON.stringify([{role: 'user', text: legacyLine}]);
+    values.set(legacyKey, legacyMessages);
+    values.set(legacyKey + '-threads', JSON.stringify({version: 1, active: 'main', threads: [{id: 'main', pins: [{turn: 0, role: 'user', text: legacyLine}]}]}));
+    const beforeLegacyRead = writes.length;
+    go('/characters/sg-diaochan');
+    assert.equal(page('profile').querySelector('[data-fw-experiences] blockquote p').textContent, legacyLine, 'validated older pins remain readable even when the current chat has no pin controls');
+    assert.equal(values.get(legacyKey), legacyMessages);
+    assert.equal(writes.length, beforeLegacyRead, 'reading an older memory does not rewrite it');
     go('/characters/wn-lamp');
     assert.equal(page('profile').querySelectorAll('[data-fw-expr]').length, 0);
   });
@@ -329,6 +424,39 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(page('universe').querySelector('[data-fw-tab="timeline"]'));
     go('/universe/sanguo');
     assert.match(page('universe').querySelector('[data-fw-pane="rules"]').textContent, /子衡|Ziheng/);
+  });
+
+  await t.test('unknown curated pages explain the missing destination without impersonating a character or writing data', () => {
+    language('zh');
+    const before = writes.length;
+    for (const [path, back] of [['/characters/not-a-person', '/characters'], ['/universe/not-a-world', '/universe'], ['/universe/toString', '/universe'], ['/universe/__proto__', '/universe']]) {
+      go(path);
+      const missing = page('missing');
+      assert.ok(missing, path + ' presents an explicit missing-page state');
+      assert.match(missing.querySelector('h1').textContent, /没有找到/);
+      assert.ok(missing.querySelector(`.fw-missing a[href="${back}"]`));
+      assert.equal(document.querySelector('[data-fw-character]'), null);
+      assert.equal(page('universe'), null);
+      assert.equal(writes.length, before, 'a missing public route does not open or overwrite private records');
+    }
+  });
+
+  await t.test('world titles follow their cover and only actual works count as related stories', () => {
+    go('/universe');
+    for (const [id, world] of Object.entries(UNIVERSES)) {
+      const card = page('universes').querySelector(`.fw-uni-card[href="/universe/${id}"]`);
+      const cover = card.querySelector('.fw-uni-cover'), name = card.querySelector('.fw-card-name');
+      assert.equal(cover.nextElementSibling, name);
+      assert.equal(cover.querySelector('.fw-card-name'), null);
+      assert.equal(name.textContent, world.name.zh);
+    }
+    const originals = page('universes').querySelector('.fw-uni-card[href="/universe/original"]');
+    assert.equal(originals.querySelector('.fw-badge-dim'), null, 'a group of original encounters is not advertised as one book');
+    go('/universe/original');
+    assert.equal(page('universe').querySelectorAll('.fw-card').length, 3);
+    assert.equal(page('universe').querySelector('.fw-appearances'), null, 'the encounter collection has no fabricated related-story listing');
+    go('/universe/xichuan');
+    assert.ok(page('universe').querySelector('.fw-appearances a[href="/play/xichuan"]'), 'real books retain their existing story entry');
   });
 
   await t.test('play guide describes real modes without fake response simulations', () => {
@@ -398,11 +526,13 @@ async function boot() {
   const storageState = {denied: false};
   const append = window.HTMLElement.prototype.append;
   window.HTMLElement.prototype.append = function (...nodes) { const result = append.apply(this, nodes); for (const node of nodes) if (node.tagName === 'LINK') queueMicrotask(() => node.onload?.()); return result; };
-  Object.defineProperty(document, 'activeElement', {configurable: true, writable: true, value: null});
+  let activeElement = null;
+  Object.defineProperty(document, 'activeElement', {configurable: true, get: () => activeElement?.isConnected ? activeElement : document.body, set: value => { activeElement = value; }});
   window.HTMLElement.prototype.focus = function () { document.activeElement = this; };
-  const location = {href: 'https://replica.example/', pathname: '/', search: ''};
-  const setLocation = path => { const url = new URL(path, location.href); Object.assign(location, {href: url.href, pathname: url.pathname, search: url.search}); };
-  window.history = {pushState(_s, _t, path) { setLocation(path); }, replaceState(){}};
+  window.HTMLElement.prototype.setSelectionRange = function (start, end, direction = 'none') { this.selectionStart = start; this.selectionEnd = end; this.selectionDirection = direction; };
+  const location = {href: 'https://replica.example/', pathname: '/', search: '', hash: ''};
+  const setLocation = path => { const url = new URL(path, location.href); Object.assign(location, {href: url.href, pathname: url.pathname, search: url.search, hash: url.hash}); };
+  window.history = createHistory(window, location, setLocation);
   window.scrollTo = () => {};
   Object.assign(globalThis, {
     window, document, DOMParser, location, history: window.history, CustomEvent: window.CustomEvent,
@@ -417,6 +547,6 @@ async function boot() {
   const {setLang} = await import('../dist/assets/site-i18n.js');
   const data = JSON.parse(await readFile(join(dist, 'data.json'), 'utf8'));
   const helpers = {data, categories: [], read: (key, fallback) => { try { return JSON.parse(values.get(key)) ?? fallback; } catch { return fallback; } }, save: (key, value) => values.set(key, JSON.stringify(value)), show: () => {}, navigate: path => navigations.push(path)};
-  const go = path => { setLocation(path); assert.ok(show(location.pathname, helpers), `route ${path} is handled`); };
+  const go = path => { window.history.pushState({}, '', path); assert.ok(show(location.pathname, helpers), `route ${path} is handled`); };
   return {document, window, values, writes, storageState, go, setLang, navigations, requests};
 }

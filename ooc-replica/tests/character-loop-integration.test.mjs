@@ -27,7 +27,7 @@ async function reload(options) {
 }
 
 test('character link helpers preserve identity and old-link context without accepting unknown characters', async () => {
-  const {CHARACTER_HOME, characterProfileUrl, canonicalCharacterUrl} = await import('../dist/assets/character-links.js');
+  const {CHARACTER_HOME, characterProfileUrl, canonicalCharacterUrl, characterDirectoryReturn} = await import('../dist/assets/character-links.js');
   const {CHARACTER_CARDS} = await import('../dist/assets/flywheel/cards-data.js');
   const {storydateCharacters} = await import('../dist/assets/storydate-originals.js');
   assert.equal(CHARACTER_HOME, '/characters');
@@ -51,6 +51,11 @@ test('character link helpers preserve identity and old-link context without acce
   assert.equal(characterProfileUrl('u-private-creator'), null);
   assert.equal(canonicalCharacterUrl('/character/u-private-creator'), '/character/u-private-creator');
   assert.equal(canonicalCharacterUrl('/play/xc-zhiyao'), '/play/xc-zhiyao');
+  assert.equal(characterDirectoryReturn('/characters'), '/characters');
+  assert.equal(characterDirectoryReturn('/characters?source=home&world=xichuan#cast'), '/characters?source=home&world=xichuan#cast');
+  for (const unsafe of ['//outside.example/characters', 'https://outside.example/characters', '/characters-extra', '/characters/xc-zhiyao', '/play/xc-zhiyao']) {
+    assert.equal(characterDirectoryReturn(unsafe), null, 'return context only accepts the exact local directory: ' + unsafe);
+  }
 });
 
 test('local walkthrough reflects canon flags and treats false or absent progress as unplayed facts', async () => {
@@ -80,6 +85,67 @@ test('real app connects profiles, local chat, current story memory and reloads t
   const read = key => JSON.parse(f.values.get(key) || 'null');
   let future;
   try {
+    await t.test('combined directory choices survive browser history, profile/chat/story returns and fresh URL reloads', async () => {
+      await f.go('/characters?source=home#cast');
+      const initialLength = f.history.length;
+      await f.click('[data-fw-filter="xichuan"]');
+      await f.click('[data-fw-chat]');
+      const search = f.document.getElementById('fw-search'); search.value = '夏知遥'; search.focus();
+      search.dispatchEvent(new f.window.Event('input', {bubbles: true}));
+      assert.equal(f.history.length, initialLength + 2, 'world/chat push while query replaces the current entry');
+      assert.equal(f.document.activeElement, search);
+      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
+      const directoryUrl = f.location.pathname + f.location.search + f.location.hash;
+      const assertDirectory = () => {
+        assert.equal(f.location.pathname + f.location.search + f.location.hash, directoryUrl);
+        assert.equal(f.document.getElementById('fw-search').value, '夏知遥');
+        assert.equal(f.document.querySelector('[data-fw-filter="xichuan"]').getAttribute('aria-pressed'), 'true');
+        assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'true');
+        assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
+      };
+      await f.click('#fw-lib-results a[href="/characters/xc-zhiyao"]');
+      await waitFor(profile, 'directory card did not open its profile');
+      assert.equal(f.history.state.discoveryReturn, directoryUrl);
+      assert.equal(profile().querySelector('.fw-back').getAttribute('href'), directoryUrl);
+      f.history.back(); await waitFor(() => f.document.querySelector('#fw-search'), 'browser Back did not restore the directory'); assertDirectory();
+      f.history.forward(); await waitFor(profile, 'browser Forward did not restore the profile');
+      await f.click('[data-fw-chat-entry]');
+      await waitFor(() => f.document.querySelector('#session-input'), 'chat did not open from the filtered profile');
+      assert.equal(f.history.state.discoveryReturn, directoryUrl);
+      await f.click('a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'chat did not return to the same profile');
+      assert.equal(profile().querySelector('.fw-back').getAttribute('href'), directoryUrl);
+      await f.click('[data-fw-story-entry]');
+      const peer = f.peer(); peer.send({type: 'xc-ready'});
+      assert.equal(f.history.state.discoveryReturn, directoryUrl);
+      await f.click('.xc-header a[href^="/play/xc-zhiyao"]');
+      await waitFor(() => f.document.querySelector('#session-input'), 'story did not return to chat');
+      await f.click('a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'story/chat chain did not return to profile');
+      const reloadedProfile = await reload({path: '/characters/xc-zhiyao', entries: [...f.values], historyState: f.history.state});
+      assert.equal(reloadedProfile.profileBack, directoryUrl, 'native history state preserves the discovery return across a profile reload');
+      await f.click('[data-fw-page="profile"] .fw-back'); assertDirectory();
+      const reloadedDirectory = await reload({path: directoryUrl, entries: [...f.values]});
+      assert.deepEqual(reloadedDirectory.directory, {query: '夏知遥', world: 'xichuan', chat: true, cards: ['/characters/xc-zhiyao']});
+      assert.equal(reloadedDirectory.hash, '#cast');
+      assert.equal(new URLSearchParams(reloadedDirectory.search).get('source'), 'home');
+      assert.deepEqual(f.requests.filter(([path]) => path.startsWith('/api/')), [['/api/config', 'GET']], 'browsing and unsent local chat never call a model or wallet');
+      await f.go('/character?world=xichuan');
+    });
+
+    await t.test('unknown and prototype world URLs cannot revive earlier filters, even after a refresh', async () => {
+      await f.go('/characters?world=xichuan&chat=1&q=夏知遥');
+      for (const world of ['__proto__', 'toString', 'constructor', 'not-a-world']) {
+        await f.go('/characters?world=' + world);
+        assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 33);
+        assert.equal(f.document.getElementById('fw-search').value, '');
+        assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
+        assert.equal(f.document.querySelector('[data-fw-filter="all"]').getAttribute('aria-pressed'), 'true');
+      }
+      const reloaded = await reload({path: '/characters?world=__proto__'});
+      assert.equal(reloaded.directory.world, 'all'); assert.equal(reloaded.directory.chat, false); assert.equal(reloaded.directory.query, '');
+      assert.equal(reloaded.directory.cards.length, 33);
+      await f.go('/character?world=xichuan');
+    });
+
     await t.test('legacy library and profile links reach the same canonical directory and identity', async () => {
       assert.equal(f.location.pathname, '/characters');
       assert.equal(f.document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, 5);
@@ -120,10 +186,13 @@ test('real app connects profiles, local chat, current story memory and reloads t
       assert.equal(f.document.querySelector('.interaction-modal[open]'), null);
       await f.click('[data-character-pin="0"]');
       assert.equal(f.document.querySelector('[data-character-pin="0"]').getAttribute('aria-pressed'), 'true');
+      await f.click('[data-character-pin="1"]');
+      assert.equal(f.document.querySelector('[data-character-pin="1"]').getAttribute('aria-pressed'), 'true');
       await f.click('a[href="/characters/xc-zhiyao"]');
       await waitFor(profile, 'chat return did not reach its unified profile');
       assert.match(profile().querySelector('[data-fw-chat-entry]').textContent, /继续|continu/i);
       assert.ok(profile().querySelector('[data-fw-experiences]').textContent.includes('我想先了解潮声影院。'));
+      assert.ok([...profile().querySelectorAll('[data-fw-experiences] cite')].some(cite => /演示|demo/i.test(cite.textContent)), 'a pinned scripted response remains clearly identified as a demo');
     });
 
     await t.test('host bridge persists the current save and chat displays its acquired facts', async () => {
@@ -152,6 +221,11 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.click('a[href="/characters/xc-zhiyao"]');
       await waitFor(profile, 'chat header did not return to profile');
       assert.match(profile().querySelector('[data-fw-progress]').textContent, /答应|promis/i);
+      const actions = [...profile().querySelectorAll('.fw-ctas a')];
+      assert.equal(actions[0].getAttribute('href'), '/play/xichuan', 'a played story becomes the first continuation action');
+      assert.equal(actions[0].classList.contains('fw-btn-secondary'), false);
+      assert.equal(profile().querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), true);
+      assert.equal(profile().querySelector('[data-fw-experiences]').closest('[aria-live],[role="status"]'), null);
       const rawBefore = f.values.get(XICHUAN_KEY);
       await f.go('/characters/xc-zhiyao');
       assert.equal(f.values.get(XICHUAN_KEY), rawBefore, 'the profile reads progress without rewriting it');
@@ -181,6 +255,8 @@ test('real app connects profiles, local chat, current story memory and reloads t
       assert.ok(configuredMessages.at(-1).text.includes('我想先了解潮声影院。'));
     });
 
+    await t.test('story viewport observers detach on route leave and stale layout callbacks cannot affect a later view', () => verifyPlayerLayoutLifecycle(f));
+
     await t.test('loading an older save removes future facts from the profile and chat', async () => {
       await f.go('/play/xichuan');
       const peer = f.peer(); peer.send({type: 'xc-ready'});
@@ -204,6 +280,64 @@ test('real app connects profiles, local chat, current story memory and reloads t
   }
 });
 
+async function verifyPlayerLayoutLifecycle(f) {
+  const previousObserver = globalThis.ResizeObserver, previousViewport = f.window.visualViewport;
+  const add = f.window.addEventListener, remove = f.window.removeEventListener;
+  const windowResizes = new Set(), viewportResizes = new Set(), observers = [];
+  const viewport = {
+    height: 800,
+    addEventListener(type, callback) { if (type === 'resize') viewportResizes.add(callback); },
+    removeEventListener(type, callback) { if (type === 'resize') viewportResizes.delete(callback); },
+  };
+  globalThis.ResizeObserver = class {
+    targets = []; disconnected = false;
+    constructor(callback) { this.callback = callback; observers.push(this); }
+    observe(target) { this.targets.push(target); }
+    disconnect() { this.disconnected = true; }
+  };
+  f.window.visualViewport = viewport;
+  f.window.addEventListener = function (type, callback, ...options) {
+    if (type === 'resize') windowResizes.add(callback);
+    return add.call(this, type, callback, ...options);
+  };
+  f.window.removeEventListener = function (type, callback, ...options) {
+    if (type === 'resize') windowResizes.delete(callback);
+    return remove.call(this, type, callback, ...options);
+  };
+  const progress = f.values.get(XICHUAN_KEY);
+  try {
+    await f.go('/play/xichuan');
+    const frame = f.document.querySelector('#xichuan-frame');
+    assert.equal(observers.length, 1);
+    assert.ok(observers[0].targets.includes(f.document.querySelector('.xc-header')), 'header wrapping is observed by the mounted host');
+    assert.equal(windowResizes.size, 1); assert.equal(viewportResizes.size, 1);
+    let measurements = 0;
+    frame.getBoundingClientRect = () => { measurements++; return {top: 100}; };
+    const windowResize = [...windowResizes][0], viewportResize = [...viewportResizes][0];
+    f.window.dispatchEvent(new f.window.Event('resize'));
+    viewportResize(); observers[0].callback();
+    assert.ok(measurements > 0, 'active layout notifications measure the real mounted frame');
+    await f.go('/characters/xc-zhiyao');
+    assert.equal(observers[0].disconnected, true);
+    assert.equal(windowResizes.size, 0); assert.equal(viewportResizes.size, 0);
+    const before = measurements;
+    windowResize(); viewportResize(); observers[0].callback();
+    assert.equal(measurements, before, 'queued callbacks from a disposed host no longer measure or change its frame');
+    assert.equal(f.values.get(XICHUAN_KEY), progress, 'layout updates do not change game progress');
+    await f.go('/play/xichuan');
+    assert.equal(observers.length, 2);
+    assert.equal(windowResizes.size, 1); assert.equal(viewportResizes.size, 1, 're-entry installs a single fresh observer set');
+    await f.go('/characters/xc-zhiyao');
+    assert.equal(observers[1].disconnected, true);
+    assert.equal(windowResizes.size, 0); assert.equal(viewportResizes.size, 0);
+  } finally {
+    await f.go('/characters/xc-zhiyao');
+    f.window.addEventListener = add; f.window.removeEventListener = remove;
+    f.window.visualViewport = previousViewport;
+    if (previousObserver === undefined) delete globalThis.ResizeObserver; else globalThis.ResizeObserver = previousObserver;
+  }
+}
+
 async function verifyProfileHydration(f) {
   const {show, syncAccount} = await import('../dist/assets/flywheel/flywheel.js');
   let subscribe, resolveBob, reads = 0;
@@ -223,6 +357,10 @@ async function verifyProfileHydration(f) {
   await f.go('/characters/xc-zhiyao');
   show('/characters/xc-zhiyao', helpers);
   assert.match(f.document.querySelector('[data-fw-progress]').textContent, /答应|promis/i);
+  const identity = f.document.querySelector('.fw-profile-head');
+  f.document.querySelector('[data-fw-story-entry]').focus();
+  syncAccount(account);
+  assert.equal(f.document.activeElement, f.document.querySelector('[data-fw-story-entry]'), 'private status refresh preserves the focused action');
   const switching = subscribe({uid: 'bob'}); reads = 0;
   syncAccount(account);
   const waiting = f.document.querySelector('[data-fw-profile-state]');
@@ -230,6 +368,7 @@ async function verifyProfileHydration(f) {
   assert.match(waiting.textContent, /恢复|Restor/i);
   assert.doesNotMatch(waiting.textContent, /Alice|答应|promis|继续聊天|Continue chatting/i);
   assert.equal(reads, 0, 'unrestored account state is never read for a public profile');
+  assert.equal(f.document.querySelector('.fw-profile-head'), identity, 'account restoration does not replace public identity');
   scope.save(XICHUAN_KEY, {[LATEST]: save({'flag.z_promised': true})});
   resolveBob([]); await switching; syncAccount(account);
   assert.equal(account.read(XICHUAN_KEY, null), null);
@@ -297,4 +436,12 @@ async function verifyBranchMemories(f) {
   show('/characters/xc-zhiyao', helpers);
   assert.match(f.document.querySelector('[data-fw-chat-entry]').textContent, /继续|continu/i, 'the legacy message array remains the thread fallback');
   assert.equal(f.document.querySelectorAll('[data-fw-experiences] blockquote').length, 0);
+  const longNotes = '旧记忆'.repeat(150);
+  cache.save('ooc-Memories-xc-zhiyao', longNotes);
+  const writes = f.writes.length;
+  show('/characters/xc-zhiyao', helpers);
+  assert.equal(f.document.querySelector('.fw-memory-notes').textContent.length, 350);
+  assert.match(f.document.querySelector('[data-fw-experiences]').textContent, /350/);
+  assert.equal(cache.read('ooc-Memories-xc-zhiyao'), longNotes, 'the displayed request limit never truncates the stored original');
+  assert.equal(f.writes.length, writes);
 }

@@ -4,6 +4,7 @@ import {parseHTML,DOMParser} from 'linkedom';
 import {readFile} from 'node:fs/promises';
 import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
+import {createHistory} from './fixtures/character-loop-dom.mjs';
 const dist=fileURLToPath(new URL('../dist/',import.meta.url));
 
 test('catalog and credit navigation work while auth is unreachable and do not load chat',async()=>{
@@ -11,8 +12,9 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  const values=new Map([['ooc-preference','"All"']]),requests=[];
  const append=window.HTMLElement.prototype.append;
  window.HTMLElement.prototype.append=function(...nodes){const result=append.apply(this,nodes);for(const node of nodes)if(node.tagName==='LINK')queueMicrotask(()=>node.onload?.());return result;};
- const location={href:'https://replica.example/',pathname:'/',search:''};
- window.history={pushState(_state,_title,path){const url=new URL(path,location.href);Object.assign(location,{href:url.href,pathname:url.pathname,search:url.search});},replaceState(){}};
+ const location={href:'https://replica.example/',pathname:'/',search:'',hash:''};
+ const setLocation=path=>{const url=new URL(path,location.href);Object.assign(location,{href:url.href,pathname:url.pathname,search:url.search,hash:url.hash});};
+ window.history=createHistory(window,location,setLocation);
  window.scrollTo=()=>{};
  Object.assign(globalThis,{window,document,DOMParser,location,history:window.history,matchMedia:()=>({matches:true}),localStorage:{getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v)},sessionStorage:{getItem:k=>values.get(k)??null,setItem:(k,v)=>values.set(k,v),removeItem:k=>values.delete(k)},fetch:async path=>{
   requests.push(path);if(path==='/api/config')return new Promise(()=>{});

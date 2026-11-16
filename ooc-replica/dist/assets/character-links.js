@@ -1,6 +1,17 @@
-import {CHARACTER_CARDS, cardById} from './flywheel/cards-data.js';
+import {CHARACTER_CARDS, UNIVERSES, cardById} from './flywheel/cards-data.js';
+import {readDiscoveryState, discoveryUrl} from './flywheel/discovery-state.js';
 
 export const CHARACTER_HOME = '/characters';
+
+// Only a local catalogue URL can be used as a return destination. The state
+// stays in browser history, separate from chat, story saves and account data.
+export function characterDirectoryReturn(value) {
+  if (typeof value !== 'string' || !/^\/characters(?:[?#]|$)/.test(value)) return null;
+  try {
+    const url = new URL(value, 'https://storydate.invalid');
+    return discoveryUrl(readDiscoveryState(url.search,UNIVERSES), {search:url.search,hash:url.hash});
+  } catch { return null; }
+}
 
 // Catalogue IDs and existing chat IDs are aliases, never new storage identities.
 export function characterProfileUrl(id) {

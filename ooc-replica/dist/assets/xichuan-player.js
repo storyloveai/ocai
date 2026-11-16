@@ -22,12 +22,31 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     .xc-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #333}
     .xc-header h1{font-size:16px;margin:0}.xc-header a{display:inline-flex;align-items:center;min-height:44px;padding:9px 12px;border:1px solid #3a3a3a;border-radius:8px;color:#fafafa;text-decoration:none}.xc-status{font-size:12px;color:#bbb;margin-left:auto}
     .xc-transfer{padding:12px 16px;background:#25232b}.xc-transfer button{margin-left:10px;padding:8px;border:1px solid #6b626f;border-radius:8px;background:#38313b;color:#fff}
-    #xichuan-frame{display:block;width:100%;height:calc(100dvh - 120px);min-height:380px;border:0;background:#111522}
-    @media(max-width:600px){.xc-header{gap:8px;padding:8px 12px}.xc-status{width:100%;margin:0}#xichuan-frame{height:calc(100dvh - 175px);min-height:300px}}
+    #xichuan-frame{display:block;width:100%;height:var(--xc-frame-height,calc(100dvh - 120px));min-height:160px;border:0;background:#111522}
+    @media(max-width:600px){.xc-header{gap:8px;padding:8px 12px}.xc-status{width:100%;margin:0}}
   </style><header class="xc-header" data-no-i18n><a href="${characterProfileUrl('xc-zhiyao')}">${t('人物档案', 'Character profile')}</a><a href="/play/xc-zhiyao?from=xichuan" data-xichuan-return>‹ ${t('和夏知遥聊聊', 'Chat with Zhiyao')}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
   ${importable ? `<div class="xc-transfer" data-no-i18n>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}<button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
   <iframe id="xichuan-frame" title="${t('汐川互动故事', 'Xichuan visual novel')}" src="/assets/xichuan/index.html?site=1&lang=${lang}" allow="autoplay"></iframe>`, h, 'xichuan');
   const frame = root.querySelector('#xichuan-frame'),gameCredits=attachGameCredits(frame,account,{lang}), status = root.querySelector('.xc-status');
+  // The mobile site footer and wrapped bilingual header have real heights.
+  // Fit the story between them instead of clipping its controls under a fixed
+  // subtraction. No game state or iframe contract is changed by this layout.
+  const bottomBars = [...root.querySelectorAll('a[href="/history"]')].map(a => a.closest('.fixed')).filter(Boolean);
+  const fitFrame = () => {
+    if (!active || !frame.isConnected || !frame.getBoundingClientRect) return;
+    const height = window.visualViewport?.height || window.innerHeight;
+    if (!Number.isFinite(height)) return;
+    const top = frame.getBoundingClientRect().top;
+    const bars = bottomBars.map(node => node.getBoundingClientRect()).filter(r => r.width > 0 && r.height > 0 && r.top > height / 2 && r.top < height);
+    const bottom = bars.length ? Math.min(height,...bars.map(r => r.top)) : height;
+    frame.style.setProperty('--xc-frame-height',Math.max(160,bottom - top) + 'px');
+  };
+  const resize = typeof ResizeObserver === 'function' ? new ResizeObserver(fitFrame) : null;
+  resize?.observe(root.querySelector('.xc-header'));
+  for (const bar of bottomBars) resize?.observe(bar);
+  window.addEventListener('resize',fitFrame);
+  window.visualViewport?.addEventListener('resize',fitFrame);
+  fitFrame();
   const setStatus = () => status.textContent = (account.user ? t('账号进度 · ', 'Account progress · ') : t('本设备进度 · ', 'Device progress · ')) + progressText(snapshot, lang);
   setStatus();
   function persist(next) {
@@ -41,7 +60,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   }
   root.querySelector('[data-import]')?.addEventListener('click', () => {
     if (!active || latestSave(snapshot) || !persist(structuredClone(transferable))) return;
-    root.querySelector('.xc-transfer')?.remove(); initialized = false; frame.src = frame.src;
+    root.querySelector('.xc-transfer')?.remove(); fitFrame(); initialized = false; frame.src = frame.src;
     track('xichuan_progress_imported', {game: 'xichuan'});
   });
   let previous = latestSave(snapshot)?.G;
@@ -67,7 +86,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   };
   window.addEventListener('message', receive);
   track('game_opened', {game: 'xichuan', lang});
-  dispose = () => { gameCredits.dispose();active = false; window.removeEventListener('message', receive); };
+  dispose = () => { gameCredits.dispose();active = false; resize?.disconnect();window.removeEventListener('resize',fitFrame);window.visualViewport?.removeEventListener('resize',fitFrame);window.removeEventListener('message', receive); };
   document.title = t('汐川的第七个春天', 'The Seventh Spring of Xichuan') + ' · StoryDate';
 }
 export function zhiyaoStoryLink(h, lang) {

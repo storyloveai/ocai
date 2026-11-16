@@ -87,10 +87,13 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   historyTab('story').textContent='故事';historyTab('character').textContent='角色';historyTab('story').click();
   assert.equal(historyTab('story').getAttribute('aria-pressed'),'true');
   assert.equal(document.querySelectorAll('.session-history-item').length,2);
+  const genericMemory='原'.repeat(500);values.set('ooc-Memories-sgc-007',genericMemory);
   document.querySelector('#session-input').textContent='谁在听？';document.querySelector('[data-control=send]').click();
   await waitFor(()=>values.get('ooc-session-v2-sgc-007')?.at(-1)?.text==='貂蝉听见你的问题，停下了脚步。'&&!values.get('ooc-session-v2-sgc-007').at(-1).streaming);
   assert.equal(narrationRequests.at(-1).titleId,'sgc-007');
   assert.equal(narrationRequests.at(-1).messages.at(-1).content,'谁在听？');
+  assert.equal(narrationRequests.at(-1).memory,genericMemory.slice(0,350),'a generic character uses the same supplemental-memory budget without requiring a thread manager');
+  assert.equal(values.get('ooc-Memories-sgc-007'),genericMemory,'request budgeting never truncates the stored original');
   assert.equal(historyTab('story').getAttribute('aria-pressed'),'true','a completed reply keeps the manually selected history category');
   assert.equal(document.querySelector('.session-history-item a[href="/play/sgc-007"]'),null);
   historyTab('character').click();assert.ok(document.querySelector('.session-history-item a[href="/play/sgc-007"]'));
@@ -100,12 +103,16 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   const previous=structuredClone(values.get('ooc-session-v2-sgc-007'));
   show('/play/sgc-007',helpers);assert.equal(document.querySelector('[data-mode]'),null);
   assert.equal(document.querySelector('[data-control=model]').textContent.trim(),'AI');
-  document.querySelector('#session-input').textContent='你是谁？';document.querySelector('[data-control=send]').click();
-  await waitFor(()=>values.get('ooc-session-v2-sgc-007')?.at(-1)?.failed===true);
-  assert.equal(narrationRequests.at(-1).titleId,'sgc-007');
-  assert.deepEqual(values.get('ooc-session-v2-sgc-007').slice(0,previous.length),previous,'saved messages remain intact');
+  const beforeUnavailable=narrationRequests.length,unavailableInput=document.querySelector('#session-input');
+  unavailableInput.textContent='你是谁？';unavailableInput.dispatchEvent(new window.Event('input',{bubbles:true}));
+  assert.equal(document.querySelector('[data-control=send]').disabled,true);
+  document.querySelector('[data-control=send]').click();
+  assert.equal(narrationRequests.length,beforeUnavailable,'known unavailability is explained before a doomed request');
+  assert.deepEqual(values.get('ooc-session-v2-sgc-007'),previous,'saved messages remain intact without a failed placeholder');
+  assert.equal(unavailableInput.textContent,'你是谁？');
+  assert.equal(values.get('ooc-composer-draft-sgc-007-main').text,'你是谁？');
   assert.doesNotMatch(document.querySelector('#session-messages').textContent,/Ashley|lovely café/);
-  assert.match(document.querySelector('.session-error').textContent,/Character replies are temporarily unavailable/);
+  assert.match(document.querySelector('[data-ai-availability]').textContent,/replies.*not available/i);
   // Real scenarios.json still contains English-only previews for these older
   // characters. They must not override their bilingual catalogue introduction.
   for(const lang of ['zh','en'])for(const id of ['sgc-007','sgc-005','sgc-006']){

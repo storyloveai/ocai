@@ -15,9 +15,34 @@ export async function waitFor(predicate, message, timeout = 2500) {
   throw Error(message);
 }
 
+export function createHistory(window, location, setLocation, initialState = {}) {
+  const entries = [{href: location.href, state: structuredClone(initialState)}];
+  let index = 0;
+  return {
+    get state() { return entries[index].state; },
+    get length() { return entries.length; },
+    replaceState(state, _title, path) {
+      if (path != null) setLocation(path);
+      entries[index] = {href: location.href, state: structuredClone(state)};
+    },
+    pushState(state, _title, path) {
+      if (path != null) setLocation(path);
+      entries.splice(index + 1); entries.push({href: location.href, state: structuredClone(state)}); index++;
+    },
+    go(delta) {
+      const next = index + delta;
+      if (!Number.isInteger(next) || next < 0 || next >= entries.length || next === index) return;
+      index = next; setLocation(entries[index].href);
+      const event = new window.Event('popstate'); event.state = structuredClone(entries[index].state); window.dispatchEvent(event);
+    },
+    back() { this.go(-1); },
+    forward() { this.go(1); },
+  };
+}
+
 // Runs the real app. Only browser APIs, the public config response and the iframe
 // peer are supplied by the fixture; routing, profiles and persistence stay real.
-export async function boot({path = '/characters', entries = [], configured = false, restoreAfterProfileMount = false} = {}) {
+export async function boot({path = '/characters', entries = [], configured = false, restoreAfterProfileMount = false, historyState = {}} = {}) {
   const {window, document} = parseHTML(await readFile(join(dist, 'index.html'), 'utf8'));
   const values = new Map([['sd.lang', 'zh'], ...entries]), writes = [], requests = [];
   let observedRestoring = false;
@@ -32,19 +57,19 @@ export async function boot({path = '/characters', entries = [], configured = fal
     Object.assign(location, {href: url.href, pathname: url.pathname, search: url.search, hash: url.hash});
   };
   setLocation(path);
-  const history = window.history = {
-    state: {},
-    replaceState(state, _title, path) { this.state = state; if (path != null) setLocation(path); },
-    pushState(state, _title, path) { this.state = state; if (path != null) setLocation(path); },
-  };
+  const history = window.history = createHistory(window, location, setLocation, historyState);
   const append = window.HTMLElement.prototype.append;
   window.HTMLElement.prototype.append = function (...nodes) {
     const result = append.apply(this, nodes);
     for (const node of nodes) if (node.tagName === 'LINK') queueMicrotask(() => node.onload?.());
     return result;
   };
-  Object.defineProperty(document, 'activeElement', {configurable: true, writable: true, value: null});
+  let activeElement = null;
+  Object.defineProperty(document, 'activeElement', {configurable: true, get: () => activeElement?.isConnected ? activeElement : document.body, set: value => { activeElement = value; }});
   window.HTMLElement.prototype.focus = function () { document.activeElement = this; };
+  window.HTMLElement.prototype.setSelectionRange = function (start, end, direction = 'none') {
+    this.selectionStart = start; this.selectionEnd = end; this.selectionDirection = direction;
+  };
   window.HTMLElement.prototype.blur = function () { document.activeElement = null; };
   window.HTMLElement.prototype.scrollIntoView = function () {};
   window.HTMLElement.prototype.showModal = function () { this.open = true; this.setAttribute('open', ''); };
@@ -75,7 +100,8 @@ export async function boot({path = '/characters', entries = [], configured = fal
   await import('../../dist/app.js');
   await waitFor(() => !document.querySelector('[data-xichuan-wait],[data-fw-restoring]') && !document.body.hasAttribute('data-booting'), 'app did not restore the local session');
   const go = async path => {
-    setLocation(path); window.dispatchEvent(new window.Event('popstate'));
+    history.pushState({}, '', path);
+    const event = new window.Event('popstate'); event.state = history.state; window.dispatchEvent(event);
     await new Promise(resolve => setTimeout(resolve, 0));
   };
   const click = async selector => {
@@ -96,7 +122,7 @@ export async function boot({path = '/characters', entries = [], configured = fal
     };
     return {frame, messages, send};
   };
-  return {window, document, location, values, writes, requests, storage, go, click, peer, get observedRestoring() { return observedRestoring; }};
+  return {window, document, location, history, values, writes, requests, storage, go, click, peer, get observedRestoring() { return observedRestoring; }};
 }
 
 // A fresh worker represents a browser reload, so no module cache, route state or
@@ -114,7 +140,7 @@ if (parentPort) {
         if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('[data-fw-chat-status]') && state.querySelector('[data-fw-progress]');
         return state.childElementCount > 0;
       }
-      return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input');
+      return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input') || f.document.querySelector('[data-fw-page="characters"] #fw-lib-results');
     }, 'requested route did not finish restoring its dynamic state');
     if (workerData.exerciseDemo) {
       const input = f.document.querySelector('#session-input');
@@ -131,9 +157,18 @@ if (parentPort) {
       const peer = f.peer(); peer.send({type: 'xc-ready'});
       snapshot = peer.messages.find(message => message.type === 'xc-init')?.snapshot;
     }
+    const directory = f.document.querySelector('[data-fw-page="characters"]');
     parentPort.postMessage({
       path: f.location.pathname,
+      search: f.location.search, hash: f.location.hash, historyState: f.history.state,
       profileId: f.document.querySelector('[data-fw-character]')?.dataset.fwCharacter,
+      profileBack: f.document.querySelector('[data-fw-page="profile"] .fw-back')?.getAttribute('href'),
+      directory: directory ? {
+        query: directory.querySelector('#fw-search').value,
+        world: directory.querySelector('[data-fw-filter][aria-pressed="true"]').dataset.fwFilter,
+        chat: directory.querySelector('[data-fw-chat]').getAttribute('aria-pressed') === 'true',
+        cards: [...directory.querySelectorAll('.fw-card')].map(card => card.getAttribute('href')),
+      } : null,
       text: f.document.querySelector('[data-fw-page="profile"]')?.textContent || f.document.querySelector('#session-messages')?.textContent || '',
       snapshot, entries: [...f.values], requests: f.requests, observedRestoring: f.observedRestoring,
     });

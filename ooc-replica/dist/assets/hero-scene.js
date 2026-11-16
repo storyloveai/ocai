@@ -50,8 +50,8 @@ export const SCENES = {
   }
 };
 const UI = {
-  en: { group: 'Choose a reply', reply: 'Your reply', story: 'Featured story', character: 'Featured character', lang: 'Language' },
-  zh: { group: '选一个回答', reply: '你的回答', story: '推荐故事', character: '推荐角色', lang: '语言' }
+  en: { group: 'Choose a reply', reply: 'Your reply', story: 'Featured story', character: 'Featured character', lang: 'Language', artUnavailable: 'Artwork unavailable' },
+  zh: { group: '选一个回答', reply: '你的回答', story: '推荐故事', character: '推荐角色', lang: '语言', artUnavailable: '插画暂不可用' }
 };
 
 // Language: the visitor's own pick (localStorage sd.lang), otherwise the browser language.
@@ -72,7 +72,7 @@ export function heroSceneMarkup(page, lang = 'en') {
   const head = page === 'character'
     ? `<div class="sd-hero-meta"><span class="sd-hero-name">${esc(x.name)}</span><span>${esc(x.role)}</span></div><div class="sd-hero-tags">${x.tags.map(t => `<span>${esc(t)}</span>`).join('')}</div><p class="sd-hero-bubble">${esc(x.quote)}</p>`
     : `<div class="sd-hero-meta"><span class="sd-hero-badge">${esc(x.badge)}</span>${x.eyebrow.map(esc).join('<span aria-hidden="true">·</span>')}</div><p class="sd-hero-lead">${esc(x.lead)}</p><p class="sd-hero-quote">${esc(x.quote)}</p><p class="sd-hero-ask">${esc(x.ask)}</p>`;
-  return `<div class="sd-hero-art sd-hero-${s.side}" aria-hidden="true"><img class="sd-hero-blur" src="${s.image}" alt="" decoding="async"><img class="sd-hero-figure" src="${s.image}" alt="" style="object-position:${s.focus}" decoding="async"><span class="sd-hero-fade"></span></div>
+  return `<div class="sd-hero-art sd-hero-${s.side}" aria-hidden="true"><img class="sd-hero-blur" src="${s.image}" alt="" decoding="async"><img class="sd-hero-figure" src="${s.image}" alt="" style="object-position:${s.focus}" decoding="async"><div class="sd-hero-placeholder" hidden><span class="sd-hero-placeholder-name">${esc(page === 'character' ? x.name : x.eyebrow[0])}</span><span class="sd-hero-placeholder-note">${esc(ui.artUnavailable)}</span></div><span class="sd-hero-fade"></span></div>
 <div class="sd-hero-copy sd-hero-copy-${s.side === 'right' ? 'left' : 'right'}"><h1 class="sd-visually-hidden">${esc(page === 'character' ? x.name : x.eyebrow[0])}</h1>${head}
 <div class="sd-hero-actions"><div class="sd-hero-choices${page === 'character' ? ' is-chips' : ''}" role="group" aria-label="${ui.group}">${chips}</div>
 <form class="sd-hero-form" data-hero-form><label class="sd-visually-hidden" for="sd-hero-input-${page}">${ui.reply}</label><input id="sd-hero-input-${page}" name="reply" maxlength="300" autocomplete="off" placeholder="${esc(x.placeholder)}"><button type="submit">${esc(x.cta)}</button></form>
@@ -82,6 +82,11 @@ export function heroSceneMarkup(page, lang = 'en') {
 const CSS = `
 .sd-hero{display:none}
 .sd-hero-actions{display:contents}
+.sd-hero .sd-hero-placeholder{position:absolute;top:0;left:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;width:100%;height:350px;padding:32px;text-align:center;color:#c7c7c7;box-sizing:border-box}
+.sd-hero .sd-hero-placeholder[hidden],.sd-hero .sd-hero-art img[hidden]{display:none}
+.sd-hero .sd-hero-placeholder-name{font:500 clamp(24px,3vw,38px)/1.3 Inter,"PingFang SC",system-ui,sans-serif;overflow-wrap:anywhere}
+.sd-hero .sd-hero-placeholder-note{font:12px/1.6 Inter,"PingFang SC",system-ui,sans-serif;color:#a1a1a1}
+.sd-hero[data-hero-art-state=unavailable] .sd-hero-art{background:radial-gradient(ellipse at 20% 10%,#40382e88,transparent 65%),linear-gradient(120deg,#20201f,#121212)}
 @media (min-width:1024px){
  .sd-hero-on [data-hero-desktop]{display:none!important}
  .sd-hero-on{min-height:0!important}
@@ -93,6 +98,8 @@ const CSS = `
  .sd-hero-blur{position:absolute;left:-60px;top:-60px;width:calc(100% + 120px);height:620px;object-fit:cover;filter:blur(48px) brightness(.32) saturate(1.2);max-width:none}
  .sd-hero-figure{position:absolute;top:0;height:100%;width:46%;max-width:560px;object-fit:cover}
  .sd-hero-right .sd-hero-figure{right:40px}.sd-hero-left .sd-hero-figure{left:40px}
+ .sd-hero .sd-hero-placeholder{width:46%;max-width:560px;height:100%;left:auto}
+ .sd-hero .sd-hero-left .sd-hero-placeholder{left:40px}.sd-hero .sd-hero-right .sd-hero-placeholder{right:40px}
  .sd-hero-fade{position:absolute;inset:0;pointer-events:none}
  .sd-hero-fade{background:linear-gradient(0deg,#121212 0%,#121212 12%,rgba(18,18,18,0) 40%)}
  .sd-hero-right .sd-hero-figure{-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 42%,#000 90%,transparent 100%);mask-image:linear-gradient(90deg,transparent 0%,#000 42%,#000 90%,transparent 100%)}
@@ -138,6 +145,29 @@ export function heroHref(page, lang, reply = '', choice = '') {
   return say ? `${SCENES.character.chat}?say=${encodeURIComponent(say)}` : SCENES.character.chat;
 }
 
+// Listen only to the two existing images. A repaint replaces these nodes, so
+// an old image's late event must never change the currently visible artwork.
+function watchHeroArt(hero) {
+  const art = hero.querySelector('.sd-hero-art'), figure = art?.querySelector('.sd-hero-figure');
+  const blur = art?.querySelector('.sd-hero-blur'), placeholder = art?.querySelector('.sd-hero-placeholder');
+  if (!figure || !blur || !placeholder) return;
+  const current = (image = figure) => hero.isConnected && hero.querySelector('.sd-hero-art') === art && art.contains(image);
+  let blurFailed = false;
+  const settle = ready => {
+    if (!current()) return;
+    hero.dataset.heroArtState = ready ? 'ready' : 'unavailable';
+    figure.hidden = !ready; placeholder.hidden = ready; blur.hidden = !ready || blurFailed;
+  };
+  hero.dataset.heroArtState = 'loading';
+  figure.addEventListener('load', () => settle(true));
+  figure.addEventListener('error', () => settle(false));
+  blur.addEventListener('load', () => { if (current(blur)) { blurFailed = false; blur.hidden = hero.dataset.heroArtState === 'unavailable'; } });
+  blur.addEventListener('error', () => { if (current(blur)) { blurFailed = true; blur.hidden = true; } });
+  // Cached images can finish before listeners are attached.
+  if (blur.complete && !blur.naturalWidth) { blurFailed = true; blur.hidden = true; }
+  if (figure.complete) settle(figure.naturalWidth > 0);
+}
+
 // The catalogue and the original home share the same scene, artwork and reply
 // actions. Keep mounting independent of the older carousel's surrounding DOM.
 export function mountHeroContent(hero, page, { navigate, win = globalThis, lang } = {}) {
@@ -149,13 +179,22 @@ export function mountHeroContent(hero, page, { navigate, win = globalThis, lang 
   const go = href => navigate ? navigate(href) : (win.location.href = href);
   const paint = l => {
     const ui = UI[l];
-    const reply = hero.querySelector('input')?.value || '';
+    const previousInput = hero.querySelector('input'), reply = previousInput?.value || '';
+    const focused = previousInput?.isConnected && doc.activeElement === previousInput;
+    const selection = focused ? [previousInput.selectionStart, previousInput.selectionEnd, previousInput.selectionDirection] : null;
     hero.lang = l === 'zh' ? 'zh-CN' : 'en'; hero.setAttribute('aria-label', ui[page === 'character' ? 'character' : 'story']);
     hero.innerHTML = heroSceneMarkup(page, l);
     const input = hero.querySelector('input');
     input.value = reply;
     hero.querySelectorAll('[data-hero-choice]').forEach(b => { const c = s[l].choices[Number(b.dataset.heroChoice)]; b.onclick = () => go(heroHref(page, l, c.label, c.id || '')); });
     hero.querySelector('[data-hero-form]').onsubmit = e => { e.preventDefault(); go(heroHref(page, l, input.value)); };
+    watchHeroArt(hero);
+    // This listener runs before the catalogue's language repaint. Restore the
+    // new input synchronously so that outer repaint can capture its focus too.
+    if (focused && hero.isConnected && input.isConnected) {
+      input.focus({preventScroll: true});
+      if (Number.isInteger(selection[0]) && Number.isInteger(selection[1])) input.setSelectionRange?.(selection[0], selection[1], selection[2] || 'none');
+    }
   };
   paint(LANGS.includes(lang) ? lang : heroLang(win));
   win.__sdHeroRepaint = l => { if (hero.isConnected && LANGS.includes(l)) paint(l); };

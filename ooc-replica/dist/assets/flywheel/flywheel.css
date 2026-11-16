@@ -42,6 +42,7 @@
 .fw-btn-gold { color: #171717; background: #fafafa; border-color: #fafafa; font-weight: 500; }
 .fw-btn:disabled { opacity: .45; cursor: default; }
 .fw-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 16px; }
+.fw-world-select { display: none; min-height: 44px; padding: 10px 12px; border: 1px solid #3a3a3a; border-radius: 8px; background: #1b1b1b; color: #c7c7c7; font: 13px Inter,system-ui,sans-serif; }
 .fw-chip { display: inline-flex; align-items: center; justify-content: center; gap: 4px; min-height: 44px; padding: 9px 12px; border: 1px solid #333; border-radius: 8px; background: transparent; color: #a1a1a1; font-size: 13px; line-height: 20px; cursor: pointer; transition: background-color .15s ease, border-color .15s ease; }
 .fw-chip small { color: #a1a1a1; font-size: 12px; }
 .fw-chip:hover { background: #202020; border-color: #555; color: #fafafa; }
@@ -53,6 +54,10 @@
 .fw-search input { flex: 1; min-width: 0; width: 100%; min-height: 44px; padding: 10px 0; border: 0; border-radius: 0; outline: none; color: #fafafa; background: transparent; font-family: inherit; font-size: 14px; line-height: 20px; }
 .fw-search input:focus-visible { outline: none; }
 .fw-empty { padding: 40px 16px; color: #a1a1a1; font-size: 14px; line-height: 1.7; text-align: center; border: 1px dashed #3a3a3a; border-radius: 8px; }
+.fw-empty p { margin: 0 0 16px; }
+.fw-missing { max-width: 560px; padding: 40px 0; }
+.fw-missing h1 { margin: 0 0 12px; font-size: 28px; line-height: 1.4; font-weight: 600; }
+.fw-missing p { margin: 0 0 24px; color: #a1a1a1; font-size: 14px; line-height: 1.8; }
 
 /* Story's cover language: 2:3 artwork, 8px corners, title below the image. */
 .fw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 32px 16px; }
@@ -74,18 +79,27 @@
 .fw-card-persona, .fw-card-voice, .fw-card-locked { color: #a1a1a1; font-size: 13px; line-height: 1.6; }
 
 /* Character detail keeps text readable and expression targets intact. */
-.fw-profile-top { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); align-items: start; gap: 32px; margin-bottom: 24px; }
-.fw-profile-portrait { min-width: 0; overflow: hidden; border: 1px solid #2b2b2b; border-radius: 10px; background: #171717; }
+.fw-profile-top { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); grid-template-rows: max-content minmax(0, 1fr); align-items: start; gap: 16px 32px; margin-bottom: 24px; }
+.fw-profile-portrait { grid-column: 1; grid-row: 1 / span 2; min-width: 0; overflow: hidden; border: 1px solid #2b2b2b; border-radius: 8px; background: #171717; }
+.fw-profile-head { grid-column: 2; grid-row: 1; min-width: 0; }
+.fw-profile-state { grid-column: 2; grid-row: 2; min-width: 0; }
 .fw-profile-scene { position: relative; overflow: hidden; aspect-ratio: 2 / 3; }
 .fw-profile-scene > img:not(.fw-scene-background) { position: relative; display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .fw-expressions { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding: 10px; scrollbar-width: thin; scrollbar-color: #555 transparent; }
-.fw-expr { flex: 0 0 44px; width: 44px; min-width: 44px; height: 52px; min-height: 44px; overflow: hidden; padding: 0; border: 2px solid #3a3a3a; border-radius: 8px; background: #222; cursor: pointer; }
+.fw-expr { position: relative; flex: 0 0 44px; width: 44px; min-width: 44px; height: 52px; min-height: 44px; overflow: hidden; padding: 0; border: 2px solid #3a3a3a; border-radius: 8px; background: #222; cursor: pointer; }
 .fw-expr img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.fw-expr-label { position: absolute; bottom: 0; left: 0; right: 0; background: #171717e6; color: #fafafa; font-size: 11px; line-height: 16px; text-align: center; pointer-events: none; }
 .fw-expr:hover { border-color: #888; }
 .fw-expr.active { border-color: #fafafa; }
 .fw-profile-head h1 { margin: 4px 0 8px; color: #fafafa; font-size: 32px; line-height: 1.3; font-weight: 600; }
 .fw-tagline { margin: 0 0 12px; color: #d4d4d4; font-size: 15px; line-height: 1.6; }
-.fw-persona { margin: 0 0 20px; color: #a1a1a1; font-size: 14px; line-height: 1.8; }
+.fw-persona { margin: 0; color: #a1a1a1; font-size: 14px; line-height: 1.8; }
+.fw-persona a { color: inherit; text-decoration: none; }
+.fw-persona a:hover { color: #fafafa; text-decoration: underline; text-underline-offset: 3px; }
+.fw-profile-actions { padding-top: 4px; }
+.fw-profile-summary { margin-top: 16px; }
+.fw-profile-summary .fw-note, .fw-profile-summary .fw-progress-scope { margin: 4px 0; }
+.fw-profile-summary .fw-progress-scope { color: #a1a1a1; }
 .fw-ctas, .fw-appearances { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .fw-progress-scope { margin: 0 0 12px; color: #a1a1a1; font-size: 12px; line-height: 1.6; }
 .fw-journey { display: grid; gap: 0; margin: 0; padding-left: 22px; }
@@ -189,12 +203,18 @@
   .fw-card-name { font-size: 15px; }
   .fw-card-body { padding: 0; }
   .fw-card-body em { font-size: 12px; }
-  .fw-profile-top { grid-template-columns: minmax(0, 1fr); gap: 20px; }
-  .fw-profile-portrait { width: 100%; max-width: 240px; margin: 0 auto; }
+  .fw-profile-top { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; gap: 20px; }
+  .fw-profile-portrait { grid-column: 1; grid-row: 2; width: 100%; max-width: 224px; margin: 0 auto; }
   .fw-profile-head h1 { font-size: 28px; }
-  .fw-profile-head { min-width: 0; grid-row: 1; }
+  .fw-profile-head { grid-column: 1; grid-row: 1; }
+  .fw-profile-state { grid-column: 1; grid-row: 3; }
+  [data-fw-page="profile"] .fw-nav { display: none; }
+  [data-fw-page="profile"] .fw-back { margin: 4px 0 12px; }
+  .fw-profile-actions .fw-btn { flex: 1; padding-inline: 12px; }
   .fw-section { margin: 28px 0; }
   .fw-toolbar { gap: 6px; }
+  .fw-toolbar [data-fw-filter] { display: none; }
+  .fw-world-select { display: block; flex: 1; min-width: 0; }
   .fw-count { width: 100%; margin: 4px 0 0; }
   .fw-uni-grid, .fw-guide-grid, .fw-factions { grid-template-columns: minmax(0, 1fr); }
   .fw-tabs { gap: 4px; }
