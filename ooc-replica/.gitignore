@@ -27,3 +27,6 @@ dist/assets/mortal-path-cover.svg
 dist/assets/monte-cristo-cover.svg
 server/book-core.cjs
 dist/assets/book-monte-cristo.html
+
+# Private campaign recipient lists are operator-local, never commit them.
+*.local.json

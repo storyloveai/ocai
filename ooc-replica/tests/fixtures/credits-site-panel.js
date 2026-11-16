@@ -1,0 +1,6 @@
+import {labAccount} from '/assets/account.js';
+const panel=document.createElement('details');panel.open=true;panel.dataset.qaPanel='';panel.style.cssText='position:fixed;bottom:78px;right:8px;z-index:2147483647;background:#24202c;color:white;padding:10px;border:1px solid #9e7ccc;border-radius:10px;font:12px system-ui;max-width:min(330px,90vw);box-shadow:0 2px 20px #0008';
+panel.innerHTML='<summary>本地模拟验收 · 无真实费用</summary><p data-qa-state>Alice · 本地模拟模型/身份/钱包</p><p>可在创作页、角色聊天、游戏和积分页验收。</p><button data-qa-user="qa-alice">Alice</button> <button data-qa-user="qa-bob">Bob（3点）</button> <button data-qa-user="">退出账号</button><p><button data-qa-case="failure">下次模拟失败</button> <button data-qa-case="slow">下次慢响应</button> <button data-qa-case="disconnect">下次断线</button></p><p><a href="/builder/story/new">创作</a> · <a href="/play/xc-zhiyao">聊天</a> · <a href="/play/xichuan">游戏</a> · <a href="/credit">钱包</a></p>';
+document.body.append(panel);
+for(const b of panel.querySelectorAll('[data-qa-user]'))b.onclick=()=>{labAccount().switchUser(b.dataset.qaUser);panel.querySelector('[data-qa-state]').textContent=(b.dataset.qaUser||'游客')+' · 本地模拟账号';};
+for(const b of panel.querySelectorAll('[data-qa-case]'))b.onclick=async()=>{await labAccount().api('qa-case',{scenario:b.dataset.qaCase});panel.querySelector('[data-qa-state]').textContent='下一次：'+b.textContent;};
