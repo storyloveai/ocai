@@ -159,7 +159,8 @@ test('real app connects profiles, local chat, current story memory and reloads t
 
     await t.test('fresh app instances restore the same chat and iframe progress without new aliases', async () => {
       const entries = [...f.values];
-      const restoredProfile = await reload({path: '/character/xc-zhiyao', entries});
+      const restoredProfile = await reload({path: '/character/xc-zhiyao', entries, restoreAfterProfileMount: true});
+      assert.equal(restoredProfile.observedRestoring, true, 'reload waits through a real restoring profile before capturing its private state');
       assert.equal(restoredProfile.path, '/characters/xc-zhiyao');
       assert.equal(restoredProfile.profileId, 'xc-zhiyao');
       assert.match(restoredProfile.text, /答应|promis/i);

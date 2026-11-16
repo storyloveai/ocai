@@ -17,9 +17,10 @@ export async function waitFor(predicate, message, timeout = 2500) {
 
 // Runs the real app. Only browser APIs, the public config response and the iframe
 // peer are supplied by the fixture; routing, profiles and persistence stay real.
-export async function boot({path = '/characters', entries = [], configured = false} = {}) {
+export async function boot({path = '/characters', entries = [], configured = false, restoreAfterProfileMount = false} = {}) {
   const {window, document} = parseHTML(await readFile(join(dist, 'index.html'), 'utf8'));
   const values = new Map([['sd.lang', 'zh'], ...entries]), writes = [], requests = [];
+  let observedRestoring = false;
   const storage = {
     getItem: key => values.get(key) ?? null,
     setItem: (key, value) => { writes.push([key, value]); values.set(key, value); },
@@ -60,13 +61,19 @@ export async function boot({path = '/characters', entries = [], configured = fal
     matchMedia: () => ({matches: true}),
     fetch: async (path, options) => {
       requests.push([String(path), options?.method || 'GET']);
-      if (path === '/api/config') return Response.json({auth: null, configured, model: configured ? 'Fixture model' : '', billing: {enabled: false}});
+      if (path === '/api/config') {
+        if (restoreAfterProfileMount) {
+          await waitFor(() => document.querySelector('[data-fw-restoring]'), 'profile did not mount its account-restoration state');
+          observedRestoring = true;
+        }
+        return Response.json({auth: null, configured, model: configured ? 'Fixture model' : '', billing: {enabled: false}});
+      }
       if (String(path).startsWith('/api/')) throw Error('Unexpected external operation: ' + path);
       return new Response(await readFile(join(dist, path)), {headers: {'Content-Type': 'application/json'}});
     },
   });
   await import('../../dist/app.js');
-  await waitFor(() => !document.querySelector('[data-xichuan-wait]') && !document.body.hasAttribute('data-booting'), 'app did not restore the local session');
+  await waitFor(() => !document.querySelector('[data-xichuan-wait],[data-fw-restoring]') && !document.body.hasAttribute('data-booting'), 'app did not restore the local session');
   const go = async path => {
     setLocation(path); window.dispatchEvent(new window.Event('popstate'));
     await new Promise(resolve => setTimeout(resolve, 0));
@@ -89,7 +96,7 @@ export async function boot({path = '/characters', entries = [], configured = fal
     };
     return {frame, messages, send};
   };
-  return {window, document, location, values, writes, requests, storage, go, click, peer};
+  return {window, document, location, values, writes, requests, storage, go, click, peer, get observedRestoring() { return observedRestoring; }};
 }
 
 // A fresh worker represents a browser reload, so no module cache, route state or
@@ -97,7 +104,18 @@ export async function boot({path = '/characters', entries = [], configured = fal
 if (parentPort) {
   try {
     const f = await boot(workerData);
-    await waitFor(() => f.document.querySelector('[data-fw-page="profile"]') || f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input'), 'requested route did not mount');
+    await waitFor(() => {
+      const profile = f.document.querySelector('[data-fw-page="profile"]');
+      if (profile) {
+        const state = profile.querySelector('[data-fw-profile-state]');
+        if (!state || state.querySelector('[data-fw-restoring]')) return false;
+        // Xia Zhiyao's shell appears before account.init() restores its private
+        // progress. Capture only after both actual dynamic status fields mount.
+        if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('[data-fw-chat-status]') && state.querySelector('[data-fw-progress]');
+        return state.childElementCount > 0;
+      }
+      return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input');
+    }, 'requested route did not finish restoring its dynamic state');
     if (workerData.exerciseDemo) {
       const input = f.document.querySelector('#session-input');
       input.value = workerData.exerciseDemo;
@@ -117,7 +135,7 @@ if (parentPort) {
       path: f.location.pathname,
       profileId: f.document.querySelector('[data-fw-character]')?.dataset.fwCharacter,
       text: f.document.querySelector('[data-fw-page="profile"]')?.textContent || f.document.querySelector('#session-messages')?.textContent || '',
-      snapshot, entries: [...f.values], requests: f.requests,
+      snapshot, entries: [...f.values], requests: f.requests, observedRestoring: f.observedRestoring,
     });
   } catch (error) { parentPort.postMessage({error: error.stack}); }
 }
