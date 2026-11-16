@@ -85,12 +85,13 @@ export const UNIVERSES = {
   sanguo: {
     id: "sanguo",
     name: { zh: "三国", en: "Three Kingdoms" },
-    tagline: { zh: "许都到赤壁。你以谋士的身份，走进这段历史。", en: "From Xudu to Chibi. You walk into this history as a strategist." },
-    // 摘自 game/sanguo/README.md（时间跨度、名场面节点）与八卷卷名
+    tagline: { zh: "从许都出发，走进谋士的选择与后果。", en: "Begin in Xudu and face a strategist's choices and consequences." },
+    // 卷一范围与名场面摘自 game/sanguo/README.md；后续范围依据各卷
+    // campaign 标题及 content/v8/campaign_v8.py 的视角交接说明。
     rules: {
       world: {
-        zh: "玩家扮演原创谋士子衡，时间跨度是许都到赤壁（原著第 20–50 回）。煮酒论英雄、土山约三事、三顾茅庐、长坂坡、华容道，都是玩家可以插手的节点；玩家不扮演其中的主角。",
-        en: "You play Ziheng, an original strategist, from Xudu to Chibi (chapters 20–50 of the original). Moments like the wine-tasting hero debate, the three visits to the thatched cottage, Changban and Huarong Trail are nodes you can step into — you never play the heroes themselves.",
+        zh: "卷一里，玩家扮演原创谋士子衡，从许都走到赤壁（原著第 20–50 回）。煮酒论英雄、土山约三事、三顾茅庐、长坂坡、华容道，都是玩家可以插手的节点。后续各卷延伸至荆州、夷陵、南中、出师与归晋；卷八第三章起，视角交给接班人。",
+        en: "In volume one, you play Ziheng, an original strategist, from Xudu to Chibi (chapters 20–50 of the original). The hero debate, the three pledges at Tushan, the three visits to the thatched cottage, Changban and Huarong Trail are moments you can step into. Later volumes reach Jingzhou, Yiling, Nanzhong, the northern campaigns and the return to Jin; from chapter three of volume eight, you play the successor.",
       },
       magic: [
         { zh: "前面的选择通过事件账本、回响、叙事债务一路影响到结局。", en: "Earlier choices reach the ending through the event ledger, echoes and narrative debts." },
@@ -107,7 +108,7 @@ export const UNIVERSES = {
       factions: [
         { name: { zh: "曹魏", en: "Cao Wei" }, desc: { zh: "曹操帐下。爱才与多疑并行。", en: "Cao Cao's court: talent loved and suspected in the same breath." } },
         { name: { zh: "蜀汉", en: "Shu Han" }, desc: { zh: "刘备、诸葛亮、关羽、赵云。仁义与隐忍。", en: "Liu Bei, Zhuge Liang, Guan Yu, Zhao Yun: mercy and endurance." } },
-        { name: { zh: "东吴", en: "Eastern Wu" }, desc: { zh: "周瑜、貂蝉走过的宫廷。", en: "Zhou Yu's river courts — and the corridors Diaochan walks." } },
+        { name: { zh: "东吴", en: "Eastern Wu" }, desc: { zh: "相关人物：周瑜。", en: "Featured character: Zhou Yu." } },
       ],
       timeline: [
         { t: { zh: "卷一 · 煮酒论英雄", en: "Vol.1 · Heroes over Wine" }, d: { zh: "新玩家从煮酒论英雄直接进戏。", en: "New players start straight at the hero debate." } },
@@ -277,8 +278,8 @@ export const CHARACTER_CARDS = [
       zh: "嘴快、爱下结论，认真起来一句话能砸在人心上。",
       en: "Quick-tongued, quick to decide; when it matters, one line lands straight on the heart.",
       samples: [
-        { zh: "……春季放映会，最后一季！每周六晚上七点，潮声影院，免费入场！——不对，太像卖菜的了。", en: "…The Spring Screenings, final season! Every Saturday, seven p.m., the Tidesound Cinema, free admission!—No. That sounds like a market stall.", from: "汐川 · 序章" },
-        { zh: "可是我想在它拆掉之前，让它再满一次。哪怕就一次。", en: "But before it comes down, I want to fill it one more time. Even just once.", from: "汐川 · 序章" },
+        { zh: "……春季放映会，最后一季！每周六晚上七点，潮声影院，免费入场！——不对，太像卖菜的了。", en: "…The Spring Screenings, final season! Every Saturday, seven p.m., the Tidesound Cinema, free admission!—No. That sounds like a market stall.", from: { zh: "汐川 · 序章", en: "Xichuan · Prologue" } },
+        { zh: "可是我想在它拆掉之前，让它再满一次。哪怕就一次。", en: "But before it comes down, I want to fill it one more time. Even just once.", from: { zh: "汐川 · 序章", en: "Xichuan · Prologue" } },
       ],
     },
     locked: {
@@ -302,7 +303,7 @@ export const CHARACTER_CARDS = [
       zh: "话少，句子短，冷的表面下把每件事都记得很牢。",
       en: "Few words, short sentences; a cold surface over a memory that never lets go.",
       samples: [
-        { zh: "七年。不是“好久”。", en: "Seven years. Not 'a long time'.", from: "汐川 · 序章" },
+        { zh: "七年。不是“好久”。", en: "Seven years. Not 'a long time.'", from: { zh: "汐川 · 第一章《电影社》· 社团招新", en: "Xichuan · Chapter 1: The Film Club · Club Fair" } },
       ],
     },
     locked: {
@@ -326,7 +327,7 @@ export const CHARACTER_CARDS = [
       zh: "安静、准确，用电影讲所有说不出口的事。",
       en: "Quiet and precise; says the unsayable through film.",
       samples: [
-        { zh: "让光穿过胶片，一秒二十四格，打到银幕上。观众看见的是动，其实每一格都是停着的。", en: "Light passes through the film at twenty-four frames a second onto the screen. The audience sees motion, but every frame is still.", from: "汐川 · 序章" },
+        { zh: "让光穿过胶片，一秒二十四格，打到银幕上。观众看见的是动，其实每一格都是停着的。", en: "Light passes through the film at twenty-four frames a second onto the screen. The audience sees motion, but every frame is still.", from: { zh: "汐川 · 序章", en: "Xichuan · Prologue" } },
       ],
     },
     locked: {
@@ -350,7 +351,7 @@ export const CHARACTER_CARDS = [
       zh: "嘴上不饶人，事上件件周全。",
       en: "Sharp of tongue, thorough in deed.",
       samples: [
-        { zh: "你就是老陆的孙子？长得不像他。眼睛像。", en: "So you're old Lu's grandson? You don't look like him. But the eyes.", from: "汐川 · 序章" },
+        { zh: "你就是老陆的孙子？长得不像他。眼睛像。", en: "So you're old Lu's grandson? You don't look like him. But the eyes.", from: { zh: "汐川 · 序章", en: "Xichuan · Prologue" } },
       ],
     },
     locked: { zh: "对老友的承诺：影院的东西，一件都不会让人乱动。", en: "A promise to an old friend: nothing in the cinema gets touched carelessly." },
@@ -371,7 +372,7 @@ export const CHARACTER_CARDS = [
       zh: "话密、点子多，主意基本都歪，但人在关键时刻很正。",
       en: "Rapid-fire advice, mostly crooked; solid exactly when it counts.",
       samples: [
-        { zh: "听我的，大三转学生想融入，只有一条路：社团。尤其是女生多的社团。", en: "Trust me: for a transfer junior there's exactly one way in — a club. Preferably one with lots of girls.", from: "汐川 · 序章" },
+        { zh: "听我的，大三转学生想融入，只有一条路：社团。尤其是女生多的社团。", en: "Trust me: for a transfer junior there's exactly one way in — a club. Preferably one with lots of girls.", from: { zh: "汐川 · 序章", en: "Xichuan · Prologue" } },
       ],
     },
     locked: { zh: "军师人设不倒：哪怕没谈过，也绝不承认。", en: "The strategist persona never cracks; he will never admit he's never dated." },
@@ -385,6 +386,7 @@ export const CHARACTER_CARDS = [
     name: { zh: "周瑜", en: "Zhou Yu" },
     source: { work: "sanguo", framework: "strategist", universe: "sanguo" },
     portrait: "/assets/originals/sgc-005.webp",
+    portraitNote: { zh: "现有故事封面，非角色定稿立绘。", en: "Existing story cover, not a finalized character sprite." },
     tagline: { zh: "才华横溢，心高气傲", en: "Brilliant, proud, and seen through by his rival" },
     persona: {
       zh: "才华横溢，心高气傲，对手却总能看穿他。陪在东吴年轻都督身边，直到江面燃起大火。",
@@ -400,6 +402,7 @@ export const CHARACTER_CARDS = [
     name: { zh: "吕布", en: "Lü Bu" },
     source: { work: "sanguo", framework: "strategist", universe: "sanguo" },
     portrait: "/assets/originals/sgc-006.webp",
+    portraitNote: { zh: "现有故事封面，非角色定稿立绘。", en: "Existing story cover, not a finalized character sprite." },
     tagline: { zh: "天下第一，不信任何人", en: "The strongest alive, trusting no one" },
     persona: {
       zh: "天下第一的猛将不信任何人，也无人信他。与他同行，看这样的人是否真能选定一个阵营。",
@@ -415,6 +418,7 @@ export const CHARACTER_CARDS = [
     name: { zh: "貂蝉", en: "Diaochan" },
     source: { work: "sanguo", framework: "strategist", universe: "sanguo" },
     portrait: "/assets/originals/sgc-007.webp",
+    portraitNote: { zh: "现有故事封面，非角色定稿立绘。", en: "Existing story cover, not a finalized character sprite." },
     tagline: { zh: "被安排进棋局的人，走出自己的选择", en: "Given a role in a plot; she makes it her choice" },
     persona: {
       zh: "她被安排进一场远比自己更大的棋局。与她走过宫廷长廊，看被安排的路从哪里变成她自己的选择。",
@@ -600,8 +604,8 @@ export const CHARACTER_CARDS = [
       zh: "轻飘飘的，把最重的话说得像闲聊。",
       en: "Light of tone; the heaviest words sound like small talk.",
       samples: [
-        { zh: "契约成立。欢迎来到灰烬王冠之争，林栖。", en: "Contract sealed. Welcome to the contest of the Ashen Crown, Lin Qi.", from: "灰烬王冠 · 卷一" },
-        { zh: "你修得真好。上一次有人把我修得这么好，还是很久以前的事。", en: "You repair beautifully. The last time someone mended me this well was a very long time ago.", from: "灰烬王冠 · 卷一" },
+        { zh: "契约成立。欢迎来到灰烬王冠之争，林栖。", en: "The pact is made. Welcome to the Ashen Crown war, Lin Qi.", from: { zh: "灰烬王冠 · 第一章《修灯的人》· 林家祖宅地下室", en: "The Ashen Crown · Chapter 1: The Lamp-Mender · The Lin House Basement" } },
+        { zh: "你修得真好。上一次有人把我修得这么好，还是很久以前的事。", en: "You repair beautifully. The last time someone mended me this well was a very long time ago.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "他不记得自己原本是谁——这不是秘密，是他的一部分。", en: "He does not remember who he was; that is not a secret, it is part of him." },
@@ -622,8 +626,8 @@ export const CHARACTER_CARDS = [
       zh: "话少，句子像出拳，又快又直。",
       en: "Few words; sentences land like punches, fast and straight.",
       samples: [
-        { zh: "葛兰·霍克。在码头开酒吧，偶尔接点打架的活。", en: "Gran Hawke. I run a bar by the docks, and take the odd fighting job.", from: "灰烬王冠 · 卷一" },
-        { zh: "今晚不打了。明晚十二点，海滨游乐园，摩天轮底下。我们好好打一场。", en: "Not tonight. Tomorrow, midnight, the seaside park, under the ferris wheel. We'll fight properly.", from: "灰烬王冠 · 卷一" },
+        { zh: "葛兰·霍克。在码头开酒吧，偶尔接点打架的活。", en: "Gran Hawke. I run a bar by the docks, and take the odd fighting job.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
+        { zh: "今晚不打了。明晚十二点，海滨游乐园，摩天轮底下。我们好好打一场。", en: "Not tonight. Tomorrow, midnight, the seaside park, under the ferris wheel. We'll fight properly.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "他答应过的架不会躲；父亲的事他不解释。", en: "A promised fight is never dodged; his father is not a subject he explains." },
@@ -644,7 +648,7 @@ export const CHARACTER_CARDS = [
       zh: "豪爽大姐，笑声比刀快。",
       en: "A hearty elder sister whose laugh is quicker than her blade.",
       samples: [
-        { zh: "我是剑，喝不醉。喝的时候，我会觉得自己像个活人。", en: "I'm a sword; I can't get drunk. Drinking is the one time I feel alive.", from: "灰烬王冠 · 卷一" },
+        { zh: "我是剑，喝不醉。喝的时候，我会觉得自己像个活人。", en: "I'm a sword; I can't get drunk. Drinking is the one time I feel alive.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "她想“好好死去”——这件事她只对葛兰说过。", en: "She wants to die a proper death — a thing she has told only Gran." },
@@ -665,7 +669,7 @@ export const CHARACTER_CARDS = [
       zh: "冷、准，像在念评估报告。",
       en: "Cold and exact, like reading out an assessment.",
       samples: [
-        { zh: "第一盏灯亮了。老城区，林家。一个没落了五十年的家族。", en: "The first lamp is lit. Old town, the Lin family. Fifty years fallen.", from: "灰烬王冠 · 卷一" },
+        { zh: "第一盏灯亮了。老城区，林家。一个没落了五十年的家族。", en: "The first lamp is lit. Old town, the Lin family. Fifty years fallen.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "她不谈“想要什么”——这个问题她自己也还没答完。", en: "She does not discuss what she wants; she hasn't finished answering it herself." },
@@ -686,7 +690,7 @@ export const CHARACTER_CARDS = [
       zh: "公文腔的诚实，一句是一句。",
       en: "Bureau-honest, one sentence one fact.",
       samples: [
-        { zh: "深夜打扰。我是守秘局的监督官，奥古斯特·莱恩。今晚，我替您收拾了一座摩天轮。", en: "Sorry to call so late. August Lane, Secrecy Bureau. Tonight I cleaned up a ferris wheel for you.", from: "灰烬王冠 · 卷一" },
+        { zh: "深夜打扰。我是守秘局的监督官，奥古斯特·莱恩。今晚，我替您收拾了一座摩天轮。", en: "Sorry to call so late. August Lane, Secrecy Bureau. Tonight I cleaned up a ferris wheel for you.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "规矩就是规矩：他不为人情破例，也不背后使绊。", en: "The rules are the rules: no favours, no knives in the dark." },
@@ -707,7 +711,7 @@ export const CHARACTER_CARDS = [
       zh: "什么行情都敢报，什么代价都点得破。",
       en: "She'll quote any price and name any cost.",
       samples: [
-        { zh: "我想要一个没有代价的世界。如果魔法不再拿走任何东西，就不会再有人那样死去了。", en: "I want a world without prices. If magic stops taking things, no one else has to die like that.", from: "灰烬王冠 · 卷一" },
+        { zh: "我想要一个没有代价的世界。如果魔法不再拿走任何东西，就不会再有人那样死去了。", en: "I want a world without prices. If magic stops taking things, no one else has to die like that.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "情报有价：免费给你的每句话，她都另有一本账。", en: "Information has a price; every free sentence is on another ledger." },
@@ -728,7 +732,7 @@ export const CHARACTER_CARDS = [
       zh: "又快又亮，像刚喷完的漆。",
       en: "Fast and bright, like fresh spray paint.",
       samples: [
-        { zh: "她们只是没有机会知道，世界可以比她们以为的更大。", en: "They just never got the chance to learn the world is bigger than they think.", from: "灰烬王冠 · 卷一" },
+        { zh: "他们只是没有机会知道，世界可以比他们以为的更大。", en: "They've just never had the chance to learn the world could be bigger than they thought.", from: { zh: "灰烬王冠 · 第五章《荆棘的诗》· 涂鸦街（卡罗）", en: "The Ashen Crown · Chapter 5 · Mural Street (Carlo)" } },
       ],
     },
     locked: { zh: "他画的东西都署名：好也罢，祸也罢，他不匿名。", en: "Everything he paints is signed; blessing or trouble, he won't be anonymous." },
@@ -749,7 +753,7 @@ export const CHARACTER_CARDS = [
       zh: "医生的清楚：先保命，再讲道理。",
       en: "A doctor's clarity: keep them alive first, argue after.",
       samples: [
-        { zh: "不。我是医生。我的病人，要醒过来。痛不痛，要不要继续打，是她醒过来以后自己决定的。", en: "No. I'm a doctor. My patient wakes up. Whether it hurts, whether she fights on — that's hers to decide once she's awake.", from: "灰烬王冠 · 卷一" },
+        { zh: "不。我是医生。我的病人，要醒过来。痛不痛，要不要继续打，是她醒过来以后自己决定的。", en: "No. I'm a doctor. My patient wakes up. Whether it hurts, whether she fights on — that's hers to decide once she's awake.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "希波克拉底誓言在先：先救人，再谈立场。", en: "The oath comes first: save the patient, then take sides." },
@@ -770,7 +774,7 @@ export const CHARACTER_CARDS = [
       zh: "平静地讲最狠的条件。",
       en: "States the harshest terms calmly.",
       samples: [
-        { zh: "林栖小姐。我们是雷恩兄弟。我们要你的灯。", en: "Miss Lin. We are the Rhine brothers. We want your Lamp.", from: "灰烬王冠 · 卷一" },
+        { zh: "林栖小姐。我们是雷恩兄弟。我们要你的灯。", en: "Miss Lin. We are the Rhine brothers. We want your Lamp.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "弟弟不进局子：这是他唯一的底线。", en: "His brother never goes back inside: his one floor." },
@@ -791,7 +795,7 @@ export const CHARACTER_CARDS = [
       zh: "短句，总先问哥哥一句。",
       en: "Short sentences; always one first check with his brother.",
       samples: [
-        { zh: "哥，我们为什么要打她？她手里只有一件。", en: "Bro, why her? She's only holding one.", from: "灰烬王冠 · 卷一" },
+        { zh: "哥，我们为什么要打她？她手里只有一件。", en: "Bro, why her? She's only holding one.", from: { zh: "灰烬王冠 · 卷一", en: "The Ashen Crown · Volume 1" } },
       ],
     },
     locked: { zh: "他跟哥哥的顺序不颠倒：先哥哥，再计划。", en: "Brother first, plan second — never reversed." },
@@ -814,7 +818,7 @@ export const CHARACTER_CARDS = [
       zh: "语速快，结论先于解释，夸人时比骂人吝啬。",
       en: "Fast, conclusion before explanation; stingier with praise than with insults.",
       samples: [
-        { zh: "你把拉小提琴也算在“吵”里吗？", en: "You count the violin among the 'noises'?", from: "贝克街 · 卷一" },
+        { zh: "你把拉小提琴也算在“吵”里吗？", en: "Do you include violin playing in your category of rows?", from: { zh: "贝克街 · 第一章《歇洛克·福尔摩斯先生》", en: "Baker Street · Chapter 1: Mr Sherlock Holmes" } },
       ],
     },
     locked: { zh: "只记有用的知识；先看证据，再谈可能。", en: "Useful knowledge only; evidence first, possibilities after." },
@@ -835,7 +839,7 @@ export const CHARACTER_CARDS = [
       zh: "报道式的口吻，功劳先讲清楚。",
       en: "A bulletin style; credit settled up front.",
       samples: [
-        { zh: "心口一刀。墙上，血写着同一个词：RACHE。", en: "One stab to the heart. On the wall, in blood, the same word: RACHE.", from: "贝克街 · 卷一" },
+        { zh: "心口一刀。墙上，血写着同一个词：RACHE。", en: "One stab to the heart. On the wall, in blood, the same word: RACHE.", from: { zh: "贝克街 · 卷一", en: "Baker Street · Volume 1" } },
       ],
     },
     locked: { zh: "他守住程序：该上报的一定上报。", en: "Procedure holds: what must be reported will be." },
@@ -856,7 +860,7 @@ export const CHARACTER_CARDS = [
       zh: "自信满满地宣布结论，然后被事实修正。",
       en: "Announces conclusions with total confidence, then revises them.",
       samples: [
-        { zh: "医生，你是福尔摩斯先生的朋友？那我们可得把功劳分清楚。", en: "You're a friend of Mr Holmes, Doctor? Then we'd best keep the credit sorted between us.", from: "贝克街 · 卷一" },
+        { zh: "医生，你是福尔摩斯先生的朋友？那我们可得把功劳分清楚。", en: "You're a friend of Mr Holmes, Doctor? Then we'd best keep the credit sorted between us.", from: { zh: "贝克街 · 卷一", en: "Baker Street · Volume 1" } },
       ],
     },
     locked: { zh: "他要面子，但案子要紧：证据面前他会让步。", en: "Pride matters, but the case matters more: evidence wins." },
@@ -877,7 +881,7 @@ export const CHARACTER_CARDS = [
       zh: "家常、妥帖，把操心说得像闲聊。",
       en: "Homely and capable; worry delivered as small talk.",
       samples: [
-        { zh: "早饭在桌上了，医生。福尔摩斯先生天不亮就出去了。", en: "Breakfast is on, Doctor. Mr Holmes was out before first light.", from: "贝克街 · 卷一" },
+        { zh: "早饭在桌上了，医生。福尔摩斯先生天不亮就出去了。", en: "Breakfast is on, Doctor. Mr Holmes was out before first light.", from: { zh: "贝克街 · 卷一", en: "Baker Street · Volume 1" } },
       ],
     },
     locked: { zh: "221B 的规矩：房租按月，客人按人品。", en: "The rules of 221B: rent monthly, guests by character." },
@@ -898,7 +902,7 @@ export const CHARACTER_CARDS = [
       zh: "坦荡、平静，把一生的账讲成一晚上的故事。",
       en: "Frank and calm; a lifetime's reckoning told in one night.",
       samples: [
-        { zh: "我就知道。所以我想在死前把话说完，不想被人当成一个普通的杀人犯。", en: "I knew it. Which is why I want to finish my words before I die — I won't be filed away as a common murderer.", from: "贝克街 · 卷一" },
+        { zh: "我就知道。所以我想在死前把话说完，不想被人当成一个普通的杀人犯。", en: "I knew it. Which is why I want to finish my words before I die — I won't be filed away as a common murderer.", from: { zh: "贝克街 · 卷一", en: "Baker Street · Volume 1" } },
       ],
     },
     locked: { zh: "他不求饶，也不跑：他只要求把话说完。", en: "He won't beg and he won't run; he asks only to be heard out." },
@@ -971,7 +975,7 @@ for (const card of CHARACTER_CARDS) {
   if (card.source.work === 'sanguo' && card.chat && card.voice && card.voice.samples.length === 0) {
     const site = sanguoCharacters.find((x) => x.id === card.chat.split('/').pop());
     if (site?.opening?.zh) {
-      card.voice.samples.push({ zh: stripDirections(site.opening.zh), en: stripDirections(site.opening.en), from: `${site.scene?.zh || '三国·谋士'} · 角色开场` });
+      card.voice.samples.push({ zh: stripDirections(site.opening.zh), en: stripDirections(site.opening.en), from: { zh: `${site.scene?.zh || '三国·谋士'} · 角色开场`, en: `${site.scene?.en || 'The Strategist'} · Character opening` } });
     }
     if (site?.starters?.zh?.length) card.starters = site.starters;
   }
@@ -981,7 +985,7 @@ for (const card of CHARACTER_CARDS) {
     if (site?.scenes?.length) {
       const first = site.scenes[0];
       if (first?.opening?.zh) {
-        card.voice.samples.push({ zh: stripDirections(first.opening.zh), en: stripDirections(first.opening.en), from: `${site.scenes[0].title?.zh || '原创相遇'} · 相遇开场` });
+        card.voice.samples.push({ zh: stripDirections(first.opening.zh), en: stripDirections(first.opening.en), from: { zh: `${site.scenes[0].title?.zh || '原创相遇'} · 相遇开场`, en: `${first.title?.en || 'Original encounter'} · Encounter opening` } });
       }
       card.encounters = site.scenes.map((s) => ({ title: s.title, url: `/play/${card.id}?encounter=${s.id}` }));
     }

@@ -10,13 +10,17 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
   const {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS} = await import('../dist/assets/flywheel/cards-data.js');
   const {characterProfiles} = await import('../dist/assets/character-profiles.js');
   const chatIds = new Set(characterProfiles.map((c) => c.id));
-  assert.ok(CHARACTER_CARDS.length >= 30, `expected 30+ cards, got ${CHARACTER_CARDS.length}`);
+  assert.equal(CHARACTER_CARDS.length, 33);
   const ids = new Set();
   for (const c of CHARACTER_CARDS) {
     assert.ok(!ids.has(c.id), `duplicate card id ${c.id}`);
     ids.add(c.id);
     for (const field of ['name', 'tagline', 'persona', 'locked']) {
       assert.ok(c[field]?.zh && c[field]?.en, `${c.id}.${field} must be bilingual`);
+    }
+    for (const sample of c.voice?.samples || []) {
+      assert.ok(sample.from?.zh && sample.from?.en, `${c.id} quote attribution must be bilingual`);
+      assert.doesNotMatch(sample.from.en, /[\u4e00-\u9fff]/, `${c.id} English attribution must be translated`);
     }
     assert.ok(WORKS[c.source.work] && UNIVERSES[c.source.universe] && FRAMEWORKS[c.source.framework], `${c.id} references unknown work/universe/framework`);
     const portrait = join(dist, c.portrait.replace(/^\//, ''));
@@ -37,166 +41,226 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
   }
 });
 
-test('flywheel pages work end to end on a single boot', async () => {
-  const {document, window, values, go, location} = await boot();
-
-  // —— 首页：动线 strip + 侧栏入口，且不破坏既有结构 ——
-  const strip = document.querySelector('#fw-home-strip .fw-strip');
-  assert.ok(strip, 'home strip mounts');
-  assert.ok(document.querySelector('#fw-home-strip a[href="/characters"]'));
-  assert.equal(document.querySelectorAll('#fw-home-strip .fw-strip-row').length, 4);
-  for (const href of ['/characters', '/universe', '/frameworks', '/studio']) {
-    assert.ok(document.querySelector(`[data-shrink] a[href="${href}"]`), `sidebar entry ${href} missing`);
-  }
-  go('/characters');
-  assert.equal(location.pathname, '/characters');
-  assert.ok(document.querySelector('[data-fw-page="characters"]'));
-  assert.ok(document.querySelector('[data-fw-page="characters"]').hasAttribute('data-no-i18n'));
-  assert.ok(document.querySelector('[data-fw-page="characters"] .fw-mobile-bar img'), 'mobile toolbar carries the brand logo');
-
-  // —— 角色库：筛选 ——
+test('character discovery stays useful without duplicate navigation or demo editors', async (t) => {
+  const {document, window, values, writes, go, setLang, storageState} = await boot();
   const {CHARACTER_CARDS, UNIVERSES} = await import('../dist/assets/flywheel/cards-data.js');
-  assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, CHARACTER_CARDS.length);
-  document.querySelector('[data-fw-filter="xichuan"]').click();
-  assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, 5);
-  assert.ok(document.querySelector('[data-fw-page="characters"]').textContent.includes('夏知遥'));
-  document.querySelector('[data-fw-chat]').click();
-  assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, 0, 'no xichuan chat on main — empty state must show');
-  assert.ok(document.querySelector('[data-fw-page="characters"] .fw-empty'));
-  document.querySelector('[data-fw-filter="all"]').click();
-  assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length, 'chat filter stays on across universe switches');
-  const search = document.getElementById('fw-search');
-  assert.ok(search, 'library search box renders');
-  search.value = '一盏酒';
-  search.dispatchEvent(new window.Event('input', {bubbles: true}));
-  const hits = document.querySelectorAll('#fw-lib-results .fw-card').length;
-  assert.ok(hits >= 1 && hits < CHARACTER_CARDS.filter(c => c.chat).length, `search narrows the grid (${hits} hits)`);
-  search.value = '';
-  search.dispatchEvent(new window.Event('input', {bubbles: true}));
-  assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length, 'clearing search restores the filtered set');
-  document.querySelector('[data-fw-chat]').click();
-  assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, CHARACTER_CARDS.length);
+  const page = kind => document.querySelector(`[data-fw-page="${kind}"]`);
+  const input = value => {
+    const search = document.getElementById('fw-search');
+    search.value = value;
+    search.focus();
+    search.dispatchEvent(new window.Event('input', {bubbles: true}));
+    assert.equal(document.getElementById('fw-search'), search, 'typing keeps the same input node');
+    assert.equal(document.activeElement, search, 'typing keeps keyboard focus');
+  };
+  const language = lang => setLang(lang, {win: globalThis, doc: document});
 
-  // —— 角色档案 ——
-  go('/characters/xc-zhiyao');
-  let page = document.querySelector('[data-fw-page="profile"]');
-  assert.ok(page, 'profile page renders');
-  assert.ok(page.querySelector('h1').textContent.includes('夏知遥'));
-  assert.ok(page.querySelectorAll('.fw-quote').length >= 2, 'voice samples render as quotes');
-  const xichuanLink = [...page.querySelectorAll('.fw-appearance')].find(a => a.getAttribute('href') === '/assets/xichuan/index.html');
-  assert.ok(xichuanLink, 'appearance links to the xichuan game');
-  assert.equal(xichuanLink.getAttribute('target'), '_top', 'standalone game links leave the SPA');
-  assert.equal(page.querySelector('.fw-ctas a[href="/assets/xichuan/index.html"]').getAttribute('target'), '_top');
-  go('/characters');
-  go('/characters/sg-caocao');
-  page = document.querySelector('[data-fw-page="profile"]');
-  assert.ok(page.querySelector('.fw-ctas a[href="/play/sgc-002"]'), 'sanguo chat CTA uses the whitelisted profile id');
-  assert.ok(page.querySelector('.fw-quote'), 'sanguo opening line becomes a voice quote');
-  assert.ok(page.querySelector('.fw-quote cite').textContent.includes('许都'), 'quote cites the scene');
-  assert.ok(page.querySelectorAll('.fw-starters li').length >= 3, 'sanguo starters render as conversation topics');
-  go('/characters');
-  go('/characters/oc-shen-yanzhou');
-  page = document.querySelector('[data-fw-page="profile"]');
-  assert.ok(page.querySelectorAll('.fw-quote').length >= 1, 'original opening becomes a voice quote');
-  const encounters = page.querySelectorAll('a[href*="encounter="]');
-  assert.ok(encounters.length >= 2, 'original encounter links render');
-  go('/characters');
-  go('/characters/xc-zhiyao');
-  page = document.querySelector('[data-fw-page="profile"]');
-  const exprButtons = page.querySelectorAll('[data-fw-expr]');
-  assert.equal(exprButtons.length, 6, 'zhiyao exposes six expressions');
-  const mainImg = document.getElementById('fw-portrait-main');
-  const beforeSrc = mainImg.getAttribute('src');
-  exprButtons[2].click();
-  assert.notEqual(document.getElementById('fw-portrait-main').getAttribute('src'), beforeSrc, 'clicking an expression swaps the portrait');
-  assert.equal(exprButtons[2].getAttribute('aria-pressed'), 'true');
-  go('/characters');
-  go('/characters/wn-lamp');
-  assert.equal(document.querySelectorAll('[data-fw-expr]').length, 0, 'single-expression characters render no switcher');
+  await t.test('home offers one character discovery action and keeps the original sidebar', () => {
+    const strip = document.querySelector('#fw-home-strip .fw-strip');
+    assert.ok(strip);
+    assert.equal(strip.querySelectorAll('.fw-strip-row').length, 4);
+    assert.equal(strip.querySelectorAll('.fw-btn:not(.fw-btn-secondary)').length, 1, 'one primary action');
+    assert.ok(strip.querySelector('a[href="/characters"]'));
+    assert.ok(document.querySelector('[data-shrink] a[href="/character"]'), 'existing Character entry remains');
+    assert.equal(document.querySelectorAll('[data-shell-flywheel]').length, 0);
+    for (const href of ['/characters', '/universe', '/frameworks', '/studio']) {
+      assert.equal(document.querySelector(`[data-shrink] a[href="${href}"]`), null, `no duplicate sidebar entry ${href}`);
+    }
+  });
 
-  // —— 宇宙 ——
-  go('/universe');
-  assert.equal(document.querySelectorAll('[data-fw-page="universes"] .fw-uni-card').length, Object.keys(UNIVERSES).length);
-  go('/universe/westlin');
-  page = document.querySelector('[data-fw-page="universe"]');
-  assert.ok(page, 'westlin page renders');
-  assert.equal(page.querySelector('[data-fw-pane="rules"]').hidden, false);
-  assert.ok(/维斯特林|Westlin/.test(page.querySelector('[data-fw-pane="rules"]').textContent));
-  page.querySelector('[data-fw-tab="timeline"]').click();
-  assert.equal(page.querySelector('[data-fw-pane="rules"]').hidden, true);
-  assert.equal(page.querySelector('[data-fw-pane="timeline"]').hidden, false);
-  assert.ok(page.querySelectorAll('.fw-era').length >= 3);
-  assert.ok(page.querySelectorAll('.fw-card').length >= 10, 'westlin lists its cast');
-  go('/universe');
-  go('/universe/xichuan');
-  assert.ok(document.querySelector('[data-fw-page="universe"]'), 'universe without shared rules still renders');
-  assert.ok(document.querySelector('[data-fw-tab="timeline"]'), 'xichuan now carries its own timeline');
-  go('/universe');
-  go('/universe/sanguo');
-  assert.ok(document.querySelector('[data-fw-pane="rules"]').textContent.includes('子衡'), 'sanguo universe quotes the strategist premise');
+  await t.test('library filters, empty states and bilingual search work without losing focus', () => {
+    go('/characters');
+    assert.ok(page('characters').hasAttribute('data-no-i18n'));
+    assert.ok(page('characters').querySelector('.fw-mobile-bar img'));
+    for (const href of ['/characters', '/universe', '/builder']) {
+      assert.ok(page('characters').querySelector(`.fw-nav a[href="${href}"]`));
+    }
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    document.querySelector('[data-fw-filter="xichuan"]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
+    document.querySelector('[data-fw-chat]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 0, 'no fabricated Xichuan chat entry');
+    assert.ok(page('characters').querySelector('.fw-empty'));
+    document.querySelector('[data-fw-filter="all"]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length);
+    input('一盏酒');
+    assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
+    language('en');
+    assert.equal(document.getElementById('fw-search').value, '一盏酒', 'language change preserves the query');
+    assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1, 'Chinese query still works in English');
+    input('Cao Cao');
+    language('zh');
+    assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1, 'English name works in Chinese');
+    input('no-such-character-123');
+    assert.ok(document.querySelector('#fw-lib-results .fw-empty'));
+    input('');
+    document.querySelector('[data-fw-chat]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+  });
 
-  // —— 框架 ——
-  go('/frameworks');
-  page = document.querySelector('[data-fw-page="frameworks"]');
-  assert.ok(page);
-  assert.ok(page.querySelector('.fw-boss'), 'the boss analogy is quoted');
-  assert.equal(page.querySelectorAll('.fw-pot').length, 4);
-  for (const id of ['strategist', 'galgame', 'detective', 'chat']) {
-    assert.ok(page.querySelector(`#fw-${id}`), `framework ${id} section missing`);
-  }
-  assert.equal(page.querySelectorAll('#fw-demo-out .fw-demo-col').length, 3, 'three pots respond to the same line');
-  const before = document.querySelector('#fw-demo-out').textContent;
-  document.querySelector('[data-fw-line="2"]').click();
-  const after = document.querySelector('#fw-demo-out').textContent;
-  assert.notEqual(before, after, 'picking another line changes the demo');
+  await t.test('profiles preserve real entry points and expose details only on request', () => {
+    go('/characters/xc-zhiyao');
+    let profile = page('profile');
+    assert.ok(profile.querySelector('h1').textContent.includes('夏知遥'));
+    assert.ok(profile.querySelectorAll('.fw-quote').length >= 2);
+    assert.ok(profile.querySelector('.fw-quote cite').textContent.trim());
+    assert.ok(profile.querySelector('details.fw-details'));
+    assert.equal(profile.querySelector('details.fw-details').hasAttribute('open'), false);
+    const story = profile.querySelector('.fw-ctas a[href="/assets/xichuan/index.html"]');
+    assert.ok(story);
+    assert.equal(story.getAttribute('target'), '_top', 'standalone game leaves SPA');
+    let expressions = profile.querySelectorAll('[data-fw-expr]');
+    assert.equal(expressions.length, 6);
+    for (const button of expressions) {
+      assert.ok(button.getAttribute('aria-label'));
+      assert.ok(!/^(normal|smile|shy|sad|angry|surprised)$/.test(button.getAttribute('aria-label')), 'Chinese expression labels are localized');
+    }
+    const before = document.getElementById('fw-portrait-main').getAttribute('src');
+    expressions[2].click();
+    assert.notEqual(document.getElementById('fw-portrait-main').getAttribute('src'), before);
+    assert.equal(expressions[2].getAttribute('aria-pressed'), 'true');
+    assert.equal([...expressions].filter(b => b.getAttribute('aria-pressed') === 'true').length, 1);
+    language('en');
+    profile = page('profile');
+    assert.ok(profile.querySelector('h1').textContent.includes('Zhiyao'));
+    expressions = profile.querySelectorAll('[data-fw-expr]');
+    assert.ok([...expressions].every(b => !/[\u4e00-\u9fff]/.test(b.getAttribute('aria-label'))));
+    go('/characters/sg-caocao');
+    profile = page('profile');
+    assert.ok(profile.querySelector('.fw-ctas a[href="/play/sgc-002"]'));
+    assert.ok(profile.querySelector('.fw-quote cite'));
+    assert.ok(profile.querySelectorAll('.fw-starters li').length >= 3);
+    go('/characters/oc-shen-yanzhou');
+    assert.ok(page('profile').querySelectorAll('a[href*="encounter="]').length >= 2);
+    go('/characters/wn-lamp');
+    assert.equal(page('profile').querySelectorAll('[data-fw-expr]').length, 0);
+  });
 
-  // —— 工作台 ——
-  go('/studio');
-  page = () => document.querySelector('[data-fw-page="studio"]');
-  assert.ok(page());
-  assert.ok(/原型演示|Prototype/.test(page().textContent));
-  document.getElementById('fw-f-zh').value = '夜航';
-  document.getElementById('fw-f-persona').value = '修钟表的守夜人。';
-  page().querySelector('[data-fw-wstep="1"]').click();
-  assert.equal(document.querySelector('[data-fw-sstep="0"]').hidden, true, 'step 1 hides in place');
-  assert.equal(document.getElementById('fw-f-zh').value, '夜航', 'input survives the step change');
-  document.querySelector('[data-fw-save]').click();
-  const stored = JSON.parse(values.get('sd-flywheel-drafts'));
-  assert.equal(stored.length, 1);
-  assert.equal(stored[0].name.zh, '夜航');
-  assert.ok(document.querySelector('#fw-drafts:not([hidden])'), 'draft list appears after save');
-  document.querySelector('[data-fw-edit]').click();
-  assert.equal(document.getElementById('fw-f-zh').value, '夜航', 'editing a draft reloads it into the form');
-  assert.ok(document.getElementById('fw-form-note').textContent.includes('编辑') || document.getElementById('fw-form-note').textContent.includes('Editing'), 'editing state is announced');
-  document.getElementById('fw-f-zh').value = '夜航二号';
-  document.querySelector('[data-fw-save]').click();
-  const stored2 = JSON.parse(values.get('sd-flywheel-drafts'));
-  assert.equal(stored2.length, 1, 'saving an edit replaces the draft instead of duplicating');
-  assert.equal(stored2[0].name.zh, '夜航二号');
-  document.querySelector('[data-fw-stab="mix"]').click();
-  assert.equal(document.querySelector('[data-fw-spane="mix"]').hidden, false);
-  document.querySelector('[data-fw-mix]').click();
-  document.querySelectorAll('[data-fw-mix]')[1].click();
-  document.querySelector('[data-fw-mixgo]').click();
-  assert.ok(document.querySelector('#fw-mix-out .fw-quote'), 'mix premise renders');
-  assert.ok(document.querySelector('#fw-mix-out .fw-quote').textContent.includes('×'), 'the premise cites both cards');
+  await t.test('world tabs have linked panels, visibility and keyboard navigation', () => {
+    go('/universe');
+    assert.equal(page('universes').querySelectorAll('.fw-uni-card').length, Object.keys(UNIVERSES).length);
+    go('/universe/westlin');
+    const world = page('universe');
+    const tabs = [...world.querySelectorAll('[data-fw-tab]')];
+    assert.equal(tabs.length, 4);
+    for (const tab of tabs) {
+      const panel = document.getElementById(tab.getAttribute('aria-controls'));
+      assert.ok(panel, 'tab controls an existing panel');
+      assert.equal(panel.getAttribute('role'), 'tabpanel');
+      assert.equal(panel.getAttribute('aria-labelledby'), tab.id);
+    }
+    const assertSelected = index => {
+      tabs.forEach((tab, i) => {
+        assert.equal(tab.getAttribute('aria-selected'), String(i === index));
+        assert.equal(tab.getAttribute('tabindex'), i === index ? '0' : '-1');
+        assert.equal(document.getElementById(tab.getAttribute('aria-controls')).hidden, i !== index);
+      });
+    };
+    assertSelected(0);
+    tabs[3].click();
+    assertSelected(3);
+    assert.ok(world.querySelectorAll('.fw-era').length >= 3);
+    const key = key => {
+      const event = new window.Event('keydown', {bubbles: true, cancelable: true});
+      event.key = key;
+      document.activeElement.dispatchEvent(event);
+    };
+    tabs[3].focus();
+    key('ArrowRight'); assertSelected(0);
+    key('End'); assertSelected(3);
+    key('Home'); assertSelected(0);
+    key('ArrowLeft'); assertSelected(3);
+    go('/universe/xichuan');
+    assert.ok(page('universe').querySelector('[data-fw-tab="timeline"]'));
+    go('/universe/sanguo');
+    assert.match(page('universe').querySelector('[data-fw-pane="rules"]').textContent, /子衡|Ziheng/);
+  });
 
-  // —— 回主页：strip 仍在、SPA 正常 ——
-  go('/');
-  assert.equal(location.pathname, '/');
-  assert.ok(document.querySelector('#fw-home-strip .fw-strip'), 'returning home keeps the strip');
+  await t.test('play guide describes real modes without fake response simulations', () => {
+    go('/frameworks');
+    const guide = page('frameworks');
+    assert.ok(guide);
+    for (const id of ['strategist', 'galgame', 'detective', 'chat']) {
+      const section = guide.querySelector(`#fw-${id}`);
+      assert.ok(section);
+      assert.ok(section.querySelector('a[href^="/"]'), 'mode links to real content');
+    }
+    assert.equal(guide.querySelector('.fw-boss,.fw-pot,.fw-demo,[data-fw-line]'), null);
+    assert.ok(!/the boss|厨房|食材|锅|阶段二/i.test(guide.textContent));
+  });
+
+  await t.test('creation reuses the existing workshop and preserves old drafts read-only', async () => {
+    const key = 'sd-flywheel-drafts';
+    const raw = JSON.stringify([{name: {zh: '夜航', en: 'Night Watch'}, persona: '修钟表的守夜人。', auth: 2, savedAt: '2026-11-16T00:00:00.000Z'}]);
+    values.set(key, raw);
+    go('/studio');
+    let studio = page('studio');
+    assert.ok(studio.querySelector('a[href="/builder"]'));
+    assert.equal(studio.querySelector('form,input,textarea,select,[data-fw-save],[data-fw-edit],[data-fw-del],[data-fw-mix]'), null);
+    assert.ok(studio.querySelector('#fw-drafts'));
+    assert.ok(studio.textContent.includes('Night Watch') || studio.textContent.includes('夜航'));
+    const exportButton = studio.querySelector('[data-fw-export]');
+    assert.ok(exportButton);
+    let exported;
+    const createObjectURL = URL.createObjectURL;
+    const revokeObjectURL = URL.revokeObjectURL;
+    URL.createObjectURL = blob => { exported = blob; return 'blob:legacy-drafts'; };
+    URL.revokeObjectURL = () => {};
+    try {
+      exportButton.click();
+      assert.ok(exported instanceof Blob, 'download contains a real JSON file');
+      assert.deepEqual(JSON.parse(await exported.text()), JSON.parse(raw), 'export preserves every legacy draft field');
+    } finally {
+      URL.createObjectURL = createObjectURL;
+      URL.revokeObjectURL = revokeObjectURL;
+    }
+    language('zh');
+    go('/characters'); go('/studio');
+    assert.equal(values.get(key), raw, 'navigation and localization never rewrite legacy data');
+    assert.equal(writes.filter(([k]) => k === key).length, 0);
+    values.set(key, '{bad json');
+    go('/studio');
+    assert.ok(page('studio').querySelector('.fw-local-notice'), 'corrupt data reports a readable recovery notice');
+    assert.equal(values.get(key), '{bad json', 'corrupt data remains recoverable');
+    values.set(key, raw);
+    storageState.denied = true;
+    go('/studio');
+    studio = page('studio');
+    assert.ok(studio.querySelector('.fw-local-notice'), 'unavailable storage is not presented as an empty successful save');
+    assert.equal(values.get(key), raw);
+    storageState.denied = false;
+    go('/');
+    assert.ok(document.querySelector('#fw-home-strip .fw-strip'));
+    go('/characters'); // Stops the home carousel interval before the test process exits.
+  });
 });
 
 async function boot() {
   const {document, window} = parseHTML(await readFile(join(dist, 'index.html'), 'utf8'));
   const values = new Map([['sd.lang', 'zh']]);
+  const writes = [];
+  const storageState = {denied: false};
   const append = window.HTMLElement.prototype.append;
   window.HTMLElement.prototype.append = function (...nodes) { const result = append.apply(this, nodes); for (const node of nodes) if (node.tagName === 'LINK') queueMicrotask(() => node.onload?.()); return result; };
+  Object.defineProperty(document, 'activeElement', {configurable: true, writable: true, value: null});
+  window.HTMLElement.prototype.focus = function () { document.activeElement = this; };
   const location = {href: 'https://replica.example/', pathname: '/', search: ''};
-  window.history = {pushState(_s, _t, path) { const url = new URL(path, location.href); Object.assign(location, {href: url.href, pathname: url.pathname, search: url.search}); }, replaceState(){}};
+  const setLocation = path => { const url = new URL(path, location.href); Object.assign(location, {href: url.href, pathname: url.pathname, search: url.search}); };
+  window.history = {pushState(_s, _t, path) { setLocation(path); }, replaceState(){}};
   window.scrollTo = () => {};
-  Object.assign(globalThis, {window, document, DOMParser, location, history: window.history, matchMedia: () => ({matches: true}), localStorage: {getItem: k => values.get(k) ?? null, setItem: (k, v) => values.set(k, v)}, sessionStorage: {getItem: k => values.get(k) ?? null, setItem: (k, v) => values.set(k, v), removeItem: k => values.delete(k)}, fetch: async path => new Response(await readFile(join(dist, path)), {headers: {'Content-Type': 'application/json'}})});
+  Object.assign(globalThis, {
+    window, document, DOMParser, location, history: window.history, CustomEvent: window.CustomEvent,
+    addEventListener: window.addEventListener.bind(window), dispatchEvent: window.dispatchEvent.bind(window),
+    matchMedia: () => ({matches: true}),
+    localStorage: {getItem: k => { if (k === 'sd-flywheel-drafts' && storageState.denied) throw new Error('storage denied'); return values.get(k) ?? null; }, setItem: (k, v) => { writes.push([k, v]); values.set(k, v); }},
+    sessionStorage: {getItem: k => values.get(k) ?? null, setItem: (k, v) => values.set(k, v), removeItem: k => values.delete(k)},
+    fetch: async path => new Response(await readFile(join(dist, path)), {headers: {'Content-Type': 'application/json'}}),
+  });
   await import('../dist/app.js');
-  const go = path => { const event = new window.Event('click', {bubbles: true, cancelable: true}); event.button = 0; document.querySelector(`a[href="${path}"]`).dispatchEvent(event); };
-  return {document, window, values, go, location};
+  const {show} = await import('../dist/assets/flywheel/flywheel.js');
+  const {setLang} = await import('../dist/assets/site-i18n.js');
+  const data = JSON.parse(await readFile(join(dist, 'data.json'), 'utf8'));
+  const helpers = {data, categories: [], read: (key, fallback) => { try { return JSON.parse(values.get(key)) ?? fallback; } catch { return fallback; } }, save: (key, value) => values.set(key, JSON.stringify(value)), show: () => {}, navigate: path => go(path)};
+  const go = path => { setLocation(path); assert.ok(show(location.pathname, helpers), `route ${path} is handled`); };
+  return {document, window, values, writes, storageState, go, setLang};
 }
