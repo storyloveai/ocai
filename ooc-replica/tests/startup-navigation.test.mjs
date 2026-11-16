@@ -37,7 +37,10 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  const navigate=path=>{const event=new window.Event('click',{bubbles:true,cancelable:true});event.button=0;document.querySelector(`a[href="${path}"]`).dispatchEvent(event);};
  navigate('/characters');
  assert.equal(location.pathname,'/characters');
- assert.ok(document.querySelector('[data-fw-page="characters"] .fw-hero'),'the unified character introduction remains available during account restoration');
+ assert.ok(document.querySelector('[data-fw-page="characters"] [data-sd-hero="character"]'),'the featured character remains available during account restoration');
+ assert.equal(document.querySelector('[data-fw-page="characters"] .sd-hero-name').textContent,document.documentElement.lang.startsWith('zh')?'貂蝉':'Diaochan');
+ assert.equal(document.querySelectorAll('[data-fw-page="characters"] [data-hero-choice]').length,2);
+ assert.ok(document.querySelector('[data-fw-page="characters"] [data-hero-form] input'));
  assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,CHARACTER_CARDS.length);
  assert.ok(document.querySelector('.fw-card[href="/characters/oc-shen-yanzhou"]'),'existing original characters remain discoverable');
  assert.ok(document.querySelector('#fw-search'),'character search stays usable before auth completes');

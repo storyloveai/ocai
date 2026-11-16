@@ -54,27 +54,30 @@
 .fw-search input:focus-visible { outline: none; }
 .fw-empty { padding: 40px 16px; color: #a1a1a1; font-size: 14px; line-height: 1.7; text-align: center; border: 1px dashed #3a3a3a; border-radius: 8px; }
 
-/* Artwork-led cards: one quiet border, no floating or staggered entrances. */
-.fw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 24px 16px; }
-.fw-card { position: relative; display: flex; min-width: 0; flex-direction: column; overflow: hidden; border: 1px solid #2b2b2b; border-radius: 10px; background: #191919; color: inherit; text-decoration: none; transition: border-color .15s ease; }
-.fw-card:hover { border-color: #666; }
-.fw-card-portrait { position: relative; display: block; overflow: hidden; aspect-ratio: 3 / 3.5; background: #171717; }
-.fw-card-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.fw-card-scrim { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 65%, #121212e6); }
-.fw-card-name { position: absolute; left: 12px; right: 12px; bottom: 10px; color: #fafafa; font-size: 16px; line-height: 1.4; font-weight: 600; }
-.fw-card-body { display: flex; flex-direction: column; gap: 8px; padding: 12px; }
-.fw-card-body em { min-height: 2.8em; color: #a1a1a1; font-size: 13px; line-height: 1.5; font-style: normal; }
+/* Story's cover language: 2:3 artwork, 8px corners, title below the image. */
+.fw-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(176px, 1fr)); gap: 32px 16px; }
+.fw-card { position: relative; display: flex; min-width: 0; flex-direction: column; gap: 12px; color: inherit; text-decoration: none; }
+.fw-card-portrait { position: relative; display: block; overflow: hidden; aspect-ratio: 2 / 3; border: 1px solid #2b2b2b; border-radius: 8px; background: #171717; transition: border-color .15s ease; }
+.fw-card:hover .fw-card-portrait { border-color: #666; }
+.fw-card-portrait > img:not(.fw-scene-background) { position: relative; display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.fw-scene-background { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; pointer-events: none; }
+.fw-card-name { color: #fafafa; font-size: 16px; line-height: 1.5; font-weight: 500; }
+.fw-card-body { display: flex; min-width: 0; flex-direction: column; gap: 6px; }
+.fw-card-body em { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 3em; color: #a1a1a1; font-size: 13px; line-height: 1.5; font-style: normal; }
 .fw-card-badges { display: flex; flex-wrap: wrap; gap: 6px; }
 .fw-badge { padding: 3px 6px; border-radius: 4px; color: #c7c7c7; background: #242424; font-size: 11px; line-height: 1.5; }
 .fw-badge-dim { color: #a1a1a1; }
 .fw-badge-gold { color: #d0bb98; background: #27241f; }
+.fw-card-badges .fw-badge { padding: 0; background: transparent; color: #a1a1a1; }
+.fw-card-badges .fw-badge + .fw-badge::before { content: '·'; margin-right: 6px; }
 .fw-card-static { pointer-events: none; }
 .fw-card-persona, .fw-card-voice, .fw-card-locked { color: #a1a1a1; font-size: 13px; line-height: 1.6; }
 
 /* Character detail keeps text readable and expression targets intact. */
 .fw-profile-top { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); align-items: start; gap: 32px; margin-bottom: 24px; }
 .fw-profile-portrait { min-width: 0; overflow: hidden; border: 1px solid #2b2b2b; border-radius: 10px; background: #171717; }
-.fw-profile-portrait > img { display: block; width: 100%; }
+.fw-profile-scene { position: relative; overflow: hidden; aspect-ratio: 2 / 3; }
+.fw-profile-scene > img:not(.fw-scene-background) { position: relative; display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 .fw-expressions { display: flex; align-items: center; gap: 8px; overflow-x: auto; padding: 10px; scrollbar-width: thin; scrollbar-color: #555 transparent; }
 .fw-expr { flex: 0 0 44px; width: 44px; min-width: 44px; height: 52px; min-height: 44px; overflow: hidden; padding: 0; border: 2px solid #3a3a3a; border-radius: 8px; background: #222; cursor: pointer; }
 .fw-expr img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
@@ -183,8 +186,8 @@
   .fw-hero-copy { width: 100%; max-width: none; }
   .fw-hero-quote { font-size: 26px; line-height: 1.35; }
   .fw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
-  .fw-card-name { left: 10px; right: 10px; font-size: 15px; }
-  .fw-card-body { padding: 10px; }
+  .fw-card-name { font-size: 15px; }
+  .fw-card-body { padding: 0; }
   .fw-card-body em { font-size: 12px; }
   .fw-profile-top { grid-template-columns: minmax(0, 1fr); gap: 20px; }
   .fw-profile-portrait { width: 100%; max-width: 240px; margin: 0 auto; }
@@ -208,3 +211,42 @@
 }
 
 .fw-art-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 220px; padding: 16px; color: #a1a1a1; background: #191919; font-size: 13px; }
+
+/* Retain the original Character scene. Catalogue spacing follows Story's
+   home-system scale; these rules stay scoped away from the Story banner. */
+.fw-page.fw-character-library { --sd-gutter: 80px; max-width: none; padding: 0 0 64px; }
+.fw-library-content { padding: 0 var(--sd-gutter); }
+.fw-library-heading { margin: 28px 0 24px; }
+.fw-library-heading h2 { margin: 0 0 8px; font-size: 20px; line-height: 1.4; font-weight: 500; }
+.fw-library-heading p { margin: 0; color: #a1a1a1; font-size: 13px; line-height: 1.7; }
+.fw-library-mobile { padding: 0 24px; }
+.fw-character-library .fw-character-feature { display: block; height: 470px; }
+.fw-character-feature .sd-visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (min-width: 1024px) and (max-width: 1250px) {
+ .fw-page.fw-character-library { --sd-gutter: 48px; }
+ .fw-character-library .fw-character-feature { height: 500px; }
+ .fw-character-feature .sd-hero-copy-right { right: 48px; top: 32px; width: 46%; gap: 12px; }
+ .fw-character-feature .sd-hero-bubble { font-size: 18px; }
+}
+@media (max-width: 1023px) {
+ .fw-page.fw-character-library { --sd-gutter: 24px; padding-bottom: 48px; }
+ .fw-character-library .fw-character-feature { position: relative; height: auto; overflow: hidden; padding: 270px 24px 24px; background: #121212; }
+ .fw-character-feature .sd-hero-art { position: absolute; inset: 0; pointer-events: none; }
+ .fw-character-feature .sd-hero-blur { position: absolute; inset: -40px; width: calc(100% + 80px); height: calc(100% + 80px); max-width: none; object-fit: cover; filter: blur(40px) brightness(.32); }
+ .fw-character-feature .sd-hero-figure { position: absolute; top: 0; left: 0; width: 100%; height: 350px; object-fit: cover; object-position: center 10%; mask-image: linear-gradient(#000 55%, transparent 100%); -webkit-mask-image: linear-gradient(#000 55%, transparent 100%); }
+ .fw-character-feature .sd-hero-fade { position: absolute; inset: 0; background: linear-gradient(0deg, #121212 0%, #121212 6%, transparent 90%); }
+ .fw-character-feature .sd-hero-copy { position: relative; display: flex; flex-direction: column; gap: 12px; min-width: 0; width: 100%; }
+ .fw-character-feature .sd-hero-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 13px; color: #a1a1a1; }
+ .fw-character-feature .sd-hero-name { color: #fafafa; font-size: 22px; font-weight: 600; }
+ .fw-character-feature .sd-hero-tags, .fw-character-feature .sd-hero-choices { display: flex; flex-wrap: wrap; gap: 8px; }
+ .fw-character-feature .sd-hero-tags span { padding: 4px 10px; border: 1px solid #484848; border-radius: 999px; color: #c7c7c7; font-size: 12px; }
+ .fw-character-feature .sd-hero-bubble { margin: 0; padding: 14px 16px; border: 1px solid #333; border-radius: 12px; background: #1f1f1fd9; color: #fafafa; font-size: 17px; line-height: 1.6; }
+ .fw-character-feature .sd-hero-choice { min-height: 44px; padding: 8px 12px; border: 1px solid #484848; border-radius: 999px; background: transparent; color: #fafafa; font: inherit; font-size: 13px; text-align: left; cursor: pointer; }
+ .fw-character-feature .sd-hero-choice:hover { background: #ffffff0d; border-color: #888; }
+ .fw-character-feature .sd-hero-form { display: flex; align-items: stretch; flex-wrap: wrap; gap: 8px; margin: 0; }
+ .fw-character-feature .sd-hero-form input { flex: 1 1 160px; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #484848; border-radius: 8px; background: #1f1f1f; color: #fafafa; font: inherit; font-size: 14px; }
+ .fw-character-feature .sd-hero-form button { flex: 0 0 auto; min-height: 44px; padding: 10px 16px; border: 0; border-radius: 8px; background: #fafafa; color: #171717; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
+ .fw-character-feature .sd-hero-note { margin: 0; color: #a1a1a1; font-size: 12px; line-height: 1.7; }
+ .fw-library-heading { margin-top: 24px; }
+ .fw-library-heading h2 { font-size: 18px; }
+}

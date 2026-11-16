@@ -138,6 +138,31 @@ export function heroHref(page, lang, reply = '', choice = '') {
   return say ? `${SCENES.character.chat}?say=${encodeURIComponent(say)}` : SCENES.character.chat;
 }
 
+// The catalogue and the original home share the same scene, artwork and reply
+// actions. Keep mounting independent of the older carousel's surrounding DOM.
+export function mountHeroContent(hero, page, { navigate, win = globalThis, lang } = {}) {
+  if (!hero || !SCENES[page]) return null;
+  const doc = hero.ownerDocument;
+  if (!doc.getElementById('sd-hero-style')) { const st = doc.createElement('style'); st.id = 'sd-hero-style'; st.textContent = CSS; doc.head.append(st); }
+  hero.classList.add('sd-hero'); hero.dataset.sdHero = page;
+  const s = SCENES[page];
+  const go = href => navigate ? navigate(href) : (win.location.href = href);
+  const paint = l => {
+    const ui = UI[l];
+    const reply = hero.querySelector('input')?.value || '';
+    hero.lang = l === 'zh' ? 'zh-CN' : 'en'; hero.setAttribute('aria-label', ui[page === 'character' ? 'character' : 'story']);
+    hero.innerHTML = heroSceneMarkup(page, l);
+    const input = hero.querySelector('input');
+    input.value = reply;
+    hero.querySelectorAll('[data-hero-choice]').forEach(b => { const c = s[l].choices[Number(b.dataset.heroChoice)]; b.onclick = () => go(heroHref(page, l, c.label, c.id || '')); });
+    hero.querySelector('[data-hero-form]').onsubmit = e => { e.preventDefault(); go(heroHref(page, l, input.value)); };
+  };
+  paint(LANGS.includes(lang) ? lang : heroLang(win));
+  win.__sdHeroRepaint = l => { if (hero.isConnected && LANGS.includes(l)) paint(l); };
+  if (!win.__sdHeroLangBound) { win.__sdHeroLangBound = true; win.addEventListener?.('sd-lang', e => win.__sdHeroRepaint?.(e.detail)); }
+  return hero;
+}
+
 export function mountHeroScene(root, page, { navigate, win = globalThis, lang } = {}) {
   const desktop = root.querySelector('[data-hero-desktop]');
   if (!desktop || !SCENES[page] || !heroSceneEnabled(win)) return null;
@@ -168,21 +193,5 @@ export function mountHeroScene(root, page, { navigate, win = globalThis, lang } 
       nextContent.classList.add('sd-home-library');nextContent.id='story-library';
     }
   }
-  const s = SCENES[page];
-  const go = href => navigate ? navigate(href) : (win.location.href = href);
-  const paint = l => {
-    const ui = UI[l];
-    hero.lang = l === 'zh' ? 'zh-CN' : 'en'; hero.setAttribute('aria-label', ui[page === 'character' ? 'character' : 'story']);
-    hero.innerHTML = heroSceneMarkup(page, l);
-    const input = hero.querySelector('input');
-    // A choice is an answer: it goes straight in. Typing is for anything else.
-    hero.querySelectorAll('[data-hero-choice]').forEach(b => { const c = s[l].choices[Number(b.dataset.heroChoice)]; b.onclick = () => go(heroHref(page, l, c.label, c.id || '')); });
-    hero.querySelector('[data-hero-form]').onsubmit = e => { e.preventDefault(); go(heroHref(page, l, input.value)); };
-
-  };
-  paint(LANGS.includes(lang) ? lang : heroLang(win));
-  // The site-wide language switch repaints whichever banner is on screen.
-  win.__sdHeroRepaint = l => { if (hero.isConnected && LANGS.includes(l)) paint(l); };
-  if (!win.__sdHeroLangBound) { win.__sdHeroLangBound = true; win.addEventListener?.('sd-lang', e => win.__sdHeroRepaint?.(e.detail)); }
-  return hero;
+  return mountHeroContent(hero,page,{navigate,win,lang});
 }

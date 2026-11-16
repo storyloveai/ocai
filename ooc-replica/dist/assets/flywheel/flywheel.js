@@ -1,8 +1,10 @@
 import {mountShell, show as referenceShow} from '../reference.js';
 import {getLang} from '../site-i18n.js';
 import {escapeHTML as safe} from '../stream.js';
+import {heroSceneMarkup, mountHeroContent} from '../hero-scene.js';
 import {XICHUAN_KEY, latestSave, legacySaves, progressText, storyContext} from '../xichuan-state.js';
 import {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS, XICHUAN_FACT_LABELS, cardById, cardsByUniverse} from './cards-data.js';
+import {characterArt} from './character-art.js';
 
 const DRAFT_KEY = 'sd-flywheel-drafts';
 // Existing artwork: compact page introductions and story-world covers.
@@ -78,16 +80,20 @@ let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261116-loop"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261116-story-art"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261116-loop';
+    link.href = '/assets/flywheel/flywheel.css?v=20261116-story-art';
     document.head.append(link);
   }
 }
 
 // —— 小组件 ——
-const cardArt = (c) => `<img src="${safe(c.portrait)}" alt="" width="300" height="400" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(L().imageUnavailable)}</span>`;
+const cardArt = (c) => `<img src="${safe(c.portrait)}" alt="" width="300" height="450" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(L().imageUnavailable)}</span>`;
+const sceneArt = c => {
+ const art = characterArt(c);
+ return art?.background ? `<img class="fw-scene-background" src="${safe(art.background)}" alt="" loading="lazy" onerror="this.hidden=true">` : '';
+};
 const workName = (id) => t(WORKS[id]?.title) || id;
 const uniName = (id) => t(UNIVERSES[id]?.name) || id;
 const fwName = (id) => t(FRAMEWORKS[id]?.name) || id;
@@ -98,10 +104,11 @@ const ext = (url) => (isStandalone(url) ? ' target="_top" rel="noopener"' : '');
 function cardMarkup(c) {
   const l = L();
   return `<a class="fw-card" href="/characters/${safe(c.id)}">
-    <span class="fw-card-portrait">${cardArt(c)}<span class="fw-card-scrim" aria-hidden="true"></span><strong class="fw-card-name">${safe(t(c.name))}</strong></span>
+    <span class="fw-card-portrait">${sceneArt(c)}${cardArt(c)}</span>
     <span class="fw-card-body">
+      <strong class="fw-card-name">${safe(t(c.name))}</strong>
       <em>${safe(t(c.tagline))}</em>${c.portraitNote ? `<span class="fw-note">${safe(t(c.portraitNote))}</span>` : ''}
-      <span class="fw-card-badges"><span class="fw-badge">${safe(workName(c.source.work))}</span>${c.chat ? `<span class="fw-badge fw-badge-gold">${safe(l.chatCta)} ↗</span>` : ''}</span>
+      <span class="fw-card-badges"><span class="fw-badge">${safe(workName(c.source.work))}</span>${c.chat ? `<span class="fw-badge">${safe(l.chatOnly)}</span>` : ''}</span>
     </span>
   </a>`;
 }
@@ -129,12 +136,15 @@ function libMarkup() {
     return `<button type="button" class="fw-chip${libFilter.universe === id ? ' active' : ''}" data-fw-filter="${id}" aria-pressed="${libFilter.universe === id}">${safe(label)} <small>${n}</small></button>`;
   }).join('');
   const items = libItems();
-  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="characters">
-    ${mobileBar()}${localNav()}
-    ${heroMarkup('characters', l.libTitle, l.libSub)}
+  return `<main class="fw-page fw-character-library" data-no-i18n data-fw-page="characters">
+    <div class="fw-library-mobile">${mobileBar()}</div>
+    <section class="sd-hero fw-character-feature" data-sd-hero="character">${heroSceneMarkup('character',getLang())}</section>
+    <div class="fw-library-content">${localNav()}
+    <header class="fw-library-heading"><h2>${safe(l.libTitle)}</h2><p>${safe(l.libSub)}</p></header>
     <div class="fw-toolbar" role="group">${chips}<button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button><span class="fw-count" role="status">${l.count(items.length)}</span></div>
     <label class="fw-search"><span aria-hidden="true">⌕</span><input type="search" id="fw-search" placeholder="${safe(l.searchPh)}" value="${safe(libQuery)}" aria-label="${safe(l.searchPh)}" autocomplete="off"></label>
     <div id="fw-lib-results">${libResults(items)}</div>
+    </div>
   </main>`;
 }
 
@@ -217,9 +227,9 @@ function profileMarkup(c) {
   const others = cardsByUniverse(c.source.universe).filter((x) => x.id !== c.id).slice(0, 8);
   const multi = (c.expressions || []).length > 1;
   const portraitBlock = multi
-    ? `<div class="fw-profile-portrait"><img id="fw-portrait-main" src="${safe(c.expressionUrl(expressionFor(c)))}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span>
+    ? `<div class="fw-profile-portrait"><div class="fw-profile-scene">${sceneArt(c)}<img id="fw-portrait-main" class="fw-portrait-figure" src="${safe(c.expressionUrl(expressionFor(c)))}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span></div>
        <div class="fw-expressions" role="group" aria-label="${safe(l.exprH)}">${c.expressions.map((e, i) => `<button type="button" class="fw-expr${expressionFor(c) === e ? ' active' : ''}" data-fw-expr="${safe(c.expressionUrl(e))}" aria-pressed="${expressionFor(c) === e}" aria-label="${safe(expressionName(e))}" title="${safe(expressionName(e))}"><img src="${safe(c.expressionUrl(e))}" alt="" loading="lazy"></button>`).join('')}</div></div>`
-    : `<div class="fw-profile-portrait">${cardArt(c)}</div>`;
+    : `<div class="fw-profile-portrait"><div class="fw-profile-scene">${sceneArt(c)}${cardArt(c)}</div></div>`;
   return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="profile" data-fw-character="${safe(c.id)}">
     ${mobileBar()}${localNav()}
     <a class="fw-back" href="/characters">‹ ${l.profileBack}</a>
@@ -378,6 +388,7 @@ function bindCommon() {
  document.querySelector('[data-fw-export]')?.addEventListener('click',exportDrafts);
 }
 function renderRoute(path) {
+ const featuredDraft = document.querySelector('.fw-character-feature input')?.value || '';
  let markup, title;
  if (path === '/characters') { markup = libMarkup(); title = L().charactersNav; }
  else if (/^\/characters\/[^/]+$/.test(path)) { const c = cardById(path.split('/')[2]); if (!c) return false; markup = profileMarkup(c); title = t(c.name); }
@@ -387,6 +398,10 @@ function renderRoute(path) {
  else if (path === '/studio') { markup = studioMarkup(); title = L().createNav; }
  else return false;
  mountShell(markup,currentHelpers,'flywheel');
+ if (path === '/characters') {
+  const hero = mountHeroContent(document.querySelector('.fw-character-feature'),'character',{navigate:currentHelpers?.navigate,lang:getLang()});
+  hero.querySelector('input').value = featuredDraft;
+ }
  // Shared shell hydration marks the canonical character navigation item.
  bindCommon(); document.title = `${title} · StoryDate`; return true;
 }

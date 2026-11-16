@@ -51,8 +51,36 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
   assert.equal(xichuan.find(c => c.id === 'xc-zhiyao').chat, '/play/xc-zhiyao');
 });
 
+test('scene artwork uses existing empty settings for transparent sprites and preserves complete portraits', async () => {
+  const {CHARACTER_CARDS} = await import('../dist/assets/flywheel/cards-data.js');
+  const {CHARACTER_ART, characterArt} = await import('../dist/assets/flywheel/character-art.js');
+  assert.deepEqual(Object.keys(CHARACTER_ART).sort(), CHARACTER_CARDS.map(card => card.id).sort());
+  let scenes = 0, portraits = 0;
+  for (const card of CHARACTER_CARDS) {
+    const art = characterArt(card);
+    assert.equal(characterArt(card.id), art, 'both supported inputs select the same artwork');
+    if (['sanguo', 'character'].includes(card.source.work)) {
+      assert.equal(art, null, `${card.id} already has a complete, opaque portrait`);
+      portraits++;
+    } else {
+      assert.ok(art?.background, `${card.id} transparent sprite needs its approved scene`);
+      assert.ok(art.background.startsWith('/assets/'));
+      assert.match(art.background, /\/(bg|background)\//, 'the backdrop comes from a scene collection, not a character CG');
+      const bytes = await readFile(join(dist, art.background.replace(/^\//, '')));
+      assert.ok(bytes.length > 100, `${card.id} scene is a real deployed image`);
+      assert.equal(bytes.toString('ascii', 0, 4), 'RIFF');
+      assert.equal(bytes.toString('ascii', 8, 12), 'WEBP');
+      scenes++;
+    }
+  }
+  assert.equal(scenes, 21);
+  assert.equal(portraits, 12);
+  assert.equal(characterArt('unknown-character'), null);
+  assert.equal(characterArt(null), null);
+});
+
 test('character discovery stays useful without duplicate navigation or demo editors', async (t) => {
-  const {document, window, values, writes, go, setLang, storageState} = await boot();
+  const {document, window, values, writes, go, setLang, storageState, navigations, requests} = await boot();
   const {CHARACTER_CARDS, UNIVERSES} = await import('../dist/assets/flywheel/cards-data.js');
   const page = kind => document.querySelector(`[data-fw-page="${kind}"]`);
   const input = value => {
@@ -77,6 +105,108 @@ test('character discovery stays useful without duplicate navigation or demo edit
     for (const href of ['/universe', '/frameworks', '/studio']) {
       assert.equal(document.querySelector(`[data-shrink] a[href="${href}"]`), null, `no duplicate sidebar entry ${href}`);
     }
+  });
+
+  await t.test('the restored Diaochan feature sends chosen and typed replies to her existing chat without API calls', () => {
+    go('/characters');
+    const feature = () => page('characters').querySelector('[data-sd-hero="character"]');
+    const apiBefore = requests.filter(path => path.startsWith('/api/'));
+    const assertFeature = lang => {
+      const hero = feature();
+      assert.equal(page('characters').querySelectorAll('[data-sd-hero="character"]').length, 1);
+      assert.equal(hero.querySelector('.sd-hero-figure').getAttribute('src'), '/assets/originals/sg-007.webp');
+      assert.ok(hero.querySelector('.sd-hero-fade'));
+      assert.equal(hero.querySelector('.sd-hero-name').textContent, lang === 'zh' ? '貂蝉' : 'Diaochan');
+      assert.equal(hero.querySelectorAll('[data-hero-choice]').length, 2);
+      assert.ok(hero.querySelector('[data-hero-form] input'));
+      assert.ok(hero.querySelector('[data-hero-form] button[type="submit"]'));
+      return hero;
+    };
+    const assertDestination = say => {
+      const url = new URL(navigations.at(-1), location.href);
+      assert.equal(url.pathname, '/play/sgc-007', 'the feature reuses Diaochan’s established chat and storage identity');
+      assert.equal(url.searchParams.get('say'), say);
+      assert.deepEqual([...url.searchParams.keys()], ['say']);
+    };
+    const choose = (lang, index = 0) => {
+      const button = assertFeature(lang).querySelector(`[data-hero-choice="${index}"]`);
+      const reply = button.querySelector('.sd-hero-choice-label').textContent;
+      const before = navigations.length;
+      button.click();
+      assert.equal(navigations.length, before + 1, 'each recommendation has one bound navigation');
+      assertDestination(reply);
+    };
+    const submit = (lang, reply) => {
+      const hero = assertFeature(lang);
+      hero.querySelector('input').value = '  ' + reply + '  ';
+      const before = navigations.length;
+      const event = new window.Event('submit', {bubbles: true, cancelable: true});
+      hero.querySelector('[data-hero-form]').dispatchEvent(event);
+      assert.equal(event.defaultPrevented, true);
+      assert.equal(navigations.length, before + 1);
+      assertDestination(reply);
+    };
+    choose('zh');
+    submit('zh', '我想听你的故事，貂蝉。 & 然后呢？');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    const unfinishedZh = '  还没说完：那张旧票根 & 后来的事……  ';
+    feature().querySelector('input').value = unfinishedZh;
+    document.querySelector('[data-fw-filter="xichuan"]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
+    assert.equal(assertFeature('zh').querySelector('input').value, unfinishedZh, 'filtering preserves the unfinished reply exactly');
+    choose('zh', 1);
+    input('夏知遥');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
+    assert.equal(feature().querySelector('input').value, unfinishedZh, 'searching the directory leaves the separate hero draft intact');
+    language('en');
+    assert.equal(document.getElementById('fw-search').value, '夏知遥');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
+    assert.equal(assertFeature('en').querySelector('input').value, unfinishedZh, 'changing language preserves typed words without translating or trimming them');
+    choose('en');
+    submit('en', 'What would you choose? & why?');
+    const unfinishedEn = '  A half-written reply: what if… & why?  ';
+    feature().querySelector('input').value = unfinishedEn;
+    input('');
+    document.querySelector('[data-fw-filter="all"]').click();
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    assert.equal(assertFeature('en').querySelector('input').value, unfinishedEn);
+    choose('en', 1);
+    language('zh');
+    assert.equal(assertFeature('zh').querySelector('input').value, unfinishedEn, 'switching back also retains the unsent draft');
+    choose('zh');
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    assert.deepEqual(requests.filter(path => path.startsWith('/api/')), apiBefore, 'hero actions only hand off navigation, without model or payment operations');
+    assert.equal(writes.some(([key]) => key.startsWith('ooc-session-v2-')), false, 'hero interactions do not open or rewrite a chat session');
+  });
+
+  await t.test('directory names stay below their artwork and only transparent portraits receive separate scene layers', async () => {
+    const {characterArt} = await import('../dist/assets/flywheel/character-art.js');
+    go('/characters');
+    for (const card of CHARACTER_CARDS) {
+      const node = page('characters').querySelector(`.fw-card[href="/characters/${card.id}"]`);
+      const portrait = node.querySelector('.fw-card-portrait'), body = node.querySelector('.fw-card-body');
+      assert.equal(portrait.nextElementSibling, body, `${card.id} readable information follows the image`);
+      assert.equal(portrait.querySelector('.fw-card-name'), null);
+      assert.equal(body.querySelector('.fw-card-name').textContent, card.name.zh);
+      assert.ok(body.querySelector('.fw-card-badges').textContent.trim(), 'source remains visible outside the image');
+      const background = portrait.querySelector('.fw-scene-background');
+      const foreground = [...portrait.querySelectorAll('img')].find(img => !img.classList.contains('fw-scene-background'));
+      assert.equal(foreground.getAttribute('src'), card.portrait);
+      assert.ok(foreground.nextElementSibling.classList.contains('fw-art-fallback'), 'image fallback remains attached to the foreground');
+      if (characterArt(card)) {
+        assert.equal(background.getAttribute('src'), characterArt(card).background);
+        assert.equal(background.nextElementSibling, foreground, 'the sprite remains separate from its scenery');
+        assert.equal(background.getAttribute('alt'), '');
+      } else assert.equal(background, null, `${card.id} retains its complete original image`);
+    }
+    for (const card of CHARACTER_CARDS) {
+      go('/characters/' + card.id);
+      const scene = page('profile').querySelector('.fw-profile-scene');
+      const background = scene.querySelector('.fw-scene-background');
+      if (characterArt(card)) assert.equal(background.getAttribute('src'), characterArt(card).background);
+      else assert.equal(background, null, `${card.id} profile also preserves its complete portrait`);
+    }
+    go('/characters');
   });
 
   await t.test('library filters, empty states and bilingual search work without losing focus', () => {
@@ -136,10 +266,15 @@ test('character discovery stays useful without duplicate navigation or demo edit
       assert.ok(!/^(normal|smile|shy|sad|angry|surprised)$/.test(button.getAttribute('aria-label')), 'Chinese expression labels are localized');
     }
     const before = document.getElementById('fw-portrait-main').getAttribute('src');
+    const scene = profile.querySelector('.fw-profile-scene .fw-scene-background');
+    const background = scene.getAttribute('src');
     expressions[2].click();
     assert.notEqual(document.getElementById('fw-portrait-main').getAttribute('src'), before);
     assert.equal(expressions[2].getAttribute('aria-pressed'), 'true');
     assert.equal([...expressions].filter(b => b.getAttribute('aria-pressed') === 'true').length, 1);
+    assert.equal(profile.querySelector('.fw-profile-scene .fw-scene-background'), scene, 'expression changes preserve the independently mounted scene');
+    assert.equal(scene.getAttribute('src'), background);
+    assert.equal(scene.nextElementSibling.id, 'fw-portrait-main');
     language('en');
     profile = page('profile');
     assert.ok(profile.querySelector('h1').textContent.includes('Zhiyao'));
@@ -259,6 +394,7 @@ async function boot() {
   const {document, window} = parseHTML(await readFile(join(dist, 'index.html'), 'utf8'));
   const values = new Map([['sd.lang', 'zh']]);
   const writes = [];
+  const navigations = [], requests = [];
   const storageState = {denied: false};
   const append = window.HTMLElement.prototype.append;
   window.HTMLElement.prototype.append = function (...nodes) { const result = append.apply(this, nodes); for (const node of nodes) if (node.tagName === 'LINK') queueMicrotask(() => node.onload?.()); return result; };
@@ -274,13 +410,13 @@ async function boot() {
     matchMedia: () => ({matches: true}),
     localStorage: {getItem: k => { if (k === 'sd-flywheel-drafts' && storageState.denied) throw new Error('storage denied'); return values.get(k) ?? null; }, setItem: (k, v) => { writes.push([k, v]); values.set(k, v); }},
     sessionStorage: {getItem: k => values.get(k) ?? null, setItem: (k, v) => values.set(k, v), removeItem: k => values.delete(k)},
-    fetch: async path => new Response(await readFile(join(dist, path)), {headers: {'Content-Type': 'application/json'}}),
+    fetch: async path => { requests.push(String(path)); return new Response(await readFile(join(dist, path)), {headers: {'Content-Type': 'application/json'}}); },
   });
   await import('../dist/app.js');
   const {show} = await import('../dist/assets/flywheel/flywheel.js');
   const {setLang} = await import('../dist/assets/site-i18n.js');
   const data = JSON.parse(await readFile(join(dist, 'data.json'), 'utf8'));
-  const helpers = {data, categories: [], read: (key, fallback) => { try { return JSON.parse(values.get(key)) ?? fallback; } catch { return fallback; } }, save: (key, value) => values.set(key, JSON.stringify(value)), show: () => {}, navigate: path => go(path)};
+  const helpers = {data, categories: [], read: (key, fallback) => { try { return JSON.parse(values.get(key)) ?? fallback; } catch { return fallback; } }, save: (key, value) => values.set(key, JSON.stringify(value)), show: () => {}, navigate: path => navigations.push(path)};
   const go = path => { setLocation(path); assert.ok(show(location.pathname, helpers), `route ${path} is handled`); };
-  return {document, window, values, writes, storageState, go, setLang};
+  return {document, window, values, writes, storageState, go, setLang, navigations, requests};
 }
