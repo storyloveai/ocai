@@ -1,4 +1,6 @@
 /* 飞轮体验版（#154）——视觉按原站 sd-hero 标准重建。
+   金色双色制：强调/描边/文字用 #c5a46c（home-system 的 --sd-action），
+   按钮填充用 #D4A853+#1a1408（builder.css 的 shell-white-button 先例）。
    配方来源：home-stage.css / hero-scene.js（blur 48px · brightness .25、右侧蒙版人像、
    底部 300→500px 渐隐、34px/600 引言、Inter + 金白品牌）。
    Token：底 #121212 / 卡 #191918 / 边 #ffffff0b / 金 #c5a46c / 文 #fafafa / 次 #a1a1a1。
@@ -120,9 +122,9 @@
 .fw-tagline { color: #c5a46c; margin: 0 0 12px; font-size: 15px; }
 .fw-persona { color: #d4d4d4; line-height: 1.75; margin: 0 0 16px; }
 .fw-ctas { display: flex; flex-wrap: wrap; gap: 10px; }
-.fw-btn { display: inline-flex; align-items: center; gap: 6px; background: #fafafa; color: #171717; border: 0; border-radius: 8px; padding: 10px 18px; font-size: 14px; font-weight: 560; text-decoration: none; cursor: pointer; transition: transform .18s ease, opacity .18s ease; }
+.fw-btn { display: inline-flex; align-items: center; gap: 6px; background: #fafafa; color: #171717; border: 0; border-radius: 8px; padding: 10px 17px; font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; transition: transform .18s ease, opacity .18s ease; }
 .fw-btn:hover { opacity: .9; transform: translateY(-1px); }
-.fw-btn-gold { background: #c5a46c; }
+.fw-btn-gold { background: #D4A853; color: #1a1408; font-weight: 600; }
 .fw-note { color: #737373; font-size: 12.5px; }
 
 .fw-section { margin: 38px 0; }
