@@ -18,7 +18,7 @@ const UI = [
   ['Daily check-in: +100 credits', '每日签到：+100 积分'], ['Continue with Google', '使用 Google 继续'], ['● Continue with Apple', '● 使用 Apple 继续'],
   ['Continue with Apple', '使用 Apple 继续'], ['Sign in to save your stories', '登录后保存你的故事'], ['Sign up and get 500 credits!', '登录后保存你的故事'],
   ['Home', '首页'], ['History', '历史'], ['My Titles', '我的作品'], ['My titles', '我的作品'], ['MY', '我的'], ['Search', '搜索'], ['Story', '故事'],
-  ['Character', '角色'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
+  ['Character', '角色'], ['Characters', '角色库'], ['Universe', '宇宙'], ['Frameworks', '框架'], ['Studio', '工作台'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
   ['Explore', '探索'], ['Previous slide', '上一张'], ['Next slide', '下一张'], ['Main', '精选'], ['New Ranking', '新作榜'], ['Rankings', '排行榜'], ['Today', '今日'],
   ['Browse by genre','按题材浏览'], ['Start chatting','开始对话'],
   ['You','你'], ['Send a message','发送消息'], ['Continue the scene.','继续当前对话。'], ['Continue the conversation','继续对话'],
