@@ -26,16 +26,18 @@ style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
 const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261117-shared';
 const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261117-shared';
+const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261117-shared';
+const characterStyleReady=new Promise((resolve,reject)=>{characterStyle.onload=resolve;characterStyle.onerror=()=>reject(new Error('Character stylesheet could not load'));});
 const controlsReady=new Promise((resolve,reject)=>{controlsStyle.onload=resolve;controlsStyle.onerror=()=>reject(new Error('Shared controls stylesheet could not load'));});
 const detailReady=new Promise((resolve,reject)=>{detailStyle.onload=resolve;detailStyle.onerror=()=>reject(new Error('Story stylesheet could not load'));});
 const layoutReady=new Promise((resolve,reject)=>{layoutStyle.onload=resolve;layoutStyle.onerror=()=>reject(new Error('Brand stylesheet could not load'));});
 const stylesheetReady=new Promise((resolve,reject)=>{style.onload=resolve;style.onerror=()=>reject(new Error('Reference stylesheet could not load'));});
-document.head.append(style,layoutStyle,detailStyle,controlsStyle);
+document.head.append(style,layoutStyle,detailStyle,controlsStyle,characterStyle);
 const [evidence, coreAssets, titlePreviews] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
   fetch('/assets/core-assets-index.json').then(r => r.json()),
   fetch('/assets/title-previews.json').then(r=>r.ok?r.json():{titles:{}}).catch(()=>({titles:{}})),
-  stylesheetReady,layoutReady,detailReady,controlsReady
+  stylesheetReady,layoutReady,detailReady,controlsReady,characterStyleReady
 ]);
 const assets={...coreAssets};
 const host = document.createElement('div');
