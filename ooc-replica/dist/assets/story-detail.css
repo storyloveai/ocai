@@ -13,10 +13,6 @@
 .story-entity-copy .story-entity-author,.story-entity-copy .story-entity-format{margin:4px 0;color:#a1a1a1;font-size:13px;line-height:1.7}
 .story-entity-copy .story-entity-lead{max-width:640px;margin:20px 0 24px;color:#d4d4d4;font-size:15px;line-height:1.8;white-space:pre-wrap}
 .story-entity-actions{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
-.story-entity-detail .story-entity-actions :is(a,button){display:inline-flex;align-items:center;justify-content:center;min-height:44px;height:auto;padding:11px 18px;border:1px solid #fafafa;border-radius:8px;background:#fafafa;color:#171717;font:500 14px/20px Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer}
-.story-entity-detail .story-entity-actions :is(a,button):hover{background:#e5e5e5;border-color:#e5e5e5}
-.story-entity-detail .story-entity-actions .story-bookmark{background:transparent;border-color:#3a3a3a;color:#c7c7c7}
-.story-entity-detail .story-entity-actions .story-bookmark:hover{background:#202020;border-color:#666}
 .story-entity-detail .story-cast-section{margin:36px 0 0;padding-top:28px;border-top:1px solid #2b2b2b}
 .story-entity-detail .story-cast-section h2{margin:0 0 20px;font-size:20px;line-height:1.4;font-weight:500}
 .story-cast-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:24px 16px}

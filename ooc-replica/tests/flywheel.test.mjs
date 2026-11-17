@@ -259,7 +259,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
 
   await t.test('directory URL, shared story selector, bilingual search and reset share the same state', () => {
     go('/characters?source=home&world=xichuan&chat=1&q=夏知遥#cast');
-    assert.equal(page('characters').querySelector('.fw-library-heading'),null);
+    assert.equal(page('characters').querySelectorAll('.fw-library-heading h2').length,1,'the catalogue has one Story-style Explore heading');
     assert.equal(page('characters').querySelector('[data-fw-filter]'),null,'retired category chips are removed, not hidden');
     assert.equal(page('characters').querySelectorAll('[data-fw-world-select]').length,1);
     assert.equal(page('characters').querySelectorAll('.fw-count').length,1,'one result count follows the actual filters');
@@ -345,7 +345,9 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const scene = profile.querySelector('.fw-profile-scene .fw-scene-background');
     const background = scene.getAttribute('src');
     assert.equal(scene.nextElementSibling.id, 'fw-portrait-main');
-    assert.deepEqual([...profile.querySelector('.fw-profile-top').children].map(node=>[...node.classList][0]),['fw-profile-head','fw-profile-state','fw-profile-portrait'],'identity and the real actions precede the decorative portrait');
+    const profileFlow=[...profile.querySelector('.fw-profile-top').children];
+    assert.ok(profileFlow.indexOf(profile.querySelector('.fw-profile-head')) < profileFlow.indexOf(profile.querySelector('[data-fw-profile-state]')), 'identity precedes the conversation in reading order');
+    assert.ok(profileFlow.indexOf(profile.querySelector('[data-fw-profile-state]')) < profileFlow.indexOf(profile.querySelector('.fw-profile-quote')), 'the first conversation action is reached before the source excerpt, without a visual-only mobile reorder');
     assert.equal(profile.querySelectorAll('.fw-profile-quote blockquote').length,1,'only the first attributed excerpt is directly visible');
     assert.equal(profile.querySelector('.fw-hscroll'),null,'related cast is reached from the real Story instead of another profile directory');
     assert.equal(profile.textContent.includes(CHARACTER_CARDS.find(c=>c.id==='xc-zhiyao').locked.zh),false,'internal character constraints are not reader-facing content');
@@ -532,6 +534,11 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const navigationCount=navigations.length;
     page('profile').querySelector('[data-fw-starter]').click();
     assert.equal(navigations.length,navigationCount,'choosing an opening line only fills the local input');assert.ok(current().value);assert.equal(document.activeElement,current());
+    assert.equal(page('profile').querySelectorAll('[data-fw-starter][aria-pressed=true]').length,1,'the chosen opening line has a visible and accessible selected state');
+    syncAccount({user:null,restored:true,busy:false});
+    assert.equal(page('profile').querySelectorAll('[data-fw-starter][aria-pressed=true]').length,1,'refreshing private actions keeps the selection from the existing draft');
+    type('A different opening');
+    assert.equal(page('profile').querySelectorAll('[data-fw-starter][aria-pressed=true]').length,0,'typing different words clears the old selected state');
     type(line);page('profile').querySelector('[data-fw-chat-entry]').click();
     const handed=new URL(navigations.at(-1),location.href);
     assert.equal(handed.pathname,'/play/xc-zhiyao');assert.equal(handed.searchParams.get('draft'),line.trim());assert.equal(handed.searchParams.has('say'),false);

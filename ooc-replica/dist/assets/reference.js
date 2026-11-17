@@ -24,16 +24,18 @@ import {getLang,translate} from './site-i18n.js';
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
-const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261117-conversation';
+const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261117-shared';
+const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261117-shared';
+const controlsReady=new Promise((resolve,reject)=>{controlsStyle.onload=resolve;controlsStyle.onerror=()=>reject(new Error('Shared controls stylesheet could not load'));});
 const detailReady=new Promise((resolve,reject)=>{detailStyle.onload=resolve;detailStyle.onerror=()=>reject(new Error('Story stylesheet could not load'));});
 const layoutReady=new Promise((resolve,reject)=>{layoutStyle.onload=resolve;layoutStyle.onerror=()=>reject(new Error('Brand stylesheet could not load'));});
 const stylesheetReady=new Promise((resolve,reject)=>{style.onload=resolve;style.onerror=()=>reject(new Error('Reference stylesheet could not load'));});
-document.head.append(style,layoutStyle,detailStyle);
+document.head.append(style,layoutStyle,detailStyle,controlsStyle);
 const [evidence, coreAssets, titlePreviews] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
   fetch('/assets/core-assets-index.json').then(r => r.json()),
   fetch('/assets/title-previews.json').then(r=>r.ok?r.json():{titles:{}}).catch(()=>({titles:{}})),
-  stylesheetReady,layoutReady,detailReady
+  stylesheetReady,layoutReady,detailReady,controlsReady
 ]);
 const assets={...coreAssets};
 const host = document.createElement('div');
@@ -347,7 +349,7 @@ function storyCharactersMarkup(id,{rich=false}={}) {
  const links=cards.map(card=>{
   if(rich){
    const art=characterArt(card);
-   return `<a class="story-character-card" href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}"><div class="story-character-art" aria-hidden="true">${art?.background?`<img class="story-character-background" src="${safe(art.background)}" alt="" loading="lazy">`:''}<img src="${safe(card.portrait)}" alt="" loading="lazy"></div><strong data-story-character-name>${safe(storyText(card.name))}</strong><p data-story-character-tagline>${safe(storyText(card.tagline))}</p><span class="story-character-capability" data-story-character-capability>${getLang()==='zh'?(card.chat?'可对话 →':'故事出场'):(card.chat?'Chat available →':'In the story')}</span></a>`;
+   return `<a class="story-character-card" href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}"><div class="story-character-art" aria-hidden="true">${art?.background?`<img class="story-character-background" src="${safe(art.background)}" alt="" loading="lazy">`:''}<img src="${safe(card.portrait)}" alt="" loading="lazy"></div><div class="story-character-caption"><strong data-story-character-name>${safe(storyText(card.name))}</strong><p data-story-character-tagline>${safe(storyText(card.tagline))}</p><span class="story-character-capability" data-story-character-capability>${getLang()==='zh'?(card.chat?'可对话 →':'故事出场'):(card.chat?'Chat available →':'In the story')}</span></div></a>`;
   }
   const crop=characterArt(card)?'position:absolute;left:50%;top:0;transform:translateX(-50%);width:80px;height:120px;max-width:none;object-fit:cover;object-position:top':'display:block;width:40px;height:40px;object-fit:cover;object-position:center 16%';
   return `<a href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 12px;border:1px solid #3a3a3a;border-radius:8px;color:inherit;text-decoration:none"><div data-story-avatar aria-hidden="true" style="position:relative;flex:none;width:40px;height:40px;overflow:hidden;border-radius:6px;background:#222"><img src="${safe(card.portrait)}" alt="" width="40" height="40" loading="lazy" style="${crop}"></div><span>${safe(storyText(card.name))}</span></a>`;
