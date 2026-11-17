@@ -124,7 +124,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
     await t.test('a real biography keeps its character source through play, refresh and the session information preview', async () => {
       const character = '/characters/sg-caocao';
       await f.go(character);
-      await f.click('a.fw-appearance[href="/story/sg-002"]');
+      await f.click('.fw-story-information[href="/story/sg-002"]');
       assert.equal(f.location.pathname, '/story/sg-002');
       assert.equal(f.history.state.characterReturn, character);
       await f.click('[data-story-play="sg-002"]');
@@ -143,6 +143,26 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.click('.shell-page-header a');
       assert.equal(profile().dataset.fwCharacter, 'sg-caocao');
       assert.equal(f.values.has('ooc-session-v2-sg-caocao'), false, 'a profile pathname never becomes a new chat identity');
+    });
+
+    await t.test('the typed character primary action imports the exact words into chat without sending or generating',async()=>{
+      const initial=new Map(f.values),line='我想先和你说句话，进入后再确认发送。 & why?';
+      const scoped=key=>key.startsWith(chatKey)||key.startsWith('ooc-composer-draft-xc-zhiyao');
+      try{
+        await f.go('/characters/xc-zhiyao');
+        const entry=profile().querySelector('[data-fw-profile-draft]');entry.value=line;entry.dispatchEvent(new f.window.Event('input',{bubbles:true}));
+        assert.equal(new URL(profile().querySelector('[data-fw-chat-entry]').getAttribute('href'),f.location.href).searchParams.get('draft'),line);
+        const requestsBefore=f.requests.filter(([path])=>/^\/api\/(chat|suggestions|credits)/.test(path));
+        await f.click('[data-fw-chat-entry]');await waitFor(()=>f.document.querySelector('#session-input'),'the draft primary action did not open the established chat');
+        assert.equal(f.location.pathname,'/play/xc-zhiyao');assert.equal(f.document.querySelector('#session-input').value,line);
+        assert.deepEqual(read(chatKey)||[],[],'the profile handoff is not a user message');
+        assert.deepEqual(f.requests.filter(([path])=>/^\/api\/(chat|suggestions|credits)/.test(path)),requestsBefore,'entry sends no chat, suggestions or billing request');
+        assert.equal(new URLSearchParams(f.location.search).has('draft'),false,'the successful one-time handoff is consumed');
+      }finally{
+        await f.go('/characters');
+        for(const key of f.values.keys())if(scoped(key))f.values.delete(key);
+        for(const [key,value] of initial)if(scoped(key))f.values.set(key,value);
+      }
     });
 
     await t.test('a character and the real Story detail share one Xichuan save and return to the actual entry source', async () => {
@@ -353,9 +373,11 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await waitFor(profile, 'chat header did not return to profile');
       assert.match(profile().querySelector('[data-fw-progress]').textContent, /答应|promis/i);
       const actions = [...profile().querySelectorAll('.fw-ctas a')];
-      assert.equal(actions[0].getAttribute('href'), '/play/xichuan', 'a played story becomes the first continuation action');
+      assert.equal(actions[0].getAttribute('href'), '/play/xc-zhiyao', 'chat remains the primary action after story progress exists');
       assert.equal(actions[0].classList.contains('fw-btn-secondary'), false);
-      assert.equal(profile().querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), true);
+      assert.equal(profile().querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), false);
+      assert.equal(profile().querySelector('[data-fw-story-entry]').classList.contains('fw-btn-secondary'),true);
+      assert.equal(profile().querySelector('.fw-profile-hero [data-fw-story-entry]'),null,'the Story action belongs to its related work card, not the conversation hero');
       assert.equal(profile().querySelector('[data-fw-experiences]').closest('[aria-live],[role="status"]'), null);
       const rawBefore = f.values.get(XICHUAN_KEY);
       await f.go('/characters/xc-zhiyao');

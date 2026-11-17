@@ -61,24 +61,60 @@
 .fw-card-static { pointer-events: none; }
 .fw-card-persona, .fw-card-voice, .fw-card-locked { color: #a1a1a1; font-size: 13px; line-height: 1.6; }
 
-/* Character detail puts the real actions before the fixed portrait on phones. */
-.fw-profile-top { display: grid; grid-template-columns: minmax(240px, 320px) minmax(0, 1fr); grid-template-rows: max-content minmax(0, 1fr); align-items: start; gap: 16px 32px; margin-bottom: 24px; }
-.fw-profile-portrait { grid-column: 1; grid-row: 1 / span 2; min-width: 0; overflow: hidden; border: 1px solid #2b2b2b; border-radius: 8px; background: #171717; }
-.fw-profile-head { grid-column: 2; grid-row: 1; min-width: 0; }
-.fw-profile-state { grid-column: 2; grid-row: 2; min-width: 0; }
-.fw-profile-scene { position: relative; overflow: hidden; aspect-ratio: 2 / 3; }
-.fw-profile-scene > img:not(.fw-scene-background) { position: relative; display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.fw-profile-head h1 { margin: 4px 0 8px; color: #fafafa; font-size: 32px; line-height: 1.3; font-weight: 600; }
-.fw-tagline { margin: 0 0 12px; color: #d4d4d4; font-size: 15px; line-height: 1.6; }
-.fw-persona { margin: 0; color: #a1a1a1; font-size: 14px; line-height: 1.8; }
+/* One visual language, different intent: people invite a conversation; the
+   real Story card below gives that conversation a place and a longer story. */
+.fw-profile-hero { position: relative; isolation: isolate; overflow: hidden; border: 1px solid #2b2b2b; border-radius: 8px; background: #151515; }
+.fw-profile-hero::before { content: ''; position: absolute; z-index: -1; inset: -40px; background-image: var(--fw-hero-image); background-size: cover; background-position: center; filter: blur(32px) brightness(.22) saturate(.8); }
+.fw-profile-top { position: relative; display: grid; grid-template-columns: minmax(260px,42%) minmax(0,1fr); grid-template-rows: max-content 1fr; align-items: start; min-height: 560px; }
+.fw-profile-portrait { position: relative; grid-column: 1; grid-row: 1 / span 2; align-self: stretch; min-width: 0; overflow: hidden; background: #202020; mask-image: linear-gradient(90deg,#000 75%,transparent); -webkit-mask-image: linear-gradient(90deg,#000 75%,transparent); }
+.fw-profile-scene { position: relative; height: 100%; min-height: 560px; }
+.fw-profile-scene > img:not(.fw-scene-background) { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 16%; }
+.fw-profile-composite .fw-profile-scene > img:not(.fw-scene-background) { object-fit: contain; object-position: center bottom; }
+.fw-profile-scene .fw-scene-background { object-position: center; }
+.fw-profile-head { grid-column: 2; grid-row: 1; min-width: 0; padding: 32px 32px 0 16px; }
+.fw-profile-state { grid-column: 2; grid-row: 2; min-width: 0; padding: 0 32px 28px 16px; }
+.fw-character-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-bottom: 12px; }
+.fw-character-meta .fw-eyebrow { margin: 0; }
+.fw-capability { font-size: 12px; color: #c5a46c; }
+.fw-profile-head h1 { margin: 0 0 10px; color: #fafafa; font-size: 32px; line-height: 1.3; font-weight: 600; }
+.fw-tagline { margin: 0 0 12px; color: #e3e3e3; font-size: 16px; line-height: 1.6; }
+.fw-public-intro { margin: 0 0 12px; color: #b6b6b6; font-size: 14px; line-height: 1.75; }
+.fw-persona { margin: 0; color: #a1a1a1; font-size: 12px; line-height: 1.7; }
 .fw-persona a { color: inherit; text-decoration: none; }
 .fw-persona a:hover { color: #fafafa; text-decoration: underline; text-underline-offset: 3px; }
-.fw-profile-actions { padding-top: 4px; }
-.fw-profile-summary { margin-top: 16px; }
-.fw-profile-summary .fw-note, .fw-profile-summary .fw-progress-scope { margin: 4px 0; }
-.fw-profile-summary .fw-progress-scope { color: #a1a1a1; }
+.fw-profile-quote .fw-quote { margin: 18px 0; padding: 14px 16px; border: 1px solid #3a3a3a; border-radius: 8px; background: #171717b8; }
+.fw-profile-quote .fw-quote p { font-size: 15px; line-height: 1.65; color: #ededed; }
+.fw-profile-quote .fw-quote cite { display: block; font-size: 11px; }
+.fw-portrait-source { font-size: 11px; }
+.fw-profile-actions { padding-top: 2px; }
+.fw-profile-actions > .fw-ctas { margin: 0 0 12px; }
+.fw-profile-actions > .fw-ctas .fw-btn { min-width: 180px; }
 .fw-ctas, .fw-appearances { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.fw-progress-scope { margin: 0 0 12px; color: #a1a1a1; font-size: 12px; line-height: 1.6; }
+.fw-progress-scope { margin: 12px 0; color: #919191; font-size: 12px; line-height: 1.6; }
+.fw-conversation-form { margin-top: 20px; }
+.fw-conversation-form > label { display: block; margin-bottom: 8px; color: #bcbcbc; font-size: 12px; }
+.fw-conversation-starters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+.fw-conversation-starters button { min-height: 44px; max-width: 100%; padding: 8px 12px; border: 1px solid #484848; border-radius: 8px; background: #1c1c1c88; color: #cfcfcf; font-size: 12px; line-height: 1.5; text-align: left; cursor: pointer; }
+.fw-conversation-starters button:hover { border-color: #888; color: #fafafa; background: #252525; }
+.fw-conversation-input { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+.fw-conversation-input input { flex: 1 1 180px; min-width: 0; min-height: 44px; width: 100%; padding: 10px 12px; border: 1px solid #484848; border-radius: 8px; background: #181818e6; color: #fafafa; font: 14px/1.5 Inter,system-ui,sans-serif; }
+.fw-conversation-input .fw-btn { flex: 0 0 auto; padding-inline: 12px; font-size: 12px; }
+.fw-draft-hint { margin: 8px 0 0; color: #919191; font-size: 11px; line-height: 1.5; }
+.fw-story-jump { display: inline-flex; align-items: center; min-height: 44px; color: #e3e3e3; font-size: 14px; text-decoration: none; }
+.fw-story-jump:hover { text-decoration: underline; text-underline-offset: 4px; }
+.fw-story-list { display: grid; gap: 16px; }
+.fw-story-card { display: grid; grid-template-columns: 120px minmax(0,1fr); gap: 24px; padding: 20px; border: 1px solid #2b2b2b; border-radius: 8px; background: #171717; }
+.fw-story-cover { display: block; align-self: start; overflow: hidden; aspect-ratio: 2 / 3; border-radius: 8px; background: #222; }
+.fw-story-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.fw-story-copy { min-width: 0; }
+.fw-story-copy h3 { margin: 4px 0 10px; font-size: 20px; line-height: 1.4; font-weight: 500; }
+.fw-story-copy h3 a { color: #fafafa; text-decoration: none; }
+.fw-story-copy > p:not(.fw-eyebrow) { margin: 0 0 14px; color: #aaa; font-size: 14px; line-height: 1.7; }
+.fw-story-copy .fw-ctas { justify-content: flex-start; margin-top: 12px; gap: 12px 20px; }
+.fw-story-information { display: inline-flex; align-items: center; min-height: 44px; color: #bcbcbc; font-size: 13px; text-decoration: none; }
+.fw-story-information:hover { color: #fafafa; text-decoration: underline; text-underline-offset: 3px; }
+.fw-story-copy .fw-standalone-note { margin-top: 12px; margin-bottom: 0; font-size: 11px; }
+.fw-card-intent { color: #c5a46c !important; }
 .fw-experiences { scroll-margin-top: 24px; }
 .fw-experiences h3 { margin: 16px 0 8px; color: #d4d4d4; font-size: 13px; line-height: 1.6; font-weight: 500; }
 .fw-experiences > p, .fw-experience-facts { color: #a1a1a1; font-size: 13px; line-height: 1.7; }
@@ -110,7 +146,9 @@
 @media (max-width: 1023px) {
   .fw-page { padding: 0 24px 48px; }
   .fw-mobile-bar { display: flex; }
-  .fw-profile-top { grid-template-columns: 240px minmax(0, 1fr); gap: 24px; }
+  .fw-profile-top { grid-template-columns: minmax(220px,40%) minmax(0,1fr); }
+  .fw-profile-head { padding: 24px 24px 0 8px; }
+  .fw-profile-state { padding: 0 24px 24px 8px; }
 }
 @media (max-width: 767px) {
   .fw-page { padding-left: 20px; padding-right: 20px; }
@@ -118,13 +156,30 @@
   .fw-card-name { font-size: 15px; }
   .fw-card-body { padding: 0; }
   .fw-card-body em { font-size: 12px; }
-  .fw-profile-top { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto; gap: 20px; }
-  .fw-profile-portrait { grid-column: 1; grid-row: 3; width: 100%; max-width: 224px; margin: 0 auto; }
-  .fw-profile-head h1 { font-size: 28px; }
-  .fw-profile-head { grid-column: 1; grid-row: 1; }
-  .fw-profile-state { grid-column: 1; grid-row: 2; }
+  .fw-profile-hero { overflow: hidden; }
+  .fw-profile-top { display: flex; flex-direction: column; min-height: 0; padding-top: 210px; }
+  .fw-profile-portrait { position: absolute; top: 0; left: 0; width: 100%; height: 300px; mask-image: linear-gradient(#000 65%,transparent); -webkit-mask-image: linear-gradient(#000 65%,transparent); }
+  .fw-profile-scene { height: 300px; min-height: 0; }
+  .fw-profile-composite .fw-profile-scene > img:not(.fw-scene-background) { left: auto; right: 12%; width: 210px; height: 315px; object-position: center top; }
+  .fw-profile-scene > img:not(.fw-scene-background) { object-position: center 18%; }
+  .fw-profile-head { position: relative; width: 100%; padding: 0 20px; }
+  .fw-profile-head h1 { font-size: 32px; }
+  .fw-profile-state { position: relative; width: 100%; padding: 0 20px 24px; }
+  .fw-profile-head, .fw-profile-state { box-sizing: border-box; }
+  .fw-character-meta { margin-bottom: 8px; }
+  .fw-tagline { font-size: 15px; margin-bottom: 10px; }
+  .fw-public-intro { font-size: 13px; line-height: 1.7; }
+  .fw-profile-quote .fw-quote { margin: 14px 0; padding: 12px; }
+  .fw-profile-quote .fw-quote p { font-size: 14px; }
+  .fw-profile-actions > .fw-ctas .fw-btn { width: 100%; }
+  .fw-conversation-form { margin-top: 16px; }
+  .fw-conversation-input input { flex-basis: 100%; }
+  .fw-conversation-input .fw-btn { width: 100%; }
+  .fw-story-card { grid-template-columns: 84px minmax(0,1fr); gap: 16px; padding: 16px; }
+  .fw-story-copy h3 { font-size: 18px; }
+  .fw-story-copy > p:not(.fw-eyebrow) { font-size: 13px; }
+  .fw-story-copy .fw-ctas { flex-direction: column; align-items: flex-start; gap: 4px; }
   [data-fw-page="profile"] .fw-back { margin: 4px 0 12px; }
-  .fw-profile-actions .fw-btn { flex: 1; padding-inline: 12px; }
   .fw-section { margin: 28px 0; }
   .fw-toolbar { gap: 6px; }
   .fw-search { flex-basis: 100%; max-width: none; }
@@ -171,4 +226,24 @@
  .fw-character-feature .sd-hero-form input { flex: 1 1 160px; min-width: 0; min-height: 44px; padding: 10px 12px; border: 1px solid #484848; border-radius: 8px; background: #1f1f1f; color: #fafafa; font: inherit; font-size: 14px; }
  .fw-character-feature .sd-hero-form button { flex: 0 0 auto; min-height: 44px; padding: 10px 16px; border: 0; border-radius: 8px; background: #fafafa; color: #171717; font: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
  .fw-character-feature .sd-hero-note { margin: 0; color: #a1a1a1; font-size: 12px; line-height: 1.7; }
+}
+
+/* The first mobile action is the conversation. The excerpt stays readable
+   below it; its length cannot push the primary action under the site bar. */
+@media (max-width: 767px) {
+ .fw-profile-top { padding: 210px 20px 24px; }
+ .fw-profile-head, .fw-profile-state, .fw-profile-actions { display: contents; }
+ .fw-profile-portrait { mask-image: linear-gradient(#000 28%,#0009 45%,transparent 76%); -webkit-mask-image: linear-gradient(#000 28%,#0009 45%,transparent 76%); }
+ .fw-profile-head > .fw-character-meta { order: 0; }
+ .fw-profile-head > h1 { order: 1; }
+ .fw-profile-head > .fw-tagline { order: 2; }
+ .fw-profile-head > .fw-public-intro { order: 3; margin-bottom: 10px; }
+ .fw-profile-head > .fw-persona { order: 4; margin-bottom: 12px; }
+ .fw-profile-actions > .fw-ctas, .fw-profile-actions > .fw-story-jump, .fw-profile-state > [role="status"] { order: 5; }
+ .fw-profile-actions > [data-fw-chat-status] { order: 6; }
+ .fw-profile-head > .fw-profile-quote { order: 7; }
+ .fw-profile-actions > .fw-conversation-form { order: 8; width: 100%; }
+ .fw-profile-actions > .fw-note:not([data-fw-chat-status]) { order: 9; }
+ .fw-profile-head > .fw-portrait-source { order: 10; }
+ .fw-profile-actions > .fw-ctas { width: 100%; }
 }

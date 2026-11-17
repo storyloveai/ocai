@@ -81,7 +81,7 @@ test('scene artwork uses existing empty settings for transparent sprites and pre
 });
 
 test('character discovery stays useful without duplicate navigation or demo editors', async (t) => {
-  const {document, window, values, writes, go, setLang, storageState, navigations, requests} = await boot();
+  const {document, window, values, writes, go, setLang, storageState, navigations, requests, helpers} = await boot();
   const {CHARACTER_CARDS, UNIVERSES} = await import('../dist/assets/flywheel/cards-data.js');
   const page = kind => document.querySelector(`[data-fw-page="${kind}"]`);
   const input = value => {
@@ -345,7 +345,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const scene = profile.querySelector('.fw-profile-scene .fw-scene-background');
     const background = scene.getAttribute('src');
     assert.equal(scene.nextElementSibling.id, 'fw-portrait-main');
-    assert.deepEqual([...profile.querySelector('.fw-profile-top').children].map(node=>node.className),['fw-profile-head','fw-profile-state','fw-profile-portrait'],'identity and the real actions precede the decorative portrait');
+    assert.deepEqual([...profile.querySelector('.fw-profile-top').children].map(node=>[...node.classList][0]),['fw-profile-head','fw-profile-state','fw-profile-portrait'],'identity and the real actions precede the decorative portrait');
     assert.equal(profile.querySelectorAll('.fw-profile-quote blockquote').length,1,'only the first attributed excerpt is directly visible');
     assert.equal(profile.querySelector('.fw-hscroll'),null,'related cast is reached from the real Story instead of another profile directory');
     assert.equal(profile.textContent.includes(CHARACTER_CARDS.find(c=>c.id==='xc-zhiyao').locked.zh),false,'internal character constraints are not reader-facing content');
@@ -361,7 +361,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     profile = page('profile');
     assert.ok(profile.querySelector('.fw-ctas a[href="/play/sgc-002"]'));
     assert.ok(profile.querySelector('.fw-quote cite'));
-    assert.equal(profile.querySelector('.fw-starters'),null,'conversation starters stay in chat rather than another profile block');
+    assert.equal(profile.querySelectorAll('[data-fw-starter]').length,2,'the profile offers two established opening lines without sending them');
     go('/characters/oc-shen-yanzhou');
     assert.equal(page('profile').querySelector('a[href*="encounter="]'),null);
     assert.ok(page('profile').querySelector('[data-fw-chat-entry]'),'the real chat keeps access to its scene choices');
@@ -384,8 +384,40 @@ test('character discovery stays useful without duplicate navigation or demo edit
       go('/characters/'+card.id);
       assert.equal(document.getElementById('fw-portrait-main').getAttribute('src'),card.portrait,card.id+' keeps its approved portrait');
       assert.ok(page('profile').querySelector('.fw-ctas a'),card.id+' retains its real entry action');
-      assert.equal(page('profile').querySelector('[data-fw-expr],.fw-hscroll,.fw-starters'),null);
+      assert.equal(page('profile').querySelector('[data-fw-expr],.fw-hscroll'),null);
+      assert.equal(Boolean(page('profile').querySelector('[data-fw-profile-form]')),Boolean(card.chat),'only characters with an established conversation get a draft handoff');
     }
+  });
+
+  await t.test('story-only character entry scrolls within the page without replaying navigation or losing its Story source',async()=>{
+    const {show,syncAccount}=await import('../dist/assets/flywheel/flywheel.js');
+    const previousMedia=globalThis.matchMedia;
+    try{
+      for(const [lang,reduced] of [['en',true],['zh',false]]){
+        language(lang);go('/characters/xc-shencheng');
+        window.history.replaceState({...window.history.state,from:'/story/xichuan',discoveryReturn:'/characters?world=xichuan&q=澄'},'',location.href);
+        show(location.pathname,helpers);
+        syncAccount({user:null,restored:true,busy:false});
+        const profile=page('profile'),target=profile.querySelector('#fw-stories'),heading=target.querySelector('h2');
+        const jump=profile.querySelector('[data-fw-story-jump]');
+        assert.ok(jump,'an unavailable chat has an honest entry to its existing story');
+        assert.equal(profile.querySelector('[data-fw-chat-entry]'),null);
+        const state=structuredClone(window.history.state),url=location.href,navigationCount=navigations.length;
+        const scrolls=[];target.scrollIntoView=options=>scrolls.push(options);
+        globalThis.matchMedia=()=>({matches:reduced});
+        let bubbled=0;const observe=()=>bubbled++;document.addEventListener('click',observe);
+        try{
+          const event=new window.Event('click',{bubbles:true,cancelable:true});Object.assign(event,{button:0});jump.dispatchEvent(event);
+          assert.equal(event.defaultPrevented,true,'the same-page jump never reaches the SPA router');
+          assert.equal(bubbled,0,'the handled click stops before global document navigation');
+        }finally{document.removeEventListener('click',observe);}
+        assert.equal(navigations.length,navigationCount);assert.equal(location.href,url);
+        assert.deepEqual(window.history.state,state,'the original Story and filtered-directory context stay intact');
+        assert.equal(profile.querySelector('.fw-back').getAttribute('href'),'/story/xichuan');
+        assert.deepEqual(scrolls,[{block:'start',behavior:reduced?'instant':'smooth'}]);
+        assert.equal(document.activeElement,heading);assert.equal(heading.tabIndex,-1,'the destination heading is programmatically focusable without adding a tab stop');
+      }
+    }finally{globalThis.matchMedia=previousMedia;language('zh');go('/characters');}
   });
 
   await t.test('real memory review keeps open and closed state and its focused summary during same-owner updates',async()=>{
@@ -485,6 +517,42 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(page('profile').querySelector('[data-fw-chat-entry]'),'original encounters remain available through their existing chat');
   });
 
+  await t.test('conversation entry keeps owner-scoped words through language and sync, then hands off a draft without a send',async()=>{
+    const {syncAccount}=await import('../dist/assets/flywheel/flywheel.js');
+    language('zh');go('/characters/xc-zhiyao');
+    const current=()=>page('profile').querySelector('[data-fw-profile-draft]');
+    const type=text=>{current().value=text;current().dispatchEvent(new window.Event('input',{bubbles:true}));};
+    const requestsBefore=requests.filter(path=>path.startsWith('/api/'));
+    const before=new Map(values),line='  我想和你聊聊影院，先不要发送。 & why?  ';
+    type(line);current().focus();current().setSelectionRange(3,9,'forward');
+    assert.equal(new URL(page('profile').querySelector('[data-fw-chat-entry]').getAttribute('href'),location.href).searchParams.get('draft'),line.trim(),'the visible primary action includes the words already typed');
+    language('en');assert.equal(current().value,line);assert.equal(document.activeElement,current());assert.equal(current().selectionStart,3);
+    syncAccount({user:null,restored:true,busy:false});assert.equal(current().value,line);assert.equal(document.activeElement,current());
+    go('/characters/sg-caocao');type('不同角色的另一句。');go('/characters/xc-zhiyao');assert.equal(current().value,line,'character entry drafts are separate');
+    const navigationCount=navigations.length;
+    page('profile').querySelector('[data-fw-starter]').click();
+    assert.equal(navigations.length,navigationCount,'choosing an opening line only fills the local input');assert.ok(current().value);assert.equal(document.activeElement,current());
+    type(line);page('profile').querySelector('[data-fw-chat-entry]').click();
+    const handed=new URL(navigations.at(-1),location.href);
+    assert.equal(handed.pathname,'/play/xc-zhiyao');assert.equal(handed.searchParams.get('draft'),line.trim());assert.equal(handed.searchParams.has('say'),false);
+    go('/characters/xc-zhiyao');assert.equal(current().value,'','explicit handoff consumes only this ephemeral entry copy');
+    assert.equal(page('profile').querySelector('[data-fw-chat-entry]').getAttribute('href'),'/play/xc-zhiyao');
+    assert.deepEqual([...values].filter(([key])=>key!=='sd.lang'),[...before].filter(([key])=>key!=='sd.lang'),'typing, recommendations and handoff create no persistent profile or conversation data; the explicit language preference is independent');
+    assert.deepEqual(requests.filter(path=>path.startsWith('/api/')),requestsBefore,'no model, suggestions or billing request comes from profile entry');
+    type('一'.repeat(340));page('profile').querySelector('[data-fw-profile-form]').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+    assert.equal(new URL(navigations.at(-1),location.href).searchParams.get('draft').length,300,'draft handoff respects the declared limit');
+    const previous=helpers.account,alice={user:{uid:'alice'},restored:true,busy:false};
+    try{
+      helpers.account=alice;go('/characters/xc-zhiyao');type('Alice 尚未发送的私有草稿');
+      const staleForm=page('profile').querySelector('[data-fw-profile-form]');
+      alice.user={uid:'bob'};alice.restored=false;syncAccount(alice);
+      assert.equal(current(),null,'restoration does not expose the old input');assert.doesNotMatch(page('profile').textContent,/Alice 尚未发送/);
+      const count=navigations.length;staleForm.dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));assert.equal(navigations.length,count,'a detached previous-owner form cannot navigate');
+      alice.restored=true;syncAccount(alice);assert.equal(current().value,'','the next owner gets no previous draft');
+      alice.user={uid:'alice'};syncAccount(alice);assert.equal(current().value,'','switching owners clears the old ephemeral entry rather than reviving it');
+    }finally{if(previous===undefined)delete helpers.account;else helpers.account=previous;go('/characters');}
+  });
+
   await t.test('creation reuses the existing workshop and preserves old drafts read-only', async () => {
     const key = 'sd-flywheel-drafts';
     const raw = JSON.stringify([{name: {zh: '夜航', en: 'Night Watch'}, persona: '修钟表的守夜人。', auth: 2, savedAt: '2026-11-16T00:00:00.000Z'}]);
@@ -562,5 +630,5 @@ async function boot() {
   const data = JSON.parse(await readFile(join(dist, 'data.json'), 'utf8'));
   const helpers = {data, categories: [], read: (key, fallback) => { try { return JSON.parse(values.get(key)) ?? fallback; } catch { return fallback; } }, save: (key, value) => values.set(key, JSON.stringify(value)), show: () => {}, navigate: path => navigations.push(path)};
   const go = path => { window.history.pushState({}, '', path); assert.ok(show(location.pathname, helpers) || reference.show(location.pathname, helpers), `route ${path} is handled by its actual owner`); };
-  return {document, window, values, writes, storageState, go, setLang, navigations, requests};
+  return {document, window, values, writes, storageState, go, setLang, navigations, requests, helpers};
 }

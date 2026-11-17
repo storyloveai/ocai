@@ -1,7 +1,7 @@
 import {syncCharacterLinks, characterReturnUrl} from './character-links.js';
 import {charactersForStory, storiesForCharacter, storyById, linkedStoryCatalog} from './character-stories.js';
 import {characterArt} from './flywheel/character-art.js';
-import {CHARACTER_CARDS} from './flywheel/cards-data.js';
+import {CHARACTER_CARDS,WORKS} from './flywheel/cards-data.js';
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
@@ -24,14 +24,16 @@ import {getLang,translate} from './site-i18n.js';
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
+const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261117-conversation';
+const detailReady=new Promise((resolve,reject)=>{detailStyle.onload=resolve;detailStyle.onerror=()=>reject(new Error('Story stylesheet could not load'));});
 const layoutReady=new Promise((resolve,reject)=>{layoutStyle.onload=resolve;layoutStyle.onerror=()=>reject(new Error('Brand stylesheet could not load'));});
 const stylesheetReady=new Promise((resolve,reject)=>{style.onload=resolve;style.onerror=()=>reject(new Error('Reference stylesheet could not load'));});
-document.head.append(style,layoutStyle);
+document.head.append(style,layoutStyle,detailStyle);
 const [evidence, coreAssets, titlePreviews] = await Promise.all([
   fetch('/assets/reference-pages.json').then(r => r.json()),
   fetch('/assets/core-assets-index.json').then(r => r.json()),
   fetch('/assets/title-previews.json').then(r=>r.ok?r.json():{titles:{}}).catch(()=>({titles:{}})),
-  stylesheetReady,layoutReady
+  stylesheetReady,layoutReady,detailReady
 ]);
 const assets={...coreAssets};
 const host = document.createElement('div');
@@ -332,20 +334,42 @@ function bindDetail() {
 
 const storyText = value => typeof value === 'string' ? value : value?.[getLang()] || value?.en || value?.zh || '';
 const isLinkedGame = id => linkedStoryCatalog.some(story=>story.id===id) || id===threeKingdomsInk.id;
+const storyFormat = id => isLinkedGame(id) ? storyText(WORKS[charactersForStory(id)[0]?.source.work]?.kind) : '';
 function storyPlayMarkup(id) {
  const story=storyById(id);
  if(!story)return `<button class="shell-white-button" data-play="${safe(id)}">New Play</button>`;
  const standalone=story.playUrl.startsWith('/assets/');
  return `<a class="shell-white-button" data-story-play="${safe(id)}" href="${safe(story.playUrl)}"${standalone?' target="_top" rel="noopener"':''}>${getLang()==='zh'?'进入故事':'Play story'}</a>`;
 }
-function storyCharactersMarkup(id) {
+function storyCharactersMarkup(id,{rich=false}={}) {
  const cards=charactersForStory(id);
  if(!cards.length)return '';
  const links=cards.map(card=>{
+  if(rich){
+   const art=characterArt(card);
+   return `<a class="story-character-card" href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}"><div class="story-character-art" aria-hidden="true">${art?.background?`<img class="story-character-background" src="${safe(art.background)}" alt="" loading="lazy">`:''}<img src="${safe(card.portrait)}" alt="" loading="lazy"></div><strong data-story-character-name>${safe(storyText(card.name))}</strong><p data-story-character-tagline>${safe(storyText(card.tagline))}</p><span class="story-character-capability" data-story-character-capability>${getLang()==='zh'?(card.chat?'可对话 →':'故事出场'):(card.chat?'Chat available →':'In the story')}</span></a>`;
+  }
   const crop=characterArt(card)?'position:absolute;left:50%;top:0;transform:translateX(-50%);width:80px;height:120px;max-width:none;object-fit:cover;object-position:top':'display:block;width:40px;height:40px;object-fit:cover;object-position:center 16%';
   return `<a href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 12px;border:1px solid #3a3a3a;border-radius:8px;color:inherit;text-decoration:none"><div data-story-avatar aria-hidden="true" style="position:relative;flex:none;width:40px;height:40px;overflow:hidden;border-radius:6px;background:#222"><img src="${safe(card.portrait)}" alt="" width="40" height="40" loading="lazy" style="${crop}"></div><span>${safe(storyText(card.name))}</span></a>`;
  }).join('');
- return `<section data-story-characters="${safe(id)}" data-no-i18n style="margin:24px 0"><h2>${getLang()==='zh'?'故事里的角色':'Characters in this story'}</h2><div style="display:flex;flex-wrap:wrap;gap:8px">${links}</div></section>`;
+ return `<section data-story-characters="${safe(id)}" data-no-i18n${rich?' class="story-cast-section"':' style="margin:24px 0"'}><h2>${getLang()==='zh'?'故事里的角色':'Characters in this story'}</h2><div${rich?' class="story-cast-grid"':' style="display:flex;flex-wrap:wrap;gap:8px"'}>${links}</div></section>`;
+}
+function enhanceStoryDetail(article,id,d) {
+ const story=storyById(id),top=article?.querySelector('.replica-story-top,.public-detail-top');
+ if(!story||!top)return;
+ const favorite=top.querySelector('[data-favorite],[data-preview-bookmark]'),creator=d.author?top.querySelector('.creator-link'):null;
+ if(favorite){const selected=context.read('ooc-favorites',[]).includes(id);favorite.dataset.favorite=id;favorite.dataset.referenceFavorite='true';favorite.dataset.storyBookmarkLabel='';favorite.textContent=getLang()==='zh'?'收藏':'Bookmark';favorite.setAttribute('aria-label',getLang()==='zh'?'收藏故事':'Bookmark story');favorite.setAttribute('aria-pressed',String(selected));favorite.style.color=selected?'#c5a46c':'';favorite.classList.add('story-bookmark');}
+ const description=article.querySelector('.story-description');
+ if(description){if(description.previousElementSibling?.tagName==='H2')description.previousElementSibling.remove();description.remove();}
+ // Only replace the public identity block. Longer authored sections below it
+ // remain intact, with a single real play action moved up to the first screen.
+ const hero=document.createElement('section');hero.className='story-entity-hero';hero.setAttribute('data-no-i18n','');
+ hero.innerHTML=`<div class="story-entity-art"><img class="story-entity-atmosphere" src="${safe(story.image)}" alt=""><img class="story-entity-cover" data-story-cover="${safe(id)}" src="${safe(story.image)}" alt="${safe(storyText(story.title))}"></div><div class="story-entity-copy"><p class="story-entity-kicker" data-story-detail-label="story">${getLang()==='zh'?'故事':'Story'}</p><h1 data-story-title="${safe(id)}">${safe(storyText(story.title))}</h1>${d.author?`<p class="story-entity-author">${safe(d.author)}</p>`:''}${storyFormat(id)?`<p class="story-entity-format" data-story-format="${safe(id)}">${safe(storyFormat(id))}</p>`:''}<p class="story-entity-lead" data-story-description="${safe(id)}">${safe(storyText(story.description))}</p><div class="story-entity-actions">${storyPlayMarkup(id)}</div></div>`;
+ if(favorite)hero.querySelector('.story-entity-actions').append(favorite);
+ if(creator){creator.classList.add('story-entity-author');hero.querySelector('.story-entity-author').replaceWith(creator);}
+ top.replaceWith(hero);
+ article.querySelector('.story-play-bar')?.remove();
+ article.classList.add('story-entity-detail');
 }
 function withStoryRelations(record,id) {
  const cast=storyCharactersMarkup(id),story=storyById(id);
@@ -370,13 +394,22 @@ globalThis.addEventListener?.('sd-lang',()=>{
   const cards=charactersForStory(section.dataset.storyCharacters);
   section.querySelectorAll('[data-story-character]').forEach(link=>{
    const card=cards.find(c=>c.id===link.dataset.storyCharacter);
-   if(card)link.querySelector('span').textContent=storyText(card.name);
+   if(card){
+    (link.querySelector('[data-story-character-name]')||link.querySelector('span')).textContent=storyText(card.name);
+    const tagline=link.querySelector('[data-story-character-tagline]'),capability=link.querySelector('[data-story-character-capability]');
+    if(tagline)tagline.textContent=storyText(card.tagline);
+    if(capability)capability.textContent=getLang()==='zh'?(card.chat?'可对话 →':'故事出场'):(card.chat?'Chat available →':'In the story');
+   }
   });
  });
  document.querySelectorAll('[data-story-information]').forEach(link=>link.textContent=(getLang()==='zh'?'查看故事详情':'Full story information')+' →');
  document.querySelectorAll('[data-story-play]').forEach(link=>link.textContent=getLang()==='zh'?'进入故事':'Play story');
  document.querySelectorAll('[data-story-title]').forEach(node=>{const story=storyById(node.dataset.storyTitle);if(story)node.textContent=storyText(story.title);});
  document.querySelectorAll('[data-story-description]').forEach(node=>{const story=storyById(node.dataset.storyDescription);if(story)node.textContent=storyText(story.description);});
+ document.querySelectorAll('[data-story-detail-label="story"]').forEach(node=>node.textContent=getLang()==='zh'?'故事':'Story');
+ document.querySelectorAll('[data-story-format]').forEach(node=>node.textContent=storyFormat(node.dataset.storyFormat));
+ document.querySelectorAll('[data-story-cover]').forEach(node=>{const story=storyById(node.dataset.storyCover);if(story)node.alt=storyText(story.title);});
+ document.querySelectorAll('[data-story-bookmark-label]').forEach(node=>{node.textContent=getLang()==='zh'?'收藏':'Bookmark';node.setAttribute('aria-label',getLang()==='zh'?'收藏故事':'Bookmark story');});
  document.querySelectorAll('[data-search-profile]').forEach(link=>{
   const profile=searchProfiles.find(p=>p.id===link.dataset.searchProfile);if(!profile)return;
   link.querySelector('[data-search-profile-name]').textContent=getLang()==='zh'?profile.title_zh:profile.title;
@@ -511,8 +544,12 @@ export function show(path, helpers) {
     if(content&&d){
       const back=content.querySelector('.shell-page-header a');
       if(back){back.href=characterReturnUrl(globalThis.history?.state?.characterReturn)||'/';back.textContent=getLang()==='zh'?'‹ 返回':'‹ Back';}
+      if(back&&storyById(id)){
+       back.parentElement.classList.add('story-detail-header');
+       back.parentElement.insertAdjacentHTML('beforeend',`<div class="sd-lang sd-lang-top story-detail-language" role="group" aria-label="${getLang()==='zh'?'语言':'Language'}" data-no-i18n>${['en','zh'].map(lang=>`<button type="button" data-sd-lang="${lang}" aria-pressed="${lang===getLang()}">${lang==='zh'?'中文':'EN'}</button>`).join('')}</div>`);
+      }
       const article=content.querySelector('.replica-story-detail'),playBar=article?.querySelector('.story-play-bar');
-      if(playBar){playBar.innerHTML=storyPlayMarkup(id);playBar.insertAdjacentHTML('beforebegin',storyCharactersMarkup(id));}
+      if(playBar){playBar.innerHTML=storyPlayMarkup(id);playBar.insertAdjacentHTML('beforebegin',storyCharactersMarkup(id,{rich:true}));}
       const related=storyById(id),title=article?.querySelector('h1'),description=article?.querySelector('.story-description');
       if(related&&title){title.textContent=storyText(related.title);title.dataset.storyTitle=id;title.dataset.noI18n='';}
       if(related&&description){description.textContent=storyText(related.description);description.dataset.storyDescription=id;description.dataset.noI18n='';}
@@ -520,6 +557,7 @@ export function show(path, helpers) {
         const settings=article?.querySelector('.story-settings');
         if(settings){if(settings.previousElementSibling?.tagName==='H2')settings.previousElementSibling.remove();settings.remove();}
       }
+      enhanceStoryDetail(article,id,d);
     }
   }
   if(page==='character-detail'){

@@ -8,6 +8,7 @@ import {characterArt} from './character-art.js';
 import {readDiscoveryState, patchDiscoveryState, discoveryUrl} from './discovery-state.js';
 import {characterDirectoryReturn, characterReturnUrl, storyReturnUrl, canonicalCharacterUrl} from '../character-links.js';
 import {storiesForCharacter} from '../character-stories.js';
+import {characterById} from '../character-profiles.js';
 
 const DRAFT_KEY = 'sd-flywheel-drafts';
 // 手机端顶栏（≤1023px 显示；桌面由侧栏承担），沿用 hub 的 sd-lang 按钮模式
@@ -21,6 +22,17 @@ const mobileBar = () => {
 const copy = {
  zh: {
   imageUnavailable: "图片暂不可用",
+  conversation: "和 TA 聊聊",
+  storyAppearance: "故事出场",
+  draftLabel: "先写一句",
+  draftPlaceholder: "想对 TA 说什么？",
+  draftCta: "带这句话去聊",
+  draftHint: "进入后确认发送",
+  draftFailed: "暂时无法打开聊天，你写的话仍保留在这里。",
+  storiesH: "TA 所在的故事",
+  storyDetails: "了解这部故事",
+  meetInStory: "在故事中认识 TA",
+  characterVoice: "TA 的说话方式",
   missingCharacter: "没有找到这个角色",
   missingWorld: "没有找到这个故事世界",
   missingGuide: "可以从目录里重新选择，已有的聊天和故事进度仍会保留。",
@@ -83,6 +95,17 @@ const copy = {
  },
  en: {
   imageUnavailable: "Image unavailable",
+  conversation: "Talk with them",
+  storyAppearance: "Story character",
+  draftLabel: "Write an opening line",
+  draftPlaceholder: "What would you like to say?",
+  draftCta: "Take this line to chat",
+  draftHint: "Review before sending in chat",
+  draftFailed: "Could not open chat. Your words are still kept here.",
+  storiesH: "The stories they belong to",
+  storyDetails: "About this story",
+  meetInStory: "Meet them in the story",
+  characterVoice: "How they speak",
   missingCharacter: "Character not found",
   missingWorld: "Story world not found",
   missingGuide: "Choose another from the directory. Your existing conversations and story progress are still saved.",
@@ -150,10 +173,10 @@ let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261117-focused"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261117-conversation"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261117-focused';
+    link.href = '/assets/flywheel/flywheel.css?v=20261117-conversation';
     document.head.append(link);
   }
 }
@@ -181,7 +204,7 @@ function cardMarkup(c) {
     <span class="fw-card-body">
       <strong class="fw-card-name">${safe(t(c.name))}</strong>
       <em>${safe(t(c.tagline))}</em>${c.portraitNote ? `<span class="fw-note">${safe(t(c.portraitNote))}</span>` : ''}
-      <span class="fw-card-badges"><span class="fw-badge">${safe(workName(c.source.work))}</span>${c.chat ? `<span class="fw-badge">${safe(l.chatOnly)}</span>` : ''}</span>
+      <span class="fw-card-badges"><span class="fw-badge">${safe(workName(c.source.work))}</span><span class="fw-badge fw-card-intent">${safe(c.chat ? l.conversation : l.storyAppearance)} →</span></span>
     </span>
   </a>`;
 }
@@ -272,81 +295,104 @@ function experiencesMarkup(c, raw, chat) {
  const memories = c.chat ? `${kept ? `<h3>${safe(l.memoriesH)}</h3>${kept}` : ''}${notes}` : '';
  return `<details class="fw-details fw-experiences" id="fw-experiences" data-fw-experiences><summary id="fw-experiences-title">${safe(l.reviewH)}</summary>${story}${memories}</details>`;
 }
-function profileStateMarkup(c, account = currentHelpers?.account) {
- const l = L(), w = storiesForCharacter(c.id)[0];
- if (account && (account.busy || !account.restored)) return `<p class="fw-note" role="status" data-fw-restoring>${safe(l.restoring)}</p>`;
+// Profile entry drafts are ephemeral and belong to one active owner and character.
+// They never write a chat, account cache or a new persistent storage key.
+const profileDrafts = new Map();
+let profileDraftOwner;
+const ownerFor = account => account?.user?.uid || null;
+function setProfileDraftOwner(owner) {
+ if (owner !== profileDraftOwner) { profileDrafts.clear(); profileDraftOwner = owner; }
+}
+function captureProfileDraft() {
+ const host = document.querySelector('[data-fw-profile-state]'), input = host?.querySelector('[data-fw-profile-draft]');
+ const id = host?.closest('[data-fw-character]')?.dataset.fwCharacter;
+ if (id && input && profileStateOwners.get(host) === profileDraftOwner) profileDrafts.set(id,Array.from(input.value || '').slice(0,300).join(''));
+}
+function profileView(c, account) {
+ if (account && (account.busy || !account.restored)) return {restoring:true};
  try {
   const read = currentHelpers?.read || ((_key, fallback) => fallback), chat = chatProgress(c, read);
   let raw = c.source.work === 'xichuan' ? read(XICHUAN_KEY,{}) : {};
-  // Match the existing player’s guest import preview without writing its keys.
-  // Signed-in accounts only show their own save, until an explicit import there.
   if (c.source.work === 'xichuan' && !account?.user && !latestSave(raw)) {
    const old = legacySaves(globalThis.localStorage);
    if (latestSave(old)) raw = old;
   }
-  const played = Boolean(latestSave(raw)), chatting = chat.messages.length > 0;
-  const chatLink = c.chat ? `<a class="fw-btn${played ? ' fw-btn-secondary' : ''}" data-fw-chat-entry href="${safe(c.chat)}">${safe(chatting ? l.continueChat : l.chatCta)} →</a>` : '';
-  const storyLink = w ? `<a class="fw-btn${c.chat && !played ? ' fw-btn-secondary' : ''}" data-fw-story-entry href="${safe(w.playUrl)}"${ext(w.playUrl)}>${safe(played ? l.continueStory : l.storyCta)} →</a>` : '';
-  const chatStatus = c.chat && chatting ? `<p class="fw-note" data-fw-chat-status>${safe(l.chatSaved(chat.messages.length))}</p>` : '';
-  const storyStatus = played ? `<p class="fw-note" data-fw-progress>${safe(progressText(raw,getLang()))}</p>` : '';
-  const scope = played || chatting || chat.pins.length || chat.notes ? `<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>` : '';
-  const summary = `${scope}${storyStatus}${chatStatus}${!c.chat ? `<p class="fw-note">${safe(l.noChat)}</p>` : ''}${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}`;
-  return `<div class="fw-profile-actions"><div class="fw-ctas">${played ? storyLink + chatLink : chatLink + storyLink}</div>${summary ? `<div class="fw-profile-summary" role="status" aria-live="polite">${summary}</div>` : ''}${w && c.chat && isStandalone(w.playUrl) ? `<p class="fw-note">${safe(l.standalone)}</p>` : ''}</div>${c.chat ? experiencesMarkup(c,raw,chat) : ''}`;
- } catch { return `<p class="fw-note" role="status">${safe(l.stateUnavailable)}</p>`; }
+  return {chat,raw,played:Boolean(latestSave(raw)),chatting:chat.messages.length > 0};
+ } catch { return {unavailable:true}; }
+}
+function entryStarters(c) {
+ const profile = characterById.get(c.chatId);
+ return (profile?.starters?.[getLang()] || c.starters?.[getLang()] || []).slice(0,2);
+}
+function profileStateMarkup(c, account = currentHelpers?.account, view = profileView(c,account)) {
+ const l = L();
+ if (view.restoring) return `<p class="fw-note" role="status" data-fw-restoring>${safe(l.restoring)}</p>`;
+ if (view.unavailable) return `<p class="fw-note" role="status">${safe(l.stateUnavailable)}</p>`;
+ const {chat,chatting} = view;
+ if (!c.chat) return `<div class="fw-profile-actions"><p class="fw-note">${safe(l.noChat)}</p><a class="fw-story-jump" data-fw-story-jump href="#fw-stories">${safe(l.meetInStory)} ↓</a></div>`;
+ const starters=entryStarters(c),draft=profileDrafts.get(c.id)||'';
+ return `<div class="fw-profile-actions"><div class="fw-ctas"><a class="fw-btn" data-fw-chat-entry href="${safe(c.chat)}">${safe(chatting ? l.continueChat : l.chatCta)} →</a></div>
+  ${chatting ? `<p class="fw-note" data-fw-chat-status>${safe(l.chatSaved(chat.messages.length))}</p>` : ''}
+  <form class="fw-conversation-form" data-fw-profile-form><label for="fw-profile-draft">${safe(l.draftLabel)}</label>${starters.length ? `<div class="fw-conversation-starters" role="group" aria-label="${safe(l.topicsH)}">${starters.map((line,i)=>`<button type="button" data-fw-starter="${i}">${safe(line)}</button>`).join('')}</div>` : ''}<div class="fw-conversation-input"><input id="fw-profile-draft" data-fw-profile-draft name="draft" maxlength="300" autocomplete="off" value="${safe(draft)}" placeholder="${safe(l.draftPlaceholder)}"><button class="fw-btn fw-btn-secondary" type="submit">${safe(l.draftCta)} →</button></div><p class="fw-draft-hint" data-fw-draft-status role="status">${safe(l.draftHint)}</p></form>
+  ${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}</div>`;
+}
+function profileRelatedMarkup(c, account = currentHelpers?.account, view = profileView(c,account)) {
+ const l=L(),stories=storiesForCharacter(c.id),ready=!view.restoring&&!view.unavailable;
+ const {raw,chat,played,chatting}=view;
+ const cards=stories.map((story,i)=>`<article class="fw-story-card"><a class="fw-story-cover" data-full-info href="${safe(story.informationUrl)}"><img src="${safe(story.image)}" alt="${safe(t(story.title))}" loading="lazy"></a><div class="fw-story-copy"><p class="fw-eyebrow">${safe(i===0 ? t(WORKS[c.source.work]?.kind)||workName(c.source.work) : l.appearH)}</p><h3><a data-full-info href="${safe(story.informationUrl)}">${safe(t(story.title))}</a></h3><p>${safe(t(story.description))}</p>${ready&&i===0&&played ? `<p class="fw-note" data-fw-progress>${safe(progressText(raw,getLang()))}</p>` : ''}<div class="fw-ctas"><a class="fw-story-information" data-full-info href="${safe(story.informationUrl)}">${safe(l.storyDetails)} ↗</a>${ready ? `<a class="fw-btn fw-btn-secondary" ${i===0?'data-fw-story-entry':'data-fw-appearance-entry'} href="${safe(story.playUrl)}"${ext(story.playUrl)}>${safe(i===0&&played ? l.continueStory : l.storyCta)} →</a>` : ''}</div>${isStandalone(story.playUrl) ? `<p class="fw-note fw-standalone-note">${safe(l.standalone)}</p>` : ''}</div></article>`).join('');
+ const scope=ready&&(played||chatting||chat.pins.length||chat.notes)?`<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>`:'';
+ return `${cards?`<section class="fw-section fw-story-section" id="fw-stories"><h2>${safe(l.storiesH)}</h2><div class="fw-story-list">${cards}</div></section>`:''}${ready&&c.chat ? experiencesMarkup(c,raw,chat) : ''}${scope}`;
+}
+function bindProfileEntry(c,account=currentHelpers?.account) {
+ const host=document.querySelector('[data-fw-profile-state]'),form=host?.querySelector('[data-fw-profile-form]'),input=form?.querySelector('input'),main=host?.querySelector('[data-fw-chat-entry]');
+ if(!form||!input||!main||!c.chat)return;
+ const owner=ownerFor(account),ordinaryLabel=main.textContent,current=()=>form.isConnected&&profileStateOwners.get(host)===owner&&profileDraftOwner===owner&&(!account||(!account.busy&&account.restored));
+ const destination=text=>{const url=new URL(c.chat,location.href);if(text)url.searchParams.set('draft',text);return url.pathname+url.search;};
+ const line=()=>Array.from(input.value.trim()).slice(0,300).join('');
+ const paint=()=>{const text=line();main.setAttribute('href',destination(text));main.textContent=text?L().draftCta+' →':ordinaryLabel;};
+ const keep=()=>{if(!current())return;profileDrafts.set(c.id,Array.from(input.value).slice(0,300).join(''));paint();};
+ input.addEventListener('input',keep);
+ const starters=entryStarters(c);
+ form.querySelectorAll('[data-fw-starter]').forEach(button=>button.addEventListener('click',()=>{if(!current())return;input.value=starters[Number(button.dataset.fwStarter)]||'';keep();input.focus({preventScroll:true});}));
+ const handoff=()=>{if(!current())return;const text=line();if(!text){input.focus({preventScroll:true});return;}const before=input.value,url=destination(text);profileDrafts.delete(c.id);input.value='';paint();try{if(currentHelpers?.navigate)currentHelpers.navigate(url);else location.href=url;}catch{profileDrafts.set(c.id,before);if(form.isConnected){input.value=before;paint();form.querySelector('[data-fw-draft-status]').textContent=L().draftFailed;}}};
+ main.addEventListener('click',event=>{if(!line()||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();handoff();});
+ form.addEventListener('submit',event=>{event.preventDefault();handoff();});
+ paint();
 }
 const profileStateCache = new WeakMap();
 const profileStateOwners = new WeakMap();
-// Account hydration and sync updates replace only private state, preserving the
-// library search, portrait, and the rest of the current profile.
+// Refresh only owner-scoped actions and the separate story / experience region.
+// The public hero stays in place, and in-progress entry drafts are not consumed.
 export function syncAccount(account) {
- const host = document.querySelector('[data-fw-profile-state]');
- const c = cardById(host?.closest('[data-fw-character]')?.dataset.fwCharacter);
- if (!host || !c) return;
- const owner=account?.user?.uid||null,sameOwner=profileStateOwners.get(host)===owner;
- const markup = profileStateMarkup(c,account);
- if (sameOwner&&profileStateCache.get(host) === markup) return;
- const active = document.activeElement;
- const selected = host.contains(active) && active?.matches?.('a[data-fw-chat-entry],a[data-fw-story-entry]') ? active.getAttribute('href') : null;
- const reviewing = sameOwner&&host.querySelector('[data-fw-experiences]')?.hasAttribute('open');
- const summaryFocus=sameOwner&&host.contains(active)&&active?.matches('summary')?active.id:null;
- host.innerHTML = markup;
- if(reviewing&&host.querySelector('[data-fw-experiences]'))host.querySelector('[data-fw-experiences]').setAttribute('open','');
- profileStateCache.set(host,markup);
- profileStateOwners.set(host,owner);
+ const host=document.querySelector('[data-fw-profile-state]'),related=document.querySelector('[data-fw-related-state]');
+ const c=cardById(host?.closest('[data-fw-character]')?.dataset.fwCharacter);
+ if(!host||!related||!c)return;
+ const owner=ownerFor(account),sameOwner=profileStateOwners.get(host)===owner;
+ if(sameOwner)captureProfileDraft();
+ setProfileDraftOwner(owner);
+ const view=profileView(c,account),markup=profileStateMarkup(c,account,view),more=profileRelatedMarkup(c,account,view),cache=markup+'\n'+more;
+ if(sameOwner&&profileStateCache.get(host)===cache)return;
+ const active=document.activeElement,focus=sameOwner&&(host.contains(active)||related.contains(active))?rememberFocus():null;
+ const reviewing=sameOwner&&related.querySelector('[data-fw-experiences]')?.hasAttribute('open');
+ host.innerHTML=markup;related.innerHTML=more;
+ if(reviewing)related.querySelector('[data-fw-experiences]')?.setAttribute('open','');
+ profileStateCache.set(host,cache);profileStateOwners.set(host,owner);bindProfileEntry(c,account);
  if(!sameOwner){const about=host.closest('[data-fw-character]')?.querySelector('[data-fw-about]');if(about){const inside=about.contains(active);about.removeAttribute('open');if(inside)about.querySelector('summary')?.focus({preventScroll:true});}}
- if (sameOwner&&selected) [...host.querySelectorAll('a[href]')].find(a => a.getAttribute('href') === selected)?.focus({preventScroll:true});
- else if(summaryFocus)host.querySelector('#'+summaryFocus)?.focus({preventScroll:true});
+ else restoreFocus(focus);
 }
 function profileMarkup(c) {
-  const l = L();
-  const from = globalThis.history?.state?.from, fromStory = storyReturnUrl(from);
-  const fromChat = characterReturnUrl(from)?.startsWith('/play/') ? characterReturnUrl(from) : null;
-  const fromDirectory = characterDirectoryReturn(globalThis.history?.state?.discoveryReturn) || characterDirectoryReturn(from);
-  const returnUrl = fromStory || fromDirectory || fromChat || '/characters';
-  const returnLabel = fromStory ? l.storiesNav : fromDirectory ? l.profileBack : fromChat ? l.chatBack : l.profileBack;
-  const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>${safe(quoted(t(s)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(s.from) || workName(c.source.work))}</cite></blockquote>`);
-  const stories = storiesForCharacter(c.id), primaryStory = stories[0];
-  const appears = stories.slice(1).map(a => `<a class="fw-appearance" data-full-info href="${safe(a.informationUrl)}"><strong>${safe(t(a.title))}</strong><span aria-hidden="true">↗</span></a>`).join('');
-  const portraitBlock = `<div class="fw-profile-portrait"><div class="fw-profile-scene">${sceneArt(c)}<img id="fw-portrait-main" class="fw-portrait-figure" src="${safe(c.portrait)}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span></div></div>`;
-  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="profile" data-fw-character="${safe(c.id)}">
-    ${mobileBar()}
-    <a class="fw-back" data-fw-back data-full-info href="${safe(returnUrl)}">‹ ${safe(returnLabel)}</a>
-    <article class="fw-profile">
-      <div class="fw-profile-top">
-        <div class="fw-profile-head">
-          ${primaryStory?.role ? `<p class="fw-eyebrow">${safe(t(primaryStory.role))}</p>` : ''}
-          <h1>${safe(t(c.name))}</h1>
-          <p class="fw-tagline">${safe(t(c.tagline))}</p>
-          <p class="fw-persona">${primaryStory ? `<a data-fw-story-source data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a>` : safe(workName(c.source.work))}</p>${c.portraitNote ? `<p class="fw-note">${safe(t(c.portraitNote))}</p>` : ''}
-        </div>
-        <div class="fw-profile-state" data-fw-profile-state>${profileStateMarkup(c)}</div>
-        ${portraitBlock}
-      </div>
-      ${samples[0] ? `<section class="fw-section fw-profile-quote">${samples[0]}</section>` : ''}
-      <details class="fw-details" id="fw-about" data-fw-about><summary id="fw-about-title">${safe(l.detailsH)}</summary><p>${safe(t(c.persona))}</p>${c.voice ? `<h3>${safe(l.voiceH)}</h3><p>${safe(t(c.voice))}</p>` : ''}${samples.slice(1).join('')}</details>
-      ${appears ? `<section class="fw-section"><h2>${l.appearH}</h2><div class="fw-appearances">${appears}</div></section>` : ''}
-    </article>
-  </main>`;
+ const l=L(),from=globalThis.history?.state?.from,fromStory=storyReturnUrl(from);
+ const fromChat=characterReturnUrl(from)?.startsWith('/play/')?characterReturnUrl(from):null;
+ const fromDirectory=characterDirectoryReturn(globalThis.history?.state?.discoveryReturn)||characterDirectoryReturn(from);
+ const returnUrl=fromStory||fromDirectory||fromChat||'/characters',returnLabel=fromStory?l.storiesNav:fromDirectory?l.profileBack:fromChat?l.chatBack:l.profileBack;
+ const samples=(c.voice?.samples||[]).map(sample=>`<blockquote class="fw-quote"><p>${safe(quoted(t(sample)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(sample.from)||workName(c.source.work))}</cite></blockquote>`);
+ const primaryStory=storiesForCharacter(c.id)[0],profile=characterById.get(c.chatId),publicIntro=profile?(getLang()==='zh'?profile.description_zh||profile.description:profile.description):t(c.voice);
+ const portrait=`<div class="fw-profile-portrait${characterArt(c)?' fw-profile-composite':''}"><div class="fw-profile-scene">${sceneArt(c)}<img id="fw-portrait-main" class="fw-portrait-figure" src="${safe(c.portrait)}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span></div></div>`;
+ const view=profileView(c,currentHelpers?.account);
+ return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="profile" data-fw-character="${safe(c.id)}">${mobileBar()}<a class="fw-back" data-fw-back data-full-info href="${safe(returnUrl)}">‹ ${safe(returnLabel)}</a><article class="fw-profile">
+ <section class="fw-profile-hero" aria-labelledby="fw-profile-name" style="--fw-hero-image:url('${safe(characterArt(c)?.background||c.portrait)}')"><div class="fw-profile-top"><div class="fw-profile-head"><div class="fw-character-meta"><p class="fw-eyebrow">${safe(primaryStory?.role?t(primaryStory.role):workName(c.source.work))}</p><span class="fw-capability">${safe(c.chat?l.chatOnly:l.storyAppearance)}</span></div><h1 id="fw-profile-name">${safe(t(c.name))}</h1><p class="fw-tagline">${safe(t(c.tagline))}</p>${publicIntro?`<p class="fw-public-intro">${safe(publicIntro)}</p>`:''}<p class="fw-persona">${primaryStory?`<a data-fw-story-source data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a>`:safe(workName(c.source.work))}</p>${samples[0]?`<div class="fw-profile-quote">${samples[0]}</div>`:''}${c.portraitNote?`<p class="fw-note fw-portrait-source">${safe(t(c.portraitNote))}</p>`:''}</div><div class="fw-profile-state" data-fw-profile-state>${profileStateMarkup(c,currentHelpers?.account,view)}</div>${portrait}</div></section>
+ <div data-fw-related-state>${profileRelatedMarkup(c,currentHelpers?.account,view)}</div>
+ <details class="fw-details" id="fw-about" data-fw-about><summary id="fw-about-title">${safe(l.detailsH)}</summary><p>${safe(t(c.persona))}</p>${c.voice?`<h3>${safe(l.voiceH)}</h3><p>${safe(t(c.voice))}</p>`:''}${samples.slice(1).join('')}</details></article></main>`;
 }
 
 // Read-only migration: retain the old prototype key without assigning it new semantics.
@@ -380,7 +426,7 @@ function missingMarkup(world = false) {
  const l = L(), title = world ? l.missingWorld : l.missingCharacter;
  return `<main class="fw-page" data-no-i18n data-fw-page="missing">${mobileBar()}<section class="fw-missing"><h1 tabindex="-1">${safe(title)}</h1><p>${safe(l.missingGuide)}</p><a class="fw-btn" href="${world ? '/' : '/characters'}">${safe(world ? l.storiesNav : l.profileBack)} →</a></section></main>`;
 }
-const focusAttributes = ['id','data-sd-lang','data-fw-world-select','data-fw-chat','data-fw-chat-entry','data-fw-story-entry','data-fw-story-source','data-fw-back'];
+const focusAttributes = ['id','data-sd-lang','data-fw-world-select','data-fw-chat','data-fw-chat-entry','data-fw-story-entry','data-fw-story-source','data-fw-back','data-fw-starter'];
 function rememberFocus() {
  const node = document.activeElement;
  const attribute = focusAttributes.find(key => node?.hasAttribute?.(key));
@@ -401,6 +447,16 @@ function restoreFocus(saved) {
  return true;
 }
 function bindCommon() {
+ const profilePage=document.querySelector('[data-fw-page="profile"]');
+ profilePage?.addEventListener('click',event=>{
+  const jump=event.target.closest?.('[data-fw-story-jump]');
+  if(!jump||!profilePage.contains(jump))return;
+  event.preventDefault();event.stopPropagation();
+  const target=profilePage.querySelector('#fw-stories'),heading=target?.querySelector('h2');
+  if(!target||!heading)return;
+  heading.tabIndex=-1;heading.focus({preventScroll:true});
+  target.scrollIntoView({block:'start',behavior:globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'instant':'smooth'});
+ });
  document.querySelector('[data-fw-chat]')?.addEventListener('click', () => { changeLibrary({chat:!libFilter.chat}); renderRoute('/characters'); document.querySelector('[data-fw-chat]')?.focus({preventScroll:true}); });
  document.querySelector('[data-fw-world-select]')?.addEventListener('change', e => { changeLibrary({world:e.target.value}); renderRoute('/characters'); document.querySelector('[data-fw-world-select]')?.focus({preventScroll:true}); });
  document.querySelector('.fw-character-feature input')?.addEventListener('input', e => { featuredDraft = e.target.value; });
@@ -417,6 +473,7 @@ function bindCommon() {
  document.querySelector('[data-fw-export]')?.addEventListener('click',exportDrafts);
 }
 function renderRoute(path) {
+ captureProfileDraft();
  const draft = document.querySelector('.fw-character-feature input');
  if (draft) featuredDraft = draft.value;
  let markup, title;
@@ -438,6 +495,7 @@ function renderRoute(path) {
   hero.querySelector('input').value = featuredDraft;
  }
  // Shared shell hydration marks the canonical character navigation item.
+ const profileCard=cardById(document.querySelector('[data-fw-character]')?.dataset.fwCharacter);if(profileCard)bindProfileEntry(profileCard);
  bindCommon(); document.title = `${title} · StoryDate`; return true;
 }
 function bindLangRerender() {
@@ -465,6 +523,7 @@ function bindLangRerender() {
 }
 export function show(path,helpers) {
  const owner = helpers.account?.user?.uid || null;
+ setProfileDraftOwner(owner);
  if (owner !== featuredOwner) { featuredDraft = ''; featuredOwner = owner; const input = document.querySelector('.fw-character-feature input'); if (input) input.value = ''; }
  currentHelpers = helpers; ensureStyles();
  if (path === '/') return false;

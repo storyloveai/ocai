@@ -15,7 +15,7 @@ const input=f=>f.document.querySelector('#session-input');
 function edit(f,text,target=input(f)){
   target.value=text;target.dispatchEvent(new f.window.Event('input',{bubbles:true}));
 }
-async function reload({path,entries}){
+async function reload({path,entries,configured=false}){
   // The existing fixture owns the fresh-app worker lifecycle. Add a read-only
   // composer snapshot to its result instead of booting a second app beside it.
   const worker=new Worker(`
@@ -27,7 +27,7 @@ async function reload({path,entries}){
       choices:globalThis.document?.querySelectorAll('[data-banner-use],[data-banner-keep]').length||0,
       hint:globalThis.document?.querySelector('[data-banner-reply]')?.textContent||''});
     import(workerData.fixture).catch(error=>post({error:error.stack}));
-  `,{eval:true,workerData:{fixture:new URL('./fixtures/character-loop-dom.mjs',import.meta.url).href,path,entries}});
+  `,{eval:true,workerData:{fixture:new URL('./fixtures/character-loop-dom.mjs',import.meta.url).href,path,entries,configured}});
   try{
     const result=await new Promise((resolve,reject)=>{worker.once('message',resolve);worker.once('error',reject);worker.once('exit',code=>{if(code)reject(Error('reload worker exited '+code));});});
     assert.equal(result.error,undefined,result.error);return result;
@@ -160,6 +160,74 @@ test('character replies preserve device drafts and hand off featured text once w
       }finally{globalThis.fetch=fetchBefore;}
     });
 
+    await t.test('profile drafts prefill a new available conversation without sending either prose or suggestion requests',async()=>{
+      const target='sgc-004',chatKey='ooc-session-v2-'+target,deviceKey='ooc-composer-draft-'+target+'-main';
+      const text='我想先问你一件事。'.repeat(40),expected=text.slice(0,300);
+      const restored=await reload({path:'/play/'+target+'?source=profile&say='+encodeURIComponent('旧自动发送参数不得重放')+'&draft='+encodeURIComponent(text)+'#reply',entries:[['ooc-suggestions-visible','true']],configured:true});
+      assert.equal(restored.input,expected);assert.equal(restored.search,'?source=profile');assert.equal(restored.hash,'#reply');
+      const values=new Map(restored.entries);
+      assert.equal(values.has(chatKey),false,'a first profile draft creates no conversation messages');
+      assert.equal(JSON.parse(values.get(deviceKey)).text,expected);assert.equal(cloudKey(deviceKey),false);
+      assert.deepEqual(restored.requests.filter(([path])=>path.startsWith('/api/')),[['/api/config','GET']],'available AI and a stored expanded preference cannot send on profile entry');
+      const reloaded=await reload({path:'/play/'+target+'?source=profile#reply',entries:restored.entries,configured:true});
+      assert.equal(reloaded.input,expected);assert.equal(new Map(reloaded.entries).has(chatKey),false);
+      assert.deepEqual(reloaded.requests.filter(([path])=>path.startsWith('/api/')),[['/api/config','GET']]);
+      const blank=await reload({path:'/play/'+id+'?draft=%20%20&say=must-not-send',entries:[[key,JSON.stringify(existing)],['ooc-suggestions-visible','true']],configured:true});
+      assert.equal(blank.input,'');assert.equal(blank.search,'');
+      assert.deepEqual(JSON.parse(new Map(blank.entries).get(key)),existing);
+      assert.deepEqual(blank.requests.filter(([path])=>path.startsWith('/api/')),[['/api/config','GET']],'a blank draft still suppresses the legacy send and automatic suggestions');
+    });
+
+    await t.test('profile drafts keep an existing unsent choice literal across language, route and reload',async()=>{
+      const prior=read(f,key),before=apiCalls(f).length,original='  原来的草稿，不要覆盖 🥀。  ',incoming='我想从这里开口。';
+      await f.go('/play/'+id);edit(f,original);
+      await f.go('/play/'+id+'?draft='+encodeURIComponent(incoming)+'&say=must-not-send');
+      assert.equal(input(f).value,original);assert.equal(read(f,draftKey).incoming,incoming);assert.equal(f.location.search,'');
+      const {setLang}=await import('../dist/assets/site-i18n.js');
+      for(const lang of ['en','zh']){
+        setLang(lang);
+        assert.equal(input(f).value,original);assert.equal(read(f,draftKey).incoming,incoming);
+        assert.ok(f.document.querySelector('[data-banner-use]'));assert.ok(f.document.querySelector('[data-banner-keep]'));
+      }
+      const restored=await reload({path:'/play/'+id,entries:[...f.values]});
+      assert.equal(restored.input,original);assert.equal(restored.choices,2);assert.ok(restored.hint.includes(incoming));
+      await f.go('/characters/sg-diaochan');await f.go('/play/'+id);
+      assert.equal(input(f).value,original);await f.click('[data-banner-use]');
+      assert.equal(input(f).value,incoming);assert.equal(read(f,draftKey).incoming,undefined);
+      assert.deepEqual(read(f,key),prior);assert.deepEqual(apiCalls(f).slice(before),[],'importing and choosing a profile draft remains a local action');
+    });
+
+    await t.test('a failed profile hand-off consumes its URL only after Use or Keep saves successfully, without replay on reload',async()=>{
+      const set=f.storage.setItem,before=apiCalls(f).length;
+      for(const action of ['use','keep']){
+        const original=read(f,draftKey),incoming='存储恢复前不要丢掉的新原话-'+action+'。';
+        f.storage.setItem=(key,value)=>{if(key===draftKey)throw Error('Device storage full');set(key,value);};
+        try{
+          await f.go('/play/'+id+'?source=profile&draft='+encodeURIComponent(incoming)+'&say=must-not-send#reply');
+          assert.equal(new URLSearchParams(f.location.search).get('draft'),incoming);
+          assert.deepEqual(read(f,draftKey),original,'a failed write leaves the previous durable draft intact');
+          assert.ok(f.document.querySelector('[data-banner-reply]').textContent.includes(incoming));
+          assert.match(f.document.querySelector('[data-banner-reply]').textContent,/无法保存|could not save/);
+          await f.click('[data-banner-'+action+']');
+          assert.equal(new URLSearchParams(f.location.search).get('draft'),incoming,'a failed Use or Keep cannot consume the recoverable URL');
+          assert.deepEqual(read(f,draftKey),original);
+          await f.go(f.location.pathname+f.location.search+f.location.hash);
+          assert.ok(f.document.querySelector('[data-banner-'+action+']'),'reopening the retained URL restores the unresolved choice');
+          assert.deepEqual(apiCalls(f).slice(before),[]);
+        }finally{f.storage.setItem=set;}
+        await f.click('[data-banner-'+action+']');
+        const expected=action==='use'?incoming:original.text;
+        assert.equal(input(f).value,expected);assert.equal(read(f,draftKey).text,expected);
+        assert.equal(read(f,draftKey).incoming,undefined);
+        assert.equal(f.location.search,'?source=profile','a recovered save consumes both draft and conflicting say');assert.equal(f.location.hash,'#reply');
+        const restored=await reload({path:f.location.pathname+f.location.search+f.location.hash,entries:[...f.values]});
+        assert.equal(restored.input,expected);assert.equal(restored.choices,0,'a completed choice never reappears on reload');
+        assert.equal(restored.search,'?source=profile');assert.equal(restored.hash,'#reply');
+        assert.equal(JSON.parse(new Map(restored.entries).get(draftKey)).incoming,undefined);
+        assert.deepEqual(restored.requests.filter(([path])=>path.startsWith('/api/')),[['/api/config','GET']]);
+      }
+    });
+
     await t.test('a new demo conversation keeps the first-reply behavior, and explicit sends consume a draft once',async()=>{
       const opening='第一次来潮声影院。',chatKey='ooc-session-v2-xc-zhiyao',deviceKey='ooc-composer-draft-xc-zhiyao-main';
       const before=apiCalls(f).length;
@@ -179,6 +247,20 @@ test('character replies preserve device drafts and hand off featured text once w
       assert.deepEqual(restored.requests.filter(([path])=>path.startsWith('/api/')),[['/api/config','GET']]);
     });
 
+    await t.test('an explicit send consumes a profile draft once using the existing conversation',async()=>{
+      const chatKey='ooc-session-v2-xc-zhiyao',deviceKey='ooc-composer-draft-xc-zhiyao-main';
+      const before=read(f,chatKey),text='这句由我确认后再发送。',requests=apiCalls(f).length;
+      await f.go('/play/xc-zhiyao?draft='+encodeURIComponent(text));
+      assert.equal(input(f).value,text);assert.deepEqual(read(f,chatKey),before);
+      await f.click('[data-control="send"]');
+      await waitFor(()=>read(f,chatKey)?.length===before.length+2&&!read(f,chatKey).at(-1)?.streaming,'explicit profile draft send did not complete',5000);
+      assert.equal(read(f,chatKey).filter(message=>message.role==='user'&&message.text===text).length,1);
+      assert.equal(read(f,deviceKey),null);assert.equal(input(f).value,'');
+      await f.go('/characters/xc-zhiyao');await f.go('/play/xc-zhiyao');
+      assert.equal(input(f).value,'');assert.equal(read(f,chatKey).filter(message=>message.role==='user'&&message.text===text).length,1);
+      assert.deepEqual(apiCalls(f).slice(requests),[],'an explicit local demo send does not contact a model or wallet');
+    });
+
     await t.test('branch switches and a stale former input cannot overwrite another branch draft',async()=>{
       await f.go('/play/oc-shen-yanzhou');await waitFor(()=>input(f),'original character did not mount');
       edit(f,'只留在原来走向里的草稿。');
@@ -187,6 +269,10 @@ test('character replies preserve device drafts and hand off featured text once w
       assert.equal(input(f).value,'');
       const active=read(f,'ooc-session-v2-oc-shen-yanzhou-threads').active;
       assert.notEqual(active,'main');
+      await f.go('/play/oc-shen-yanzhou?draft='+encodeURIComponent('只交给新走向的回复。'));
+      assert.equal(input(f).value,'只交给新走向的回复。');
+      assert.equal(read(f,'ooc-composer-draft-oc-shen-yanzhou-'+active).text,input(f).value);
+      assert.equal(read(f,originalKey).text,'只留在原来走向里的草稿。','profile imports respect the active branch');
       edit(f,'新走向自己的草稿。');
       const branchKey='ooc-composer-draft-oc-shen-yanzhou-'+active;
       edit(f,'旧页面的迟到输入。',previousInput);
@@ -229,9 +315,18 @@ test('character replies preserve device drafts and hand off featured text once w
       f.window.history.replaceState({},'', '/play/'+id);
       interaction.show('/play/'+id,helpers());edit(f,'Alice private draft');const stale=input(f);
       assert.equal(account.read(draftKey,null).text,'Alice private draft');
-      await subscribe({uid:'bob'});edit(f,'late Alice draft',stale);
+      const load=client.load;let finishBob;
+      client.load=()=>new Promise(resolve=>finishBob=resolve);
+      const changing=subscribe({uid:'bob'});
+      f.window.history.replaceState({},'', '/play/'+id+'?source=profile&draft='+encodeURIComponent('Bob incoming draft')+'&say=must-not-send');
+      interaction.show('/play/'+id,helpers());
+      assert.equal(new URLSearchParams(f.location.search).get('draft'),'Bob incoming draft','a restoring account cannot consume or assign the profile reply');
+      assert.equal(input(f).value,'');
+      edit(f,'late Alice draft',stale);finishBob([[key,[{role:'user',text:'bob existing conversation'}]]]);await changing;client.load=load;
       assert.equal(account.read(draftKey,null),null,'old helpers never write into Bob’s scope');
-      interaction.show('/play/'+id,helpers());assert.equal(input(f).value,'');
+      interaction.show('/play/'+id,helpers());assert.equal(input(f).value,'Bob incoming draft');
+      assert.equal(f.location.search,'?source=profile','only the restored owner consumes draft and conflicting legacy say');
+      assert.equal(account.read(draftKey,null).text,'Bob incoming draft');
       edit(f,'Bob private draft');await subscribe({uid:'alice'});
       interaction.show('/play/'+id,helpers());assert.equal(input(f).value,'Alice private draft');
       await subscribe({uid:'bob'});interaction.show('/play/'+id,helpers());assert.equal(input(f).value,'Bob private draft');

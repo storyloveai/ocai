@@ -60,12 +60,20 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  const reference=await import('../dist/assets/reference.js');
  const {closeTitlePreview}=await import('../dist/assets/title-preview.js');
  const {setLang}=await import('../dist/assets/site-i18n.js');
- const helpers={categories:['Main','New Ranking','Rankings','Today'],data:reference.extraStories,read:(_key,fallback)=>fallback,save:(key,value)=>writes.push([key,value]),navigate(){},show(){}};
+ const helpers={categories:['Main','New Ranking','Rankings','Today'],data:reference.extraStories,read:(key,fallback)=>key==='ooc-favorites'?['xichuan']:fallback,save:(key,value)=>writes.push([key,value]),navigate(){},show(){}};
  const storyIds=[...linkedStoryCatalog.map(s=>s.id),'three-kingdoms-ink',...storydateCharacters.filter(c=>c.story_id).map(c=>c.story_id)];
  const checkCast=(host,id)=>{
   const expected=charactersForStory(id).map(c=>'/characters/'+c.id);
   assert.deepEqual([...host.querySelectorAll('[data-story-characters] a')].map(a=>a.getAttribute('href')),expected,id);
   for(const link of host.querySelectorAll('[data-story-character]')){
+   if(link.classList.contains('story-character-card')){
+    const card=CHARACTER_CARDS.find(card=>card.id===link.dataset.storyCharacter);
+    assert.equal(link.querySelector('[data-story-character-name]').textContent,card.name.zh);
+    assert.equal(link.querySelector('.story-character-art>img:last-child').getAttribute('src'),card.portrait,'the Story uses the same character artwork as the directory');
+    assert.equal(link.querySelector('[data-story-character-capability]').textContent,card.chat?'可对话 →':'故事出场','the cast never invents a chat capability');
+    assert.ok(link.querySelector('[data-story-character-tagline]').textContent);
+    continue;
+   }
    const avatar=link.querySelector('[data-story-avatar]');assert.ok(avatar);
    assert.match(avatar.getAttribute('style'),/width:40px;height:40px;overflow:hidden/);
    assert.match(link.getAttribute('style'),/min-height:44px/);
@@ -74,7 +82,11 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  for(const id of storyIds){
   const record=storyById(id);setPath(record.informationUrl);assert.equal(reference.show(location.pathname,helpers),true);
   const detail=document.querySelector('.replica-story-detail');assert.ok(detail,id);checkCast(detail,id);
+  assert.equal(document.querySelectorAll('.story-detail-header .story-detail-language').length,1,'phone Story details retain one language control instead of losing the utility with the sidebar');
   const play=detail.querySelectorAll('[data-story-play]');assert.equal(play.length,1,id);assert.equal(play[0].getAttribute('href'),record.playUrl);
+  assert.ok(play[0].closest('.story-entity-hero'),'the one play action is available beside the story identity, before the cast');
+  assert.equal(detail.querySelector('.story-play-bar'),null,'the same play action is not repeated in a second sticky footer');
+  assert.equal(detail.querySelector('.story-bookmark').getAttribute('aria-pressed'),String(id==='xichuan'),'moving the bookmark preserves the existing saved state without writing it');
   assert.equal(play[0].getAttribute('target'),record.playUrl.startsWith('/assets/')?'_top':null);
   assert.equal(reference.preview(record.informationUrl,helpers),true);
   const dialog=document.getElementById('title-preview');checkCast(dialog,id);
@@ -88,7 +100,11 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  setPath('/story/xichuan');history.state={characterReturn:'/characters/xc-shencheng'};reference.show(location.pathname,helpers);
  assert.equal(document.querySelector('.shell-page-header a').getAttribute('href'),'/characters/xc-shencheng');
  setLang('en',{win:globalThis,doc:document});
- assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] span').textContent,'Xia Zhiyao');
+ assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] [data-story-character-name]').textContent,'Xia Zhiyao');
+ assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] [data-story-character-capability]').textContent,'Chat available →');
+ assert.equal(document.querySelector('[data-story-character="xc-shencheng"] [data-story-character-capability]').textContent,'In the story');
+ assert.match(document.querySelector('[data-story-format]').textContent,/Galgame/);
+ assert.equal(document.querySelector('.story-detail-language [data-sd-lang="en"]').getAttribute('aria-pressed'),'true');
  assert.equal(document.querySelector('[data-story-title]').textContent,storyById('xichuan').title.en);
  history.state={characterReturn:'https://outside.example/'};reference.show(location.pathname,helpers);
  assert.equal(document.querySelector('.shell-page-header a').getAttribute('href'),'/');
