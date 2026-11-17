@@ -219,8 +219,17 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.click('[data-fw-chat-entry]');
       await waitFor(() => f.document.querySelector('#session-input'), 'chat did not open from the filtered profile');
       assert.equal(f.history.state.discoveryReturn, directoryUrl);
+      await f.click('[data-xichuan-entry]');
+      const chatPeer = f.peer(); chatPeer.send({type: 'xc-ready'});
+      assert.equal(f.history.state.discoveryReturn, directoryUrl);
+      assert.equal(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), '/play/xc-zhiyao', 'a story opened from chat returns to the same conversation');
+      await f.click('[data-xichuan-return]');
+      await waitFor(() => f.document.querySelector('#session-input'), 'story did not return to the same chat');
       await f.click('a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'chat did not return to the same profile');
-      assert.equal(profile().querySelector('.fw-back').getAttribute('href'), '/play/xc-zhiyao', 'a profile opened from chat returns to that chat');
+      assert.equal(profile().querySelector('.fw-back').getAttribute('href'), directoryUrl, 'the complete story/chat loop keeps a usable return to the original filtered directory');
+      assert.match(profile().querySelector('.fw-back').textContent, /返回角色/);
+      await f.click('.fw-back'); assertDirectory();
+      await f.click('#fw-lib-results a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'the preserved directory did not reopen its profile');
       await f.click('[data-fw-story-entry]');
       const peer = f.peer(); peer.send({type: 'xc-ready'});
       assert.equal(f.history.state.discoveryReturn, directoryUrl);
@@ -229,7 +238,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.click('[data-fw-chat-entry]'); await waitFor(() => f.document.querySelector('#session-input'), 'the source profile did not reopen the same chat');
       await f.click('a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'story/chat chain did not return to profile');
       const reloadedProfile = await reload({path: '/characters/xc-zhiyao', entries: [...f.values], historyState: f.history.state});
-      assert.equal(reloadedProfile.profileBack, '/play/xc-zhiyao', 'a profile reload preserves its immediate chat return');
+      assert.equal(reloadedProfile.profileBack, directoryUrl, 'a profile reload still exits the chat/profile loop to the original filtered directory');
       assert.equal(reloadedProfile.historyState.discoveryReturn, directoryUrl, 'the earlier filtered directory remains available in native history');
       f.history.go(directoryHistoryLength - f.history.length);
       await waitFor(() => f.document.querySelector('#fw-search'), 'history did not return to the original filtered directory'); assertDirectory();
@@ -239,6 +248,16 @@ test('real app connects profiles, local chat, current story memory and reloads t
       assert.equal(new URLSearchParams(reloadedDirectory.search).get('source'), 'home');
       assert.deepEqual(f.requests.filter(([path]) => path.startsWith('/api/')), [['/api/config', 'GET']], 'browsing and unsent local chat never call a model or wallet');
       await f.go('/character?world=xichuan');
+    });
+
+    await t.test('direct chat and real Story sources remain meaningful without accepting unsafe directory returns', async () => {
+      const directory = '/characters?world=xichuan&chat=1&q=夏#cast';
+      for (const discoveryReturn of [undefined, '//outside.example/characters', 'https://outside.example/characters', '/characters/xc-zhiyao']) {
+        const restored = await reload({path: '/characters/xc-zhiyao', historyState: {from: '/play/xc-zhiyao', ...(discoveryReturn ? {discoveryReturn} : {})}});
+        assert.equal(restored.profileBack, '/play/xc-zhiyao', 'without a safe directory source, a direct chat entry returns to its conversation');
+      }
+      const fromStory = await reload({path: '/characters/xc-zhiyao', historyState: {from: '/story/xichuan', discoveryReturn: directory}});
+      assert.equal(fromStory.profileBack, '/story/xichuan', 'a character opened from the real Story still returns to that Story before an older directory');
     });
 
     await t.test('unknown and prototype world URLs cannot revive earlier filters, even after a refresh', async () => {
@@ -524,7 +543,7 @@ async function verifyLegacyProgress(f) {
   const before = f.writes.length;
   show('/characters/xc-zhiyao', helpers);
   assert.match(f.document.querySelector('[data-fw-progress]').textContent, /答应|promis/i);
-  assert.match(f.document.querySelector('[data-fw-story-entry]').textContent, /继续|continu/i);
+  assert.match(f.document.querySelector('[data-fw-story-entry]').textContent, /回到|Return/i);
   assert.equal(f.values.get('xc.auto'), legacy);
   assert.equal(f.values.has(XICHUAN_KEY), false, 'viewing a legacy save does not silently migrate it');
   assert.equal(f.writes.length, before, 'profile rendering never mutates existing keys');

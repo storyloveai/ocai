@@ -46,7 +46,8 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.equal(document.querySelectorAll('.suggestion-send').length,3,'opening suggestions restores the existing cached actions');
   assert.deepEqual(values.get('ooc-session-v2-'+id).at(-1).suggestions,cachedBefore);
   assert.equal(suggestionRequests.length,0,'opening cached suggestions makes no provider request');
-  assert.equal(document.querySelectorAll('.message-tools button').length,4);
+  assert.equal(document.querySelectorAll('.message-tools button').length,3);
+  assert.equal(document.querySelectorAll('.message-tools [data-options]').length,1,'each reply has one named edit action, without an identical options action');
   assert.ok(document.querySelector('[data-control=model] img'),'model identity icon stays in the captured shell');
   assert.ok(!document.querySelector('#session-messages [data-mode]'),'live model configuration stays out of story text');
   document.querySelector('[data-edit="0"]').click();

@@ -39,7 +39,7 @@ const copy = {
   chatCta: "开始聊天",
   continueChat: "继续聊天",
   storyCta: "进入故事",
-  continueStory: "继续故事",
+  continueStory: "回到故事",
   profileBack: "返回角色",
   personaH: "人物背景",
   voiceH: "听 TA 说话",
@@ -101,7 +101,7 @@ const copy = {
   chatCta: "Start chatting",
   continueChat: "Continue chatting",
   storyCta: "Enter the story",
-  continueStory: "Continue the story",
+  continueStory: "Return to story",
   profileBack: "Back to characters",
   personaH: "Background",
   voiceH: "In their own words",
@@ -321,8 +321,9 @@ function profileMarkup(c) {
   const l = L();
   const from = globalThis.history?.state?.from, fromStory = storyReturnUrl(from);
   const fromChat = characterReturnUrl(from)?.startsWith('/play/') ? characterReturnUrl(from) : null;
-  const returnUrl = fromStory || fromChat || characterDirectoryReturn(globalThis.history?.state?.discoveryReturn) || characterDirectoryReturn(from) || '/characters';
-  const returnLabel = fromStory ? l.storiesNav : fromChat ? l.chatBack : l.profileBack;
+  const fromDirectory = characterDirectoryReturn(globalThis.history?.state?.discoveryReturn) || characterDirectoryReturn(from);
+  const returnUrl = fromStory || fromDirectory || fromChat || '/characters';
+  const returnLabel = fromStory ? l.storiesNav : fromDirectory ? l.profileBack : fromChat ? l.chatBack : l.profileBack;
   const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>${safe(quoted(t(s)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(s.from) || workName(c.source.work))}</cite></blockquote>`);
   const stories = storiesForCharacter(c.id), primaryStory = stories[0];
   const appears = stories.slice(1).map(a => `<a class="fw-appearance" data-full-info href="${safe(a.informationUrl)}"><strong>${safe(t(a.title))}</strong><span aria-hidden="true">↗</span></a>`).join('');

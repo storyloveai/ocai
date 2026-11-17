@@ -164,6 +164,7 @@ test('chat settings expose actual controls in both layouts without changing conv
       assert.equal(toolbar.querySelector('[data-character-recap],[data-character-memories],[data-character-branches],[data-character-encounters]'),null);
       assert.equal(f.document.querySelector('[data-control="suggest"]').getAttribute('aria-pressed'),'false');
       assert.equal(f.document.querySelector('.session-suggestions'),null);
+      assert.match(f.document.querySelector('.sg-chat-intro .character-prose').textContent,/潮声影院|Tidesound Cinema/,'a fresh conversation retains its authored first meeting');
       const bridge=f.document.querySelector('.xc-chat-bridge');
       assert.equal(bridge.querySelectorAll('a').length,1);
       assert.equal(bridge.querySelector('a').getAttribute('href'),'/play/xichuan');
@@ -203,6 +204,29 @@ test('chat settings expose actual controls in both layouts without changing conv
       f.values.set(progressKey,JSON.stringify(snapshot));await f.go('/play/xc-zhiyao');await waitFor(()=>input(f),'saved story chat did not mount');
       for(const lang of ['zh','en']){language(lang);const progress=f.document.querySelector('[data-xichuan-progress]');assert.match(progress.textContent,lang==='zh'?/第 2 章进行中.*答应/:/Chapter 2 in progress.*promis/);assert.equal(progress.getAttribute('title'),progress.textContent,'the complete progress remains available in the compact strip');assert.equal(f.document.querySelector('#session-messages').textContent.includes(progress.textContent),false,'the opening does not repeat story status');assert.equal(f.document.querySelectorAll('.xc-chat-bridge [data-xichuan-entry]').length,1);}
       assert.deepEqual(JSON.parse(f.values.get(progressKey)),snapshot,'simplifying progress never writes a game save');
+    });
+    await t.test('returning Zhiyao conversations keep identity and history without replaying an opening or duplicate editing tools',async()=>{
+      await f.go('/play/xc-zhiyao');await waitFor(()=>input(f),'the returning chat did not mount');
+      const before=JSON.parse(f.values.get('ooc-session-v2-xc-zhiyao'));
+      const draft='先留在这里，还没有发送。';edit(f,draft);
+      for(const lang of ['zh','en']){
+        language(lang);
+        const opening=f.document.querySelector('.sg-chat-intro');
+        assert.equal(opening.querySelector('h2').textContent,lang==='zh'?'夏知遥':'Xia Zhiyao');
+        assert.equal(opening.querySelector('.character-prose').textContent,'','saved dialogue does not replay the first meeting or the synthetic story-return line');
+        for(const message of before)assert.ok(f.document.querySelector('#session-messages').textContent.includes(message.text),'the original message remains readable');
+        assert.equal(f.document.querySelectorAll('.message-tools [data-options]').length,1);
+        assert.equal(f.document.querySelectorAll('.message-tools button').length,3,'copy, regenerate and one explicit edit action remain');
+        assert.equal(input(f).value,draft,'language changes preserve the unsent draft');
+      }
+      await f.click('.message-tools [data-options]');
+      assert.equal(openDialog(f).querySelector('textarea[aria-label="Edit message"]').value,before[1].text,'the single edit action opens the original reply');
+      openDialog(f).querySelector('textarea').value='这是一句明确编辑过的回复。';await f.click('.interaction-modal[open] .save');
+      assert.equal(JSON.parse(f.values.get('ooc-session-v2-xc-zhiyao'))[1].text,'这是一句明确编辑过的回复。');
+      assert.equal(input(f).value,draft,'editing a reply does not consume the composer draft');
+      assert.equal(f.document.querySelector('.sg-chat-intro .character-prose').textContent,'','editing does not reintroduce the opening');
+      await f.click('.message-tools [data-options]');openDialog(f).querySelector('textarea').value=before[1].text;await f.click('.interaction-modal[open] .save');
+      assert.deepEqual(JSON.parse(f.values.get('ooc-session-v2-xc-zhiyao')),before,'only the explicit reply edit writes messages and it can be restored');
     });
     await t.test('published author tips share the chat-help dialog as escaped, untranslated original text',async () => {
       await f.go('/play/'+published.publishedId);

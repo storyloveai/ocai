@@ -28,15 +28,17 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     .xc-header h1{font-size:16px;margin:0}.xc-header a{display:inline-flex;align-items:center;min-height:44px;padding:9px 12px;border:1px solid #3a3a3a;border-radius:8px;color:#fafafa;text-decoration:none}.xc-status{font-size:12px;color:#bbb;margin-left:auto}
     .xc-transfer{padding:12px 16px;background:#25232b}.xc-transfer button{margin-left:10px;padding:8px;border:1px solid #6b626f;border-radius:8px;background:#38313b;color:#fff}
     #xichuan-frame{display:block;width:100%;height:var(--xc-frame-height,calc(100dvh - 120px));min-height:160px;border:0;background:#111522}
+    @media(max-width:1023px){[data-page="xichuan"] [data-xichuan-site-navigation]{display:none!important}[data-page="xichuan"] .shell-content{padding-bottom:0}}
     @media(max-width:600px){.xc-header{gap:8px;padding:8px 12px}.xc-status{width:100%;margin:0}}
   </style><header class="xc-header" data-no-i18n><a href="${esc(returnUrl)}" data-xichuan-return>‹ ${returnLabel()}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
   ${importable ? `<div class="xc-transfer" data-no-i18n><span data-xichuan-import-note>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}</span><button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
   <iframe id="xichuan-frame" title="${t('汐川互动故事', 'Xichuan visual novel')}" src="/assets/xichuan/index.html?site=1&lang=${lang}" allow="autoplay"></iframe>`, h, 'xichuan');
   const frame = root.querySelector('#xichuan-frame'),gameCredits=attachGameCredits(frame,account,{lang}), status = root.querySelector('.xc-status');
-  // The mobile site footer and wrapped bilingual header have real heights.
-  // Fit the story between them instead of clipping its controls under a fixed
-  // subtraction. No game state or iframe contract is changed by this layout.
+  // Reading keeps one exit in the host header; the mobile site navigation is
+  // hidden here, as it is in chat. Measure actual remaining bars rather than
+  // reserving their old space. The game state and iframe contract stay intact.
   const bottomBars = [...root.querySelectorAll('a[href="/history"]')].map(a => a.closest('.fixed')).filter(Boolean);
+  for (const bar of bottomBars) bar.setAttribute('data-xichuan-site-navigation','');
   const fitFrame = () => {
     if (!active || !frame.isConnected || !frame.getBoundingClientRect) return;
     const height = window.visualViewport?.height || window.innerHeight;
@@ -118,5 +120,5 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
 }
 export function zhiyaoStoryLink(h, lang) {
   const raw = h.read(XICHUAN_KEY, {}), played = Boolean(latestSave(raw)), progress = progressText(raw, lang);
-  return `<aside class="xc-chat-bridge" data-no-i18n><p data-xichuan-progress title="${esc(progress)}">${esc(progress)}</p><a href="/play/xichuan" data-xichuan-entry>${lang === 'zh' ? played ? '继续故事 →' : '进入故事 →' : played ? 'Continue story →' : 'Enter story →'}</a></aside>`;
+  return `<aside class="xc-chat-bridge" data-no-i18n><p data-xichuan-progress title="${esc(progress)}">${esc(progress)}</p><a href="/play/xichuan" data-xichuan-entry>${lang === 'zh' ? played ? '回到故事 →' : '进入故事 →' : played ? 'Return to story →' : 'Enter story →'}</a></aside>`;
 }
