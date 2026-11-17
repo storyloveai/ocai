@@ -117,6 +117,6 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   document.title = t('汐川的第七个春天', 'The Seventh Spring of Xichuan') + ' · StoryDate';
 }
 export function zhiyaoStoryLink(h, lang) {
-  const raw = h.read(XICHUAN_KEY, {}), played = Boolean(latestSave(raw));
-  return `<aside class="xc-chat-bridge" data-no-i18n style="flex-shrink:0;margin:8px 12px;padding:10px 12px;border:1px solid #333;border-radius:8px;font-size:13px"><p style="margin:0 0 8px">${esc(progressText(raw, lang))}</p><a href="/play/xichuan" data-xichuan-entry style="display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;background:#fafafa;color:#171717;border-radius:8px;font-weight:500;text-decoration:none">${lang === 'zh' ? played ? '继续她的故事 →' : '走进她的故事 →' : played ? 'Continue her story →' : 'Step into her story →'}</a><small style="display:block;color:#aaa;margin-top:6px">${lang === 'zh' ? '故事里的选择会带回聊天。聊天不会改写游戏选项和存档。' : 'Story choices carry back to chat. Chat does not change game choices or saves.'}</small></aside>`;
+  const raw = h.read(XICHUAN_KEY, {}), played = Boolean(latestSave(raw)), progress = progressText(raw, lang);
+  return `<aside class="xc-chat-bridge" data-no-i18n><p data-xichuan-progress title="${esc(progress)}">${esc(progress)}</p><a href="/play/xichuan" data-xichuan-entry>${lang === 'zh' ? played ? '继续故事 →' : '进入故事 →' : played ? 'Continue story →' : 'Enter story →'}</a></aside>`;
 }

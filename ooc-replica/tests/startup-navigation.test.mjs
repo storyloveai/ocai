@@ -48,7 +48,7 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,CHARACTER_CARDS.length);
  assert.ok(document.querySelector('.fw-card[href="/characters/oc-shen-yanzhou"]'),'existing original characters remain discoverable');
  assert.ok(document.querySelector('#fw-search'),'character search stays usable before auth completes');
- assert.ok(document.querySelector('[data-fw-filter="xichuan"]'),'world filters stay mounted');
+ assert.ok(document.querySelector('[data-fw-world-select] option[value="xichuan"]'),'the real story filter stays mounted');assert.equal(document.querySelector('[data-fw-filter]'),null,'retired chips are removed rather than hidden');
  const oldLink=document.createElement('a');oldLink.href='/character?world=xichuan';document.body.append(oldLink);
  navigate('/character?world=xichuan');oldLink.remove();
  assert.equal(location.pathname,'/characters','legacy directory clicks canonicalize before quick-view interception');

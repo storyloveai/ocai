@@ -135,9 +135,9 @@ if (parentPort) {
       if (profile) {
         const state = profile.querySelector('[data-fw-profile-state]');
         if (!state || state.querySelector('[data-fw-restoring]')) return false;
-        // Xia Zhiyao's shell appears before account.init() restores its private
-        // progress. Capture only after both actual dynamic status fields mount.
-        if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('[data-fw-chat-status]') && state.querySelector('[data-fw-progress]');
+        // A new profile has no progress text. Wait for the restored account's
+        // real actions, rather than requiring empty status placeholders.
+        if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('.fw-ctas a');
         return state.childElementCount > 0;
       }
       return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input') || f.document.querySelector('[data-fw-page="characters"] #fw-lib-results') || f.document.querySelector('[data-story-characters]');
@@ -166,7 +166,7 @@ if (parentPort) {
       profileBack: f.document.querySelector('[data-fw-page="profile"] .fw-back')?.getAttribute('href'),
       directory: directory ? {
         query: directory.querySelector('#fw-search').value,
-        world: directory.querySelector('[data-fw-filter][aria-pressed="true"]').dataset.fwFilter,
+        world: directory.querySelector('[data-fw-world-select]').value,
         chat: directory.querySelector('[data-fw-chat]').getAttribute('aria-pressed') === 'true',
         cards: [...directory.querySelectorAll('.fw-card')].map(card => card.getAttribute('href')),
       } : null,

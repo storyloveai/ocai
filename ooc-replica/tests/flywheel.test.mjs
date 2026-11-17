@@ -93,6 +93,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(document.activeElement, search, 'typing keeps keyboard focus');
   };
   const language = lang => setLang(lang, {win: globalThis, doc: document});
+  const selectStory = value => {const select=document.querySelector('[data-fw-world-select]');select.querySelectorAll('option').forEach(option=>option.removeAttribute('selected'));select.querySelector('option[value="'+value+'"]').setAttribute('selected','');select.dispatchEvent(new window.Event('change',{bubbles:true}));};
 
   await t.test('home retains its canonical character entry without an extra world strip or role navigation', () => {
     assert.equal(document.querySelector('#fw-home-strip'), null);
@@ -155,7 +156,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const directory = location.pathname + location.search + location.hash;
     go('/characters/xc-zhiyao'); go(directory);
     assert.equal(feature().querySelector('input').value, unfinishedZh, 'ordinary profile browsing preserves an unsent directory draft');
-    document.querySelector('[data-fw-filter="xichuan"]').click();
+    selectStory('xichuan');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
     assert.equal(assertFeature('zh').querySelector('input').value, unfinishedZh, 'filtering preserves the unfinished reply exactly');
     choose('zh', 1);
@@ -175,7 +176,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const unfinishedEn = '  A half-written reply: what if… & why?  ';
     feature().querySelector('input').value = unfinishedEn;
     input('');
-    document.querySelector('[data-fw-filter="all"]').click();
+    selectStory('all');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
     assert.equal(assertFeature('en').querySelector('input').value, unfinishedEn);
     choose('en', 1);
@@ -231,14 +232,14 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(page('characters').querySelector('.fw-mobile-bar img'));
     assert.equal(page('characters').querySelector('.fw-nav'), null, 'the directory uses the established site navigation');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
-    document.querySelector('[data-fw-filter="xichuan"]').click();
+    selectStory('xichuan');
     assertCharacterNavigation();
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
     document.querySelector('[data-fw-chat]').click();
     assertCharacterNavigation();
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 1, 'only the established Xia Zhiyao chat is available');
     assert.ok(page('characters').querySelector('.fw-card[href="/characters/xc-zhiyao"]'));
-    document.querySelector('[data-fw-filter="all"]').click();
+    selectStory('all');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length);
     input('一盏酒');
     assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
@@ -256,13 +257,18 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
   });
 
-  await t.test('directory URL, mobile selector, bilingual story search and reset share the same state', () => {
+  await t.test('directory URL, shared story selector, bilingual search and reset share the same state', () => {
     go('/characters?source=home&world=xichuan&chat=1&q=夏知遥#cast');
+    assert.equal(page('characters').querySelector('.fw-library-heading'),null);
+    assert.equal(page('characters').querySelector('[data-fw-filter]'),null,'retired category chips are removed, not hidden');
+    assert.equal(page('characters').querySelectorAll('[data-fw-world-select]').length,1);
+    assert.equal(page('characters').querySelectorAll('.fw-count').length,1,'one result count follows the actual filters');
+    assert.ok([...document.querySelectorAll('[data-fw-world-select] option')].every(option => !/·\s*\d+\s*$/.test(option.textContent)), 'work choices contain names rather than duplicate category totals');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
     assert.equal(document.getElementById('fw-search').value, '夏知遥');
     assert.equal(document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'true');
     const beforeWorld = history.length;
-    document.querySelector('[data-fw-filter="sanguo"]').click();
+    selectStory('sanguo');
     assert.equal(history.length, beforeWorld + 1, 'a discrete world choice adds a history entry');
     assert.equal(new URL(location.href).searchParams.get('world'), 'sanguo');
     assert.equal(document.getElementById('fw-search').value, '夏知遥', 'world changes preserve the query');
@@ -277,11 +283,10 @@ test('character discovery stays useful without duplicate navigation or demo edit
     select.querySelector('option[value="xichuan"]').setAttribute('selected', '');
     select.dispatchEvent(new window.Event('change', {bubbles: true}));
     assert.equal(new URL(location.href).searchParams.get('world'), 'xichuan');
-    assert.equal(document.querySelector('[data-fw-filter="xichuan"]').getAttribute('aria-pressed'), 'true');
     assert.equal(document.querySelector('[data-fw-world-select]').value, 'xichuan');
     assert.equal(document.activeElement, document.querySelector('[data-fw-world-select]'));
     language('en');
-    assert.ok(document.activeElement === document.querySelector('[data-fw-world-select]'), 'language changes keep keyboard focus on the mobile selector');
+    assert.ok(document.activeElement === document.querySelector('[data-fw-world-select]'), 'language changes keep keyboard focus on the shared story selector');
     language('zh');
     input('The Seventh Spring of Xichuan');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 1, 'English story title matches in the Chinese directory');
@@ -301,7 +306,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
     assert.equal(document.activeElement, document.getElementById('fw-search'));
     assert.equal(document.getElementById('fw-search').value, '');
-    assert.equal(document.querySelector('[data-fw-filter="all"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(document.querySelector('[data-fw-world-select]').value, 'all');
     assert.equal(document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
     const url = new URL(location.href);
     for (const key of ['world', 'chat', 'q']) assert.equal(url.searchParams.has(key), false, 'reset removes ' + key);
@@ -310,7 +315,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     for (const world of ['__proto__', 'constructor', 'toString', 'unknown-world']) {
       go('/characters?world=' + world);
       assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length, world + ' never inherits a prior filter');
-      assert.equal(document.querySelector('[data-fw-filter="all"]').getAttribute('aria-pressed'), 'true');
+      assert.equal(document.querySelector('[data-fw-world-select]').value, 'all');
     }
     go('/characters');
   });
@@ -330,40 +335,36 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const identity = profile.querySelector('.fw-profile-head');
     assert.equal(identity.querySelector('[data-fw-profile-state],[data-fw-experiences],.fw-ctas'), null, 'identity and current actions are separate regions');
     assert.ok(identity.querySelector('.fw-persona a[href="/story/xichuan"]'), 'the source opens the existing Story detail');
-    const summary = profile.querySelector('.fw-profile-summary');
-    assert.equal(summary.getAttribute('role'), 'status'); assert.equal(summary.getAttribute('aria-live'), 'polite');
-    assert.equal(summary.querySelector('[data-fw-experiences]'), null, 'long memories are outside the live status');
+    assert.equal(profile.querySelector('.fw-profile-summary'),null,'a fresh profile does not stack empty status or scope explanations');
     assert.equal(profile.querySelector('[data-fw-experiences]'), null, 'a fresh profile does not add an empty shared-experience panel');
     assert.equal(profile.querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), false, 'the first unplayed action is chat');
     assert.equal(profile.querySelector('[data-fw-story-entry]').classList.contains('fw-btn-secondary'), true);
-    let expressions = profile.querySelectorAll('[data-fw-expr]');
-    assert.equal(expressions.length, 6);
-    for (const button of expressions) {
-      assert.ok(button.getAttribute('aria-label'));
-      assert.ok(!/^(normal|smile|shy|sad|angry|surprised)$/.test(button.getAttribute('aria-label')), 'Chinese expression labels are localized');
-    }
+    assert.equal(profile.querySelectorAll('[data-fw-expr]').length,0,'the profile uses the approved portrait rather than an expression demo');
     const before = document.getElementById('fw-portrait-main').getAttribute('src');
+    assert.equal(before,CHARACTER_CARDS.find(c=>c.id==='xc-zhiyao').portrait);
     const scene = profile.querySelector('.fw-profile-scene .fw-scene-background');
     const background = scene.getAttribute('src');
-    expressions[2].click();
-    assert.notEqual(document.getElementById('fw-portrait-main').getAttribute('src'), before);
-    assert.equal(expressions[2].getAttribute('aria-pressed'), 'true');
-    assert.equal([...expressions].filter(b => b.getAttribute('aria-pressed') === 'true').length, 1);
-    assert.equal(profile.querySelector('.fw-profile-scene .fw-scene-background'), scene, 'expression changes preserve the independently mounted scene');
-    assert.equal(scene.getAttribute('src'), background);
     assert.equal(scene.nextElementSibling.id, 'fw-portrait-main');
+    assert.deepEqual([...profile.querySelector('.fw-profile-top').children].map(node=>node.className),['fw-profile-head','fw-profile-state','fw-profile-portrait'],'identity and the real actions precede the decorative portrait');
+    assert.equal(profile.querySelectorAll('.fw-profile-quote blockquote').length,1,'only the first attributed excerpt is directly visible');
+    assert.equal(profile.querySelector('.fw-hscroll'),null,'related cast is reached from the real Story instead of another profile directory');
+    assert.equal(profile.textContent.includes(CHARACTER_CARDS.find(c=>c.id==='xc-zhiyao').locked.zh),false,'internal character constraints are not reader-facing content');
+    const about=profile.querySelector('[data-fw-about]');about.setAttribute('open','');about.querySelector('summary').focus();
     language('en');
     profile = page('profile');
     assert.ok(profile.querySelector('h1').textContent.includes('Zhiyao'));
-    expressions = profile.querySelectorAll('[data-fw-expr]');
-    assert.ok([...expressions].every(b => !/[\u4e00-\u9fff]/.test(b.getAttribute('aria-label'))));
+    assert.equal(document.getElementById('fw-portrait-main').getAttribute('src'),before);
+    assert.equal(profile.querySelector('.fw-profile-scene .fw-scene-background').getAttribute('src'),background);
+    assert.ok(profile.querySelector('[data-fw-about]').hasAttribute('open'),'language preserves the reader’s expanded about section');
+    assert.equal(document.activeElement,profile.querySelector('[data-fw-about] summary'));
     go('/characters/sg-caocao');
     profile = page('profile');
     assert.ok(profile.querySelector('.fw-ctas a[href="/play/sgc-002"]'));
     assert.ok(profile.querySelector('.fw-quote cite'));
-    assert.ok(profile.querySelectorAll('.fw-starters li').length >= 3);
+    assert.equal(profile.querySelector('.fw-starters'),null,'conversation starters stay in chat rather than another profile block');
     go('/characters/oc-shen-yanzhou');
-    assert.ok(page('profile').querySelectorAll('a[href*="encounter="]').length >= 2);
+    assert.equal(page('profile').querySelector('a[href*="encounter="]'),null);
+    assert.ok(page('profile').querySelector('[data-fw-chat-entry]'),'the real chat keeps access to its scene choices');
     go('/characters/sg-diaochan');
     const genericMemories = page('profile').querySelector('[data-fw-experiences]');
     assert.equal(genericMemories, null, 'a generic character with no retained memories does not get an empty panel or unavailable pin guidance');
@@ -374,10 +375,79 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const beforeLegacyRead = writes.length;
     go('/characters/sg-diaochan');
     assert.equal(page('profile').querySelector('[data-fw-experiences] blockquote p').textContent, legacyLine, 'validated older pins remain readable even when the current chat has no pin controls');
+    assert.equal(page('profile').querySelector('[data-fw-experiences]').hasAttribute('open'),false,'real memories are initially a compact, closed review');
     assert.equal(values.get(legacyKey), legacyMessages);
     assert.equal(writes.length, beforeLegacyRead, 'reading an older memory does not rewrite it');
     go('/characters/wn-lamp');
     assert.equal(page('profile').querySelectorAll('[data-fw-expr]').length, 0);
+    for(const card of CHARACTER_CARDS){
+      go('/characters/'+card.id);
+      assert.equal(document.getElementById('fw-portrait-main').getAttribute('src'),card.portrait,card.id+' keeps its approved portrait');
+      assert.ok(page('profile').querySelector('.fw-ctas a'),card.id+' retains its real entry action');
+      assert.equal(page('profile').querySelector('[data-fw-expr],.fw-hscroll,.fw-starters'),null);
+    }
+  });
+
+  await t.test('real memory review keeps open and closed state and its focused summary during same-owner updates',async()=>{
+    const {syncAccount}=await import('../dist/assets/flywheel/flywheel.js');
+    go('/characters/sg-diaochan');
+    const current=()=>page('profile').querySelector('[data-fw-experiences]');
+    current().setAttribute('open','');current().querySelector('summary').focus();
+    const about=page('profile').querySelector('[data-fw-about]');about.setAttribute('open','');
+    values.set('ooc-Memories-sgc-007',JSON.stringify('A supplemental note from this conversation.'));
+    syncAccount({user:null,restored:true,busy:false});
+    assert.equal(current().hasAttribute('open'),true);
+    assert.equal(document.activeElement,current().querySelector('summary'));
+    assert.equal(page('profile').querySelector('[data-fw-about]'),about,'private state refresh does not rebuild public about content');
+    current().removeAttribute('open');current().querySelector('summary').focus();
+    values.set('ooc-Memories-sgc-007',JSON.stringify('The same owner updated this note.'));
+    syncAccount({user:null,restored:true,busy:false});
+    assert.equal(current().hasAttribute('open'),false);
+    assert.equal(document.activeElement,current().querySelector('summary'));
+    language('zh');
+    assert.equal(current().hasAttribute('open'),false);assert.equal(page('profile').querySelector('[data-fw-about]').hasAttribute('open'),true);
+    assert.equal(document.activeElement,current().querySelector('summary'));
+  });
+
+  await t.test('language focus returns to its active page or shell slot instead of hidden legacy copies', () => {
+    const stale = document.createElement('div'); stale.hidden = true;
+    stale.innerHTML = '<div class="sd-lang sd-lang-top"><button data-sd-lang="en">EN</button></div><div class="sd-lang sd-lang-side"><button data-sd-lang="en">EN</button><button data-sd-lang="zh">中文</button></div>';
+    document.body.prepend(stale);
+    const previousFrame = globalThis.requestAnimationFrame, frames = [];
+    globalThis.requestAnimationFrame = callback => frames.push(callback);
+    const addSide = lang => {
+      const group = document.createElement('div'); group.className = 'sd-lang sd-lang-side';
+      const button = document.createElement('button'); button.dataset.sdLang = lang; button.textContent = lang;
+      group.append(button); document.getElementById('precision-view').prepend(group);
+      return button;
+    };
+    try {
+      go('/characters/sg-diaochan');
+      page('profile').querySelector('[data-fw-experiences]').setAttribute('open', '');
+      page('profile').querySelector('[data-fw-about]').setAttribute('open', '');
+      page('profile').querySelector('.fw-mobile-bar [data-sd-lang="en"]').focus();
+      language('en');
+      assert.equal(document.activeElement, page('profile').querySelector('.fw-mobile-bar [data-sd-lang="en"]'));
+      assert.equal(page('profile').querySelector('[data-fw-experiences]').hasAttribute('open'), true);
+      assert.equal(page('profile').querySelector('[data-fw-about]').hasAttribute('open'), true);
+
+      addSide('zh').focus();
+      language('zh');
+      assert.equal(stale.contains(document.activeElement), false, 'a missing new shell slot never restores into hidden legacy UI');
+      const restoredSide = addSide('zh');
+      frames.splice(0).forEach(callback => callback());
+      assert.equal(document.activeElement, restoredSide, 'a delayed shell slot restores within the new visible shell and the same slot');
+      assert.equal(document.activeElement.closest('[data-fw-page]'), null, 'desktop focus does not jump to the mobile language control');
+
+      restoredSide.dataset.sdLang = 'en'; restoredSide.focus();
+      language('en');
+      addSide('en');
+      const action = page('profile').querySelector('[data-fw-chat-entry]'); action.focus();
+      frames.splice(0).forEach(callback => callback());
+      assert.equal(document.activeElement, action, 'delayed restoration does not steal focus from a later user action');
+    } finally {
+      stale.remove(); globalThis.requestAnimationFrame = previousFrame;
+    }
   });
 
   await t.test('unknown curated pages explain the missing destination without impersonating a character or writing data', () => {
@@ -412,7 +482,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     }
     go('/characters/oc-shen-yanzhou');
     assert.equal(page('profile').querySelector('.fw-persona a[href^="/story/"]'), null, 'an original encounter is not mislabeled as a book');
-    assert.ok(page('profile').querySelectorAll('a[href*="encounter="]').length >= 2);
+    assert.ok(page('profile').querySelector('[data-fw-chat-entry]'),'original encounters remain available through their existing chat');
   });
 
   await t.test('creation reuses the existing workshop and preserves old drafts read-only', async () => {

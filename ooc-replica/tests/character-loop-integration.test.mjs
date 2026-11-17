@@ -91,6 +91,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
   const f = await boot({path: '/character?world=xichuan'});
   const profile = () => f.document.querySelector('[data-fw-page="profile"]');
   const read = key => JSON.parse(f.values.get(key) || 'null');
+  const selectStory=async value=>{const select=f.document.querySelector('[data-fw-world-select]');select.querySelectorAll('option').forEach(option=>option.removeAttribute('selected'));select.querySelector('option[value="'+value+'"]').setAttribute('selected','');select.dispatchEvent(new f.window.Event('change',{bubbles:true}));await new Promise(resolve=>setTimeout(resolve,0));};
   let future;
   try {
     await t.test('retired world and format links lead to established Story pages without starting a game', async () => {
@@ -193,7 +194,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
     await t.test('combined directory choices survive browser history, profile/chat/story returns and fresh URL reloads', async () => {
       await f.go('/characters?source=home#cast');
       const initialLength = f.history.length;
-      await f.click('[data-fw-filter="xichuan"]');
+      await selectStory('xichuan');
       await f.click('[data-fw-chat]');
       const search = f.document.getElementById('fw-search'); search.value = '夏知遥'; search.focus();
       search.dispatchEvent(new f.window.Event('input', {bubbles: true}));
@@ -205,7 +206,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       const assertDirectory = () => {
         assert.equal(f.location.pathname + f.location.search + f.location.hash, directoryUrl);
         assert.equal(f.document.getElementById('fw-search').value, '夏知遥');
-        assert.equal(f.document.querySelector('[data-fw-filter="xichuan"]').getAttribute('aria-pressed'), 'true');
+        assert.equal(f.document.querySelector('[data-fw-world-select]').value, 'xichuan');
         assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'true');
         assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
       };
@@ -247,7 +248,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
         assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 33);
         assert.equal(f.document.getElementById('fw-search').value, '');
         assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
-        assert.equal(f.document.querySelector('[data-fw-filter="all"]').getAttribute('aria-pressed'), 'true');
+        assert.equal(f.document.querySelector('[data-fw-world-select]').value, 'all');
       }
       const reloaded = await reload({path: '/characters?world=__proto__'});
       assert.equal(reloaded.directory.world, 'all'); assert.equal(reloaded.directory.chat, false); assert.equal(reloaded.directory.query, '');
@@ -474,19 +475,40 @@ async function verifyProfileHydration(f) {
   f.document.querySelector('[data-fw-story-entry]').focus();
   syncAccount(account);
   assert.equal(f.document.activeElement, f.document.querySelector('[data-fw-story-entry]'), 'private status refresh preserves the focused action');
+  const experience = () => f.document.querySelector('[data-fw-experiences]');
+  const about = f.document.querySelector('[data-fw-about]');
+  experience().setAttribute('open', ''); about.setAttribute('open', '');
+  experience().querySelector('summary').focus();
+  account.save('ooc-Memories-xc-zhiyao', 'Alice private note');
+  const afterMemorySave = f.writes.length;
+  syncAccount(account);
+  assert.equal(experience().hasAttribute('open'), true, 'same-owner memory refresh preserves the chosen expansion');
+  assert.equal(f.document.activeElement, experience().querySelector('summary'), 'same-owner memory refresh preserves summary focus');
+  assert.equal(f.document.querySelector('[data-fw-about]'), about, 'a private refresh keeps the existing public details node');
+  assert.equal(about.hasAttribute('open'), true);
+  assert.equal(f.writes.length, afterMemorySave, 'details display state is not written to private or cloud storage');
   const switching = subscribe({uid: 'bob'}); reads = 0;
   syncAccount(account);
   const waiting = f.document.querySelector('[data-fw-profile-state]');
   assert.ok(waiting.querySelector('[role="status"]') || waiting.getAttribute('role') === 'status');
   assert.match(waiting.textContent, /恢复|Restor/i);
   assert.doesNotMatch(waiting.textContent, /Alice|答应|promis|继续聊天|Continue chatting/i);
+  assert.equal(about.hasAttribute('open'), false, 'a different owner does not inherit an expanded public details panel');
   assert.equal(reads, 0, 'unrestored account state is never read for a public profile');
   assert.equal(f.document.querySelector('.fw-profile-head'), identity, 'account restoration does not replace public identity');
   scope.save(XICHUAN_KEY, {[LATEST]: save({'flag.z_promised': true})});
   resolveBob([]); await switching; syncAccount(account);
   assert.equal(account.read(XICHUAN_KEY, null), null);
-  assert.doesNotMatch(f.document.querySelector('[data-fw-progress]').textContent, /答应|promis/i);
+  assert.equal(f.document.querySelector('[data-fw-progress]'), null, 'a new account has no invented progress text');
   assert.deepEqual(account.read(chatKey, []), []);
+  assert.equal(experience(), null, 'an empty new account does not inherit the previous experience panel');
+  account.save('ooc-Memories-xc-zhiyao', 'Bob private note');
+  const afterBobSave = f.writes.length;
+  syncAccount(account);
+  assert.equal(experience().hasAttribute('open'), false, 'new-owner experiences start folded even when the previous owner opened them');
+  assert.match(experience().textContent, /Bob private note/);
+  assert.doesNotMatch(experience().textContent, /Alice|答应|promis/i);
+  assert.equal(f.writes.length, afterBobSave, 'a new owner’s initial folded state is also display-only');
   clearInterval(f.window.carousel);
 }
 
@@ -508,8 +530,7 @@ async function verifyLegacyProgress(f) {
   assert.equal(f.writes.length, before, 'profile rendering never mutates existing keys');
   cache.useAccount('new-account'); helpers.account = {...guest, user: {uid: 'new-account'}};
   show('/characters/xc-zhiyao', helpers);
-  assert.doesNotMatch(f.document.querySelector('[data-fw-progress]').textContent, /答应|promis/i);
-  assert.match(f.document.querySelector('[data-fw-progress]').textContent, /序章|prologue/i);
+  assert.equal(f.document.querySelector('[data-fw-progress]'), null, 'a new account has no invented progress text');
   assert.equal(cache.read(XICHUAN_KEY, null), null);
   assert.equal(f.values.get('xc.auto'), legacy);
   assert.equal(f.writes.length, before);

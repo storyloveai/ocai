@@ -4,6 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {parseHTML} from 'linkedom';
 import {sanguoCharacters} from '../dist/assets/sanguo-characters.js';
 import {storydateCharacters} from '../dist/assets/storydate-originals.js';
+import {xichuanCharacters} from '../dist/assets/xichuan-character.js';
 
 const pages=JSON.parse(await readFile(new URL('../dist/assets/interaction-pages.json',import.meta.url),'utf8'));
 const source=await readFile(new URL('../dist/assets/interaction.js',import.meta.url),'utf8');
@@ -11,11 +12,12 @@ const scenarios=JSON.parse(await readFile(new URL('../dist/assets/scenarios.json
 
 test('captured chat shell keeps working suggestions, rich code copy, local history and accessible settings',async()=>{
  const {document,window}=parseHTML('<html><head></head><body></body></html>');
- const original={document:globalThis.document,fetch:globalThis.fetch,matchMedia:globalThis.matchMedia,navigator:Object.getOwnPropertyDescriptor(globalThis,'navigator')};
- let focused,copied,suggestionRequest,failNarration=false;
+ const original={document:globalThis.document,fetch:globalThis.fetch,matchMedia:globalThis.matchMedia,navigator:Object.getOwnPropertyDescriptor(globalThis,'navigator'),addEventListener:globalThis.addEventListener,removeEventListener:globalThis.removeEventListener,dispatchEvent:globalThis.dispatchEvent};
+ let focused,copied,suggestionRequest,failNarration=false,holdSuggestions=false;
+ const suggestionRequests=[],pendingSuggestions=[];
  const configuration={configured:true,model:'gemini-test-flash'},narrationRequests=[];
  const waitFor=async predicate=>{for(let i=0;i<200;i++){if(predicate())return;await new Promise(resolve=>setTimeout(resolve,10));}assert.fail('chat did not settle');};
- globalThis.document=document;globalThis.matchMedia=()=>({matches:false});
+ globalThis.document=document;globalThis.addEventListener=window.addEventListener.bind(window);globalThis.removeEventListener=window.removeEventListener.bind(window);globalThis.dispatchEvent=window.dispatchEvent.bind(window);globalThis.matchMedia=()=>({matches:false});
  Object.defineProperty(document,'activeElement',{get:()=>focused});
  window.HTMLElement.prototype.focus=function(){focused=this;};
  window.HTMLElement.prototype.showModal=function(){this.setAttribute('open','');};
@@ -25,6 +27,7 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
  globalThis.fetch=async (url,options)=>{if(url==='/api/chat'){
    suggestionRequest=JSON.parse(options.body);
    if(suggestionRequest.task!=='suggestions'){narrationRequests.push(suggestionRequest);if(failNarration)return new Response(JSON.stringify({error:'角色对话暂时无法连接，请稍后重试。',code:'AI_NOT_CONFIGURED'}),{status:503});return new Response(JSON.stringify({type:'text',text:'貂蝉听见你的问题，停下了脚步。'})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});}
+   suggestionRequests.push(suggestionRequest);if(holdSuggestions)await new Promise(resolve=>pendingSuggestions.push({resolve,signal:options.signal}));
    const text=JSON.stringify(['Read the letter on the desk.','Wait behind the shelves.','Ask who is approaching.']);
    return new Response(JSON.stringify({type:'text',text})+'\n'+JSON.stringify({type:'done'})+'\n',{headers:{'Content-Type':'application/x-ndjson'}});
   }return {ok:true,json:async()=>url.includes('interaction-pages')?pages:url.includes('scenarios')?scenarios:configuration};};
@@ -35,7 +38,14 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   const values=new Map([['ooc-session-v2-'+id,[{role:'user',text:'Hello'},{role:'assistant',text:'A reply\n\n```info\nTier: Beginner\n```',suggestions:['Inspect the academy guide.','Ask about the hall.','Listen for the courtyard bell.']}]],['ooc-session-v2-'+other,[{role:'user',text:'A second story'}]]]);
   const routes=[];const helpers={data:[{id,title:'Lumencia Academy',image:'assets/cover.webp'},{id:other,title:'APEX Heroes Academy',image:'assets/apex.webp'}],read:(key,fallback)=>values.get(key)??fallback,save:(key,value)=>values.set(key,value),navigate:path=>routes.push(path)};
   assert.equal(show('/play/'+id,helpers),true);
-  assert.equal(document.querySelectorAll('.suggestion-send').length,3);
+  assert.equal(document.querySelectorAll('.suggestion-send').length,0,'new preferences keep suggestions folded');
+  assert.equal(document.querySelector('[data-control=suggest]').getAttribute('aria-pressed'),'false');
+  assert.equal(suggestionRequests.length,0,'folded saved conversations do not request suggestions');
+  const cachedBefore=structuredClone(values.get('ooc-session-v2-'+id).at(-1).suggestions);
+  document.querySelector('[data-control=suggest]').click();
+  assert.equal(document.querySelectorAll('.suggestion-send').length,3,'opening suggestions restores the existing cached actions');
+  assert.deepEqual(values.get('ooc-session-v2-'+id).at(-1).suggestions,cachedBefore);
+  assert.equal(suggestionRequests.length,0,'opening cached suggestions makes no provider request');
   assert.equal(document.querySelectorAll('.message-tools button').length,4);
   assert.ok(document.querySelector('[data-control=model] img'),'model identity icon stays in the captured shell');
   assert.ok(!document.querySelector('#session-messages [data-mode]'),'live model configuration stays out of story text');
@@ -55,15 +65,53 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.equal(document.querySelectorAll('.session-history-item').length,2);
   const sidebar=document.querySelector('[data-shrink]');[...sidebar.querySelectorAll('button')].find(button=>button.textContent.trim()==='Character').click();assert.ok(document.querySelector('.session-history-empty'));
   [...sidebar.querySelectorAll('button')].find(button=>button.textContent.trim()==='Search').click();assert.deepEqual(routes,['/search']);
-  // Older saved conversations acquire scene-based suggestions, then reuse the cached result.
+  // Folded sessions never ask for missing suggestions, including after a reply.
   delete values.get('ooc-session-v2-'+id).at(-1).suggestions;
-  show('/play/'+id,helpers);assert.equal(document.querySelectorAll('.suggestion-send').length,0);
+  values.set('ooc-suggestions-visible',false);show('/play/'+id,helpers);
   await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(document.querySelectorAll('.suggestion-send').length,0);
+  assert.equal(suggestionRequests.length,0);
+  document.querySelector('#session-input').textContent='接着刚才的话。';document.querySelector('[data-control=send]').click();
+  await waitFor(()=>values.get('ooc-session-v2-'+id).at(-1)?.text==='貂蝉听见你的问题，停下了脚步。'&&!values.get('ooc-session-v2-'+id).at(-1).streaming);
+  assert.equal(suggestionRequests.length,0,'a completed main reply does not request folded suggestions');
+  assert.equal(narrationRequests.length,1,'the main reply still uses its existing request');
+  document.querySelector('[data-control=suggest]').click();
+  await waitFor(()=>document.querySelectorAll('.suggestion-send').length===3);
   assert.equal(suggestionRequest.task,'suggestions');assert.equal(suggestionRequest.titleId,id);
-  assert.match(suggestionRequest.messages.at(-1).content,/A reply/);
-  assert.equal(document.querySelectorAll('.suggestion-send').length,3);
-  assert.equal(document.querySelector('.suggestion-content').textContent,'Read the letter on the desk.');
+  assert.match(suggestionRequest.messages.at(-1).content,/貂蝉听见你的问题/);
+  assert.equal(suggestionRequests.length,1);
   assert.equal(values.get('ooc-session-v2-'+id).at(-1).suggestions[0],'Read the letter on the desk.');
+  const cachedReply=structuredClone(values.get('ooc-session-v2-'+id));
+  document.querySelector('[data-control=suggest]').click();show('/play/'+id,helpers);
+  assert.equal(document.querySelectorAll('.suggestion-send').length,0,'explicit false survives remount');
+  assert.deepEqual(values.get('ooc-session-v2-'+id),cachedReply,'collapsing suggestions does not delete its stored cache');
+  document.querySelector('[data-control=suggest]').click();
+  assert.equal(document.querySelectorAll('.suggestion-send').length,3);
+  assert.equal(suggestionRequests.length,1,'reopening uses the completed reply cache');
+  document.querySelector('[data-control=suggest]').click();
+  delete values.get('ooc-session-v2-'+id).at(-1).suggestions;
+  holdSuggestions=true;document.querySelector('[data-control=suggest]').click();
+  await waitFor(()=>pendingSuggestions.length===1);
+  const pending=pendingSuggestions.shift();document.querySelector('[data-control=suggest]').click();
+  assert.equal(pending.signal.aborted,true,'collapsing cancels the in-flight suggestion request');
+  pending.resolve();await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(document.querySelectorAll('.suggestion-send').length,0,'a late result cannot reopen suggestions');
+  assert.equal(values.get('ooc-session-v2-'+id).at(-1).suggestions,undefined,'a late folded result cannot write stale actions');
+  holdSuggestions=false;
+  const beforeMode=suggestionRequests.length;helpers.data.push(xichuanCharacters[0]);
+  values.set('ooc-session-v2-xc-zhiyao',[{role:'user',text:'电影社怎么样了？'},{role:'assistant',text:'我们还有最后一场。'}]);
+  show('/play/xc-zhiyao',helpers);
+  assert.equal(document.querySelector('[data-mode]'),null,'the header is the only response-mode entry');
+  document.querySelector('[data-control=model]').click();
+  const mode=document.querySelector('.interaction-modal[open] select[aria-label="Response mode"]');
+  for(const option of mode.querySelectorAll('option'))option.toggleAttribute('selected',option.value==='ai');
+  document.querySelector('.interaction-modal[open] .save').click();
+  assert.equal(values.get('ooc-response-mode-xc-zhiyao'),'ai');
+  assert.equal(document.querySelector('[data-control=suggest]').getAttribute('aria-pressed'),'false');
+  for(const lang of ['zh','en']){document.documentElement.lang=lang;globalThis.dispatchEvent(new window.CustomEvent('sd-lang',{detail:lang}));}
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(suggestionRequests.length,beforeMode,'mode remounts and language changes never request folded suggestions');
+  values.set('ooc-suggestions-visible',true);
   // A mode switch stays on this URL, so it must remount without a no-op navigation.
   // With a configured server a stale saved Demo preference is ignored: replies always come from the AI.
   values.set('ooc-response-mode','demo');show('/play/'+id,helpers);
@@ -80,7 +128,8 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   const historyTab=kind=>document.querySelector(`[data-history-mode="${kind}"]`);
   assert.equal(historyTab('character').getAttribute('aria-pressed'),'true');
   assert.equal(historyTab('story').getAttribute('aria-pressed'),'false');
-  assert.equal(document.querySelectorAll('.session-history-item').length,2);
+  assert.equal(document.querySelectorAll('.session-history-item').length,3);
+  assert.ok(document.querySelector('.session-history-item a[href="/play/xc-zhiyao"]'),'the mode-switch sample keeps its existing conversation history');
   assert.ok(document.querySelector('.session-history-item a[href="/play/u-published"]'));
   assert.equal(document.querySelector('.session-history-item a[href="/play/unknown-title"]'),null);
   assert.doesNotMatch(document.querySelector('#session-messages').textContent,/Ashley|neighbour/);
@@ -157,7 +206,7 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
   assert.equal([...document.querySelectorAll('button')].find(button=>button.textContent.trim()==='Fantasy').getAttribute('aria-pressed'),'false','an intentionally empty selection remains empty');
   show('/',helpers);
  }finally{
-  for(const key of ['document','fetch','matchMedia'])if(original[key]===undefined)delete globalThis[key];else globalThis[key]=original[key];
+  for(const key of ['document','fetch','matchMedia','addEventListener','removeEventListener','dispatchEvent'])if(original[key]===undefined)delete globalThis[key];else globalThis[key]=original[key];
   if(original.navigator)Object.defineProperty(globalThis,'navigator',original.navigator);else delete globalThis.navigator;
  }
 });

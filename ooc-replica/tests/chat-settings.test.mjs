@@ -53,6 +53,17 @@ test('chat settings expose actual controls in both layouts without changing conv
         await f.go('/play/'+layout.id);
         await waitFor(() => input(f),'the real session did not mount');
         language('zh');
+        const jump=f.document.querySelector('[data-control="bottom"]'),scroll=f.document.querySelector('#session-scroll');
+        assert.equal(jump.hidden,true,'the first paint has no stray jump button');
+        assert.equal(jump.getAttribute('tabindex'),'-1','a hidden jump is absent from keyboard navigation');
+        Object.assign(scroll,{scrollHeight:1000,clientHeight:400,scrollTop:0});scroll.onscroll();
+        assert.equal(jump.hidden,false,'scrolling up reveals the existing jump control');
+        assert.equal(jump.getAttribute('tabindex'),'0');
+        await f.click('[data-control="bottom"]');
+        assert.equal(jump.hidden,true,'clicking hides it immediately before another scroll event');
+        language('en');assert.equal(jump.hidden,true,'a render while following the bottom leaves it hidden');language('zh');
+        assert.ok(f.document.querySelector('.session-title-link'),'the repeated phone title has its scoped responsive marker');
+        if(layout.character){assert.ok(f.document.querySelector('[data-character-recap]'));assert.equal(f.document.querySelector('[data-character-memories],[data-character-branches]'),null,'completed dialogue alone does not reveal empty memories or a single branch');}
         const draft = '这句还没有发送，先看看设置。';
         edit(f,draft);
         const composer = input(f), toggle = f.document.querySelector('[data-control="settings"]');
@@ -144,6 +155,55 @@ test('chat settings expose actual controls in both layouts without changing conv
         assert.equal(input(f),null,'the former session is removed after returning');
       });
     }
+    await t.test('fresh character tools stay quiet while saved moments, other branches and restart remain reachable',async()=>{
+      const key='ooc-session-v2-xc-zhiyao',before=f.values.get(key);
+      await f.go('/characters');f.values.delete(key);
+      await f.go('/play/xc-zhiyao');await waitFor(()=>input(f),'fresh Zhiyao chat did not mount');
+      const toolbar=f.document.querySelector('.character-conversation-tools');
+      assert.equal(toolbar.hidden,true,'a single-scene empty conversation has no empty toolbar');
+      assert.equal(toolbar.querySelector('[data-character-recap],[data-character-memories],[data-character-branches],[data-character-encounters]'),null);
+      assert.equal(f.document.querySelector('[data-control="suggest"]').getAttribute('aria-pressed'),'false');
+      assert.equal(f.document.querySelector('.session-suggestions'),null);
+      const bridge=f.document.querySelector('.xc-chat-bridge');
+      assert.equal(bridge.querySelectorAll('a').length,1);
+      assert.equal(bridge.querySelector('a').getAttribute('href'),'/play/xichuan');
+      assert.equal(bridge.querySelectorAll('p').length,1);
+      assert.equal(bridge.querySelector('small'),null,'the story strip has no repeated long explanation');
+      assert.equal(f.document.querySelector('[data-mode]'),null,'mode changes use the actual header control');
+      await f.click('[data-control="settings"]');
+      await f.click('#session-settings [data-session-setting="Chat help"]');
+      for(const lang of ['zh','en']){language(lang);assert.match(openDialog(f).textContent,lang==='zh'?/聊天不会改写游戏选项和存档/:/Chat does not change game choices or saves/);}
+      await closeDialog(f);
+      await f.click('[data-control="model"]');
+      assert.ok(openDialog(f).querySelector('select[aria-label="Response mode"]'));
+      assert.match(openDialog(f).textContent,/no AI|不调用 AI/);
+      assert.equal(openDialog(f).querySelector('option[value="ai"]').hasAttribute('disabled'),true);
+      await closeDialog(f);
+      await f.go('/play/oc-shen-yanzhou');await waitFor(()=>input(f),'multi-scene chat did not mount');
+      assert.ok(f.document.querySelector('[data-character-encounters]'),'multiple encounters remain selectable before a conversation');
+      assert.equal(f.document.querySelector('[data-character-recap],[data-character-memories],[data-character-branches]'),null);
+      await f.click('[data-character-encounters]');assert.equal(openDialog(f).querySelectorAll('[data-start-encounter]').length,2);await closeDialog(f);
+      await f.go('/characters');f.values.set(key,before);
+      const {createCharacterThreads}=await import('../dist/assets/character-threads.js');
+      const manager=createCharacterThreads({id:'xc-zhiyao',defaultScene:'cinema',read:(key,fallback)=>JSON.parse(f.values.get(key)??'null')??fallback,save:(key,value)=>f.values.set(key,JSON.stringify(value)),newId:()=> 'quiet-empty'});
+      manager.pin(0,previous);manager.fork(previous,-1,{label:'空的另一条走向'});
+      await f.go('/play/xc-zhiyao');await waitFor(()=>input(f),'empty active branch did not mount');
+      assert.ok(f.document.querySelector('[data-character-branches]'),'an empty active branch can still reach other branches');
+      assert.equal(f.document.querySelector('[data-character-recap],[data-character-memories]'),null);
+      await f.click('[data-character-branches]');await f.click('[data-select-branch="main"]');
+      assert.ok(f.document.querySelector('[data-character-memories]'),'the saved original lines remain reachable');
+      assert.ok(f.document.querySelector('[data-character-recap]'));
+      assert.ok(f.document.querySelector('[data-character-encounters]'),'a single-scene conversation retains its restart entry');
+      await f.click('[data-character-memories]');assert.ok(openDialog(f).textContent.includes(previous[0].text));await closeDialog(f);
+      await f.click('[data-character-encounters]');assert.equal(openDialog(f).querySelectorAll('[data-start-encounter]').length,1);await closeDialog(f);
+      assert.deepEqual(JSON.parse(f.values.get(key)),previous);
+    });
+    await t.test('one compact story strip holds current progress without repeating it in the chat opening',async()=>{
+      const progressKey='ooc-session-v2-xichuan',snapshot={'game.xichuan':{G:{ch:2,phase:'node',v:{'flag.z_promised':true},offer:[],done:[]},V:{queue:[],i:0,sprites:{},log:[]}}};
+      f.values.set(progressKey,JSON.stringify(snapshot));await f.go('/play/xc-zhiyao');await waitFor(()=>input(f),'saved story chat did not mount');
+      for(const lang of ['zh','en']){language(lang);const progress=f.document.querySelector('[data-xichuan-progress]');assert.match(progress.textContent,lang==='zh'?/第 2 章进行中.*答应/:/Chapter 2 in progress.*promis/);assert.equal(progress.getAttribute('title'),progress.textContent,'the complete progress remains available in the compact strip');assert.equal(f.document.querySelector('#session-messages').textContent.includes(progress.textContent),false,'the opening does not repeat story status');assert.equal(f.document.querySelectorAll('.xc-chat-bridge [data-xichuan-entry]').length,1);}
+      assert.deepEqual(JSON.parse(f.values.get(progressKey)),snapshot,'simplifying progress never writes a game save');
+    });
     await t.test('published author tips share the chat-help dialog as escaped, untranslated original text',async () => {
       await f.go('/play/'+published.publishedId);
       await waitFor(() => input(f),'the existing published story did not mount');

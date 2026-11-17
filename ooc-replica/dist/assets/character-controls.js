@@ -79,16 +79,18 @@ export function attachCharacterControls({root, body, profile, manager, getMessag
     };
   }
   function update() {
-    const state = manager.metadata(), labels = l(), pins = manager.pins(getMessages());
+    const state = manager.metadata(), labels = l(), messages = getMessages(), pins = manager.pins(messages);
+    const hasDialogue = messages.some(message => message.text?.trim()), hasConversation = characterRecap({messages}).hasConversation;
+    const canChooseEncounter = profile.scenes?.length > 1 || (profile.scenes?.length === 1 && hasDialogue);
+    const showMemories = pins.length > 0, showBranches = state.threads.length > 1;
     pinnedTurns = new Set(pins.map(p => p.turn));
     toolbar.setAttribute('aria-label', lang() === 'zh' ? '对话与记事' : 'Conversation and memories');
-    toolbar.innerHTML = `${profile.scenes ? `<button type="button" data-character-encounters><span>${safe(sceneName(state.thread))}</span><span aria-hidden="true">⌄</span></button>` : `<span class="character-encounter-name">${safe(sceneName(state.thread))}</span>`}<div><button type="button" data-character-recap>${labels.recap}</button><button type="button" data-character-memories>${labels.memories}${pins.length ? ' · ' + pins.length : ''}</button><button type="button" data-character-branches>${labels.branches}${state.threads.length > 1 ? ' · ' + state.threads.length : ''}</button></div>`;
+    toolbar.hidden = !canChooseEncounter && !hasConversation && !showMemories && !showBranches;
+    toolbar.innerHTML = `${canChooseEncounter ? `<button type="button" data-character-encounters><span>${safe(sceneName(state.thread))}</span><span aria-hidden="true">⌄</span></button>` : `<span class="character-encounter-name">${safe(sceneName(state.thread))}</span>`}<div>${hasConversation ? `<button type="button" data-character-recap>${labels.recap}</button>` : ''}${showMemories ? `<button type="button" data-character-memories>${labels.memories}${pins.length ? ' · ' + pins.length : ''}</button>` : ''}${showBranches ? `<button type="button" data-character-branches>${labels.branches}${state.threads.length > 1 ? ' · ' + state.threads.length : ''}</button>` : ''}</div>`;
     const busy = !isReady();
     for (const b of [...toolbar.querySelectorAll('button'), ...root.querySelectorAll('[data-character-pin],[data-character-fork]')]) b.disabled = busy;
     const recapButton = toolbar.querySelector('[data-character-recap]');
-    const hasConversation = characterRecap({messages: getMessages()}).hasConversation;
-    recapButton.disabled = busy || !hasConversation;
-    if (!hasConversation) recapButton.title = labels.recapWait;
+    if (recapButton) recapButton.disabled = busy;
   }
   toolbar.onclick = event => {if(event.target.closest('button'))event.stopPropagation();if (!isReady()) return;
     if (event.target.closest('[data-character-recap]')) showRecap();

@@ -8,7 +8,6 @@ import {characterArt} from './character-art.js';
 import {readDiscoveryState, patchDiscoveryState, discoveryUrl} from './discovery-state.js';
 import {characterDirectoryReturn, characterReturnUrl, storyReturnUrl, canonicalCharacterUrl} from '../character-links.js';
 import {storiesForCharacter} from '../character-stories.js';
-import {characterById as threadedProfiles} from '../character-profiles.js';
 
 const DRAFT_KEY = 'sd-flywheel-drafts';
 // 手机端顶栏（≤1023px 显示；桌面由侧栏承担），沿用 hub 的 sd-lang 按钮模式
@@ -63,7 +62,7 @@ const copy = {
   memoryLimit: "补充记忆当前使用前 350 字；可在会话设置中整理原文。",
   noMemories: "还没有记事。在聊天中把想留下的话记下来，回来就能回顾。",
   noStoryFacts: "尚未开始故事。进入汐川后，经历会随当前存档更新。",
-  detailsH: "人物详细设定（含剧透）",
+  detailsH: "关于 TA（含剧透）",
   samplesFrom: "原作节选",
   noSamples: "暂无原作节选。",
   sameUniverseH: "故事里的其他人",
@@ -125,7 +124,7 @@ const copy = {
   memoryLimit: "Supplementary memory uses the first 350 characters. Review the original in conversation settings.",
   noMemories: "No memories kept yet. Keep a line in chat to revisit it here.",
   noStoryFacts: "The story has not started. Experiences will follow your active save when you enter Xichuan.",
-  detailsH: "More about this character (spoilers)",
+  detailsH: "About this character (spoilers)",
   samplesFrom: "Story excerpt",
   noSamples: "No excerpts available yet.",
   sameUniverseH: "Others in this story",
@@ -147,24 +146,14 @@ const copy = {
 };
 const L = () => getLang() === 'zh' ? copy.zh : copy.en;
 const t = o => typeof o === 'string' ? o : (o?.[getLang() === 'zh' ? 'zh' : 'en'] || o?.zh || o?.en || '');
-const chosenExpressions = new Map();
-const expressionFor = c => chosenExpressions.get(c.id) || c.expressions?.find(e => c.expressionUrl(e) === c.portrait) || c.expressions?.[0];
-function expressionName(key) {
- const names = {normal:['平静','Neutral'], smile:['微笑','Smile'], shy:['害羞','Shy'], sad:['难过','Sad'], angry:['生气','Angry'], surprised:['吃惊','Surprised'], serious:['认真','Serious'], battle:['战斗','Battle']};
- return names[key]?.[getLang() === 'zh' ? 0 : 1] || key;
-}
-function expressionLabel(key) {
- if (getLang() === 'zh') return expressionName(key);
- return {normal:'Calm',smile:'Smile',shy:'Shy',sad:'Sad',angry:'Angry',surprised:'Shock',serious:'Focus',battle:'Fight'}[key] || expressionName(key);
-}
 let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261117-simplified"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261117-focused"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261117-simplified';
+    link.href = '/assets/flywheel/flywheel.css?v=20261117-focused';
     document.head.append(link);
   }
 }
@@ -232,20 +221,13 @@ function libResults(items) {
 }
 function libMarkup() {
   const l = L();
-  const chips = ['all', ...Object.keys(UNIVERSES)].map((id) => {
-    const label = id === 'all' ? l.all : storyFilterName(id);
-    const n = id === 'all' ? CHARACTER_CARDS.length : cardsByUniverse(id).length;
-    return `<button type="button" class="fw-chip${libFilter.universe === id ? ' active' : ''}" data-fw-filter="${id}" aria-pressed="${libFilter.universe === id}">${safe(label)} <small>${n}</small></button>`;
-  }).join('');
-  const worldOptions = ['all',...Object.keys(UNIVERSES)].map(id => `<option value="${id}"${libFilter.universe === id ? ' selected' : ''}>${safe(id === 'all' ? l.all : storyFilterName(id))} · ${id === 'all' ? CHARACTER_CARDS.length : cardsByUniverse(id).length}</option>`).join('');
+  const worldOptions = ['all',...Object.keys(UNIVERSES)].map(id => `<option value="${id}"${libFilter.universe === id ? ' selected' : ''}>${safe(id === 'all' ? l.all : storyFilterName(id))}</option>`).join('');
   const items = libItems();
-  return `<main class="fw-page fw-character-library" data-no-i18n data-fw-page="characters">
+  return `<main class="fw-page fw-character-library" data-no-i18n data-fw-page="characters" aria-label="${safe(l.charactersNav)}">
     <div class="fw-library-mobile">${mobileBar()}</div>
     <section class="sd-hero fw-character-feature" data-sd-hero="character">${heroSceneMarkup('character',getLang())}</section>
     <div class="fw-library-content">
-    <header class="fw-library-heading"><h2>${safe(l.libTitle)}</h2><p>${safe(l.libSub)}</p></header>
-    <div class="fw-toolbar" role="group" aria-label="${safe(l.filtersLabel)}">${chips}<select class="fw-world-select" data-fw-world-select aria-label="${safe(l.storyFilter)}">${worldOptions}</select><button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button><span class="fw-count" role="status">${l.count(items.length)}</span></div>
-    <label class="fw-search"><span aria-hidden="true">⌕</span><input type="search" id="fw-search" placeholder="${safe(l.searchPh)}" value="${safe(libQuery)}" aria-label="${safe(l.searchPh)}" autocomplete="off"></label>
+    <div class="fw-toolbar" role="group" aria-label="${safe(l.filtersLabel)}"><label class="fw-search"><span aria-hidden="true">⌕</span><input type="search" id="fw-search" placeholder="${safe(l.searchPh)}" value="${safe(libQuery)}" aria-label="${safe(l.searchPh)}" autocomplete="off"></label><select class="fw-world-select" data-fw-world-select aria-label="${safe(l.storyFilter)}">${worldOptions}</select><button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button><span class="fw-count" role="status">${l.count(items.length)}</span></div>
     <div id="fw-lib-results">${libResults(items)}</div>
     </div>
   </main>`;
@@ -282,14 +264,13 @@ function chatProgress(c, read) {
 }
 function experiencesMarkup(c, raw, chat) {
  const l = L(), context = storyContext(raw);
- const keepsLines = threadedProfiles.has(c.chatId);
- if (!context && !chat.pins.length && !chat.notes) return '';
  const facts = Object.entries(XICHUAN_FACT_LABELS).filter(([key]) => context?.flags[key] === true);
- const story = c.source.work === 'xichuan' ? `<h3>${safe(l.storyFacts)}</h3>${context ? `<p>${safe(progressText(raw,getLang()))}</p>${facts.length ? `<ul class="fw-experience-facts">${facts.map(([,label]) => `<li>${safe(t(label))}</li>`).join('')}</ul>` : ''}` : `<p class="fw-note">${safe(l.noStoryFacts)}</p>`}` : '';
- const kept = chat.pins.length ? chat.pins.map(p => `<blockquote class="fw-quote"><p>${safe(p.text)}</p><cite>${safe(p.role === 'user' ? l.memoryYou : p.demo ? l.memoryDemo : l.memoryCharacter)}</cite></blockquote>`).join('') : `<p class="fw-note">${safe(l.noMemories)}</p>`;
+ if (!facts.length && !chat.pins.length && !chat.notes) return '';
+ const story = c.source.work === 'xichuan' && facts.length ? `<h3>${safe(l.storyFacts)}</h3><ul class="fw-experience-facts">${facts.map(([,label]) => `<li>${safe(t(label))}</li>`).join('')}</ul>` : '';
+ const kept = chat.pins.map(p => `<blockquote class="fw-quote"><p>${safe(p.text)}</p><cite>${safe(p.role === 'user' ? l.memoryYou : p.demo ? l.memoryDemo : l.memoryCharacter)}</cite></blockquote>`).join('');
  const notes = chat.notes ? `<h3>${safe(l.memoryNotesH)}</h3><p class="fw-memory-notes">${safe(chat.notes)}</p>${chat.notesTrimmed ? `<p class="fw-note">${safe(l.memoryLimit)}</p>` : ''}` : '';
- const memories = c.chat ? `${keepsLines || chat.pins.length ? `<h3>${safe(l.memoriesH)}</h3>${kept}` : ''}${notes}` : '';
- return `<section class="fw-experiences" id="fw-experiences" data-fw-experiences aria-labelledby="fw-experiences-title"><h2 id="fw-experiences-title">${safe(l.reviewH)}</h2>${story}${memories}</section>`;
+ const memories = c.chat ? `${kept ? `<h3>${safe(l.memoriesH)}</h3>${kept}` : ''}${notes}` : '';
+ return `<details class="fw-details fw-experiences" id="fw-experiences" data-fw-experiences><summary id="fw-experiences-title">${safe(l.reviewH)}</summary>${story}${memories}</details>`;
 }
 function profileStateMarkup(c, account = currentHelpers?.account) {
  const l = L(), w = storiesForCharacter(c.id)[0];
@@ -306,26 +287,35 @@ function profileStateMarkup(c, account = currentHelpers?.account) {
   const played = Boolean(latestSave(raw)), chatting = chat.messages.length > 0;
   const chatLink = c.chat ? `<a class="fw-btn${played ? ' fw-btn-secondary' : ''}" data-fw-chat-entry href="${safe(c.chat)}">${safe(chatting ? l.continueChat : l.chatCta)} →</a>` : '';
   const storyLink = w ? `<a class="fw-btn${c.chat && !played ? ' fw-btn-secondary' : ''}" data-fw-story-entry href="${safe(w.playUrl)}"${ext(w.playUrl)}>${safe(played ? l.continueStory : l.storyCta)} →</a>` : '';
-  const chatStatus = `<p class="fw-note" data-fw-chat-status>${safe(chatting ? l.chatSaved(chat.messages.length) : l.noChatYet)}</p>`;
-  const storyStatus = c.source.work === 'xichuan' ? `<p class="fw-note" data-fw-progress>${safe(progressText(raw,getLang()))}</p>` : '';
-  const scope = c.chat || c.source.work === 'xichuan' ? `<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}` : '';
-  return `<div class="fw-profile-actions"><div class="fw-ctas">${played ? storyLink + chatLink : chatLink + storyLink}</div><div class="fw-profile-summary" role="status" aria-live="polite">${scope}${storyStatus}${c.chat ? chatStatus : `<p class="fw-note">${safe(l.noChat)}</p>`}</div>${w && c.chat && isStandalone(w.playUrl) ? `<p class="fw-note">${safe(l.standalone)}</p>` : ''}</div>${c.chat ? experiencesMarkup(c,raw,chat) : ''}`;
+  const chatStatus = c.chat && chatting ? `<p class="fw-note" data-fw-chat-status>${safe(l.chatSaved(chat.messages.length))}</p>` : '';
+  const storyStatus = played ? `<p class="fw-note" data-fw-progress>${safe(progressText(raw,getLang()))}</p>` : '';
+  const scope = played || chatting || chat.pins.length || chat.notes ? `<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>` : '';
+  const summary = `${scope}${storyStatus}${chatStatus}${!c.chat ? `<p class="fw-note">${safe(l.noChat)}</p>` : ''}${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}`;
+  return `<div class="fw-profile-actions"><div class="fw-ctas">${played ? storyLink + chatLink : chatLink + storyLink}</div>${summary ? `<div class="fw-profile-summary" role="status" aria-live="polite">${summary}</div>` : ''}${w && c.chat && isStandalone(w.playUrl) ? `<p class="fw-note">${safe(l.standalone)}</p>` : ''}</div>${c.chat ? experiencesMarkup(c,raw,chat) : ''}`;
  } catch { return `<p class="fw-note" role="status">${safe(l.stateUnavailable)}</p>`; }
 }
 const profileStateCache = new WeakMap();
+const profileStateOwners = new WeakMap();
 // Account hydration and sync updates replace only private state, preserving the
-// library search, portrait expression, and the rest of the current profile.
+// library search, portrait, and the rest of the current profile.
 export function syncAccount(account) {
  const host = document.querySelector('[data-fw-profile-state]');
  const c = cardById(host?.closest('[data-fw-character]')?.dataset.fwCharacter);
  if (!host || !c) return;
+ const owner=account?.user?.uid||null,sameOwner=profileStateOwners.get(host)===owner;
  const markup = profileStateMarkup(c,account);
- if (profileStateCache.get(host) === markup) return;
+ if (sameOwner&&profileStateCache.get(host) === markup) return;
  const active = document.activeElement;
  const selected = host.contains(active) && active?.matches?.('a[data-fw-chat-entry],a[data-fw-story-entry]') ? active.getAttribute('href') : null;
+ const reviewing = sameOwner&&host.querySelector('[data-fw-experiences]')?.hasAttribute('open');
+ const summaryFocus=sameOwner&&host.contains(active)&&active?.matches('summary')?active.id:null;
  host.innerHTML = markup;
+ if(reviewing&&host.querySelector('[data-fw-experiences]'))host.querySelector('[data-fw-experiences]').setAttribute('open','');
  profileStateCache.set(host,markup);
- if (selected) [...host.querySelectorAll('a[href]')].find(a => a.getAttribute('href') === selected)?.focus({preventScroll:true});
+ profileStateOwners.set(host,owner);
+ if(!sameOwner){const about=host.closest('[data-fw-character]')?.querySelector('[data-fw-about]');if(about){const inside=about.contains(active);about.removeAttribute('open');if(inside)about.querySelector('summary')?.focus({preventScroll:true});}}
+ if (sameOwner&&selected) [...host.querySelectorAll('a[href]')].find(a => a.getAttribute('href') === selected)?.focus({preventScroll:true});
+ else if(summaryFocus)host.querySelector('#'+summaryFocus)?.focus({preventScroll:true});
 }
 function profileMarkup(c) {
   const l = L();
@@ -333,36 +323,27 @@ function profileMarkup(c) {
   const fromChat = characterReturnUrl(from)?.startsWith('/play/') ? characterReturnUrl(from) : null;
   const returnUrl = fromStory || fromChat || characterDirectoryReturn(globalThis.history?.state?.discoveryReturn) || characterDirectoryReturn(from) || '/characters';
   const returnLabel = fromStory ? l.storiesNav : fromChat ? l.chatBack : l.profileBack;
-  const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>${safe(quoted(t(s)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(s.from) || workName(c.source.work))}</cite></blockquote>`).join('');
+  const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>${safe(quoted(t(s)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(s.from) || workName(c.source.work))}</cite></blockquote>`);
   const stories = storiesForCharacter(c.id), primaryStory = stories[0];
   const appears = stories.slice(1).map(a => `<a class="fw-appearance" data-full-info href="${safe(a.informationUrl)}"><strong>${safe(t(a.title))}</strong><span aria-hidden="true">↗</span></a>`).join('');
-  const encounters = (c.encounters || []).map((e) => `<a class="fw-appearance" href="${safe(e.url)}"><strong>${safe(t(e.title))}</strong><span>${safe(l.encounterCta)}</span><span aria-hidden="true">↗</span></a>`).join('');
-  const starters = (c.starters?.[getLang() === 'zh' ? 'zh' : 'en'] || []).map((x) => `<li>${safe(x)}</li>`).join('');
-  const others = cardsByUniverse(c.source.universe).filter((x) => x.id !== c.id).slice(0, 8);
-  const multi = (c.expressions || []).length > 1;
-  const portraitBlock = multi
-    ? `<div class="fw-profile-portrait"><div class="fw-profile-scene">${sceneArt(c)}<img id="fw-portrait-main" class="fw-portrait-figure" src="${safe(c.expressionUrl(expressionFor(c)))}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span></div>
-       <div class="fw-expressions" role="group" aria-label="${safe(l.exprH)}">${c.expressions.map((e, i) => `<button type="button" class="fw-expr${expressionFor(c) === e ? ' active' : ''}" data-fw-expr="${safe(c.expressionUrl(e))}" aria-pressed="${expressionFor(c) === e}" aria-label="${safe(expressionName(e))}" title="${safe(expressionName(e))}"><img src="${safe(c.expressionUrl(e))}" alt="" loading="lazy"><span class="fw-expr-label" aria-hidden="true">${safe(expressionLabel(e))}</span></button>`).join('')}</div></div>`
-    : `<div class="fw-profile-portrait"><div class="fw-profile-scene">${sceneArt(c)}${cardArt(c)}</div></div>`;
+  const portraitBlock = `<div class="fw-profile-portrait"><div class="fw-profile-scene">${sceneArt(c)}<img id="fw-portrait-main" class="fw-portrait-figure" src="${safe(c.portrait)}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span></div></div>`;
   return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="profile" data-fw-character="${safe(c.id)}">
     ${mobileBar()}
-    <a class="fw-back" data-full-info href="${safe(returnUrl)}">‹ ${safe(returnLabel)}</a>
+    <a class="fw-back" data-fw-back data-full-info href="${safe(returnUrl)}">‹ ${safe(returnLabel)}</a>
     <article class="fw-profile">
       <div class="fw-profile-top">
-        ${portraitBlock}
         <div class="fw-profile-head">
           ${primaryStory?.role ? `<p class="fw-eyebrow">${safe(t(primaryStory.role))}</p>` : ''}
           <h1>${safe(t(c.name))}</h1>
           <p class="fw-tagline">${safe(t(c.tagline))}</p>
-          <p class="fw-persona">${primaryStory ? `<a data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a>` : safe(workName(c.source.work))}</p>${c.portraitNote ? `<p class="fw-note">${safe(t(c.portraitNote))}</p>` : ''}
+          <p class="fw-persona">${primaryStory ? `<a data-fw-story-source data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a>` : safe(workName(c.source.work))}</p>${c.portraitNote ? `<p class="fw-note">${safe(t(c.portraitNote))}</p>` : ''}
         </div>
         <div class="fw-profile-state" data-fw-profile-state>${profileStateMarkup(c)}</div>
+        ${portraitBlock}
       </div>
-      <section class="fw-section"><h2>${l.voiceH}</h2>${c.voice ? `<p>${safe(t(c.voice))}</p>` : ''}${samples || `<p class="fw-note">${safe(l.noSamples)}</p>`}</section>
-      <details class="fw-details"><summary>${safe(l.detailsH)}</summary><h3>${safe(l.personaH)}</h3><p>${safe(t(c.persona))}</p><h3>${safe(l.lockedH)}</h3><p>${safe(t(c.locked))}</p></details>
+      ${samples[0] ? `<section class="fw-section fw-profile-quote">${samples[0]}</section>` : ''}
+      <details class="fw-details" id="fw-about" data-fw-about><summary id="fw-about-title">${safe(l.detailsH)}</summary><p>${safe(t(c.persona))}</p>${c.voice ? `<h3>${safe(l.voiceH)}</h3><p>${safe(t(c.voice))}</p>` : ''}${samples.slice(1).join('')}</details>
       ${appears ? `<section class="fw-section"><h2>${l.appearH}</h2><div class="fw-appearances">${appears}</div></section>` : ''}
-      ${encounters || starters ? `<details class="fw-details"><summary>${safe(l.topicsH)}</summary>${encounters ? `<div class="fw-appearances">${encounters}</div>` : ''}${starters ? `<ul class="fw-rules fw-starters">${starters}</ul>` : ''}</details>` : ''}
-      ${others.length ? `<section class="fw-section"><h2>${l.sameUniverseH}</h2><div class="fw-hscroll">${others.map(cardMarkup).join('')}</div></section>` : ''}
     </article>
   </main>`;
 }
@@ -398,21 +379,27 @@ function missingMarkup(world = false) {
  const l = L(), title = world ? l.missingWorld : l.missingCharacter;
  return `<main class="fw-page" data-no-i18n data-fw-page="missing">${mobileBar()}<section class="fw-missing"><h1 tabindex="-1">${safe(title)}</h1><p>${safe(l.missingGuide)}</p><a class="fw-btn" href="${world ? '/' : '/characters'}">${safe(world ? l.storiesNav : l.profileBack)} →</a></section></main>`;
 }
-const focusAttributes = ['id','data-sd-lang','data-fw-expr','data-fw-filter','data-fw-world-select','data-fw-chat'];
+const focusAttributes = ['id','data-sd-lang','data-fw-world-select','data-fw-chat','data-fw-chat-entry','data-fw-story-entry','data-fw-story-source','data-fw-back'];
 function rememberFocus() {
  const node = document.activeElement;
  const attribute = focusAttributes.find(key => node?.hasAttribute?.(key));
- return attribute ? {attribute,value:node.getAttribute(attribute),start:node.selectionStart,end:node.selectionEnd,direction:node.selectionDirection} : null;
+ const scope = node?.closest?.('[data-fw-page]') ? 'page' : node?.closest?.('#precision-view') ? 'shell' : null;
+ const slot = attribute === 'data-sd-lang' ? ['sd-lang-side','sd-lang-top','sd-lang-legacy'].find(name => node.closest('.sd-lang')?.classList.contains(name)) : null;
+ return attribute && scope ? {attribute,scope,slot,value:node.getAttribute(attribute),start:node.selectionStart,end:node.selectionEnd,direction:node.selectionDirection} : null;
 }
 function restoreFocus(saved) {
- if (!saved) return;
- const node = [...document.querySelectorAll(`[${saved.attribute}]`)].find(el => el.getAttribute(saved.attribute) === saved.value);
- if (!node || node.disabled) return;
+ if (!saved) return false;
+ const root = saved.scope === 'page' ? document.querySelector('[data-fw-page]') : document.getElementById('precision-view');
+ const node = [...(root?.querySelectorAll('[' + saved.attribute + ']') || [])].find(el =>
+  el.getAttribute(saved.attribute) === saved.value &&
+  (saved.scope !== 'shell' || !el.closest('[data-fw-page]')) &&
+  (!saved.slot || el.closest('.sd-lang')?.classList.contains(saved.slot)));
+ if (!node || node.disabled) return false;
  node.focus({preventScroll:true});
  if (Number.isInteger(saved.start) && node.setSelectionRange) { try { node.setSelectionRange(saved.start,saved.end,saved.direction); } catch {} }
+ return true;
 }
 function bindCommon() {
- document.querySelectorAll('[data-fw-filter]').forEach(b => b.onclick = () => { changeLibrary({world:b.dataset.fwFilter}); renderRoute('/characters'); document.querySelector(`[data-fw-filter="${libFilter.universe}"]`)?.focus({preventScroll:true}); });
  document.querySelector('[data-fw-chat]')?.addEventListener('click', () => { changeLibrary({chat:!libFilter.chat}); renderRoute('/characters'); document.querySelector('[data-fw-chat]')?.focus({preventScroll:true}); });
  document.querySelector('[data-fw-world-select]')?.addEventListener('change', e => { changeLibrary({world:e.target.value}); renderRoute('/characters'); document.querySelector('[data-fw-world-select]')?.focus({preventScroll:true}); });
  document.querySelector('.fw-character-feature input')?.addEventListener('input', e => { featuredDraft = e.target.value; });
@@ -426,12 +413,6 @@ function bindCommon() {
   changeLibrary({world:'all',chat:false,query:''}); renderRoute('/characters');
   document.getElementById('fw-search')?.focus({preventScroll:true});
  });
- document.querySelectorAll('[data-fw-expr]').forEach(b => b.onclick = () => {
-  const id = document.querySelector('[data-fw-character]').dataset.fwCharacter, c = cardById(id);
-  chosenExpressions.set(id,c.expressions.find(e => c.expressionUrl(e) === b.dataset.fwExpr));
-  const main = document.getElementById('fw-portrait-main'); main.hidden = false; main.nextElementSibling.hidden = true; main.src = b.dataset.fwExpr;
-  document.querySelectorAll('[data-fw-expr]').forEach(x => { x.classList.toggle('active',x === b); x.setAttribute('aria-pressed',String(x === b)); });
- });
  document.querySelector('[data-fw-export]')?.addEventListener('click',exportDrafts);
 }
 function renderRoute(path) {
@@ -444,6 +425,7 @@ function renderRoute(path) {
  else if (path === '/studio') { markup = studioMarkup(); title = L().legacyH; }
  else return false;
  mountShell(markup,currentHelpers,'flywheel');
+ const state=document.querySelector('[data-fw-profile-state]');if(state)profileStateOwners.set(state,currentHelpers?.account?.user?.uid||null);
  if (path === '/characters') {
   const element = document.querySelector('.fw-character-feature');
   const hero = mountHeroContent(element,'character',{navigate: url => {
@@ -464,7 +446,20 @@ function bindLangRerender() {
   if (!currentHelpers) return;
   if (location.pathname === '/') return;
   const focus = rememberFocus();
-  if (renderRoute(location.pathname)) { currentHelpers.repaint?.(); restoreFocus(focus); }
+  const state=document.querySelector('[data-fw-profile-state]'),sameOwner=!state||profileStateOwners.get(state)===(currentHelpers?.account?.user?.uid||null);
+  const expanded=sameOwner?[...document.querySelectorAll('[data-fw-experiences][open],[data-fw-about][open]')].map(node=>node.id):[];
+  if (renderRoute(location.pathname)) {
+   for (const id of expanded) document.getElementById(id)?.setAttribute('open','');
+   currentHelpers.repaint?.();
+   if (!restoreFocus(focus) && focus?.scope === 'shell') {
+    // The shared i18n observer places shell language controls after mounting.
+    // Never focus a hidden legacy copy or take focus from a later user action.
+    const page = document.querySelector('[data-fw-page]');
+    globalThis.requestAnimationFrame?.(() => {
+     if (page === document.querySelector('[data-fw-page]') && document.activeElement === document.body) restoreFocus(focus);
+    });
+   }
+  }
  });
 }
 export function show(path,helpers) {

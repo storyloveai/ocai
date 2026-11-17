@@ -127,6 +127,16 @@ test('language switches translate library UI but preserve creator titles, identi
   await chooseLanguage('en');
   assert.equal(audience.value,'Neutral');
   assert.equal(document.querySelector('#profile-name').value,'Profile');
+  await open('/profile/setting/chat');
+  assert.equal(document.querySelector('[data-suggestion-preference]').hasAttribute('checked'),false,'recommendations start collapsed without creating a preference');
+  assert.equal(values.has('ooc-suggestions-visible'),false);
+  values.set('ooc-suggestions-visible',true);
+  await open('/profile/setting/chat');
+  assert.equal(document.querySelector('[data-suggestion-preference]').hasAttribute('checked'),true,'existing explicit preference remains enabled');
+  values.set('ooc-suggestions-visible',false);
+  await open('/profile/setting/chat');
+  assert.equal(document.querySelector('[data-suggestion-preference]').hasAttribute('checked'),false);
+  values.delete('ooc-suggestions-visible');
   assert.deepEqual([...values], original);
   assert.deepEqual(writes, []);
 });
