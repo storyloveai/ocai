@@ -7,6 +7,8 @@ import {join} from 'node:path';
 import {historyIds,lastSessionText} from '../dist/assets/history.js';
 import {buildPrompt} from '../server/prompt-engine.js';
 import {cloudKey} from '../dist/assets/account-storage.js';
+import {storyById,charactersForStory} from '../dist/assets/character-stories.js';
+import {getLang} from '../dist/assets/site-i18n.js';
 const dist=fileURLToPath(new URL('../dist/',import.meta.url));
 test('object-shaped Three Kingdoms progress remains in shared history after opening another session',()=>{
  const values=new Map([['ooc-history',['other']],['ooc-session-v2-three-kingdoms',{'game.sg08_arrows_from_fog':{turn:3}}],['ooc-session-v2-other',[{role:'assistant',text:'Still here'}]]]);
@@ -36,7 +38,12 @@ test('all title kinds float, search preserves background, tabs update only conte
  reference.openSearch(h,'#fantasy');assert.ok(document.querySelectorAll('[data-search-results] a').length>0);document.querySelector('[data-preview-close]').click();
  reference.openSearch(h,'三国');assert.equal(document.querySelector('[data-hero-desktop]'),hero);assert.match(document.querySelector('[data-search-results]').textContent,/三国/);assert.equal(document.querySelector('dialog[open]').getAttribute('aria-label'),'Search');document.querySelector('[data-preview-close]').click();
  for(const story of [h.data.find(d=>d.id==='three-kingdoms'),h.data.find(d=>d.type==='character'),h.data.find(d=>d.id==='sgc-007'),h.data.find(d=>d.id==='story-005')]){
-  assert.equal(reference.preview('/'+(story.type==='character'?'character':'story')+'/'+story.id,h),true);const dialog=document.querySelector('#title-preview');assert.match(dialog.textContent,new RegExp(story.title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));assert.ok(dialog.querySelector('[data-preview-play]'));if(story.id==='sgc-007'){assert.equal(dialog.querySelector('[data-preview-close]').getAttribute('aria-label'),'Close Character Information');assert.ok(dialog.querySelector('a[href^="/search?q="]'));dialog.querySelector('[data-preview-bookmark]').click();assert.ok(values.get('ooc-favorites').includes(story.id));}dialog.querySelector('[data-preview-close]').click();
+  assert.equal(reference.preview('/'+(story.type==='character'?'character':'story')+'/'+story.id,h),true);const dialog=document.querySelector('#title-preview');
+  const linked=story.type!=='character'&&charactersForStory(story.id).length?storyById(story.id):null;
+  const title=linked?linked.title[getLang()]:story.title;
+  assert.match(dialog.textContent,new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')));
+  if(linked){assert.equal(dialog.querySelector('a[data-story-play]').getAttribute('href'),linked.playUrl);assert.equal(dialog.querySelector('[data-preview-play]'),null);}else{assert.equal(dialog.querySelector('[data-preview-play]').dataset.previewPlay,story.id);}
+  if(story.id==='sgc-007'){assert.equal(dialog.querySelector('[data-preview-close]').getAttribute('aria-label'),'Close Character Information');assert.ok(dialog.querySelector('a[href^="/search?q="]'));dialog.querySelector('[data-preview-bookmark]').click();assert.ok(values.get('ooc-favorites').includes(story.id));}dialog.querySelector('[data-preview-close]').click();
  }
  // captured OOC titles are no longer listed or previewable; comments work on our own titles
  assert.equal(reference.preview('/story/69f414d90abbab6f6a2c8131',h),false);

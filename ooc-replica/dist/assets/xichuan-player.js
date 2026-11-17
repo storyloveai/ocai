@@ -1,14 +1,15 @@
-import {characterProfileUrl} from './character-links.js';
+import {characterReturnUrl} from './character-links.js';
 import {attachGameCredits} from './game-credit-bridge.js';
 import {xichuanAction} from './loop-events.js';
 import {track} from './analytics.js';
 import {escapeHTML as esc} from './stream.js';
+import {currentLang, setLang} from './site-i18n.js';
 import {XICHUAN_KEY, LATEST, cleanSaves, latestSave, legacySaves, validSave, progressText} from './xichuan-state.js';
 let dispose = () => {};
-export const isXichuanPath = path => ['/play/xichuan', '/story/xichuan'].includes(path);
+export const isXichuanPath = path => path === '/play/xichuan';
 export function stopXichuan() { dispose(); dispose = () => {}; }
 export function mountXichuan({reference, account, helpers: h, storage = localStorage}) {
-  const lang = document.documentElement.lang.startsWith('zh') ? 'zh' : 'en';
+  let lang = document.documentElement.lang.startsWith('zh') ? 'zh' : 'en';
   const t = (zh, en) => lang === 'zh' ? zh : en;
   let snapshot = cleanSaves(h.read(XICHUAN_KEY, {})), active = true, initialized = false;
   if (!account.user && !latestSave(snapshot)) {
@@ -18,14 +19,18 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   const guest = account.user ? cleanSaves((() => { try { return JSON.parse(storage.getItem(XICHUAN_KEY)); } catch { return {}; } })()) : {};
   const old = legacySaves(storage), transferable = latestSave(guest) ? guest : old;
   const importable = account.user && !account.syncError && !latestSave(snapshot) && latestSave(transferable);
+  const origin = characterReturnUrl(globalThis.history?.state?.characterReturn) || characterReturnUrl(globalThis.history?.state?.from);
+  const returnUrl = origin || '/story/xichuan';
+  const returnLabel = () => origin?.startsWith('/play/') ? t('返回聊天', 'Back to chat') : origin ? t('返回人物', 'Back to character') : t('故事介绍', 'Story information');
   const root = reference.mountShell(`<style>
+    [data-page="xichuan"] .sd-language-slot{display:none!important}
     .xc-header{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid #333}
     .xc-header h1{font-size:16px;margin:0}.xc-header a{display:inline-flex;align-items:center;min-height:44px;padding:9px 12px;border:1px solid #3a3a3a;border-radius:8px;color:#fafafa;text-decoration:none}.xc-status{font-size:12px;color:#bbb;margin-left:auto}
     .xc-transfer{padding:12px 16px;background:#25232b}.xc-transfer button{margin-left:10px;padding:8px;border:1px solid #6b626f;border-radius:8px;background:#38313b;color:#fff}
     #xichuan-frame{display:block;width:100%;height:var(--xc-frame-height,calc(100dvh - 120px));min-height:160px;border:0;background:#111522}
     @media(max-width:600px){.xc-header{gap:8px;padding:8px 12px}.xc-status{width:100%;margin:0}}
-  </style><header class="xc-header" data-no-i18n><a href="${characterProfileUrl('xc-zhiyao')}">${t('人物档案', 'Character profile')}</a><a href="/play/xc-zhiyao?from=xichuan" data-xichuan-return>‹ ${t('和夏知遥聊聊', 'Chat with Zhiyao')}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
-  ${importable ? `<div class="xc-transfer" data-no-i18n>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}<button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
+  </style><header class="xc-header" data-no-i18n><a href="${esc(returnUrl)}" data-xichuan-return>‹ ${returnLabel()}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
+  ${importable ? `<div class="xc-transfer" data-no-i18n><span data-xichuan-import-note>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}</span><button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
   <iframe id="xichuan-frame" title="${t('汐川互动故事', 'Xichuan visual novel')}" src="/assets/xichuan/index.html?site=1&lang=${lang}" allow="autoplay"></iframe>`, h, 'xichuan');
   const frame = root.querySelector('#xichuan-frame'),gameCredits=attachGameCredits(frame,account,{lang}), status = root.querySelector('.xc-status');
   // The mobile site footer and wrapped bilingual header have real heights.
@@ -43,20 +48,38 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   };
   const resize = typeof ResizeObserver === 'function' ? new ResizeObserver(fitFrame) : null;
   resize?.observe(root.querySelector('.xc-header'));
+  const creditBar = root.querySelector('[data-game-credits]');
+  if (creditBar) resize?.observe(creditBar);
   for (const bar of bottomBars) resize?.observe(bar);
   window.addEventListener('resize',fitFrame);
   window.visualViewport?.addEventListener('resize',fitFrame);
   fitFrame();
-  const setStatus = () => status.textContent = (account.user ? t('账号进度 · ', 'Account progress · ') : t('本设备进度 · ', 'Device progress · ')) + progressText(snapshot, lang);
+  let saveFailed = false;
+  const setStatus = () => status.textContent = saveFailed ? t('保存失败，请保留此页面并重试；可先返回聊天检查设备空间。', 'Save failed. Keep this page open, free device space and retry.') : (account.user ? t('账号进度 · ', 'Account progress · ') : t('本设备进度 · ', 'Device progress · ')) + progressText(snapshot, lang);
   setStatus();
+  const paintLanguage = next => {
+    if (!active || !frame.isConnected || !['zh','en'].includes(next)) return;
+    lang = next;
+    root.querySelector('.xc-header h1').textContent = t('汐川的第七个春天', 'The Seventh Spring of Xichuan');
+    root.querySelector('[data-xichuan-return]').textContent = '‹ ' + returnLabel();
+    const note = root.querySelector('[data-xichuan-import-note]'), button = root.querySelector('[data-import]');
+    if (note) note.textContent = t('此账号尚无汐川进度。', 'This account has no Xichuan progress.');
+    if (button) button.textContent = t('接续本设备上的进度', 'Import this device’s progress');
+    frame.title = t('汐川互动故事', 'Xichuan visual novel');
+    gameCredits.setLanguage(next);
+    setStatus(); fitFrame();
+    document.title = t('汐川的第七个春天', 'The Seventh Spring of Xichuan') + ' · StoryDate';
+  };
+  const onSiteLanguage = event => paintLanguage(event.detail);
+  globalThis.addEventListener?.('sd-lang',onSiteLanguage);
   function persist(next) {
     if (!active || !frame.isConnected) return false;
     try {
       if (new TextEncoder().encode(JSON.stringify(next)).byteLength > 750000) throw Error('Save too large');
       h.save(XICHUAN_KEY, next);
       if (latestSave(next)) h.save('ooc-history', ['xichuan', ...h.read('ooc-history', []).filter(id => id !== 'xichuan')]);
-      snapshot = next; setStatus(); return true;
-    } catch { status.textContent = t('保存失败，请保留此页面并重试；可先返回聊天检查设备空间。', 'Save failed. Keep this page open, free device space and retry.'); return false; }
+      snapshot = next; saveFailed = false; setStatus(); return true;
+    } catch { saveFailed = true; setStatus(); return false; }
   }
   root.querySelector('[data-import]')?.addEventListener('click', () => {
     if (!active || latestSave(snapshot) || !persist(structuredClone(transferable))) return;
@@ -74,6 +97,10 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     }
     if(d?.type === 'xc-action' && initialized){xichuanAction(d);return;}
     if (d?.type !== 'xc-save' || !initialized || !validSave(d.key, d.value)) return;
+    if (d.key === 'lang' && ['zh','en'].includes(d.value)) {
+      if (currentLang() !== d.value) setLang(d.value);
+      else if (lang !== d.value) paintLanguage(d.value);
+    }
     const next = {...snapshot}, key = d.key === 'latest' ? LATEST : d.key;
     if (d.value === null) delete next[key]; else next[key] = d.value;
     if (d.key === 'auto' && d.value) next[LATEST] = d.value;
@@ -86,10 +113,10 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   };
   window.addEventListener('message', receive);
   track('game_opened', {game: 'xichuan', lang});
-  dispose = () => { gameCredits.dispose();active = false; resize?.disconnect();window.removeEventListener('resize',fitFrame);window.visualViewport?.removeEventListener('resize',fitFrame);window.removeEventListener('message', receive); };
+  dispose = () => { gameCredits.dispose();active = false; resize?.disconnect();window.removeEventListener('resize',fitFrame);window.visualViewport?.removeEventListener('resize',fitFrame);window.removeEventListener('message', receive);globalThis.removeEventListener?.('sd-lang',onSiteLanguage); };
   document.title = t('汐川的第七个春天', 'The Seventh Spring of Xichuan') + ' · StoryDate';
 }
 export function zhiyaoStoryLink(h, lang) {
   const raw = h.read(XICHUAN_KEY, {}), played = Boolean(latestSave(raw));
-  return `<aside class="xc-chat-bridge" data-no-i18n style="flex-shrink:0;margin:8px 12px;padding:10px 12px;border:1px solid #333;border-radius:8px;font-size:13px"><p style="margin:0 0 8px">${esc(progressText(raw, lang))}</p><a href="${characterProfileUrl('xc-zhiyao')}" style="display:inline-flex;align-items:center;min-height:44px;margin-right:10px;color:inherit">${lang==='zh'?'人物档案':'Character profile'}</a><a href="/play/xichuan" data-xichuan-entry style="display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;background:#fafafa;color:#171717;border-radius:8px;font-weight:500;text-decoration:none">${lang === 'zh' ? played ? '继续她的故事 →' : '走进她的故事 →' : played ? 'Continue her story →' : 'Step into her story →'}</a><small style="display:block;color:#aaa;margin-top:6px">${lang === 'zh' ? '故事里的选择会带回聊天。聊天不会改写游戏选项和存档。' : 'Story choices carry back to chat. Chat does not change game choices or saves.'}</small></aside>`;
+  return `<aside class="xc-chat-bridge" data-no-i18n style="flex-shrink:0;margin:8px 12px;padding:10px 12px;border:1px solid #333;border-radius:8px;font-size:13px"><p style="margin:0 0 8px">${esc(progressText(raw, lang))}</p><a href="/play/xichuan" data-xichuan-entry style="display:inline-flex;align-items:center;min-height:44px;padding:8px 12px;background:#fafafa;color:#171717;border-radius:8px;font-weight:500;text-decoration:none">${lang === 'zh' ? played ? '继续她的故事 →' : '走进她的故事 →' : played ? 'Continue her story →' : 'Step into her story →'}</a><small style="display:block;color:#aaa;margin-top:6px">${lang === 'zh' ? '故事里的选择会带回聊天。聊天不会改写游戏选项和存档。' : 'Story choices carry back to chat. Chat does not change game choices or saves.'}</small></aside>`;
 }

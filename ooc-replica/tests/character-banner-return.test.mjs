@@ -108,6 +108,25 @@ test('character replies preserve device drafts and hand off featured text once w
       await f.go('/play/'+id);
     });
 
+    await t.test('demo model control changes the real response mode without offering fictional quality tiers or empty notifications',async()=>{
+      f.values.set('ooc-model-tier',JSON.stringify('Superb'));
+      await f.go('/play/story-005');await waitFor(()=>input(f),'ordinary demo did not mount');
+      const before=apiCalls(f).filter(([,method])=>method==='POST');
+      const model=f.document.querySelector('[data-control="model"]');
+      assert.match(model.textContent,/演示对话|Demo replies/);
+      const sidebar=f.document.querySelector('[data-shrink]');assert.ok(sidebar);
+      assert.doesNotMatch(sidebar.textContent,/Notifications|通知/);
+      await f.click('[data-control="model"]');
+      const mode=f.document.querySelector('.interaction-modal[open] select[aria-label="Response mode"]');
+      assert.ok(mode,'the actual mode selector opens');
+      assert.equal(mode.querySelector('option[value="ai"]').hasAttribute('disabled'),true,'unavailable AI is still gated');
+      assert.equal(f.document.querySelector('[data-tier]'),null);
+      await f.click('.interaction-modal[open] .save');
+      assert.equal(read(f,'ooc-model-tier'),'Superb','retiring the picker does not delete old preferences');
+      assert.deepEqual(apiCalls(f).filter(([,method])=>method==='POST'),before);
+      await f.go('/play/'+id);
+    });
+
     await t.test('retry checks public configuration only, and a recovered service still honors the existing login gate',async()=>{
       const fetchBefore=globalThis.fetch;
       await f.go('/play/'+id+'?say='+encodeURIComponent('检查状态前带来的新回复。'));

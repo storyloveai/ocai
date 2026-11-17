@@ -1,27 +1,11 @@
 /* Flywheel pages extend the existing StoryDate shell.
    One neutral control language: 8px corners, 44px targets, white primary,
    dark outlined secondary. Existing story artwork supplies the colour. */
+.fw-page [hidden] { display: none !important; }
 .fw-page { max-width: 1200px; margin: 0 auto; padding: 0 48px 64px; color: #fafafa; }
-.fw-page [hidden], .fw-strip [hidden] { display: none !important; }
-.fw-page :is(a, button, input, select, textarea, summary):focus-visible,
-.fw-strip :is(a, button):focus-visible { outline: 2px solid #fafafa; outline-offset: 3px; box-shadow: none; }
-.fw-page :is(button, a):hover, .fw-strip :is(button, a):hover { filter: none; }
-.fw-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 24px; padding: 0; border-bottom: 1px solid #2b2b2b; }
-.fw-nav a { display: inline-flex; align-items: center; min-height: 44px; padding: 10px 12px; color: #a1a1a1; font-size: 14px; border-bottom: 2px solid transparent; }
-.fw-nav a:hover { color: #fafafa; }
-.fw-nav a[aria-current="page"], .fw-nav a.active { color: #fafafa; border-bottom-color: #fafafa; }
+.fw-page :is(a, button, input, select, textarea, summary):focus-visible { outline: 2px solid #fafafa; outline-offset: 3px; box-shadow: none; }
+.fw-page :is(button, a):hover { filter: none; }
 
-/* A compact introduction, not another full-screen landing page. */
-.fw-hero { position: relative; overflow: hidden; display: flex; align-items: center; min-height: 220px; margin: 0 0 28px; padding: 28px 0; background: #121212; }
-.fw-hero-art { position: absolute; inset: 0; pointer-events: none; }
-.fw-hero-blur, .fw-hero-fade { display: none; }
-.fw-hero-figure { position: absolute; inset: 0 0 0 auto; width: 28%; height: 100%; object-fit: contain; object-position: center; opacity: .7; }
-.fw-hero-copy { position: relative; display: flex; flex-direction: column; gap: 12px; width: 68%; max-width: 640px; }
-.fw-hero-meta { margin: 0; }
-.fw-hero-badge { color: #a1a1a1; font-size: 12px; letter-spacing: .06em; }
-.fw-hero-quote { margin: 0; font-size: 30px; line-height: 1.3; font-weight: 600; text-wrap: balance; }
-.fw-hero-lead, .fw-sub { margin: 0; max-width: 640px; color: #a1a1a1; font-size: 14px; line-height: 1.7; }
-.fw-hero-slim { display: none; }
 .fw-eyebrow { margin: 0 0 8px; color: #a1a1a1; font-size: 12px; letter-spacing: .04em; }
 .fw-back { display: inline-flex; align-items: center; min-height: 44px; margin: 8px 0 16px; color: #a1a1a1; font-size: 14px; }
 .fw-back:hover { color: #fafafa; }
@@ -102,12 +86,6 @@
 .fw-profile-summary .fw-progress-scope { color: #a1a1a1; }
 .fw-ctas, .fw-appearances { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .fw-progress-scope { margin: 0 0 12px; color: #a1a1a1; font-size: 12px; line-height: 1.6; }
-.fw-journey { display: grid; gap: 0; margin: 0; padding-left: 22px; }
-.fw-journey li { padding: 0 0 16px 4px; color: #a1a1a1; font-size: 13px; }
-.fw-journey li:last-child { padding-bottom: 0; }
-.fw-journey h2 { margin: 0; color: #d4d4d4; font-size: 15px; line-height: 1.6; font-weight: 500; }
-.fw-journey .fw-note { margin: 4px 0 8px; }
-.fw-review-link { display: inline-flex; align-items: center; min-height: 44px; color: #fafafa; font-size: 13px; text-decoration: underline; text-underline-offset: 3px; }
 .fw-experiences { margin-top: 24px; padding-top: 20px; border-top: 1px solid #2b2b2b; scroll-margin-top: 24px; }
 .fw-experiences h2 { margin: 0 0 12px; font-size: 18px; line-height: 1.5; font-weight: 600; }
 .fw-experiences h3 { margin: 16px 0 8px; color: #d4d4d4; font-size: 13px; line-height: 1.6; font-weight: 500; }
@@ -129,76 +107,23 @@
 .fw-hscroll { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(190px, 220px); gap: 16px; overflow-x: auto; padding: 2px 2px 12px; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: #555 transparent; }
 .fw-hscroll .fw-card { scroll-snap-align: start; }
 
-/* Story-world pages reuse the same cards and understated tabs. */
-.fw-uni-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-.fw-uni-card { position: relative; display: flex; min-width: 0; flex-direction: column; gap: 8px; overflow: hidden; padding: 14px; border: 1px solid #2b2b2b; border-radius: 10px; background: #191919; color: inherit; text-decoration: none; transition: border-color .15s ease; }
-.fw-uni-card:hover { border-color: #666; }
-.fw-uni-cover { position: relative; display: block; overflow: hidden; aspect-ratio: 16 / 8; margin-bottom: 4px; border-radius: 8px; background: #171717; }
-.fw-uni-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.fw-uni-cover .fw-card-name { font-size: 17px; }
-.fw-uni-blank { display: block; height: 100%; background: #202020; }
-.fw-uni-card em { color: #a1a1a1; font-size: 13px; line-height: 1.6; font-style: normal; }
-.fw-world { max-width: 760px; color: #a1a1a1; font-size: 14px; line-height: 1.8; }
-.fw-tabs { display: flex; gap: 8px; overflow-x: auto; margin: 16px 0 20px; padding-bottom: 8px; border-bottom: 1px solid #2b2b2b; scrollbar-width: thin; }
-.fw-tabs [role="tab"] { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 12px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: #a1a1a1; font-size: 14px; white-space: nowrap; cursor: pointer; }
-.fw-tabs [role="tab"]:hover { color: #fafafa; background: #202020; }
-.fw-tabs [role="tab"].active { color: #fafafa; background: #292929; border-color: #555; }
-.fw-rules, .fw-factions { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.fw-rules li, .fw-factions li { padding: 12px 14px; border: 1px solid #2b2b2b; border-radius: 8px; background: #191919; color: #c7c7c7; font-size: 14px; line-height: 1.7; }
-.fw-factions { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
-.fw-factions li { display: flex; flex-direction: column; gap: 6px; }
-.fw-factions strong { color: #fafafa; font-weight: 500; }
-.fw-factions span { color: #a1a1a1; font-size: 13px; line-height: 1.7; }
-.fw-timeline { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(220px, 280px); gap: 12px; overflow-x: auto; padding: 2px 2px 12px; scroll-snap-type: x proximity; scrollbar-width: thin; scrollbar-color: #555 transparent; }
-.fw-era { padding: 14px; border: 1px solid #2b2b2b; border-radius: 8px; background: #191919; scroll-snap-align: start; }
-.fw-era strong { display: block; margin-bottom: 8px; color: #fafafa; font-size: 14px; font-weight: 500; }
-.fw-era p { margin: 0; color: #a1a1a1; font-size: 13px; line-height: 1.7; }
-
-/* Compact reading guides and a hand-off to the existing creator. */
-.fw-guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin: 24px 0; }
-.fw-guide-grid > :is(article, section, div), .fw-studio-start { padding: 20px; border: 1px solid #2b2b2b; border-radius: 10px; background: #191919; }
-.fw-guide-grid h2, .fw-guide-grid h3, .fw-studio-start h2 { margin: 0 0 10px; color: #fafafa; font-size: 18px; line-height: 1.4; font-weight: 600; }
-.fw-guide-grid p, .fw-studio-start p { margin: 0 0 16px; color: #a1a1a1; font-size: 14px; line-height: 1.7; }
-.fw-studio-start { max-width: 760px; margin: 24px 0; }
-.fw-studio-start .fw-ctas { margin-top: 16px; }
+/* Only old prototype draft backups retain their read-only migration page. */
+.fw-rules { display: grid; gap: 8px; padding-left: 20px; color: #a1a1a1; font-size: 13px; line-height: 1.7; }
+[data-fw-page="studio"] h1 { margin: 24px 0 16px; font-size: 28px; line-height: 1.4; font-weight: 600; }
 .fw-details { margin: 24px 0; padding: 0; border: 1px solid #2b2b2b; border-radius: 8px; background: #171717; }
 .fw-details > summary { display: list-item; min-height: 44px; padding: 12px 16px; color: #d4d4d4; font-size: 14px; line-height: 20px; cursor: pointer; }
 .fw-details[open] > summary { border-bottom: 1px solid #2b2b2b; }
 .fw-details > :not(summary) { margin: 16px; }
 .fw-details p { color: #a1a1a1; font-size: 13px; line-height: 1.7; }
-.fw-draft { gap: 8px; }
-.fw-builderlink { margin-top: 24px; font-size: 14px; }
-.fw-builderlink a { color: #fafafa; text-decoration: underline; text-underline-offset: 3px; }
-
-/* One quiet link row at the end of the existing home catalogue. */
-.fw-strip { max-width: 1160px; margin: 32px auto 0; padding: 24px; border-top: 1px solid #2b2b2b; }
-.fw-strip header { margin-bottom: 16px; }
-.fw-strip h2 { margin: 0 0 8px; font-size: 22px; line-height: 1.4; font-weight: 600; }
-.fw-strip header p { margin: 0; color: #a1a1a1; font-size: 14px; line-height: 1.7; }
-.fw-strip-rows { display: grid; gap: 10px; margin-bottom: 16px; }
-.fw-strip-row { display: grid; grid-template-columns: 130px minmax(0, 1fr) auto; align-items: center; gap: 16px; min-height: 44px; padding: 12px; border: 1px solid #2b2b2b; border-radius: 8px; background: #191919; color: inherit; text-decoration: none; }
-.fw-strip-row:hover { border-color: #666; }
-.fw-strip-row strong { font-size: 14px; font-weight: 500; }
-.fw-strip-faces { display: flex; gap: 8px; }
-.fw-strip-faces img { width: 40px; aspect-ratio: 3 / 3.4; object-fit: cover; object-position: top; border-radius: 4px; background: #171717; }
-.fw-strip-links { display: flex; flex-wrap: wrap; gap: 10px; }
 
 @media (max-width: 1250px) { .fw-page { padding-left: 32px; padding-right: 32px; } }
 @media (max-width: 1023px) {
   .fw-page { padding: 0 24px 48px; }
   .fw-mobile-bar { display: flex; }
-  .fw-nav { margin-top: 12px; }
-  .fw-hero { min-height: 180px; padding: 20px 0; }
-  .fw-hero-quote { font-size: 26px; }
   .fw-profile-top { grid-template-columns: 240px minmax(0, 1fr); gap: 24px; }
 }
 @media (max-width: 767px) {
   .fw-page { padding-left: 20px; padding-right: 20px; }
-  .fw-nav { margin-bottom: 16px; }
-  .fw-hero { min-height: 0; margin-bottom: 24px; padding: 16px 0 20px; }
-  .fw-hero-art { display: none; }
-  .fw-hero-copy { width: 100%; max-width: none; }
-  .fw-hero-quote { font-size: 26px; line-height: 1.35; }
   .fw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 12px; }
   .fw-card-name { font-size: 15px; }
   .fw-card-body { padding: 0; }
@@ -208,7 +133,6 @@
   .fw-profile-head h1 { font-size: 28px; }
   .fw-profile-head { grid-column: 1; grid-row: 1; }
   .fw-profile-state { grid-column: 1; grid-row: 3; }
-  [data-fw-page="profile"] .fw-nav { display: none; }
   [data-fw-page="profile"] .fw-back { margin: 4px 0 12px; }
   .fw-profile-actions .fw-btn { flex: 1; padding-inline: 12px; }
   .fw-section { margin: 28px 0; }
@@ -216,18 +140,11 @@
   .fw-toolbar [data-fw-filter] { display: none; }
   .fw-world-select { display: block; flex: 1; min-width: 0; }
   .fw-count { width: 100%; margin: 4px 0 0; }
-  .fw-uni-grid, .fw-guide-grid, .fw-factions { grid-template-columns: minmax(0, 1fr); }
-  .fw-tabs { gap: 4px; }
-  .fw-tabpanes { min-width: 0; }
   .fw-appearance { max-width: 100%; }
   .fw-appearance :is(strong, span) { overflow-wrap: anywhere; }
-  .fw-studio-start { padding: 16px; }
-  .fw-strip { padding: 20px; }
-  .fw-strip-row { grid-template-columns: 88px minmax(0, 1fr) auto; gap: 10px; }
-  .fw-strip-faces img:nth-child(n+4) { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .fw-page *, .fw-strip * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .fw-page * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
 
 .fw-art-fallback { display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; min-height: 220px; padding: 16px; color: #a1a1a1; background: #191919; font-size: 13px; }

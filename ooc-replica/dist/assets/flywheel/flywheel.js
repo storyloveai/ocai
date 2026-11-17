@@ -1,34 +1,16 @@
-import {mountShell, show as referenceShow} from '../reference.js';
+import {mountShell} from '../reference.js';
 import {getLang} from '../site-i18n.js';
 import {escapeHTML as safe} from '../stream.js';
 import {heroSceneMarkup, mountHeroContent} from '../hero-scene.js';
 import {XICHUAN_KEY, latestSave, legacySaves, progressText, storyContext} from '../xichuan-state.js';
-import {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS, XICHUAN_FACT_LABELS, cardById, cardsByUniverse} from './cards-data.js';
+import {CHARACTER_CARDS, WORKS, UNIVERSES, XICHUAN_FACT_LABELS, cardById, cardsByUniverse} from './cards-data.js';
 import {characterArt} from './character-art.js';
 import {readDiscoveryState, patchDiscoveryState, discoveryUrl} from './discovery-state.js';
-import {characterDirectoryReturn} from '../character-links.js';
+import {characterDirectoryReturn, characterReturnUrl, storyReturnUrl, canonicalCharacterUrl} from '../character-links.js';
+import {storiesForCharacter} from '../character-stories.js';
 import {characterById as threadedProfiles} from '../character-profiles.js';
 
 const DRAFT_KEY = 'sd-flywheel-drafts';
-// Existing artwork: compact page introductions and story-world covers.
-const HERO_ART = {
-  characters: { figure: '/assets/xichuan/art/sprites/zhiyao/normal.webp', blur: '/assets/xichuan/art/cg/cg_stage.webp' },
-  universes: { figure: '/assets/ashen/art/anime/sprites/lamp/normal.webp', blur: '/assets/ashen/art/real/cg/cg_lamp_lit.webp' },
-  westlin: { figure: '/assets/ashen/art/anime/sprites/lamp/normal.webp', blur: '/assets/ashen/art/real/cg/cg_lamp_lit.webp' },
-  sanguo: { figure: '/assets/sanguo-art/portraits/caocao.webp', blur: '/assets/sanguo-art/cover.webp' },
-  xichuan: { figure: '/assets/xichuan/art/sprites/zhiyao/normal.webp', blur: '/assets/xichuan/art/cg/cg_stage.webp' },
-  baker: { figure: '/assets/holmes-webgal/game/figure/holmes_normal.webp', blur: '/assets/holmes-webgal/game/background/bg_baker_day.webp' },
-  original: { figure: '/assets/characters/shen-yanzhou.webp', blur: '/assets/characters/lu-wensheng.webp' },
-  frameworks: { figure: '/assets/ashen/art/anime/sprites/baiqiu/normal.webp', blur: '/assets/ashen/art/real/cg/cg_scales.webp' },
-  studio: { figure: '/assets/ashen/art/anime/sprites/carlo/normal.webp', blur: '/assets/ashen/art/real/cg/cg_wheel.webp' },
-};
-
-// Compact introduction; artwork supplies colour without extra effects.
-function heroMarkup(key, title, lead) {
-  const art = HERO_ART[key] || HERO_ART.characters;
-  return `<div class="fw-hero"><div class="fw-hero-art" aria-hidden="true"><img class="fw-hero-figure" src="${safe(art.figure)}" alt="" loading="eager"></div><div class="fw-hero-fade" aria-hidden="true"></div><div class="fw-hero-copy"><p class="fw-hero-meta"><span class="fw-hero-badge">STORYDATE</span></p><h1 class="fw-hero-quote">${safe(title)}</h1>${lead ? `<p class="fw-hero-lead">${safe(lead)}</p>` : ''}</div></div>`;
-}
-
 // 手机端顶栏（≤1023px 显示；桌面由侧栏承担），沿用 hub 的 sd-lang 按钮模式
 const mobileBar = () => {
   const lang = getLang();
@@ -39,32 +21,128 @@ const mobileBar = () => {
 // No simulated permissions, separate editor or invented gameplay outcomes.
 const copy = {
  zh: {
-  imageUnavailable: '图片暂不可用', missingCharacter: '没有找到这个角色', missingWorld: '没有找到这个故事世界', missingGuide: '可以从目录里重新选择，已有的聊天和故事进度仍会保留。', libTitle: '认识故事里的人', libSub: '从一个让你好奇的角色开始，走进 TA 的故事。',
-  all: '全部', chatOnly: '可聊天', empty: '没有找到符合条件的角色。', resetSearch: '清除搜索与筛选', filtersLabel: '筛选角色', count: n => `${n} 个角色`, storyCount: n => `${n} 个故事`, searchPh: '搜索名字、故事或关键词',
-  chatCta: '开始聊天', continueChat: '继续聊天', storyCta: '进入故事', continueStory: '继续故事', profileBack: '返回角色', personaH: '人物背景', voiceH: '听 TA 说话', lockedH: '人物设定', appearH: '出场故事',
-  restoring: '正在恢复账号进度…', stateUnavailable: '暂时无法读取此设备上的经历。请稍后刷新重试。', accountProgress: '当前账号的经历', deviceProgress: '本设备的经历', restoreFailed: '云端进度尚未恢复，以下为当前账号在本设备上的记录。', reviewH: '共同经历', reviewCta: '查看已有经历', noChatYet: '还没有对话，可以从第一次相遇开始。', chatSaved: n => `当前对话已有 ${n} 条消息。`, storyFacts: '当前剧情', memoriesH: '当前对话的记事', memoryNotesH: '聊天中的补充记忆', supplementaryEmpty: '可以在会话设置中添加补充记忆，留下一些希望 TA 了解的偏好。', memoryYou: '你记下的话', memoryCharacter: '角色说过的话', memoryDemo: '记下的演示回复', memoryLimit: '补充记忆当前使用前 350 字；可在会话设置中整理原文。', noMemories: '还没有记事。在聊天中把想留下的话记下来，回来就能回顾。', noStoryFacts: '尚未开始故事。进入汐川后，经历会随当前存档更新。', storySync: '故事里的选择会带回聊天；聊天不会改写故事存档。', chatStep: '先和她聊聊', storyStep: '再走进她的故事', reviewStep: '回来看共同经历', reviewGuide: '只回顾当前存档和当前对话中保留的记事。',
-  detailsH: '人物详细设定（含剧透）', samplesFrom: '原作节选', noSamples: '暂无原作节选。', sameUniverseH: '故事里的其他人', noChat: '可以先进入故事认识 TA，独立聊天暂未开放。', standalone: '将打开独立游戏页面。此入口的进度尚未与角色聊天同步。',
-  exprH: '切换表情', encounterH: '选择一场相遇', encounterCta: '进入相遇', topicsH: '可以从这里聊起',
-  uniTitle: '故事世界', uniSub: '了解故事发生的地方，再选一个人同行。', placesH: '地点', factionsH: '人物与势力', timelineH: '时间线', rulesH: '世界背景', magicH: '故事背景', storyH: '相关故事', charsH: '出场角色', rolesH: '位角色', worldDetails: '故事世界介绍',
-  charactersNav: '角色', worldsNav: '故事世界', createNav: '创作', navLabel: '角色与故事',
-  fwTitle: '选择你喜欢的玩法', fwSub: '有的故事考验谋略，有的让你慢慢靠近一个人。选一种，直接开始。', worksH: '开始体验', guideLink: '了解故事玩法',
-  stTitle: '从一个想法开始创作', stSub: '角色和故事，都在同一个创作工坊里完成。', builderTitle: '打开创作工坊', builderSub: '选择创作角色或故事，填写设定，保存你的草稿。', builderCta: '进入创作工坊',
-  legacyH: '旧版演示草稿', legacySub: '这些草稿仅存于此浏览器，不代表角色已发布或已授权。可以导出备份，在创作工坊继续整理。', exportJ: '导出旧草稿', loadFailed: '无法读取旧版草稿。浏览器中的原数据未修改；请检查此浏览器的存储设置。', rawExport: '下载原始备份', exportFailed: '下载未完成，请重试。', exported: '已发起下载，请检查浏览器下载列表。',
-  homeStripTitle: '从故事认识角色', homeStripSub: '喜欢一个故事，也许是因为遇见了一个难忘的人。', homeStripMore: '认识更多角色',
+  imageUnavailable: "图片暂不可用",
+  missingCharacter: "没有找到这个角色",
+  missingWorld: "没有找到这个故事世界",
+  missingGuide: "可以从目录里重新选择，已有的聊天和故事进度仍会保留。",
+  libTitle: "认识故事里的人",
+  libSub: "从一个让你好奇的角色开始，走进 TA 的故事。",
+  chatBack: "返回聊天",
+  storiesNav: "返回故事",
+  storyFilter: "按故事筛选",
+  all: "全部",
+  chatOnly: "可聊天",
+  empty: "没有找到符合条件的角色。",
+  resetSearch: "清除搜索与筛选",
+  filtersLabel: "筛选角色",
+  count: n => `${n} 个角色`,
+  searchPh: "搜索名字、故事或关键词",
+  chatCta: "开始聊天",
+  continueChat: "继续聊天",
+  storyCta: "进入故事",
+  continueStory: "继续故事",
+  profileBack: "返回角色",
+  personaH: "人物背景",
+  voiceH: "听 TA 说话",
+  lockedH: "人物设定",
+  appearH: "出场故事",
+  restoring: "正在恢复账号进度…",
+  stateUnavailable: "暂时无法读取此设备上的经历。请稍后刷新重试。",
+  accountProgress: "当前账号的经历",
+  deviceProgress: "本设备的经历",
+  restoreFailed: "云端进度尚未恢复，以下为当前账号在本设备上的记录。",
+  reviewH: "共同经历",
+  noChatYet: "还没有对话，可以从第一次相遇开始。",
+  chatSaved: n => `当前对话已有 ${n} 条消息。`,
+  storyFacts: "当前剧情",
+  memoriesH: "当前对话的记事",
+  memoryNotesH: "聊天中的补充记忆",
+  memoryYou: "你记下的话",
+  memoryCharacter: "角色说过的话",
+  memoryDemo: "记下的演示回复",
+  memoryLimit: "补充记忆当前使用前 350 字；可在会话设置中整理原文。",
+  noMemories: "还没有记事。在聊天中把想留下的话记下来，回来就能回顾。",
+  noStoryFacts: "尚未开始故事。进入汐川后，经历会随当前存档更新。",
+  detailsH: "人物详细设定（含剧透）",
+  samplesFrom: "原作节选",
+  noSamples: "暂无原作节选。",
+  sameUniverseH: "故事里的其他人",
+  noChat: "可以先进入故事认识 TA，独立聊天暂未开放。",
+  standalone: "将打开独立游戏页面。此入口的进度尚未与角色聊天同步。",
+  exprH: "切换表情",
+  encounterCta: "进入相遇",
+  topicsH: "可以从这里聊起",
+  charactersNav: "角色",
+  builderTitle: "打开创作工坊",
+  legacyH: "旧版演示草稿",
+  legacySub: "这些草稿仅存于此浏览器，不代表角色已发布或已授权。可以导出备份，在创作工坊继续整理。",
+  exportJ: "导出旧草稿",
+  loadFailed: "无法读取旧版草稿。浏览器中的原数据未修改；请检查此浏览器的存储设置。",
+  rawExport: "下载原始备份",
+  exportFailed: "下载未完成，请重试。",
+  exported: "已发起下载，请检查浏览器下载列表。",
  },
  en: {
-  imageUnavailable: 'Image unavailable', missingCharacter: 'Character not found', missingWorld: 'Story world not found', missingGuide: 'Choose another from the directory. Your existing conversations and story progress are still saved.', libTitle: 'Meet the people in our stories', libSub: 'Start with someone who intrigues you. Discover the story they belong to.',
-  all: 'All', chatOnly: 'Chat available', empty: 'No characters match these choices.', resetSearch: 'Clear search and filters', filtersLabel: 'Filter characters', count: n => `${n} ${n === 1 ? 'character' : 'characters'}`, storyCount: n => `${n} ${n === 1 ? 'story' : 'stories'}`, searchPh: 'Search names, stories or keywords',
-  chatCta: 'Start chatting', continueChat: 'Continue chatting', storyCta: 'Enter the story', continueStory: 'Continue the story', profileBack: 'Back to characters', personaH: 'Background', voiceH: 'In their own words', lockedH: 'Character details', appearH: 'Their stories',
-  restoring: 'Restoring account progress…', stateUnavailable: 'Could not read experiences on this device. Refresh and try again.', accountProgress: 'Experiences for this account', deviceProgress: 'Experiences on this device', restoreFailed: 'Cloud progress has not been restored. These are this account’s records on this device.', reviewH: 'Shared experiences', reviewCta: 'Review experiences', noChatYet: 'No conversation yet. Begin with your first meeting.', chatSaved: n => `${n} messages in the current conversation.`, storyFacts: 'Current story', memoriesH: 'Memories from this conversation', memoryNotesH: 'Additional chat memories', supplementaryEmpty: 'Add supplementary memory in conversation settings to share preferences you would like them to know.', memoryYou: 'Words you kept', memoryCharacter: 'Words the character said', memoryDemo: 'A demo reply you kept', memoryLimit: 'Supplementary memory uses the first 350 characters. Review the original in conversation settings.', noMemories: 'No memories kept yet. Keep a line in chat to revisit it here.', noStoryFacts: 'The story has not started. Experiences will follow your active save when you enter Xichuan.', storySync: 'Story choices carry back to chat. Chat does not change story saves.', chatStep: 'Talk with her first', storyStep: 'Step into her story', reviewStep: 'Return to shared experiences', reviewGuide: 'Review only the active save and memories kept in the current conversation.',
-  detailsH: 'More about this character (spoilers)', samplesFrom: 'Story excerpt', noSamples: 'No excerpts available yet.', sameUniverseH: 'Others in this world', noChat: 'Meet them in their story first. Standalone chat is not available yet.', standalone: 'Opens a standalone game. Progress here does not yet sync with character chat.',
-  exprH: 'Change expression', encounterH: 'Choose an encounter', encounterCta: 'Start here', topicsH: 'Conversation starters',
-  uniTitle: 'Story worlds', uniSub: 'Explore where each story unfolds, then choose someone to meet.', placesH: 'Places', factionsH: 'People & factions', timelineH: 'Timeline', rulesH: 'Background', magicH: 'About this world', storyH: 'Related stories', charsH: 'Meet the cast', rolesH: 'characters', worldDetails: 'About this story world',
-  charactersNav: 'Characters', worldsNav: 'Story worlds', createNav: 'Create', navLabel: 'Characters and stories',
-  fwTitle: 'Find your kind of story', fwSub: 'Test your strategy, solve a mystery, or grow closer to someone. Choose a story and start playing.', worksH: 'Try it', guideLink: 'Explore story formats',
-  stTitle: 'Start with an idea', stSub: 'Create characters and stories in one workshop.', builderTitle: 'Open the workshop', builderSub: 'Choose a character or a story, add your ideas, and save a draft.', builderCta: 'Start creating',
-  legacyH: 'Earlier demo drafts', legacySub: 'These drafts exist only in this browser. They have not been published or licensed. Export a backup to continue working in the workshop.', exportJ: 'Export demo drafts', loadFailed: 'Could not read earlier drafts. The original browser data has not been changed. Check your browser storage settings.', rawExport: 'Download raw backup', exportFailed: 'Download failed. Please try again.', exported: 'Download started. Check your browser downloads.',
-  homeStripTitle: 'Meet characters through stories', homeStripSub: 'Sometimes a story stays with you because of someone you met there.', homeStripMore: 'Meet more characters',
+  imageUnavailable: "Image unavailable",
+  missingCharacter: "Character not found",
+  missingWorld: "Story world not found",
+  missingGuide: "Choose another from the directory. Your existing conversations and story progress are still saved.",
+  libTitle: "Meet the people in our stories",
+  libSub: "Start with someone who intrigues you. Discover the story they belong to.",
+  chatBack: "Back to chat",
+  storiesNav: "Back to stories",
+  storyFilter: "Filter by story",
+  all: "All",
+  chatOnly: "Chat available",
+  empty: "No characters match these choices.",
+  resetSearch: "Clear search and filters",
+  filtersLabel: "Filter characters",
+  count: n => `${n} ${n === 1 ? 'character' : 'characters'}`,
+  searchPh: "Search names, stories or keywords",
+  chatCta: "Start chatting",
+  continueChat: "Continue chatting",
+  storyCta: "Enter the story",
+  continueStory: "Continue the story",
+  profileBack: "Back to characters",
+  personaH: "Background",
+  voiceH: "In their own words",
+  lockedH: "Character details",
+  appearH: "Their stories",
+  restoring: "Restoring account progress…",
+  stateUnavailable: "Could not read experiences on this device. Refresh and try again.",
+  accountProgress: "Experiences for this account",
+  deviceProgress: "Experiences on this device",
+  restoreFailed: "Cloud progress has not been restored. These are this account’s records on this device.",
+  reviewH: "Shared experiences",
+  noChatYet: "No conversation yet. Begin with your first meeting.",
+  chatSaved: n => `${n} messages in the current conversation.`,
+  storyFacts: "Current story",
+  memoriesH: "Memories from this conversation",
+  memoryNotesH: "Additional chat memories",
+  memoryYou: "Words you kept",
+  memoryCharacter: "Words the character said",
+  memoryDemo: "A demo reply you kept",
+  memoryLimit: "Supplementary memory uses the first 350 characters. Review the original in conversation settings.",
+  noMemories: "No memories kept yet. Keep a line in chat to revisit it here.",
+  noStoryFacts: "The story has not started. Experiences will follow your active save when you enter Xichuan.",
+  detailsH: "More about this character (spoilers)",
+  samplesFrom: "Story excerpt",
+  noSamples: "No excerpts available yet.",
+  sameUniverseH: "Others in this story",
+  noChat: "Meet them in their story first. Standalone chat is not available yet.",
+  standalone: "Opens a standalone game. Progress here does not yet sync with character chat.",
+  exprH: "Change expression",
+  encounterCta: "Start here",
+  topicsH: "Conversation starters",
+  charactersNav: "Characters",
+  builderTitle: "Open the workshop",
+  legacyH: "Earlier demo drafts",
+  legacySub: "These drafts exist only in this browser. They have not been published or licensed. Export a backup to continue working in the workshop.",
+  exportJ: "Export demo drafts",
+  loadFailed: "Could not read earlier drafts. The original browser data has not been changed. Check your browser storage settings.",
+  rawExport: "Download raw backup",
+  exportFailed: "Download failed. Please try again.",
+  exported: "Download started. Check your browser downloads.",
  },
 };
 const L = () => getLang() === 'zh' ? copy.zh : copy.en;
@@ -79,18 +157,14 @@ function expressionLabel(key) {
  if (getLang() === 'zh') return expressionName(key);
  return {normal:'Calm',smile:'Smile',shy:'Shy',sad:'Sad',angry:'Angry',surprised:'Shock',serious:'Focus',battle:'Fight'}[key] || expressionName(key);
 }
-function localNav() {
- const l = L(), path = location.pathname;
- return `<nav class="fw-nav" aria-label="${safe(l.navLabel)}">${[['/characters',l.charactersNav],['/universe',l.worldsNav],['/builder',l.createNav]].map(([href,label]) => `<a href="${href}"${path === href || path.startsWith(href + '/') ? ' aria-current="page"' : ''}>${safe(label)}</a>`).join('')}</nav>`;
-}
 let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261116-refinement"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261117-simplified"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261116-refinement';
+    link.href = '/assets/flywheel/flywheel.css?v=20261117-simplified';
     document.head.append(link);
   }
 }
@@ -103,7 +177,10 @@ const sceneArt = c => {
 };
 const workName = (id) => t(WORKS[id]?.title) || id;
 const uniName = (id) => t(UNIVERSES[id]?.name) || id;
-const fwName = (id) => t(FRAMEWORKS[id]?.name) || id;
+const storyFilterName = id => {
+ const card = cardsByUniverse(id)[0], story = card && storiesForCharacter(card.id)[0];
+ return story ? t(story.title) : uniName(id);
+};
 // 独立整页游戏（/assets/**）必须整页跳转，不能走 SPA 路由（站内现例：ashen 卡 target="_top"）
 const isStandalone = (url) => /^\/assets\//.test(url || '');
 const ext = (url) => (isStandalone(url) ? ' target="_top" rel="noopener"' : '');
@@ -146,7 +223,7 @@ function libItems() {
   let items = libFilter.universe === 'all' ? CHARACTER_CARDS : cardsByUniverse(libFilter.universe);
   if (libFilter.chat) items = items.filter((c) => c.chat);
   const q = libQuery.trim().toLowerCase();
-  if (q) items = items.filter((c) => [c.name, c.tagline, c.persona, WORKS[c.source.work]?.title, UNIVERSES[c.source.universe]?.name].flatMap((v) => [v?.zh, v?.en]).join(' ').toLowerCase().includes(q));
+  if (q) items = items.filter((c) => [c.name, c.tagline, c.persona, WORKS[c.source.work]?.title, UNIVERSES[c.source.universe]?.name, ...storiesForCharacter(c.id).map(story=>story.title)].flatMap((v) => [v?.zh, v?.en]).join(' ').toLowerCase().includes(q));
   return items;
 }
 function libResults(items) {
@@ -156,18 +233,18 @@ function libResults(items) {
 function libMarkup() {
   const l = L();
   const chips = ['all', ...Object.keys(UNIVERSES)].map((id) => {
-    const label = id === 'all' ? l.all : uniName(id);
+    const label = id === 'all' ? l.all : storyFilterName(id);
     const n = id === 'all' ? CHARACTER_CARDS.length : cardsByUniverse(id).length;
     return `<button type="button" class="fw-chip${libFilter.universe === id ? ' active' : ''}" data-fw-filter="${id}" aria-pressed="${libFilter.universe === id}">${safe(label)} <small>${n}</small></button>`;
   }).join('');
-  const worldOptions = ['all',...Object.keys(UNIVERSES)].map(id => `<option value="${id}"${libFilter.universe === id ? ' selected' : ''}>${safe(id === 'all' ? l.all : uniName(id))} · ${id === 'all' ? CHARACTER_CARDS.length : cardsByUniverse(id).length}</option>`).join('');
+  const worldOptions = ['all',...Object.keys(UNIVERSES)].map(id => `<option value="${id}"${libFilter.universe === id ? ' selected' : ''}>${safe(id === 'all' ? l.all : storyFilterName(id))} · ${id === 'all' ? CHARACTER_CARDS.length : cardsByUniverse(id).length}</option>`).join('');
   const items = libItems();
   return `<main class="fw-page fw-character-library" data-no-i18n data-fw-page="characters">
     <div class="fw-library-mobile">${mobileBar()}</div>
     <section class="sd-hero fw-character-feature" data-sd-hero="character">${heroSceneMarkup('character',getLang())}</section>
-    <div class="fw-library-content">${localNav()}
+    <div class="fw-library-content">
     <header class="fw-library-heading"><h2>${safe(l.libTitle)}</h2><p>${safe(l.libSub)}</p></header>
-    <div class="fw-toolbar" role="group" aria-label="${safe(l.filtersLabel)}">${chips}<select class="fw-world-select" data-fw-world-select aria-label="${safe(l.worldsNav)}">${worldOptions}</select><button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button><span class="fw-count" role="status">${l.count(items.length)}</span></div>
+    <div class="fw-toolbar" role="group" aria-label="${safe(l.filtersLabel)}">${chips}<select class="fw-world-select" data-fw-world-select aria-label="${safe(l.storyFilter)}">${worldOptions}</select><button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button><span class="fw-count" role="status">${l.count(items.length)}</span></div>
     <label class="fw-search"><span aria-hidden="true">⌕</span><input type="search" id="fw-search" placeholder="${safe(l.searchPh)}" value="${safe(libQuery)}" aria-label="${safe(l.searchPh)}" autocomplete="off"></label>
     <div id="fw-lib-results">${libResults(items)}</div>
     </div>
@@ -206,7 +283,7 @@ function chatProgress(c, read) {
 function experiencesMarkup(c, raw, chat) {
  const l = L(), context = storyContext(raw);
  const keepsLines = threadedProfiles.has(c.chatId);
- if (!context && !chat.pins.length && !chat.notes) return `<section class="fw-experiences" id="fw-experiences" data-fw-experiences aria-labelledby="fw-experiences-title"><h2 id="fw-experiences-title">${safe(l.reviewH)}</h2><p class="fw-note">${safe(c.id === 'xc-zhiyao' ? l.storySync : keepsLines ? l.noMemories : l.supplementaryEmpty)}</p></section>`;
+ if (!context && !chat.pins.length && !chat.notes) return '';
  const facts = Object.entries(XICHUAN_FACT_LABELS).filter(([key]) => context?.flags[key] === true);
  const story = c.source.work === 'xichuan' ? `<h3>${safe(l.storyFacts)}</h3>${context ? `<p>${safe(progressText(raw,getLang()))}</p>${facts.length ? `<ul class="fw-experience-facts">${facts.map(([,label]) => `<li>${safe(t(label))}</li>`).join('')}</ul>` : ''}` : `<p class="fw-note">${safe(l.noStoryFacts)}</p>`}` : '';
  const kept = chat.pins.length ? chat.pins.map(p => `<blockquote class="fw-quote"><p>${safe(p.text)}</p><cite>${safe(p.role === 'user' ? l.memoryYou : p.demo ? l.memoryDemo : l.memoryCharacter)}</cite></blockquote>`).join('') : `<p class="fw-note">${safe(l.noMemories)}</p>`;
@@ -215,7 +292,7 @@ function experiencesMarkup(c, raw, chat) {
  return `<section class="fw-experiences" id="fw-experiences" data-fw-experiences aria-labelledby="fw-experiences-title"><h2 id="fw-experiences-title">${safe(l.reviewH)}</h2>${story}${memories}</section>`;
 }
 function profileStateMarkup(c, account = currentHelpers?.account) {
- const l = L(), w = WORKS[c.source.work];
+ const l = L(), w = storiesForCharacter(c.id)[0];
  if (account && (account.busy || !account.restored)) return `<p class="fw-note" role="status" data-fw-restoring>${safe(l.restoring)}</p>`;
  try {
   const read = currentHelpers?.read || ((_key, fallback) => fallback), chat = chatProgress(c, read);
@@ -228,11 +305,11 @@ function profileStateMarkup(c, account = currentHelpers?.account) {
   }
   const played = Boolean(latestSave(raw)), chatting = chat.messages.length > 0;
   const chatLink = c.chat ? `<a class="fw-btn${played ? ' fw-btn-secondary' : ''}" data-fw-chat-entry href="${safe(c.chat)}">${safe(chatting ? l.continueChat : l.chatCta)} →</a>` : '';
-  const storyLink = w && c.source.work !== 'character' ? `<a class="fw-btn${c.chat && !played ? ' fw-btn-secondary' : ''}" data-fw-story-entry href="${safe(w.url)}"${ext(w.url)}>${safe(played ? l.continueStory : l.storyCta)} →</a>` : '';
+  const storyLink = w ? `<a class="fw-btn${c.chat && !played ? ' fw-btn-secondary' : ''}" data-fw-story-entry href="${safe(w.playUrl)}"${ext(w.playUrl)}>${safe(played ? l.continueStory : l.storyCta)} →</a>` : '';
   const chatStatus = `<p class="fw-note" data-fw-chat-status>${safe(chatting ? l.chatSaved(chat.messages.length) : l.noChatYet)}</p>`;
   const storyStatus = c.source.work === 'xichuan' ? `<p class="fw-note" data-fw-progress>${safe(progressText(raw,getLang()))}</p>` : '';
   const scope = c.chat || c.source.work === 'xichuan' ? `<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}` : '';
-  return `<div class="fw-profile-actions"><div class="fw-ctas">${played ? storyLink + chatLink : chatLink + storyLink}</div><div class="fw-profile-summary" role="status" aria-live="polite">${scope}${storyStatus}${c.chat ? chatStatus : `<p class="fw-note">${safe(l.noChat)}</p>`}</div>${w && isStandalone(w.url) ? `<p class="fw-note">${safe(l.standalone)}</p>` : ''}</div>${c.chat ? experiencesMarkup(c,raw,chat) : ''}`;
+  return `<div class="fw-profile-actions"><div class="fw-ctas">${played ? storyLink + chatLink : chatLink + storyLink}</div><div class="fw-profile-summary" role="status" aria-live="polite">${scope}${storyStatus}${c.chat ? chatStatus : `<p class="fw-note">${safe(l.noChat)}</p>`}</div>${w && c.chat && isStandalone(w.playUrl) ? `<p class="fw-note">${safe(l.standalone)}</p>` : ''}</div>${c.chat ? experiencesMarkup(c,raw,chat) : ''}`;
  } catch { return `<p class="fw-note" role="status">${safe(l.stateUnavailable)}</p>`; }
 }
 const profileStateCache = new WeakMap();
@@ -252,8 +329,13 @@ export function syncAccount(account) {
 }
 function profileMarkup(c) {
   const l = L();
+  const from = globalThis.history?.state?.from, fromStory = storyReturnUrl(from);
+  const fromChat = characterReturnUrl(from)?.startsWith('/play/') ? characterReturnUrl(from) : null;
+  const returnUrl = fromStory || fromChat || characterDirectoryReturn(globalThis.history?.state?.discoveryReturn) || characterDirectoryReturn(from) || '/characters';
+  const returnLabel = fromStory ? l.storiesNav : fromChat ? l.chatBack : l.profileBack;
   const samples = (c.voice?.samples || []).map((s) => `<blockquote class="fw-quote"><p>${safe(quoted(t(s)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(s.from) || workName(c.source.work))}</cite></blockquote>`).join('');
-  const appears = c.appearances.map((a) => `<a class="fw-appearance" href="${safe(a.url)}"${ext(a.url)}><strong>${safe(workName(a.work))}</strong><span>${safe(t(a.role))}</span><span aria-hidden="true">↗</span></a>`).join('');
+  const stories = storiesForCharacter(c.id), primaryStory = stories[0];
+  const appears = stories.slice(1).map(a => `<a class="fw-appearance" data-full-info href="${safe(a.informationUrl)}"><strong>${safe(t(a.title))}</strong><span aria-hidden="true">↗</span></a>`).join('');
   const encounters = (c.encounters || []).map((e) => `<a class="fw-appearance" href="${safe(e.url)}"><strong>${safe(t(e.title))}</strong><span>${safe(l.encounterCta)}</span><span aria-hidden="true">↗</span></a>`).join('');
   const starters = (c.starters?.[getLang() === 'zh' ? 'zh' : 'en'] || []).map((x) => `<li>${safe(x)}</li>`).join('');
   const others = cardsByUniverse(c.source.universe).filter((x) => x.id !== c.id).slice(0, 8);
@@ -263,92 +345,28 @@ function profileMarkup(c) {
        <div class="fw-expressions" role="group" aria-label="${safe(l.exprH)}">${c.expressions.map((e, i) => `<button type="button" class="fw-expr${expressionFor(c) === e ? ' active' : ''}" data-fw-expr="${safe(c.expressionUrl(e))}" aria-pressed="${expressionFor(c) === e}" aria-label="${safe(expressionName(e))}" title="${safe(expressionName(e))}"><img src="${safe(c.expressionUrl(e))}" alt="" loading="lazy"><span class="fw-expr-label" aria-hidden="true">${safe(expressionLabel(e))}</span></button>`).join('')}</div></div>`
     : `<div class="fw-profile-portrait"><div class="fw-profile-scene">${sceneArt(c)}${cardArt(c)}</div></div>`;
   return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="profile" data-fw-character="${safe(c.id)}">
-    ${mobileBar()}${localNav()}
-    <a class="fw-back" href="${safe(characterDirectoryReturn(globalThis.history?.state?.discoveryReturn) || characterDirectoryReturn(globalThis.history?.state?.from) || '/characters')}">‹ ${l.profileBack}</a>
+    ${mobileBar()}
+    <a class="fw-back" data-full-info href="${safe(returnUrl)}">‹ ${safe(returnLabel)}</a>
     <article class="fw-profile">
       <div class="fw-profile-top">
         ${portraitBlock}
         <div class="fw-profile-head">
-          <p class="fw-eyebrow">${safe(uniName(c.source.universe))} · ${safe(fwName(c.source.framework))}</p>
+          ${primaryStory?.role ? `<p class="fw-eyebrow">${safe(t(primaryStory.role))}</p>` : ''}
           <h1>${safe(t(c.name))}</h1>
           <p class="fw-tagline">${safe(t(c.tagline))}</p>
-          <p class="fw-persona">${c.source.work === 'character' ? safe(workName(c.source.work)) : `<a href="${safe(WORKS[c.source.work].url)}"${ext(WORKS[c.source.work].url)}>${safe(workName(c.source.work))} ↗</a>`}</p>${c.portraitNote ? `<p class="fw-note">${safe(t(c.portraitNote))}</p>` : ''}
+          <p class="fw-persona">${primaryStory ? `<a data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a>` : safe(workName(c.source.work))}</p>${c.portraitNote ? `<p class="fw-note">${safe(t(c.portraitNote))}</p>` : ''}
         </div>
         <div class="fw-profile-state" data-fw-profile-state>${profileStateMarkup(c)}</div>
       </div>
       <section class="fw-section"><h2>${l.voiceH}</h2>${c.voice ? `<p>${safe(t(c.voice))}</p>` : ''}${samples || `<p class="fw-note">${safe(l.noSamples)}</p>`}</section>
       <details class="fw-details"><summary>${safe(l.detailsH)}</summary><h3>${safe(l.personaH)}</h3><p>${safe(t(c.persona))}</p><h3>${safe(l.lockedH)}</h3><p>${safe(t(c.locked))}</p></details>
-      <section class="fw-section"><h2>${l.appearH}</h2><div class="fw-appearances">${appears}</div>
-      ${encounters ? `<h3 class="fw-subhead">${safe(l.encounterH)}</h3><div class="fw-appearances">${encounters}</div>` : ''}
-      ${starters ? `<h3 class="fw-subhead">${safe(l.topicsH)}</h3><ul class="fw-rules fw-starters">${starters}</ul>` : ''}</section>
+      ${appears ? `<section class="fw-section"><h2>${l.appearH}</h2><div class="fw-appearances">${appears}</div></section>` : ''}
+      ${encounters || starters ? `<details class="fw-details"><summary>${safe(l.topicsH)}</summary>${encounters ? `<div class="fw-appearances">${encounters}</div>` : ''}${starters ? `<ul class="fw-rules fw-starters">${starters}</ul>` : ''}</details>` : ''}
       ${others.length ? `<section class="fw-section"><h2>${l.sameUniverseH}</h2><div class="fw-hscroll">${others.map(cardMarkup).join('')}</div></section>` : ''}
     </article>
   </main>`;
 }
 
-// —— /universe ——
-function universesMarkup() {
-  const l = L();
-  const cards = Object.keys(UNIVERSES).map((id) => {
-    const u = UNIVERSES[id];
-    const chars = cardsByUniverse(id);
-    const works = [...new Set(chars.map((c) => c.source.work).filter(work => work !== 'character'))].length;
-    const art = HERO_ART[id] || null;
-    const cover = art ? `<img src="${safe(art.blur)}" alt="" loading="lazy">` : (chars[0] ? `<img src="${safe(chars[0].portrait)}" alt="" loading="lazy">` : '');
-    return `<a class="fw-uni-card" href="/universe/${safe(id)}">
-      <span class="fw-uni-cover">${cover ? cover : '<span class="fw-uni-blank"></span>'}</span><strong class="fw-card-name">${safe(t(u.name))}</strong>
-      <em>${safe(t(u.tagline))}</em>
-      <span class="fw-card-badges"><span class="fw-badge">${chars.length} ${safe(l.rolesH)}</span>${works ? `<span class="fw-badge fw-badge-dim">${safe(l.storyCount(works))}</span>` : ''}${u.rules ? '<span class="fw-badge">' + safe(l.rulesH) + '</span>' : ''}</span>
-    </a>`;
-  }).join('');
-  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="universes">
-    ${mobileBar()}${localNav()}
-    ${heroMarkup('universes', l.uniTitle, l.uniSub)}
-    <div class="fw-uni-grid">${cards}</div><p class="fw-builderlink"><a href="/frameworks">${safe(l.guideLink)} →</a></p>
-  </main>`;
-}
-
-function universeMarkup(id) {
-  const l = L();
-  const u = Object.hasOwn(UNIVERSES,id) ? UNIVERSES[id] : null;
-  if (!u) return null;
-  const chars = cardsByUniverse(id);
-  const works = [...new Set(chars.map((c) => c.source.work))].map((w) => WORKS[w]).filter(w => w && w.id !== 'character');
-  const tabs = u.rules ? `
-    <div class="fw-tabs" role="tablist" aria-label="${safe(l.worldDetails)}">
-      <button type="button" role="tab" aria-selected="true" class="active" data-fw-tab="rules" id="fw-tab-rules" aria-controls="fw-pane-rules" tabindex="0">${safe(l.rulesH)}</button>
-      <button type="button" role="tab" aria-selected="false" data-fw-tab="places" id="fw-tab-places" aria-controls="fw-pane-places" tabindex="-1">${safe(l.placesH)}</button>
-      <button type="button" role="tab" aria-selected="false" data-fw-tab="factions" id="fw-tab-factions" aria-controls="fw-pane-factions" tabindex="-1">${safe(l.factionsH)}</button>
-      <button type="button" role="tab" aria-selected="false" data-fw-tab="timeline" id="fw-tab-timeline" aria-controls="fw-pane-timeline" tabindex="-1">${safe(l.timelineH)}</button>
-    </div>
-    <div class="fw-tabpanes">
-      <section class="fw-pane" data-fw-pane="rules" id="fw-pane-rules" role="tabpanel" aria-labelledby="fw-tab-rules" tabindex="0"><h2>${l.magicH}</h2><p class="fw-world">${safe(t(u.rules.world))}</p><ul class="fw-rules">${(u.rules.magic || []).map((m) => `<li>${safe(t(m))}</li>`).join('')}</ul></section>
-      <section class="fw-pane" data-fw-pane="places" id="fw-pane-places" role="tabpanel" aria-labelledby="fw-tab-places" tabindex="0" hidden><ul class="fw-factions">${(u.rules.places || []).map((p) => `<li><strong>${safe(t(p.name))}</strong><span>${safe(t(p.desc))}</span></li>`).join('')}</ul></section>
-      <section class="fw-pane" data-fw-pane="factions" id="fw-pane-factions" role="tabpanel" aria-labelledby="fw-tab-factions" tabindex="0" hidden><ul class="fw-factions">${(u.rules.factions || []).map((f) => `<li><strong>${safe(t(f.name))}</strong><span>${safe(t(f.desc))}</span></li>`).join('')}</ul></section>
-      <section class="fw-pane" data-fw-pane="timeline" id="fw-pane-timeline" role="tabpanel" aria-labelledby="fw-tab-timeline" tabindex="0" hidden><div class="fw-timeline" tabindex="0" aria-label="${safe(l.timelineH)}">${(u.rules.timeline || []).map((e) => `<div class="fw-era"><strong>${safe(t(e.t))}</strong><p>${safe(t(e.d))}</p></div>`).join('')}</div></section>
-    </div>` : '';
-  const workCards = works.map((w) => `<a class="fw-appearance" href="${safe(w.url)}"${ext(w.url)}><strong>${safe(t(w.title))}</strong><span>${safe(t(w.kind))}</span><span aria-hidden="true">↗</span></a>`).join('');
-  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="universe">
-    ${mobileBar()}${localNav()}
-    ${heroMarkup(id, t(u.name), t(u.tagline))}
-    <a class="fw-back" href="/universe">‹ ${l.uniTitle}</a>
-    ${tabs}
-    <section class="fw-section"><h2>${l.charsH} · ${chars.length}</h2>${chars.length ? grid(chars) : `<div class="fw-empty">${l.empty}</div>`}</section>
-    ${works.length ? `<section class="fw-section"><h2>${l.storyH}</h2><div class="fw-appearances">${workCards}</div></section>` : ''}
-  </main>`;
-}
-
-// Formats explain the existing stories; they do not simulate engine outcomes.
-const GUIDE = {
- strategist: {zh:'你是一名谋士。在关键时刻做出选择，观察人物关系与局势如何变化。', en:'Play a strategist. Make choices at decisive moments and see how relationships and circumstances change.'},
- galgame: {zh:'通过场景、对话和选择了解角色，走进不同的个人故事与结局。', en:'Get to know the cast through scenes, dialogue and choices, with personal stories and different endings.'},
- detective: {zh:'以华生的视角探索案件，收集线索、盘问证人，和福尔摩斯一起推理。卷一试样可体验。', en:'Explore a case as Watson. Gather clues, question witnesses and reason alongside Holmes in the volume-one pilot.'},
- chat: {zh:'从一次相遇开始与角色自由交谈，也可以回顾对话、整理记事或探索另一条分支。', en:'Begin with an encounter and talk freely. Revisit conversations, keep notes or explore another branch.'},
-};
-function frameworksMarkup() {
- const l = L();
- return `<main class="fw-page" data-no-i18n data-fw-page="frameworks">${mobileBar()}${localNav()}${heroMarkup('frameworks',l.fwTitle,l.fwSub)}<div class="fw-guide-grid">${Object.entries(GUIDE).map(([id,desc]) => `<section id="fw-${id}"><h2>${safe(fwName(id))}</h2><p>${safe(t(desc))}</p><div class="fw-appearances">${FRAMEWORKS[id].works.map(work => `<a class="fw-appearance" href="${safe(WORKS[work].url)}"${ext(WORKS[work].url)}>${safe(workName(work))} ↗</a>`).join('')}</div></section>`).join('')}</div></main>`;
-}
 // Read-only migration: retain the old prototype key without assigning it new semantics.
 function legacyDrafts() {
  let raw = null;
@@ -361,7 +379,7 @@ function legacyDrafts() {
 }
 function studioMarkup() {
  const l = L(), legacy = legacyDrafts();
- return `<main class="fw-page" data-no-i18n data-fw-page="studio">${mobileBar()}${localNav()}${heroMarkup('studio',l.stTitle,l.stSub)}<section class="fw-studio-start"><h2>${safe(l.builderTitle)}</h2><p>${safe(l.builderSub)}</p><a class="fw-btn" href="/builder">${safe(l.builderCta)} →</a></section>${legacy.error ? `<p class="fw-local-notice" role="status">${safe(l.loadFailed)}</p>` : ''}${legacy.drafts.length || legacy.raw && legacy.error ? `<details class="fw-details" id="fw-drafts"><summary>${safe(l.legacyH)}${legacy.drafts.length ? ` · ${legacy.drafts.length}` : ''}</summary><p>${safe(l.legacySub)}</p>${legacy.drafts.length ? `<ul class="fw-rules">${legacy.drafts.map(d => `<li>${safe(t(d?.name) || '—')}</li>`).join('')}</ul>` : ''}<p><button type="button" class="fw-btn fw-btn-secondary" data-fw-export>${safe(legacy.error ? l.rawExport : l.exportJ)}</button></p><p id="fw-export-status" role="status"></p></details>` : ''}</main>`;
+ return `<main class="fw-page" data-no-i18n data-fw-page="studio">${mobileBar()}<a class="fw-back" href="/builder">‹ ${safe(l.builderTitle)}</a><h1>${safe(l.legacyH)}</h1><p class="fw-note">${safe(l.legacySub)}</p>${legacy.error ? `<p class="fw-local-notice" role="status">${safe(l.loadFailed)}</p>` : ''}${legacy.drafts.length ? `<ul class="fw-rules">${legacy.drafts.map(d => `<li>${safe(t(d?.name) || '—')}</li>`).join('')}</ul>` : ''}${legacy.raw != null ? `<p><button type="button" class="fw-btn fw-btn-secondary" data-fw-export>${safe(legacy.error ? l.rawExport : l.exportJ)}</button></p>` : ''}<p id="fw-export-status" role="status"></p></main>`;
 }
 function exportDrafts() {
  const legacy = legacyDrafts(), status = document.getElementById('fw-export-status');
@@ -375,26 +393,12 @@ function exportDrafts() {
  } catch { if (status) status.textContent = L().exportFailed; }
  finally { if (url) setTimeout(() => URL.revokeObjectURL(url), 1000); }
 }
-function homeStrip() {
- const l = L();
- const rows = ['xichuan','sanguo','westlin','baker'].map(id => `<a class="fw-strip-row" href="/characters?world=${id}"><strong>${safe(uniName(id))}</strong><span class="fw-strip-faces">${cardsByUniverse(id).slice(0,4).map(cardArt).join('')}</span><span aria-hidden="true">→</span></a>`).join('');
- return `<section class="fw-strip" data-no-i18n aria-label="${safe(l.homeStripTitle)}"><header><h2>${safe(l.homeStripTitle)}</h2><p>${safe(l.homeStripSub)}</p></header><div class="fw-strip-rows">${rows}</div><div class="fw-strip-links"><a class="fw-btn" href="/characters">${safe(l.homeStripMore)} →</a></div></section>`;
-}
-function appendStrip() {
- const host = document.querySelector('#precision-view') || document.querySelector('#main');
- if (!host) return;
- document.getElementById('fw-home-strip')?.remove();
- const wrap = document.createElement('div'); wrap.id = 'fw-home-strip'; wrap.innerHTML = homeStrip();
- const footer = [...host.querySelectorAll('footer')].pop();
- if (footer?.parentElement) footer.parentElement.insertBefore(wrap,footer); else host.append(wrap);
-}
 let currentHelpers = null, langBound = false;
-const worldTabs = new Map();
 function missingMarkup(world = false) {
  const l = L(), title = world ? l.missingWorld : l.missingCharacter;
- return `<main class="fw-page" data-no-i18n data-fw-page="missing">${mobileBar()}${localNav()}<section class="fw-missing"><h1 tabindex="-1">${safe(title)}</h1><p>${safe(l.missingGuide)}</p><a class="fw-btn" href="${world ? '/universe' : '/characters'}">${safe(world ? l.uniTitle : l.profileBack)} →</a></section></main>`;
+ return `<main class="fw-page" data-no-i18n data-fw-page="missing">${mobileBar()}<section class="fw-missing"><h1 tabindex="-1">${safe(title)}</h1><p>${safe(l.missingGuide)}</p><a class="fw-btn" href="${world ? '/' : '/characters'}">${safe(world ? l.storiesNav : l.profileBack)} →</a></section></main>`;
 }
-const focusAttributes = ['id','data-sd-lang','data-fw-expr','data-fw-filter','data-fw-world-select','data-fw-chat','data-fw-tab'];
+const focusAttributes = ['id','data-sd-lang','data-fw-expr','data-fw-filter','data-fw-world-select','data-fw-chat'];
 function rememberFocus() {
  const node = document.activeElement;
  const attribute = focusAttributes.find(key => node?.hasAttribute?.(key));
@@ -428,19 +432,6 @@ function bindCommon() {
   const main = document.getElementById('fw-portrait-main'); main.hidden = false; main.nextElementSibling.hidden = true; main.src = b.dataset.fwExpr;
   document.querySelectorAll('[data-fw-expr]').forEach(x => { x.classList.toggle('active',x === b); x.setAttribute('aria-pressed',String(x === b)); });
  });
- document.querySelectorAll('.fw-tabs').forEach(wrap => {
-  const tabs = [...wrap.querySelectorAll('[role=tab]')];
-  const select = b => {
-   worldTabs.set(location.pathname,b.dataset.fwTab);
-   tabs.forEach(x => { const active = x === b; x.classList.toggle('active',active); x.setAttribute('aria-selected',String(active)); x.tabIndex = active ? 0 : -1; });
-   document.querySelectorAll('[data-fw-pane]').forEach(p => p.hidden = p.dataset.fwPane !== b.dataset.fwTab);
-  };
-  tabs.forEach((b,i) => { b.onclick = () => select(b); b.onkeydown = e => {
-   const next = e.key === 'ArrowRight' ? (i+1)%tabs.length : e.key === 'ArrowLeft' ? (i+tabs.length-1)%tabs.length : e.key === 'Home' ? 0 : e.key === 'End' ? tabs.length-1 : null;
-   if (next != null) { e.preventDefault(); select(tabs[next]); tabs[next].focus(); }
-  }; });
-  const saved = tabs.find(b => b.dataset.fwTab === worldTabs.get(location.pathname)); if (saved) select(saved);
- });
  document.querySelector('[data-fw-export]')?.addEventListener('click',exportDrafts);
 }
 function renderRoute(path) {
@@ -449,10 +440,8 @@ function renderRoute(path) {
  let markup, title;
  if (path === '/characters') { readLibraryState(); markup = libMarkup(); title = L().charactersNav; }
  else if (/^\/characters\/[^/]+$/.test(path)) { const c = cardById(path.split('/')[2]); markup = c ? profileMarkup(c) : missingMarkup(); title = c ? t(c.name) : L().missingCharacter; }
- else if (path === '/universe') { markup = universesMarkup(); title = L().uniTitle; }
- else if (/^\/universe\/[^/]+$/.test(path)) { const id = path.split('/')[2]; markup = universeMarkup(id) || missingMarkup(true); title = Object.hasOwn(UNIVERSES,id) ? uniName(id) : L().missingWorld; }
- else if (path === '/frameworks') { markup = frameworksMarkup(); title = L().guideLink; }
- else if (path === '/studio') { markup = studioMarkup(); title = L().createNav; }
+ else if (/^\/universe\/[^/]+$/.test(path)) { markup = missingMarkup(true); title = L().missingWorld; }
+ else if (path === '/studio') { markup = studioMarkup(); title = L().legacyH; }
  else return false;
  mountShell(markup,currentHelpers,'flywheel');
  if (path === '/characters') {
@@ -473,7 +462,7 @@ function bindLangRerender() {
  langBound = true;
  globalThis.addEventListener?.('sd-lang', () => {
   if (!currentHelpers) return;
-  if (location.pathname === '/') { appendStrip(); return; }
+  if (location.pathname === '/') return;
   const focus = rememberFocus();
   if (renderRoute(location.pathname)) { currentHelpers.repaint?.(); restoreFocus(focus); }
  });
@@ -482,9 +471,14 @@ export function show(path,helpers) {
  const owner = helpers.account?.user?.uid || null;
  if (owner !== featuredOwner) { featuredDraft = ''; featuredOwner = owner; const input = document.querySelector('.fw-character-feature input'); if (input) input.value = ''; }
  currentHelpers = helpers; ensureStyles();
- if (path === '/') {
-  if (!referenceShow(path,helpers)) return false;
-  appendStrip(); bindLangRerender(); return true;
+ if (path === '/') return false;
+ const canonical = canonicalCharacterUrl(path + (location.search || '') + (location.hash || ''));
+ if (canonical !== path + (location.search || '') + (location.hash || '')) {
+  helpers.navigate(canonical); return true;
+ }
+ if (path === '/studio') {
+  const legacy = legacyDrafts();
+  if (!legacy.error && !legacy.drafts.length) { helpers.navigate('/builder'); return true; }
  }
  const handled = renderRoute(path);
  if (handled) bindLangRerender();

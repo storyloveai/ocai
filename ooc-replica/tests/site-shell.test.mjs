@@ -26,7 +26,7 @@ test('account routes use the captured shell, keep real private history isolated,
  location.pathname='/story/6ac749a7ab586f53935a023d';
  reference.show(location.pathname,h);assert.doesNotMatch(document.body.textContent,/Failed Knight/); // captured OOC titles are not shown
  location.pathname='/story/story-005';
- reference.show(location.pathname,h);assert.match(document.querySelector('.replica-story-detail').textContent,/Saintess/);assert.equal(document.querySelector('[data-play]').dataset.play,'story-005');
+ reference.show(location.pathname,h);assert.match(document.querySelector('.replica-story-detail').textContent,/Saintess/);assert.equal(document.querySelector('[data-story-play="story-005"]').getAttribute('href'),'/play/story-005');assert.equal(document.querySelector('.replica-story-detail iframe'),null,'information stays separate from starting the story');
  community.show('/profile',h);reference.syncAccount(account);account.user=null;values.clear();reference.syncAccount(account);
  assert.doesNotMatch(document.querySelector('[data-shrink]').textContent,/Current owner|Private local response|Saved story/);assert.ok(document.querySelector('[data-shrink] [data-action=login]'));
 });

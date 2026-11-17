@@ -94,12 +94,10 @@ test('character discovery stays useful without duplicate navigation or demo edit
   };
   const language = lang => setLang(lang, {win: globalThis, doc: document});
 
-  await t.test('home offers one character discovery action and one canonical sidebar entry', () => {
-    const strip = document.querySelector('#fw-home-strip .fw-strip');
-    assert.ok(strip);
-    assert.equal(strip.querySelectorAll('.fw-strip-row').length, 4);
-    assert.equal(strip.querySelectorAll('.fw-btn:not(.fw-btn-secondary)').length, 1, 'one primary action');
-    assert.ok(strip.querySelector('a[href="/characters"]'));
+  await t.test('home retains its canonical character entry without an extra world strip or role navigation', () => {
+    assert.equal(document.querySelector('#fw-home-strip'), null);
+    assert.equal(document.querySelector('.fw-strip-row'), null);
+    assert.equal(document.querySelector('.fw-nav'), null);
     assert.equal(document.querySelectorAll('[data-shrink] a[href="/characters"]').length, 1, 'existing Character entry uses the canonical library');
     assert.equal(document.querySelector('[data-shrink] a[href="/character"]'), null);
     assert.equal(document.querySelectorAll('[data-shell-flywheel]').length, 0);
@@ -231,9 +229,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assertCharacterNavigation();
     assert.ok(page('characters').hasAttribute('data-no-i18n'));
     assert.ok(page('characters').querySelector('.fw-mobile-bar img'));
-    for (const href of ['/characters', '/universe', '/builder']) {
-      assert.ok(page('characters').querySelector(`.fw-nav a[href="${href}"]`));
-    }
+    assert.equal(page('characters').querySelector('.fw-nav'), null, 'the directory uses the established site navigation');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
     document.querySelector('[data-fw-filter="xichuan"]').click();
     assertCharacterNavigation();
@@ -333,11 +329,11 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(profile.querySelector('.fw-ctas a[href="/play/xc-zhiyao"]'));
     const identity = profile.querySelector('.fw-profile-head');
     assert.equal(identity.querySelector('[data-fw-profile-state],[data-fw-experiences],.fw-ctas'), null, 'identity and current actions are separate regions');
-    assert.ok(identity.querySelector('.fw-persona a[href="/play/xichuan"]'));
+    assert.ok(identity.querySelector('.fw-persona a[href="/story/xichuan"]'), 'the source opens the existing Story detail');
     const summary = profile.querySelector('.fw-profile-summary');
     assert.equal(summary.getAttribute('role'), 'status'); assert.equal(summary.getAttribute('aria-live'), 'polite');
     assert.equal(summary.querySelector('[data-fw-experiences]'), null, 'long memories are outside the live status');
-    assert.equal(profile.querySelector('[data-fw-experiences]').closest('[aria-live],[role="status"]'), null);
+    assert.equal(profile.querySelector('[data-fw-experiences]'), null, 'a fresh profile does not add an empty shared-experience panel');
     assert.equal(profile.querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), false, 'the first unplayed action is chat');
     assert.equal(profile.querySelector('[data-fw-story-entry]').classList.contains('fw-btn-secondary'), true);
     let expressions = profile.querySelectorAll('[data-fw-expr]');
@@ -370,9 +366,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(page('profile').querySelectorAll('a[href*="encounter="]').length >= 2);
     go('/characters/sg-diaochan');
     const genericMemories = page('profile').querySelector('[data-fw-experiences]');
-    assert.match(genericMemories.textContent, /supplementary memory/i);
-    assert.match(genericMemories.textContent, /conversation settings/i);
-    assert.doesNotMatch(genericMemories.textContent, /Keep a line|Remember this line/i, 'generic chat does not advertise unavailable pin controls');
+    assert.equal(genericMemories, null, 'a generic character with no retained memories does not get an empty panel or unavailable pin guidance');
     const legacyKey = 'ooc-session-v2-sgc-007', legacyLine = 'A real line kept in an earlier conversation.';
     const legacyMessages = JSON.stringify([{role: 'user', text: legacyLine}]);
     values.set(legacyKey, legacyMessages);
@@ -386,50 +380,10 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(page('profile').querySelectorAll('[data-fw-expr]').length, 0);
   });
 
-  await t.test('world tabs have linked panels, visibility and keyboard navigation', () => {
-    go('/universe');
-    assert.equal(page('universes').querySelectorAll('.fw-uni-card').length, Object.keys(UNIVERSES).length);
-    go('/universe/westlin');
-    const world = page('universe');
-    const tabs = [...world.querySelectorAll('[data-fw-tab]')];
-    assert.equal(tabs.length, 4);
-    for (const tab of tabs) {
-      const panel = document.getElementById(tab.getAttribute('aria-controls'));
-      assert.ok(panel, 'tab controls an existing panel');
-      assert.equal(panel.getAttribute('role'), 'tabpanel');
-      assert.equal(panel.getAttribute('aria-labelledby'), tab.id);
-    }
-    const assertSelected = index => {
-      tabs.forEach((tab, i) => {
-        assert.equal(tab.getAttribute('aria-selected'), String(i === index));
-        assert.equal(tab.getAttribute('tabindex'), i === index ? '0' : '-1');
-        assert.equal(document.getElementById(tab.getAttribute('aria-controls')).hidden, i !== index);
-      });
-    };
-    assertSelected(0);
-    tabs[3].click();
-    assertSelected(3);
-    assert.ok(world.querySelectorAll('.fw-era').length >= 3);
-    const key = key => {
-      const event = new window.Event('keydown', {bubbles: true, cancelable: true});
-      event.key = key;
-      document.activeElement.dispatchEvent(event);
-    };
-    tabs[3].focus();
-    key('ArrowRight'); assertSelected(0);
-    key('End'); assertSelected(3);
-    key('Home'); assertSelected(0);
-    key('ArrowLeft'); assertSelected(3);
-    go('/universe/xichuan');
-    assert.ok(page('universe').querySelector('[data-fw-tab="timeline"]'));
-    go('/universe/sanguo');
-    assert.match(page('universe').querySelector('[data-fw-pane="rules"]').textContent, /子衡|Ziheng/);
-  });
-
   await t.test('unknown curated pages explain the missing destination without impersonating a character or writing data', () => {
     language('zh');
     const before = writes.length;
-    for (const [path, back] of [['/characters/not-a-person', '/characters'], ['/universe/not-a-world', '/universe'], ['/universe/toString', '/universe'], ['/universe/__proto__', '/universe']]) {
+    for (const [path, back] of [['/characters/not-a-person', '/characters'], ['/universe/not-a-world', '/'], ['/universe/toString', '/'], ['/universe/__proto__', '/']]) {
       go(path);
       const missing = page('missing');
       assert.ok(missing, path + ' presents an explicit missing-page state');
@@ -437,39 +391,28 @@ test('character discovery stays useful without duplicate navigation or demo edit
       assert.ok(missing.querySelector(`.fw-missing a[href="${back}"]`));
       assert.equal(document.querySelector('[data-fw-character]'), null);
       assert.equal(page('universe'), null);
+      assert.equal(missing.querySelector('.fw-nav'), null);
       assert.equal(writes.length, before, 'a missing public route does not open or overwrite private records');
     }
   });
 
-  await t.test('world titles follow their cover and only actual works count as related stories', () => {
-    go('/universe');
-    for (const [id, world] of Object.entries(UNIVERSES)) {
-      const card = page('universes').querySelector(`.fw-uni-card[href="/universe/${id}"]`);
-      const cover = card.querySelector('.fw-uni-cover'), name = card.querySelector('.fw-card-name');
-      assert.equal(cover.nextElementSibling, name);
-      assert.equal(cover.querySelector('.fw-card-name'), null);
-      assert.equal(name.textContent, world.name.zh);
+  await t.test('each real character source opens Story details while its one main story action keeps the true player', () => {
+    for (const [id, detail, play] of [
+      ['sg-caocao', '/story/three-kingdoms', '/play/three-kingdoms'],
+      ['xc-zhiyao', '/story/xichuan', '/play/xichuan'],
+      ['wn-lamp', '/story/ashen-crown', '/assets/ashen/index.html'],
+      ['bk-holmes', '/story/baker-street', '/assets/holmes-webgal/index.html'],
+    ]) {
+      go('/characters/' + id);
+      const profile = page('profile');
+      assert.ok(profile.querySelector(`.fw-persona a[href="${detail}"]`), id + ' has a real Story source');
+      assert.equal(profile.querySelectorAll(`[data-fw-story-entry][href="${play}"]`).length, 1);
+      assert.equal(profile.querySelector(`.fw-appearances a[href="${play}"]`), null, 'a single work is not repeated as a second appearance action');
+      assert.equal(profile.querySelector('.fw-nav'), null);
     }
-    const originals = page('universes').querySelector('.fw-uni-card[href="/universe/original"]');
-    assert.equal(originals.querySelector('.fw-badge-dim'), null, 'a group of original encounters is not advertised as one book');
-    go('/universe/original');
-    assert.equal(page('universe').querySelectorAll('.fw-card').length, 3);
-    assert.equal(page('universe').querySelector('.fw-appearances'), null, 'the encounter collection has no fabricated related-story listing');
-    go('/universe/xichuan');
-    assert.ok(page('universe').querySelector('.fw-appearances a[href="/play/xichuan"]'), 'real books retain their existing story entry');
-  });
-
-  await t.test('play guide describes real modes without fake response simulations', () => {
-    go('/frameworks');
-    const guide = page('frameworks');
-    assert.ok(guide);
-    for (const id of ['strategist', 'galgame', 'detective', 'chat']) {
-      const section = guide.querySelector(`#fw-${id}`);
-      assert.ok(section);
-      assert.ok(section.querySelector('a[href^="/"]'), 'mode links to real content');
-    }
-    assert.equal(guide.querySelector('.fw-boss,.fw-pot,.fw-demo,[data-fw-line]'), null);
-    assert.ok(!/the boss|厨房|食材|锅|阶段二/i.test(guide.textContent));
+    go('/characters/oc-shen-yanzhou');
+    assert.equal(page('profile').querySelector('.fw-persona a[href^="/story/"]'), null, 'an original encounter is not mislabeled as a book');
+    assert.ok(page('profile').querySelectorAll('a[href*="encounter="]').length >= 2);
   });
 
   await t.test('creation reuses the existing workshop and preserves old drafts read-only', async () => {
@@ -478,9 +421,9 @@ test('character discovery stays useful without duplicate navigation or demo edit
     values.set(key, raw);
     go('/studio');
     let studio = page('studio');
-    assert.ok(studio.querySelector('a[href="/builder"]'));
+    assert.equal(studio.querySelector('.fw-nav'), null);
     assert.equal(studio.querySelector('form,input,textarea,select,[data-fw-save],[data-fw-edit],[data-fw-del],[data-fw-mix]'), null);
-    assert.ok(studio.querySelector('#fw-drafts'));
+    assert.equal(studio.querySelectorAll('[data-fw-export]').length, 1, 'the compatibility page exposes one read-only backup action');
     assert.ok(studio.textContent.includes('Night Watch') || studio.textContent.includes('夜航'));
     const exportButton = studio.querySelector('[data-fw-export]');
     assert.ok(exportButton);
@@ -513,7 +456,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(values.get(key), raw);
     storageState.denied = false;
     go('/');
-    assert.ok(document.querySelector('#fw-home-strip .fw-strip'));
+    assert.equal(document.querySelector('#fw-home-strip'), null);
     go('/characters'); // Stops the home carousel interval before the test process exits.
   });
 });
@@ -544,9 +487,10 @@ async function boot() {
   });
   await import('../dist/app.js');
   const {show} = await import('../dist/assets/flywheel/flywheel.js');
+  const reference = await import('../dist/assets/reference.js');
   const {setLang} = await import('../dist/assets/site-i18n.js');
   const data = JSON.parse(await readFile(join(dist, 'data.json'), 'utf8'));
   const helpers = {data, categories: [], read: (key, fallback) => { try { return JSON.parse(values.get(key)) ?? fallback; } catch { return fallback; } }, save: (key, value) => values.set(key, JSON.stringify(value)), show: () => {}, navigate: path => navigations.push(path)};
-  const go = path => { window.history.pushState({}, '', path); assert.ok(show(location.pathname, helpers), `route ${path} is handled`); };
+  const go = path => { window.history.pushState({}, '', path); assert.ok(show(location.pathname, helpers) || reference.show(location.pathname, helpers), `route ${path} is handled by its actual owner`); };
   return {document, window, values, writes, storageState, go, setLang, navigations, requests};
 }

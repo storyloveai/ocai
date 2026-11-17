@@ -140,7 +140,7 @@ if (parentPort) {
         if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('[data-fw-chat-status]') && state.querySelector('[data-fw-progress]');
         return state.childElementCount > 0;
       }
-      return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input') || f.document.querySelector('[data-fw-page="characters"] #fw-lib-results');
+      return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input') || f.document.querySelector('[data-fw-page="characters"] #fw-lib-results') || f.document.querySelector('[data-story-characters]');
     }, 'requested route did not finish restoring its dynamic state');
     if (workerData.exerciseDemo) {
       const input = f.document.querySelector('#session-input');
@@ -158,6 +158,7 @@ if (parentPort) {
       snapshot = peer.messages.find(message => message.type === 'xc-init')?.snapshot;
     }
     const directory = f.document.querySelector('[data-fw-page="characters"]');
+    const story = f.document.querySelector('[data-story-characters]');
     parentPort.postMessage({
       path: f.location.pathname,
       search: f.location.search, hash: f.location.hash, historyState: f.history.state,
@@ -168,6 +169,11 @@ if (parentPort) {
         world: directory.querySelector('[data-fw-filter][aria-pressed="true"]').dataset.fwFilter,
         chat: directory.querySelector('[data-fw-chat]').getAttribute('aria-pressed') === 'true',
         cards: [...directory.querySelectorAll('.fw-card')].map(card => card.getAttribute('href')),
+      } : null,
+      story: story ? {
+        id: story.dataset.storyCharacters,
+        characters: [...story.querySelectorAll('a[href^="/characters/"]')].map(link => link.getAttribute('href')),
+        playUrl: f.document.querySelector(`[data-story-play="${story.dataset.storyCharacters}"]`)?.getAttribute('href'),
       } : null,
       text: f.document.querySelector('[data-fw-page="profile"]')?.textContent || f.document.querySelector('#session-messages')?.textContent || '',
       snapshot, entries: [...f.values], requests: f.requests, observedRestoring: f.observedRestoring,

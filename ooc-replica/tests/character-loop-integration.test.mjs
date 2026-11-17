@@ -27,7 +27,7 @@ async function reload(options) {
 }
 
 test('character link helpers preserve identity and old-link context without accepting unknown characters', async () => {
-  const {CHARACTER_HOME, characterProfileUrl, canonicalCharacterUrl, characterDirectoryReturn} = await import('../dist/assets/character-links.js');
+  const {CHARACTER_HOME, characterProfileUrl, canonicalCharacterUrl, characterDirectoryReturn, characterReturnUrl, storyReturnUrl, isCharacterJourney} = await import('../dist/assets/character-links.js');
   const {CHARACTER_CARDS} = await import('../dist/assets/flywheel/cards-data.js');
   const {storydateCharacters} = await import('../dist/assets/storydate-originals.js');
   assert.equal(CHARACTER_HOME, '/characters');
@@ -56,6 +56,14 @@ test('character link helpers preserve identity and old-link context without acce
   for (const unsafe of ['//outside.example/characters', 'https://outside.example/characters', '/characters-extra', '/characters/xc-zhiyao', '/play/xc-zhiyao']) {
     assert.equal(characterDirectoryReturn(unsafe), null, 'return context only accepts the exact local directory: ' + unsafe);
   }
+  assert.equal(characterReturnUrl('/character/sgc-002?say=private#memory'), '/characters/sg-caocao');
+  assert.equal(characterReturnUrl('/play/xc-zhiyao?say=private&source=profile'), '/play/xc-zhiyao');
+  for (const unsafe of ['//outside.example/play/xc-zhiyao', 'https://outside.example/characters/xc-zhiyao', '/characters/not-a-person', '/play/not-a-character', '/story/xichuan']) assert.equal(characterReturnUrl(unsafe), null);
+  for (const [old, canonical] of [['/universe', '/'], ['/frameworks', '/'], ['/universe/xichuan', '/story/xichuan'], ['/universe/sanguo', '/story/three-kingdoms'], ['/universe/westlin', '/story/ashen-crown'], ['/universe/baker', '/story/baker-street']]) assert.equal(canonicalCharacterUrl(old), canonical);
+  assert.equal(storyReturnUrl('/story/xichuan?say=private#cast'), '/story/xichuan');
+  for (const unsafe of ['//outside.example/story/xichuan', 'https://outside.example/story/xichuan', '/story/not-a-story', '/story/xichuan/extra', '/play/xichuan']) assert.equal(storyReturnUrl(unsafe), null);
+  for (const id of ['sg-001', 'sg-002', 'sg-003', 'sg-004', 'sg-005', 'sg-006', 'sg-007', 'sg-008', 'xichuan', 'three-kingdoms', 'three-kingdoms-ink']) assert.equal(isCharacterJourney('/play/' + id), true, id + ' retains its character source during real site play');
+  for (const path of ['/play/sg-002-extra', '/play/sg-002/extra', '/play/not-a-story', '/play/ashen-crown', '/play/baker-street', '/play/__proto__', '//outside.example/play/sg-002', 'https://outside.example/play/sg-002']) assert.equal(isCharacterJourney(path), false, path + ' is not a real site play URL');
 });
 
 test('local walkthrough reflects canon flags and treats false or absent progress as unplayed facts', async () => {
@@ -85,6 +93,103 @@ test('real app connects profiles, local chat, current story memory and reloads t
   const read = key => JSON.parse(f.values.get(key) || 'null');
   let future;
   try {
+    await t.test('retired world and format links lead to established Story pages without starting a game', async () => {
+      const before = f.values.get(XICHUAN_KEY);
+      for (const [oldPath, path, storyId] of [
+        ['/universe', '/'], ['/frameworks', '/'],
+        ['/universe/xichuan', '/story/xichuan', 'xichuan'],
+        ['/universe/sanguo', '/story/three-kingdoms', 'three-kingdoms'],
+        ['/universe/westlin', '/story/ashen-crown', 'ashen-crown'],
+        ['/universe/baker', '/story/baker-street', 'baker-street'],
+      ]) {
+        await f.go(oldPath);
+        assert.equal(f.location.pathname, path, oldPath + ' has one established destination');
+        assert.equal(f.document.querySelector('.fw-nav'), null);
+        assert.equal(f.document.querySelector('#xichuan-frame'), null, 'a Story detail does not auto-start its player');
+        if (storyId) assert.ok(f.document.querySelector(`[data-story-characters="${storyId}"] a[href^="/characters/"]`), 'the real detail links its existing cast');
+      }
+      await f.go('/universe/original');
+      assert.equal(f.location.pathname, '/characters'); assert.equal(new URLSearchParams(f.location.search).get('world'), 'original');
+      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 3);
+      await f.go('/universe/not-a-world');
+      assert.ok(f.document.querySelector('[data-fw-page="missing"] .fw-missing a[href="/"]'));
+      assert.equal(f.values.get(XICHUAN_KEY), before);
+      await f.go('/studio');
+      assert.equal(f.location.pathname, '/builder', 'visiting the old studio with no backup reuses the existing workshop');
+      assert.equal(f.values.has('sd-flywheel-drafts'), false);
+      await f.go('/character?world=xichuan');
+    });
+
+    await t.test('a real biography keeps its character source through play, refresh and the session information preview', async () => {
+      const character = '/characters/sg-caocao';
+      await f.go(character);
+      await f.click('a.fw-appearance[href="/story/sg-002"]');
+      assert.equal(f.location.pathname, '/story/sg-002');
+      assert.equal(f.history.state.characterReturn, character);
+      await f.click('[data-story-play="sg-002"]');
+      await waitFor(() => f.document.querySelector('#session-input'), 'the real biography did not open its existing session');
+      assert.equal(f.location.pathname, '/play/sg-002');
+      assert.equal(f.history.state.characterReturn, character, 'playing the biography preserves the original character source');
+      const refreshed = await reload({path: f.location.pathname, entries: [...f.values], historyState: f.history.state});
+      assert.equal(refreshed.path, '/play/sg-002');
+      assert.equal(refreshed.historyState.characterReturn, character);
+      await f.click('a[href="/story/sg-002"] [data-session-title]');
+      assert.ok(f.document.querySelector('#title-preview [data-story-characters="sg-002"]'));
+      await f.click('#title-preview [data-story-information="sg-002"][data-full-info]');
+      assert.equal(f.location.pathname, '/story/sg-002');
+      assert.equal(f.history.state.characterReturn, character);
+      assert.equal(f.document.querySelector('.shell-page-header a').getAttribute('href'), character);
+      await f.click('.shell-page-header a');
+      assert.equal(profile().dataset.fwCharacter, 'sg-caocao');
+      assert.equal(f.values.has('ooc-session-v2-sg-caocao'), false, 'a profile pathname never becomes a new chat identity');
+    });
+
+    await t.test('a character and the real Story detail share one Xichuan save and return to the actual entry source', async () => {
+      const previous = f.values.get(XICHUAN_KEY), current = save({'flag.joined_club': true});
+      const envelope = JSON.stringify({[LATEST]: current});
+      f.values.set(XICHUAN_KEY, envelope);
+      try {
+        await f.go('/characters/xc-shencheng?say=private-unsubmitted-text&source=profile');
+        await f.click('.fw-persona a[href="/story/xichuan"]');
+        assert.equal(f.location.pathname, '/story/xichuan');
+        assert.equal(f.document.querySelector('#xichuan-frame'), null, 'reading the real Story detail does not mount the game');
+        const cast = f.document.querySelector('[data-story-characters="xichuan"]');
+        assert.ok(cast.querySelector('a[href="/characters/xc-shencheng"]'));
+        assert.equal(cast.querySelectorAll('a[href^="/characters/"]').length, 5);
+        assert.equal(f.history.state.characterReturn, '/characters/xc-shencheng', 'source context contains only the actual profile pathname');
+        assert.equal(f.document.querySelector('[data-story-play="xichuan"]').getAttribute('href'), '/play/xichuan');
+        const restoredDetail = await reload({path: '/story/xichuan', entries: [...f.values], historyState: f.history.state});
+        assert.equal(restoredDetail.story.id, 'xichuan');
+        assert.equal(restoredDetail.story.playUrl, '/play/xichuan');
+        assert.ok(restoredDetail.story.characters.includes('/characters/xc-shencheng'));
+        await f.click('[data-story-characters="xichuan"] a[href="/characters/xc-shencheng"]');
+        await waitFor(profile, 'the real Story cast did not open its character');
+        assert.equal(profile().querySelector('.fw-back').getAttribute('href'), '/story/xichuan', 'a character opened from Story returns to that same real Story');
+        await f.click('[data-fw-page="profile"] .fw-back');
+        assert.ok(f.document.querySelector('[data-story-characters="xichuan"]'));
+        await f.click('[data-story-play="xichuan"]');
+        let peer = f.peer(); peer.send({type: 'xc-ready'});
+        assert.deepEqual(peer.messages.find(message => message.type === 'xc-init').snapshot.latest, current);
+        assert.equal(f.document.querySelectorAll('.xc-header a').length, 1, 'the host has one source-specific return, not competing destinations');
+        assert.equal(new URL(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), f.location.href).pathname, '/characters/xc-shencheng');
+        await f.click('[data-xichuan-return]'); await waitFor(profile, 'the game did not return to Shen Cheng’s actual profile');
+        assert.equal(profile().dataset.fwCharacter, 'xc-shencheng');
+        assert.equal(f.values.get(XICHUAN_KEY), envelope);
+        assert.equal(f.values.has('ooc-session-v2-xc-shencheng'), false, 'story access does not invent an unavailable Shen Cheng chat');
+        await f.go('/story/xichuan');
+        await f.click('[data-story-play="xichuan"]');
+        peer = f.peer(); peer.send({type: 'xc-ready'});
+        assert.deepEqual(peer.messages.find(message => message.type === 'xc-init').snapshot.latest, current);
+        assert.equal(new URL(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), f.location.href).pathname, '/story/xichuan', 'a direct Story entry returns to that Story');
+        await f.click('[data-xichuan-return]');
+        assert.ok(f.document.querySelector('[data-story-characters="xichuan"]'));
+        assert.equal(f.values.get(XICHUAN_KEY), envelope, 'both entrances retain the same unchanged canonical envelope');
+      } finally {
+        if (previous === undefined) f.values.delete(XICHUAN_KEY); else f.values.set(XICHUAN_KEY, previous);
+        await f.go('/character?world=xichuan');
+      }
+    });
+
     await t.test('combined directory choices survive browser history, profile/chat/story returns and fresh URL reloads', async () => {
       await f.go('/characters?source=home#cast');
       const initialLength = f.history.length;
@@ -96,6 +201,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       assert.equal(f.document.activeElement, search);
       assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
       const directoryUrl = f.location.pathname + f.location.search + f.location.hash;
+      const directoryHistoryLength = f.history.length;
       const assertDirectory = () => {
         assert.equal(f.location.pathname + f.location.search + f.location.hash, directoryUrl);
         assert.equal(f.document.getElementById('fw-search').value, '夏知遥');
@@ -113,16 +219,19 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await waitFor(() => f.document.querySelector('#session-input'), 'chat did not open from the filtered profile');
       assert.equal(f.history.state.discoveryReturn, directoryUrl);
       await f.click('a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'chat did not return to the same profile');
-      assert.equal(profile().querySelector('.fw-back').getAttribute('href'), directoryUrl);
+      assert.equal(profile().querySelector('.fw-back').getAttribute('href'), '/play/xc-zhiyao', 'a profile opened from chat returns to that chat');
       await f.click('[data-fw-story-entry]');
       const peer = f.peer(); peer.send({type: 'xc-ready'});
       assert.equal(f.history.state.discoveryReturn, directoryUrl);
-      await f.click('.xc-header a[href^="/play/xc-zhiyao"]');
-      await waitFor(() => f.document.querySelector('#session-input'), 'story did not return to chat');
+      assert.equal(new URL(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), f.location.href).pathname, '/characters/xc-zhiyao');
+      await f.click('[data-xichuan-return]'); await waitFor(profile, 'the story did not return to its source profile');
+      await f.click('[data-fw-chat-entry]'); await waitFor(() => f.document.querySelector('#session-input'), 'the source profile did not reopen the same chat');
       await f.click('a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'story/chat chain did not return to profile');
       const reloadedProfile = await reload({path: '/characters/xc-zhiyao', entries: [...f.values], historyState: f.history.state});
-      assert.equal(reloadedProfile.profileBack, directoryUrl, 'native history state preserves the discovery return across a profile reload');
-      await f.click('[data-fw-page="profile"] .fw-back'); assertDirectory();
+      assert.equal(reloadedProfile.profileBack, '/play/xc-zhiyao', 'a profile reload preserves its immediate chat return');
+      assert.equal(reloadedProfile.historyState.discoveryReturn, directoryUrl, 'the earlier filtered directory remains available in native history');
+      f.history.go(directoryHistoryLength - f.history.length);
+      await waitFor(() => f.document.querySelector('#fw-search'), 'history did not return to the original filtered directory'); assertDirectory();
       const reloadedDirectory = await reload({path: directoryUrl, entries: [...f.values]});
       assert.deepEqual(reloadedDirectory.directory, {query: '夏知遥', world: 'xichuan', chat: true, cards: ['/characters/xc-zhiyao']});
       assert.equal(reloadedDirectory.hash, '#cast');
@@ -204,7 +313,9 @@ test('real app connects profiles, local chat, current story memory and reloads t
       future = save({'flag.z_promised': true, 'flag.knows_mom': true});
       peer.send({type: 'xc-save', key: 'auto', value: future});
       assert.deepEqual(read(XICHUAN_KEY)[LATEST], future);
-      await f.click('.xc-header a[href^="/play/xc-zhiyao"]');
+      assert.equal(new URL(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), f.location.href).pathname, '/characters/xc-zhiyao');
+      await f.click('[data-xichuan-return]'); await waitFor(profile, 'the story did not return to its source profile');
+      await f.click('[data-fw-chat-entry]');
       await waitFor(() => f.document.querySelector('#session-input'), 'story return did not open chat');
       assert.match(f.document.querySelector('.xc-chat-bridge').textContent, /答应|promis/i);
       assert.equal(read(chatKey).filter(message => message.role === 'user').length, 1, 'returning to chat preserves the existing thread');
@@ -258,10 +369,12 @@ test('real app connects profiles, local chat, current story memory and reloads t
     await t.test('story viewport observers detach on route leave and stale layout callbacks cannot affect a later view', () => verifyPlayerLayoutLifecycle(f));
 
     await t.test('loading an older save removes future facts from the profile and chat', async () => {
-      await f.go('/play/xichuan');
+      await f.go('/play/xc-zhiyao'); await waitFor(() => f.document.querySelector('#session-input'), 'the chat did not mount before continuing the story');
+      await f.click('[data-xichuan-entry]');
       const peer = f.peer(); peer.send({type: 'xc-ready'});
       peer.send({type: 'xc-save', key: 'latest', value: save({})});
-      await f.click('.xc-header a[href^="/play/xc-zhiyao"]');
+      assert.equal(new URL(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), f.location.href).pathname, '/play/xc-zhiyao');
+      await f.click('[data-xichuan-return]');
       await waitFor(() => f.document.querySelector('#session-input'), 'chat did not resume after rollback');
       assert.doesNotMatch(f.document.querySelector('.xc-chat-bridge').textContent, /答应|promis/i);
       assert.equal(roleFor('xc-zhiyao', {xichuan: storyContext(read(XICHUAN_KEY))}).storyProgress.facts.length, 0);
@@ -417,7 +530,8 @@ async function verifyBranchMemories(f) {
   assert.equal(f.document.querySelector('[data-fw-experiences] script'), null, 'saved words are escaped in the profile');
   manager.fork(first, -1);
   show('/characters/xc-zhiyao', helpers);
-  assert.equal(f.document.querySelector('[data-fw-experiences]').textContent.includes('MAIN_PRIVATE'), false, 'another branch does not inherit a prior branch memory');
+  assert.equal((f.document.querySelector('[data-fw-experiences]')?.textContent || '').includes('MAIN_PRIVATE'), false, 'another branch does not inherit a prior branch memory');
+  assert.equal(f.document.querySelector('[data-fw-experiences]'), null, 'an empty active branch has no fabricated experience panel');
   assert.match(f.document.querySelector('[data-fw-chat-entry]').textContent, /开始|Start/i);
   const current = createCharacterThreads({id: 'xc-zhiyao', ...helpers, defaultScene: 'cinema'});
   const second = [{role: 'user', text: 'CURRENT_PRIVATE ' + 'x'.repeat(200) + 'A'}];

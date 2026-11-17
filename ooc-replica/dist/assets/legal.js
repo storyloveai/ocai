@@ -3,14 +3,14 @@
 import {currentLang} from './site-i18n.js';
 
 export const OPERATOR = {en: 'StoryDate', zh: 'StoryDate'}; // the legal entity that runs the site, once registered
-export const SUPPORT_EMAIL = ''; // e.g. support@…; while empty, the pages point to the in-app Customer Support page
+export const SUPPORT_EMAIL = ''; // Add an operator-owned contact when one is available.
 export const UPDATED = '2026-10-23';
 export const LEGAL_PATHS = ['/terms', '/privacy', '/support'];
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const contact = lang => SUPPORT_EMAIL
   ? (lang === 'zh' ? `发邮件到 <span class="legal-email">${esc(SUPPORT_EMAIL)}</span>` : `email <span class="legal-email">${esc(SUPPORT_EMAIL)}</span>`)
-  : (lang === 'zh' ? '在「我的 → 设置 → 客服」页面联系我们' : 'reach us from My → Settings → Customer Support');
+  : (lang === 'zh' ? '查看<a href="/support">帮助说明</a>。在线客服暂未开放' : 'see the <a href="/support">help page</a>. Online support is not available yet');
 
 // [heading, paragraphs] per section; paragraphs are plain text except the contact line, which is built above
 const PAGES = {
@@ -67,12 +67,14 @@ const PAGES = {
   '/support': {
     title: {en: 'Contact & Support', zh: '联系与帮助'},
     body: lang => lang === 'zh' ? [
-      ['遇到问题', ['账户、积分、付款或对话出了问题，请@contact，并写明出问题的页面、时间和你看到的情况，有截图更好。']],
-      ['常见问题', ['积分没到账：刷新页面后到「积分」页查看余额；仍未到账，请把付款时间告诉我们。', '进度不见了：登录后进度会同步到账户；没登录时进度只保存在当前浏览器里。', '切换语言：左侧边栏的 EN / 中文。']],
+      ['遇到问题', [SUPPORT_EMAIL ? '账户、积分、付款或对话出了问题，请@contact，并写明出问题的页面、时间和你看到的情况，有截图更好。' : '在线客服暂未开放。你可以先查看下面的帮助说明，保留出问题的页面、时间和截图。']],
+      ['常见问题', ['积分没到账：到「积分」页刷新余额，查看积分记录；请保留付款收据。', '进度不见了：先确认登录的是原账号，再查看历史记录；没登录时进度只保存在当前浏览器里。', '切换语言：左侧边栏的 EN / 中文。']],
+      ['继续使用', ['@support-actions']],
       ['相关条款', ['@links']],
     ] : [
-      ['Something wrong?', ['For account, credit, payment or conversation problems, @contact. Tell us the page, the time and what you saw; a screenshot helps.']],
-      ['Common questions', ['Credits missing: refresh and check your balance on the Credits page; if they are still missing, send us the time of the payment.', 'Progress missing: signed in, your progress syncs to your account; signed out, it stays only in this browser.', 'Switching language: EN / 中文 in the left sidebar.']],
+      ['Something wrong?', [SUPPORT_EMAIL ? 'For account, credit, payment or conversation problems, @contact. Tell us the page, the time and what you saw; a screenshot helps.' : 'Online support is not available yet. Start with the help below and keep the page, time and a screenshot of the issue.']],
+      ['Common questions', ['Credits missing: refresh your balance and check Credit History on the Credits page. Keep your payment receipt.', 'Progress missing: confirm that you are signed in to your original account, then check History. Signed-out progress stays only in this browser.', 'Switching language: EN / 中文 in the left sidebar.']],
+      ['Continue using StoryDate', ['@support-actions']],
       ['Policies', ['@links']],
     ],
   },
@@ -83,6 +85,7 @@ export function legalMarkup(path, lang = currentLang()) {
   const zh = lang === 'zh';
   const para = p => p === '@contact' ? `<p>${zh ? '有任何问题，请' : 'Questions? Please '}${contact(lang)}${zh ? '。' : '.'}</p>`
     : p === '@links' ? `<p><a href="/terms">${PAGES['/terms'].title[lang]}</a> · <a href="/privacy">${PAGES['/privacy'].title[lang]}</a></p>`
+    : p === '@support-actions' ? `<p><a href="/credit">${zh ? '查看积分与记录' : 'View Credits and history'}</a> · <a href="/history">${zh ? '查看历史记录' : 'View History'}</a> · <a href="/profile">${zh ? '返回我的' : 'Back to My profile'}</a> · <a href="/">${zh ? '返回故事' : 'Back to stories'}</a></p>`
     : `<p>${esc(p).replace('@contact', contact(lang))}</p>`;
   const sections = page.body(lang).map(([h, ps]) => `<section><h2>${esc(h)}</h2>${ps.map(para).join('')}</section>`).join('');
   return `<article class="legal-page" data-no-i18n lang="${zh ? 'zh-CN' : 'en'}"><h1>${page.title[lang]}</h1>`
@@ -91,14 +94,15 @@ export function legalMarkup(path, lang = currentLang()) {
 
 const CSS = `.legal-page{max-width:68ch;margin:0 auto;padding:32px max(16px,env(safe-area-inset-right,0px)) 64px max(16px,env(safe-area-inset-left,0px));color:#d4d4d4;line-height:1.7;font-size:15px}
 .legal-page h1{font-size:28px;color:#fafafa;margin:0 0 4px;text-wrap:balance}.legal-page h2{font-size:17px;color:#fafafa;margin:28px 0 6px}
-.legal-page p{margin:0 0 10px}.legal-page a{color:#e0ff2e}.legal-updated{color:#8a8a8a;font-size:13px}.legal-email{user-select:all;color:#fafafa}`;
+.legal-page p{margin:0 0 10px}.legal-page a{color:#d4d4d4;text-decoration:underline;text-underline-offset:3px}.legal-page a:hover{color:#fafafa}.legal-updated{color:#8a8a8a;font-size:13px}.legal-email{user-select:all;color:#fafafa}`;
 
 export function show(path, h, mountShell) {
-  if (!LEGAL_PATHS.includes(path)) return false;
+  const pagePath = path === '/profile/setting/customer-support' ? '/support' : path;
+  if (!LEGAL_PATHS.includes(pagePath)) return false;
   if (!document.getElementById('legal-css')) document.head.insertAdjacentHTML('beforeend', `<style id="legal-css">${CSS}</style>`);
-  const root = mountShell(legalMarkup(path), h, 'legal');
-  const repaint = () => { if (location.pathname !== path) { removeEventListener('sd-lang', repaint); return; } const a = root.querySelector('.legal-page'); if (a) a.outerHTML = legalMarkup(path); };
+  const root = mountShell(legalMarkup(pagePath), h, 'legal');
+  const repaint = () => { if (location.pathname !== path) { removeEventListener('sd-lang', repaint); return; } const a = root.querySelector('.legal-page'); if (a) a.outerHTML = legalMarkup(pagePath); };
   addEventListener('sd-lang', repaint);
-  document.title = `${PAGES[path].title[currentLang()]} · StoryDate`;
+  document.title = `${PAGES[pagePath].title[currentLang()]} · StoryDate`;
   return true;
 }

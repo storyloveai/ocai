@@ -1,5 +1,6 @@
 import {CHARACTER_CARDS, UNIVERSES, cardById} from './flywheel/cards-data.js';
 import {readDiscoveryState, discoveryUrl} from './flywheel/discovery-state.js';
+import {storyById} from './character-stories.js';
 
 export const CHARACTER_HOME = '/characters';
 
@@ -23,6 +24,14 @@ export function characterProfileUrl(id) {
 export function canonicalCharacterUrl(url) {
   if (typeof url !== 'string' || !url.startsWith('/') || url.startsWith('//')) return url;
   const [, path, suffix] = /^(\/[^?#]*)(.*)$/.exec(url);
+  // Retired prototype destinations lead back into the existing product.
+  // Keep authored content and old bookmarks without a second world catalogue.
+  if (path === '/universe' || path === '/frameworks') return '/' + suffix;
+  const world = /^\/universe\/([^/]+)$/.exec(path)?.[1];
+  if (world === 'original') return '/characters?world=original' + (suffix.startsWith('#') ? suffix : '');
+  const retiredWorlds = {xichuan:'xichuan',sanguo:'three-kingdoms',westlin:'ashen-crown',baker:'baker-street'};
+  const story = Object.hasOwn(retiredWorlds,world) ? retiredWorlds[world] : null;
+  if (story) return '/story/' + story + suffix;
   if (path === '/character' || path === '/character/') return CHARACTER_HOME + suffix;
   const match = /^\/(?:character|characters)\/([^/]+)$/.exec(path);
   if (!match) return url;
@@ -31,6 +40,31 @@ export function canonicalCharacterUrl(url) {
   const profile = characterProfileUrl(id);
   // Creator titles outside the curated index keep their existing detail route.
   return profile ? profile + suffix : url;
+}
+
+// Return context contains no draft text, arbitrary URL, or account identity.
+// It names an existing profile/chat only; story pages can pass it through.
+export function characterReturnUrl(value) {
+  if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//')) return null;
+  const path = canonicalCharacterUrl(value).split(/[?#]/)[0];
+  const profile = /^\/characters\/([^/]+)$/.exec(path);
+  if (profile && cardById(profile[1])) return path;
+  const chat = /^\/play\/([^/]+)$/.exec(path);
+  return chat && CHARACTER_CARDS.some(c => c.chatId === chat[1]) ? path : null;
+}
+
+export function storyReturnUrl(value) {
+  if (typeof value !== 'string' || !value.startsWith('/') || value.startsWith('//')) return null;
+  const path = value.split(/[?#]/)[0], match = /^\/story\/([^/]+)$/.exec(path);
+  return match && storyById(match[1]) ? path : null;
+}
+
+export function isCharacterJourney(path) {
+  if (isCharacterArea(path)) return true;
+  const play = /^\/play\/([^/]+)$/.exec(path);
+  if (play && storyById(play[1])?.playUrl === path) return true;
+  const story = /^\/story\/([^/]+)$/.exec(path);
+  return Boolean(story && storyById(story[1]));
 }
 
 export function isCharacterArea(path) {

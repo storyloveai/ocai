@@ -23,6 +23,7 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  await import('../dist/app.js');
  const {CHARACTER_CARDS}=await import('../dist/assets/flywheel/cards-data.js');
  assert.ok(document.querySelector('#precision-view a[href^="/story/"]'));
+ assert.equal(document.querySelector('#fw-home-strip'),null,'home keeps its original Story shelves without an extra world strip');
  assert.equal(document.querySelector('[data-hero-desktop] h1').textContent,'三国演义 · 谋士');
  assert.equal(document.querySelector('section a [data-name]')?.textContent,'三国演义 · 谋士');
  assert.equal(document.querySelector('section a [data-name]').closest('[aria-roledescription="slide"]').querySelectorAll('a[data-unused],a [data-name]').length,1);
@@ -39,6 +40,7 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  const navigate=path=>{const event=new window.Event('click',{bubbles:true,cancelable:true});event.button=0;document.querySelector(`a[href="${path}"]`).dispatchEvent(event);};
  navigate('/characters');
  assert.equal(location.pathname,'/characters');
+ assert.equal(document.querySelector('.fw-nav'),null,'the directory uses only the established site navigation');
  assert.ok(document.querySelector('[data-fw-page="characters"] [data-sd-hero="character"]'),'the featured character remains available during account restoration');
  assert.equal(document.querySelector('[data-fw-page="characters"] .sd-hero-name').textContent,document.documentElement.lang.startsWith('zh')?'貂蝉':'Diaochan');
  assert.equal(document.querySelectorAll('[data-fw-page="characters"] [data-hero-choice]').length,2);
@@ -56,7 +58,15 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  navigate('/character/sgc-002');oldProfile.remove();
  assert.equal(location.pathname,'/characters/sg-caocao','old chat identities resolve to their existing curated profile');
  assert.equal(document.querySelector('[data-fw-character]').dataset.fwCharacter,'sg-caocao');
+ assert.equal(document.querySelector('.fw-nav'),null);
  assert.ok(!requests.some(path=>/interaction-pages|scenarios/.test(path)),'library and profile navigation do not load the chat bundle');
+ const source=document.querySelector('.fw-persona a[href="/story/three-kingdoms"]');
+ assert.ok(source?.hasAttribute('data-full-info'),'a character source opens the real Story detail');
+ const sourceClick=new window.Event('click',{bubbles:true,cancelable:true});sourceClick.button=0;source.dispatchEvent(sourceClick);
+ assert.equal(location.pathname,'/story/three-kingdoms');
+ assert.ok(document.querySelector('[data-story-characters="three-kingdoms"] a[href="/characters/sg-caocao"]'));
+ assert.equal(document.querySelector('[data-story-play="three-kingdoms"]').getAttribute('href'),'/play/three-kingdoms');
+ assert.ok(!requests.some(path=>/interaction-pages|scenarios/.test(path)),'public Story details stay usable without loading chat or waiting for auth');
  navigate('/');
  assert.equal(location.pathname,'/');
  assert.equal(document.querySelectorAll('button[aria-label="Dismiss"]').length,0);
