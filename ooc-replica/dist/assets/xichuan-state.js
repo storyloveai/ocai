@@ -5,9 +5,13 @@ export const SAVE_KEYS = ['auto', ...Array.from({length: 9}, (_, i) => 'slot' + 
 const plain = v => v && typeof v === 'object' && !Array.isArray(v);
 export function playable(v) {
   return Boolean(plain(v) && plain(v.G) && plain(v.G.v) && Number.isInteger(v.G.ch) && v.G.ch >= 0 && v.G.ch < 8 &&
-    ['node', 'side', 'end'].includes(v.G.phase) && plain(v.V) && Array.isArray(v.V.queue) &&
+    ['node', 'side', 'end'].includes(v.G.phase) && (v.G.phase !== 'node' || typeof v.G.cur === 'string') &&
+    Array.isArray(v.G.log) && Array.isArray(v.G.ledger) && plain(v.G.echoes) &&
+    plain(v.V) && Array.isArray(v.V.queue) && v.V.queue.every(op => plain(op) && typeof op.op === 'string') &&
     Number.isInteger(v.V.i) && v.V.i >= 0 && v.V.i <= v.V.queue.length && Array.isArray(v.V.log) &&
-    plain(v.V.sprites) && Array.isArray(v.G.offer) && Array.isArray(v.G.done));
+    plain(v.V.sprites) && Object.values(v.V.sprites).every(plain) &&
+    [v.V.bg, v.V.cg].every(id => id == null || typeof id === 'string') &&
+    Array.isArray(v.G.offer) && v.G.offer.every(id => typeof id === 'string') && Array.isArray(v.G.done));
 }
 export function validSave(key, value) {
   if (!SAVE_KEYS.includes(key)) return false;
@@ -25,13 +29,44 @@ export function cleanSaves(raw) {
   }
   return out;
 }
-export function latestSave(raw) { const s = raw?.[LATEST]; return playable(s) ? s : playable(raw?.auto) ? raw.auto : null; }
+export function latestSave(raw) {
+  // An explicit latest snapshot (including an ending or a manual rollback)
+  // takes precedence. A broken latest must not silently resume an older branch.
+  const current = raw?.[LATEST] ?? raw?.auto;
+  return current != null && validSave('latest', current) ? current : null;
+}
+export function readXichuanProgress(read, account, storage) {
+  if (account?.busy || account?.restored === false) return {};
+  const raw = read(XICHUAN_KEY, {}) || {};
+  if (account?.user || raw[LATEST] != null || raw.auto != null) return raw;
+  try {
+    const legacy = legacySaves(storage ?? globalThis.localStorage);
+    if (latestSave(legacy)) return {...legacy, ...raw};
+  } catch {}
+  return raw;
+}
+export function xichuanStoryEntry(raw, lang) {
+  const save = latestSave(raw), zh = lang === 'zh';
+  if (!save) return {href: '/play/xichuan', label: zh ? '进入故事 →' : 'Enter the story →'};
+  const ending = save.G.phase === 'end';
+  return {href: '/play/xichuan?entry=resume', label: ending
+    ? (zh ? '回顾结局 →' : 'Review ending →')
+    : (zh ? '继续故事 →' : 'Continue story →')};
+}
 export function legacySaves(storage) {
   const raw = {};
   for (const key of SAVE_KEYS.filter(k => k !== 'latest')) {
     try { raw[key] = JSON.parse(storage.getItem('xc.' + key)); } catch {}
   }
   const out = cleanSaves(raw);
+  // Older standalone players wrote xc.latest only on completion and cleared
+  // xc.auto at that point. A later playthrough can create a newer autosave.
+  let ending;
+  try { ending = JSON.parse(storage.getItem('xc.latest')); } catch {}
+  if (ending?.G?.phase === 'end' && validSave('latest', ending) && (!out.auto || ending.at > out.auto.at)) {
+    out[LATEST] = ending;
+    return out;
+  }
   const last = [out.auto, ...SAVE_KEYS.filter(k => k.startsWith('slot')).map(k => out[k])].filter(playable).sort((a, b) => (b.at || 0) - (a.at || 0))[0];
   if (last) out[LATEST] = structuredClone(last);
   return out;

@@ -134,9 +134,11 @@ const nameOf = who => who === "me" ? t(CAMP.player.name) : who ? t(CAMP.chars[wh
 let G = null;                          // engine state
 let V = { bg: null, cg: null, sprites: {}, queue: [], i: 0, log: [], speaker: null };
 let typing = null, typingFull = "", auto = false, skip = false, timer = null;
-const seen = new Set(store.get("seen", []));
-const markSeen = k => { if (!seen.has(k)) { seen.add(k); store.set("seen", [...seen]); } };
-const unlock = (kind, id) => { const u = store.get(kind, []); if (!u.includes(id)) { u.push(id); store.set(kind, u); } };
+const savedSeen = store.get("seen", []);
+const seen = new Set(Array.isArray(savedSeen) ? savedSeen : []);
+let restoring = false;                   // Painting a saved screen must not record another read, unlock or save.
+const markSeen = k => { if (!restoring && !seen.has(k)) { seen.add(k); store.set("seen", [...seen]); } };
+const unlock = (kind, id) => { if (restoring) return; const u = store.get(kind, []); if (!u.includes(id)) { u.push(id); store.set(kind, u); } };
 
 /* ---------- drawing ---------- */
 function drawBg() {
@@ -241,12 +243,12 @@ function next() {
   if (G.phase === "side") return sideMenu();
   if (G.phase === "node") {
     const n = CAMP.nodes[G.cur];
-    if (V.started !== G.cur) { V.started = G.cur; load(n.script || [], "n:" + n.id); autosave(); return step(); }
+    if (V.started !== G.cur) { V.started = G.cur; load(n.script || [], "n:" + n.id); return step(); }
     return choiceMenu(n);
   }
 }
 function menu(prompt, opts) {
-  const m = $("#menu"); m.replaceChildren(); m.hidden = false; skip = false; renderBar();
+  const m = $("#menu"); delete m.dataset.choiceNode; m.replaceChildren(); m.hidden = false; skip = false; renderBar();
   if (prompt) { const p = document.createElement("div"); p.className = "prompt"; p.textContent = prompt; m.append(p); }
   opts.forEach(o => { const b = document.createElement("button"); b.className = "opt"; b.textContent = o.label; b.disabled = !!o.disabled; b.onclick = () => { m.hidden = true; o.go(); }; m.append(b); });
   m.querySelector("button:not([disabled])")?.focus(); autosave();
@@ -259,7 +261,13 @@ function choiceMenu(n) {
     const lines = o.c.script || []; CC.choose(CAMP, G, o.id); hostAction("choice", n.id, o.id); V.started = null;
     load(lines, `c:${n.id}.${o.id}`); step();
   } })));
-  // 自由对话：场上有女主、这一幕还有说话的机会、网站接了 AI，就多一个“对她说点什么”
+  $("#menu").dataset.choiceNode = n.id;
+  addTalkChoice(n);
+}
+function addTalkChoice(n) {
+  const menu = $("#menu");
+  if (menu.hidden || menu.dataset.choiceNode !== n.id || menu.querySelector(".talk-opt")) return;
+  // The config can arrive after a cold resume: append only the optional control to the current menu.
   const who = talkTarget(n);
   if (who && TALK.ai && CC.freeLeft(CAMP, G) > 0) {
     const b = document.createElement("button"); b.className = "opt talk-opt"; b.textContent = ui("talk")(nameOf(who));
@@ -286,20 +294,69 @@ function showEnd() {
   const cr = document.createElement("p"); cr.className = "credits"; cr.textContent = ui("song"); e.append(cr);
   const b = document.createElement("button"); b.textContent = ui("back"); b.onclick = () => { songStop(); e.hidden = true; title(); }; e.append(b);
   songPlay();
-  store.set("latest", snapshot()); store.set("auto", null);
+  if (!restoring) { store.set("latest", snapshot()); store.set("auto", null); }
 }
 
 /* ---------- saves ---------- */
-const snapshot = () => JSON.parse(JSON.stringify({ G, V: { ...V, log: V.log.slice(-60) }, at: Date.now(), label: nameOf(null) + t(CAMP.chapters[Math.max(0, G.ch)]?.title) }));
-function autosave() { if (G && G.phase !== "end") store.set("auto", snapshot()); }
-function restore(s) { hostAction("resume", s.G.cur); askTilt(); songStop(); audioStart(); G = s.G; V = s.V; typing = null; $("#endscreen").hidden = true; $("#menu").hidden = true; $("#title").hidden = true; draw(); V.i = Math.max(0, V.i - 1); step(); if (G.phase !== "end") autosave(); }
+const snapshot = () => JSON.parse(JSON.stringify({ G, V: { ...V, menu: !$("#menu").hidden, log: V.log.slice(-60) }, at: Date.now(), label: nameOf(null) + t(CAMP.chapters[Math.max(0, G.ch)]?.title) }));
+function autosave() { if (!restoring && G && G.phase !== "end") store.set("auto", snapshot()); }
+function validSave(s) {
+  const g = s?.G, v = s?.V, obj = x => x !== null && typeof x === "object" && !Array.isArray(x);
+  const nodeId = id => typeof id === "string" && Object.hasOwn(CAMP.nodes, id);
+  return obj(g) && obj(g.v) && Number.isInteger(g.ch) && !!CAMP.chapters[g.ch] &&
+    ["node", "side", "end"].includes(g.phase) && (g.phase !== "node" || nodeId(g.cur)) &&
+    Array.isArray(g.offer) && g.offer.every(nodeId) && Array.isArray(g.done) &&
+    Array.isArray(g.log) && Array.isArray(g.ledger) && obj(g.echoes) &&
+    obj(v) && Array.isArray(v.log) && obj(v.sprites) && Object.values(v.sprites).every(obj) &&
+    [v.bg, v.cg].every(id => id == null || typeof id === "string") &&
+    Array.isArray(v.queue) && v.queue.every(op => obj(op) && typeof op.op === "string" &&
+      (op.op !== "say" || !op.who || op.who === "me" || (typeof op.who === "string" && Object.hasOwn(CAMP.chars, op.who)))) &&
+    Number.isInteger(v.i) && v.i >= 0 && v.i <= v.queue.length;
+}
+function restore(s, fromHost = false) {
+  if (!validSave(s)) return title();
+  clearInterval(typing); clearTimeout(timer); typing = null; skip = auto = false;
+  if (!fromHost) { askTilt(); audioStart(); }
+  songStop();
+  // The active runner can advance mutable arrays; keep the stored slot and latest checkpoint independent.
+  ({ G, V } = JSON.parse(JSON.stringify(s)));
+  $("#endscreen").hidden = $("#menu").hidden = $("#title").hidden = true;
+  restoring = true;
+  try {
+    draw();
+    if (G.phase === "end") showEnd();
+    else {
+      const line = V.queue[V.i - 1];
+      if (line?.op === "say") {
+        $("#name").textContent = nameOf(line.who);
+        $("#text").textContent = t(line.t); $("#text").classList.toggle("think", !!line.think);
+        $("#next").classList.add("on");
+      } else {
+        const last = V.log.at(-1);
+        $("#name").textContent = last?.who || ""; $("#text").textContent = last?.text || "";
+        $("#text").classList.remove("think");
+      }
+      // Older snapshots do not distinguish the last line from the menu at the same cursor.
+      if (V.menu && G.phase === "side") sideMenu();
+      else if (V.menu && G.phase === "node") choiceMenu(CAMP.nodes[G.cur]);
+      else if (line?.op !== "say") step();
+    }
+  } catch {
+    G = null; $("#endscreen").hidden = $("#menu").hidden = true;
+    return title();
+  } finally { restoring = false; }
+  if (fromHost) { armResumeAudio(); return; }
+  hostAction("resume", G.cur);
+  if (G.phase === "end") { store.set("latest", snapshot()); store.set("auto", null); }
+  else autosave(); // An explicit slot load becomes the current checkpoint.
+}
 function slots(mode) {
   const p = $("#panel"); p.replaceChildren(); p.hidden = false;
   const h = document.createElement("h2"); h.textContent = mode === "save" ? ui("save") : ui("loadS");
   const close = document.createElement("button"); close.className = "close"; close.textContent = ui("close"); close.onclick = () => p.hidden = true;
   const body = document.createElement("div"); body.className = "body slots";
   for (let n = 1; n <= 9; n++) {
-    const s = store.get("slot" + n, null), b = document.createElement("button"); b.className = "slot";
+    const raw = store.get("slot" + n, null), s = validSave(raw) ? raw : null, b = document.createElement("button"); b.className = "slot";
     b.textContent = ui("savedAt")(n); const sm = document.createElement("small");
     sm.textContent = s ? `${t(CAMP.chapters[Math.max(0, s.G.ch)]?.title)} · ${new Date(s.at).toLocaleString()}` : ui("empty"); b.append(sm);
     b.disabled = mode === "load" && !s;
@@ -352,7 +409,7 @@ function title() {
   el.append(h, sub);
   const b = (k, f, dis) => { const x = document.createElement("button"); x.textContent = ui(k); x.disabled = !!dis; x.onclick = f; if (dis) x.style.opacity = .4; el.append(x); };
   const a = store.get("auto", null);
-  if (a) b("cont", () => restore(a));
+  if (validSave(a)) b("cont", () => restore(a));
   b("start", start); b("load", () => { el.hidden = true; slots("load"); $("#panel").querySelector(".close").onclick = () => { $("#panel").hidden = true; title(); }; });
   b("gallery", () => { showGallery(); });
   const l = document.createElement("button"); l.className = "lang"; l.textContent = ui("lang"); l.onclick = () => { LANG = LANG === "zh" ? "en" : "zh"; saveLang(LANG); title(); renderBar(); }; el.append(l);
@@ -398,6 +455,18 @@ function songPlay() {
 function songStop() {
   if (SONG.el) SONG.el.pause();
   if (AUDIO.on && AUDIO.ctx && AUDIO.timer) AUDIO.out.gain.setTargetAtTime(.16, AUDIO.ctx.currentTime, 1.2);
+}
+function armResumeAudio() {
+  // A postMessage is not a user gesture. Browsers may suspend audio until the next tap or key.
+  function activate() {
+    document.removeEventListener("pointerdown", activate, true);
+    document.removeEventListener("keydown", activate, true);
+    if (!AUDIO.on || !$("#title").hidden) return;
+    if ($("#endscreen").hidden) audioStart();
+    else if (!SONG.el || SONG.el.paused) songPlay();
+  }
+  document.addEventListener("pointerdown", activate, true);
+  document.addEventListener("keydown", activate, true);
 }
 function audioStart() {
   if (!AUDIO.on) return;
@@ -456,14 +525,17 @@ document.addEventListener("visibilitychange", () => { if (!AUDIO.ctx) return; do
    AI 回一句台词，并只给你的话打标签（语气、显出的品质）；好感怎么变由引擎规则决定（CC.speak），每幕最多两句。
    网站没接 AI（或本地打开页面）时不出现这个入口。 */
 const TALK = { ai: false };
-fetch("/api/config", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(d => { TALK.ai = !!(d && d.configured); }).catch(() => {});
+fetch("/api/config", { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(d => {
+  TALK.ai = !!(d && d.configured);
+  if (TALK.ai && G?.phase === "node") addTalkChoice(CAMP.nodes[G.cur]);
+}).catch(() => {});
 const MOODFACE = { neutral: "normal", warm: "smile", cold: "angry", sad: "sad", surprised: "surprised", shy: "shy" };
 function talkTarget(n) {
   const cast = (n.cast || []).map(c => c.id);
   return Object.keys(V.sprites).find(w => CAMP.chars[w] && CAMP.chars[w].romance && cast.includes(w) && !G.v["flag.broken_" + w]) || null;
 }
 function talkBox(n, who) {
-  const m = $("#menu"); m.replaceChildren(); m.hidden = false;
+  const m = $("#menu"); delete m.dataset.choiceNode; m.replaceChildren(); m.hidden = false;
   const p = document.createElement("div"); p.className = "prompt"; p.textContent = ui("talk")(nameOf(who)); m.append(p);
   const f = document.createElement("form"); f.className = "talk";
   const inp = document.createElement("input"); inp.maxLength = 120; inp.placeholder = ui("talkHint"); inp.autocomplete = "off"; inp.enterKeyHint = "send";
@@ -578,7 +650,11 @@ $("#stage").addEventListener("pointermove", e => {
   const st = $("#stage"); $("#sprites").style.transform = `translate3d(${(-x * .05 * .6 * st.clientWidth / 1.05).toFixed(1)}px, ${(-y * .05 * .35 * st.clientHeight / 1.05).toFixed(1)}px, 0)`;
   requestAnimationFrame(fxLoop);
 })();
-function boot() { document.documentElement.lang = LANG; renderBar(); title(); }
+function boot(entry = "title") {
+  document.documentElement.lang = LANG; renderBar();
+  if (entry === "resume") return restore(store.get("latest", null) ?? store.get("auto", null), true);
+  title();
+}
 if (HOSTED) {
   let ready = false;
   window.addEventListener("message", event => {
@@ -586,7 +662,9 @@ if (HOSTED) {
     ready = true; hostStore = event.data.snapshot || {};
     LANG = ["zh", "en"].includes(hostStore.lang) ? hostStore.lang : LANG;
     AUDIO.on = store.get("music", true); TILT.on = store.get("tilt", true);
-    seen.clear(); store.get("seen", []).forEach(k => seen.add(k)); boot();
+    seen.clear(); const readLines = store.get("seen", []);
+    if (Array.isArray(readLines)) readLines.forEach(k => seen.add(k));
+    boot(event.data.entry === "resume" ? "resume" : "title");
   });
   parent.postMessage({ type: "xc-ready" }, location.origin);
 } else boot();

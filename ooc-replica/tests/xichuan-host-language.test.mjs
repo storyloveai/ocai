@@ -8,7 +8,7 @@ import {XICHUAN_KEY,LATEST} from '../dist/assets/xichuan-state.js';
 
 const tick=()=>new Promise(resolve=>setTimeout(resolve,0));
 async function until(condition){for(let i=0;i<100;i++){if(condition())return;await tick();}throw Error('Expected asynchronous state did not arrive');}
-const played={G:{ch:1,phase:'node',cur:'c1_club',v:{'flag.joined_club':true},offer:[],done:[]},V:{queue:[],i:0,log:[],sprites:{}},at:10};
+const played={G:{ch:1,phase:'node',cur:'c1_fair',log:[],ledger:[],echoes:{},v:{'flag.joined_club':true},offer:[],done:[]},V:{queue:[],i:0,log:[],sprites:{}},at:10};
 const billing={enabled:true,prices:{gameUnderstand:1,gameExpress:3}};
 
 function host({progress=true,legacy=false}={}){

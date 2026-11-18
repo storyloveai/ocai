@@ -6,7 +6,7 @@ const layouts = [
   {id:'xc-zhiyao', image:'/assets/xichuan/art/sprites/zhiyao/normal.webp', zh:'查看立绘', en:'View portrait', character:true, back:'/characters/xc-zhiyao'},
   {id:'story-005', image:'/assets/originals/story-005.webp', zh:'查看封面', en:'View cover', character:false, back:'/story/story-005'},
 ];
-const previous = [{role:'user',text:'这段对话已经存在。'}, {role:'assistant',text:'我还记得。'}];
+const previous = [{role:'user',text:'这段对话已经存在。'}, {role:'assistant',text:'我还记得。',transport:'demo'}];
 const authoredGuide = '先观察，再向钟表匠问路。<img src=x onerror="window.injected=true"> & 保留这句原文。';
 const published = {id:'settings-guide-draft',publishedId:'u-settings-guide',status:'published',type:'story',title:'作者提示样本',description:'一段已有作品的说明。',details:'钟表匠的店。',opening:'你来到店门口。',guide:authoredGuide,image:'/assets/originals/story-005.webp'};
 const oldSettings = new Map(layouts.map((layout,index) => ['ooc-situation-image-'+layout.id, JSON.stringify(index === 1)]));
@@ -166,6 +166,9 @@ test('chat settings expose actual controls in both layouts without changing conv
       assert.equal(f.document.querySelector('.session-suggestions'),null);
       assert.match(f.document.querySelector('.sg-chat-intro .character-prose').textContent,/潮声影院|Tidesound Cinema/,'a fresh conversation retains its authored first meeting');
       const bridge=f.document.querySelector('.xc-chat-bridge');
+      assert.equal(toolbar.parentElement,bridge,'context actions share the story bar');
+      assert.equal(f.document.querySelector('#session-messages > .session-demo'),null);
+      assert.equal(bridge.querySelector('.character-encounter-name,[data-character-encounters]'),null);
       assert.equal(bridge.querySelectorAll('a').length,1);
       assert.equal(bridge.querySelector('a').getAttribute('href'),'/play/xichuan');
       assert.equal(bridge.querySelectorAll('p').length,1);
@@ -194,15 +197,33 @@ test('chat settings expose actual controls in both layouts without changing conv
       await f.click('[data-character-branches]');await f.click('[data-select-branch="main"]');
       assert.ok(f.document.querySelector('[data-character-memories]'),'the saved original lines remain reachable');
       assert.ok(f.document.querySelector('[data-character-recap]'));
-      assert.ok(f.document.querySelector('[data-character-encounters]'),'a single-scene conversation retains its restart entry');
+      assert.equal(f.document.querySelector('.xc-chat-bridge [data-character-encounters]'),null);
+      assert.equal(f.document.querySelector('#session-settings [data-character-restart]').hidden,false,'the single-scene restart remains available in settings');
       await f.click('[data-character-memories]');assert.ok(openDialog(f).textContent.includes(previous[0].text));await closeDialog(f);
-      await f.click('[data-character-encounters]');assert.equal(openDialog(f).querySelectorAll('[data-start-encounter]').length,1);await closeDialog(f);
+      await f.click('[data-control="settings"]');await f.click('#session-settings [data-character-restart]');assert.equal(openDialog(f).querySelectorAll('[data-start-encounter]').length,1);await closeDialog(f);
       assert.deepEqual(JSON.parse(f.values.get(key)),previous);
     });
     await t.test('one compact story strip holds current progress without repeating it in the chat opening',async()=>{
-      const progressKey='ooc-session-v2-xichuan',snapshot={'game.xichuan':{G:{ch:2,phase:'node',v:{'flag.z_promised':true},offer:[],done:[]},V:{queue:[],i:0,sprites:{},log:[]}}};
+      const progressKey='ooc-session-v2-xichuan',snapshot={'game.xichuan':{G:{ch:2,phase:'node',cur:'c2_screening',log:[],ledger:[],echoes:{},v:{'flag.z_promised':true},offer:[],done:[]},V:{queue:[],i:0,sprites:{},log:[]}}};
       f.values.set(progressKey,JSON.stringify(snapshot));await f.go('/play/xc-zhiyao');await waitFor(()=>input(f),'saved story chat did not mount');
-      for(const lang of ['zh','en']){language(lang);const progress=f.document.querySelector('[data-xichuan-progress]');assert.match(progress.textContent,lang==='zh'?/第 2 章进行中.*答应/:/Chapter 2 in progress.*promis/);assert.equal(progress.getAttribute('title'),progress.textContent,'the complete progress remains available in the compact strip');assert.equal(f.document.querySelector('#session-messages').textContent.includes(progress.textContent),false,'the opening does not repeat story status');assert.equal(f.document.querySelectorAll('.xc-chat-bridge [data-xichuan-entry]').length,1);}
+      const strip = f.document.querySelector('.xc-chat-bridge');
+      for (const lang of ['zh','en']) {
+        language(lang);
+        const progress = strip.querySelector('[data-xichuan-progress]');
+        assert.match(progress.textContent,lang==='zh'?/第 2 章进行中.*答应/:/Chapter 2 in progress.*promis/);
+        assert.equal(progress.getAttribute('title'),progress.textContent);
+        assert.equal(f.document.querySelector('#session-messages').textContent.includes(progress.textContent),false);
+        const links = strip.querySelectorAll('[data-xichuan-entry]');
+        assert.equal(links.length,1);
+        assert.equal(links[0].getAttribute('href'),'/play/xichuan?entry=resume');
+        assert.equal(links[0].textContent,lang==='zh'?'继续故事 →':'Continue story →');
+        assert.equal(strip.querySelectorAll('[data-character-recap]').length,1);
+        assert.equal(strip.querySelector('[data-character-encounters]'),null);
+        const messages = f.document.querySelector('#session-messages');
+        assert.equal(messages.querySelector(':scope > .session-demo'),null);
+        assert.equal(messages.querySelector('article small.session-demo').textContent,lang==='zh'?'演示回复':'Demo reply');
+        assert.match(f.document.querySelector('[data-control="model"]').textContent,lang==='zh'?/演示对话/:/Demo replies/);
+      }
       assert.deepEqual(JSON.parse(f.values.get(progressKey)),snapshot,'simplifying progress never writes a game save');
     });
     await t.test('returning Zhiyao conversations keep identity and history without replaying an opening or duplicate editing tools',async()=>{

@@ -2,7 +2,7 @@ import {mountShell} from '../reference.js';
 import {getLang} from '../site-i18n.js';
 import {escapeHTML as safe} from '../stream.js';
 import {heroSceneMarkup, mountHeroContent} from '../hero-scene.js';
-import {XICHUAN_KEY, latestSave, legacySaves, progressText, storyContext} from '../xichuan-state.js';
+import {latestSave, readXichuanProgress, xichuanStoryEntry, progressText, storyContext} from '../xichuan-state.js';
 import {FEATURED_CHARACTER_CARDS, WORKS, UNIVERSES, XICHUAN_FACT_LABELS, cardById, cardsByUniverse, characterCardQuote, characterCardMeta, characterCapabilityLabel} from './cards-data.js';
 import {characterArt} from './character-art.js';
 import {readDiscoveryState, discoveryUrl} from './discovery-state.js';
@@ -47,7 +47,6 @@ const copy = {
   chatCta: "开始聊天",
   continueChat: "继续聊天",
   storyCta: "进入故事",
-  continueStory: "回到故事",
   profileBack: "返回角色",
   personaH: "人物背景",
   voiceH: "听 TA 说话",
@@ -116,7 +115,6 @@ const copy = {
   chatCta: "Start chatting",
   continueChat: "Continue chatting",
   storyCta: "Enter the story",
-  continueStory: "Return to story",
   profileBack: "Back to characters",
   personaH: "Background",
   voiceH: "In their own words",
@@ -298,11 +296,7 @@ function profileView(c, account) {
  if (account && (account.busy || !account.restored)) return {restoring:true};
  try {
   const read = currentHelpers?.read || ((_key, fallback) => fallback), chat = chatProgress(c, read);
-  let raw = c.source.work === 'xichuan' ? read(XICHUAN_KEY,{}) : {};
-  if (c.source.work === 'xichuan' && !account?.user && !latestSave(raw)) {
-   const old = legacySaves(globalThis.localStorage);
-   if (latestSave(old)) raw = old;
-  }
+  const raw = c.source.work === 'xichuan' ? readXichuanProgress(read,account) : {};
   return {chat,raw,played:Boolean(latestSave(raw)),chatting:chat.messages.length > 0};
  } catch { return {unavailable:true}; }
 }
@@ -338,7 +332,9 @@ function profileRelatedMarkup(c, account = currentHelpers?.account, view = profi
  const l = L(), stories = storiesForCharacter(c.id), ready = !view.restoring && !view.unavailable;
  const {raw,chat,played,chatting} = view;
  const cards = stories.map((story,i) => {
-  const hasProgress = i === 0 && ready && played;
+  const xichuan = story.id === 'xichuan';
+  const hasProgress = xichuan && ready && played;
+  const entry = xichuan ? xichuanStoryEntry(raw,getLang()) : {href:story.playUrl,label:l.storyCta + ' →'};
   const format = i === 0 ? t(WORKS[c.source.work]?.kind) || workName(c.source.work) : l.appearH;
   const informationUrl = safe(story.informationUrl), title = safe(t(story.title));
   const summary = i === 0 ? t(UNIVERSES[c.source.universe]?.tagline) || t(story.description) : t(story.description);
@@ -349,7 +345,7 @@ function profileRelatedMarkup(c, account = currentHelpers?.account, view = profi
       <h3><a data-full-info href="${informationUrl}">${title}</a></h3><p class="fw-story-description">${safe(summary)}</p>
       ${isStandalone(story.playUrl) ? `<p class="fw-note fw-standalone-note">${safe(l.standalone)}</p>` : ''}
     </div>
-    <div class="fw-ctas fw-story-actions"><a class="fw-story-information" data-full-info href="${informationUrl}">${safe(l.storyDetails)} ↗</a>${ready ? `<a class="fw-btn fw-btn-secondary" ${i===0?'data-fw-story-entry':'data-fw-appearance-entry'} href="${safe(story.playUrl)}"${ext(story.playUrl)}>${safe(hasProgress ? l.continueStory : l.storyCta)} →</a>` : ''}</div>
+    <div class="fw-ctas fw-story-actions"><a class="fw-story-information" data-full-info href="${informationUrl}">${safe(l.storyDetails)} ↗</a>${ready ? `<a class="fw-btn fw-btn-secondary" ${i===0?'data-fw-story-entry':'data-fw-appearance-entry'} href="${safe(entry.href)}"${ext(entry.href)}>${safe(entry.label)}</a>` : ''}</div>
   </article>`;
  }).join('');
  const scope=ready&&(played||chatting||chat.pins.length||chat.notes)?`<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>`:'';

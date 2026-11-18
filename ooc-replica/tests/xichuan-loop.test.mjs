@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {parseHTML} from 'linkedom';
 import {readFile} from 'node:fs/promises';
-import {XICHUAN_KEY, LATEST, cleanSaves, legacySaves, storyContext, validSave} from '../dist/assets/xichuan-state.js';
+import {XICHUAN_KEY, LATEST, cleanSaves, latestSave, legacySaves, readXichuanProgress, xichuanStoryEntry, storyContext, validSave} from '../dist/assets/xichuan-state.js';
 import {mountXichuan, stopXichuan} from '../dist/assets/xichuan-player.js';
 import {createAccountStorage, cloudKey} from '../dist/assets/account-storage.js';
 import {createAccount} from '../dist/assets/account.js';
@@ -89,17 +89,19 @@ test('account hydration blocks a previous frame scope before cloud data arrives'
   assert.equal(a.read(XICHUAN_KEY, null), null);
 });
 
-function fixture({signedIn = false, syncError = '', storage = memory()} = {}) {
+function fixture({signedIn = false, syncError = '', storage = memory(), raw, path = '/play/xichuan'} = {}) {
   const {window, document} = parseHTML('<html lang="zh"><body><main></main></body></html>');
-  Object.assign(globalThis, {window, document, location: {origin: 'https://test.example'}});
-  const values = new Map(), messages = [];
+  const location = new URL(path,'https://test.example'), replacements = [];
+  const history = {state:{characterReturn:'/play/xc-zhiyao'},replaceState(state,_title,path){replacements.push({state,path});location.href=new URL(path,location).href;}};
+  Object.assign(globalThis, {window, document, location, history});
+  const values = new Map(raw ? [[XICHUAN_KEY,raw]] : []), messages = [];
   const h = {read: (k, f) => values.get(k) ?? f, save: (k, v) => values.set(k, structuredClone(v))};
   const reference = {mountShell(html) {document.querySelector('main').innerHTML = html; return document.querySelector('main');}};
   mountXichuan({reference, account: {user: signedIn ? {uid: 'alice'} : null, syncError}, helpers: h, storage});
   const frame = document.querySelector('iframe'), peer = {postMessage: (...args) => messages.push(args)};
   Object.defineProperty(frame, 'contentWindow', {value: peer});
   const send = (data, extra = {}) => {const event = new window.Event('message'); Object.assign(event, {data, origin: location.origin, source: peer, ...extra}); window.dispatchEvent(event);};
-  return {values, messages, frame, peer, send, document};
+  return {values, messages, frame, peer, send, document, replacements};
 }
 
 test('iframe accepts only its same-origin initialized peer, persists rollback, and detaches on route leave', () => {
@@ -142,4 +144,51 @@ test('cloud restore failure does not offer to overwrite an unknown cloud save wi
     assert.equal(f.document.querySelector('[data-import]'), null);
     assert.equal(f.values.has(XICHUAN_KEY), false);
   } finally {stopXichuan();}
+});
+
+
+test('profile and chat entries use the authoritative save, including standalone endings and explicit rollbacks', () => {
+  const storage = memory(), old = save(), ending = save();
+  ending.G.phase = 'end'; ending.at = 2; old.at = 1;
+  storage.setItem('xc.latest', JSON.stringify(ending));
+  storage.setItem('xc.slot1', JSON.stringify(old));
+  const read = () => ({});
+  const raw = readXichuanProgress(read,{user:null},storage);
+  assert.deepEqual(latestSave(raw),ending);
+  assert.deepEqual(xichuanStoryEntry(raw,'en'),{href:'/play/xichuan?entry=resume',label:'Review ending →'});
+  assert.equal(xichuanStoryEntry({[LATEST]:old,auto:ending},'zh').label,'继续故事 →');
+  assert.equal(xichuanStoryEntry({[LATEST]:{},auto:old},'en').label,'Enter the story →');
+  assert.equal(latestSave(readXichuanProgress(read,{user:{uid:'alice'}},storage)),null);
+  assert.equal(latestSave(readXichuanProgress(read,{restored:false},storage)),null);
+});
+
+test('only an explicit, trusted, single-use resume request attaches the current checkpoint', () => {
+  const old = save(), ending = save(); ending.G.phase = 'end';
+  for (const [path,raw,entry] of [
+    ['/play/xichuan',{[LATEST]:old},'title'],
+    ['/play/xichuan?entry=resume',{auto:old},'resume'],
+    ['/play/xichuan?entry=resume',{auto:null,[LATEST]:ending},'resume'],
+    ['/play/xichuan?entry=resume',{auto:old,[LATEST]:{}},'title'],
+    ['/play/xichuan?entry=unknown',{},'title'],
+    ['/play/xichuan?entry=resume',{},'title']
+  ]) {
+    const f = fixture({path:path + (path.includes('?')?'&':'?') + 'lang=en#scene', raw});
+    try {
+      f.send({type:'xc-ready'},{source:{}});
+      assert.equal(f.replacements.length,0);
+      f.send({type:'xc-ready'});
+      const init = f.messages[0][0];
+      assert.equal(init.entry,entry);
+      if (raw[LATEST] === ending) assert.deepEqual(init.snapshot.latest,ending);
+      if (path.includes('entry=resume')) assert.deepEqual(f.replacements,[{state:{characterReturn:'/play/xc-zhiyao'},path:'/play/xichuan?lang=en#scene'}]);
+      else assert.equal(f.replacements.length,0);
+      assert.equal(f.values.get(XICHUAN_KEY),raw,'entering keeps the original stored envelope');
+      if (raw.auto && raw[LATEST] && !latestSave(raw)) {
+        assert.match(f.document.querySelector('.xc-status').textContent,/从序章开始/);
+        f.send({type:'xc-save',key:'music',value:false});
+        assert.equal(latestSave(f.values.get(XICHUAN_KEY)), null, 'a settings save cannot make stale progress current');
+      }
+      f.send({type:'xc-ready'});assert.equal(f.messages.length,1);
+    } finally {stopXichuan();}
+  }
 });

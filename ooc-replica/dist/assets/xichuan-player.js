@@ -4,21 +4,23 @@ import {xichuanAction} from './loop-events.js';
 import {track} from './analytics.js';
 import {escapeHTML as esc} from './stream.js';
 import {currentLang, setLang} from './site-i18n.js';
-import {XICHUAN_KEY, LATEST, cleanSaves, latestSave, legacySaves, validSave, progressText} from './xichuan-state.js';
+import {XICHUAN_KEY, LATEST, cleanSaves, readXichuanProgress, latestSave, legacySaves, validSave, progressText, xichuanStoryEntry} from './xichuan-state.js';
 let dispose = () => {};
 export const isXichuanPath = path => path === '/play/xichuan';
 export function stopXichuan() { dispose(); dispose = () => {}; }
 export function mountXichuan({reference, account, helpers: h, storage = localStorage}) {
   let lang = document.documentElement.lang.startsWith('zh') ? 'zh' : 'en';
   const t = (zh, en) => lang === 'zh' ? zh : en;
-  let snapshot = cleanSaves(h.read(XICHUAN_KEY, {})), active = true, initialized = false;
-  if (!account.user && !latestSave(snapshot)) {
-    const old = legacySaves(storage);
-    if (latestSave(old)) { snapshot = old; try { h.save(XICHUAN_KEY, snapshot); } catch {} }
+  let snapshot = readXichuanProgress(h.read, account, storage), active = true, initialized = false;
+  const entryUrl = new URL(location.href || location.origin);
+  let requestedResume = entryUrl.searchParams.get('entry') === 'resume';
+  let transferable = null;
+  if (account.user && !account.syncError && snapshot[LATEST] == null && snapshot.auto == null) {
+    let guest;
+    try { guest = JSON.parse(storage.getItem(XICHUAN_KEY)); } catch {}
+    const device = guest?.[LATEST] != null || guest?.auto != null ? guest : legacySaves(storage);
+    if (latestSave(device)) transferable = cleanSaves(device);
   }
-  const guest = account.user ? cleanSaves((() => { try { return JSON.parse(storage.getItem(XICHUAN_KEY)); } catch { return {}; } })()) : {};
-  const old = legacySaves(storage), transferable = latestSave(guest) ? guest : old;
-  const importable = account.user && !account.syncError && !latestSave(snapshot) && latestSave(transferable);
   const origin = characterReturnUrl(globalThis.history?.state?.characterReturn) || characterReturnUrl(globalThis.history?.state?.from);
   const returnUrl = origin || '/story/xichuan';
   const returnLabel = () => origin?.startsWith('/play/') ? t('返回聊天', 'Back to chat') : origin ? t('返回人物', 'Back to character') : t('故事介绍', 'Story information');
@@ -31,7 +33,7 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     @media(max-width:1023px){[data-page="xichuan"] [data-xichuan-site-navigation]{display:none!important}[data-page="xichuan"] .shell-content{padding-bottom:0}}
     @media(max-width:600px){.xc-header{gap:8px;padding:8px 12px}.xc-status{width:100%;margin:0}}
   </style><header class="xc-header" data-no-i18n><a href="${esc(returnUrl)}" data-xichuan-return>‹ ${returnLabel()}</a><h1>${t('汐川的第七个春天', 'The Seventh Spring of Xichuan')}</h1><span class="xc-status" role="status"></span></header>
-  ${importable ? `<div class="xc-transfer" data-no-i18n><span data-xichuan-import-note>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}</span><button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
+  ${transferable ? `<div class="xc-transfer" data-no-i18n><span data-xichuan-import-note>${t('此账号尚无汐川进度。', 'This account has no Xichuan progress.')}</span><button data-import>${t('接续本设备上的进度', 'Import this device’s progress')}</button></div>` : ''}
   <iframe id="xichuan-frame" title="${t('汐川互动故事', 'Xichuan visual novel')}" src="/assets/xichuan/index.html?site=1&lang=${lang}" allow="autoplay"></iframe>`, h, 'xichuan');
   const frame = root.querySelector('#xichuan-frame'),gameCredits=attachGameCredits(frame,account,{lang}), status = root.querySelector('.xc-status');
   // Reading keeps one exit in the host header; the mobile site navigation is
@@ -94,8 +96,15 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     const d = event.data;
     if (d?.type === 'xc-ready' && !initialized) {
       gameCredits.install();initialized = true;
-      const initial = {...snapshot, latest: snapshot[LATEST], lang}; delete initial[LATEST];
-      frame.contentWindow.postMessage({type: 'xc-init', snapshot: initial}, location.origin);
+      const initial = cleanSaves(snapshot);
+      initial.latest = initial[LATEST]; delete initial[LATEST]; initial.lang = lang;
+      const entry = requestedResume && latestSave(snapshot) ? 'resume' : 'title';
+      frame.contentWindow.postMessage({type: 'xc-init', entry, snapshot: initial}, location.origin);
+      if (requestedResume) {
+        requestedResume = false;
+        entryUrl.searchParams.delete('entry');
+        history.replaceState(history.state, '', entryUrl.pathname + entryUrl.search + entryUrl.hash);
+      }
     }
     if(d?.type === 'xc-action' && initialized){xichuanAction(d);return;}
     if (d?.type !== 'xc-save' || !initialized || !validSave(d.key, d.value)) return;
@@ -118,7 +127,8 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   dispose = () => { gameCredits.dispose();active = false; resize?.disconnect();window.removeEventListener('resize',fitFrame);window.visualViewport?.removeEventListener('resize',fitFrame);window.removeEventListener('message', receive);globalThis.removeEventListener?.('sd-lang',onSiteLanguage); };
   document.title = t('汐川的第七个春天', 'The Seventh Spring of Xichuan') + ' · StoryDate';
 }
-export function zhiyaoStoryLink(h, lang) {
-  const raw = h.read(XICHUAN_KEY, {}), played = Boolean(latestSave(raw)), progress = progressText(raw, lang);
-  return `<aside class="xc-chat-bridge" data-no-i18n><p data-xichuan-progress title="${esc(progress)}">${esc(progress)}</p><a href="/play/xichuan" data-xichuan-entry>${lang === 'zh' ? played ? '回到故事 →' : '进入故事 →' : played ? 'Return to story →' : 'Enter story →'}</a></aside>`;
+export function zhiyaoStoryLink(raw, lang) {
+  const progress = progressText(raw, lang);
+  const {href, label} = xichuanStoryEntry(raw, lang);
+  return `<div class="xc-chat-story"><p data-xichuan-progress title="${esc(progress)}">${esc(progress)}</p><a href="${esc(href)}" data-xichuan-entry>${esc(label)}</a></div>`;
 }

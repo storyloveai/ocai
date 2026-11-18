@@ -72,7 +72,7 @@ test('a failed local backup cannot discard either conflicting copy', async () =>
   assert.deepEqual(f.a.conflictKeys, [key]);
 });
 test('conflict review escapes displayed summaries and never renders account identifiers', () => {
-  const html = conflictMarkup([{key: 'ooc-session-v2-xichuan', device: {'game.xichuan': {G: {ch: 1, phase: 'node', v: {}, offer: [], done: []}, V: {queue: [], i: 0, log: [], sprites: {}}}}, cloud: []}], 'zh');
+  const html = conflictMarkup([{key: 'ooc-session-v2-xichuan', device: {'game.xichuan': {G: {ch: 1, phase: 'node', cur: 'c1_fair', log: [], ledger: [], echoes: {}, v: {}, offer: [], done: []}, V: {queue: [], i: 0, log: [], sprites: {}}}}, cloud: []}], 'zh');
   assert.match(html, /汐川故事/); assert.match(html, /第 1 章/); assert.match(html, /改用云端版本/);
   assert.doesNotMatch(conflictMarkup([{key: '<script>', device: ['private sentence'], cloud: 'private sentence'}]), /<script>|private sentence/);
 });

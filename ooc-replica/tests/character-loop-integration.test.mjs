@@ -192,6 +192,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
         await f.click('[data-story-play="xichuan"]');
         let peer = f.peer(); peer.send({type: 'xc-ready'});
         assert.deepEqual(peer.messages.find(message => message.type === 'xc-init').snapshot.latest, current);
+        assert.equal(peer.messages.find(message => message.type === 'xc-init').entry, 'title');
         assert.equal(f.document.querySelectorAll('.xc-header a').length, 1, 'the host has one source-specific return, not competing destinations');
         assert.equal(new URL(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), f.location.href).pathname, '/characters/xc-shencheng');
         await f.click('[data-xichuan-return]'); await waitFor(profile, 'the game did not return to Shen Cheng’s actual profile');
@@ -202,6 +203,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
         await f.click('[data-story-play="xichuan"]');
         peer = f.peer(); peer.send({type: 'xc-ready'});
         assert.deepEqual(peer.messages.find(message => message.type === 'xc-init').snapshot.latest, current);
+        assert.equal(peer.messages.find(message => message.type === 'xc-init').entry, 'title');
         assert.equal(new URL(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), f.location.href).pathname, '/story/xichuan', 'a direct Story entry returns to that Story');
         await f.click('[data-xichuan-return]');
         assert.ok(f.document.querySelector('[data-story-characters="xichuan"]'));
@@ -321,13 +323,14 @@ test('real app connects profiles, local chat, current story memory and reloads t
     await t.test('unconfigured preview labels local scripted chat and sends no model or credit requests', async () => {
       await f.click('[data-fw-chat-entry][href="/play/xc-zhiyao"]');
       const input = await waitFor(() => f.document.querySelector('#session-input'), 'character chat did not mount');
-      assert.match(f.document.querySelector('#session-messages').textContent, /演示|Demo/);
-      assert.match(f.document.querySelector('#session-messages').textContent, /不调用\s*AI|No AI|scripted|simulated/i);
+      assert.match(f.document.querySelector('[data-control="model"]').textContent, /演示|Demo/);
+      assert.equal(f.document.querySelector('#session-messages > .session-demo'), null);
       input.value = '我想先了解潮声影院。';
       input.dispatchEvent(new f.window.Event('input', {bubbles: true}));
       await f.click('[data-control="send"]');
       await waitFor(() => read(chatKey)?.some(message => message.role === 'assistant' && message.text && !message.streaming), 'local preview did not persist a completed reply', 5000);
       assert.ok(read(chatKey).some(message => message.role === 'user' && message.text === '我想先了解潮声影院。'));
+      assert.match(f.document.querySelector('article small.session-demo').textContent, /演示|Demo/);
       assert.equal(f.document.querySelector('.session-error'), null);
       assert.deepEqual(f.requests.filter(([path]) => path.startsWith('/api/')), [['/api/config', 'GET']]);
       assert.equal(f.document.querySelector('.interaction-modal[open]'), null);
@@ -357,6 +360,15 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await waitFor(() => f.document.querySelector('#session-input'), 'story return did not open chat');
       assert.match(f.document.querySelector('.xc-chat-bridge').textContent, /答应|promis/i);
       assert.equal(read(chatKey).filter(message => message.role === 'user').length, 1, 'returning to chat preserves the existing thread');
+      const chatEntry = f.document.querySelector('[data-xichuan-entry]');
+      assert.equal(chatEntry.getAttribute('href'), '/play/xichuan?entry=resume');
+      await f.click('[data-xichuan-entry]');
+      const resumed = f.peer(); resumed.send({type:'xc-ready'});
+      assert.equal(resumed.messages[0].entry, 'resume');
+      assert.deepEqual(resumed.messages[0].snapshot.latest, future);
+      assert.equal(f.location.search, '');
+      await f.click('[data-xichuan-return]');
+      await waitFor(() => f.document.querySelector('#session-input'), 'resume did not preserve the return to chat');
       const role = roleFor('xc-zhiyao', {xichuan: storyContext(read(XICHUAN_KEY))});
       assert.deepEqual(role.storyProgress.facts.map(fact => fact.id).sort(), ['flag.knows_mom', 'flag.z_promised']);
       const input = f.document.querySelector('#session-input');
@@ -373,6 +385,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       const actions = [...profile().querySelectorAll('[data-fw-chat-entry],[data-fw-story-entry]')];
       assert.equal(actions[0].getAttribute('href'), '/play/xc-zhiyao', 'chat remains the primary action after story progress exists');
       assert.equal(actions[0].classList.contains('fw-btn-secondary'), false);
+      assert.equal(actions[1].getAttribute('href'), '/play/xichuan?entry=resume');
       assert.equal(profile().querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), false);
       assert.equal(profile().querySelector('[data-fw-story-entry]').classList.contains('fw-btn-secondary'),true);
       assert.equal(profile().querySelector('.fw-profile-hero [data-fw-story-entry]'),null,'the Story action belongs to its related work card, not the conversation hero');
@@ -563,7 +576,7 @@ async function verifyLegacyProgress(f) {
   const before = f.writes.length;
   show('/characters/xc-zhiyao', helpers);
   assert.match(f.document.querySelector('[data-fw-progress]').textContent, /答应|promis/i);
-  assert.match(f.document.querySelector('[data-fw-story-entry]').textContent, /回到|Return/i);
+  assert.match(f.document.querySelector('[data-fw-story-entry]').textContent, /继续故事|Continue story/i);
   assert.equal(f.values.get('xc.auto'), legacy);
   assert.equal(f.values.has(XICHUAN_KEY), false, 'viewing a legacy save does not silently migrate it');
   assert.equal(f.writes.length, before, 'profile rendering never mutates existing keys');
