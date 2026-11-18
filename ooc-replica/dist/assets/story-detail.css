@@ -53,6 +53,19 @@
 }
 .story-entity-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
 
+.story-edition-link {
+  display: inline-flex;
+  align-items: center;
+  align-self: start;
+  min-height: 44px;
+  color: #c7c7c7;
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.story-edition-link:hover { color: #fafafa; }
+.story-edition-link:focus-visible { outline: 2px solid #c5a46c; outline-offset: 2px; }
+
 .story-cast-section { margin: 36px 0 0; }
 .story-entity-detail .story-cast-section h2 {
   margin: 0 0 18px;

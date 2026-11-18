@@ -32,11 +32,15 @@ test('all title kinds float, search preserves background, tabs update only conte
   const card=document.querySelector('a[href="/story/'+id+'"]');assert.ok(card);assert.ok(!card.querySelector('img[alt="ORIGINAL"]'));
   for(const img of card.querySelectorAll('img'))assert.equal(img.getAttribute('src'),'/assets/'+id+'-cover.webp');
  }
- const hero=document.querySelector('[data-hero-desktop]');
- const ranking=[...document.querySelectorAll('button')].find(b=>b.textContent==='Rankings');ranking.click();assert.equal(document.querySelector('[data-hero-desktop]'),hero);assert.equal(routes.length,0);assert.ok(document.querySelector('[data-category-panel] [data-category-grid] a'));assert.ok(!document.querySelector('[data-category-panel]').closest('.sticky'));
- const main=[...document.querySelectorAll('button')].find(b=>b.textContent==='Main');main.click();assert.equal(document.querySelector('[data-category-panel]').hidden,true);assert.equal(document.querySelector('[data-hero-desktop]'),hero);
+ const hero=document.querySelector('[data-sd-hero="home"]');
+ document.querySelector('[data-story-filter="classics"]').click();
+ assert.equal(document.querySelector('[data-sd-hero="home"]'),hero);
+ assert.equal(routes.length,0);
+ assert.deepEqual([...document.querySelectorAll('.sd-story-grid [data-story-card]')].map(card=>card.dataset.storyCard),['mortal-path','monte-cristo']);
+ document.querySelector('[data-story-filter="all"]').click();
+ assert.equal(document.querySelectorAll('.sd-story-grid [data-story-card]').length,6);
  reference.openSearch(h,'#fantasy');assert.ok(document.querySelectorAll('[data-search-results] a').length>0);document.querySelector('[data-preview-close]').click();
- reference.openSearch(h,'三国');assert.equal(document.querySelector('[data-hero-desktop]'),hero);assert.match(document.querySelector('[data-search-results]').textContent,/三国/);assert.equal(document.querySelector('dialog[open]').getAttribute('aria-label'),'Search');document.querySelector('[data-preview-close]').click();
+ reference.openSearch(h,'三国');assert.equal(document.querySelector('[data-sd-hero="home"]'),hero);assert.match(document.querySelector('[data-search-results]').textContent,/三国/);assert.equal(document.querySelector('dialog[open]').getAttribute('aria-label'),'Search');document.querySelector('[data-preview-close]').click();
  for(const story of [h.data.find(d=>d.id==='three-kingdoms'),h.data.find(d=>d.type==='character'),h.data.find(d=>d.id==='sgc-007'),h.data.find(d=>d.id==='story-005')]){
   assert.equal(reference.preview('/'+(story.type==='character'?'character':'story')+'/'+story.id,h),true);const dialog=document.querySelector('#title-preview');
   const linked=story.type!=='character'&&charactersForStory(story.id).length?storyById(story.id):null;

@@ -22,11 +22,14 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  }});
  await import('../dist/app.js');
  assert.ok(document.querySelector('#precision-view a[href^="/story/"]'));
- assert.equal(document.querySelector('#fw-home-strip'),null,'home keeps its original Story shelves without an extra world strip');
- assert.equal(document.querySelector('[data-hero-desktop] h1').textContent,'三国演义 · 谋士');
- assert.equal(document.querySelector('section a [data-name]')?.textContent,'三国演义 · 谋士');
- assert.equal(document.querySelector('section a [data-name]').closest('[aria-roledescription="slide"]').querySelectorAll('a[data-unused],a [data-name]').length,1);
- for(const img of document.querySelector('section a [data-name]').closest('a').querySelectorAll('img'))if(img.alt!=='ORIGINAL')assert.equal(img.getAttribute('src'),'/assets/sanguo-art/cover.webp');
+ const allIds=['xichuan','three-kingdoms','ashen-crown','baker-street','mortal-path','monte-cristo'];
+ const cardIds=()=>[...document.querySelectorAll('.sd-story-grid a[data-full-info]')].map(a=>a.dataset.storyCard);
+ assert.deepEqual(cardIds(),allIds);
+ assert.ok(document.querySelector('[data-sd-hero="home"] [data-hero-choice]'));
+ assert.equal(document.querySelector('#fw-home-strip, .sd-genre-select, .sd-shelf, [data-category-label], a[href="/story/three-kingdoms-ink"]'),null);
+ assert.equal(document.querySelectorAll('.sd-story-grid .sd-capability.is-chat').length,4);
+ assert.equal(document.querySelectorAll('.sd-story-grid .sd-card-quote > span').length,6);
+ assert.equal(document.querySelector('.sd-story-grid [href="/story/three-kingdoms"] img').getAttribute('src'),'/assets/sanguo-art/cover.webp');
  assert.equal(document.body.hasAttribute('data-booting'),false);
  assert.equal(document.querySelector('#precision-view').inert,false);
  assert.ok(!requests.some(path=>/interaction-pages|scenarios/.test(path)));
@@ -72,13 +75,17 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.equal(document.querySelectorAll('button[aria-label="Dismiss"]').length,0);
  assert.equal(document.querySelector('[class~="tl:min-h-[52px]"]'),null,'returning home must not retain the empty desktop notice spacer');
  assert.ok(document.querySelector('[data-sd-hero=home]'));
- const fantasy=document.querySelector('[data-category-label="Fantasy"]');fantasy.textContent='奇幻';
- const genre=document.querySelector('.sd-genre-select');assert.ok(genre);assert.equal(genre.querySelectorAll('option').length,13);
- assert.equal(document.querySelectorAll('.sd-browse-track>div:not([hidden])').length,4);
- genre.querySelector('option[value="Fantasy"]').selected=true;genre.dispatchEvent(new window.Event('change',{bubbles:true}));
- assert.equal(fantasy.getAttribute('aria-pressed'),'true');
- assert.ok(document.querySelectorAll('[data-category-panel] a[href^="/story/"]').length>0,'translated category labels still filter canonical genre tags');
- document.querySelector('[data-category-label="Main"]').click();assert.equal(document.querySelector('[data-category-panel]').hidden,true);assert.equal(genre.value,'');
+ const expectedFilters={'visual-novels':['xichuan','ashen-crown'],strategy:['three-kingdoms'],detective:['baker-street'],classics:['mortal-path','monte-cristo'],all:allIds};
+ assert.equal(document.querySelectorAll('.sd-story-filter-bar .fw-chip').length,5);
+ for(const [filter,ids] of Object.entries(expectedFilters)){
+  const chip=document.querySelector(`[data-story-filter="${filter}"]`);
+  chip.click();
+  assert.equal(chip.getAttribute('aria-pressed'),'true');
+  assert.deepEqual(cardIds(),ids);
+  assert.equal(document.querySelectorAll('.sd-story-filter-bar [aria-pressed="true"]').length,1);
+  assert.match(document.querySelector('[data-story-count]').textContent,new RegExp('^'+ids.length+' '));
+  assert.equal(location.pathname,'/');
+ }
  const link=document.querySelector('a[href="/credit"]');link.href='/credit?creditTab=free';
  const click=new window.Event('click',{bubbles:true,cancelable:true});click.button=0;link.dispatchEvent(click);
  assert.equal(location.pathname,'/credit');assert.equal(document.querySelector('#credits-tab-free').getAttribute('aria-selected'),'true');

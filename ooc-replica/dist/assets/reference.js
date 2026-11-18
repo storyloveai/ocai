@@ -4,8 +4,9 @@ import {characterArt} from './flywheel/character-art.js';
 import {FEATURED_CHARACTER_CARDS,WORKS,UNIVERSES,characterCapabilityLabel,characterCardMeta,characterCardQuote} from './flywheel/cards-data.js';
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
-import {mountHeroScene} from './hero-scene.js';
-import {mountHomeSystem} from './home-system.js';
+import {heroSceneEnabled,mountHeroScene} from './hero-scene.js';
+import {featuredStoryCard,localizeStoryCard,mountHomeSystem} from './home-system.js';
+import {FEATURED_STORIES,featuredStoryById} from './featured-stories.js';
 import announcements from './announcements.js';
 import {initSocial,bindSocial,creatorLink} from './social.js';
 import {bindDisclosures} from './disclosure.js';
@@ -24,8 +25,8 @@ import {getLang,translate} from './site-i18n.js';
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
-const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261118-core-cast';
-const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261118-core-cast';
+const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261118-story-library';
+const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261118-story-library';
 const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261118-core-cast';
 const characterStyleReady=new Promise((resolve,reject)=>{characterStyle.onload=resolve;characterStyle.onerror=()=>reject(new Error('Character stylesheet could not load'));});
 const controlsReady=new Promise((resolve,reject)=>{controlsStyle.onload=resolve;controlsStyle.onerror=()=>reject(new Error('Shared controls stylesheet could not load'));});
@@ -160,7 +161,14 @@ const searchProfiles=FEATURED_CHARACTER_CARDS.map(card=>{
   image:card.portrait,background:characterArt(card)?.background||'',author:existing?.author||''};
 });
 const searchCatalog=[...catalog.filter(d=>d.type!=='character'),...searchProfiles];
-const searchIndex=new Map(searchCatalog.map(d=>{const linked=storyById(d.id);return [d.id,[d.title,d.title_zh,translate(d.title,'en'),translate(d.title,'zh'),d.author,d.description,d.description_zh,d.genre,...Object.values(linked?.title||{}),...Object.values(linked?.description||{}),...storiesForCharacter(d.id).flatMap(story=>Object.values(story.title))].filter(Boolean).join(' ').toLowerCase()];}));
+const searchIndex=new Map(searchCatalog.map(d=>{
+ const linked=storyById(d.id), featured=featuredStoryById.get(d.id);
+ const fields=[d.title,d.title_zh,translate(d.title,'en'),translate(d.title,'zh'),d.author,d.description,d.description_zh,d.genre,
+  ...Object.values(linked?.title||{}),...Object.values(linked?.description||{}),
+  ...storiesForCharacter(d.id).flatMap(story=>Object.values(story.title))];
+ if(featured)fields.push(...[featured.title,featured.quote,featured.meta,featured.badge].flatMap(pair=>Object.values(pair)));
+ return [d.id,fields.filter(Boolean).join(' ').toLowerCase()];
+}));
 for(const [id,record]of Object.entries(titlePreviews.titles)){const doc=new DOMParser().parseFromString(record.html,'text/html');searchIndex.set(id,(searchIndex.get(id)||'')+' '+[...doc.querySelectorAll('a')].filter(a=>a.textContent.trim().startsWith('#')).map(a=>a.textContent.trim().slice(1).toLowerCase()).join(' '));}
 const searchSummary=(query,count,kind='All')=>query?(getLang()==='zh'?`找到 ${count} 项`:`${count} ${count===1?'result':'results'}`):kind==='Character'?(getLang()==='zh'?'全部角色':'Characters'):(getLang()==='zh'?'热门作品':'Popular titles');
 const searchSummaryMarkup=(query,count,tag='h3',kind='All')=>`<${tag} data-search-summary data-count="${count}" data-query="${query?'1':'0'}" data-kind="${safe(kind)}" data-no-i18n>${safe(searchSummary(query,count,kind))}</${tag}>`;
@@ -236,12 +244,30 @@ function updateHero(step) {
   all('[data-ref-dot]').forEach((b,i)=>b.setAttribute('aria-current',String(i===current)));
 }
 
-function bindHome(page) {
-  let homeSystem;
+// Preserve the original template used by collections, history, and snapshot comparisons.
+function buildLibraryShells() {
+  const shell = templateDocument.querySelector('#reference-root').cloneNode(true);
+  const mainTab = [...shell.querySelectorAll('button')].find(button => text(button) === 'Main');
+  const library = mainTab.closest('.sticky').closest('.flex-1');
+  library.id = 'story-library';
+  library.className = 'sd-home-library sd-hero-next';
+  library.replaceChildren();
+  const classic = shell.outerHTML;
+  // The interactive banner only needs a mount point. Retired slide images
+  // should never enter the live document or start loading on the default page.
+  const heroMount = document.createElement('div');
+  heroMount.setAttribute('data-hero-desktop', '');
+  shell.querySelector('[data-hero-desktop]').parentElement.replaceChildren(heroMount);
+  return {classic, interactive: shell.outerHTML};
+}
+const libraryShells = buildLibraryShells();
+let activeHomeLibrary;
+
+function bindHome(page, features) {
   // There is no daily ranking source. Existing Today collection URLs remain
   // compatible, while this duplicate of the played ordering is not offered.
   all('button').filter(b=>text(b)==='Today').forEach(b=>b.remove());
-  activeFeatures=page==='character'?(evidence.characterFeatures||[]):evidence.features;
+  activeFeatures=page==='character'?(evidence.characterFeatures||[]):features||evidence.features;
   if(activeFeatures.length)paintMobileSlides(activeFeatures);
   all('button').filter(b=>text(b)==='Previous slide'||text(b)==='Next slide').forEach(b=>{
     b.setAttribute('aria-label',text(b));b.dataset.refStep=text(b)==='Previous slide'?'-1':'1';b.onclick=()=>updateHero(Number(b.dataset.refStep));
@@ -267,7 +293,6 @@ function bindHome(page) {
       for(const child of container.children){if(child===region){after=true;continue;}if(after&&child!==panel){if(!child.hasAttribute('data-category-original-hidden'))child.dataset.categoryOriginalHidden=String(child.hidden);child.hidden=label==='Main'?child.dataset.categoryOriginalHidden==='true':true;}}
       panel.hidden=label==='Main';
       buttons.forEach(button=>{const selected=button.dataset.categoryLabel===label;button.dataset.categoryTab='';button.setAttribute('aria-pressed',String(selected));button.classList.toggle('category-selected',selected);});
-      homeSystem?.sync();
       if(label!=='Main'){
         const available=catalog.filter(d=>page==='character'?d.type==='character':d.type!=='character');
         const items=['New Ranking','Rankings','Today'].includes(label)?sortStories(available,label==='New Ranking'?'newest':'played'):available.filter(d=>tagsOf(d).has(label));
@@ -283,7 +308,6 @@ function bindHome(page) {
   const title=q('[data-hero-desktop] h1');
   current=page==='home'?0:Math.max(0,activeFeatures.findIndex(f=>f.title===title?.textContent));
   const scene=mountHeroScene(host,page,{navigate:context.navigate});
-  if(page==='home'&&scene)homeSystem=mountHomeSystem(host);
   if(activeFeatures.length){
     updateHero(0);
     if(!scene&&!new URLSearchParams(location.search).has('inspection')&&!matchMedia('(prefers-reduced-motion: reduce)').matches) carousel=setInterval(()=>{
@@ -339,9 +363,11 @@ function bindDetail() {
 const storyText = value => typeof value === 'string' ? value : value?.[getLang()] || value?.en || value?.zh || '';
 const isLinkedGame = id => linkedStoryCatalog.some(story=>story.id===id) || id===threeKingdomsInk.id;
 function storyTitle(id) {
- return storyText(storyById(id)?.title) || translate(catalog.find(item=>item.id===id)?.title || '',getLang());
+ return storyText(featuredStoryById.get(id)?.title || storyById(id)?.title) || translate(catalog.find(item=>item.id===id)?.title || '',getLang());
 }
 function storyFormat(id) {
+ const featured=featuredStoryById.get(id);
+ if(featured)return storyText(featured.badge);
  const work=isLinkedGame(id) ? charactersForStory(id)[0]?.source.work : null;
  return storyText(WORKS[work]?.kind) || translate(catalog.find(item=>item.id===id)?.genre || 'Story',getLang());
 }
@@ -350,11 +376,15 @@ function storyLead(id) {
  const description=storyText(record?.description) || translate(catalog.find(item=>item.id===id)?.description || '',getLang());
  // Some campaign records contain just their format in one language. Use the
  // published world synopsis in that case so the genre pill isn't repeated.
- if(record && description===storyFormat(id)){
-  const universe=charactersForStory(id)[0]?.source.universe;
-  return storyText(UNIVERSES[universe]?.tagline) || description;
+ const source=record && charactersForStory(id)[0]?.source;
+ if(source && description===storyText(WORKS[source.work]?.kind)){
+  return storyText(UNIVERSES[source.universe]?.tagline) || description;
  }
  return description;
+}
+function campaignAvailability(id) {
+ const featured=featuredStoryById.get(id);
+ return storyText(featured?.meta) || translate(bookMetadata.find(book=>book.id===id)?.plays || '',getLang());
 }
 function storyPlayMarkup(id) {
  const playUrl=storyById(id)?.playUrl || (bookMetadata.some(book=>book.id===id) ? '/play/'+id : '');
@@ -413,13 +443,19 @@ function enhanceStoryDetail(article,id,d) {
     <h1 id="story-entity-title" data-story-title="${safe(id)}">${safe(title)}</h1>
     ${d.author?`<div class="story-entity-author">${creatorLink(d.author)}</div>`:''}
     <p class="story-entity-lead" data-story-description="${safe(id)}">${safe(storyLead(id))}</p>
-    ${campaign?.plays?`<small data-story-campaign="${safe(campaign.plays)}">${safe(translate(campaign.plays,getLang()))}</small>`:''}
+    ${campaign?.plays?`<small data-story-campaign="${safe(id)}">${safe(campaignAvailability(id))}</small>`:''}
    </div>
    <div class="story-entity-actions">${storyPlayMarkup(id)}</div>
+   ${id===threeKingdoms.id ? `<a class="story-edition-link" data-full-info data-story-ink href="${threeKingdomsInk.href}">${getLang()==='zh'?'查看水墨版':'View ink edition'} →</a>` : ''}
   </div>
  </div>`;
  if(favorite)hero.querySelector('.story-entity-actions').append(favorite);
  if(creator)hero.querySelector('.story-entity-author').replaceChildren(creator);
+ if(campaign && d.author){
+  const credit=hero.querySelector('.story-entity-author .creator-link');
+  credit.dataset.storyCredit=d.author;
+  credit.textContent=translate(d.author,getLang());
+ }
  top.replaceWith(hero);
  article.querySelector('.story-play-bar')?.remove();
  article.classList.add('story-entity-detail');
@@ -441,6 +477,7 @@ function withStoryRelations(record,id) {
 // Keep the public relationship labels bilingual without rebuilding a dialog,
 // interrupting its focus, or touching any private session state.
 globalThis.addEventListener?.('sd-lang',()=>{
+ if(host.dataset.page==='home')activeHomeLibrary?.syncLanguage();
  document.querySelectorAll('[data-search-summary]').forEach(node=>{node.textContent=searchSummary(node.dataset.query==='1',Number(node.dataset.count),node.dataset.kind);});
  document.querySelectorAll('[data-story-characters]').forEach(section=>{
   section.querySelector('h2').textContent=getLang()==='zh'?'故事里的角色':'Characters in this story';
@@ -459,6 +496,7 @@ globalThis.addEventListener?.('sd-lang',()=>{
  });
  document.querySelectorAll('[data-story-information]').forEach(link=>link.textContent=(getLang()==='zh'?'查看故事详情':'Full story information')+' →');
  document.querySelectorAll('[data-story-play]').forEach(link=>link.textContent=getLang()==='zh'?'进入故事':'Play story');
+ document.querySelectorAll('[data-story-ink]').forEach(link=>link.textContent=(getLang()==='zh'?'查看水墨版':'View ink edition')+' →');
  document.querySelectorAll('[data-story-title]').forEach(node=>node.textContent=storyTitle(node.dataset.storyTitle));
  document.querySelectorAll('[data-story-description]').forEach(node=>{
   const id=node.dataset.storyDescription;
@@ -467,8 +505,12 @@ globalThis.addEventListener?.('sd-lang',()=>{
  });
  document.querySelectorAll('[data-story-format]').forEach(node=>node.textContent=storyFormat(node.dataset.storyFormat));
  document.querySelectorAll('[data-story-cover]').forEach(node=>node.alt=storyTitle(node.dataset.storyCover));
- document.querySelectorAll('[data-story-campaign]').forEach(node=>node.textContent=translate(node.dataset.storyCampaign,getLang()));
+ document.querySelectorAll('[data-story-campaign]').forEach(node=>node.textContent=campaignAvailability(node.dataset.storyCampaign));
+ document.querySelectorAll('[data-story-credit]').forEach(node=>node.textContent=translate(node.dataset.storyCredit,getLang()));
  document.querySelectorAll('[data-story-bookmark-label]').forEach(node=>{node.textContent=getLang()==='zh'?'收藏':'Bookmark';node.setAttribute('aria-label',getLang()==='zh'?'收藏故事':'Bookmark story');});
+ document.querySelectorAll('[data-search-results] [data-story-card]').forEach(link=>{
+  localizeStoryCard(link,featuredStoryById.get(link.dataset.storyCard),getLang());
+ });
  document.querySelectorAll('[data-search-profile]').forEach(link=>{
   const profile=searchProfiles.find(p=>p.id===link.dataset.searchProfile);if(!profile)return;
   link.querySelector('[data-search-profile-name]').textContent=getLang()==='zh'?profile.title_zh:profile.title;
@@ -522,13 +564,26 @@ function bindExploreSort(page){
  const draw=()=>{const available=records.map(r=>({...catalog.find(d=>d.id===r.id),id:r.id,node:r.node})).filter(d=>d.title);sortStories(available,select.value).forEach(d=>container.append(d.node));};select.onchange=draw;draw();
 }
 
-function grid(items,ranked=false){
- return `<div class="precision-grid">${items.map((d,index)=>{
+function legacyGridCard(d){
   const holder=document.createElement('div');
   holder.innerHTML=d.searchProfile?`<a href="${safe(d.href)}" data-search-profile="${safe(d.id)}" data-no-i18n><span class="search-profile-cover">${d.background?`<img class="search-profile-background" src="${safe(d.background)}" alt="" loading="lazy" onerror="this.hidden=true">`:""}<img class="search-profile-figure" src="${safe(source(d))}" alt="" loading="lazy"></span><p data-search-profile-name>${safe(getLang()==='zh'?d.title_zh:d.title)}</p><p data-search-profile-tagline>${safe(getLang()==='zh'?d.description_zh:d.description)}</p></a>`:cardMarkup.get(d.id)||`<a href="${safe(d.href||`/${d.type==='character'?'character':'story'}/${d.id}`)}"><img src="${source(d)}" alt="${safe(d.title)}"><p>${safe(d.title)}</p></a>`;
   const anchor=holder.firstElementChild;
   anchor.querySelectorAll('span[class~="typo-text-base_leading-none_semibold"]').forEach(rank=>{if(/^\d+$/.test(text(rank))){const badge=rank.parentElement;if(text(badge)===text(rank))badge.remove();else rank.remove();}});
+  return anchor;
+}
+function grid(items,ranked=false){
+ return `<div class="precision-grid">${items.map((d,index)=>{
+  const anchor=legacyGridCard(d);
   if(ranked)anchor.dataset.gridRank=String(index+1);
+  return anchor.outerHTML;
+ }).join('')}</div>`;
+}
+function searchGrid(items){
+ return `<div class="precision-grid">${items.map(item=>{
+  const featured=featuredStoryById.get(item.id);
+  if(featured)return featuredStoryCard(featured,getLang());
+  const anchor=legacyGridCard(item);
+  if(item.type!=='character')anchor.setAttribute('data-full-info','');
   return anchor.outerHTML;
  }).join('')}</div>`;
 }
@@ -582,7 +637,12 @@ export function show(path, helpers) {
   document.body.dataset.reference=String(Boolean(page));
   delete document.body.dataset.inspection;
   if(!page)return false;
-  host.innerHTML=evidence.pages[page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page];patchOriginals(host);paintBrand(host);
+  const params=new URLSearchParams(location.search);
+  const curated=page==='home'&&params.get('layout')!=='baseline'&&params.get('inspection')!=='reference-terms';
+  activeHomeLibrary=null;
+  const pageKey=page==='collection'||page==='character-detail'||page==='story-detail'?'home':page==='captured-detail'?path:page;
+  host.innerHTML=curated?(heroSceneEnabled()?libraryShells.interactive:libraryShells.classic):evidence.pages[pageKey];
+  patchOriginals(host);paintBrand(host);
   if(page==='story-detail'){
     const id=path.split('/')[2],d=catalog.find(d=>d.id===id),record=OURS.has(id)?titlePreviews.titles[id]:null;
     const content=q('[data-shrink]')?.nextElementSibling;
@@ -612,7 +672,7 @@ export function show(path, helpers) {
       const related=storyById(id),title=article?.querySelector('h1'),description=article?.querySelector('.story-description');
       if(related&&title){title.textContent=storyText(related.title);title.dataset.storyTitle=id;title.dataset.noI18n='';}
       if(related&&description){description.textContent=storyText(related.description);description.dataset.storyDescription=id;description.dataset.noI18n='';}
-      if(isLinkedGame(id)){
+      if(featuredStoryById.has(id)||isLinkedGame(id)){
         const settings=article?.querySelector('.story-settings');
         if(settings){if(settings.previousElementSibling?.tagName==='H2')settings.previousElementSibling.remove();settings.remove();}
       }
@@ -641,10 +701,16 @@ export function show(path, helpers) {
       const sort=content.querySelector('select');sort.onchange=()=>{content.querySelector('[data-collection-grid]').innerHTML=grid(sort.value==='featured'?items:sortStories(items,sort.value),name==='Top Ranked');hydrate();};
     }
   }
-  if(page==='home')pinThreeKingdoms();
+  if(page==='home'&&!curated)pinThreeKingdoms();
   if(page==='character')extendCharacterShelf();
   hydrate();
-  if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);bindCarousels(host,updateHero);}
+  if(curated){
+    activeHomeLibrary=mountHomeSystem(host);
+    if(!mountHeroScene(host,page,{navigate:context.navigate})){
+      const features=FEATURED_STORIES.map(story=>({...catalog.find(item=>item.id===story.id),href:'/story/'+story.id}));
+      bindHome(page,features);bindCarousels(host,updateHero);
+    }
+  }else if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);bindCarousels(host,updateHero);}
   bindDisclosures(host);
   if(page==='detail'||page==='captured-detail'){bindDetail();const panel=q('[role=tabpanel]');if(panel){for(const child of [...panel.children])if(child.querySelector('article'))child.remove();bindSocial(panel,path.split('/')[2],helpers);}}
   if(page==='search')bindSearch();
@@ -707,7 +773,23 @@ export function openSearch(helpers,initial=''){
  const dialog=openTitlePreview({html:`<header><button data-preview-close aria-label="Back to stories" class="dialog-back">‹</button><h2>Search</h2></header><div class="search-dialog-content"><label class="search-dialog-input"><span aria-hidden="true">⌕</span><input type="search" aria-label="Search stories, characters and creators" placeholder="Search stories, characters, creators" maxlength="100"></label><div class="search-kind-tabs" role="tablist" aria-label="Search type">${['All','Story','Character','Creator'].map((label,i)=>`<button role="tab" data-search-kind="${label}" aria-selected="${i===0}">${label}</button>`).join('')}</div><div data-search-results aria-live="polite"></div></div><footer><small>Explore stories, characters and creators</small></footer>`},'search',{...helpers,assets});
  dialog.classList.add('search-dialog');dialog.setAttribute('aria-label','Search');
  const input=dialog.querySelector('input'),output=dialog.querySelector('[data-search-results]');let kind='All';
- const draw=()=>{const query=normalizedQuery(input.value);const found=matchingTitles(query,kind);output.innerHTML=kind==='Creator'?`<h3>Creators</h3><div class="creator-search">${[...new Set(catalog.map(d=>d.author).filter(Boolean))].filter(name=>name.toLowerCase().includes(query)).map(name=>creatorLink(name)).join('')||'<p>No matching creators.</p>'}</div>`:`${searchSummaryMarkup(query,found.length,'h3',kind)}${grid(query||kind==='Character'?found:found.slice(0,12))}`;};
+ // The SPA intentionally skips navigation to the current URL. Selecting that
+ // result from its own page should still close the search dialog.
+ output.addEventListener('click',event=>{
+  const link=event.target.closest('a[href]');
+  if(link && event.button===0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey &&
+     link.getAttribute('href')===location.pathname+location.search+location.hash)closeTitlePreview();
+ });
+ const draw=()=>{
+  const query=normalizedQuery(input.value);
+  if(kind==='Creator'){
+   const creators=[...new Set(catalog.map(d=>d.author).filter(Boolean))].filter(name=>name.toLowerCase().includes(query));
+   output.innerHTML=`<h3>Creators</h3><div class="creator-search">${creators.map(name=>creatorLink(name)).join('')||'<p>No matching creators.</p>'}</div>`;
+   return;
+  }
+  const results=query ? matchingTitles(query,kind) : kind==='Character' ? searchProfiles : FEATURED_STORIES;
+  output.innerHTML=searchSummaryMarkup(query,results.length,'h3',kind)+searchGrid(results);
+ };
  input.value=initial;input.oninput=draw;dialog.querySelectorAll('[data-search-kind]').forEach(b=>b.onclick=()=>{kind=b.dataset.searchKind;dialog.querySelectorAll('[data-search-kind]').forEach(t=>t.setAttribute('aria-selected',String(t===b)));draw();});draw();input.focus({preventScroll:true});return dialog;
 }
 

@@ -92,6 +92,7 @@ const UI = [
 const mortal = bookMetadata.find(book => book.id === 'mortal-path');
 const monte = bookMetadata.find(book => book.id === 'monte-cristo');
 const OWN = [
+  ['StoryDate · Classics Interactive', mortal.author],
   ["A Record of a Mortal's Journey to Immortality · Dust Beyond the Valley", mortal.title],
   ["You are Shen Weichen, a new disciple at Yellow Maple Valley. Your gifts are ordinary and your allowance is meagre. A contract offers a shortcut by letting you borrow spiritual energy. A shortage in the herb fields, a broken promise at the trials and an evacuation list draw you between getting ahead and standing by your companions. Either choice comes at a price.", mortal.description],
   ['Eight-chapter campaign · The cost of cultivation', mortal.plays],

@@ -217,3 +217,11 @@ body[data-reference=true] .story-cast-grid {grid-template-columns:repeat(auto-fi
 @media(prefers-reduced-motion:reduce) {
   body[data-reference=true] :is(.sd-home-stage,.fw-page,.story-entity-detail) :is(a,button,input,select) {transition:none!important}
 }
+/* Long gameplay labels stay legible above the artwork on narrow Story covers. */
+@media (max-width:767px) {
+  [data-story-card] .fw-card-portrait > .sd-capability {
+    top:6px;left:6px;max-width:calc(100% - 12px);padding:3px 6px;
+    gap:4px;font-size:11px;line-height:1.25;
+  }
+  [data-story-card] .sd-capability.is-chat::before {width:4px;height:4px}
+}

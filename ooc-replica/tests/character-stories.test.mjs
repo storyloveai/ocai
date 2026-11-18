@@ -110,7 +110,19 @@ test('existing Story detail and preview expose the same cast, metadata and one r
   assert.equal(dialog.querySelector('[data-preview-play]'),null,'no second action can synthesize /play for a standalone game');
   closeTitlePreview();
  }
- for (const id of ['story-005', 'mortal-path', 'monte-cristo']) {
+ setPath('/story/three-kingdoms');
+ reference.show(location.pathname,helpers);
+ const edition=document.querySelector('.sd-stage-card [data-story-ink][data-full-info]');
+ assert.equal(edition.getAttribute('href'),'/story/three-kingdoms-ink');
+ for(const [lang,label] of [['en','View ink edition →'],['zh','查看水墨版 →']]){
+  setLang(lang,{win:globalThis,doc:document});
+  assert.equal(edition.textContent,label);
+  assert.equal(document.querySelectorAll('.story-entity-actions [data-story-play]').length,1);
+ }
+ const archivedStories = reference.extraStories.filter(({id}) => /^(story|sg)-\d{3}$/.test(id));
+ assert.equal(archivedStories.filter(({id}) => id.startsWith('story-')).length,50);
+ assert.equal(archivedStories.filter(({id}) => id.startsWith('sg-')).length,8);
+ for (const id of [...archivedStories.map(story => story.id), 'mortal-path', 'monte-cristo']) {
   setPath('/story/' + id);
   reference.show(location.pathname, helpers);
   const stage = document.querySelector('.replica-story-detail .sd-stage-card');
@@ -141,6 +153,40 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  setPath('/collection?name=Today');reference.show('/collection',helpers);
  assert.equal(document.querySelector('.collection-heading h1').textContent,'Most Played');
  assert.ok(document.querySelectorAll('[data-collection-grid] a').length>0,'legacy Today remains a usable played collection');
+ const publicIds=['xichuan','three-kingdoms','ashen-crown','baker-street','mortal-path','monte-cristo'];
+ const searchLinks=()=>[...document.querySelectorAll('[data-search-results] a')];
+ setPath('/search');reference.show('/search',helpers);
+ for(const kind of ['All','Story']){
+  document.querySelector('[data-search-kind="'+kind+'"]').click();
+  const links=searchLinks();
+  assert.deepEqual(links.map(link=>link.getAttribute('href')),publicIds.map(id=>'/story/'+id));
+  assert.equal(document.querySelector('[data-search-summary]').dataset.count,'6');
+  assert.ok(links.every(link=>link.hasAttribute('data-full-info')&&link.querySelector('.sd-card-quote')&&link.querySelector('.sd-capability')));
+  assert.equal(links[4].querySelector('.fw-card-name').textContent,'Mortal Path · Dust Outside the Valley');
+ }
+ const fifth=searchLinks()[4];fifth.focus();
+ setLang('zh',{win:globalThis,doc:document});
+ assert.equal(searchLinks()[4],fifth,'changing language keeps the focused recommendation and its place');
+ assert.equal(document.activeElement,fifth);assert.equal(fifth.querySelector('.fw-card-name').textContent,'凡人修仙传 · 谷外微尘');
+ assert.equal(fifth.querySelector('.sd-card-meta').textContent,'名著互动 · 前两章试玩');
+ setLang('en',{win:globalThis,doc:document});
+ assert.equal(fifth.querySelector('.sd-capability').textContent,'Cultivation · Rule campaign');
+ const input=document.querySelector('.search-dialog input');
+ const typeQuery=value=>{input.value=value;input.dispatchEvent(new window.Event('input',{bubbles:true}));};
+ typeQuery('我替巨龙送信');
+ assert.ok(searchLinks().some(link=>link.getAttribute('href')==='/story/story-018'&&link.hasAttribute('data-full-info')));
+ assert.equal(document.querySelector('[data-search-summary]').dataset.query,'1');
+ typeQuery('no-such-title-0149');
+ assert.equal(document.querySelector('[data-search-summary]').textContent,'0 results');
+ typeQuery('   ');
+ assert.deepEqual(searchLinks().map(link=>link.dataset.storyCard),publicIds,'clearing an active query restores just the six recommendations');
+ assert.equal(document.querySelector('[data-search-summary]').textContent,'Popular titles');
+ closeTitlePreview();setPath('/story/mortal-path');reference.show('/story/mortal-path',helpers);
+ reference.openSearch(helpers);
+ const selected=new window.Event('click',{bubbles:true,cancelable:true});Object.assign(selected,{button:0});
+ searchLinks()[4].dispatchEvent(selected);
+ assert.equal(document.querySelector('dialog.search-dialog'),null,'selecting the currently open Story still dismisses search');
+ assert.ok(document.querySelector('.sd-stage-card [data-story-play="mortal-path"]'));
  setPath('/search?q='+encodeURIComponent('我替巨龙送信'));reference.show('/search',helpers);
  let results=[...document.querySelectorAll('[data-search-results] a[href^="/story/"]')].map(a=>a.getAttribute('href'));
  assert.ok(results.includes('/story/story-018'));
@@ -151,6 +197,10 @@ test('existing Story detail and preview expose the same cast, metadata and one r
   const hrefs=[...document.querySelectorAll('[data-search-results] a[href^="/story/"]')].map(a=>a.getAttribute('href'));
   assert.ok(hrefs.includes('/story/three-kingdoms'),query+' finds the canonical story');
   assert.ok(hrefs.includes('/story/three-kingdoms-ink'),query+' finds the existing ink edition');
+ }
+ for(const query of ['Dust Outside the Valley','Dust Beyond the Valley','Mortal Path']){
+  closeTitlePreview();reference.openSearch(helpers,query);
+  assert.ok(searchLinks().some(link=>link.getAttribute('href')==='/story/mortal-path'),query+' finds the same new or historic title');
  }
  const characterResults=query=>{
   closeTitlePreview();reference.openSearch(helpers,query);
@@ -179,7 +229,7 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  assert.equal(document.querySelector('[data-search-summary]').textContent,'找到 1 项');
  assert.deepEqual(reference.extraStories.filter(d=>d.type==='character').map(d=>d.id),storydateCharacters.map(d=>d.id),'display profiles never replace the real session/model catalogue');
  assert.equal(reference.extraStories.some(d=>d.id==='sg-caocao'||d.id==='xc-shencheng'),false);
- closeTitlePreview();assert.deepEqual(writes,[['sd.lang','en'],['sd.lang','zh']],'only explicit language choices write preferences; public relationships/search never create or migrate private state');
+ closeTitlePreview();assert.deepEqual(writes,['en','zh','en','zh','en','zh'].map(lang=>['sd.lang',lang]),'only explicit language choices write preferences; public relationships/search never create or migrate private state');
 
  const {translate}=await import('../dist/assets/site-i18n.js');
  for (const [en,zh] of [['Added to bookmarks','已加入收藏'],['Removed from bookmarks','已取消收藏']]) {
@@ -192,16 +242,20 @@ test('existing Story detail and preview expose the same cast, metadata and one r
   const stage=document.querySelector('.sd-stage-card'),title=stage.querySelector('h1');
   const description=stage.querySelector('[data-story-description]'),campaign=stage.querySelector('[data-story-campaign]');
   const play=stage.querySelector('[data-story-play]'),bookmark=stage.querySelector('.story-bookmark');
-  assert.equal(campaign.textContent,book.plays);
+  assert.equal(campaign.textContent,'名著互动 · 前两章试玩');
+  const credit=stage.querySelector('.story-entity-author a'),creditUrl=credit.getAttribute('href');
+  assert.equal(credit.textContent,book.author);
   setLang('en',{win:globalThis,doc:document});
-  assert.match(title.textContent,book.id==='mortal-path'?/Dust Beyond the Valley/:/Embers and Tides/);
+  assert.equal(title.textContent,book.id==='mortal-path'?'Mortal Path · Dust Outside the Valley':'Monte Cristo · Embers and Tides');
   assert.match(description.textContent,book.id==='mortal-path'?/Shen Weichen/:/Noël/);
-  assert.match(campaign.textContent,/Eight-chapter campaign/);
+  assert.equal(campaign.textContent,'Classics Interactive · 2 chapters');
+  assert.equal(credit.textContent,'StoryDate · Classics Interactive');
+  assert.equal(credit.getAttribute('href'),creditUrl);
   assert.equal(stage.querySelector('[data-story-cover]').alt,title.textContent);
   assert.equal(play.getAttribute('href'),'/play/'+book.id);
   assert.equal(bookmark.dataset.favorite,book.id);
   setLang('zh',{win:globalThis,doc:document});
-  assert.deepEqual([title.textContent,description.textContent,campaign.textContent],[book.title,book.description,book.plays]);
+  assert.deepEqual([title.textContent,description.textContent,campaign.textContent],[book.title,book.description,'名著互动 · 前两章试玩']);
   assert.equal(stage.querySelector('[data-story-cover]').alt,book.title);
  }
 });

@@ -2,20 +2,21 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {boot, waitFor} from './fixtures/character-loop-dom.mjs';
 
-test('a cast link from the home Story preview returns to that real Story information page', async () => {
+test('a home library card opens its Story stage and the cast can return to that stage', async () => {
   const f = await boot({path: '/'});
   try {
     for (const [storyId, characterId] of [['xichuan', 'xc-shencheng'], ['three-kingdoms', 'sg-caocao']]) {
       await f.go('/');
-      await f.click(`a[href="/story/${storyId}"]`);
-      const preview = await waitFor(() => f.document.querySelector('#title-preview'), 'home Story card did not open its preview');
-      assert.equal(f.location.pathname, '/', 'opening a preview leaves the underlying home URL intact');
-      assert.ok(preview.querySelector(`[data-story-characters="${storyId}"] a[href="/characters/${characterId}"]`));
-      await f.click(`#title-preview [data-story-characters="${storyId}"] a[href="/characters/${characterId}"]`);
-      const profile = await waitFor(() => f.document.querySelector(`[data-fw-character="${characterId}"]`), 'the preview cast did not reach the actual character profile');
+      await f.click(`.sd-story-grid a[href="/story/${storyId}"]`);
+      const stage = await waitFor(() => f.document.querySelector('.sd-stage-layout'), 'home Story card did not reach its stage');
+      assert.equal(f.location.pathname, '/story/' + storyId);
+      assert.equal(f.document.querySelector('#title-preview'), null);
+      assert.ok(stage.querySelector(`[data-story-play="${storyId}"]`));
+      await f.click(`[data-story-characters="${storyId}"] a[href="/characters/${characterId}"]`);
+      const profile = await waitFor(() => f.document.querySelector(`[data-fw-character="${characterId}"]`), 'the Story cast did not reach the character profile');
       assert.equal(f.location.pathname, '/characters/' + characterId);
       assert.equal(profile.querySelector('.fw-back').getAttribute('href'), '/story/' + storyId);
-      assert.equal(f.history.state.from, '/story/' + storyId, 'the source is the known Story, not the preview’s underlying home page');
+      assert.equal(f.history.state.from, '/story/' + storyId, 'the profile retains the originating Story');
       assert.equal(f.location.search, '', 'the navigation needs no private query payload');
       assert.equal(f.document.querySelector('#title-preview'), null);
       await f.click('[data-fw-page="profile"] .fw-back');
