@@ -1,4 +1,4 @@
-import {CHARACTER_CARDS, WORKS} from './flywheel/cards-data.js';
+import {FEATURED_CHARACTER_CARDS, WORKS, cardById, cardsByWork} from './flywheel/cards-data.js';
 import {storydateOriginals, storydateCharacters} from './storydate-originals.js';
 import {threeKingdoms, threeKingdomsInk} from './three-kingdoms.js';
 import {ashenCrown, ashenCrownEn, bakerStreet, bakerStreetEn} from './ashen-crown.js';
@@ -63,7 +63,7 @@ export const linkedStoryCatalog = gameSources.map(({source}) => {
 export function storyById(storyId) { return records.get(storyId) || null; }
 
 export function storiesForCharacter(cardId) {
-  const card = CHARACTER_CARDS.find(c => c.id === cardId);
+  const card = cardById(cardId);
   if (!card) return [];
   const found = new Map();
   for (const appearance of [{work:card.source.work},...card.appearances]) {
@@ -80,8 +80,8 @@ export function storiesForCharacter(cardId) {
 
 export function charactersForStory(storyId) {
   const work = workForGameStory.get(storyId);
-  if (work) return CHARACTER_CARDS.filter(card => card.source.work === work || card.appearances.some(a => a.work === work));
+  if (work) return cardsByWork(work);
   if (!records.has(storyId)) return [];
   const chatIds = new Set(storydateCharacters.filter(c => c.story_id === storyId).map(c => c.id));
-  return CHARACTER_CARDS.filter(card => chatIds.has(card.chatId));
+  return FEATURED_CHARACTER_CARDS.filter(card => chatIds.has(card.chatId));
 }

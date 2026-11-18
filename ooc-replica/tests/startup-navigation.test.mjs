@@ -21,7 +21,6 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
   return new Response(await readFile(join(dist,path)),{headers:{'Content-Type':'application/json'}});
  }});
  await import('../dist/app.js');
- const {CHARACTER_CARDS}=await import('../dist/assets/flywheel/cards-data.js');
  assert.ok(document.querySelector('#precision-view a[href^="/story/"]'));
  assert.equal(document.querySelector('#fw-home-strip'),null,'home keeps its original Story shelves without an extra world strip');
  assert.equal(document.querySelector('[data-hero-desktop] h1').textContent,'三国演义 · 谋士');
@@ -45,15 +44,16 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.equal(document.querySelector('[data-fw-page="characters"] .sd-hero-name').textContent,document.documentElement.lang.startsWith('zh')?'貂蝉':'Diaochan');
  assert.equal(document.querySelectorAll('[data-fw-page="characters"] [data-hero-choice]').length,2);
  assert.ok(document.querySelector('[data-fw-page="characters"] [data-hero-form] input'));
- assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,CHARACTER_CARDS.length);
+ assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,18);
  assert.ok(document.querySelector('.fw-card[href="/characters/oc-shen-yanzhou"]'),'existing original characters remain discoverable');
- assert.ok(document.querySelector('#fw-search'),'character search stays usable before auth completes');
- assert.ok(document.querySelector('[data-fw-world-select] option[value="xichuan"]'),'the real story filter stays mounted');assert.equal(document.querySelector('[data-fw-filter]'),null,'retired chips are removed rather than hidden');
+ assert.equal(document.querySelector('#fw-search,[data-fw-world-select],.fw-library-heading'),null);
+ assert.equal(document.querySelectorAll('.fw-filter-bar button').length,7,'all worlds are usable while login is restoring');
+ assert.equal(document.querySelector('[data-fw-world="all"]').getAttribute('aria-pressed'),'true');
  const oldLink=document.createElement('a');oldLink.href='/character?world=xichuan';document.body.append(oldLink);
  navigate('/character?world=xichuan');oldLink.remove();
  assert.equal(location.pathname,'/characters','legacy directory clicks canonicalize before quick-view interception');
  assert.equal(location.search,'?world=xichuan');
- assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,5);
+ assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,3);
  const oldProfile=document.createElement('a');oldProfile.href='/character/sgc-002';document.body.append(oldProfile);
  navigate('/character/sgc-002');oldProfile.remove();
  assert.equal(location.pathname,'/characters/sg-caocao','old chat identities resolve to their existing curated profile');

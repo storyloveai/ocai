@@ -53,6 +53,7 @@ test('character link helpers preserve identity and old-link context without acce
   assert.equal(canonicalCharacterUrl('/play/xc-zhiyao'), '/play/xc-zhiyao');
   assert.equal(characterDirectoryReturn('/characters'), '/characters');
   assert.equal(characterDirectoryReturn('/characters?source=home&world=xichuan#cast'), '/characters?source=home&world=xichuan#cast');
+  assert.equal(characterDirectoryReturn('/characters?q=retired&world=baker#cast'), '/characters?world=baker#cast');
   for (const unsafe of ['//outside.example/characters', 'https://outside.example/characters', '/characters-extra', '/characters/xc-zhiyao', '/play/xc-zhiyao']) {
     assert.equal(characterDirectoryReturn(unsafe), null, 'return context only accepts the exact local directory: ' + unsafe);
   }
@@ -91,7 +92,6 @@ test('real app connects profiles, local chat, current story memory and reloads t
   const f = await boot({path: '/character?world=xichuan'});
   const profile = () => f.document.querySelector('[data-fw-page="profile"]');
   const read = key => JSON.parse(f.values.get(key) || 'null');
-  const selectStory=async value=>{const select=f.document.querySelector('[data-fw-world-select]');select.querySelectorAll('option').forEach(option=>option.removeAttribute('selected'));select.querySelector('option[value="'+value+'"]').setAttribute('selected','');select.dispatchEvent(new f.window.Event('change',{bubbles:true}));await new Promise(resolve=>setTimeout(resolve,0));};
   let future;
   try {
     await t.test('retired world and format links lead to established Story pages without starting a game', async () => {
@@ -176,7 +176,8 @@ test('real app connects profiles, local chat, current story memory and reloads t
         assert.equal(f.document.querySelector('#xichuan-frame'), null, 'reading the real Story detail does not mount the game');
         const cast = f.document.querySelector('[data-story-characters="xichuan"]');
         assert.ok(cast.querySelector('a[href="/characters/xc-shencheng"]'));
-        assert.equal(cast.querySelectorAll('a[href^="/characters/"]').length, 5);
+        assert.deepEqual([...cast.querySelectorAll('[data-story-character]')].map(link => link.dataset.storyCharacter),
+          ['xc-zhiyao', 'xc-shencheng', 'xc-jibai']);
         assert.equal(f.history.state.characterReturn, '/characters/xc-shencheng', 'source context contains only the actual profile pathname');
         assert.equal(f.document.querySelector('[data-story-play="xichuan"]').getAttribute('href'), '/play/xichuan');
         const restoredDetail = await reload({path: '/story/xichuan', entries: [...f.values], historyState: f.history.state});
@@ -211,30 +212,28 @@ test('real app connects profiles, local chat, current story memory and reloads t
       }
     });
 
-    await t.test('combined directory choices survive browser history, profile/chat/story returns and fresh URL reloads', async () => {
+    await t.test('a selected world survives browser history, profile/chat/story returns and fresh URL reloads', async () => {
       await f.go('/characters?source=home#cast');
       const initialLength = f.history.length;
-      await selectStory('xichuan');
       await f.click('[data-fw-chat]');
-      const search = f.document.getElementById('fw-search'); search.value = '夏知遥'; search.focus();
-      search.dispatchEvent(new f.window.Event('input', {bubbles: true}));
-      assert.equal(f.history.length, initialLength + 2, 'world/chat push while query replaces the current entry');
-      assert.equal(f.document.activeElement, search);
-      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
+      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 13);
+      await f.click('[data-fw-world="xichuan"]');
+      assert.equal(f.history.length, initialLength + 2, 'each discrete choice gets a history entry');
       const directoryUrl = f.location.pathname + f.location.search + f.location.hash;
       const directoryHistoryLength = f.history.length;
+      const xichuanCards = ['xc-zhiyao', 'xc-shencheng', 'xc-jibai'].map(id => '/characters/' + id);
       const assertDirectory = () => {
         assert.equal(f.location.pathname + f.location.search + f.location.hash, directoryUrl);
-        assert.equal(f.document.getElementById('fw-search').value, '夏知遥');
-        assert.equal(f.document.querySelector('[data-fw-world-select]').value, 'xichuan');
-        assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'true');
-        assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
+        assert.equal(f.document.querySelector('[data-fw-world="xichuan"]').getAttribute('aria-pressed'), 'true');
+        assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
+        assert.deepEqual([...f.document.querySelectorAll('#fw-lib-results .fw-card')].map(a=>a.getAttribute('href')),xichuanCards);
       };
+      assertDirectory();
       await f.click('#fw-lib-results a[href="/characters/xc-zhiyao"]');
       await waitFor(profile, 'directory card did not open its profile');
       assert.equal(f.history.state.discoveryReturn, directoryUrl);
       assert.equal(profile().querySelector('.fw-back').getAttribute('href'), directoryUrl);
-      f.history.back(); await waitFor(() => f.document.querySelector('#fw-search'), 'browser Back did not restore the directory'); assertDirectory();
+      f.history.back(); await waitFor(() => f.document.querySelector('.fw-filter-bar'), 'browser Back did not restore the directory'); assertDirectory();
       f.history.forward(); await waitFor(profile, 'browser Forward did not restore the profile');
       await f.click('[data-fw-chat-entry]');
       await waitFor(() => f.document.querySelector('#session-input'), 'chat did not open from the filtered profile');
@@ -261,9 +260,9 @@ test('real app connects profiles, local chat, current story memory and reloads t
       assert.equal(reloadedProfile.profileBack, directoryUrl, 'a profile reload still exits the chat/profile loop to the original filtered directory');
       assert.equal(reloadedProfile.historyState.discoveryReturn, directoryUrl, 'the earlier filtered directory remains available in native history');
       f.history.go(directoryHistoryLength - f.history.length);
-      await waitFor(() => f.document.querySelector('#fw-search'), 'history did not return to the original filtered directory'); assertDirectory();
+      await waitFor(() => f.document.querySelector('.fw-filter-bar'), 'history did not return to the original filtered directory'); assertDirectory();
       const reloadedDirectory = await reload({path: directoryUrl, entries: [...f.values]});
-      assert.deepEqual(reloadedDirectory.directory, {query: '夏知遥', world: 'xichuan', chat: true, cards: ['/characters/xc-zhiyao']});
+      assert.deepEqual(reloadedDirectory.directory, {world: 'xichuan', chat: false, cards: xichuanCards});
       assert.equal(reloadedDirectory.hash, '#cast');
       assert.equal(new URLSearchParams(reloadedDirectory.search).get('source'), 'home');
       assert.deepEqual(f.requests.filter(([path]) => path.startsWith('/api/')), [['/api/config', 'GET']], 'browsing and unsent local chat never call a model or wallet');
@@ -284,20 +283,19 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.go('/characters?world=xichuan&chat=1&q=夏知遥');
       for (const world of ['__proto__', 'toString', 'constructor', 'not-a-world']) {
         await f.go('/characters?world=' + world);
-        assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 33);
-        assert.equal(f.document.getElementById('fw-search').value, '');
+        assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 18);
         assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
-        assert.equal(f.document.querySelector('[data-fw-world-select]').value, 'all');
+        assert.equal(f.document.querySelector('[data-fw-world="all"]').getAttribute('aria-pressed'), 'true');
       }
       const reloaded = await reload({path: '/characters?world=__proto__'});
-      assert.equal(reloaded.directory.world, 'all'); assert.equal(reloaded.directory.chat, false); assert.equal(reloaded.directory.query, '');
-      assert.equal(reloaded.directory.cards.length, 33);
+      assert.equal(reloaded.directory.world, 'all'); assert.equal(reloaded.directory.chat, false);
+      assert.equal(reloaded.directory.cards.length, 18);
       await f.go('/character?world=xichuan');
     });
 
     await t.test('legacy library and profile links reach the same canonical directory and identity', async () => {
       assert.equal(f.location.pathname, '/characters');
-      assert.equal(f.document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, 5);
+      assert.equal(f.document.querySelectorAll('[data-fw-page="characters"] .fw-card').length, 3);
       assert.equal(f.document.querySelectorAll('[data-shrink] a[href="/characters"]').length, 1);
       assert.equal(f.document.querySelector('[data-shrink] a[href="/character"]'), null);
       await f.go('/character/xc-zhiyao?source=old#experiences');

@@ -6,15 +6,16 @@ import {fileURLToPath} from 'node:url';
 import {parseHTML,DOMParser} from 'linkedom';
 import {storiesForCharacter,charactersForStory,storyById,linkedStoryCatalog} from '../dist/assets/character-stories.js';
 import {bookMetadata} from '../dist/assets/book-catalog.js';
-import {CHARACTER_CARDS} from '../dist/assets/flywheel/cards-data.js';
+import {CHARACTER_CARDS, FEATURED_CHARACTER_CARDS, characterCardQuote, characterCardMeta} from '../dist/assets/flywheel/cards-data.js';
 import {storydateCharacters,storydateOriginals} from '../dist/assets/storydate-originals.js';
 const dist=fileURLToPath(new URL('../dist/',import.meta.url));
 
 test('published character relationships preserve campaign identities and the eight real biography links',()=>{
- const works=[['three-kingdoms','sanguo',9],['xichuan','xichuan',5],['ashen-crown','ashen',10],['baker-street','holmes',6]];
+ const works=[['three-kingdoms','sanguo',9],['xichuan','xichuan',3],['ashen-crown','ashen',2],['baker-street','holmes',1]];
  assert.deepEqual(linkedStoryCatalog.map(s=>s.id),works.map(([id])=>id));
  for(const [id,work,count] of works){
   const cards=charactersForStory(id);assert.equal(cards.length,count);
+  assert.deepEqual(cards.map(card => card.id), FEATURED_CHARACTER_CARDS.filter(card => card.source.work === work).map(card => card.id));
   for(const card of cards){
    assert.equal(card.source.work,work);
    const story=storiesForCharacter(card.id).find(s=>s.id===id);
@@ -70,12 +71,15 @@ test('existing Story detail and preview expose the same cast, metadata and one r
    if(link.classList.contains('story-character-card')){
     const card=CHARACTER_CARDS.find(card=>card.id===link.dataset.storyCharacter);
     assert.equal(link.querySelector('[data-story-character-name]').textContent,card.name.zh);
-    assert.equal(link.querySelector('.story-character-art>img:last-child').getAttribute('src'),card.portrait,'the Story uses the same character artwork as the directory');
-    const badge = link.querySelector('[data-story-character-capability]');
-    assert.ok(badge?.matches(card.chat ? '.sd-capability.is-chat' : '.sd-capability.is-story'), 'cast badges distinguish real chat from story appearances');
-    assert.equal(badge.textContent.replace(/^●\s*/, '').trim(), card.chat ? '可聊天' : '故事出场');
-    assert.equal(Boolean(link.querySelector('[data-story-character-hint]')?.textContent.trim()), Boolean(card.chat), 'only the real chat capabilities get the extra invitation');
-    assert.ok(link.querySelector('[data-story-character-tagline]').textContent);
+    assert.equal(link.querySelector('.story-character-art>img:not(.story-character-background)').getAttribute('src'),card.portrait,'the Story uses the same character artwork as the directory');
+    const art = link.querySelector('.story-character-art');
+    const badge = art.querySelector('.sd-capability[data-story-character-capability]');
+    assert.ok(badge);
+    assert.equal(badge.classList.contains('is-chat'), Boolean(card.chat));
+    assert.equal(badge.textContent.trim(), card.chat ? '可聊天' : '故事主角');
+    assert.equal(art.querySelector('.sd-card-quote > span').textContent, characterCardQuote(card, 'zh'));
+    assert.equal(link.querySelector('.sd-card-meta').textContent, characterCardMeta(card, 'zh'));
+    assert.equal(link.querySelector('[data-story-character-hint]'), null);
     continue;
    }
    const avatar=link.querySelector('[data-story-avatar]');assert.ok(avatar);
@@ -121,6 +125,8 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] [data-story-character-name]').textContent,'Xia Zhiyao');
  assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] .is-chat[data-story-character-capability]').textContent.replace(/^●\s*/, '').trim(), 'Chat available');
  assert.equal(document.querySelector('[data-story-character="xc-shencheng"] [data-story-character-capability]').textContent,'In the story');
+ assert.equal(document.querySelector('[data-story-character="xc-shencheng"] .sd-card-quote > span').textContent,'Seven years.');
+ assert.deepEqual([...document.querySelectorAll('.story-character-card')].map(link=>link.dataset.storyCharacter),['xc-zhiyao','xc-shencheng','xc-jibai']);
  assert.match(document.querySelector('[data-story-format]').textContent,/Galgame/);
  assert.equal(document.querySelector('.story-detail-language [data-sd-lang="en"]').getAttribute('aria-pressed'),'true');
  assert.equal(document.querySelector('[data-story-title]').textContent,storyById('xichuan').title.en);
@@ -152,12 +158,17 @@ test('existing Story detail and preview expose the same cast, metadata and one r
   return [...document.querySelectorAll('[data-search-results] [data-search-profile]')];
  };
  const allProfiles=characterResults('');
- assert.deepEqual(allProfiles.map(a=>a.getAttribute('href')),CHARACTER_CARDS.map(c=>'/characters/'+c.id));
- assert.equal(new Set(allProfiles.map(a=>a.dataset.searchProfile)).size,33);
+ assert.deepEqual(allProfiles.map(a=>a.getAttribute('href')),FEATURED_CHARACTER_CARDS.map(c=>'/characters/'+c.id));
+ assert.equal(new Set(allProfiles.map(a=>a.dataset.searchProfile)).size,18);
  for(const [query,id] of [['夏知遥','xc-zhiyao'],['Xia Zhiyao','xc-zhiyao'],['沈澄','xc-shencheng'],['Cao Cao','sg-caocao'],['曹操','sg-caocao'],['曹操传','sg-caocao']]){
   assert.deepEqual(characterResults(query).map(a=>a.dataset.searchProfile),[id],query);
   setPath('/search?q='+encodeURIComponent(query));closeTitlePreview();reference.show('/search',helpers);
   assert.ok(document.querySelector('[data-search-profile="'+id+'"]'),query+' also works from the search route');
+ }
+ for(const [query, id] of [['老周','xc-zhou'],['Mrs Hudson','bk-hudson'],['奥古斯特','wn-august']]){
+  assert.equal(characterResults(query).some(result=>result.dataset.searchProfile===id),false,query+' is absent from the modal');
+  closeTitlePreview();setPath('/search?q='+encodeURIComponent(query));reference.show('/search',helpers);
+  assert.equal(document.querySelector(`[data-search-profile="${id}"]`),null,query+' is absent from the search page');
  }
  const cao=characterResults('Cao Cao')[0];
  assert.equal(cao.querySelector('[data-search-profile-name]').textContent,'Cao Cao');

@@ -1,7 +1,7 @@
 import {syncCharacterLinks, characterReturnUrl} from './character-links.js';
 import {charactersForStory, storiesForCharacter, storyById, linkedStoryCatalog} from './character-stories.js';
 import {characterArt} from './flywheel/character-art.js';
-import {CHARACTER_CARDS,WORKS,UNIVERSES} from './flywheel/cards-data.js';
+import {FEATURED_CHARACTER_CARDS,WORKS,UNIVERSES,characterCapabilityLabel,characterCardMeta,characterCardQuote} from './flywheel/cards-data.js';
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
@@ -24,9 +24,9 @@ import {getLang,translate} from './site-i18n.js';
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
-const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261118-stage';
-const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261118-stage';
-const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261118-mobile-dock';
+const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261118-core-cast';
+const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261118-core-cast';
+const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261118-core-cast';
 const characterStyleReady=new Promise((resolve,reject)=>{characterStyle.onload=resolve;characterStyle.onerror=()=>reject(new Error('Character stylesheet could not load'));});
 const controlsReady=new Promise((resolve,reject)=>{controlsStyle.onload=resolve;controlsStyle.onerror=()=>reject(new Error('Shared controls stylesheet could not load'));});
 const detailReady=new Promise((resolve,reject)=>{detailStyle.onload=resolve;detailStyle.onerror=()=>reject(new Error('Story stylesheet could not load'));});
@@ -153,7 +153,7 @@ for(const [kind,doc]of [['story',templateDocument],['character',characterDocumen
 export const extraStories = catalog.map(d => ({...d, image:source(d),genre:d.genre||'Others'}));
 // Search profiles share the curated directory identity. These display-only
 // records never enter catalog/extraStories or become new chat/model IDs.
-const searchProfiles=CHARACTER_CARDS.map(card=>{
+const searchProfiles=FEATURED_CHARACTER_CARDS.map(card=>{
  const existing=catalog.find(d=>d.type==='character'&&d.id===card.chatId);
  return {id:card.id,type:'character',searchProfile:true,href:'/characters/'+card.id,
   title:card.name.en,title_zh:card.name.zh,description:card.tagline.en,description_zh:card.tagline.zh,
@@ -362,10 +362,6 @@ function storyPlayMarkup(id) {
  const standalone=playUrl.startsWith('/assets/');
  return `<a class="shell-white-button" data-story-play="${safe(id)}" href="${safe(playUrl)}"${standalone?' target="_top" rel="noopener"':''}>${getLang()==='zh'?'进入故事':'Play story'}</a>`;
 }
-function castCapability(card) {
- return getLang()==='zh' ? (card.chat?'可聊天':'故事出场') : (card.chat?'Chat available':'In the story');
-}
-const castProfileHint = () => getLang()==='zh'?'认识 TA →':'Meet character →';
 function storyCharactersMarkup(id,{rich=false}={}) {
  const cards=charactersForStory(id);
  if(!cards.length)return '';
@@ -374,14 +370,14 @@ function storyCharactersMarkup(id,{rich=false}={}) {
    const art=characterArt(card);
    return `<a class="story-character-card" href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}">
     <div class="story-character-art">
-     <span class="story-cast-badge sd-capability ${card.chat?'is-chat':'is-story'}" data-story-character-capability>${castCapability(card)}</span>
+     <span class="sd-capability ${card.chat?'is-chat':'is-story'}" data-story-character-capability>${safe(characterCapabilityLabel(card,getLang()))}</span>
      ${art?.background?`<img class="story-character-background" src="${safe(art.background)}" alt="" loading="lazy">`:''}
      <img src="${safe(card.portrait)}" alt="" loading="lazy">
+     <span class="sd-card-quote"><span data-story-character-quote>${safe(characterCardQuote(card,getLang()))}</span></span>
     </div>
     <div class="story-character-caption">
      <strong data-story-character-name>${safe(storyText(card.name))}</strong>
-     <p data-story-character-tagline>${safe(storyText(card.tagline))}</p>
-     ${card.chat?`<span class="story-character-hint" data-story-character-hint>${castProfileHint()}</span>`:''}
+     <p class="sd-card-meta" data-story-character-tagline>${safe(characterCardMeta(card,getLang()))}</p>
     </div>
    </a>`;
   }
@@ -454,10 +450,10 @@ globalThis.addEventListener?.('sd-lang',()=>{
    if(card){
     (link.querySelector('[data-story-character-name]')||link.querySelector('span')).textContent=storyText(card.name);
     const tagline=link.querySelector('[data-story-character-tagline]'),capability=link.querySelector('[data-story-character-capability]');
-    if(tagline)tagline.textContent=storyText(card.tagline);
-    if(capability)capability.textContent=castCapability(card);
-    const hint=link.querySelector('[data-story-character-hint]');
-    if(hint)hint.textContent=castProfileHint();
+    const quote=link.querySelector('[data-story-character-quote]');
+    if(tagline)tagline.textContent=characterCardMeta(card,getLang());
+    if(capability)capability.textContent=characterCapabilityLabel(card,getLang());
+    if(quote)quote.textContent=characterCardQuote(card,getLang());
    }
   });
  });

@@ -45,7 +45,7 @@ export const WORKS = {
   },
   character: {
     id: "character",
-    title: { zh: "角色页原创相遇", en: "Character Originals" },
+    title: { zh: "原创相遇", en: "StoryDate Originals" },
     kind: { zh: "角色聊天", en: "Character chat" },
     url: "/characters",
     cover: "/assets/characters/shen-yanzhou.webp",
@@ -943,20 +943,51 @@ export const CHARACTER_CARDS = [
   },
 ];
 
+// Public discovery follows this editorial lineup. The full index also serves
+// bookmarked profiles and their original story links.
+const featuredIds = [
+  'xc-zhiyao', 'xc-shencheng', 'xc-jibai',
+  'sg-caocao', 'sg-zhuge', 'sg-wenzhi', 'sg-liubei', 'sg-guanyu', 'sg-zhaoyun', 'sg-zhouyu', 'sg-lvbu', 'sg-diaochan',
+  'oc-shen-yanzhou', 'oc-lu-wensheng', 'oc-lin-zhaowan',
+  'wn-lamp', 'wn-evelyn', 'bk-holmes',
+];
+
+export const FEATURED_CHARACTER_CARDS = featuredIds.map(cardById);
+
+export function characterCardQuote(card, lang) {
+  const sample = card.voice?.samples?.[0]?.[lang];
+  if (!sample) return card.tagline[lang];
+  // Some openings interleave dialogue and narration. Take the speaker's
+  // first sentence, leaving longer passages and their source on the profile.
+  const line = sample.match(/^“([^”]+)”/u)?.[1] || sample;
+  return line.match(/^.*?(?:[。！？]+|[.!?]+(?=\s|$))/u)?.[0] || line;
+}
+
+export function characterCardMeta(card, lang) {
+  const identity = card.voice?.samples?.[0]?.[lang] ? card.tagline[lang] : card.appearances[0]?.role?.[lang];
+  return [WORKS[card.source.work].title[lang], identity].filter(Boolean).join(' · ');
+}
+
+export function characterCapabilityLabel(card, lang) {
+  if (card.chat) return lang === 'zh' ? '可聊天' : 'Chat available';
+  if (lang === 'en') return 'In the story';
+  return featuredIds.includes(card.id) ? '故事主角' : '故事出场';
+}
+
 export function cardById(id) {
   return CHARACTER_CARDS.find((c) => c.id === id) || null;
 }
 
 export function cardsByUniverse(universeId) {
-  return CHARACTER_CARDS.filter((c) => c.source.universe === universeId);
+  return FEATURED_CHARACTER_CARDS.filter((c) => c.source.universe === universeId);
 }
 
 export function cardsByFramework(frameworkId) {
-  return CHARACTER_CARDS.filter((c) => c.source.framework === frameworkId);
+  return FEATURED_CHARACTER_CARDS.filter((c) => c.source.framework === frameworkId);
 }
 
 export function cardsByWork(workId) {
-  return CHARACTER_CARDS.filter((c) => c.source.work === workId || c.appearances.some((a) => a.work === workId));
+  return FEATURED_CHARACTER_CARDS.filter((c) => c.source.work === workId || c.appearances.some((a) => a.work === workId));
 }
 
 // Current-save fact labels from server/xichuan-campaign.json vars. These are

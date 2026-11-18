@@ -165,8 +165,7 @@ if (parentPort) {
       profileId: f.document.querySelector('[data-fw-character]')?.dataset.fwCharacter,
       profileBack: f.document.querySelector('[data-fw-page="profile"] .fw-back')?.getAttribute('href'),
       directory: directory ? {
-        query: directory.querySelector('#fw-search').value,
-        world: directory.querySelector('[data-fw-world-select]').value,
+        world: directory.querySelector('[data-fw-world][aria-pressed="true"]')?.dataset.fwWorld || null,
         chat: directory.querySelector('[data-fw-chat]').getAttribute('aria-pressed') === 'true',
         cards: [...directory.querySelectorAll('.fw-card')].map(card => card.getAttribute('href')),
       } : null,

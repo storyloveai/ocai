@@ -18,6 +18,16 @@ test('detail stages and secondary story covers follow the same responsive layout
   const media = (list, query) => list.find(rule => rule.media?.mediaText === query).cssRules;
   const value = (list, selector, prop) => Array.from(list).find(rule => rule.selectorText === selector).style.getPropertyValue(prop).replace(/\s*,\s*/g, ',');
   const [stages, character] = await Promise.all([rules('story-surfaces.css'), rules('flywheel/flywheel.css')]);
+  const selectedPill = 'body[data-reference=true] .fw-page .fw-chip[aria-pressed=true]';
+  for (const [property, expected] of [['background', '#303033'], ['color', '#fafafa'], ['border-color', '#d4a853'], ['box-shadow', '0 0 0 1px #d4a853']]) {
+    assert.equal(value(stages, selectedPill, property), expected);
+  }
+  assert.equal(value(character, '.fw-filter-bar.native-carousel', 'overflow-x'), 'auto');
+  assert.equal(value(character, '.fw-filter-bar .fw-chip', 'white-space'), 'nowrap');
+  assert.equal(value(stages, '.sd-card-quote', 'padding'), '28px 12px 12px');
+  assert.equal(value(stages, '.sd-card-quote', 'font-size'), '12px');
+  assert.equal(value(stages, '.sd-card-quote', 'line-height'), '1.45');
+  assert.equal(value(stages, '.sd-card-quote > span,.sd-card-meta', '-webkit-line-clamp'), '2');
   const tablet = media(stages, '(min-width: 768px) and (max-width: 1023px)');
   const phone = media(stages, '(max-width: 767px)');
   assert.equal(value(stages, '.sd-stage-layout', 'grid-template-columns'), '340px minmax(0,1fr)');
@@ -29,17 +39,30 @@ test('detail stages and secondary story covers follow the same responsive layout
   const phoneCharacter = media(character, '(max-width: 767px)');
   assert.equal(value(phoneCharacter, '.fw-story-card', 'grid-template-columns'), '64px minmax(0,1fr)');
   assert.equal(value(character, '.fw-conversation-input', 'grid-template-columns'), 'minmax(0,1fr) auto');
-  assert.equal(value(phoneCharacter, '.fw-conversation-input', 'grid-template-columns'), '1fr');
+  assert.equal(value(phoneCharacter, '.fw-conversation-input', 'grid-template-columns'), 'minmax(0,1fr)');
+  assert.equal(value(phoneCharacter, '.fw-conversation-input', 'gap'), '10px');
+  assert.equal(value(character, '.fw-conversation-input input', 'width'), '100%');
+  assert.equal(value(phoneCharacter, 'body[data-reference=true] .fw-chat-dock .fw-conversation-input .fw-btn[data-fw-chat-entry]', 'width'), '100%');
+  assert.equal(value(phoneCharacter, '.fw-chat-dock [data-fw-starter]', 'padding'), '8px 12px');
   assert.equal(value(character, '.fw-chat-dock [data-fw-starter]', 'border-radius'), '999px');
   assert.equal(value(phoneCharacter, '.fw-chat-dock [data-fw-starter]', 'border-radius'), '10px');
 });
 
 test('flywheel card data is complete, bilingual, and points at real assets and routes', async () => {
-  const {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS} = await import('../dist/assets/flywheel/cards-data.js');
+  const {CHARACTER_CARDS, FEATURED_CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS} = await import('../dist/assets/flywheel/cards-data.js');
   const {storydateCharacters} = await import('../dist/assets/storydate-originals.js');
   const {roleFor} = await import('../server/roles.js');
   const chatIds = new Set(storydateCharacters.map((c) => c.id));
-  assert.equal(CHARACTER_CARDS.length, 33);
+  const publicIds = [
+    'xc-zhiyao', 'xc-shencheng', 'xc-jibai',
+    'sg-caocao', 'sg-zhuge', 'sg-wenzhi', 'sg-liubei', 'sg-guanyu', 'sg-zhaoyun', 'sg-zhouyu', 'sg-lvbu', 'sg-diaochan',
+    'oc-shen-yanzhou', 'oc-lu-wensheng', 'oc-lin-zhaowan', 'wn-lamp', 'wn-evelyn', 'bk-holmes',
+  ];
+  assert.deepEqual(FEATURED_CHARACTER_CARDS.map(card => card.id).sort(), publicIds.sort());
+  assert.equal(FEATURED_CHARACTER_CARDS.filter(card => card.chat).length, 13);
+  assert.deepEqual(FEATURED_CHARACTER_CARDS.filter(card => !card.chat).map(card => card.id).sort(),
+    ['bk-holmes', 'wn-evelyn', 'wn-lamp', 'xc-jibai', 'xc-shencheng']);
+  assert.equal(CHARACTER_CARDS.length, 33, 'old direct profile URLs retain their source records');
   const ids = new Set();
   for (const c of CHARACTER_CARDS) {
     assert.ok(!ids.has(c.id), `duplicate card id ${c.id}`);
@@ -109,18 +132,12 @@ test('scene artwork uses existing empty settings for transparent sprites and pre
 
 test('character discovery stays useful without duplicate navigation or demo editors', async (t) => {
   const {document, window, values, writes, go, setLang, storageState, navigations, requests, helpers} = await boot();
-  const {CHARACTER_CARDS, UNIVERSES} = await import('../dist/assets/flywheel/cards-data.js');
+  const {CHARACTER_CARDS, FEATURED_CHARACTER_CARDS, characterCardQuote, characterCardMeta} = await import('../dist/assets/flywheel/cards-data.js');
   const page = kind => document.querySelector(`[data-fw-page="${kind}"]`);
-  const input = value => {
-    const search = document.getElementById('fw-search');
-    search.value = value;
-    search.focus();
-    search.dispatchEvent(new window.Event('input', {bubbles: true}));
-    assert.equal(document.getElementById('fw-search'), search, 'typing keeps the same input node');
-    assert.equal(document.activeElement, search, 'typing keeps keyboard focus');
-  };
   const language = lang => setLang(lang, {win: globalThis, doc: document});
-  const selectStory = value => {const select=document.querySelector('[data-fw-world-select]');select.querySelectorAll('option').forEach(option=>option.removeAttribute('selected'));select.querySelector('option[value="'+value+'"]').setAttribute('selected','');select.dispatchEvent(new window.Event('change',{bubbles:true}));};
+  const pill = key => document.querySelector(key === 'chat' ? '.fw-filter-bar [data-fw-chat]' : `.fw-filter-bar [data-fw-world="${key}"]`);
+  const selectStory = key => pill(key).click();
+  const listed = () => [...page('characters').querySelectorAll('.fw-card')].map(node => node.getAttribute('href').split('/').pop());
 
   await t.test('home retains its canonical character entry without an extra world strip or role navigation', () => {
     assert.equal(document.querySelector('#fw-home-strip'), null);
@@ -177,23 +194,23 @@ test('character discovery stays useful without duplicate navigation or demo edit
     };
     choose('zh');
     submit('zh', '我想听你的故事，貂蝉。 & 然后呢？');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, FEATURED_CHARACTER_CARDS.length);
     const unfinishedZh = '  还没说完：那张旧票根 & 后来的事……  ';
     feature().querySelector('input').value = unfinishedZh;
     const directory = location.pathname + location.search + location.hash;
     go('/characters/xc-zhiyao'); go(directory);
     assert.equal(feature().querySelector('input').value, unfinishedZh, 'ordinary profile browsing preserves an unsent directory draft');
     selectStory('xichuan');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, 3);
     assert.equal(assertFeature('zh').querySelector('input').value, unfinishedZh, 'filtering preserves the unfinished reply exactly');
     choose('zh', 1);
     feature().querySelector('input').value = unfinishedZh;
-    input('夏知遥');
+    selectStory('baker');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
-    assert.equal(feature().querySelector('input').value, unfinishedZh, 'searching the directory leaves the separate hero draft intact');
+    assert.equal(feature().querySelector('input').value, unfinishedZh, 'switching worlds preserves the separate hero draft');
     const activeReply = feature().querySelector('input'); activeReply.focus(); activeReply.setSelectionRange(3, 9, 'forward');
     language('en');
-    assert.equal(document.getElementById('fw-search').value, '夏知遥');
+    assert.equal(pill('baker').getAttribute('aria-pressed'), 'true');
     assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
     assert.equal(assertFeature('en').querySelector('input').value, unfinishedZh, 'changing language preserves typed words without translating or trimming them');
     assert.ok(document.activeElement === feature().querySelector('input'), 'language changes restore the focused hero draft');
@@ -202,9 +219,8 @@ test('character discovery stays useful without duplicate navigation or demo edit
     submit('en', 'What would you choose? & why?');
     const unfinishedEn = '  A half-written reply: what if… & why?  ';
     feature().querySelector('input').value = unfinishedEn;
-    input('');
     selectStory('all');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, FEATURED_CHARACTER_CARDS.length);
     assert.equal(assertFeature('en').querySelector('input').value, unfinishedEn);
     choose('en', 1);
     language('zh');
@@ -212,32 +228,45 @@ test('character discovery stays useful without duplicate navigation or demo edit
     go('/characters/xc-zhiyao'); go('/characters');
     assert.equal(feature().querySelector('input').value, '', 'returning from ordinary browsing after handoff does not resurrect the old reply');
     choose('zh');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    assert.equal(page('characters').querySelectorAll('.fw-card').length, FEATURED_CHARACTER_CARDS.length);
     assert.deepEqual(requests.filter(path => path.startsWith('/api/')), apiBefore, 'hero actions only hand off navigation, without model or payment operations');
     assert.equal(writes.some(([key]) => key.startsWith('ooc-session-v2-')), false, 'hero interactions do not open or rewrite a chat session');
   });
 
   await t.test('directory names stay below their artwork and only transparent portraits receive separate scene layers', async () => {
     const {characterArt} = await import('../dist/assets/flywheel/character-art.js');
-    language('zh');
     go('/characters');
-    for (const card of CHARACTER_CARDS) {
-      const node = page('characters').querySelector(`.fw-card[href="/characters/${card.id}"]`);
-      const portrait = node.querySelector('.fw-card-portrait'), body = node.querySelector('.fw-card-body');
-      assert.equal(portrait.nextElementSibling, body, `${card.id} readable information follows the image`);
-      assert.equal(portrait.querySelector('.fw-card-name'), null);
-      assert.equal(body.querySelector('.fw-card-name').textContent, card.name.zh);
-      assert.ok(body.querySelector('.fw-card-badges').textContent.trim(), 'source remains visible outside the image');
-      const background = portrait.querySelector('.fw-scene-background');
-      const foreground = [...portrait.querySelectorAll('img')].find(img => !img.classList.contains('fw-scene-background'));
-      assert.equal(foreground.getAttribute('src'), card.portrait);
-      assert.ok(foreground.nextElementSibling.classList.contains('fw-art-fallback'), 'image fallback remains attached to the foreground');
-      if (characterArt(card)) {
-        assert.equal(background.getAttribute('src'), characterArt(card).background);
-        assert.equal(background.nextElementSibling, foreground, 'the sprite remains separate from its scenery');
-        assert.equal(background.getAttribute('alt'), '');
-      } else assert.equal(background, null, `${card.id} retains its complete original image`);
+    for (const lang of ['en', 'zh']) {
+      language(lang);
+      for (const card of FEATURED_CHARACTER_CARDS) {
+        const node = page('characters').querySelector(`.fw-card[href="/characters/${card.id}"]`);
+        const portrait = node.querySelector('.fw-card-portrait'), body = node.querySelector('.fw-card-body');
+        assert.equal(portrait.nextElementSibling, body, `${card.id} readable information follows the image`);
+        assert.equal(portrait.querySelector('.fw-card-name'), null);
+        assert.equal(body.querySelector('strong.fw-card-name').textContent, card.name[lang]);
+        const badge = portrait.querySelector('.sd-capability');
+        assert.equal(node.querySelectorAll('.sd-capability').length, 1);
+        assert.equal(badge.classList.contains('is-chat'), Boolean(card.chat));
+        assert.equal(badge.textContent.trim(), card.chat ? (lang === 'en' ? 'Chat available' : '可聊天') : (lang === 'en' ? 'In the story' : '故事主角'));
+        assert.equal(portrait.querySelector('.sd-card-quote > span').textContent, characterCardQuote(card, lang));
+        assert.equal(body.querySelector('.sd-card-meta').textContent, characterCardMeta(card, lang));
+        assert.equal(body.children.length, 2, 'the caption has only a name and a source/identity line');
+        const background = portrait.querySelector('.fw-scene-background');
+        const foreground = [...portrait.querySelectorAll('img')].find(img => !img.classList.contains('fw-scene-background'));
+        assert.equal(foreground.getAttribute('src'), card.portrait);
+        assert.ok(foreground.nextElementSibling.classList.contains('fw-art-fallback'), 'image fallback remains attached to the foreground');
+        if (characterArt(card)) {
+          assert.equal(background.getAttribute('src'), characterArt(card).background);
+          assert.equal(background.nextElementSibling, foreground, 'the sprite remains separate from its scenery');
+          assert.equal(background.getAttribute('alt'), '');
+        } else assert.equal(background, null, `${card.id} retains its complete original image`);
+      }
     }
+    const shen = FEATURED_CHARACTER_CARDS.find(card => card.id === 'xc-shencheng');
+    assert.equal(characterCardQuote(shen, 'zh'), '七年。');
+    assert.equal(characterCardQuote(shen, 'en'), 'Seven years.');
+    const withoutSample = FEATURED_CHARACTER_CARDS.find(card => !card.voice?.samples?.length);
+    assert.equal(characterCardQuote(withoutSample, 'zh'), withoutSample.tagline.zh);
     for (const card of CHARACTER_CARDS) {
       go('/characters/' + card.id);
       const scene = page('profile').querySelector('.fw-profile-scene');
@@ -248,103 +277,88 @@ test('character discovery stays useful without duplicate navigation or demo edit
     go('/characters');
   });
 
-  await t.test('library filters, empty states and bilingual search work without losing focus', () => {
+  await t.test('one bilingual world pill bar filters the public cast and keeps the shell navigation selected', () => {
+    const filters = [
+      ['all', '全部', 'All', 18], ['chat', '可聊天', 'Chat available', 13],
+      ['xichuan', '汐川的第七个春天', 'The Seventh Spring of Xichuan', 3], ['sanguo', '三国·谋士', 'The Strategist', 9],
+      ['original', '原创相遇', 'StoryDate Originals', 3], ['westlin', '灰烬王冠', 'The Ashen Crown', 2], ['baker', '贝克街', 'Baker Street', 1],
+    ];
     go('/characters');
-    const assertCharacterNavigation = () => {
-      assert.equal(document.querySelectorAll('[data-shrink] a[href="/characters"][aria-current="page"]').length, 1, 'the canonical Character entry stays selected exactly once');
-      assert.equal(document.querySelectorAll('[data-shrink] a[href="/"][aria-current="page"]').length, 0);
-    };
-    assertCharacterNavigation();
-    assert.ok(page('characters').hasAttribute('data-no-i18n'));
-    assert.ok(page('characters').querySelector('.fw-mobile-bar img'));
-    assert.equal(page('characters').querySelector('.fw-nav'), null, 'the directory uses the established site navigation');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
-    selectStory('xichuan');
-    assertCharacterNavigation();
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
-    document.querySelector('[data-fw-chat]').click();
-    assertCharacterNavigation();
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1, 'only the established Xia Zhiyao chat is available');
-    assert.ok(page('characters').querySelector('.fw-card[href="/characters/xc-zhiyao"]'));
-    selectStory('all');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.filter(c => c.chat).length);
-    input('一盏酒');
-    assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1);
-    language('en');
-    assertCharacterNavigation();
-    assert.equal(document.getElementById('fw-search').value, '一盏酒', 'language change preserves the query');
-    assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1, 'Chinese query still works in English');
-    input('Cao Cao');
+    for (const lang of ['zh', 'en']) {
+      language(lang);
+      const library = page('characters');
+      assert.ok(library.hasAttribute('data-no-i18n'));
+      assert.ok(library.querySelector('.fw-mobile-bar img'));
+      assert.equal(library.querySelector('.fw-nav, #fw-search, select, .fw-library-heading'), null);
+      const buttons = [...library.querySelectorAll('.fw-filter-bar button')];
+      assert.deepEqual(buttons.map(b => b.textContent.replace(/^●\s*/, '').trim()), filters.map(f => f[lang === 'zh' ? 1 : 2]));
+      for (const [key, , , count] of filters) {
+        selectStory(key);
+        assert.equal(document.querySelectorAll('[data-shrink] a[href="/characters"][aria-current="page"]').length, 1);
+        assert.equal(pill(key).getAttribute('aria-pressed'), 'true');
+        assert.equal(library.querySelectorAll('.fw-filter-bar [aria-pressed="true"]').length, 1);
+        assert.equal(listed().length, count);
+        const label = lang === 'zh' ? '位角色' : count === 1 ? 'character' : 'characters';
+        assert.equal(library.querySelector('.fw-count').textContent, count + ' ' + label);
+        const expected = FEATURED_CHARACTER_CARDS.filter(card => key === 'all' || (key === 'chat' ? Boolean(card.chat) : card.source.universe === key));
+        assert.deepEqual(listed(), expected.map(card => card.id), key + ' only includes matching public profiles');
+      }
+    }
     language('zh');
-    assert.equal(document.querySelectorAll('#fw-lib-results .fw-card').length, 1, 'English name works in Chinese');
-    input('no-such-character-123');
-    assert.ok(document.querySelector('#fw-lib-results .fw-empty'));
-    input('');
-    document.querySelector('[data-fw-chat]').click();
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
+    go('/characters');
   });
 
-  await t.test('directory URL, shared story selector, bilingual search and reset share the same state', () => {
-    go('/characters?source=home&world=xichuan&chat=1&q=夏知遥#cast');
-    assert.equal(page('characters').querySelectorAll('.fw-library-heading h2').length,1,'the catalogue has one Story-style Explore heading');
-    assert.equal(page('characters').querySelector('[data-fw-filter]'),null,'retired category chips are removed, not hidden');
-    assert.equal(page('characters').querySelectorAll('[data-fw-world-select]').length,1);
-    assert.equal(page('characters').querySelectorAll('.fw-count').length,1,'one result count follows the actual filters');
-    assert.ok([...document.querySelectorAll('[data-fw-world-select] option')].every(option => !/·\s*\d+\s*$/.test(option.textContent)), 'work choices contain names rather than duplicate category totals');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
-    assert.equal(document.getElementById('fw-search').value, '夏知遥');
-    assert.equal(document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'true');
-    const beforeWorld = history.length;
+  await t.test('pill URLs preserve native history, support old combinations and remove obsolete query filters on selection', () => {
+    go('/characters?source=home&world=xichuan&chat=1&q=retired-search#cast');
+    assert.deepEqual(listed(), ['xc-zhiyao'], 'old combined links remain useful without a hidden text filter');
+    assert.equal(pill('xichuan').getAttribute('aria-pressed'), 'true');
+    assert.equal(pill('chat').getAttribute('aria-pressed'), 'true');
+    const before = history.length;
     selectStory('sanguo');
-    assert.equal(history.length, beforeWorld + 1, 'a discrete world choice adds a history entry');
-    assert.equal(new URL(location.href).searchParams.get('world'), 'sanguo');
-    assert.equal(document.getElementById('fw-search').value, '夏知遥', 'world changes preserve the query');
-    assert.ok(document.querySelector('#fw-lib-results [data-fw-reset]'));
-    const beforeTyping = history.length;
-    input('  Cao Cao  ');
-    assert.equal(history.length, beforeTyping, 'typing replaces the current URL without adding history per key');
-    assert.equal(new URL(location.href).searchParams.get('q'), '  Cao Cao  ');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1);
-    const select = document.querySelector('[data-fw-world-select]');
-    select.querySelectorAll('option').forEach(option => option.removeAttribute('selected'));
-    select.querySelector('option[value="xichuan"]').setAttribute('selected', '');
-    select.dispatchEvent(new window.Event('change', {bubbles: true}));
-    assert.equal(new URL(location.href).searchParams.get('world'), 'xichuan');
-    assert.equal(document.querySelector('[data-fw-world-select]').value, 'xichuan');
-    assert.equal(document.activeElement, document.querySelector('[data-fw-world-select]'));
+    assert.equal(history.length, before + 1);
+    const url = () => new URL(location.href);
+    assert.equal(url().searchParams.get('world'), 'sanguo');
+    assert.equal(url().searchParams.has('chat'), false);
+    assert.equal(url().searchParams.has('q'), false);
+    assert.equal(url().searchParams.get('source'), 'home');
+    assert.equal(url().hash, '#cast');
+    pill('sanguo').focus();
     language('en');
-    assert.ok(document.activeElement === document.querySelector('[data-fw-world-select]'), 'language changes keep keyboard focus on the shared story selector');
-    language('zh');
-    input('The Seventh Spring of Xichuan');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 1, 'English story title matches in the Chinese directory');
-    document.querySelector('[data-fw-chat]').click();
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5);
-    const search = document.getElementById('fw-search'); search.focus(); search.setSelectionRange(4, 12, 'backward');
-    language('en');
-    const restored = document.getElementById('fw-search');
-    assert.equal(document.activeElement, restored, 'language repaint restores the focused search');
-    assert.equal(restored.selectionStart, 4); assert.equal(restored.selectionEnd, 12); assert.equal(restored.selectionDirection, 'backward');
-    input('汐川的第七个春天');
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, 5, 'Chinese story title matches in the English directory');
-    document.querySelector('[data-fw-chat]').click();
-    input('no-character-matches-this');
-    assert.ok(document.querySelector('#fw-lib-results .fw-empty'));
-    document.querySelector('[data-fw-reset]').click();
-    assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length);
-    assert.equal(document.activeElement, document.getElementById('fw-search'));
-    assert.equal(document.getElementById('fw-search').value, '');
-    assert.equal(document.querySelector('[data-fw-world-select]').value, 'all');
-    assert.equal(document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
-    const url = new URL(location.href);
-    for (const key of ['world', 'chat', 'q']) assert.equal(url.searchParams.has(key), false, 'reset removes ' + key);
-    assert.equal(url.searchParams.get('source'), 'home'); assert.equal(url.hash, '#cast');
-    language('zh');
+    assert.equal(document.activeElement, pill('sanguo'), 'language repaint restores focused world pill');
+    selectStory('chat');
+    assert.equal(url().searchParams.get('chat'), '1');
+    assert.equal(url().searchParams.has('world'), false);
+    selectStory('all');
+    assert.equal(url().searchParams.has('world') || url().searchParams.has('chat'), false);
+    assert.equal(listed().length, 18);
+    const arrow = new window.Event('keydown', {bubbles: true, cancelable: true});
+    arrow.key = 'ArrowRight';
+    pill('all').dispatchEvent(arrow);
+    assert.equal(document.activeElement, pill('chat'), 'arrow keys move focus without changing the selection');
+    assert.equal(pill('all').getAttribute('aria-pressed'), 'true');
+    go('/characters?world=baker&chat=1');
+    assert.equal(listed().length, 0);
+    page('characters').querySelector('.fw-empty [data-fw-reset]').click();
+    assert.equal(document.activeElement, pill('all'));
+    assert.equal(listed().length, 18);
     for (const world of ['__proto__', 'constructor', 'toString', 'unknown-world']) {
       go('/characters?world=' + world);
-      assert.equal(page('characters').querySelectorAll('.fw-card').length, CHARACTER_CARDS.length, world + ' never inherits a prior filter');
-      assert.equal(document.querySelector('[data-fw-world-select]').value, 'all');
+      assert.equal(listed().length, 18, world + ' never inherits a prior filter');
+      assert.equal(pill('all').getAttribute('aria-pressed'), 'true');
     }
+    language('zh');
     go('/characters');
+  });
+
+  await t.test('a supporting character bookmark keeps its bilingual story-only badge and work link', () => {
+    go('/characters/xc-zhou');
+    for (const [lang, badge] of [['en', 'In the story'], ['zh', '故事出场']]) {
+      language(lang);
+      const profile = page('profile');
+      assert.equal(profile.querySelector('.sd-capability').textContent, badge);
+      assert.ok(profile.querySelector('a[href="/story/xichuan"]'));
+      assert.equal(profile.querySelector('[data-fw-chat-entry]'), null);
+    }
   });
 
   await t.test('profiles preserve real entry points and expose details only on request', () => {

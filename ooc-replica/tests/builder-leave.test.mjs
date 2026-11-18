@@ -8,8 +8,8 @@ test('real router protects dirty creation across links, Back, Forward and unload
  const visit=async path=>{const a=document.createElement('a');a.href=path;a.setAttribute('data-full-info','');document.body.append(a);const e=new window.Event('click',{bubbles:true,cancelable:true});e.button=0;a.dispatchEvent(e);a.remove();await tick();};
  const edit=(key,value)=>{const input=document.querySelector(`.builder-fields [name="${key}"]`);input.value=value;input.dispatchEvent(new window.Event('input',{bubbles:true}));return input;};
  const unload=()=>{const e=new window.Event('beforeunload',{cancelable:true});window.dispatchEvent(e);return e.defaultPrevented;};
- const selectStory=async value=>{const select=document.querySelector('[data-fw-world-select]');select.querySelectorAll('option').forEach(option=>option.removeAttribute('selected'));select.querySelector('option[value="'+value+'"]').setAttribute('selected','');select.dispatchEvent(new window.Event('change',{bubbles:true}));await tick();};
- await selectStory('xichuan');await selectStory('sanguo');
+ await f.click('[data-fw-world="xichuan"]');
+ await f.click('[data-fw-world="sanguo"]');
  const sourceState=structuredClone(history.state),sourceUrl=location.pathname+location.search;
  assert.equal(typeof sourceState.storydatePosition,'number');
  await visit('/builder/story/new');

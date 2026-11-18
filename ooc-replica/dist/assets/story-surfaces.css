@@ -165,24 +165,53 @@ body[data-reference=true] :is(.sd-home-stage,.fw-page,.story-entity-detail) butt
   .sd-stage-layout { --sd-stage-overlap: 56px; }
 }
 /* The same person has the same cover and caption on Story and Characters. */
-body[data-reference=true] :is(.fw-card,.story-character-card) {gap:16px;color:#fafafa;text-decoration:none}
+body[data-reference=true] :is(.fw-card,.story-character-card) {gap:10px;color:#fafafa;text-decoration:none}
 body[data-reference=true] :is(.fw-card-portrait,.story-character-art) {
   box-sizing:border-box;aspect-ratio:2/3;border:0;border-radius:12px;
   background:#171717;box-shadow:0 20px 25px -5px #0003,0 8px 10px -6px #0003;
 }
-body[data-reference=true] :is(.fw-card:hover .fw-card-portrait,.story-character-card:hover .story-character-art) {border-color:transparent}
-body[data-reference=true] :is(.fw-card-body,.story-character-caption) {display:flex;min-width:0;flex-direction:column;gap:6px}
-body[data-reference=true] :is(.fw-card-name,.story-character-card strong) {display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:3em;font-size:16px;line-height:1.5;font-weight:500}
-body[data-reference=true] :is(.fw-card-body em,.story-character-card [data-story-character-tagline]) {color:#a1a1a1;font-size:13px;line-height:1.5}
-body[data-reference=true] :is(.fw-card-intent,.story-character-capability) {color:#a1a1a1;font-size:12px;line-height:1.6}
+/* Leave room for the capability badge above a transparent sprite's face. */
+.fw-card-portrait > .fw-scene-background + img,
+.story-character-art > .story-character-background + img {transform:translateY(22px)}
+:is(.fw-card-portrait,.story-character-art) > .sd-capability {
+  position:absolute;
+  z-index:1;
+  top:10px;
+  left:10px;
+  max-width:calc(100% - 20px);
+  background:rgba(24,24,27,.88);
+  color:#e6e5e3;
+}
+:is(.fw-card-portrait,.story-character-art) > .sd-capability.is-chat {
+  background:rgba(49,38,24,.94);
+  color:#f0d294;
+}
+.sd-card-quote {
+  position:absolute;
+  inset:auto 0 0;
+  padding:28px 12px 12px;
+  background:linear-gradient(180deg,transparent 0%,rgba(12,12,14,.72) 45%,rgba(12,12,14,.94) 100%);
+  color:#f1efeb;
+  font-size:12px;
+  line-height:1.45;
+  pointer-events:none;
+}
+.sd-card-quote > span,.sd-card-meta {
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  overflow-wrap:anywhere;
+}
+body[data-reference=true] :is(.fw-card-body,.story-character-caption) {display:flex;min-width:0;flex-direction:column;gap:3px}
+body[data-reference=true] :is(.fw-card-name,.story-character-card strong) {display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:0;font-size:16px;line-height:1.5;font-weight:500}
+body[data-reference=true] .sd-card-meta {margin:0;color:#a1a1a1;font-size:13px;line-height:1.5}
 body[data-reference=true] .story-cast-grid {grid-template-columns:repeat(auto-fill,var(--sd-cover));gap:32px var(--sd-card-gap)}
 @media(min-width:1024px) and (max-width:1250px) {
   body[data-reference=true] :is(.fw-page,.story-entity-detail) {--sd-cover:176px}
 }
 @media(max-width:1023px) {
   body[data-reference=true] :is(.fw-page,.story-entity-detail) {--sd-cover:clamp(128px,36vw,148px);--sd-card-gap:12px}
-  body[data-reference=true] :is(.fw-card-name,.story-character-card strong) {font-size:15px}
-  body[data-reference=true] :is(.fw-card-body em,.story-character-card [data-story-character-tagline]) {font-size:12px;line-height:1.6}
   body[data-reference=true] :is(.sd-home-stage .sd-hero-choice,.fw-page .sd-hero-choice) {padding:10px 12px;font-size:13px}
 }
 @media(prefers-reduced-motion:reduce) {

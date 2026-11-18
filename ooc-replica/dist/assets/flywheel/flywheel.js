@@ -3,9 +3,9 @@ import {getLang} from '../site-i18n.js';
 import {escapeHTML as safe} from '../stream.js';
 import {heroSceneMarkup, mountHeroContent} from '../hero-scene.js';
 import {XICHUAN_KEY, latestSave, legacySaves, progressText, storyContext} from '../xichuan-state.js';
-import {CHARACTER_CARDS, WORKS, UNIVERSES, XICHUAN_FACT_LABELS, cardById, cardsByUniverse} from './cards-data.js';
+import {FEATURED_CHARACTER_CARDS, WORKS, UNIVERSES, XICHUAN_FACT_LABELS, cardById, cardsByUniverse, characterCardQuote, characterCardMeta, characterCapabilityLabel} from './cards-data.js';
 import {characterArt} from './character-art.js';
-import {readDiscoveryState, patchDiscoveryState, discoveryUrl} from './discovery-state.js';
+import {readDiscoveryState, discoveryUrl} from './discovery-state.js';
 import {characterDirectoryReturn, characterReturnUrl, storyReturnUrl, canonicalCharacterUrl} from '../character-links.js';
 import {storiesForCharacter} from '../character-stories.js';
 import {characterById} from '../character-profiles.js';
@@ -22,10 +22,6 @@ const mobileBar = ({href,label} = {}) => {
 const copy = {
  zh: {
   imageUnavailable: "图片暂不可用",
-  exploreH: "探索",
-  conversation: "和 TA 聊聊",
-  storyAppearance: "故事出场",
-  storyCapability: "故事出场",
   draftLabel: "先写一句",
   draftPlaceholder: "想对 TA 说什么？",
   draftCta: "带这句话去聊",
@@ -42,14 +38,12 @@ const copy = {
   libSub: "从一个让你好奇的角色开始，走进 TA 的故事。",
   chatBack: "返回聊天",
   storiesNav: "返回故事",
-  storyFilter: "按故事筛选",
   all: "全部",
   chatOnly: "可聊天",
   empty: "没有找到符合条件的角色。",
-  resetSearch: "清除搜索与筛选",
+  resetFilters: "查看全部角色",
   filtersLabel: "筛选角色",
-  count: n => `${n} 个角色`,
-  searchPh: "搜索名字、故事或关键词",
+  count: n => `${n} 位角色`,
   chatCta: "开始聊天",
   continueChat: "继续聊天",
   storyCta: "进入故事",
@@ -97,10 +91,6 @@ const copy = {
  },
  en: {
   imageUnavailable: "Image unavailable",
-  exploreH: "Explore",
-  conversation: "Talk with them",
-  storyAppearance: "Story character",
-  storyCapability: "In the story",
   draftLabel: "Write an opening line",
   draftPlaceholder: "What would you like to say?",
   draftCta: "Take this line to chat",
@@ -117,14 +107,12 @@ const copy = {
   libSub: "Start with someone who intrigues you. Discover the story they belong to.",
   chatBack: "Back to chat",
   storiesNav: "Back to stories",
-  storyFilter: "Filter by story",
   all: "All",
   chatOnly: "Chat available",
   empty: "No characters match these choices.",
-  resetSearch: "Clear search and filters",
+  resetFilters: "Show all characters",
   filtersLabel: "Filter characters",
   count: n => `${n} ${n === 1 ? 'character' : 'characters'}`,
-  searchPh: "Search names, stories or keywords",
   chatCta: "Start chatting",
   continueChat: "Continue chatting",
   storyCta: "Enter the story",
@@ -177,10 +165,10 @@ let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261118-mobile-dock"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261118-core-cast"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261118-mobile-dock';
+    link.href = '/assets/flywheel/flywheel.css?v=20261118-core-cast';
     document.head.append(link);
   }
 }
@@ -192,71 +180,64 @@ const sceneArt = (c, loading = 'lazy') => {
  return art?.background ? `<img class="fw-scene-background" src="${safe(art.background)}" alt="" loading="${loading}" onerror="this.hidden=true">` : '';
 };
 const workName = (id) => t(WORKS[id]?.title) || id;
-const uniName = (id) => t(UNIVERSES[id]?.name) || id;
-const storyFilterName = id => {
- const card = cardsByUniverse(id)[0], story = card && storiesForCharacter(card.id)[0];
- return story ? t(story.title) : uniName(id);
-};
 // 独立整页游戏（/assets/**）必须整页跳转，不能走 SPA 路由（站内现例：ashen 卡 target="_top"）
 const isStandalone = (url) => /^\/assets\//.test(url || '');
 const ext = (url) => (isStandalone(url) ? ' target="_top" rel="noopener"' : '');
 
 function cardMarkup(c) {
-  const l = L();
+  const lang = getLang();
   return `<a class="fw-card" href="/characters/${safe(c.id)}">
-    <span class="fw-card-portrait">${sceneArt(c)}${cardArt(c)}</span>
+    <span class="fw-card-portrait">${sceneArt(c)}${cardArt(c)}
+      <span class="sd-capability${c.chat ? ' is-chat' : ''}">${safe(characterCapabilityLabel(c, lang))}</span>
+      <span class="sd-card-quote"><span>${safe(characterCardQuote(c, lang))}</span></span>
+    </span>
     <span class="fw-card-body">
       <strong class="fw-card-name">${safe(t(c.name))}</strong>
-      <em>${safe(t(c.tagline))}</em>${c.portraitNote ? `<span class="fw-note">${safe(t(c.portraitNote))}</span>` : ''}
-      <span class="fw-card-badges"><span class="fw-badge">${safe(workName(c.source.work))}</span><span class="fw-badge fw-card-intent">${safe(c.chat ? l.conversation : l.storyAppearance)} →</span></span>
+      <span class="sd-card-meta">${safe(characterCardMeta(c, lang))}</span>
     </span>
   </a>`;
 }
 const grid = (cards) => `<div class="fw-grid">${cards.map(cardMarkup).join('')}</div>`;
 
 // —— /characters ——
-let libFilter = { universe: 'all', chat: false }, libQuery = '';
+const worldTitles = {
+  xichuan: WORKS.xichuan.title,
+  sanguo: WORKS.sanguo.title,
+  original: WORKS.character.title,
+  westlin: WORKS.ashen.title,
+  baker: WORKS.holmes.title,
+};
 let featuredDraft = '', featuredOwner;
-function readLibraryState() {
- const state = readDiscoveryState(location.search,UNIVERSES);
- libFilter = {universe:state.world,chat:state.chat}; libQuery = state.query;
-}
-function changeLibrary(patch, {replace = false} = {}) {
- const state = patchDiscoveryState({world:libFilter.universe,chat:libFilter.chat,query:libQuery},patch,UNIVERSES);
- const url = discoveryUrl(state,{search:location.search,hash:location.hash});
- const from = location.pathname + location.search;
- if (url !== from + (location.hash || '')) {
-  const history = globalThis.history;
-  if (replace) history?.replaceState({...history.state},'',url);
-  else {
-   history?.replaceState({...history.state,scroll:[globalThis.scrollX||0,globalThis.scrollY||0]},'');
-   history?.pushState({storydateNavigation:true,from},'',url);
-  }
- }
- libFilter = {universe:state.world,chat:state.chat}; libQuery = state.query;
-}
-function libItems() {
-  let items = libFilter.universe === 'all' ? CHARACTER_CARDS : cardsByUniverse(libFilter.universe);
-  if (libFilter.chat) items = items.filter((c) => c.chat);
-  const q = libQuery.trim().toLowerCase();
-  if (q) items = items.filter((c) => [c.name, c.tagline, c.persona, WORKS[c.source.work]?.title, UNIVERSES[c.source.universe]?.name, ...storiesForCharacter(c.id).map(story=>story.title)].flatMap((v) => [v?.zh, v?.en]).join(' ').toLowerCase().includes(q));
-  return items;
+
+function libItems({world, chat}) {
+  const cards = world === 'all' ? FEATURED_CHARACTER_CARDS : cardsByUniverse(world);
+  return chat ? cards.filter(card => card.chat) : cards;
 }
 function libResults(items) {
   const l = L();
-  return items.length ? grid(items) : `<div class="fw-empty"><p>${safe(l.empty)}</p><button type="button" class="fw-btn fw-btn-secondary" data-fw-reset>${safe(l.resetSearch)}</button></div>`;
+  return items.length ? grid(items) : `<div class="fw-empty"><p>${safe(l.empty)}</p><button type="button" class="fw-btn fw-btn-secondary" data-fw-reset>${safe(l.resetFilters)}</button></div>`;
 }
-function libMarkup() {
+function selectedPill(world, state) {
+  if (world === 'all') return state.world === 'all' && !state.chat;
+  if (world === 'chat') return state.chat;
+  return state.world === world;
+}
+function libMarkup(state) {
   const l = L();
-  const worldOptions = ['all',...Object.keys(UNIVERSES)].map(id => `<option value="${id}"${libFilter.universe === id ? ' selected' : ''}>${safe(id === 'all' ? l.all : storyFilterName(id))}</option>`).join('');
-  const items = libItems();
+  const labels = {all:l.all, chat:l.chatOnly, ...worldTitles};
+  const pills = Object.entries(labels).map(([world,label]) =>
+    `<button type="button" class="fw-chip" ${world === 'chat' ? 'data-fw-chat="1"' : `data-fw-world="${world}"`} aria-pressed="${selectedPill(world, state)}">${safe(t(label))}</button>`
+  ).join('');
+  const items = libItems(state);
   return `<main class="fw-page fw-character-library" data-no-i18n data-fw-page="characters" aria-label="${safe(l.charactersNav)}">
     <div class="fw-library-mobile">${mobileBar()}</div>
     <section class="sd-hero fw-character-feature" data-sd-hero="character">${heroSceneMarkup('character',getLang())}</section>
     <div class="fw-library-content">
-    <div class="fw-toolbar" role="group" aria-label="${safe(l.filtersLabel)}"><label class="fw-search"><span aria-hidden="true">⌕</span><input type="search" id="fw-search" placeholder="${safe(l.searchPh)}" value="${safe(libQuery)}" aria-label="${safe(l.searchPh)}" autocomplete="off"></label><select class="fw-world-select" data-fw-world-select aria-label="${safe(l.storyFilter)}">${worldOptions}</select><button type="button" class="fw-chip fw-chip-toggle${libFilter.chat ? ' active' : ''}" data-fw-chat="1" aria-pressed="${libFilter.chat}">${safe(l.chatOnly)}</button></div>
-    <div class="fw-library-heading"><h2>${safe(l.exploreH)}</h2><span class="fw-count" role="status">${l.count(items.length)}</span></div>
-    <div id="fw-lib-results">${libResults(items)}</div>
+      <div class="fw-filter-row">
+        <div class="fw-filter-bar native-carousel" role="group" aria-label="${safe(l.filtersLabel)}">${pills}</div>
+        <span class="fw-count" role="status">${l.count(items.length)}</span>
+      </div>
+      <div id="fw-lib-results">${libResults(items)}</div>
     </div>
   </main>`;
 }
@@ -491,7 +472,7 @@ function profileMarkup(c) {
      <div class="fw-profile-body sd-stage-body">
        <div class="fw-profile-head">
          <div class="fw-character-meta">
-           <span class="fw-capability sd-capability ${c.chat ? 'is-chat' : 'is-story'}">${safe(c.chat ? l.chatOnly : l.storyCapability)}</span>
+           <span class="fw-capability sd-capability ${c.chat ? 'is-chat' : 'is-story'}">${safe(characterCapabilityLabel(c, getLang()))}</span>
            <p class="fw-eyebrow">${safe(role)}</p>
            ${primaryStory ? `<span aria-hidden="true">·</span><p class="fw-persona"><a data-fw-story-source data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a></p>` : ''}
          </div>
@@ -540,7 +521,7 @@ function missingMarkup(world = false) {
  const l = L(), title = world ? l.missingWorld : l.missingCharacter;
  return `<main class="fw-page" data-no-i18n data-fw-page="missing">${mobileBar()}<section class="fw-missing"><h1 tabindex="-1">${safe(title)}</h1><p>${safe(l.missingGuide)}</p><a class="fw-btn" href="${world ? '/' : '/characters'}">${safe(world ? l.storiesNav : l.profileBack)} →</a></section></main>`;
 }
-const focusAttributes = ['id','data-sd-lang','data-fw-world-select','data-fw-chat','data-fw-chat-entry','data-fw-story-entry','data-fw-story-source','data-fw-back','data-fw-starter'];
+const focusAttributes = ['id','data-sd-lang','data-fw-world','data-fw-chat','data-fw-chat-entry','data-fw-story-entry','data-fw-story-source','data-fw-back','data-fw-starter'];
 function rememberFocus() {
  const node = document.activeElement;
  const attribute = focusAttributes.find(key => node?.hasAttribute?.(key));
@@ -560,6 +541,53 @@ function restoreFocus(saved) {
  if (Number.isInteger(saved.start) && node.setSelectionRange) { try { node.setSelectionRange(saved.start,saved.end,saved.direction); } catch {} }
  return true;
 }
+function revealPill(bar, button) {
+  if (!button || !(bar.scrollWidth > bar.clientWidth)) return;
+  const area = bar.getBoundingClientRect(), pill = button.getBoundingClientRect();
+  if (pill.left < area.left + 4) bar.scrollLeft -= area.left + 4 - pill.left;
+  else if (pill.right > area.right - 4) bar.scrollLeft += pill.right - area.right + 4;
+}
+
+function bindLibraryFilters() {
+  const bar = document.querySelector('.fw-filter-bar');
+  if (!bar) return;
+  const buttons = [...bar.querySelectorAll('button')];
+  const active = buttons.filter(button => button.getAttribute('aria-pressed') === 'true');
+  revealPill(bar, active.at(-1));
+
+  const choose = button => {
+    const state = {world:button.dataset.fwWorld || 'all', chat:button.hasAttribute('data-fw-chat')};
+    const url = discoveryUrl(state, {search:location.search, hash:location.hash});
+    const from = location.pathname + location.search, history = globalThis.history;
+    if (url !== from + (location.hash || '')) {
+      history?.replaceState({...history.state,scroll:[globalThis.scrollX || 0,globalThis.scrollY || 0]}, '');
+      history?.pushState({storydateNavigation:true,from}, '', url);
+    }
+    for (const pill of buttons) pill.setAttribute('aria-pressed', String(pill === button));
+    const items = libItems(state);
+    document.getElementById('fw-lib-results').innerHTML = libResults(items);
+    document.querySelector('.fw-count').textContent = L().count(items.length);
+    button.focus({preventScroll:true});
+    revealPill(bar, button);
+  };
+  bar.addEventListener('click', event => {
+    const button = event.target.closest('button');
+    if (button) choose(button);
+  });
+  bar.addEventListener('keydown', event => {
+    const index = buttons.indexOf(event.target);
+    if (index < 0) return;
+    const destination = {ArrowLeft:Math.max(0,index-1), ArrowRight:Math.min(buttons.length-1,index+1), Home:0, End:buttons.length-1}[event.key];
+    if (!Number.isInteger(destination)) return;
+    event.preventDefault();
+    buttons[destination].focus({preventScroll:true});
+    revealPill(bar, buttons[destination]);
+  });
+  document.getElementById('fw-lib-results').addEventListener('click', event => {
+    if (event.target.closest('[data-fw-reset]')) choose(buttons[0]);
+  });
+}
+
 function bindCommon() {
  const profilePage=document.querySelector('[data-fw-page="profile"]');
  profilePage?.addEventListener('click',event=>{
@@ -571,19 +599,8 @@ function bindCommon() {
   heading.tabIndex=-1;heading.focus({preventScroll:true});
   target.scrollIntoView({block:'start',behavior:globalThis.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches?'instant':'smooth'});
  });
- document.querySelector('[data-fw-chat]')?.addEventListener('click', () => { changeLibrary({chat:!libFilter.chat}); renderRoute('/characters'); document.querySelector('[data-fw-chat]')?.focus({preventScroll:true}); });
- document.querySelector('[data-fw-world-select]')?.addEventListener('change', e => { changeLibrary({world:e.target.value}); renderRoute('/characters'); document.querySelector('[data-fw-world-select]')?.focus({preventScroll:true}); });
+ bindLibraryFilters();
  document.querySelector('.fw-character-feature input')?.addEventListener('input', e => { featuredDraft = e.target.value; });
- document.getElementById('fw-search')?.addEventListener('input', e => {
-  changeLibrary({query:e.target.value},{replace:true});
-  document.getElementById('fw-lib-results').innerHTML = libResults(libItems());
-  document.querySelector('.fw-count').textContent = L().count(libItems().length);
- });
- document.getElementById('fw-lib-results')?.addEventListener('click', e => {
-  if (!e.target.closest('[data-fw-reset]')) return;
-  changeLibrary({world:'all',chat:false,query:''}); renderRoute('/characters');
-  document.getElementById('fw-search')?.focus({preventScroll:true});
- });
  document.querySelector('[data-fw-export]')?.addEventListener('click',exportDrafts);
 }
 function renderRoute(path) {
@@ -591,7 +608,13 @@ function renderRoute(path) {
  const draft = document.querySelector('.fw-character-feature input');
  if (draft) featuredDraft = draft.value;
  let markup, title;
- if (path === '/characters') { readLibraryState(); markup = libMarkup(); title = L().charactersNav; }
+ if (path === '/characters') {
+  const filter = readDiscoveryState(location.search, UNIVERSES);
+  if (new URLSearchParams(location.search).has('q')) {
+   globalThis.history?.replaceState(globalThis.history.state, '', discoveryUrl(filter, location));
+  }
+  markup = libMarkup(filter); title = L().charactersNav;
+ }
  else if (/^\/characters\/[^/]+$/.test(path)) { const c = cardById(path.split('/')[2]); markup = c ? profileMarkup(c) : missingMarkup(); title = c ? t(c.name) : L().missingCharacter; }
  else if (/^\/universe\/[^/]+$/.test(path)) { markup = missingMarkup(true); title = L().missingWorld; }
  else if (path === '/studio') { markup = studioMarkup(); title = L().legacyH; }
