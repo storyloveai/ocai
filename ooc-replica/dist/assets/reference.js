@@ -1,7 +1,7 @@
 import {syncCharacterLinks, characterReturnUrl} from './character-links.js';
 import {charactersForStory, storiesForCharacter, storyById, linkedStoryCatalog} from './character-stories.js';
 import {characterArt} from './flywheel/character-art.js';
-import {CHARACTER_CARDS,WORKS} from './flywheel/cards-data.js';
+import {CHARACTER_CARDS,WORKS,UNIVERSES} from './flywheel/cards-data.js';
 import {bookMetadata} from './book-catalog.js';
 import {updateShelf} from './hero-shelf.js';
 import {mountHeroScene} from './hero-scene.js';
@@ -24,9 +24,9 @@ import {getLang,translate} from './site-i18n.js';
 const style=document.createElement('link');
 style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
-const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261117-shared';
-const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261117-shared';
-const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261117-shared';
+const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261118-stage';
+const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261118-stage';
+const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261118-stage';
 const characterStyleReady=new Promise((resolve,reject)=>{characterStyle.onload=resolve;characterStyle.onerror=()=>reject(new Error('Character stylesheet could not load'));});
 const controlsReady=new Promise((resolve,reject)=>{controlsStyle.onload=resolve;controlsStyle.onerror=()=>reject(new Error('Shared controls stylesheet could not load'));});
 const detailReady=new Promise((resolve,reject)=>{detailStyle.onload=resolve;detailStyle.onerror=()=>reject(new Error('Story stylesheet could not load'));});
@@ -338,20 +338,52 @@ function bindDetail() {
 
 const storyText = value => typeof value === 'string' ? value : value?.[getLang()] || value?.en || value?.zh || '';
 const isLinkedGame = id => linkedStoryCatalog.some(story=>story.id===id) || id===threeKingdomsInk.id;
-const storyFormat = id => isLinkedGame(id) ? storyText(WORKS[charactersForStory(id)[0]?.source.work]?.kind) : '';
-function storyPlayMarkup(id) {
- const story=storyById(id);
- if(!story)return `<button class="shell-white-button" data-play="${safe(id)}">New Play</button>`;
- const standalone=story.playUrl.startsWith('/assets/');
- return `<a class="shell-white-button" data-story-play="${safe(id)}" href="${safe(story.playUrl)}"${standalone?' target="_top" rel="noopener"':''}>${getLang()==='zh'?'进入故事':'Play story'}</a>`;
+function storyTitle(id) {
+ return storyText(storyById(id)?.title) || translate(catalog.find(item=>item.id===id)?.title || '',getLang());
 }
+function storyFormat(id) {
+ const work=isLinkedGame(id) ? charactersForStory(id)[0]?.source.work : null;
+ return storyText(WORKS[work]?.kind) || translate(catalog.find(item=>item.id===id)?.genre || 'Story',getLang());
+}
+function storyLead(id) {
+ const record=storyById(id);
+ const description=storyText(record?.description) || translate(catalog.find(item=>item.id===id)?.description || '',getLang());
+ // Some campaign records contain just their format in one language. Use the
+ // published world synopsis in that case so the genre pill isn't repeated.
+ if(record && description===storyFormat(id)){
+  const universe=charactersForStory(id)[0]?.source.universe;
+  return storyText(UNIVERSES[universe]?.tagline) || description;
+ }
+ return description;
+}
+function storyPlayMarkup(id) {
+ const playUrl=storyById(id)?.playUrl || (bookMetadata.some(book=>book.id===id) ? '/play/'+id : '');
+ if(!playUrl)return `<button class="shell-white-button" data-play="${safe(id)}" data-story-play="${safe(id)}">${getLang()==='zh'?'进入故事':'Play story'}</button>`;
+ const standalone=playUrl.startsWith('/assets/');
+ return `<a class="shell-white-button" data-story-play="${safe(id)}" href="${safe(playUrl)}"${standalone?' target="_top" rel="noopener"':''}>${getLang()==='zh'?'进入故事':'Play story'}</a>`;
+}
+function castCapability(card) {
+ return getLang()==='zh' ? (card.chat?'可聊天':'故事出场') : (card.chat?'Chat available':'In the story');
+}
+const castProfileHint = () => getLang()==='zh'?'认识 TA →':'Meet character →';
 function storyCharactersMarkup(id,{rich=false}={}) {
  const cards=charactersForStory(id);
  if(!cards.length)return '';
  const links=cards.map(card=>{
   if(rich){
    const art=characterArt(card);
-   return `<a class="story-character-card" href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}"><div class="story-character-art" aria-hidden="true">${art?.background?`<img class="story-character-background" src="${safe(art.background)}" alt="" loading="lazy">`:''}<img src="${safe(card.portrait)}" alt="" loading="lazy"></div><div class="story-character-caption"><strong data-story-character-name>${safe(storyText(card.name))}</strong><p data-story-character-tagline>${safe(storyText(card.tagline))}</p><span class="story-character-capability" data-story-character-capability>${getLang()==='zh'?(card.chat?'可对话 →':'故事出场'):(card.chat?'Chat available →':'In the story')}</span></div></a>`;
+   return `<a class="story-character-card" href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}">
+    <div class="story-character-art">
+     <span class="story-cast-badge sd-capability ${card.chat?'is-chat':'is-story'}" data-story-character-capability>${castCapability(card)}</span>
+     ${art?.background?`<img class="story-character-background" src="${safe(art.background)}" alt="" loading="lazy">`:''}
+     <img src="${safe(card.portrait)}" alt="" loading="lazy">
+    </div>
+    <div class="story-character-caption">
+     <strong data-story-character-name>${safe(storyText(card.name))}</strong>
+     <p data-story-character-tagline>${safe(storyText(card.tagline))}</p>
+     ${card.chat?`<span class="story-character-hint" data-story-character-hint>${castProfileHint()}</span>`:''}
+    </div>
+   </a>`;
   }
   const crop=characterArt(card)?'position:absolute;left:50%;top:0;transform:translateX(-50%);width:80px;height:120px;max-width:none;object-fit:cover;object-position:top':'display:block;width:40px;height:40px;object-fit:cover;object-position:center 16%';
   return `<a href="/characters/${safe(card.id)}" data-story-character="${safe(card.id)}" style="display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:8px 12px;border:1px solid #3a3a3a;border-radius:8px;color:inherit;text-decoration:none"><div data-story-avatar aria-hidden="true" style="position:relative;flex:none;width:40px;height:40px;overflow:hidden;border-radius:6px;background:#222"><img src="${safe(card.portrait)}" alt="" width="40" height="40" loading="lazy" style="${crop}"></div><span>${safe(storyText(card.name))}</span></a>`;
@@ -360,17 +392,38 @@ function storyCharactersMarkup(id,{rich=false}={}) {
 }
 function enhanceStoryDetail(article,id,d) {
  const story=storyById(id),top=article?.querySelector('.replica-story-top,.public-detail-top');
- if(!story||!top)return;
+ if(!top || d.type!=='story')return;
+ const image=story?.image || source(d);
+ const title=storyTitle(id),campaign=bookMetadata.find(book=>book.id===id);
  const favorite=top.querySelector('[data-favorite],[data-preview-bookmark]'),creator=d.author?top.querySelector('.creator-link'):null;
  if(favorite){const selected=context.read('ooc-favorites',[]).includes(id);favorite.dataset.favorite=id;favorite.dataset.referenceFavorite='true';favorite.dataset.storyBookmarkLabel='';favorite.textContent=getLang()==='zh'?'收藏':'Bookmark';favorite.setAttribute('aria-label',getLang()==='zh'?'收藏故事':'Bookmark story');favorite.setAttribute('aria-pressed',String(selected));favorite.style.color=selected?'#c5a46c':'';favorite.classList.add('story-bookmark');}
  const description=article.querySelector('.story-description');
  if(description){if(description.previousElementSibling?.tagName==='H2')description.previousElementSibling.remove();description.remove();}
  // Only replace the public identity block. Longer authored sections below it
  // remain intact, with a single real play action moved up to the first screen.
- const hero=document.createElement('section');hero.className='story-entity-hero';hero.setAttribute('data-no-i18n','');
- hero.innerHTML=`<div class="story-entity-art"><img class="story-entity-atmosphere" src="${safe(story.image)}" alt=""><img class="story-entity-cover" data-story-cover="${safe(id)}" src="${safe(story.image)}" alt="${safe(storyText(story.title))}"></div><div class="story-entity-copy"><p class="story-entity-kicker" data-story-detail-label="story">${getLang()==='zh'?'故事':'Story'}</p><h1 data-story-title="${safe(id)}">${safe(storyText(story.title))}</h1>${d.author?`<p class="story-entity-author">${safe(d.author)}</p>`:''}${storyFormat(id)?`<p class="story-entity-format" data-story-format="${safe(id)}">${safe(storyFormat(id))}</p>`:''}<p class="story-entity-lead" data-story-description="${safe(id)}">${safe(storyText(story.description))}</p><div class="story-entity-actions">${storyPlayMarkup(id)}</div></div>`;
+ const hero=document.createElement('section');
+ hero.className='story-entity-hero sd-stage-card';
+ hero.setAttribute('aria-labelledby','story-entity-title');
+ hero.setAttribute('data-no-i18n','');
+ hero.style.setProperty('--sd-stage-image',`url(${JSON.stringify(image)})`);
+ hero.innerHTML=`<div class="sd-stage-layout">
+  <div class="story-entity-art sd-stage-art">
+   <img class="story-entity-cover" data-story-cover="${safe(id)}" src="${safe(image)}" alt="${safe(title)}" fetchpriority="high">
+   <span class="sd-stage-fade" aria-hidden="true"></span>
+  </div>
+  <div class="story-entity-copy sd-stage-body">
+   <div class="story-entity-head">
+    <span class="story-entity-format" data-story-format="${safe(id)}">${safe(storyFormat(id))}</span>
+    <h1 id="story-entity-title" data-story-title="${safe(id)}">${safe(title)}</h1>
+    ${d.author?`<div class="story-entity-author">${creatorLink(d.author)}</div>`:''}
+    <p class="story-entity-lead" data-story-description="${safe(id)}">${safe(storyLead(id))}</p>
+    ${campaign?.plays?`<small data-story-campaign="${safe(campaign.plays)}">${safe(translate(campaign.plays,getLang()))}</small>`:''}
+   </div>
+   <div class="story-entity-actions">${storyPlayMarkup(id)}</div>
+  </div>
+ </div>`;
  if(favorite)hero.querySelector('.story-entity-actions').append(favorite);
- if(creator){creator.classList.add('story-entity-author');hero.querySelector('.story-entity-author').replaceWith(creator);}
+ if(creator)hero.querySelector('.story-entity-author').replaceChildren(creator);
  top.replaceWith(hero);
  article.querySelector('.story-play-bar')?.remove();
  article.classList.add('story-entity-detail');
@@ -402,17 +455,23 @@ globalThis.addEventListener?.('sd-lang',()=>{
     (link.querySelector('[data-story-character-name]')||link.querySelector('span')).textContent=storyText(card.name);
     const tagline=link.querySelector('[data-story-character-tagline]'),capability=link.querySelector('[data-story-character-capability]');
     if(tagline)tagline.textContent=storyText(card.tagline);
-    if(capability)capability.textContent=getLang()==='zh'?(card.chat?'可对话 →':'故事出场'):(card.chat?'Chat available →':'In the story');
+    if(capability)capability.textContent=castCapability(card);
+    const hint=link.querySelector('[data-story-character-hint]');
+    if(hint)hint.textContent=castProfileHint();
    }
   });
  });
  document.querySelectorAll('[data-story-information]').forEach(link=>link.textContent=(getLang()==='zh'?'查看故事详情':'Full story information')+' →');
  document.querySelectorAll('[data-story-play]').forEach(link=>link.textContent=getLang()==='zh'?'进入故事':'Play story');
- document.querySelectorAll('[data-story-title]').forEach(node=>{const story=storyById(node.dataset.storyTitle);if(story)node.textContent=storyText(story.title);});
- document.querySelectorAll('[data-story-description]').forEach(node=>{const story=storyById(node.dataset.storyDescription);if(story)node.textContent=storyText(story.description);});
- document.querySelectorAll('[data-story-detail-label="story"]').forEach(node=>node.textContent=getLang()==='zh'?'故事':'Story');
+ document.querySelectorAll('[data-story-title]').forEach(node=>node.textContent=storyTitle(node.dataset.storyTitle));
+ document.querySelectorAll('[data-story-description]').forEach(node=>{
+  const id=node.dataset.storyDescription;
+  if(node.closest('.story-entity-head'))node.textContent=storyLead(id);
+  else if(storyById(id))node.textContent=storyText(storyById(id).description);
+ });
  document.querySelectorAll('[data-story-format]').forEach(node=>node.textContent=storyFormat(node.dataset.storyFormat));
- document.querySelectorAll('[data-story-cover]').forEach(node=>{const story=storyById(node.dataset.storyCover);if(story)node.alt=storyText(story.title);});
+ document.querySelectorAll('[data-story-cover]').forEach(node=>node.alt=storyTitle(node.dataset.storyCover));
+ document.querySelectorAll('[data-story-campaign]').forEach(node=>node.textContent=translate(node.dataset.storyCampaign,getLang()));
  document.querySelectorAll('[data-story-bookmark-label]').forEach(node=>{node.textContent=getLang()==='zh'?'收藏':'Bookmark';node.setAttribute('aria-label',getLang()==='zh'?'收藏故事':'Bookmark story');});
  document.querySelectorAll('[data-search-profile]').forEach(link=>{
   const profile=searchProfiles.find(p=>p.id===link.dataset.searchProfile);if(!profile)return;
@@ -548,7 +607,7 @@ export function show(path, helpers) {
     if(content&&d){
       const back=content.querySelector('.shell-page-header a');
       if(back){back.href=characterReturnUrl(globalThis.history?.state?.characterReturn)||'/';back.textContent=getLang()==='zh'?'‹ 返回':'‹ Back';}
-      if(back&&storyById(id)){
+      if(back&&d.type==='story'){
        back.parentElement.classList.add('story-detail-header');
        back.parentElement.insertAdjacentHTML('beforeend',`<div class="sd-lang sd-lang-top story-detail-language" role="group" aria-label="${getLang()==='zh'?'语言':'Language'}" data-no-i18n>${['en','zh'].map(lang=>`<button type="button" data-sd-lang="${lang}" aria-pressed="${lang===getLang()}">${lang==='zh'?'中文':'EN'}</button>`).join('')}</div>`);
       }

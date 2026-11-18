@@ -2,6 +2,10 @@
 
 用户要求：统一角色入口，跑通夏知遥聊天、故事、记忆和进度，提供从头体验的 Preview，不合并。任务 #156。
 
+## 11 月 18 日交接
+
+角色档案与 Story 详情共用响应式舞台。先从夏知遥档案选择话题，点白色按钮进入聊天，确认输入框中是尚未发送的草稿。返回档案后，从下方故事条进入原 Story，点出场卡可回到同一角色。两种语言、两种屏幕尺寸的截图和本轮检查结果收在[沉浸舞台验收](../verification/2026-11-18-detail-stage.md)。下文按日期保留此前的集成记录。
+
 使用 `codex/character-loop-integration-20261116`，base main。它组合 #151 4e78a6a（含 #149 38b6ad4）及 #155 1b184f9；原 PR 不改、不关、不合并。产品行为和截图见 `docs/verification/2026-11-16-character-loop-integration.md`。
 
 关键入口：`/characters` → `/characters/xc-zhiyao` → `/play/xc-zhiyao` ↔ `/play/xichuan`。原角色聊天 ID 和 `ooc-session-v2-*` 键未更名；旧 singular 角色 URL 兼容，新旧存档不被静默清除。旧静态汐川入口在 Vercel 缺少 site=1 时跳宿主，iframe 保留 site=1。

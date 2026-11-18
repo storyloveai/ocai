@@ -25,8 +25,9 @@ const copy = {
   exploreH: "探索",
   conversation: "和 TA 聊聊",
   storyAppearance: "故事出场",
+  storyCapability: "故事出场",
   draftLabel: "先写一句",
-  draftPlaceholder: "想对 TA 说什么？",
+  draftPlaceholder: "想对 TA 说什么？（留空可直接开始聊天）",
   draftCta: "带这句话去聊",
   draftHint: "进入后确认发送",
   draftFailed: "暂时无法打开聊天，你写的话仍保留在这里。",
@@ -99,10 +100,11 @@ const copy = {
   exploreH: "Explore",
   conversation: "Talk with them",
   storyAppearance: "Story character",
+  storyCapability: "In the story",
   draftLabel: "Write an opening line",
-  draftPlaceholder: "What would you like to say?",
+  draftPlaceholder: "What would you like to say? Leave blank to start chatting.",
   draftCta: "Take this line to chat",
-  draftHint: "Review before sending in chat",
+  draftHint: "Confirm in chat",
   draftFailed: "Could not open chat. Your words are still kept here.",
   storiesH: "The stories they belong to",
   storyDetails: "About this story",
@@ -175,19 +177,19 @@ let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261117-shared"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261118-stage"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261117-shared';
+    link.href = '/assets/flywheel/flywheel.css?v=20261118-stage';
     document.head.append(link);
   }
 }
 
 // —— 小组件 ——
 const cardArt = (c) => `<img src="${safe(c.portrait)}" alt="" width="300" height="450" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(L().imageUnavailable)}</span>`;
-const sceneArt = c => {
+const sceneArt = (c, loading = 'lazy') => {
  const art = characterArt(c);
- return art?.background ? `<img class="fw-scene-background" src="${safe(art.background)}" alt="" loading="lazy" onerror="this.hidden=true">` : '';
+ return art?.background ? `<img class="fw-scene-background" src="${safe(art.background)}" alt="" loading="${loading}" onerror="this.hidden=true">` : '';
 };
 const workName = (id) => t(WORKS[id]?.title) || id;
 const uniName = (id) => t(UNIVERSES[id]?.name) || id;
@@ -333,33 +335,113 @@ function profileStateMarkup(c, account = currentHelpers?.account, view = profile
  if (view.unavailable) return `<p class="fw-note" role="status">${safe(l.stateUnavailable)}</p>`;
  const {chat,chatting} = view;
  if (!c.chat) return `<div class="fw-profile-actions"><p class="fw-note">${safe(l.noChat)}</p><a class="fw-story-jump" data-fw-story-jump href="#fw-stories">${safe(l.meetInStory)} ↓</a></div>`;
- const starters=entryStarters(c),draft=profileDrafts.get(c.id)||'';
- return `<div class="fw-profile-actions"><div class="fw-ctas"><a class="fw-btn" data-fw-chat-entry href="${safe(c.chat)}">${safe(chatting ? l.continueChat : l.chatCta)} →</a></div>
-  ${chatting ? `<p class="fw-note" data-fw-chat-status>${safe(l.chatSaved(chat.messages.length))}</p>` : ''}
-  <form class="fw-conversation-form" data-fw-profile-form><label for="fw-profile-draft">${safe(l.draftLabel)}</label>${starters.length ? `<div class="fw-conversation-starters" role="group" aria-label="${safe(l.topicsH)}">${starters.map((line,i)=>`<button type="button" data-fw-starter="${i}" aria-pressed="${line === draft.trim()}">${safe(line)}</button>`).join('')}</div>` : ''}<div class="fw-conversation-input"><input id="fw-profile-draft" data-fw-profile-draft name="draft" maxlength="300" autocomplete="off" value="${safe(draft)}" placeholder="${safe(l.draftPlaceholder)}"><button class="fw-btn fw-btn-secondary" type="submit">${safe(l.draftCta)} →</button></div><p class="fw-draft-hint" data-fw-draft-status role="status">${safe(l.draftHint)}</p></form>
-  ${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}</div>`;
+ const starters = entryStarters(c), draft = profileDrafts.get(c.id) || '';
+ const openingLines = starters.map((line,i) => `<button type="button" data-fw-starter="${i}" aria-pressed="${line === draft.trim()}">${safe(line)}</button>`).join('');
+ return `<div class="fw-profile-actions fw-chat-dock">
+   <form class="fw-conversation-form" data-fw-profile-form>
+     <div class="fw-dock-header">
+       <label for="fw-profile-draft">${safe(l.draftLabel)}</label>
+       <span class="fw-draft-hint" id="fw-draft-status" data-fw-draft-status role="status">${safe(l.draftHint)}</span>
+     </div>
+     ${openingLines ? `<div class="fw-conversation-starters" role="group" aria-label="${safe(l.topicsH)}">${openingLines}</div>` : ''}
+     <div class="fw-conversation-input">
+       <input id="fw-profile-draft" data-fw-profile-draft name="draft" maxlength="300" autocomplete="off" aria-describedby="fw-draft-status" value="${safe(draft)}" placeholder="${safe(l.draftPlaceholder)}">
+       <a class="fw-btn" data-fw-chat-entry href="${safe(c.chat)}">${safe(chatting ? l.continueChat : l.chatCta)} →</a>
+     </div>
+   </form>
+   ${chatting ? `<p class="fw-note" data-fw-chat-status>${safe(l.chatSaved(chat.messages.length))}</p>` : ''}
+   ${account?.restoreError ? `<p class="fw-note" role="status">${safe(l.restoreFailed)}</p>` : ''}
+ </div>`;
 }
 function profileRelatedMarkup(c, account = currentHelpers?.account, view = profileView(c,account)) {
- const l=L(),stories=storiesForCharacter(c.id),ready=!view.restoring&&!view.unavailable;
- const {raw,chat,played,chatting}=view;
- const cards=stories.map((story,i)=>`<article class="fw-story-card"><a class="fw-story-cover" data-full-info href="${safe(story.informationUrl)}"><img src="${safe(story.image)}" alt="${safe(t(story.title))}" loading="lazy"></a><div class="fw-story-copy"><p class="fw-eyebrow">${safe(i===0 ? t(WORKS[c.source.work]?.kind)||workName(c.source.work) : l.appearH)}</p><h3><a data-full-info href="${safe(story.informationUrl)}">${safe(t(story.title))}</a></h3><p>${safe(t(story.description))}</p>${ready&&i===0&&played ? `<p class="fw-note" data-fw-progress>${safe(progressText(raw,getLang()))}</p>` : ''}<div class="fw-ctas"><a class="fw-story-information" data-full-info href="${safe(story.informationUrl)}">${safe(l.storyDetails)} ↗</a>${ready ? `<a class="fw-btn fw-btn-secondary" ${i===0?'data-fw-story-entry':'data-fw-appearance-entry'} href="${safe(story.playUrl)}"${ext(story.playUrl)}>${safe(i===0&&played ? l.continueStory : l.storyCta)} →</a>` : ''}</div>${isStandalone(story.playUrl) ? `<p class="fw-note fw-standalone-note">${safe(l.standalone)}</p>` : ''}</div></article>`).join('');
+ const l = L(), stories = storiesForCharacter(c.id), ready = !view.restoring && !view.unavailable;
+ const {raw,chat,played,chatting} = view;
+ const cards = stories.map((story,i) => {
+  const hasProgress = i === 0 && ready && played;
+  const format = i === 0 ? t(WORKS[c.source.work]?.kind) || workName(c.source.work) : l.appearH;
+  const informationUrl = safe(story.informationUrl), title = safe(t(story.title));
+  const summary = i === 0 ? t(UNIVERSES[c.source.universe]?.tagline) || t(story.description) : t(story.description);
+  return `<article class="fw-story-card">
+    <a class="fw-story-cover" data-full-info href="${informationUrl}"><img src="${safe(story.image)}" alt="${title}" loading="lazy"></a>
+    <div class="fw-story-copy">
+      <div class="fw-story-meta"><span class="fw-eyebrow">${safe(format)}</span>${hasProgress ? `<span data-fw-progress>${safe(progressText(raw,getLang()))}</span>` : ''}</div>
+      <h3><a data-full-info href="${informationUrl}">${title}</a></h3><p class="fw-story-description">${safe(summary)}</p>
+      ${isStandalone(story.playUrl) ? `<p class="fw-note fw-standalone-note">${safe(l.standalone)}</p>` : ''}
+    </div>
+    <div class="fw-ctas fw-story-actions"><a class="fw-story-information" data-full-info href="${informationUrl}">${safe(l.storyDetails)} ↗</a>${ready ? `<a class="fw-btn fw-btn-secondary" ${i===0?'data-fw-story-entry':'data-fw-appearance-entry'} href="${safe(story.playUrl)}"${ext(story.playUrl)}>${safe(hasProgress ? l.continueStory : l.storyCta)} →</a>` : ''}</div>
+  </article>`;
+ }).join('');
  const scope=ready&&(played||chatting||chat.pins.length||chat.notes)?`<p class="fw-progress-scope">${safe(account?.user ? l.accountProgress : l.deviceProgress)}</p>`:'';
  return `${cards?`<section class="fw-section fw-story-section" id="fw-stories"><h2>${safe(l.storiesH)}</h2><div class="fw-story-list">${cards}</div></section>`:''}${ready&&c.chat ? experiencesMarkup(c,raw,chat) : ''}${scope}`;
 }
-function bindProfileEntry(c,account=currentHelpers?.account) {
- const host=document.querySelector('[data-fw-profile-state]'),form=host?.querySelector('[data-fw-profile-form]'),input=form?.querySelector('input'),main=host?.querySelector('[data-fw-chat-entry]');
- if(!form||!input||!main||!c.chat)return;
- const owner=ownerFor(account),ordinaryLabel=main.textContent,current=()=>form.isConnected&&profileStateOwners.get(host)===owner&&profileDraftOwner===owner&&(!account||(!account.busy&&account.restored));
- const destination=text=>{const url=new URL(c.chat,location.href);if(text)url.searchParams.set('draft',text);return url.pathname+url.search;};
- const line=()=>Array.from(input.value.trim()).slice(0,300).join('');
- const paint=()=>{const text=line(),href=destination(text),label=text?L().draftCta+' →':ordinaryLabel;if(main.getAttribute('href')!==href)main.setAttribute('href',href);if(main.textContent!==label)main.textContent=label;form.querySelectorAll('[data-fw-starter]').forEach(button=>{const selected=String(text===starters[Number(button.dataset.fwStarter)]);if(button.getAttribute('aria-pressed')!==selected)button.setAttribute('aria-pressed',selected);});};
- const keep=()=>{if(!current())return;profileDrafts.set(c.id,Array.from(input.value).slice(0,300).join(''));paint();};
+function bindProfileEntry(c, account = currentHelpers?.account) {
+ const host = document.querySelector('[data-fw-profile-state]'), form = host?.querySelector('[data-fw-profile-form]');
+ const input = form?.querySelector('[data-fw-profile-draft]'), main = form?.querySelector('[data-fw-chat-entry]');
+ if (!input || !main || !c.chat) return;
+ const owner = ownerFor(account), ordinaryLabel = main.textContent, starters = entryStarters(c);
+ const current = () => form.isConnected && profileStateOwners.get(host) === owner && profileDraftOwner === owner && (!account || (!account.busy && account.restored));
+ const line = () => Array.from(input.value.trim()).slice(0,300).join('');
+ function destination(text) {
+  const url = new URL(c.chat,location.href);
+  if (text) url.searchParams.set('draft',text);
+  return url.pathname + url.search;
+ }
+ function paint() {
+  const text = line(), href = destination(text), label = text ? L().draftCta + ' →' : ordinaryLabel;
+  if (main.getAttribute('href') !== href) main.setAttribute('href',href);
+  if (main.textContent !== label) main.textContent = label;
+  for (const button of form.querySelectorAll('[data-fw-starter]')) {
+   const selected = String(text === starters[Number(button.dataset.fwStarter)]);
+   if (button.getAttribute('aria-pressed') !== selected) button.setAttribute('aria-pressed',selected);
+  }
+ }
+ function keep() {
+  if (!current()) return;
+  profileDrafts.set(c.id,Array.from(input.value).slice(0,300).join(''));
+  paint();
+ }
  input.addEventListener('input',keep);
- const starters=entryStarters(c);
- form.querySelectorAll('[data-fw-starter]').forEach(button=>button.addEventListener('click',()=>{if(!current())return;input.value=starters[Number(button.dataset.fwStarter)]||'';keep();input.focus({preventScroll:true});}));
- const handoff=()=>{if(!current())return;const text=line();if(!text){input.focus({preventScroll:true});return;}const before=input.value,url=destination(text);profileDrafts.delete(c.id);input.value='';paint();try{if(currentHelpers?.navigate)currentHelpers.navigate(url);else location.href=url;}catch{profileDrafts.set(c.id,before);if(form.isConnected){input.value=before;paint();form.querySelector('[data-fw-draft-status]').textContent=L().draftFailed;}}};
- main.addEventListener('click',event=>{if(!line()||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;event.preventDefault();handoff();});
- form.addEventListener('submit',event=>{event.preventDefault();handoff();});
+ for (const button of form.querySelectorAll('[data-fw-starter]')) {
+  button.addEventListener('click',() => {
+   if (!current()) return;
+   input.value = starters[Number(button.dataset.fwStarter)] || '';
+   keep();
+   input.focus({preventScroll:true});
+  });
+ }
+ function handoff() {
+  if (!current()) return;
+  const before = input.value, url = destination(line());
+  profileDrafts.delete(c.id);
+  input.value = '';
+  paint();
+  try {
+   if (currentHelpers?.navigate) currentHelpers.navigate(url);
+   else location.href = url;
+  } catch {
+   if (!current()) return;
+   profileDrafts.set(c.id,before);
+   input.value = before;
+   paint();
+   form.querySelector('[data-fw-draft-status]').textContent = L().draftFailed;
+  }
+ }
+ main.addEventListener('click',event => {
+  if (current() && (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)) return;
+  event.preventDefault();
+  handoff();
+ });
+ // A single text field can submit a form implicitly. The Enter selecting an
+ // IME candidate belongs to the input method, even if composition ends first.
+ let confirmingCandidate = false;
+ input.addEventListener('keydown',event => {
+  confirmingCandidate = event.isComposing || event.keyCode === 229;
+ });
+ input.addEventListener('keyup',() => { confirmingCandidate = false; });
+ form.addEventListener('submit',event => {
+  event.preventDefault();
+  if (!confirmingCandidate) handoff();
+ });
  paint();
 }
 const profileStateCache = new WeakMap();
@@ -389,11 +471,40 @@ function profileMarkup(c) {
  const fromDirectory=characterDirectoryReturn(globalThis.history?.state?.discoveryReturn)||characterDirectoryReturn(from);
  const returnUrl=fromStory||fromDirectory||fromChat||'/characters',returnLabel=fromStory?l.storiesNav:fromDirectory?l.profileBack:fromChat?l.chatBack:l.profileBack;
  const samples=(c.voice?.samples||[]).map(sample=>`<blockquote class="fw-quote"><p>${safe(quoted(t(sample)))}</p><cite>${safe(l.samplesFrom)} · ${safe(t(sample.from)||workName(c.source.work))}</cite></blockquote>`);
- const primaryStory=storiesForCharacter(c.id)[0],profile=characterById.get(c.chatId),publicIntro=profile?(getLang()==='zh'?profile.description_zh||profile.description:profile.description):t(c.voice);
- const portrait=`<div class="fw-profile-portrait${characterArt(c)?' fw-profile-composite':''}"><div class="fw-profile-scene">${sceneArt(c)}<img id="fw-portrait-main" class="fw-portrait-figure" src="${safe(c.portrait)}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span></div></div>`;
- const view=profileView(c,currentHelpers?.account);
+ const primaryStory = storiesForCharacter(c.id)[0], profile = characterById.get(c.chatId);
+ const introduction = profile ? (getLang()==='zh' ? profile.description_zh || profile.description : profile.description) : t(c.voice);
+ const publicIntro = introduction?.match(/^.*?(?:[。！？]|[.!?](?=\s|$))/u)?.[0] || introduction;
+ const title = safe(t(c.name)), background = characterArt(c)?.background;
+ const role = t(primaryStory?.role || c.appearances[0]?.role) || workName(c.source.work);
+ const view = profileView(c,currentHelpers?.account);
  return `<main class="fw-page fw-page-hero" data-no-i18n data-fw-page="profile" data-fw-character="${safe(c.id)}">${mobileBar({href:returnUrl,label:returnLabel})}<article class="fw-profile">
- <section class="fw-profile-hero" aria-labelledby="fw-profile-name" style="--fw-hero-image:url('${safe(characterArt(c)?.background||c.portrait)}')"><div class="fw-profile-top"><div class="fw-profile-head"><div class="fw-character-meta"><p class="fw-eyebrow">${safe(primaryStory?.role?t(primaryStory.role):workName(c.source.work))}</p><span class="fw-capability">${safe(c.chat?l.chatOnly:l.storyAppearance)}</span></div><h1 id="fw-profile-name">${safe(t(c.name))}</h1><p class="fw-tagline">${safe(t(c.tagline))}</p><p class="fw-persona">${primaryStory?`<a data-fw-story-source data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a>`:safe(workName(c.source.work))}</p></div>${publicIntro?`<p class="fw-public-intro fw-profile-introduction">${safe(publicIntro)}</p>`:''}<div class="fw-profile-state" data-fw-profile-state>${profileStateMarkup(c,currentHelpers?.account,view)}</div>${samples[0]?`<div class="fw-profile-quote">${samples[0]}</div>`:''}${c.portraitNote?`<p class="fw-note fw-portrait-source">${safe(t(c.portraitNote))}</p>`:''}${portrait}</div></section>
+ <section class="fw-profile-hero sd-stage-card" aria-labelledby="fw-profile-name" style="--sd-stage-image:url('${safe(background || c.portrait)}')">
+   <div class="fw-profile-top sd-stage-layout">
+     <div class="fw-profile-portrait sd-stage-art${background ? ' fw-profile-composite' : ''}">
+       <div class="fw-profile-scene">
+         ${sceneArt(c,'eager')}
+         <img id="fw-portrait-main" class="fw-portrait-figure" src="${safe(c.portrait)}" alt="" onerror="this.hidden=true;this.nextElementSibling.hidden=false">
+         <span class="fw-art-fallback" hidden>${safe(l.imageUnavailable)}</span>
+         <span class="fw-stage-fade sd-stage-fade" aria-hidden="true"></span>
+       </div>
+     </div>
+     <div class="fw-profile-body sd-stage-body">
+       <div class="fw-profile-head">
+         <div class="fw-character-meta">
+           <span class="fw-capability sd-capability ${c.chat ? 'is-chat' : 'is-story'}">${safe(c.chat ? l.chatOnly : l.storyCapability)}</span>
+           <p class="fw-eyebrow">${safe(role)}</p>
+           ${primaryStory ? `<span aria-hidden="true">·</span><p class="fw-persona"><a data-fw-story-source data-full-info href="${safe(primaryStory.informationUrl)}">${safe(t(primaryStory.title))} ↗</a></p>` : ''}
+         </div>
+         <h1 id="fw-profile-name">${title}</h1>
+         <p class="fw-tagline">${safe(t(c.tagline))}</p>
+         ${publicIntro ? `<p class="fw-public-intro fw-profile-introduction">${safe(publicIntro)}</p>` : ''}
+         ${samples[0] ? `<div class="fw-profile-quote">${samples[0]}</div>` : ''}
+         ${c.portraitNote ? `<p class="fw-note fw-portrait-source">${safe(t(c.portraitNote))}</p>` : ''}
+       </div>
+       <div class="fw-profile-state" data-fw-profile-state>${profileStateMarkup(c,currentHelpers?.account,view)}</div>
+     </div>
+   </div>
+ </section>
  <div data-fw-related-state>${profileRelatedMarkup(c,currentHelpers?.account,view)}</div>
  <details class="fw-details" id="fw-about" data-fw-about><summary id="fw-about-title">${safe(l.detailsH)}</summary><p>${safe(t(c.persona))}</p>${c.voice?`<h3>${safe(l.voiceH)}</h3><p>${safe(t(c.voice))}</p>`:''}${samples.slice(1).join('')}</details></article></main>`;
 }

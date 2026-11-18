@@ -7,6 +7,28 @@ import {fileURLToPath} from 'node:url';
 import {createHistory} from './fixtures/character-loop-dom.mjs';
 const dist = fileURLToPath(new URL('../dist/', import.meta.url));
 
+test('detail stages and secondary story covers follow the same responsive layout contract', async () => {
+  const {document} = parseHTML('<html><head></head><body></body></html>');
+  async function rules(file) {
+    const sheet = document.createElement('style');
+    sheet.textContent = await readFile(join(dist, 'assets', file), 'utf8');
+    document.head.append(sheet);
+    return Array.from(sheet.sheet.cssRules);
+  }
+  const media = (list, query) => list.find(rule => rule.media?.mediaText === query).cssRules;
+  const value = (list, selector, prop) => Array.from(list).find(rule => rule.selectorText === selector).style.getPropertyValue(prop).replace(/\s*,\s*/g, ',');
+  const [stages, character] = await Promise.all([rules('story-surfaces.css'), rules('flywheel/flywheel.css')]);
+  const tablet = media(stages, '(min-width: 768px) and (max-width: 1023px)');
+  const phone = media(stages, '(max-width: 767px)');
+  assert.equal(value(stages, '.sd-stage-layout', 'grid-template-columns'), '340px minmax(0,1fr)');
+  assert.equal(value(stages, '.sd-stage-layout', 'min-height'), '440px');
+  assert.equal(value(tablet, '.sd-stage-layout', 'grid-template-columns'), '260px minmax(0,1fr)');
+  assert.equal(value(phone, '.sd-stage-layout', 'grid-template-columns'), 'minmax(0,1fr)');
+  assert.equal(value(phone, '.sd-stage-art', 'height'), 'clamp(260px,66vw,300px)');
+  assert.equal(value(character, '.fw-story-card', 'grid-template-columns'), '72px minmax(0,1fr) auto');
+  assert.equal(value(media(character, '(max-width: 767px)'), '.fw-story-card', 'grid-template-columns'), '64px minmax(0,1fr)');
+});
+
 test('flywheel card data is complete, bilingual, and points at real assets and routes', async () => {
   const {CHARACTER_CARDS, WORKS, UNIVERSES, FRAMEWORKS} = await import('../dist/assets/flywheel/cards-data.js');
   const {storydateCharacters} = await import('../dist/assets/storydate-originals.js');
@@ -328,10 +350,10 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(profile.querySelector('.fw-quote cite').textContent.trim());
     assert.ok(profile.querySelector('details.fw-details'));
     assert.equal(profile.querySelector('details.fw-details').hasAttribute('open'), false);
-    const story = profile.querySelector('.fw-ctas a[href="/play/xichuan"]');
+    const story = profile.querySelector('.fw-story-card [data-fw-story-entry][href="/play/xichuan"]');
     assert.ok(story);
     assert.equal(story.getAttribute('target'), null, 'Xichuan enters the shared account-aware host');
-    assert.ok(profile.querySelector('.fw-ctas a[href="/play/xc-zhiyao"]'));
+    assert.ok(profile.querySelector('[data-fw-chat-entry][href="/play/xc-zhiyao"]'));
     const identity = profile.querySelector('.fw-profile-head');
     assert.equal(identity.querySelector('[data-fw-profile-state],[data-fw-experiences],.fw-ctas'), null, 'identity and current actions are separate regions');
     assert.ok(identity.querySelector('.fw-persona a[href="/story/xichuan"]'), 'the source opens the existing Story detail');
@@ -345,10 +367,22 @@ test('character discovery stays useful without duplicate navigation or demo edit
     const scene = profile.querySelector('.fw-profile-scene .fw-scene-background');
     const background = scene.getAttribute('src');
     assert.equal(scene.nextElementSibling.id, 'fw-portrait-main');
-    const profileFlow=[...profile.querySelector('.fw-profile-top').children];
-    assert.ok(profileFlow.indexOf(profile.querySelector('.fw-profile-head')) < profileFlow.indexOf(profile.querySelector('[data-fw-profile-state]')), 'identity precedes the conversation in reading order');
-    assert.ok(profileFlow.indexOf(profile.querySelector('[data-fw-profile-state]')) < profileFlow.indexOf(profile.querySelector('.fw-profile-quote')), 'the first conversation action is reached before the source excerpt, without a visual-only mobile reorder');
-    assert.equal(profile.querySelectorAll('.fw-profile-quote blockquote').length,1,'only the first attributed excerpt is directly visible');
+    const stage = profile.querySelector('.fw-profile-hero.sd-stage-card');
+    assert.ok(stage?.querySelector('.sd-stage-layout .sd-stage-art .sd-stage-fade'));
+    assert.ok(stage.querySelector('.sd-stage-art #fw-portrait-main'));
+    const body = stage.querySelector('.sd-stage-body');
+    const quote = identity.querySelector('.fw-profile-quote blockquote');
+    assert.ok(quote?.querySelector('cite')?.textContent.trim(), 'the character speaks with attribution before the chat dock');
+    assert.equal(stage.querySelectorAll('.fw-profile-quote blockquote').length, 1);
+    const expectedOrder = ['h1', '.fw-profile-introduction', '.fw-profile-quote', '[data-fw-profile-form]'];
+    const readingOrder = [...body.querySelectorAll(expectedOrder.join(','))];
+    assert.deepEqual(readingOrder.map(el => expectedOrder.find(selector => el.matches(selector))), expectedOrder,
+      'name, introduction and sourced line precede the chat form in reading order');
+    const strip = profile.querySelector('.fw-story-card');
+    assert.ok(strip?.querySelector('.fw-story-cover img'));
+    assert.ok(strip.querySelector('.fw-story-copy h3'));
+    assert.ok(strip.querySelector('.fw-story-information[href="/story/xichuan"]'));
+    assert.ok(!strip.querySelector('.fw-story-copy').contains(story), 'the story actions occupy their own strip column');
     assert.equal(profile.querySelector('.fw-hscroll'),null,'related cast is reached from the real Story instead of another profile directory');
     assert.equal(profile.textContent.includes(CHARACTER_CARDS.find(c=>c.id==='xc-zhiyao').locked.zh),false,'internal character constraints are not reader-facing content');
     const about=profile.querySelector('[data-fw-about]');about.setAttribute('open','');about.querySelector('summary').focus();
@@ -361,7 +395,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(document.activeElement,profile.querySelector('[data-fw-about] summary'));
     go('/characters/sg-caocao');
     profile = page('profile');
-    assert.ok(profile.querySelector('.fw-ctas a[href="/play/sgc-002"]'));
+    assert.ok(profile.querySelector('[data-fw-chat-entry][href="/play/sgc-002"]'));
     assert.ok(profile.querySelector('.fw-quote cite'));
     assert.equal(profile.querySelectorAll('[data-fw-starter]').length,2,'the profile offers two established opening lines without sending them');
     go('/characters/oc-shen-yanzhou');
@@ -385,7 +419,9 @@ test('character discovery stays useful without duplicate navigation or demo edit
     for(const card of CHARACTER_CARDS){
       go('/characters/'+card.id);
       assert.equal(document.getElementById('fw-portrait-main').getAttribute('src'),card.portrait,card.id+' keeps its approved portrait');
-      assert.ok(page('profile').querySelector('.fw-ctas a'),card.id+' retains its real entry action');
+      const stage = page('profile').querySelector('.sd-stage-card');
+      assert.ok(stage.querySelector(card.chat ? '.sd-capability.is-chat' : '.sd-capability.is-story'), card.id + ' shows its actual capability');
+      assert.ok(stage.querySelector(card.chat ? '[data-fw-chat-entry]' : '[data-fw-story-jump]'), card.id + ' retains its real entry action');
       assert.equal(page('profile').querySelector('[data-fw-expr],.fw-hscroll'),null);
       assert.equal(Boolean(page('profile').querySelector('[data-fw-profile-form]')),Boolean(card.chat),'only characters with an established conversation get a draft handoff');
     }
@@ -519,6 +555,51 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.ok(page('profile').querySelector('[data-fw-chat-entry]'),'original encounters remain available through their existing chat');
   });
 
+  await t.test('the same primary action changes from start or continue to a draft handoff in either language', () => {
+    const sessionKey = 'ooc-session-v2-xc-zhiyao';
+    const original = values.get(sessionKey);
+    try {
+      for (const [lang, start, resume, take] of [
+        ['zh', '开始聊天 →', '继续聊天 →', '带这句话去聊 →'],
+        ['en', 'Start chatting →', 'Continue chatting →', 'Take this line to chat →'],
+      ]) {
+        language(lang);
+        for (const hasHistory of [false, true]) {
+          if (hasHistory) values.set(sessionKey, JSON.stringify([{role:'user', text:'Earlier message'}]));
+          else values.delete(sessionKey);
+          go('/characters/xc-zhiyao');
+          const dock = page('profile').querySelector('.fw-chat-dock form');
+          const primary = dock.querySelector('[data-fw-chat-entry]');
+          const controls = [...dock.querySelectorAll('a,button,input[type="submit"]')].filter(el => !el.hasAttribute('data-fw-starter'));
+          assert.equal(controls.length, 1, 'only one action can take the user into chat');
+          assert.ok(controls[0] === primary);
+          const ordinaryLabel = hasHistory ? resume : start;
+          assert.equal(primary.textContent.trim(), ordinaryLabel);
+          assert.equal(primary.getAttribute('href'), '/play/xc-zhiyao');
+          const starter = dock.querySelector('[data-fw-starter]');
+          starter.click();
+          assert.equal(starter.getAttribute('aria-pressed'), 'true');
+          assert.equal(primary.textContent.trim(), take);
+          const input = dock.querySelector('[data-fw-profile-draft]');
+          assert.equal(input.value, starter.textContent);
+          assert.equal(new URL(primary.getAttribute('href'), location.href).searchParams.get('draft'), input.value);
+          input.value = '  ';
+          input.dispatchEvent(new window.Event('input', {bubbles:true}));
+          assert.equal(primary.textContent.trim(), ordinaryLabel, 'clearing a line restores this thread’s entry action');
+          assert.equal(primary.getAttribute('href'), '/play/xc-zhiyao');
+          assert.equal(starter.getAttribute('aria-pressed'), 'false');
+          input.value = '';
+          input.dispatchEvent(new window.Event('input', {bubbles:true}));
+        }
+      }
+    } finally {
+      if (original === undefined) values.delete(sessionKey);
+      else values.set(sessionKey, original);
+      language('zh');
+      go('/characters');
+    }
+  });
+
   await t.test('conversation entry keeps owner-scoped words through language and sync, then hands off a draft without a send',async()=>{
     const {syncAccount}=await import('../dist/assets/flywheel/flywheel.js');
     language('zh');go('/characters/xc-zhiyao');
@@ -546,7 +627,26 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(page('profile').querySelector('[data-fw-chat-entry]').getAttribute('href'),'/play/xc-zhiyao');
     assert.deepEqual([...values].filter(([key])=>key!=='sd.lang'),[...before].filter(([key])=>key!=='sd.lang'),'typing, recommendations and handoff create no persistent profile or conversation data; the explicit language preference is independent');
     assert.deepEqual(requests.filter(path=>path.startsWith('/api/')),requestsBefore,'no model, suggestions or billing request comes from profile entry');
-    type('一'.repeat(340));page('profile').querySelector('[data-fw-profile-form]').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+    const submit = () => page('profile').querySelector('[data-fw-profile-form]').dispatchEvent(new window.Event('submit',{bubbles:true,cancelable:true}));
+    const countBeforeSubmit = navigations.length;
+    type(line);
+    for (const composition of [{isComposing:true}, {keyCode:229}]) {
+      const confirm = new window.Event('keydown', {bubbles:true});
+      Object.assign(confirm, {key:'Enter'}, composition);
+      current().dispatchEvent(confirm);
+      submit();
+      assert.equal(navigations.length, countBeforeSubmit, 'confirming an IME candidate keeps the user in the dock');
+      assert.equal(current().value, line);
+      current().dispatchEvent(new window.Event('keyup', {bubbles:true}));
+    }
+    submit();
+    assert.equal(navigations.length, countBeforeSubmit + 1, 'the next ordinary form submission performs one handoff');
+    assert.equal(new URL(navigations.at(-1),location.href).href, handed.href, 'form submission follows the same draft URL as clicking the primary action');
+    go('/characters/xc-zhiyao');
+    submit();
+    assert.equal(navigations.at(-1), '/play/xc-zhiyao', 'an empty form uses the ordinary chat route');
+    go('/characters/xc-zhiyao');
+    type('一'.repeat(340));submit();
     assert.equal(new URL(navigations.at(-1),location.href).searchParams.get('draft').length,300,'draft handoff respects the declared limit');
     const previous=helpers.account,alice={user:{uid:'alice'},restored:true,busy:false};
     try{

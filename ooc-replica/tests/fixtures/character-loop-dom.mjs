@@ -137,7 +137,7 @@ if (parentPort) {
         if (!state || state.querySelector('[data-fw-restoring]')) return false;
         // A new profile has no progress text. Wait for the restored account's
         // real actions, rather than requiring empty status placeholders.
-        if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('.fw-ctas a');
+        if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('[data-fw-chat-entry]');
         return state.childElementCount > 0;
       }
       return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input') || f.document.querySelector('[data-fw-page="characters"] #fw-lib-results') || f.document.querySelector('[data-story-characters]');

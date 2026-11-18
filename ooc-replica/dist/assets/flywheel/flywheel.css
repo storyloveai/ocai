@@ -1,6 +1,3 @@
-/* Character surfaces extend the StoryDate shell: 12px catalogue covers and
-   8px detail covers, with existing story artwork supplying the colour.
-   Shared Story control styles are defined with the other site surfaces. */
 .fw-page [hidden] { display: none !important; }
 .fw-page { box-sizing: border-box; max-width: 1200px; margin: 0 auto; padding: 0 48px 64px; color: #fafafa; }
 .fw-page.fw-page-hero { max-width: none; padding: 0; }
@@ -55,61 +52,55 @@
 .fw-card-static { pointer-events: none; }
 .fw-card-persona, .fw-card-voice, .fw-card-locked { color: #a1a1a1; font-size: 13px; line-height: 1.6; }
 
-/* One visual language, different intent: people invite a conversation; the
-   real Story card below gives that conversation a place and a longer story. */
-.fw-profile-hero { position: relative; isolation: isolate; overflow: visible; border: 0; border-radius: 0; background: transparent; }
-.fw-profile-hero::before { display: none; }
-.fw-profile-top { position: relative; display: grid; grid-template-columns: 240px minmax(0,1fr); align-items: start; gap: 0 40px; margin: 8px 0 40px; min-height: 0; }
-.fw-profile-portrait { position: relative; isolation: isolate; grid-column: 1; grid-row: 1 / span 5; align-self: start; width: 240px; min-width: 0; overflow: visible; background: transparent; }
-.fw-profile-portrait::before { content: ''; position: absolute; inset: -24px; z-index: -1; background-image: var(--fw-hero-image); background-position: center; background-size: cover; filter: blur(36px); opacity: .2; pointer-events: none; }
-.fw-profile-scene { position: relative; width: 100%; height: auto; min-height: 0; aspect-ratio: 2 / 3; overflow: hidden; border: 1px solid #2b2b2b; border-radius: 8px; background: #202020; }
-.fw-profile-scene > img:not(.fw-scene-background) { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 16%; }
-.fw-profile-composite .fw-profile-scene > img:not(.fw-scene-background) { object-fit: cover; object-position: center top; }
-.fw-profile-scene .fw-scene-background { object-position: center; }
-.fw-profile-head { grid-column: 2; grid-row: 1; min-width: 0; padding: 0; }
-.fw-profile-introduction { grid-column: 2; grid-row: 2; max-width: 640px; margin: 20px 0 24px; }
-.fw-profile-state { grid-column: 2; grid-row: 3; min-width: 0; padding: 0; }
-.fw-profile-top > .fw-profile-quote { grid-column: 2; grid-row: 4; min-width: 0; margin: 24px 0 0; }
-.fw-profile-top > .fw-portrait-source { grid-column: 2; grid-row: 5; }
-.fw-character-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px; margin-bottom: 12px; }
-.fw-character-meta .fw-eyebrow { margin: 0; }
-.fw-capability { font-size: 12px; color: #c5a46c; }
-.fw-profile-head h1 { margin: 0 0 14px; color: #fafafa; font-size: 32px; line-height: 1.3; font-weight: 600; text-wrap: balance; overflow-wrap: anywhere; }
-.fw-tagline { margin: 0 0 12px; color: #d4d4d4; font-size: 15px; line-height: 1.8; }
-.fw-public-intro { max-width: 640px; color: #d4d4d4; font-size: 15px; line-height: 1.8; }
-.fw-persona { margin: 0; color: #a1a1a1; font-size: 12px; line-height: 1.7; }
-.fw-persona a { color: inherit; text-decoration: none; }
-.fw-persona a:hover { color: #fafafa; text-decoration: underline; text-underline-offset: 3px; }
-.fw-profile-quote .fw-quote { margin: 0; padding: 0 0 0 16px; border: 0; border-left: 2px solid #3a3a3a; border-radius: 0; background: transparent; }
-.fw-profile-quote .fw-quote p { font-size: 14px; line-height: 1.8; color: #d4d4d4; }
-.fw-profile-quote .fw-quote cite { display: block; font-size: 12px; }
+/* Character-specific artwork, sourced dialogue, and the conversation dock. */
+.fw-profile-scene { position: absolute; inset: 0; background: #202020; }
+.fw-profile-scene > .fw-portrait-figure { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 15%; }
+.fw-profile-composite .fw-portrait-figure { object-position: center top; }
+.fw-profile-head, .fw-profile-state { min-width: 0; }
+.fw-character-meta, .fw-story-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; color: #aaa; font-size: 12px; line-height: 1.5; }
+.fw-character-meta :is(.fw-persona,.fw-eyebrow), .fw-story-meta p { margin: 0; }
+.fw-character-meta a { color: #ccc; text-decoration: none; }
+.fw-character-meta a:hover, .fw-story-information:hover { color: #fafafa; text-decoration: underline; text-underline-offset: 3px; }
+.fw-profile-head h1 { margin: 12px 0 6px; color: #fafafa; font-size: clamp(32px,3vw,36px); line-height: 1.14; font-weight: 600; overflow-wrap: anywhere; }
+.fw-tagline { margin: 0 0 6px; color: #eee; font-size: 16px; line-height: 1.5; }
+.fw-profile-introduction { margin: 0; max-width: 62ch; color: #c3c3c6; font-size: 14px; line-height: 1.6; }
+.fw-profile-quote { margin-top: 14px; }
+.fw-profile-quote .fw-quote { margin: 0; padding: 14px 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: rgba(255,255,255,.04); }
+.fw-profile-quote .fw-quote p { margin: 0 0 5px; color: #f1efeb; font-size: 15px; line-height: 1.55; }
+.fw-profile-quote .fw-quote cite { display: block; font-size: 11px; }
 .fw-portrait-source { font-size: 11px; }
-.fw-profile-actions { padding-top: 2px; }
-.fw-profile-actions > .fw-ctas { margin: 0 0 12px; }
-.fw-profile-actions > .fw-ctas .fw-btn { min-width: 180px; }
-.fw-ctas, .fw-appearances { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
-.fw-progress-scope { margin: 12px 0; color: #919191; font-size: 12px; line-height: 1.6; }
-.fw-conversation-form { margin-top: 20px; }
-.fw-conversation-form > label { display: block; margin-bottom: 8px; color: #bcbcbc; font-size: 12px; }
-.fw-conversation-starters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-.fw-conversation-input { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
-.fw-conversation-input input { flex: 1 1 180px; min-width: 0; min-height: 44px; width: 100%; padding: 10px 12px; border: 1px solid #484848; border-radius: 8px; background: #181818e6; color: #fafafa; font: 14px/1.5 Inter,system-ui,sans-serif; }
-.fw-conversation-input .fw-btn { flex: 0 0 auto; padding-inline: 12px; font-size: 12px; }
-.fw-draft-hint { margin: 8px 0 0; color: #919191; font-size: 11px; line-height: 1.5; }
-.fw-story-jump { display: inline-flex; align-items: center; min-height: 44px; color: #e3e3e3; font-size: 14px; text-decoration: none; }
+.fw-chat-dock { padding: 14px 16px; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: rgba(0,0,0,.32); }
+.fw-conversation-form { display: grid; gap: 8px; margin: 0; }
+.fw-dock-header { display: flex; align-items: baseline; flex-wrap: wrap; justify-content: space-between; gap: 2px 8px; }
+.fw-dock-header label { color: #e1e1e3; font-size: 13px; font-weight: 500; }
+.fw-draft-hint { margin: 0; color: #aaa; font-size: 11px; line-height: 1.4; }
+.fw-conversation-starters { display: flex; align-items: stretch; flex-wrap: wrap; gap: 6px; }
+.fw-chat-dock [data-fw-starter] {
+  max-width: 100%; min-width: 0; padding: 6px 11px; border: 1px solid #424244; border-radius: 999px;
+  background: #262629; color: #dedee1; font: inherit; font-size: 12px; line-height: 1.45;
+  text-align: start; cursor: pointer; transition: background-color .15s ease,color .15s ease,border-color .15s ease;
+}
+.fw-chat-dock [data-fw-starter]:hover { background: #343436; border-color: #747477; }
+.fw-chat-dock [data-fw-starter]:active { background: #444446; }
+.fw-chat-dock [data-fw-starter][aria-pressed="true"] { background: #ded8cf; color: #201d18; border-color: #ded8cf; }
+.fw-conversation-input { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; align-items: center; }
+.fw-conversation-input input { width: 100%; min-width: 0; }
+body[data-reference=true] .fw-chat-dock .fw-conversation-input .fw-btn[data-fw-chat-entry] { min-width: 0; padding-inline: 16px; height: 48px; white-space: nowrap; }
+.fw-story-jump, .fw-story-information { display: inline-flex; align-items: center; min-height: 44px; color: #c7c7c7; font-size: 13px; text-decoration: none; }
 .fw-story-jump:hover { text-decoration: underline; text-underline-offset: 4px; }
-.fw-story-list { display: grid; gap: 32px; }
-.fw-story-card { display: grid; grid-template-columns: 192px minmax(0,1fr); gap: 32px; padding: 24px 0 0; border: 0; border-top: 1px solid #2b2b2b; border-radius: 0; background: transparent; }
-.fw-story-cover { display: block; align-self: start; overflow: hidden; aspect-ratio: 2 / 3; border: 1px solid #2b2b2b; border-radius: 8px; background: #222; }
+.fw-progress-scope { margin: 12px 0; color: #a1a1a1; font-size: 12px; line-height: 1.6; }
+.fw-story-list { display: grid; gap: 12px; }
+.fw-story-card { display: grid; grid-template-columns: 72px minmax(0,1fr) auto; gap: 20px; align-items: center; padding: 16px 20px; border: 1px solid rgba(255,255,255,.08); border-radius: 12px; background: #17171a; }
+.fw-story-cover { display: block; aspect-ratio: 2 / 3; overflow: hidden; border-radius: 8px; background: #222; }
 .fw-story-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .fw-story-copy { min-width: 0; }
-.fw-story-copy h3 { margin: 4px 0 10px; font-size: 20px; line-height: 1.4; font-weight: 500; }
+.fw-story-meta [data-fw-progress] { color: #d8be8b; }
+.fw-story-copy h3 { margin: 5px 0; font-size: 18px; line-height: 1.35; font-weight: 600; }
 .fw-story-copy h3 a { color: #fafafa; text-decoration: none; }
-.fw-story-copy > p:not(.fw-eyebrow) { margin: 0 0 14px; color: #aaa; font-size: 14px; line-height: 1.7; }
-.fw-story-copy .fw-ctas { justify-content: flex-start; margin-top: 12px; gap: 12px 20px; }
-.fw-story-information { display: inline-flex; align-items: center; min-height: 44px; color: #bcbcbc; font-size: 13px; text-decoration: none; }
-.fw-story-information:hover { color: #fafafa; text-decoration: underline; text-underline-offset: 3px; }
-.fw-story-copy .fw-standalone-note { margin-top: 12px; margin-bottom: 0; font-size: 11px; }
+.fw-story-copy > p { margin: 0; color: #b0b0b3; font-size: 13px; line-height: 1.6; }
+.fw-story-copy .fw-standalone-note { margin-top: 6px; font-size: 11px; }
+.fw-ctas, .fw-appearances { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.fw-story-actions { justify-content: flex-end; }
 .fw-card-intent { color: #a1a1a1; }
 .fw-experiences { scroll-margin-top: 24px; }
 .fw-experiences h3 { margin: 16px 0 8px; color: #d4d4d4; font-size: 13px; line-height: 1.6; font-weight: 500; }
@@ -139,11 +130,6 @@
 .fw-details p { color: #a1a1a1; font-size: 13px; line-height: 1.7; }
 
 @media (max-width: 1250px) { .fw-page { padding-left: 32px; padding-right: 32px; } .fw-page-hero > .fw-profile { padding-inline: 32px; } }
-@media (min-width: 768px) and (max-width: 1250px) {
- .fw-profile-top { grid-template-columns: 220px minmax(0,1fr); gap: 0 32px; }
- .fw-profile-portrait { width: 220px; }
- .fw-story-card { grid-template-columns: 176px minmax(0,1fr); }
-}
 @media (max-width: 1023px) {
   .fw-page { padding: 0 24px 48px; }
   .fw-mobile-bar { display: flex; }
@@ -152,30 +138,21 @@
 }
 @media (max-width: 767px) {
   .fw-page { padding-left: 20px; padding-right: 20px; }
-  .fw-page-hero > .fw-profile { padding: 20px 20px 48px; }
+  .fw-page-hero > .fw-profile { padding: 8px 12px 48px; }
   .fw-card-name { font-size: 15px; }
   .fw-card-body { padding: 0; }
   .fw-card-body em { font-size: 12px; }
-  .fw-profile-top { grid-template-columns: 112px minmax(0,1fr); gap: 0 20px; margin: 8px 0 28px; padding: 0; }
-  .fw-profile-portrait { grid-column: 1; grid-row: 1; width: 112px; }
-  .fw-profile-head { grid-column: 2; grid-row: 1; }
-  .fw-profile-head h1 { font-size: 24px; }
-  .fw-profile-introduction { grid-column: 1 / -1; grid-row: 2; max-width: none; margin: 14px 0 18px; }
-  .fw-profile-state { grid-column: 1 / -1; grid-row: 3; }
-  .fw-profile-top > .fw-profile-quote { grid-column: 1 / -1; grid-row: 4; margin-top: 24px; }
-  .fw-profile-top > .fw-portrait-source { grid-column: 1 / -1; grid-row: 5; }
-  .fw-character-meta { margin-bottom: 8px; }
-  .fw-tagline { font-size: 14px; margin-bottom: 10px; line-height: 1.7; }
-  .fw-public-intro { font-size: 14px; line-height: 1.7; }
-  .fw-profile-quote .fw-quote p { font-size: 14px; }
-  .fw-profile-actions > .fw-ctas .fw-btn { width: 100%; }
-  .fw-conversation-form { margin-top: 16px; }
-  .fw-conversation-input input { flex-basis: 100%; }
-  .fw-conversation-input .fw-btn { width: 100%; }
-  .fw-story-card { grid-template-columns: 112px minmax(0,1fr); gap: 20px; padding: 20px 0 0; }
-  .fw-story-copy h3 { font-size: 18px; }
-  .fw-story-copy > p:not(.fw-eyebrow) { font-size: 13px; }
-  .fw-story-copy .fw-ctas { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .fw-profile-head h1 { margin: 8px 0 4px; }
+  .fw-tagline { font-size: 14px; }
+  .fw-profile-head:has(.fw-profile-introduction) .fw-tagline { display: none; }
+  .fw-profile-introduction { line-height: 1.45; }
+  .fw-profile-quote { margin-top: 10px; }
+  .fw-profile-quote .fw-quote p { font-size: 14px; line-height: 1.45; }
+  .fw-conversation-starters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .fw-chat-dock [data-fw-starter] { padding: 5px 8px; text-align: center; }
+  body[data-reference=true] .fw-chat-dock .fw-conversation-input .fw-btn[data-fw-chat-entry] { padding-inline: 10px; font-size: 13px; }
+  .fw-story-card { grid-template-columns: 64px minmax(0,1fr); gap: 12px 16px; }
+  .fw-story-actions { grid-column: 1 / -1; justify-content: space-between; }
   [data-fw-page="profile"] .fw-back { margin: 4px 0 12px; }
   .fw-section { margin: 28px 0; }
   .fw-toolbar { gap: 6px; }
@@ -184,6 +161,14 @@
   .fw-count { margin: 0; }
   .fw-appearance { max-width: 100%; }
   .fw-appearance :is(strong, span) { overflow-wrap: anywhere; }
+}
+@media (max-width: 359px) {
+  .fw-chat-dock { margin-inline: -8px; }
+  body[data-reference=true] .fw-chat-dock input[data-fw-profile-draft] { padding-inline: 8px; }
+  body[data-reference=true] .fw-chat-dock .fw-conversation-input .fw-btn[data-fw-chat-entry] { padding-inline: 7px; }
+  .fw-conversation-starters { display: flex; flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x proximity; }
+  .fw-chat-dock [data-fw-starter] { flex: 0 0 auto; max-width: 92%; min-height: 40px; scroll-snap-align: start; }
+  .fw-chat-dock [data-fw-starter]:focus-visible { outline-offset: -3px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .fw-page * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }

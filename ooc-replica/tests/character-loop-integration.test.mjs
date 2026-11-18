@@ -306,8 +306,8 @@ test('real app connects profiles, local chat, current story memory and reloads t
       assert.equal(f.location.search, '?source=old');
       assert.equal(f.location.hash, '#experiences');
       assert.equal(profile().dataset.fwCharacter, 'xc-zhiyao');
-      assert.ok(profile().querySelector('.fw-ctas a[href="/play/xc-zhiyao"]'));
-      assert.ok(profile().querySelector('.fw-ctas a[href="/play/xichuan"]'));
+      assert.ok(profile().querySelector('[data-fw-chat-entry][href="/play/xc-zhiyao"]'));
+      assert.ok(profile().querySelector('[data-fw-story-entry][href="/play/xichuan"]'));
       const {storydateCharacters} = await import('../dist/assets/storydate-originals.js');
       const {characterProfileUrl} = await import('../dist/assets/character-links.js');
       for (const title of storydateCharacters) {
@@ -321,7 +321,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
     });
 
     await t.test('unconfigured preview labels local scripted chat and sends no model or credit requests', async () => {
-      await f.click('.fw-ctas a[href="/play/xc-zhiyao"]');
+      await f.click('[data-fw-chat-entry][href="/play/xc-zhiyao"]');
       const input = await waitFor(() => f.document.querySelector('#session-input'), 'character chat did not mount');
       assert.match(f.document.querySelector('#session-messages').textContent, /演示|Demo/);
       assert.match(f.document.querySelector('#session-messages').textContent, /不调用\s*AI|No AI|scripted|simulated/i);
@@ -345,7 +345,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
     });
 
     await t.test('host bridge persists the current save and chat displays its acquired facts', async () => {
-      await f.click('.fw-ctas a[href="/play/xichuan"]');
+      await f.click('[data-fw-story-entry][href="/play/xichuan"]');
       const peer = f.peer();
       assert.ok(peer.frame.getAttribute('src').startsWith('/assets/xichuan/index.html?site=1'));
       peer.send({type: 'xc-ready'});
@@ -372,7 +372,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.click('a[href="/characters/xc-zhiyao"]');
       await waitFor(profile, 'chat header did not return to profile');
       assert.match(profile().querySelector('[data-fw-progress]').textContent, /答应|promis/i);
-      const actions = [...profile().querySelectorAll('.fw-ctas a')];
+      const actions = [...profile().querySelectorAll('[data-fw-chat-entry],[data-fw-story-entry]')];
       assert.equal(actions[0].getAttribute('href'), '/play/xc-zhiyao', 'chat remains the primary action after story progress exists');
       assert.equal(actions[0].classList.contains('fw-btn-secondary'), false);
       assert.equal(profile().querySelector('[data-fw-chat-entry]').classList.contains('fw-btn-secondary'), false);

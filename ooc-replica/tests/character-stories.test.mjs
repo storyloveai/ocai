@@ -5,6 +5,7 @@ import {join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {parseHTML,DOMParser} from 'linkedom';
 import {storiesForCharacter,charactersForStory,storyById,linkedStoryCatalog} from '../dist/assets/character-stories.js';
+import {bookMetadata} from '../dist/assets/book-catalog.js';
 import {CHARACTER_CARDS} from '../dist/assets/flywheel/cards-data.js';
 import {storydateCharacters,storydateOriginals} from '../dist/assets/storydate-originals.js';
 const dist=fileURLToPath(new URL('../dist/',import.meta.url));
@@ -70,7 +71,10 @@ test('existing Story detail and preview expose the same cast, metadata and one r
     const card=CHARACTER_CARDS.find(card=>card.id===link.dataset.storyCharacter);
     assert.equal(link.querySelector('[data-story-character-name]').textContent,card.name.zh);
     assert.equal(link.querySelector('.story-character-art>img:last-child').getAttribute('src'),card.portrait,'the Story uses the same character artwork as the directory');
-    assert.equal(link.querySelector('[data-story-character-capability]').textContent,card.chat?'可对话 →':'故事出场','the cast never invents a chat capability');
+    const badge = link.querySelector('[data-story-character-capability]');
+    assert.ok(badge?.matches(card.chat ? '.sd-capability.is-chat' : '.sd-capability.is-story'), 'cast badges distinguish real chat from story appearances');
+    assert.equal(badge.textContent.replace(/^●\s*/, '').trim(), card.chat ? '可聊天' : '故事出场');
+    assert.equal(Boolean(link.querySelector('[data-story-character-hint]')?.textContent.trim()), Boolean(card.chat), 'only the real chat capabilities get the extra invitation');
     assert.ok(link.querySelector('[data-story-character-tagline]').textContent);
     continue;
    }
@@ -84,7 +88,12 @@ test('existing Story detail and preview expose the same cast, metadata and one r
   const detail=document.querySelector('.replica-story-detail');assert.ok(detail,id);checkCast(detail,id);
   assert.equal(document.querySelectorAll('.story-detail-header .story-detail-language').length,1,'phone Story details retain one language control instead of losing the utility with the sidebar');
   const play=detail.querySelectorAll('[data-story-play]');assert.equal(play.length,1,id);assert.equal(play[0].getAttribute('href'),record.playUrl);
-  assert.ok(play[0].closest('.story-entity-hero'),'the one play action is available beside the story identity, before the cast');
+  const stage = detail.querySelector('.sd-stage-card .sd-stage-layout');
+  assert.ok(stage?.querySelector('.sd-stage-art .sd-stage-fade'), id + ' shares the same artwork and gradient stage as the character');
+  assert.equal(stage.querySelector('[data-story-cover]').getAttribute('src'), record.image);
+  const copy = stage.querySelector('.sd-stage-body');
+  assert.ok(copy?.querySelector('[data-story-title]') && copy.contains(play[0]), 'the story shares its title and its one player action in the stage');
+  assert.ok(copy.querySelector('.story-bookmark'), 'the existing bookmark stays with the player action');
   assert.equal(detail.querySelector('.story-play-bar'),null,'the same play action is not repeated in a second sticky footer');
   assert.equal(detail.querySelector('.story-bookmark').getAttribute('aria-pressed'),String(id==='xichuan'),'moving the bookmark preserves the existing saved state without writing it');
   assert.equal(play[0].getAttribute('target'),record.playUrl.startsWith('/assets/')?'_top':null);
@@ -97,11 +106,20 @@ test('existing Story detail and preview expose the same cast, metadata and one r
   assert.equal(dialog.querySelector('[data-preview-play]'),null,'no second action can synthesize /play for a standalone game');
   closeTitlePreview();
  }
+ for (const id of ['story-005', 'mortal-path', 'monte-cristo']) {
+  setPath('/story/' + id);
+  reference.show(location.pathname, helpers);
+  const stage = document.querySelector('.replica-story-detail .sd-stage-card');
+  assert.ok(stage?.querySelector('.sd-stage-art img'), id + ' has a stage even without a linked cast');
+  const play = stage.querySelector('.sd-stage-body [data-story-play]');
+  assert.equal(play?.getAttribute('href'), '/play/' + id);
+  assert.equal(document.querySelectorAll('.replica-story-detail [data-story-play]').length, 1, id + ' has one existing player');
+ }
  setPath('/story/xichuan');history.state={characterReturn:'/characters/xc-shencheng'};reference.show(location.pathname,helpers);
  assert.equal(document.querySelector('.shell-page-header a').getAttribute('href'),'/characters/xc-shencheng');
  setLang('en',{win:globalThis,doc:document});
  assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] [data-story-character-name]').textContent,'Xia Zhiyao');
- assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] [data-story-character-capability]').textContent,'Chat available →');
+ assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] .is-chat[data-story-character-capability]').textContent.replace(/^●\s*/, '').trim(), 'Chat available');
  assert.equal(document.querySelector('[data-story-character="xc-shencheng"] [data-story-character-capability]').textContent,'In the story');
  assert.match(document.querySelector('[data-story-format]').textContent,/Galgame/);
  assert.equal(document.querySelector('.story-detail-language [data-sd-lang="en"]').getAttribute('aria-pressed'),'true');
@@ -151,4 +169,28 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  assert.deepEqual(reference.extraStories.filter(d=>d.type==='character').map(d=>d.id),storydateCharacters.map(d=>d.id),'display profiles never replace the real session/model catalogue');
  assert.equal(reference.extraStories.some(d=>d.id==='sg-caocao'||d.id==='xc-shencheng'),false);
  closeTitlePreview();assert.deepEqual(writes,[['sd.lang','en'],['sd.lang','zh']],'only explicit language choices write preferences; public relationships/search never create or migrate private state');
+
+ const {translate}=await import('../dist/assets/site-i18n.js');
+ for (const [en,zh] of [['Added to bookmarks','已加入收藏'],['Removed from bookmarks','已取消收藏']]) {
+  assert.equal(translate(en,'zh'),zh);
+  assert.equal(translate(zh,'en'),en);
+ }
+ for (const book of bookMetadata) {
+  setPath(book.href);
+  reference.show(location.pathname,helpers);
+  const stage=document.querySelector('.sd-stage-card'),title=stage.querySelector('h1');
+  const description=stage.querySelector('[data-story-description]'),campaign=stage.querySelector('[data-story-campaign]');
+  const play=stage.querySelector('[data-story-play]'),bookmark=stage.querySelector('.story-bookmark');
+  assert.equal(campaign.textContent,book.plays);
+  setLang('en',{win:globalThis,doc:document});
+  assert.match(title.textContent,book.id==='mortal-path'?/Dust Beyond the Valley/:/Embers and Tides/);
+  assert.match(description.textContent,book.id==='mortal-path'?/Shen Weichen/:/Noël/);
+  assert.match(campaign.textContent,/Eight-chapter campaign/);
+  assert.equal(stage.querySelector('[data-story-cover]').alt,title.textContent);
+  assert.equal(play.getAttribute('href'),'/play/'+book.id);
+  assert.equal(bookmark.dataset.favorite,book.id);
+  setLang('zh',{win:globalThis,doc:document});
+  assert.deepEqual([title.textContent,description.textContent,campaign.textContent],[book.title,book.description,book.plays]);
+  assert.equal(stage.querySelector('[data-story-cover]').alt,book.title);
+ }
 });
