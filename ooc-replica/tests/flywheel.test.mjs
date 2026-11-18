@@ -26,7 +26,12 @@ test('detail stages and secondary story covers follow the same responsive layout
   assert.equal(value(phone, '.sd-stage-layout', 'grid-template-columns'), 'minmax(0,1fr)');
   assert.equal(value(phone, '.sd-stage-art', 'height'), 'clamp(260px,66vw,300px)');
   assert.equal(value(character, '.fw-story-card', 'grid-template-columns'), '72px minmax(0,1fr) auto');
-  assert.equal(value(media(character, '(max-width: 767px)'), '.fw-story-card', 'grid-template-columns'), '64px minmax(0,1fr)');
+  const phoneCharacter = media(character, '(max-width: 767px)');
+  assert.equal(value(phoneCharacter, '.fw-story-card', 'grid-template-columns'), '64px minmax(0,1fr)');
+  assert.equal(value(character, '.fw-conversation-input', 'grid-template-columns'), 'minmax(0,1fr) auto');
+  assert.equal(value(phoneCharacter, '.fw-conversation-input', 'grid-template-columns'), '1fr');
+  assert.equal(value(character, '.fw-chat-dock [data-fw-starter]', 'border-radius'), '999px');
+  assert.equal(value(phoneCharacter, '.fw-chat-dock [data-fw-starter]', 'border-radius'), '10px');
 });
 
 test('flywheel card data is complete, bilingual, and points at real assets and routes', async () => {
@@ -581,6 +586,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
           assert.equal(starter.getAttribute('aria-pressed'), 'true');
           assert.equal(primary.textContent.trim(), take);
           const input = dock.querySelector('[data-fw-profile-draft]');
+          assert.equal(input.getAttribute('placeholder'), lang === 'zh' ? '想对 TA 说什么？' : 'What would you like to say?');
           assert.equal(input.value, starter.textContent);
           assert.equal(new URL(primary.getAttribute('href'), location.href).searchParams.get('draft'), input.value);
           input.value = '  ';

@@ -149,8 +149,13 @@ body[data-reference=true] .fw-chat-dock .fw-conversation-input .fw-btn[data-fw-c
   .fw-profile-quote { margin-top: 10px; }
   .fw-profile-quote .fw-quote p { font-size: 14px; line-height: 1.45; }
   .fw-conversation-starters { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
-  .fw-chat-dock [data-fw-starter] { padding: 5px 8px; text-align: center; }
-  body[data-reference=true] .fw-chat-dock .fw-conversation-input .fw-btn[data-fw-chat-entry] { padding-inline: 10px; font-size: 13px; }
+  .fw-chat-dock [data-fw-starter] { padding: 5px 8px; border-radius: 10px; text-align: center; }
+  /* On shorter screens, let the new 48px action row and its gap use the portrait fade. */
+  .fw-profile-body:has(.fw-conversation-input) {
+    margin-top: calc(-1 * var(--sd-stage-overlap) - clamp(0px, 900px - 100svh, 56px));
+  }
+  .fw-conversation-input { grid-template-columns: 1fr; }
+  body[data-reference=true] .fw-chat-dock .fw-conversation-input .fw-btn[data-fw-chat-entry] { width: 100%; padding-inline: 10px; font-size: 13px; }
   .fw-story-card { grid-template-columns: 64px minmax(0,1fr); gap: 12px 16px; }
   .fw-story-actions { grid-column: 1 / -1; justify-content: space-between; }
   [data-fw-page="profile"] .fw-back { margin: 4px 0 12px; }

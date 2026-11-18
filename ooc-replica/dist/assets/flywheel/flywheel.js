@@ -27,7 +27,7 @@ const copy = {
   storyAppearance: "故事出场",
   storyCapability: "故事出场",
   draftLabel: "先写一句",
-  draftPlaceholder: "想对 TA 说什么？（留空可直接开始聊天）",
+  draftPlaceholder: "想对 TA 说什么？",
   draftCta: "带这句话去聊",
   draftHint: "进入后确认发送",
   draftFailed: "暂时无法打开聊天，你写的话仍保留在这里。",
@@ -102,7 +102,7 @@ const copy = {
   storyAppearance: "Story character",
   storyCapability: "In the story",
   draftLabel: "Write an opening line",
-  draftPlaceholder: "What would you like to say? Leave blank to start chatting.",
+  draftPlaceholder: "What would you like to say?",
   draftCta: "Take this line to chat",
   draftHint: "Confirm in chat",
   draftFailed: "Could not open chat. Your words are still kept here.",
@@ -177,10 +177,10 @@ let styles = false;
 function ensureStyles() {
   if (styles) return;
   styles = true;
-  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261118-stage"]')) {
+  if (!document.querySelector('link[href="/assets/flywheel/flywheel.css?v=20261118-mobile-dock"]')) {
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = '/assets/flywheel/flywheel.css?v=20261118-stage';
+    link.href = '/assets/flywheel/flywheel.css?v=20261118-mobile-dock';
     document.head.append(link);
   }
 }

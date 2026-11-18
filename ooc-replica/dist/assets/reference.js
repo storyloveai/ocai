@@ -26,7 +26,7 @@ style.rel='stylesheet';style.href='/assets/reference.css';style.media='not all';
 const layoutStyle=document.createElement('link');layoutStyle.rel='stylesheet';layoutStyle.href='/assets/brand-layout.css';
 const detailStyle=document.createElement('link');detailStyle.rel='stylesheet';detailStyle.href='/assets/story-detail.css?v=20261118-stage';
 const controlsStyle=document.createElement('link');controlsStyle.rel='stylesheet';controlsStyle.href='/assets/story-surfaces.css?v=20261118-stage';
-const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261118-stage';
+const characterStyle=document.createElement('link');characterStyle.rel='stylesheet';characterStyle.href='/assets/flywheel/flywheel.css?v=20261118-mobile-dock';
 const characterStyleReady=new Promise((resolve,reject)=>{characterStyle.onload=resolve;characterStyle.onerror=()=>reject(new Error('Character stylesheet could not load'));});
 const controlsReady=new Promise((resolve,reject)=>{controlsStyle.onload=resolve;controlsStyle.onerror=()=>reject(new Error('Shared controls stylesheet could not load'));});
 const detailReady=new Promise((resolve,reject)=>{detailStyle.onload=resolve;detailStyle.onerror=()=>reject(new Error('Story stylesheet could not load'));});
