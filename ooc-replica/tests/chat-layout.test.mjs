@@ -25,6 +25,7 @@ test('the mode selector fits its displayed label and the reading surfaces share 
   assert.equal(rule(styles,'.character-reading .character-composer-wrap').getPropertyValue('flex-grow'),'0');
   const interaction = await rulesFor('interaction.css');
   assert.equal(rule(interaction,'.xc-chat-bridge').getPropertyValue('width'),'var(--chat-reading-width)');
+  assert.equal(rule(interaction,'.xc-chat-bridge .character-conversation-tools').getPropertyValue('flex'),'0 0 auto');
   assert.equal(rule(interaction,'.xc-chat-story p').getPropertyValue('text-overflow'),'ellipsis');
   assert.equal(rule(interaction,'.xc-chat-story a').getPropertyValue('border-radius'),'8px');
   const phone = interaction.find(r=>r.media?.mediaText==='(max-width:767px)' && [...r.cssRules].some(s=>s.selectorText==='.character-reading .session-suggestions'));
