@@ -1,4 +1,4 @@
-import {startI18n,currentLang} from './assets/site-i18n.js';
+import {startI18n,currentLang,getLang,setLang} from './assets/site-i18n.js';
 import {startAnalytics,identify,forget} from './assets/analytics.js';
 import {isBookPath,mountBook,stopBook} from './assets/book-player.js';
 import {showBuilder,guardBuilderLeave,hasUnsavedBuilderChanges,preserveBuilderDraft,syncBuilderAccount,releaseBuilder} from './assets/builder.js';
@@ -124,7 +124,8 @@ function render(){renderPage();paintAccount();document.body.removeAttribute('dat
 function renderPage(){releaseBuilder();const originalUrl=location.pathname+location.search+(location.hash||'');const canonicalUrl=canonicalCharacterUrl(originalUrl);if(canonicalUrl!==originalUrl)window.history.replaceState(window.history.state,'',canonicalUrl);stopBook();stopXichuan();clearInterval(window.carousel);const path=location.pathname,version=++routeVersion;
  stopLivingManga?.();
  stopLivingManga=undefined;
- if(path==='/pilot/sanguo-manga'){
+ if(currentLang()!==getLang())setLang(getLang(),{persist:false});
+ if(path==='/pilot/sanguo-manga'||path==='/pilot/seven-nights'){
   const helpers={navigate,show,...account.scope(),categories,data};
   interaction?.show(path,helpers);
   reference.show(path,helpers);
@@ -144,7 +145,7 @@ function renderPage(){releaseBuilder();const originalUrl=location.pathname+locat
  if(isBookPath(path)){interaction?.show('/book-campaign',{navigate,show,...account.scope(),categories,data});void mountBook(path,{reference,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(path==='/credit'){interaction?.show(path,{navigate,show,...account.scope(),categories,data});credits();return;}
  if(isThreeKingdomsPath(path)&&!path.startsWith('/story/')){interaction?.show('/three-kingdoms',{navigate,show,...account.scope(),categories,data});mountThreeKingdoms(path,{reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
- if(path.startsWith('/play/')||path.startsWith('/onboarding/')||/^\/(story|character)\/[^/]+\/episode\//.test(path)){
+ if(path==='/chat/sn-julian'||path.startsWith('/play/')||path.startsWith('/onboarding/')||/^\/(story|character)\/[^/]+\/episode\//.test(path)){
   if(interaction){interaction.show(path,{navigate,show,...account.scope(),categories,data});return;}
   reference.mountShell('<div class="route-loading" role="status">Loading your story…</div>',{navigate,show,...account.scope(),categories,data},'loading');
   void loadInteraction().then(module=>{if(version!==routeVersion)return;module.show(path,{navigate,show,...account.scope(),categories,data});paintAccount();}).catch(()=>{if(version===routeVersion)show('<h2>Unable to load this story</h2><p>Please refresh and try again.</p>');});

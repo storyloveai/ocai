@@ -38,5 +38,27 @@ class PilotDepthTest(unittest.TestCase):
                     self.assertGreater(nearer - farther, 20)
 
 
+    def test_seven_nights_depth(self):
+        base = ASSETS / "living-manga" / "seven-nights"
+        # Door jamb, desk, glass/lamp, curtain, desk versus distant window or street.
+        points = [((.07,.52),(.88,.25)), ((.13,.92),(.52,.14)),
+                  ((.05,.12),(.92,.10)), ((.07,.52),(.84,.80)),
+                  ((.24,.92),(.84,.23))]
+        for i, (near, far) in enumerate(points, 1):
+            with self.subTest(panel=i):
+                path = base / "depth" / f"p{i}_depth.webp"
+                self.assertLessEqual(path.stat().st_size, 45000)
+                with Image.open(base / f"p{i}.webp") as art, Image.open(path) as depth:
+                    self.assertEqual(art.size, (1440, 810))
+                    self.assertEqual(depth.size, art.size)
+                    r, g, b = depth.convert("RGB").split()
+                    self.assertIsNone(ImageChops.difference(r, g).getbbox())
+                    self.assertIsNone(ImageChops.difference(r, b).getbbox())
+                    self.assertGreaterEqual(len(r.getcolors()), 64)
+                    def sample(at):
+                        return r.getpixel((int(r.width * at[0]), int(r.height * at[1])))
+                    self.assertGreater(sample(near) - sample(far), 30)
+
+
 if __name__ == "__main__":
     unittest.main()

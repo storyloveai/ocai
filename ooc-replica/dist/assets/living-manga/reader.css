@@ -161,3 +161,12 @@ body.lm-reading > #main { display:block; padding:0; margin:0; width:100%; max-wi
 @media (prefers-reduced-motion:reduce) {
   .lm-reader *, .lm-reader *::before, .lm-reader *::after { animation:none!important; scroll-behavior:auto!important; }
 }
+body.lm-reading vercel-live-feedback, body.lm-reading #vercel-live-feedback { display:none !important; }
+.lm-reader[data-lm-episode="seven-nights"] .lm-overlay:is(.speech,.caption):not(.lm-loc) { max-width:43%; }
+.lm-reader[data-lm-episode="seven-nights"] .speech { font-size:clamp(14px,1.25vw,18px); }
+.lm-reader[data-lm-episode="seven-nights"] .lm-ending { min-height:clamp(340px,35vw,465px); }
+@media (max-width:520px) {
+  .lm-reader[data-lm-episode="seven-nights"] .cols-2-asym { grid-template-columns:1fr; }
+  .lm-reader[data-lm-episode="seven-nights"] .lm-close { height:275px; }
+  .lm-reader[data-lm-episode="seven-nights"] .lm-overlay:is(.speech,.caption):not(.lm-loc) { max-width:49%; font-size:13px; line-height:1.35; }
+}

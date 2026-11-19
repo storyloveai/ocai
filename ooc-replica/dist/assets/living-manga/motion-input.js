@@ -15,7 +15,7 @@ function deviceAxes({ alpha, beta, gamma }) {
   };
 }
 
-export function createMotionInput(root, { panelAt, onSensorChange, canMove, isAuto, onSensorStart, setView }) {
+export function createMotionInput(root, { panelAt, onEngage, onSensorChange, canMove, isAuto, onSensorStart, setView }) {
   const doc = root.ownerDocument;
   const win = doc.defaultView || window;
   const orientation = win.DeviceOrientationEvent;
@@ -69,6 +69,7 @@ export function createMotionInput(root, { panelAt, onSensorChange, canMove, isAu
     }
     const radians = screenAngle * rad;
     const c = Math.cos(radians), s = Math.sin(radians);
+    onEngage?.('tilt');
     setView(clampAxis(roll * c + pitch * s), clampAxis(pitch * c - roll * s));
   }
   function listen() {
@@ -113,12 +114,14 @@ export function createMotionInput(root, { panelAt, onSensorChange, canMove, isAu
     if (!manual() || !drag || drag.id !== id) return;
     dragX = clampAxis(drag.startX + (x - drag.x) / 95);
     dragY = clampAxis(drag.startY + (y - drag.y) / 95);
+    onEngage?.('drag');
     setView(dragX, dragY);
   }
   function mouse(event) {
     if (!manual()) return;
     const bounds = panelAt(event.target)?.getBoundingClientRect();
     if (!bounds?.width || !bounds?.height) return;
+    onEngage?.('pointer');
     setView((event.clientX - bounds.left) / bounds.width * 2 - 1,
       (event.clientY - bounds.top) / bounds.height * 2 - 1);
   }

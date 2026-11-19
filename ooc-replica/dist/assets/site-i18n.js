@@ -11,6 +11,7 @@ import {bookMetadata} from './book-catalog.js';
 export const LANGS = ['en', 'zh'];
 export function getLang(win = globalThis) {
   try { const v = win.localStorage?.getItem('sd.lang'); if (LANGS.includes(v)) return v; } catch {}
+  if (['/pilot/seven-nights', '/chat/sn-julian'].includes(win.location?.pathname)) return 'en';
   return /^zh/i.test(win.navigator?.language || '') ? 'zh' : 'en';
 }
 
@@ -197,9 +198,9 @@ function placeToggles(doc, lang) {
 }
 
 let current, observer;
-export function setLang(lang, {win = globalThis, doc = win.document} = {}) {
+export function setLang(lang, {win = globalThis, doc = win.document, persist = true} = {}) {
   if (!LANGS.includes(lang)) return;
-  try { win.localStorage?.setItem('sd.lang', lang); } catch {}
+  try { if (persist) win.localStorage?.setItem('sd.lang', lang); } catch {}
   current = lang; doc.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
   apply(doc.body, lang); placeToggles(doc, lang);
   win.dispatchEvent?.(new win.CustomEvent('sd-lang', {detail: lang}));

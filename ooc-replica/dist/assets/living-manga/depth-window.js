@@ -57,13 +57,13 @@ void main() {
 }`;
 
 const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
-function coverCrop(asset, width, height, image) {
+export function coverCrop(asset, width, height, image) {
   const [cx, cy, cw, ch] = asset.crop || [0, 0, 1, 1];
   const x = clamp(cx, 0, 0.999), y = clamp(cy, 0, 0.999);
   const w = clamp(cw, 0.001, 1 - x), h = clamp(ch, 0.001, 1 - y);
   const ratio = (width / height) / (image.naturalWidth / image.naturalHeight);
   const fitW = Math.min(w, h * ratio), fitH = Math.min(h, w / ratio);
-  return [x + (w - fitW) / 2, y + (h - fitH) / 2, fitW, fitH];
+  return [x + (w - fitW) * clamp(asset.alignX ?? .5, 0, 1), y + (h - fitH) * clamp(asset.alignY ?? .5, 0, 1), fitW, fitH];
 }
 
 // Own every allocation, including partially compiled programs or failed texture uploads.
@@ -258,7 +258,7 @@ function createPanel(element, asset, win, invalidate) {
   };
 }
 
-export function createDepthStage(root, { onSensorChange, onMotionPreferenceChange } = {}) {
+export function createDepthStage(root, { onSensorChange, onMotionPreferenceChange, onEngage } = {}) {
   const doc = root.ownerDocument;
   const win = doc.defaultView || window;
   const panels = new Map();
@@ -296,7 +296,7 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
     else last = 0;
   }
   const motion = createMotionInput(root, {
-    onSensorChange,
+    onSensorChange, onEngage,
     panelAt(target) {
       for (const el of panels.keys()) if (el.contains(target)) return el;
       return null;
