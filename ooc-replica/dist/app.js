@@ -1,4 +1,4 @@
-import {startI18n} from './assets/site-i18n.js';
+import {startI18n,currentLang} from './assets/site-i18n.js';
 import {startAnalytics,identify,forget} from './assets/analytics.js';
 import {isBookPath,mountBook,stopBook} from './assets/book-player.js';
 import {showBuilder,guardBuilderLeave,hasUnsavedBuilderChanges,preserveBuilderDraft,syncBuilderAccount,releaseBuilder} from './assets/builder.js';
@@ -19,7 +19,7 @@ const [data,reference,community]=await Promise.all([
  if(boot)boot.innerHTML='<p>Unable to load stories.</p><button onclick="location.reload()">Try again</button>';
  throw error;
 });
-let interaction, interactionRequest, routeVersion=0;
+let interaction, interactionRequest, stopLivingManga, routeVersion=0;
 const loadInteraction=()=>interactionRequest||(interactionRequest=import('./assets/interaction.js').then(module=>interaction=module).catch(error=>{interactionRequest=null;throw error;}));
 for(const story of [...reference.extraStories,xichuanStory])if(!data.some(d=>d.id===story.id))data.push(story);
 const $=s=>document.querySelector(s),main=$('#main'),modal=$('#modal');
@@ -122,6 +122,23 @@ function chat(id){const d=data.find(d=>d.id===id);if(!d){navigate('/');return}hi
 function preferences(){let choice=read('ooc-preference','All');show(`<h2>Content Preference</h2><p>Select the type of content you'd like to see.</p><div class="choices">${['All','Male','Female'].map(x=>`<button data-choice="${x}" class="${choice===x?'active':''}">${x}</button>`).join('')}</div><small class="demo">This demo stores your preference locally.</small><button class="primary" id="confirm-preference">Confirm</button>`);modal.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{choice=b.dataset.choice;modal.querySelectorAll('[data-choice]').forEach(x=>x.classList.toggle('active',x===b))});$('#confirm-preference').onclick=()=>{save('ooc-preference',choice);modal.close();toast('Content preference saved')}}
 function render(){renderPage();paintAccount();document.body.removeAttribute('data-booting');$('#boot-screen')?.remove();}
 function renderPage(){releaseBuilder();const originalUrl=location.pathname+location.search+(location.hash||'');const canonicalUrl=canonicalCharacterUrl(originalUrl);if(canonicalUrl!==originalUrl)window.history.replaceState(window.history.state,'',canonicalUrl);stopBook();stopXichuan();clearInterval(window.carousel);const path=location.pathname,version=++routeVersion;
+ stopLivingManga?.();
+ stopLivingManga=undefined;
+ if(path==='/pilot/sanguo-manga'){
+  const helpers={navigate,show,...account.scope(),categories,data};
+  interaction?.show(path,helpers);
+  reference.show(path,helpers);
+  const zh=currentLang()==='zh';
+  main.innerHTML='<p class="route-loading" role="status">'+(zh?'正在载入分镜…':'Loading the panels…')+'</p>';
+  void import('./assets/living-manga/entry.js').then(({startLivingManga})=>{
+   if(version===routeVersion)stopLivingManga=startLivingManga(main);
+  }).catch(()=>{
+   if(version!==routeVersion)return;
+   main.innerHTML='<p class="route-loading" role="alert">'+(zh?'分镜暂时无法加载。':'The panels could not load.')+' <a href="/">StoryDate</a> · <button type="button">'+(zh?'重试':'Retry')+'</button></p>';
+   main.querySelector('button').onclick=render;
+  });
+  return;
+ }
  if(needsXichuanProgress(path)&&!account.restored){interaction?.show('/xichuan-loading',{navigate,show,...account.scope(),categories,data});reference.mountShell('<p data-xichuan-wait role="status">正在恢复账号进度 / Restoring account progress…</p>',{navigate,show,...account.scope(),categories,data},'loading');return;}
  if(isXichuanPath(path)){interaction?.show('/xichuan',{navigate,show,...account.scope(),categories,data});mountXichuan({reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(isBookPath(path)){interaction?.show('/book-campaign',{navigate,show,...account.scope(),categories,data});void mountBook(path,{reference,helpers:{navigate,show,...account.scope(),categories,data}});return;}

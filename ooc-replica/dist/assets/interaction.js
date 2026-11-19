@@ -68,7 +68,21 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
  const jump=q('[data-control=bottom]'),paintJump=()=>{if(jump){jump.hidden=follow;jump.tabIndex=follow?-1:0;}};paintJump();
  const titleLink=root.querySelector(`a[href="/${isCharacter?'character':'story'}/${isCharacter?'6a808dbe8cc39ab3d8abaf5e':'69f414d90abbab6f6a2c8131'}"]`);if(titleLink){titleLink.href=mine?(h.read('ooc-custom',[]).some(d=>d&&d.status==='published'&&d.publishedId===id)?'/my-title':'/community'):isCharacter?(characterProfileUrl(id)||`/character/${id}`):`/story/${id}`;if(mine)titleLink.title=titleLink.href.endsWith('/my-title')?'Back to My Titles':'Browse Community';const label=[...titleLink.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===(isCharacter?'Your New beautiful neighbour':'Lumencia Academy'));if(label){label.textContent=title.title;label.dataset.sessionTitle='';}}
  titleLink?.classList.add('session-title-link');
+ const interludeReturn=isCharacter&&globalThis.history?.state?.storydateNavigation===true&&globalThis.history.state.from==='/pilot/sanguo-manga';
+
  const capturedBack=titleLink?.previousElementSibling;if(capturedBack?.matches('button')&&capturedBack.classList.contains('ts:hidden')){const back=document.createElement('a');back.setAttribute('href',titleLink.getAttribute('href'));if(back.getAttribute('href').startsWith('/story/'))back.dataset.fullInfo='';back.dataset.sessionBack='';back.dataset.noI18n='';back.className=capturedBack.className.replace('inline-block','inline-flex')+' items-center justify-center';back.style.cssText='min-width:44px;min-height:44px';back.innerHTML=capturedBack.innerHTML;back.querySelector('svg')?.setAttribute('aria-hidden','true');capturedBack.replaceWith(back);}
+ if(interludeReturn){
+  const back=q('[data-session-back]');
+  if(back){
+   back.href='/pilot/sanguo-manga';
+   back.classList.remove('ts:hidden');
+   back.addEventListener('click',event=>{
+    if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    event.preventDefault();
+    globalThis.history.back();
+   });
+  }
+ }
  if(isCharacter){scroll.parentElement.classList.add('character-dialogue-column');const actions=q('[data-control=model]')?.parentElement;actions?.classList.add('character-session-actions');actions?.parentElement?.classList.add('character-session-header');actions?.parentElement?.parentElement?.classList.add('character-session-shell');input.parentElement?.parentElement?.parentElement?.classList.add('character-composer-wrap');}
  const settingsTitle=settings.querySelector('p');if(settingsTitle){settingsTitle.textContent=title.title;settingsTitle.dataset.sessionTitle='';const pencil=settingsTitle.nextElementSibling;if(pencil?.matches('button.shrink-0'))pencil.remove();}
  settings.querySelectorAll('button').forEach(b=>{
@@ -86,7 +100,7 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
   const zh=sessionLanguage()==='zh',image=settings.querySelector('[data-session-setting="View image"]'),help=settings.querySelector('[data-session-setting="Chat help"]');
   if(image)image.textContent=zh?(isCharacter?'查看立绘':'查看封面'):(isCharacter?'View portrait':'View cover');
   if(help)help.textContent=zh?'聊天操作说明':'Chat controls';
-  const back=q('[data-session-back]');if(back){const label=mine?(back.getAttribute('href')==='/my-title'?(zh?'返回我的作品':'Back to My Titles'):(zh?'返回社区':'Back to Community')):(isCharacter?(zh?'返回角色档案':'Back to character profile'):(zh?'返回作品详情':'Back to story details'));back.setAttribute('aria-label',label);back.title=label;}
+  const back=q('[data-session-back]');if(back){const label=interludeReturn?(zh?'返回分镜':'Back to the panels'):mine?(back.getAttribute('href')==='/my-title'?(zh?'返回我的作品':'Back to My Titles'):(zh?'返回社区':'Back to Community')):(isCharacter?(zh?'返回角色档案':'Back to character profile'):(zh?'返回作品详情':'Back to story details'));back.setAttribute('aria-label',label);back.title=label;}
   settings.querySelectorAll('[data-session-memory-label]').forEach(node=>{node.textContent=zh?'补充记忆':'Additional memories';});
   settings.querySelector('[data-session-close]')?.setAttribute('aria-label',local('Close session settings'));
   document.querySelectorAll('[data-chat-help]').forEach(paintChatHelp);
