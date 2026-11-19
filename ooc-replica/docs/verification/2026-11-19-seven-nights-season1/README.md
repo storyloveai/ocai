@@ -4,11 +4,15 @@
 
 ## Preview 实测
 
-[实测 Preview](https://storydate-zhou-r9ngw2mqo-zhou-zeyas-projects.vercel.app/seven-nights)。Chrome 浏览器视口为桌面 1366 × 900、手机 390 × 844。每组从剧场进入，第二夜选择亮出暗账并打开车内草稿，第三夜选择拉近距离并打开阳台草稿，再经左上角返回剧场查看印记。预览使用访客身份与手机模拟视口，只核对草稿，没有发送真实模型请求。
+[实测 Preview](https://storydate-zhou-eexifqwig-zhou-zeyas-projects.vercel.app/seven-nights)。Chrome 浏览器视口为桌面 1366 × 900、手机 390 × 844。每组从剧场进入，第二夜选择亮出暗账并打开车内草稿，第三夜选择拉近距离并打开阳台草稿，再经左上角返回剧场查看印记。以访客身份核对未发送草稿。本轮刷新 56 张分镜、幕间聊天及解锁截图；剧场首页的四张对照保留自上一轮。
 
 | 页面 | 桌面 EN | 桌面 中文 | 手机 EN | 手机 中文 |
 |---|---|---|---|---|
 | 剧场入口 | [实截](desktop-en-hub.jpg) | [实截](desktop-zh-hub.jpg) | [实截](mobile-en-hub.jpg) | [实截](mobile-zh-hub.jpg) |
+| 第一夜开场 | [实截](desktop-en-ep1-color.jpg) | [实截](desktop-zh-ep1-color.jpg) | [实截](mobile-en-ep1-color.jpg) | [实截](mobile-zh-ep1-color.jpg) |
+| 第一夜抉择 | [实截](desktop-en-ep1-decision.jpg) | [实截](desktop-zh-ep1-decision.jpg) | [实截](mobile-en-ep1-decision.jpg) | [实截](mobile-zh-ep1-decision.jpg) |
+| 第一夜集末 | [实截](desktop-en-ep1-ending.jpg) | [实截](desktop-zh-ep1-ending.jpg) | [实截](mobile-en-ep1-ending.jpg) | [实截](mobile-zh-ep1-ending.jpg) |
+| 书房私聊 | [实截](desktop-en-ep1-chat.jpg) | [实截](desktop-zh-ep1-chat.jpg) | [实截](mobile-en-ep1-chat.jpg) | [实截](mobile-zh-ep1-chat.jpg) |
 | 第二夜开场 | [实截](desktop-en-ep2-color.jpg) | [实截](desktop-zh-ep2-color.jpg) | [实截](mobile-en-ep2-color.jpg) | [实截](mobile-zh-ep2-color.jpg) |
 | 第二夜水墨 | [实截](desktop-en-ep2-ink.jpg) | [实截](desktop-zh-ep2-ink.jpg) | [实截](mobile-en-ep2-ink.jpg) | [实截](mobile-zh-ep2-ink.jpg) |
 | 第二夜抉择 | [实截](desktop-en-ep2-decision.jpg) | [实截](desktop-zh-ep2-decision.jpg) | [实截](mobile-en-ep2-decision.jpg) | [实截](mobile-zh-ep2-decision.jpg) |
@@ -18,14 +22,25 @@
 | 第三夜抉择 | [实截](desktop-en-ep3-decision.jpg) | [实截](desktop-zh-ep3-decision.jpg) | [实截](mobile-en-ep3-decision.jpg) | [实截](mobile-zh-ep3-decision.jpg) |
 | 第三夜集末 | [实截](desktop-en-ep3-ending.jpg) | [实截](desktop-zh-ep3-ending.jpg) | [实截](mobile-en-ep3-ending.jpg) | [实截](mobile-zh-ep3-ending.jpg) |
 | 阳台私聊 | [实截](desktop-en-ep3-chat.jpg) | [实截](desktop-zh-ep3-chat.jpg) | [实截](mobile-en-ep3-chat.jpg) | [实截](mobile-zh-ep3-chat.jpg) |
+| 第三夜免费解锁 | [实截](desktop-en-gate.jpg) | [实截](desktop-zh-gate.jpg) | [实截](mobile-en-gate.jpg) | [实截](mobile-zh-gate.jpg) |
 
-[第 3 集免费解锁卡实截](mobile-en-gate.jpg)。同一设备免费解锁后，重新进入会直接恢复阅读。
+同一设备免费解锁后，重新进入会直接恢复阅读。
 
 另从剧场按钮逐集进入第一、二、三夜，季终返回剧场后核对三张已读卡及七项选择印记。
 
+## Cinema Pro 手机与 WebGL 验收
+
+390px 触屏视口进入时顶部可见「3D 倾斜」。打开就有轻微呼吸，竖滑时各画格按自身在屏幕里的位置移动；横拖或倾斜可以接管。系统开启减少动态时，视差、微光和入场转场静止。单测覆盖权限拒绝、2.5 秒未收到读数、横拖、后台恢复和离屏停止。
+
+在同一个 390px 面板上，用生产着色器及输入处理器先正视、再右倾，逐行读取画布像素并测量同一根标线的中心。白色近景向左 16.97px，焦点深度 0.58 的标线向左 0.01px，黑色远景向右 23.41px。可在本目录所属的 `ooc-replica/` 启动本地静态服务器，打开 [像素探针](../../../tests/fixtures/cinema-depth-probe.html) 复测。三夜中有纪沉的画格另外使用各自深度图的双眼采样值锁定视线，并保护脸部免受玻璃雨痕影响。
+
+Apple M2 上使用 Chrome / ANGLE Metal、390×844 视口，在第二夜和《煮酒论英雄》开场各取 120 个帧间隔。两处的平均刷新率均为 60 fps，帧间隔中位数与 P95 均为 16.7 ms。此项是桌面 GPU 实测，实体 iPhone、Android 的传感器与帧率仍需真机复测。
+
+本地浏览器的四组中文／英文、桌面／触屏尺寸验收均使用关闭计费的配置，拦截外部请求，逐集检查画布覆盖、当前场景的舞台图和未发送草稿，记录到 0 个 POST。三国和三夜共用引擎，本轮上线资产复用原画与深度图。
+
 ## 回归与隐私
 
-构建、420 项 JavaScript 自动测试、23 份 CSS 的 esbuild 解析、游戏副本一致性检查与 Pillow 深度校验通过。读者页面和剧场复用已有路由与账号作用域。开启计费时以服务端返回的 15 积分为准，钱包事务同时记录扣费与剧集权益。单元测试覆盖伪造价格、余额不足、跨账号、并发重复解锁，以及预览凭据无权打开计费模式。
+构建、422 项 JavaScript 自动测试、23 份 CSS 的 esbuild 解析、游戏副本一致性检查与 Pillow 深度校验通过。读者页面和剧场复用已有路由与账号作用域。开启计费时以服务端返回的 15 积分为准，钱包事务同时记录扣费与剧集权益。单元测试覆盖伪造价格、余额不足、跨账号、并发重复解锁，以及预览凭据无权打开计费模式。
 
 角色场景与记忆只经过枚举白名单。剧场、读完、闸门曝光和解锁四个新增事件只写入规范中的字段。回归检查了分支、浏览、输入类型、轮次等事件参数，确认 URL 查询字符串和自由输入不会进入捕获结果。聊天回复用测试替身验证，Preview 验收仅检查打开草稿的链路。
 

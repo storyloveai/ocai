@@ -319,3 +319,24 @@ test('ambient motion works before permission, tracks viewport position, and surv
   assert.equal(r.layer.style.translate,'0px 0px');
   r.stage.destroy();
 });
+
+test('horizontal ray uses full panel width and the focused POM keeps its nine-percent overscan', () => {
+  const r = rig();
+  r.stage.setAuto(false);
+  const uniforms = new Map();
+  r.win.Image = class { complete = true; naturalWidth = 390 };
+  const gl = new Proxy({
+    NO_ERROR:0, getError:()=>0, getProgramParameter:()=>true, getShaderParameter:()=>true,
+    getUniformLocation:(_program,name)=>name, getExtension:()=>null,
+    uniform1f:(name,v)=>uniforms.set(name,v), uniform2f:(name,x,y)=>uniforms.set(name,[x,y])
+  }, {get:(o,k)=>k in o ? o[k] : ()=>({})});
+  r.canvas.getContext=()=>gl;
+  r.visible(true);r.settle();
+  r.pointer('pointermove',{pointerType:'mouse',clientX:320,clientY:120});r.settle();
+  const [rayX,rayY]=uniforms.get('u_tilt'), focus=uniforms.get('u_focus');
+  assert.equal(rayX,.07);assert.equal(rayY,0);
+  assert.equal(focus,.58);assert.equal(uniforms.get('u_inset'),.09);
+  const near=(1-focus)*rayX, far=(0-focus)*rayX;
+  assert.ok(near>0 && far<0 && Math.max(near,-far)<uniforms.get('u_inset'));
+  r.stage.destroy();
+});
