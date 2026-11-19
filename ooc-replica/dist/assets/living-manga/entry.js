@@ -12,7 +12,7 @@ export function startLivingManga(host, helpers) {
   const style = doc.createElement('link');
   style.rel = 'stylesheet';
   style.href = new URL('./reader.css', import.meta.url).href;
-  doc.head.append(style);
+  let ready=false, active=true, disposed=false;
   doc.body.classList.add('lm-reading');
   let stop;
   const reader = () => mountReader(host,episode,{
@@ -30,12 +30,14 @@ export function startLivingManga(host, helpers) {
     onComplete:(number,id)=>{if(helpers)remember(helpers,number,id);}
   });
   const mount = () => {
+    if(!ready||!active||disposed||stop)return;
     stop = path==='/seven-nights' ? mountHub(host,helpers)
       : episode.number===3 ? mountGate(host,helpers,reader) : reader();
   };
-  const suspend = () => { stop?.(); stop = undefined; };
-  const restore = event => { if (event.persisted && !stop) mount(); };
+  const suspend = () => { active=false; stop?.(); stop = undefined; };
+  const restore = event => { if (event.persisted) {active=true;mount();} };
   function dispose() {
+    disposed=true;style.onload=style.onerror=null;
     win.removeEventListener('pagehide', suspend);
     win.removeEventListener('pageshow', restore);
     suspend();
@@ -43,7 +45,14 @@ export function startLivingManga(host, helpers) {
     style.remove();
   }
   try {
-    mount();
+    style.onload=()=>{ready=true;mount();};
+    style.onerror=()=>{
+      if(disposed)return;
+      const retry=doc.createElement('button');
+      retry.textContent=currentLang()==='zh'?'重新加载剧场':'Reload theater';
+      retry.onclick=()=>win.location.reload();host.replaceChildren(retry);
+    };
+    doc.head.append(style);
     win.addEventListener('pagehide', suspend);
     win.addEventListener('pageshow', restore);
     return dispose;

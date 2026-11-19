@@ -103,6 +103,15 @@ test("SDK integration: real auth verification, atomic Firestore transactions, cr
     assert.equal(direct.status, 403);
     const w = await (await platform.wallet(req(bob.token))).json();
     assert.equal(w.balance, 0);
+    // Concurrent clicks from two devices share one debit and one entitlement.
+    await store.purchase(bob.uid,"cs_" + bob.uid.replace(/[^a-zA-Z0-9_]/g,""),200);
+    const unlock = {action:"episode-unlock",episodeId:"seven-nights-ep3",amount:1};
+    const purchases=await Promise.all([platform.wallet(req(bob.token,unlock)),platform.wallet(req(bob.token,unlock))]);
+    for(const response of purchases)assert.equal(response.status,200);
+    const owned=await store.read(bob.uid);
+    assert.equal(owned.balance,185);
+    assert.deepEqual(owned.unlockedEpisodes,["seven-nights-ep3"]);
+    assert.deepEqual((await store.read(alice.uid)).unlockedEpisodes,[]);
     await auth.updateUser(bob.uid, { disabled: true });
     assert.equal((await platform.wallet(req(bob.token))).status, 401);
     assert.equal((await createCredits(db, "live").read(alice.uid)).balance, 0);

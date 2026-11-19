@@ -243,3 +243,26 @@ body.lm-reading vercel-live-feedback, body.lm-reading #vercel-live-feedback { di
 .sn-gate-copy{padding-top:15vh}.sn-gate-copy p{margin:12px 0}
 .lm-next,.sn-save{display:inline-flex;align-items:center;gap:12px;padding:10px}
 @media(max-width:767px){.sn-rail{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}.sn-hero{background-position:60% center}.sn-hero-copy{padding:70px 0 32px}.sn-memory>img{width:74px;height:106px}.sn-theater h3{font-size:18px}.sn-memory{align-items:flex-start}.sn-hero-copy>p{max-width:30ch}}
+
+/* The harbor flare and the incoming boat occupy the outer right quarter.
+   Set the caption in the strip of storm sky between the flare and Julian. */
+.lm-reader[data-lm-episode="seven-nights-ep3"] [data-scene="p4"] .lm-overlay.caption {
+  right:22%; top:5px; max-width:31%; padding:4px 7px;
+}
+.lm-reader[data-lm-episode^="seven-nights-ep"] .lm-opening [data-scene="p1"] {
+  height:auto; aspect-ratio:16/9;
+}
+.lm-reader[data-lm-episode^="seven-nights-ep"] .lm-opening [data-scene="p1"] .lm-narration {
+  bottom:32%;
+}
+@media(max-width:520px){
+  .lm-reader[data-lm-episode="seven-nights-ep3"] [data-scene="p4"] .lm-overlay.caption {
+    max-width:31%; right:22%; top:3px; font:500 12px/1.15 system-ui,sans-serif; padding:3px 5px;
+  }
+  .lm-reader[data-lm-episode="seven-nights-ep3"] [data-scene="p4"] .lm-overlay.speech{
+    left:3%;bottom:3px;max-width:68%;
+  }
+  .lm-reader[data-lm-episode^="seven-nights-ep"] .lm-opening [data-scene="p1"] .lm-narration{
+    bottom:27%;max-width:60%;font-size:12px;line-height:1.25;
+  }
+}
