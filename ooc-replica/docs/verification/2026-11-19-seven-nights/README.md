@@ -1,6 +1,6 @@
 # Seven Nights · 第一集验收
 
-独立试播分支从 `c124d794`（#160）分出。首次进入英文试播页时优先使用读者主动保存的语言。截图取自 [Vercel 固定提交预览](https://storydate-zhou-6315i5o1v-zhou-zeyas-projects.vercel.app/pilot/seven-nights)，对应 `83b21bb`。使用 Chrome 的 1366 × 900 桌面视口和 390 × 844 手机模拟视口。手机真机传感器未纳入本轮验收。
+独立试播分支从 `c124d794`（#160）分出。首次进入英文试播页时优先使用读者主动保存的语言。首轮截图取自 [Vercel 固定提交预览](https://storydate-zhou-6315i5o1v-zhou-zeyas-projects.vercel.app/pilot/seven-nights)，对应 `83b21bb`。使用 Chrome 的 1366 × 900 桌面视口和 390 × 844 手机模拟视口。手机真机传感器未纳入本轮验收。
 
 ## 桌面与手机
 
@@ -10,6 +10,13 @@
 | 桌面 中文 | [彩漫](desktop-zh-color.jpg) | [水墨](desktop-zh-ink.jpg) | [集末](desktop-zh-decision.jpg) | [书房](desktop-zh-interlude.jpg) |
 | 手机 EN | [彩漫](mobile-en-color.jpg) | [水墨](mobile-en-ink.jpg) | [集末](mobile-en-decision.jpg) | [书房](mobile-en-interlude.jpg) |
 | 手机 中文 | [彩漫](mobile-zh-color.jpg) | [水墨](mobile-zh-ink.jpg) | [集末](mobile-zh-decision.jpg) | [书房](mobile-zh-interlude.jpg) |
+
+### 两处分镜排版复验
+
+在 [`68e8d56` 的固定 Preview](https://storydate-zhou-2bm3rgjtx-zhou-zeyas-projects.vercel.app/pilot/seven-nights) 更新了表内桌面双语彩漫、水墨开场及手机双语集末，共 6 张。其余截图沿用首轮验收。
+
+- **桌面第 2 格**　1366 × 900 下，气泡正文中英文各两行，姓名单独标在左上角。气泡贴在大衣下方，整条下颌可见。
+- **手机第 5 格**　390 × 844 下，WebGL 画布覆盖面板边框内全部 368 × 229 像素。英文对白四行，中文三行。台词与旁白之间保留侧脸和街面，两辆车可见。
 
 ## 资源与验证方法
 
