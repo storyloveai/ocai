@@ -6,7 +6,7 @@ import {show as showFlywheel, syncAccount as syncFlywheelAccount} from './assets
 import {canonicalCharacterUrl, characterDirectoryReturn, characterReturnUrl, storyReturnUrl, isCharacterJourney} from './assets/character-links.js';
 import {mountThreeKingdoms,isThreeKingdomsPath} from './assets/three-kingdoms.js';
 import {mountXichuan,isXichuanPath,stopXichuan} from './assets/xichuan-player.js';
-import {xichuanStory} from './assets/xichuan-character.js';
+import {isXichuanCharacterId, xichuanStory} from './assets/xichuan-character.js';
 import {createPayments} from './assets/payments.js';
 import {paintSyncStatus,clearAccountDialog} from './assets/account-sync-ui.js';
 import {createAccount} from './assets/account.js';
@@ -25,7 +25,8 @@ for(const story of [...reference.extraStories,xichuanStory])if(!data.some(d=>d.i
 const $=s=>document.querySelector(s),main=$('#main'),modal=$('#modal');
 startAnalytics();let trackedUid=null;
 const syncAnalytics=()=>{const uid=account?.user?.uid||null;if(uid===trackedUid)return;if(uid)identify(uid);else if(trackedUid)forget();trackedUid=uid;};
-const account=createAccount({changed:reset=>{syncAnalytics();if(reset){clearAccountDialog(modal);favorites=read('ooc-favorites',[]);history=read('ooc-history',[]);custom=read('ooc-custom',[]);if(account.user&&!read('ooc-onboarding-complete',false)&&!location.pathname.startsWith('/onboarding/'))navigate('/onboarding/1');else render();}else if((isXichuanPath(location.pathname)||location.pathname==='/play/xc-zhiyao')&&(!account.restored||document.querySelector('[data-xichuan-wait]')))render();else paintAccount();},notify:toast});
+const needsXichuanProgress=path=>isXichuanPath(path)||(path.startsWith('/play/')&&isXichuanCharacterId(path.slice(6)));
+const account=createAccount({changed:reset=>{syncAnalytics();if(reset){clearAccountDialog(modal);favorites=read('ooc-favorites',[]);history=read('ooc-history',[]);custom=read('ooc-custom',[]);if(account.user&&!read('ooc-onboarding-complete',false)&&!location.pathname.startsWith('/onboarding/'))navigate('/onboarding/1');else render();}else if(needsXichuanProgress(location.pathname)&&(!account.restored||document.querySelector('[data-xichuan-wait]')))render();else paintAccount();},notify:toast});
 const payments=createPayments({account,show,modal,notify:toast});
 const read=(k,f)=>account.read(k,f),save=(k,v)=>account.save(k,v);
 let favorites=read('ooc-favorites',[]),history=read('ooc-history',[]),custom=read('ooc-custom',[]),slide=0,category='Main',timer;
@@ -121,7 +122,7 @@ function chat(id){const d=data.find(d=>d.id===id);if(!d){navigate('/');return}hi
 function preferences(){let choice=read('ooc-preference','All');show(`<h2>Content Preference</h2><p>Select the type of content you'd like to see.</p><div class="choices">${['All','Male','Female'].map(x=>`<button data-choice="${x}" class="${choice===x?'active':''}">${x}</button>`).join('')}</div><small class="demo">This demo stores your preference locally.</small><button class="primary" id="confirm-preference">Confirm</button>`);modal.querySelectorAll('[data-choice]').forEach(b=>b.onclick=()=>{choice=b.dataset.choice;modal.querySelectorAll('[data-choice]').forEach(x=>x.classList.toggle('active',x===b))});$('#confirm-preference').onclick=()=>{save('ooc-preference',choice);modal.close();toast('Content preference saved')}}
 function render(){renderPage();paintAccount();document.body.removeAttribute('data-booting');$('#boot-screen')?.remove();}
 function renderPage(){releaseBuilder();const originalUrl=location.pathname+location.search+(location.hash||'');const canonicalUrl=canonicalCharacterUrl(originalUrl);if(canonicalUrl!==originalUrl)window.history.replaceState(window.history.state,'',canonicalUrl);stopBook();stopXichuan();clearInterval(window.carousel);const path=location.pathname,version=++routeVersion;
- if((isXichuanPath(path)||path==='/play/xc-zhiyao')&&!account.restored){interaction?.show('/xichuan-loading',{navigate,show,...account.scope(),categories,data});reference.mountShell('<p data-xichuan-wait role="status">正在恢复账号进度 / Restoring account progress…</p>',{navigate,show,...account.scope(),categories,data},'loading');return;}
+ if(needsXichuanProgress(path)&&!account.restored){interaction?.show('/xichuan-loading',{navigate,show,...account.scope(),categories,data});reference.mountShell('<p data-xichuan-wait role="status">正在恢复账号进度 / Restoring account progress…</p>',{navigate,show,...account.scope(),categories,data},'loading');return;}
  if(isXichuanPath(path)){interaction?.show('/xichuan',{navigate,show,...account.scope(),categories,data});mountXichuan({reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(isBookPath(path)){interaction?.show('/book-campaign',{navigate,show,...account.scope(),categories,data});void mountBook(path,{reference,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(path==='/credit'){interaction?.show(path,{navigate,show,...account.scope(),categories,data});credits();return;}

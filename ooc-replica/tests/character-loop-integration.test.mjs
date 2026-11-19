@@ -198,7 +198,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
         await f.click('[data-xichuan-return]'); await waitFor(profile, 'the game did not return to Shen Cheng’s actual profile');
         assert.equal(profile().dataset.fwCharacter, 'xc-shencheng');
         assert.equal(f.values.get(XICHUAN_KEY), envelope);
-        assert.equal(f.values.has('ooc-session-v2-xc-shencheng'), false, 'story access does not invent an unavailable Shen Cheng chat');
+        assert.equal(f.values.has('ooc-session-v2-xc-shencheng'), false, 'visiting a profile and its story does not create a chat session');
         await f.go('/story/xichuan');
         await f.click('[data-story-play="xichuan"]');
         peer = f.peer(); peer.send({type: 'xc-ready'});
@@ -218,7 +218,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.go('/characters?source=home#cast');
       const initialLength = f.history.length;
       await f.click('[data-fw-chat]');
-      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 13);
+      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 15);
       await f.click('[data-fw-world="xichuan"]');
       assert.equal(f.history.length, initialLength + 2, 'each discrete choice gets a history entry');
       const directoryUrl = f.location.pathname + f.location.search + f.location.hash;
@@ -243,7 +243,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.click('[data-xichuan-entry]');
       const chatPeer = f.peer(); chatPeer.send({type: 'xc-ready'});
       assert.equal(f.history.state.discoveryReturn, directoryUrl);
-      assert.equal(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), '/play/xc-zhiyao', 'a story opened from chat returns to the same conversation');
+      assert.equal(f.document.querySelector('[data-xichuan-return]').getAttribute('href'), '/play/xc-zhiyao?from=xichuan', 'a story opened from chat returns to the same conversation with a one-time return signal');
       await f.click('[data-xichuan-return]');
       await waitFor(() => f.document.querySelector('#session-input'), 'story did not return to the same chat');
       await f.click('a[href="/characters/xc-zhiyao"]'); await waitFor(profile, 'chat did not return to the same profile');
@@ -441,10 +441,91 @@ test('real app connects profiles, local chat, current story memory and reloads t
     await t.test('profile hydration hides the previous account and rejects its stale scope', () => verifyProfileHydration(f));
     await t.test('guest legacy progress remains read-only and is never attached to a signed-in account', () => verifyLegacyProgress(f));
     await t.test('profiles follow actual conversation branches and validate pinned source text', () => verifyBranchMemories(f));
+    const newHeroines = [
+      {id:'xc-shencheng', own:'flag.cheng_coffee', other:'flag.saw_reel', summary:/热可可/, intro:/把杯子放回吧台/, opening:/风铃响了/},
+      {id:'xc-jibai', own:'flag.saw_reel', other:'flag.cheng_coffee', summary:/没有标签的胶片/, intro:/关掉检片灯/, opening:/进来时小心脚下的胶片盒/},
+    ];
+    for (const heroine of newHeroines) {
+      await t.test(heroine.id + ' accepts a draft, projects only her own facts and returns from resume', () => verifyHeroineJourney(f,heroine));
+      await t.test(heroine.id + ' uses her selected mode and projection in actual chat and suggestion request bodies', async () => {
+        const id=heroine.id, game=save({[heroine.own]: true, [heroine.other]: true,'flag.knows_mom':true});
+        const entries=[[XICHUAN_KEY,JSON.stringify({[LATEST]:game})],['ooc-response-mode','"ai"'],['ooc-response-mode-xc-zhiyao','"ai"'],['ooc-suggestions-visible','true']];
+        const local=await reload({path:'/play/'+id,entries,configured:true,exerciseDemo:'你好。'});
+        assert.deepEqual(local.requests.filter(([path])=>path.startsWith('/api/')), [['/api/config','GET']]);
+        const pastAnswer={role:'assistant',text:'Earlier turn',suggestions:['Discarded branch?'],suggestionsLanguage:'zh',xichuanStamp:'previous-save'};
+        const live=await reload({
+          path:'/play/'+id+'?draft=hello',
+          entries:[...entries,['ooc-session-v2-'+id,JSON.stringify([pastAnswer])]],
+          configured:true,mockChat:true,exerciseAI:'hello'
+        });
+        assert.equal(JSON.parse(new Map(live.entries).get('ooc-response-mode-'+id)),'ai','the top-bar control persists this heroine’s mode');
+        assert.deepEqual(live.chatBodies.map(body=>body.task || 'chat'), ['chat','suggestions']);
+        assert.deepEqual(live.chatBodies[1].previousSuggestions,[],'suggestions from a discarded snapshot never seed the next ones');
+        for(const body of live.chatBodies){
+          assert.equal(body.titleId,id);
+          assert.deepEqual(body.xichuan,storyContext({[LATEST]:game},id));
+          assert.equal(body.xichuan.flags[heroine.own],true);
+          assert.equal(Object.hasOwn(body.xichuan.flags,heroine.other),false);
+          assert.equal(Object.hasOwn(body.xichuan.flags,'flag.knows_mom'),false);
+        }
+      });
+    }
   } finally {
     await f.go('/characters'); clearInterval(f.window.carousel);
   }
 });
+
+async function verifyHeroineJourney(f,{id,own,other,summary,intro,opening}) {
+  const game=save({[own]:true,[other]:true,'flag.z_promised':true});
+  const snapshot=JSON.stringify({[LATEST]:game});
+  const sessionKey='ooc-session-v2-'+id;
+  const line='我想先聊聊这里。 '+id;
+  const requestsBefore=f.requests.filter(([path])=>path.startsWith('/api/'));
+  f.values.delete(XICHUAN_KEY);
+  f.values.delete('xc.auto');
+  await f.go('/characters/'+id);
+  const field=f.document.querySelector('[data-fw-profile-draft]');
+  field.value=line; field.dispatchEvent(new f.window.Event('input',{bubbles:true}));
+  assert.equal(new URL(f.document.querySelector('[data-fw-chat-entry]').getAttribute('href'),f.location.origin).searchParams.get('draft'),line);
+  await f.click('[data-fw-chat-entry]');
+  const input=await waitFor(()=>f.document.querySelector('#session-input'),'chat did not open');
+  assert.equal(f.location.pathname,'/play/'+id);
+  assert.equal(input.value,line);
+  assert.match(f.document.querySelector('.sg-chat-intro').textContent,opening);
+  assert.equal(new URLSearchParams(f.location.search).has('draft'),false);
+  assert.deepEqual(JSON.parse(f.values.get(sessionKey)||'[]'),[]);
+  assert.deepEqual(f.requests.filter(([path])=>path.startsWith('/api/')),requestsBefore);
+
+  await f.click('[data-control="send"]');
+  await waitFor(()=>JSON.parse(f.values.get(sessionKey)||'[]').some(m=>m.role==='assistant'&&m.text&&!m.streaming),'demo reply did not finish',8000);
+  await f.click('[data-character-pin="0"]');
+  await f.click('[data-xichuan-entry]');
+  const first=f.peer(); first.send({type:'xc-ready'});
+  assert.equal(first.messages[0].entry,'title');
+  first.send({type:'xc-save',key:'auto',value:game});
+  await f.click('[data-xichuan-return]');
+  await waitFor(()=>f.document.querySelector('[data-xichuan-progress]'),'missing story context after return');
+  assert.equal(f.location.pathname,'/play/'+id);
+  assert.equal(f.location.search,'');
+  assert.match(f.document.querySelector('[data-xichuan-return-intro]').textContent,intro);
+  assert.match(f.document.querySelector('[data-xichuan-progress]').textContent,summary);
+  assert.equal(f.document.querySelectorAll('.xc-chat-bridge').length,1);
+  assert.equal(f.document.querySelector('[data-xichuan-entry]').getAttribute('href'),'/play/xichuan?entry=resume');
+  await f.click('[data-xichuan-entry]');
+  const continued=f.peer();continued.send({type:'xc-ready'});
+  assert.equal(continued.messages[0].entry,'resume');
+  assert.deepEqual(continued.messages[0].snapshot.latest,game);
+  assert.equal(f.document.querySelector('[data-xichuan-return]').getAttribute('href'),'/play/'+id+'?from=xichuan');
+  await f.click('[data-xichuan-return]');await waitFor(()=>f.document.querySelector('#session-input'),'return link did not restore chat');
+  await f.click('a[href="/characters/'+id+'"]');
+  const profile=await waitFor(()=>f.document.querySelector('[data-fw-character="'+id+'"]'),'profile did not reopen');
+  const facts=[...profile.querySelectorAll('.fw-experience-facts li')].map(item=>item.textContent);
+  assert.deepEqual(facts,[campaign.vars[own].label.zh]);
+  assert.match(profile.querySelector('[data-fw-progress]').textContent,summary);
+  assert.ok(profile.querySelector('[data-fw-experiences]').textContent.includes(line));
+  assert.deepEqual(f.requests.filter(([path])=>path.startsWith('/api/')),requestsBefore);
+  assert.equal(JSON.stringify({[LATEST]:JSON.parse(f.values.get(XICHUAN_KEY))[LATEST]}),snapshot);
+}
 
 async function verifyPlayerLayoutLifecycle(f) {
   const previousObserver = globalThis.ResizeObserver, previousViewport = f.window.visualViewport;

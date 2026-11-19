@@ -175,6 +175,12 @@ const searchSummaryMarkup=(query,count,tag='h3',kind='All')=>`<${tag} data-searc
 const normalizedQuery = query => String(query||'').trim().replace(/^#+/,'').toLowerCase();
 const matchingTitles = (query,kind='All') => searchCatalog.filter(d=>(searchIndex.get(d.id)||'').includes(normalizedQuery(query))).filter(d=>kind==='Character'?d.type==='character':kind==='Story'?d.type!=='character':true);
 
+function removeHomeNotice(root) {
+  for (const button of root.querySelectorAll('button[aria-label="Dismiss"]')) {
+    const section=button.closest('section');
+    if (section?.querySelector('a[href^="/announcement/"]')) section.parentElement.remove();
+  }
+}
 function paintNotice(){
   const buttons=all('button[aria-label="Dismiss"]');
   const slots=[...new Set(buttons.map(button=>button.closest('section')?.parentElement).filter(Boolean))];
@@ -190,7 +196,9 @@ function paintNotice(){
   }
 }
 function hydrate() {
-  paintBrand(host);paintNotice();
+  paintBrand(host);
+  if (host.dataset.page === 'home') removeHomeNotice(host);
+  else paintNotice();
   all('img[data-asset]').forEach(img => {
     const local = assets[img.dataset.asset];
     if(local){img.src=local;img.style.visibility='';}
@@ -247,6 +255,7 @@ function updateHero(step) {
 // Preserve the original template used by collections, history, and snapshot comparisons.
 function buildLibraryShells() {
   const shell = templateDocument.querySelector('#reference-root').cloneNode(true);
+  removeHomeNotice(shell);
   const mainTab = [...shell.querySelectorAll('button')].find(button => text(button) === 'Main');
   const library = mainTab.closest('.sticky').closest('.flex-1');
   library.id = 'story-library';

@@ -42,9 +42,9 @@ export function createHistory(window, location, setLocation, initialState = {}) 
 
 // Runs the real app. Only browser APIs, the public config response and the iframe
 // peer are supplied by the fixture; routing, profiles and persistence stay real.
-export async function boot({path = '/characters', entries = [], configured = false, restoreAfterProfileMount = false, historyState = {}} = {}) {
+export async function boot({path = '/characters', entries = [], configured = false, mockChat = false, restoreAfterProfileMount = false, historyState = {}} = {}) {
   const {window, document} = parseHTML(await readFile(join(dist, 'index.html'), 'utf8'));
-  const values = new Map([['sd.lang', 'zh'], ...entries]), writes = [], requests = [];
+  const values = new Map([['sd.lang', 'zh'], ...entries]), writes = [], requests = [], chatBodies = [];
   let observedRestoring = false;
   const storage = {
     getItem: key => values.get(key) ?? null,
@@ -93,6 +93,12 @@ export async function boot({path = '/characters', entries = [], configured = fal
         }
         return Response.json({auth: null, configured, model: configured ? 'Fixture model' : '', billing: {enabled: false}});
       }
+      if (path === '/api/chat' && mockChat) {
+        const body = JSON.parse(options.body);
+        chatBodies.push(body);
+        const reply = body.task === 'suggestions' ? JSON.stringify(['First?', 'Second?', 'Third?']) : 'Fixture reply';
+        return new Response(reply, {headers:{'Content-Type':'text/plain'}});
+      }
       if (String(path).startsWith('/api/')) throw Error('Unexpected external operation: ' + path);
       return new Response(await readFile(join(dist, path)), {headers: {'Content-Type': 'application/json'}});
     },
@@ -122,7 +128,7 @@ export async function boot({path = '/characters', entries = [], configured = fal
     };
     return {frame, messages, send};
   };
-  return {window, document, location, history, values, writes, requests, storage, go, click, peer, get observedRestoring() { return observedRestoring; }};
+  return {window, document, location, history, values, writes, requests, chatBodies, storage, go, click, peer, get observedRestoring() { return observedRestoring; }};
 }
 
 // A fresh worker represents a browser reload, so no module cache, route state or
@@ -137,20 +143,29 @@ if (parentPort) {
         if (!state || state.querySelector('[data-fw-restoring]')) return false;
         // A new profile has no progress text. Wait for the restored account's
         // real actions, rather than requiring empty status placeholders.
-        if (profile.dataset.fwCharacter === 'xc-zhiyao') return state.querySelector('[data-fw-chat-entry]');
+        if (profile.querySelector('[data-fw-profile-draft]')) return state.querySelector('[data-fw-chat-entry]');
         return state.childElementCount > 0;
       }
       return f.document.querySelector('#xichuan-frame') || f.document.querySelector('#session-input') || f.document.querySelector('[data-fw-page="characters"] #fw-lib-results') || f.document.querySelector('[data-story-characters]');
     }, 'requested route did not finish restoring its dynamic state');
-    if (workerData.exerciseDemo) {
+    if (workerData.exerciseAI) {
+      await f.click('[data-control="model"]');
+      const choice=f.document.querySelector('.interaction-modal[open] select[aria-label="Response mode"] option[value="ai"]');
+      if (!choice || choice.disabled) throw Error('The configured model is not available in the reply-mode control');
+      choice.selected=true;
+      await f.click('.interaction-modal[open] .save');
+    }
+    if (workerData.exerciseDemo || workerData.exerciseAI) {
+      const line = workerData.exerciseDemo || workerData.exerciseAI;
       const input = f.document.querySelector('#session-input');
-      input.value = workerData.exerciseDemo;
+      input.value = line;
       input.dispatchEvent(new f.window.Event('input', {bubbles: true}));
       await f.click('[data-control="send"]');
       await waitFor(() => {
-        const messages = JSON.parse(f.values.get('ooc-session-v2-xc-zhiyao') || '[]');
-        return messages.at(-2)?.text === workerData.exerciseDemo && messages.at(-1)?.role === 'assistant' && messages.at(-1).text && !messages.at(-1).streaming;
-      }, 'demo reply did not complete after reload', 5000);
+        const messages = JSON.parse(f.values.get('ooc-session-v2-' + f.location.pathname.split('/').pop()) || '[]');
+        return messages.at(-2)?.text === line && messages.at(-1)?.role === 'assistant' && messages.at(-1).text && !messages.at(-1).streaming;
+      }, 'reply did not complete after reload', 8000);
+      if (workerData.exerciseAI) await waitFor(() => f.document.querySelector('[data-suggest]'), 'mock suggestions did not finish');
     }
     let snapshot = null;
     if (f.document.querySelector('#xichuan-frame')) {
@@ -175,7 +190,7 @@ if (parentPort) {
         playUrl: f.document.querySelector(`[data-story-play="${story.dataset.storyCharacters}"]`)?.getAttribute('href'),
       } : null,
       text: f.document.querySelector('[data-fw-page="profile"]')?.textContent || f.document.querySelector('#session-messages')?.textContent || '',
-      snapshot, entries: [...f.values], requests: f.requests, observedRestoring: f.observedRestoring,
+      snapshot, entries: [...f.values], requests: f.requests, chatBodies: f.chatBodies, observedRestoring: f.observedRestoring,
     });
   } catch (error) { parentPort.postMessage({error: error.stack}); }
 }

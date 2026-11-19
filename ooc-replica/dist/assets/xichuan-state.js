@@ -1,3 +1,6 @@
+import {ZHIYAO_ID, SHENCHENG_ID, JIBAI_ID, heroineCanKnowFact, xichuanCharacterById} from './xichuan-character.js';
+import {XICHUAN_FACT_LABELS} from './flywheel/cards-data.js';
+
 // Site-owned, account-scoped save envelope. Standalone xc.* keys remain untouched.
 export const XICHUAN_KEY = 'ooc-session-v2-xichuan';
 export const LATEST = 'game.xichuan';
@@ -71,22 +74,70 @@ export function legacySaves(storage) {
   if (last) out[LATEST] = structuredClone(last);
   return out;
 }
-// Only a small typed projection reaches the model, never arbitrary save labels or logs.
-export function storyContext(raw) {
-  const s = latestSave(raw);
-  if (!s) return null;
-  const flags = {};
-  for (const [key, value] of Object.entries(s.G.v)) {
-    if (/^flag\.(joined_club|saw_last_spring|poster_sale|knows_mom|zhiyao_secret|route_zhiyao|route_shencheng|route_jibai|route_none|broken_zhiyao|z_[a-z_]+)$/.test(key) && typeof value === 'boolean') flags[key] = value;
-    if (/^(rel\.zhiyao\.(warmth|trust|esteem|intimacy)|grudge\.zhiyao)$/.test(key) && Number.isFinite(value)) flags[key] = Math.max(0, Math.min(10, value));
+// Project just the current save. Other routes' node names, dialogue, logs and
+// player-entered save labels are not part of a companion's story memory.
+export function storyContext(raw, characterId = ZHIYAO_ID) {
+  const save = latestSave(raw), character = xichuanCharacterById(characterId);
+  if (!save || !character) return null;
+  const values = save.G.v, flags = {};
+  for (const key of Object.keys(XICHUAN_FACT_LABELS)) {
+    if (heroineCanKnowFact(characterId, key) && typeof values[key] === 'boolean') flags[key] = values[key];
   }
-  return {chapter: s.G.ch, node: typeof s.G.cur === 'string' ? s.G.cur.slice(0, 80) : null, ended: s.G.phase === 'end', flags};
+  const numericKeys = ['warmth', 'trust', 'esteem', 'intimacy'].map(dim => `rel.${character.key}.${dim}`);
+  for (const key of [...numericKeys, 'grudge.' + character.key]) {
+    if (Number.isFinite(values[key])) flags[key] = Math.max(0, Math.min(10, values[key]));
+  }
+  return {chapter: save.G.ch, ended: save.G.phase === 'end', flags};
 }
-export function progressText(raw, lang = 'zh') {
-  const s = latestSave(raw);
-  if (!s) return lang === 'zh' ? '从序章开始，认识她的故事。' : 'Start at the prologue and discover her story.';
-  const c = storyContext(raw), f = c.flags;
-  const base = lang === 'zh' ? (c.ended ? '已到达结局' : c.chapter === 0 ? '序章进行中' : `第 ${c.chapter} 章进行中`) : (c.ended ? 'Ending reached' : c.chapter === 0 ? 'Prologue in progress' : `Chapter ${c.chapter} in progress`);
-  const fact = f['flag.broken_zhiyao'] ? ['你们已经决裂。', 'You have broken with her.'] : f['flag.z_broke_promise'] ? ['你没能履行最后一场的约定。', 'You missed your promise at the last show.'] : f['flag.z_promised'] ? ['你答应最后一场站在她身边。', 'You promised to stand beside her at the last show.'] : f['flag.joined_club'] ? ['你已加入电影社。', 'You have joined the film club.'] : null;
-  return base + (fact ? ' · ' + fact[lang === 'zh' ? 0 : 1] : '');
+
+const milestones = {
+  [ZHIYAO_ID]: [
+    ['broken_zhiyao', '你们已经决裂。', 'You have broken with her.'],
+    ['z_broke_promise', '你没能履行最后一场的约定。', 'You missed your promise at the last show.'],
+    ['z_promised', '你答应最后一场站在她身边。', 'You promised to stand beside her at the last show.'],
+    ['joined_club', '你已加入电影社。', 'You have joined the film club.']
+  ],
+  [SHENCHENG_ID]: [
+    ['broken_shencheng', '你们已经决裂。', 'You have broken with her.'],
+    ['c_good', '你和她一起写下了第七封信。', 'You wrote the seventh letter together.'],
+    ['c_keep', '你决定留下老房子。', 'You decided to keep the old house.'],
+    ['c_sold', '你卖掉了老房子。', 'You sold the old house.'],
+    ['c_tore', '你撕开了她的一封信。', 'You tore open one of her letters.'],
+    ['c_letters', '你没有拆她的信。', 'You left her letters unopened.'],
+    ['cheng_promise', '你想起了七年前的约定。', 'You remembered the promise from seven years ago.'],
+    ['third_cheng', '她加入了电影社。', 'She joined the film club.'],
+    ['cheng_coffee', '你在她的店里点了小时候那杯热可可。', 'You ordered your childhood cocoa at her café.']
+  ],
+  [JIBAI_ID]: [
+    ['broken_jibai', '你们已经决裂。', 'You have broken with her.'],
+    ['j_good', '海堤上，她决定留下来。', 'On the seawall, she chose to stay.'],
+    ['j_whole', '你们把第七卷胶片接完整了。', 'You restored reel seven in full.'],
+    ['j_projector', '你买下了放映机。', 'You bought the projector.'],
+    ['j_watched', '你陪她看完了最后一卷。', 'You watched the final reel with her.'],
+    ['reel_together', '你答应和她一起看第七卷。', 'You promised to watch reel seven with her.'],
+    ['third_jibai', '她加入了电影社。', 'She joined the film club.'],
+    ['saw_reel', '你看见了那盘没有标签的胶片。', 'You saw the unlabeled reel.']
+  ]
+};
+export function progressText(raw, lang = 'zh', characterId = null) {
+  const save = latestSave(raw), zh = lang === 'zh';
+  if (!save) return zh ? '从序章开始，认识她的故事。' : 'Start at the prologue and discover her story.';
+  const g = save.G, ended = g.phase === 'end';
+  const base = zh ? (ended ? '已到达结局' : g.ch === 0 ? '序章进行中' : `第 ${g.ch} 章进行中`) :
+    (ended ? 'Ending reached' : g.ch === 0 ? 'Prologue in progress' : `Chapter ${g.ch} in progress`);
+  // Generic history and player surfaces follow the current route first and
+  // retain the original Zhiyao summary when a route milestone isn't present.
+  const personalRoutes = [ZHIYAO_ID, SHENCHENG_ID, JIBAI_ID];
+  const activeRoute = personalRoutes.find(id => g.v['flag.route_' + xichuanCharacterById(id).key] === true);
+  // Some older saves carry a personal chapter milestone without a route flag.
+  // Meeting someone in the common chapters alone does not select her route.
+  const inferredRoute = !activeRoute && !characterId && personalRoutes.find(id => milestones[id].some(([key]) =>
+    /^(?:broken_|[zcj]_)/.test(key) && g.v['flag.' + key] === true));
+  const ids = characterId ? [characterId] : [activeRoute || inferredRoute, ZHIYAO_ID];
+  for (const id of ids) {
+    if (!xichuanCharacterById(id)) continue;
+    const fact = milestones[id].find(([key]) => g.v['flag.' + key] === true);
+    if (fact) return base + ' · ' + fact[zh ? 1 : 2];
+  }
+  return base;
 }

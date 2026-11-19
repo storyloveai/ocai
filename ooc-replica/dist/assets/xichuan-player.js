@@ -1,3 +1,4 @@
+import {ZHIYAO_ID, isXichuanCharacterId} from './xichuan-character.js';
 import {characterReturnUrl} from './character-links.js';
 import {attachGameCredits} from './game-credit-bridge.js';
 import {xichuanAction} from './loop-events.js';
@@ -22,7 +23,8 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
     if (latestSave(device)) transferable = cleanSaves(device);
   }
   const origin = characterReturnUrl(globalThis.history?.state?.characterReturn) || characterReturnUrl(globalThis.history?.state?.from);
-  const returnUrl = origin || '/story/xichuan';
+  const chatId = origin?.startsWith('/play/') ? origin.slice('/play/'.length) : null;
+  const returnUrl = isXichuanCharacterId(chatId) ? origin + '?from=xichuan' : origin || '/story/xichuan';
   const returnLabel = () => origin?.startsWith('/play/') ? t('返回聊天', 'Back to chat') : origin ? t('返回人物', 'Back to character') : t('故事介绍', 'Story information');
   const root = reference.mountShell(`<style>
     [data-page="xichuan"] .sd-language-slot{display:none!important}
@@ -127,8 +129,10 @@ export function mountXichuan({reference, account, helpers: h, storage = localSto
   dispose = () => { gameCredits.dispose();active = false; resize?.disconnect();window.removeEventListener('resize',fitFrame);window.visualViewport?.removeEventListener('resize',fitFrame);window.removeEventListener('message', receive);globalThis.removeEventListener?.('sd-lang',onSiteLanguage); };
   document.title = t('汐川的第七个春天', 'The Seventh Spring of Xichuan') + ' · StoryDate';
 }
-export function zhiyaoStoryLink(raw, lang) {
-  const progress = progressText(raw, lang);
+export function xichuanStoryLink(raw, lang, id = ZHIYAO_ID) {
+  const progress = progressText(raw, lang, id);
   const {href, label} = xichuanStoryEntry(raw, lang);
   return `<div class="xc-chat-story"><p data-xichuan-progress title="${esc(progress)}">${esc(progress)}</p><a href="${esc(href)}" data-xichuan-entry>${esc(label)}</a></div>`;
 }
+
+export const zhiyaoStoryLink = xichuanStoryLink;

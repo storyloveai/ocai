@@ -34,11 +34,12 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.equal(document.querySelector('#precision-view').inert,false);
  assert.ok(!requests.some(path=>/interaction-pages|scenarios/.test(path)));
  assert.equal(requests.filter(path=>path==='/api/config').length,1);
- const noticeSlots=[...document.querySelectorAll('button[aria-label="Dismiss"]')].map(button=>button.closest('section').parentElement);
- assert.equal(noticeSlots.length,2);
- document.querySelector('button[aria-label="Dismiss"]').click();
- assert.ok(noticeSlots.every(slot=>!slot.isConnected),'dismiss removes the complete desktop and mobile notice slots');
- assert.equal(values.get('ooc-notice-dismissed'),'1');
+ const assertNoNotice=()=>{
+  assert.equal(document.querySelector('button[aria-label="Dismiss"],[class~="tl:min-h-[52px]"]'),null);
+  assert.equal(document.querySelector('section a[href^="/announcement/"]'),null);
+ };
+ assertNoNotice();
+ assert.equal(values.has('ooc-notice-dismissed'),false,'fresh visitors need no dismissal preference');
  const navigate=path=>{const event=new window.Event('click',{bubbles:true,cancelable:true});event.button=0;document.querySelector(`a[href="${path}"]`).dispatchEvent(event);};
  navigate('/characters');
  assert.equal(location.pathname,'/characters');
@@ -72,8 +73,7 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.ok(!requests.some(path=>/interaction-pages|scenarios/.test(path)),'public Story details stay usable without loading chat or waiting for auth');
  navigate('/');
  assert.equal(location.pathname,'/');
- assert.equal(document.querySelectorAll('button[aria-label="Dismiss"]').length,0);
- assert.equal(document.querySelector('[class~="tl:min-h-[52px]"]'),null,'returning home must not retain the empty desktop notice spacer');
+ assertNoNotice();
  assert.ok(document.querySelector('[data-sd-hero=home]'));
  const expectedFilters={'visual-novels':['xichuan','ashen-crown'],strategy:['three-kingdoms'],detective:['baker-street'],classics:['mortal-path','monte-cristo'],all:allIds};
  assert.equal(document.querySelectorAll('.sd-story-filter-bar .fw-chip').length,5);

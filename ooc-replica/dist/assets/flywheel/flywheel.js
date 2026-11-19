@@ -270,7 +270,7 @@ function chatProgress(c, read) {
   return {messages, pins, notes: typeof notes === 'string' ? notes.slice(0,350).trim() : '',notesTrimmed:typeof notes === 'string' && notes.length > 350};
 }
 function experiencesMarkup(c, raw, chat) {
- const l = L(), context = storyContext(raw);
+ const l = L(), context = storyContext(raw, c.id);
  const facts = Object.entries(XICHUAN_FACT_LABELS).filter(([key]) => context?.flags[key] === true);
  if (!facts.length && !chat.pins.length && !chat.notes) return '';
  const story = c.source.work === 'xichuan' && facts.length ? `<h3>${safe(l.storyFacts)}</h3><ul class="fw-experience-facts">${facts.map(([,label]) => `<li>${safe(t(label))}</li>`).join('')}</ul>` : '';
@@ -341,7 +341,7 @@ function profileRelatedMarkup(c, account = currentHelpers?.account, view = profi
   return `<article class="fw-story-card">
     <a class="fw-story-cover" data-full-info href="${informationUrl}"><img src="${safe(story.image)}" alt="${title}" loading="lazy"></a>
     <div class="fw-story-copy">
-      <div class="fw-story-meta"><span class="fw-eyebrow">${safe(format)}</span>${hasProgress ? `<span data-fw-progress>${safe(progressText(raw,getLang()))}</span>` : ''}</div>
+      <div class="fw-story-meta"><span class="fw-eyebrow">${safe(format)}</span>${hasProgress ? `<span data-fw-progress>${safe(progressText(raw,getLang(),c.id))}</span>` : ''}</div>
       <h3><a data-full-info href="${informationUrl}">${title}</a></h3><p class="fw-story-description">${safe(summary)}</p>
       ${isStandalone(story.playUrl) ? `<p class="fw-note fw-standalone-note">${safe(l.standalone)}</p>` : ''}
     </div>

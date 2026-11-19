@@ -136,7 +136,9 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  setLang('en',{win:globalThis,doc:document});
  assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] [data-story-character-name]').textContent,'Xia Zhiyao');
  assert.equal(document.querySelector('[data-story-character="xc-zhiyao"] .is-chat[data-story-character-capability]').textContent.replace(/^●\s*/, '').trim(), 'Chat available');
- assert.equal(document.querySelector('[data-story-character="xc-shencheng"] [data-story-character-capability]').textContent,'In the story');
+ for (const id of ['xc-zhiyao','xc-shencheng','xc-jibai']) {
+  assert.match(document.querySelector(`[data-story-character="${id}"] [data-story-character-capability]`).textContent,/Chat available/);
+ }
  assert.equal(document.querySelector('[data-story-character="xc-shencheng"] .sd-card-quote > span').textContent,'Seven years.');
  assert.deepEqual([...document.querySelectorAll('.story-character-card')].map(link=>link.dataset.storyCharacter),['xc-zhiyao','xc-shencheng','xc-jibai']);
  assert.match(document.querySelector('[data-story-format]').textContent,/Galgame/);
@@ -228,7 +230,8 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  assert.equal(cao.querySelector('[data-search-profile-name]').textContent,'曹操');
  assert.equal(document.querySelector('[data-search-summary]').textContent,'找到 1 项');
  assert.deepEqual(reference.extraStories.filter(d=>d.type==='character').map(d=>d.id),storydateCharacters.map(d=>d.id),'display profiles never replace the real session/model catalogue');
- assert.equal(reference.extraStories.some(d=>d.id==='sg-caocao'||d.id==='xc-shencheng'),false);
+ assert.equal(reference.extraStories.some(d=>d.id==='sg-caocao'),false);
+ for (const id of ['xc-shencheng','xc-jibai']) assert.equal(reference.extraStories.filter(d=>d.id===id&&d.type==='character').length,1);
  closeTitlePreview();assert.deepEqual(writes,['en','zh','en','zh','en','zh'].map(lang=>['sd.lang',lang]),'only explicit language choices write preferences; public relationships/search never create or migrate private state');
 
  const {translate}=await import('../dist/assets/site-i18n.js');

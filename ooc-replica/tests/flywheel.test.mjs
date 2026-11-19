@@ -59,9 +59,9 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
     'oc-shen-yanzhou', 'oc-lu-wensheng', 'oc-lin-zhaowan', 'wn-lamp', 'wn-evelyn', 'bk-holmes',
   ];
   assert.deepEqual(FEATURED_CHARACTER_CARDS.map(card => card.id).sort(), publicIds.sort());
-  assert.equal(FEATURED_CHARACTER_CARDS.filter(card => card.chat).length, 13);
+  assert.equal(FEATURED_CHARACTER_CARDS.filter(card => card.chat).length, 15);
   assert.deepEqual(FEATURED_CHARACTER_CARDS.filter(card => !card.chat).map(card => card.id).sort(),
-    ['bk-holmes', 'wn-evelyn', 'wn-lamp', 'xc-jibai', 'xc-shencheng']);
+    ['bk-holmes', 'wn-evelyn', 'wn-lamp']);
   assert.equal(CHARACTER_CARDS.length, 33, 'old direct profile URLs retain their source records');
   const ids = new Set();
   for (const c of CHARACTER_CARDS) {
@@ -99,7 +99,7 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
   assert.equal(xichuan.length, 5);
   assert.equal(WORKS.xichuan.url, '/play/xichuan');
   assert.ok(xichuan.every(c => c.appearances.every(a => a.url === '/play/xichuan')), 'every Xichuan appearance uses the account-aware host');
-  assert.equal(xichuan.find(c => c.id === 'xc-zhiyao').chat, '/play/xc-zhiyao');
+  assert.deepEqual(xichuan.filter(c => c.chat).map(c => c.chat), ['/play/xc-zhiyao','/play/xc-shencheng','/play/xc-jibai']);
 });
 
 test('scene artwork uses existing empty settings for transparent sprites and preserves complete portraits', async () => {
@@ -279,7 +279,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
 
   await t.test('one bilingual world pill bar filters the public cast and keeps the shell navigation selected', () => {
     const filters = [
-      ['all', '全部', 'All', 18], ['chat', '可聊天', 'Chat available', 13],
+      ['all', '全部', 'All', 18], ['chat', '可聊天', 'Chat available', 15],
       ['xichuan', '汐川的第七个春天', 'The Seventh Spring of Xichuan', 3], ['sanguo', '三国·谋士', 'The Strategist', 9],
       ['original', '原创相遇', 'StoryDate Originals', 3], ['westlin', '灰烬王冠', 'The Ashen Crown', 2], ['baker', '贝克街', 'Baker Street', 1],
     ];
@@ -310,7 +310,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
 
   await t.test('pill URLs preserve native history, support old combinations and remove obsolete query filters on selection', () => {
     go('/characters?source=home&world=xichuan&chat=1&q=retired-search#cast');
-    assert.deepEqual(listed(), ['xc-zhiyao'], 'old combined links remain useful without a hidden text filter');
+    assert.deepEqual(listed(), ['xc-zhiyao', 'xc-shencheng', 'xc-jibai'], 'old combined links remain useful without a hidden text filter');
     assert.equal(pill('xichuan').getAttribute('aria-pressed'), 'true');
     assert.equal(pill('chat').getAttribute('aria-pressed'), 'true');
     const before = history.length;
@@ -446,13 +446,33 @@ test('character discovery stays useful without duplicate navigation or demo edit
     }
   });
 
+  await t.test('unplayed Xichuan profiles keep private backstory out of public cards, expandable bios and starters', () => {
+    const guards = {
+      'xc-zhiyao': /生病的母亲|妈妈生病|sick mother|mother.s illness/i,
+      'xc-shencheng': /七年前的约|未寄出的信|第七封信|the promise he forgot|made a promise|seventh letter|unsent letter/i,
+      'xc-jibai': /没有标签的胶片|第七卷|她不敢放|unlabell?ed reel|seventh reel|reel seven|never dared to run/i,
+    };
+    for (const lang of ['zh','en']) {
+      language(lang);
+      go('/characters?world=xichuan');
+      const cards=page('characters');
+      for (const [id,hidden] of Object.entries(guards)) {
+        assert.doesNotMatch(cards.querySelector(`a[href="/characters/${id}"]`).textContent,hidden);
+        go('/characters/'+id);
+        assert.doesNotMatch(page('profile').textContent,hidden);
+        assert.ok(page('profile').querySelector(`[data-fw-chat-entry][href="/play/${id}"]`));
+      }
+    }
+    language('zh');go('/characters');
+  });
+
   await t.test('story-only character entry scrolls within the page without replaying navigation or losing its Story source',async()=>{
     const {show,syncAccount}=await import('../dist/assets/flywheel/flywheel.js');
     const previousMedia=globalThis.matchMedia;
     try{
       for(const [lang,reduced] of [['en',true],['zh',false]]){
-        language(lang);go('/characters/xc-shencheng');
-        window.history.replaceState({...window.history.state,from:'/story/xichuan',discoveryReturn:'/characters?world=xichuan&q=澄'},'',location.href);
+        language(lang);go('/characters/wn-lamp');
+        window.history.replaceState({...window.history.state,from:'/story/ashen-crown',discoveryReturn:'/characters?world=westlin'},'',location.href);
         show(location.pathname,helpers);
         syncAccount({user:null,restored:true,busy:false});
         const profile=page('profile'),target=profile.querySelector('#fw-stories'),heading=target.querySelector('h2');
@@ -470,7 +490,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
         }finally{document.removeEventListener('click',observe);}
         assert.equal(navigations.length,navigationCount);assert.equal(location.href,url);
         assert.deepEqual(window.history.state,state,'the original Story and filtered-directory context stay intact');
-        assert.equal(profile.querySelector('.fw-back').getAttribute('href'),'/story/xichuan');
+        assert.equal(profile.querySelector('.fw-back').getAttribute('href'),'/story/ashen-crown');
         assert.deepEqual(scrolls,[{block:'start',behavior:reduced?'instant':'smooth'}]);
         assert.equal(document.activeElement,heading);assert.equal(heading.tabIndex,-1,'the destination heading is programmatically focusable without adding a tab stop');
       }
