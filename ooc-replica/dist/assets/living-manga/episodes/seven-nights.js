@@ -3,7 +3,7 @@ const julian = line('Julian Vance', '纪沉');
 const base = '/assets/living-manga/seven-nights/';
 function art(id, alt, crop = [0, 0, 1, 1], alignX = .5, alignY = .5) {
   return {image: base + id + '.webp', depth: base + 'depth/' + id + '_depth.webp',
-    alt, crop, alignX, alignY, strength: .04};
+    alt, crop, alignX, alignY, strength: .035, inset: .04};
 }
 function caption(type, position, text) {
   return {type, position, style: 'caption', z: .65, text};
@@ -11,7 +11,7 @@ function caption(type, position, text) {
 function speech(position, text) {
   return {type: 'bubble', position, style: 'speech', z: 1, speaker: julian, text};
 }
-const ending = {scene: 'p4', heightClass: 'ending', overlays: [
+const ending = {scene: 'p4', heightClass: 'ending', captionRails: true, overlays: [
   caption('narration', 'top-right', line('Below the rain-streaked glass, two black sedans cut across the wet avenue. Leaving before dawn isn’t an option anymore.', '雨幕之下，两辆黑车斜停在湿漉漉的街口封死了去路。天亮前离开，已经不可能了。')),
   speech('bottom-left', line('“Walk out if you want—I won’t stop you. Or stay seven nights under my name, and watch every man downstairs learn what it costs to touch what’s under my roof.”', '「想走我现在就开门，不拦你。或者在我名下住满七夜——看楼下那些人，怎么为动我屋檐下的人付出代价。」'))
 ]};
@@ -38,10 +38,10 @@ export default {
   id:'seven-nights', title:line('2:00 AM · Seven Nights','凌晨两点 · 七夜之约'),
   subtitle:line('Port Veyron · Maison Vance Penthouse','维伦港 · 纪氏顶层私邸'), theme:'color',
   assets:{
-    p1:art('p1',line('From the wet doorway, Julian turns beside the brass lamp.','雨湿的门框内，纪沉从黄铜台灯旁回头。')),
+    p1:art('p1',line('From the wet doorway, Julian turns beside the brass lamp.','雨湿的门框内，纪沉从黄铜台灯旁回头。'),undefined,.68,0),
     p2Close:art('p2',line('Julian meets your eyes across the desk.','纪沉隔桌直视你。'),[.54,0,.45,.88],.62,.05),
     p2Full:art('p2',line('His ringed hand slides the key toward you.','戴着印章戒的手将钥匙朝你推来。'),[.02,.02,.98,.96],.96,.5),
-    p3:art('p3',line('Lightning catches the small smile on Julian’s face.','细闪电映出他嘴角的一丝笑意。')),
+    p3:art('p3',line('Lightning catches the small smile on Julian’s face.','细闪电映出他嘴角的一丝笑意。'),undefined,.72,0),
     p4:art('p4',line('Beyond the curtain, two black sedans block the street below.','帘后雨夜中，两辆黑车封住了楼下的街口。'))
   },
   openingRows:[

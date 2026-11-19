@@ -19,7 +19,7 @@ varying vec2 v_uv;
 uniform sampler2D u_img, u_depth;
 uniform vec4 u_crop;
 uniform vec2 u_tilt;
-uniform float u_ink, u_pixelRatio;
+uniform float u_ink, u_pixelRatio, u_inset;
 
 vec2 intersectDepth(vec2 uv, vec2 ray) {
   if (dot(ray, ray) < 0.00000001) return uv;
@@ -41,8 +41,8 @@ vec2 intersectDepth(vec2 uv, vec2 ray) {
 }
 
 void main() {
-  // Reserve 9% on all sides. Even the near-plane end of the ray stays in crop.
-  vec2 uv = u_crop.xy + u_crop.zw * (0.09 + v_uv * 0.82);
+  // Reserve enough overscan for the largest ray in this panel.
+  vec2 uv = u_crop.xy + u_crop.zw * (u_inset + v_uv * (1.0 - 2.0 * u_inset));
   vec3 color = texture2D(u_img, intersectDepth(uv, u_crop.zw * u_tilt)).rgb;
   if (u_ink > 0.5) {
     float tone = dot(color, vec3(0.299, 0.587, 0.114));
@@ -67,7 +67,7 @@ export function coverCrop(asset, width, height, image) {
 }
 
 // Own every allocation, including partially compiled programs or failed texture uploads.
-function makeSurface(gl, image, depth) {
+function makeSurface(gl, image, depth, inset) {
   const program = gl.createProgram();
   const shaders = [], textures = [];
   let buffer;
@@ -108,6 +108,7 @@ function makeSurface(gl, image, depth) {
       gl.uniform1i(gl.getUniformLocation(program, name), unit);
     }
     if (gl.getError() !== gl.NO_ERROR) throw Error('Texture upload failed');
+    gl.uniform1f(gl.getUniformLocation(program, 'u_inset'), inset);
     const crop = gl.getUniformLocation(program, 'u_crop');
     const tilt = gl.getUniformLocation(program, 'u_tilt');
     const ink = gl.getUniformLocation(program, 'u_ink');
@@ -155,6 +156,8 @@ function createPanel(element, asset, win, invalidate) {
   }));
   const imageOffset = image && layerOffset(image, win);
   const strength = clamp(asset.strength ?? 0.07, 0, 0.088);
+  const inset = clamp(asset.inset ?? .09, strength, .2);
+  const artWindow = element.querySelector('.lm-art-window') || element;
   let gl, depth, surface, failed = false, lost = false, resized = true;
   let rect = [0, 0, 1, 1], width = 0, height = 0, dpr = 1;
   element.removeAttribute('data-lm-visible');
@@ -196,25 +199,25 @@ function createPanel(element, asset, win, invalidate) {
         depth.onerror = fallback;
         depth.src = asset.depth;
       }
-      if (depth.complete && depth.naturalWidth) surface = makeSurface(gl, image, depth);
+      if (depth.complete && depth.naturalWidth) surface = makeSurface(gl, image, depth, inset);
     } catch {
       fallback();
     }
   }
   function measure() {
-    width = element.clientWidth;
-    height = element.clientHeight;
+    width = artWindow.clientWidth;
+    height = artWindow.clientHeight;
     if (!width || !height || !image?.naturalWidth || !image.naturalHeight) return;
     for (const { offset } of layers) offset.measure();
     imageOffset.measure();
     rect = coverCrop(asset, width, height, image);
     const [x, y, w, h] = rect;
-    const sw = w * 0.82, sh = h * 0.82;
+    const sw = w * (1 - 2 * inset), sh = h * (1 - 2 * inset);
     // Exact CSS equivalent of u_crop at rest, including the same safety inset.
     Object.assign(image.style, {
       position: 'absolute', objectFit: 'fill', maxWidth: 'none', maxHeight: 'none',
       width: (100 / sw) + '%', height: (100 / sh) + '%',
-      left: (-100 * (x + w * 0.09) / sw) + '%', top: (-100 * (y + h * 0.09) / sh) + '%',
+      left: (-100 * (x + w * inset) / sw) + '%', top: (-100 * (y + h * inset) / sh) + '%',
     });
     if (canvas) {
       // Limit fill rate on large, high-DPR screens.

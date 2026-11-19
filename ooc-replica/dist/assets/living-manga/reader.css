@@ -170,3 +170,21 @@ body.lm-reading vercel-live-feedback, body.lm-reading #vercel-live-feedback { di
   .lm-reader[data-lm-episode="seven-nights"] .lm-close { height:275px; }
   .lm-reader[data-lm-episode="seven-nights"] .lm-overlay:is(.speech,.caption):not(.lm-loc) { max-width:49%; font-size:13px; line-height:1.35; }
 }
+.lm-art-window { position:absolute; inset:0; overflow:hidden; }
+.lm-reader[data-lm-episode="seven-nights"] [data-scene="p2Close"] .speech { max-width:76%; }
+.lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] { aspect-ratio:16/9; height:auto; }
+.lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .bottom-left { max-width:58%; }
+@media (max-width:520px) {
+  /* Keep the curtain hand and both cars in view, including at 320px. */
+  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] {
+    display:grid; grid-template-rows:auto auto auto; aspect-ratio:auto; min-height:0; padding:8px;
+  }
+  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-art-window {
+    position:relative; grid-row:2; aspect-ratio:16/9; margin:6px -8px;
+  }
+  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-overlay {
+    position:relative; inset:auto; width:fit-content; max-width:92%;
+  }
+  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .top-right { grid-row:1; justify-self:end; }
+  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .bottom-left { grid-row:3; }
+}

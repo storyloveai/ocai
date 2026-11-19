@@ -161,7 +161,11 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, sendEve
       original.draggable = false;
       const canvas = el('canvas','lm-depth-canvas');
       canvas.setAttribute('aria-hidden','true');
-      frame.append(original,canvas);
+      if (panel.captionRails) {
+        const window = el('div','lm-art-window');
+        window.append(original, canvas);
+        frame.append(window);
+      } else frame.append(original,canvas);
       for (const effect of panel.fx || []) {
         const fx = el('span','lm-fx lm-' + effect);
         fx.setAttribute('aria-hidden','true');
