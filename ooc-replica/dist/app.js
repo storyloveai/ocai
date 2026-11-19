@@ -26,7 +26,7 @@ const $=s=>document.querySelector(s),main=$('#main'),modal=$('#modal');
 startAnalytics();let trackedUid=null;
 const syncAnalytics=()=>{const uid=account?.user?.uid||null;if(uid===trackedUid)return;if(uid)identify(uid);else if(trackedUid)forget();trackedUid=uid;};
 const needsXichuanProgress=path=>isXichuanPath(path)||(path.startsWith('/play/')&&isXichuanCharacterId(path.slice(6)));
-const account=createAccount({changed:reset=>{syncAnalytics();if(reset){clearAccountDialog(modal);favorites=read('ooc-favorites',[]);history=read('ooc-history',[]);custom=read('ooc-custom',[]);if(account.user&&!read('ooc-onboarding-complete',false)&&!location.pathname.startsWith('/onboarding/'))navigate('/onboarding/1');else render();}else if(needsXichuanProgress(location.pathname)&&(!account.restored||document.querySelector('[data-xichuan-wait]')))render();else paintAccount();},notify:toast});
+const account=createAccount({changed:reset=>{syncAnalytics();if(reset){clearAccountDialog(modal);favorites=read('ooc-favorites',[]);history=read('ooc-history',[]);custom=read('ooc-custom',[]);if(account.user&&!/seven-nights|^\/chat\/sn-julian$/.test(location.pathname)&&!read('ooc-onboarding-complete',false)&&!location.pathname.startsWith('/onboarding/'))navigate('/onboarding/1');else render();}else if(needsXichuanProgress(location.pathname)&&(!account.restored||document.querySelector('[data-xichuan-wait]')))render();else paintAccount();},notify:toast});
 const payments=createPayments({account,show,modal,notify:toast});
 const read=(k,f)=>account.read(k,f),save=(k,v)=>account.save(k,v);
 let favorites=read('ooc-favorites',[]),history=read('ooc-history',[]),custom=read('ooc-custom',[]),slide=0,category='Main',timer;
@@ -125,14 +125,14 @@ function renderPage(){releaseBuilder();const originalUrl=location.pathname+locat
  stopLivingManga?.();
  stopLivingManga=undefined;
  if(currentLang()!==getLang())setLang(getLang(),{persist:false});
- if(path==='/pilot/sanguo-manga'||path==='/pilot/seven-nights'){
+ if(['/pilot/sanguo-manga','/seven-nights','/pilot/seven-nights','/pilot/seven-nights/ep2','/pilot/seven-nights/ep3'].includes(path)){
   const helpers={navigate,show,...account.scope(),categories,data};
   interaction?.show(path,helpers);
   reference.show(path,helpers);
   const zh=currentLang()==='zh';
   main.innerHTML='<p class="route-loading" role="status">'+(zh?'正在载入分镜…':'Loading the panels…')+'</p>';
   void import('./assets/living-manga/entry.js').then(({startLivingManga})=>{
-   if(version===routeVersion)stopLivingManga=startLivingManga(main);
+   if(version===routeVersion)stopLivingManga=startLivingManga(main,helpers);
   }).catch(()=>{
    if(version!==routeVersion)return;
    main.innerHTML='<p class="route-loading" role="alert">'+(zh?'分镜暂时无法加载。':'The panels could not load.')+' <a href="/">StoryDate</a> · <button type="button">'+(zh?'重试':'Retry')+'</button></p>';
@@ -143,7 +143,7 @@ function renderPage(){releaseBuilder();const originalUrl=location.pathname+locat
  if(needsXichuanProgress(path)&&!account.restored){interaction?.show('/xichuan-loading',{navigate,show,...account.scope(),categories,data});reference.mountShell('<p data-xichuan-wait role="status">正在恢复账号进度 / Restoring account progress…</p>',{navigate,show,...account.scope(),categories,data},'loading');return;}
  if(isXichuanPath(path)){interaction?.show('/xichuan',{navigate,show,...account.scope(),categories,data});mountXichuan({reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(isBookPath(path)){interaction?.show('/book-campaign',{navigate,show,...account.scope(),categories,data});void mountBook(path,{reference,helpers:{navigate,show,...account.scope(),categories,data}});return;}
- if(path==='/credit'){interaction?.show(path,{navigate,show,...account.scope(),categories,data});credits();return;}
+ if(path==='/credit'||path==='/credits'){interaction?.show(path,{navigate,show,...account.scope(),categories,data});credits();return;}
  if(isThreeKingdomsPath(path)&&!path.startsWith('/story/')){interaction?.show('/three-kingdoms',{navigate,show,...account.scope(),categories,data});mountThreeKingdoms(path,{reference,account,helpers:{navigate,show,...account.scope(),categories,data}});return;}
  if(path==='/chat/sn-julian'||path.startsWith('/play/')||path.startsWith('/onboarding/')||/^\/(story|character)\/[^/]+\/episode\//.test(path)){
   if(interaction){interaction.show(path,{navigate,show,...account.scope(),categories,data});return;}

@@ -2,7 +2,7 @@ import { createAccountStorage, cloudKey } from './account-storage.js';
 import { loadPublicConfig } from './public-config.js';
 export function createAccount({ storage = localStorage, fetchImpl = fetch, loadClient = () => import('./firebase-client.js'), changed = () => {}, notify = () => {}, cloudLoadTimeoutMs = 8000 } = {}) {
   const cache = createAccountStorage(storage);
-  let client, uid = null, generation = 0, hydrating = false;
+  let client, restoration, uid = null, generation = 0, hydrating = false;
   const pending = new Map();
   let timer, inFlight, writeError = '', sending = [];
   const unverified = new Set(), conflicts = new Map();
@@ -142,7 +142,11 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
       if (!a.ready) { notify(a.error || '账户服务正在初始化。'); return; }
       if (a.busy || !a.providers[provider]) return;
       a.busy = true; changed();
-      try { await client.login(provider); }
+      try {
+        const result = await client.login(provider);
+        await restoration;
+        if (result?.user?.uid && a.restored && a.user?.uid === result.user.uid) return a.user.uid;
+      }
       catch (e) {
         const errors = {
           'auth/popup-closed-by-user': '登录已取消。',
@@ -172,7 +176,7 @@ export function createAccount({ storage = localStorage, fetchImpl = fetch, loadC
         a.providers = auth.providers;
         const sdk = await loadClient();
         client = await sdk.connectFirebase(auth.config);
-        client.subscribe(hydrate);
+        client.subscribe(user => (restoration = hydrate(user)));
         a.ready = true;
       } catch (e) { a.error = e.message; a.busy = false; a.restored = true; }
       changed();

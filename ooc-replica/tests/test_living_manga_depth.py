@@ -44,11 +44,23 @@ class PilotDepthTest(unittest.TestCase):
         points = [((.07,.52),(.88,.25)), ((.13,.92),(.52,.14)),
                   ((.05,.12),(.92,.10)), ((.07,.52),(.84,.80)),
                   ((.24,.92),(.84,.23))]
-        for i, (near, far) in enumerate(points, 1):
+        scenes = {f"p{i}": pair for i, pair in enumerate(points, 1)}
+        scenes.update({
+            "ep2_p1": ((.21,.92),(.85,.24)),  # desk / morning harbor
+            "ep2_p2": ((.07,.53),(.38,.31)),  # guest / distant gallery
+            "ep2_p3": ((.055,.48),(.37,.25)),  # sleeve / arcade
+            "ep2_p4": ((.095,.90),(.80,.31)),  # seat / trailing traffic
+            "ep3_p1": ((.045,.50),(.81,.29)),  # door hardware / cellar glass
+            "ep3_p2": ((.07,.30),(.34,.28)),  # lamp / shelves
+            "ep3_p3": ((.07,.50),(.44,.29)),  # curtain / harbor
+            "ep3_p4": ((.09,.88),(.86,.33)),  # balustrade / storm sky
+        })
+        self.assertEqual(len(scenes),13)
+        for i, (near, far) in scenes.items():
             with self.subTest(panel=i):
-                path = base / "depth" / f"p{i}_depth.webp"
+                path = base / "depth" / f"{i}_depth.webp"
                 self.assertLessEqual(path.stat().st_size, 45000)
-                with Image.open(base / f"p{i}.webp") as art, Image.open(path) as depth:
+                with Image.open(base / f"{i}.webp") as art, Image.open(path) as depth:
                     self.assertEqual(art.size, (1440, 810))
                     self.assertEqual(depth.size, art.size)
                     r, g, b = depth.convert("RGB").split()

@@ -1,3 +1,4 @@
+import {nightPath} from '../seven-nights-character.js';
 import {track} from '../analytics.js';
 import {createDepthStage} from './depth-window.js';
 import {resolveChoice, interludeDraft} from './episode.js';
@@ -25,14 +26,14 @@ const ui = {
   silent: words('当前浏览器无法播放雨声。', 'Rain sound is unavailable in this browser.')
 };
 
-export function mountReader(host, episode, {getLanguage, changeLanguage, sendEvent = track}) {
+export function mountReader(host, episode, {getLanguage, changeLanguage, account, saveForLogin, onComplete, sendEvent = track}) {
   const doc = host.ownerDocument, win = doc.defaultView;
   let lang = getLanguage(), disposed = false;
   const prior = win.history?.state?.livingManga;
   const saved = prior?.episodeId === episode.id ? prior : {};
-  const measured = episode.id === 'seven-nights';
+  const measured = episode.series === 'seven-nights';
   const emit = (step, fields) => {
-    if (measured) sendEvent('living_manga_' + step, {episode_id:episode.id, ...fields});
+    if (measured) sendEvent('living_manga_' + step, {episode_id:'seven-nights-ep'+episode.number, ...fields});
   };
   let viewed = Boolean(saved.viewed), engaged = false;
   const engagementKey = 'sd.living-manga.engaged.' + episode.id;
@@ -69,10 +70,11 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, sendEve
   const page = el('article', 'lm-reader');
   page.dataset.noI18n = '';
   page.dataset.lmEpisode = episode.id;
+  if(measured)page.dataset.lmSeries=episode.series;
   host.replaceChildren(page);
   const hud = el('header','lm-hud');
   const home = el('a', 'lm-home');
-  home.href = '/';
+  home.href = measured?'/seven-nights':'/';
   home.innerHTML = '<span aria-hidden="true">←</span><img src="/assets/storydate-dialogue-logo.svg" width="109" height="27" alt="StoryDate">';
   const toolbar = el('div','lm-toolbar');
   const themes = el('div','lm-themes');
@@ -196,13 +198,32 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, sendEve
       const a = el('a','lm-chat');
       a.dataset.fullInfo = '';
       a.dataset.lmCharacter = entry.characterId;
-      a.href = (entry.path || '/play/' + encodeURIComponent(entry.characterId)) + '?' + new URLSearchParams({draft:interludeDraft(entry,choice,lang)});
+      a.href = (entry.path || '/play/' + encodeURIComponent(entry.characterId)) + '?' + new URLSearchParams({draft:interludeDraft(entry,choice,lang),...(measured?{scene:episode.scene,from:'seven-nights-ep'+episode.number}:{})});
       a.append(copy('span','',entry.label));
       const arrow = el('span');
       arrow.setAttribute('aria-hidden','true');
       arrow.textContent = '↗';
       a.append(arrow);
       fragment.append(a);
+    }
+    if(measured) {
+      const next=el('a','lm-next'); next.href=episode.number===3?'/seven-nights':nightPath(episode.number+1);
+      next.dataset.fullInfo='';
+      const captions=[words('继续第 2 集：暗账 →','Continue to Episode 2: The Ledger →'),
+        words('继续追第 3 集：天鹅绒不在场证明 →','Continue to Episode 3: Velvet Alibi →'),words('返回《七夜之约》剧场主页','Back to Seven Nights Season Hub')];
+      label(next,captions[episode.number-1]);
+      if(episode.number===2 && account?.ready && !account.user && account.providers?.google && account.paymentConfig?.billing?.mode!=='off'){
+        next.onclick=event=>{
+          event.preventDefault();event.stopPropagation();
+          const card=el('section','sn-save');
+          const skip=el('a');skip.href=next.href;skip.dataset.fullInfo='';
+          label(skip,words('直接继续','Continue without saving'));
+          const sign=button('login',words('登录并保存','Sign in to save'));sign.onclick=saveForLogin;
+          card.append(copy('p','',words('保存当前进度与纪沉的记忆？','Save your progress and Julian’s memories?')),sign,skip);
+          next.replaceWith(card);skip.focus();
+        };
+      }
+      fragment.append(next);
     }
     links.replaceChildren(fragment);
   }
@@ -230,6 +251,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, sendEve
     persist();
     if (jump) {
       emit('decision', {branch_id:choice.branchId, input_kind:input.optionId ? 'preset' : 'free', lang});
+      if(measured){onComplete?.(episode.number,choice.branchId);emit('episode_completed',{branch_id:choice.branchId,lang});}
       result.focus({preventScroll:true});
       result.scrollIntoView({behavior:win.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
     }
@@ -250,7 +272,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, sendEve
     }
     field.placeholder = episode.decision.freeInput.placeholder[lang];
     field.setAttribute('aria-label',ui.free[lang]);
-    home.setAttribute('aria-label',ui.back[lang]);
+    home.setAttribute('aria-label',measured?words('返回七夜剧场','Back to Seven Nights')[lang]:ui.back[lang]);
     language.setAttribute('aria-label',lang === 'zh'?'English':'中文');
     result.setAttribute('aria-label',ui.result[lang]);
     tags.setAttribute('aria-label',ui.remembered[lang]);

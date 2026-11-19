@@ -162,50 +162,84 @@ body.lm-reading > #main { display:block; padding:0; margin:0; width:100%; max-wi
   .lm-reader *, .lm-reader *::before, .lm-reader *::after { animation:none!important; scroll-behavior:auto!important; }
 }
 body.lm-reading vercel-live-feedback, body.lm-reading #vercel-live-feedback { display:none !important; }
-.lm-reader[data-lm-episode="seven-nights"] .lm-overlay:is(.speech,.caption):not(.lm-loc) { max-width:43%; }
-.lm-reader[data-lm-episode="seven-nights"] .speech { font-size:clamp(14px,1.25vw,18px); }
-.lm-reader[data-lm-episode="seven-nights"] .lm-ending { min-height:clamp(340px,35vw,465px); }
+.lm-reader[data-lm-series="seven-nights"] .lm-overlay:is(.speech,.caption):not(.lm-loc) { max-width:43%; }
+.lm-reader[data-lm-series="seven-nights"] .speech { font-size:clamp(14px,1.25vw,18px); }
+.lm-reader[data-lm-series="seven-nights"] .lm-ending { min-height:clamp(340px,35vw,465px); }
 @media (max-width:520px) {
-  .lm-reader[data-lm-episode="seven-nights"] .cols-2-asym { grid-template-columns:1fr; }
-  .lm-reader[data-lm-episode="seven-nights"] .lm-close { height:275px; }
-  .lm-reader[data-lm-episode="seven-nights"] .lm-overlay:is(.speech,.caption):not(.lm-loc) { max-width:49%; font-size:13px; line-height:1.35; }
+  .lm-reader[data-lm-series="seven-nights"] .cols-2-asym { grid-template-columns:1fr; }
+  .lm-reader[data-lm-series="seven-nights"] .lm-close { height:275px; }
+  .lm-reader[data-lm-series="seven-nights"] .lm-overlay:is(.speech,.caption):not(.lm-loc) { max-width:49%; font-size:13px; line-height:1.35; }
 }
 .lm-art-window { position:absolute; inset:0; overflow:hidden; }
 @media (min-width:768px) {
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p2Close"] .lm-overlay.speech {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p2Close"] .lm-overlay.speech {
     left:12px; bottom:5px; max-width:min(85%, 330px); padding:4px 10px;
     font-size:clamp(14px,1.15vw,16px); line-height:1.2;
   }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p2Close"] .lm-speaker {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p2Close"] .lm-speaker {
     position:absolute; left:7px; bottom:100%; margin:0; padding:2px 6px;
     border-radius:4px 4px 0 0; background:var(--paper);
   }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p2Close"] .speech::after { content:none; }
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p2Close"] .speech::after { content:none; }
 }
-.lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] { aspect-ratio:16/9; height:auto; }
-.lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .bottom-left { max-width:58%; }
+.lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] { aspect-ratio:16/9; height:auto; }
+.lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .bottom-left { max-width:58%; }
 @media (max-width:520px) {
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] {
     --frame-inset:6px;
     width:100%; aspect-ratio:16/10; min-height:0;
   }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-overlay:is(.caption,.speech) {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .lm-overlay:is(.caption,.speech) {
     padding:4px 7px; font-size:clamp(12px,3.2vw,14px); line-height:1.2;
   }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-overlay.caption { max-width:38%; }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-overlay.speech {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .lm-overlay.caption { max-width:38%; }
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .lm-overlay.speech {
     left:10%; max-width:72%;
   }
 }
 @media (max-width:360px) {
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-overlay.caption {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .lm-overlay.caption {
     max-width:41%; padding:3px 4px; font:500 12px/1.15 system-ui,sans-serif;
   }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-overlay.speech {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .lm-overlay.speech {
     bottom:3px; left:4%; max-width:70%; padding:3px 6px; line-height:1.14;
   }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .lm-speaker {
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .lm-speaker {
     position:absolute; bottom:100%; left:6px; padding:1px 5px; margin:0; background:var(--paper);
   }
-  .lm-reader[data-lm-episode="seven-nights"] [data-scene="p4"] .speech::after { content:none; }
+  .lm-reader[data-lm-series="seven-nights"] [data-scene="p4"] .speech::after { content:none; }
 }
+
+.sn-theater{background:#0c0c0e;color:#f4eee4;min-height:100svh;font:400 16px/1.5 system-ui,sans-serif;color-scheme:dark;padding-bottom:56px}
+.sn-theater *{box-sizing:border-box}
+.sn-theater :is(h1,h2,h3,p){margin:0}
+.sn-theater :is(h1,h2,h3){font-family:Georgia,"Songti SC",serif;font-weight:400}
+.sn-theater button,.sn-theater a{color:inherit;font:inherit;cursor:pointer}
+.sn-theater :focus-visible{outline:2px solid #d4a853;outline-offset:4px}
+.sn-hero,.sn-gate{background:linear-gradient(90deg,#0c0c0ef0,transparent 80%),linear-gradient(0deg,#0c0c0e,transparent 32%),url('./seven-nights/p1.webp') center 36%/cover}
+.sn-bar,.sn-hero-copy,.sn-shelf,.sn-memory,.sn-gate-copy{width:min(1160px,90%);margin:auto}
+.sn-bar{display:flex;align-items:center;justify-content:space-between;padding:20px 0;color:#e7d7ae}
+.sn-bar button,.sn-upcoming button,.sn-gate button:not(.sn-primary){border:1px solid #827b71;border-radius:6px;background:#151518;padding:7px 14px}
+.sn-hero-copy{padding:clamp(40px,7vw,100px) 0 50px}
+.sn-kicker,.sn-episode small,.sn-upcoming small{color:#d4a853;font:600 12px/1.5 system-ui;letter-spacing:.12em;text-transform:uppercase}
+.sn-theater h1{font-size:clamp(44px,6vw,88px);line-height:1.05;max-width:720px;margin:12px 0 18px;text-wrap:balance}
+.sn-theater .sn-primary{display:inline-flex;align-items:center;min-height:46px;background:#fafafa;color:#171717;border:0;border-radius:8px;font-weight:550;padding:12px 19px;margin:22px 0 0;text-decoration:none}
+.sn-primary:hover{background:#e8dfcd}
+.sn-shelf{padding:28px 0}
+.sn-theater h2{font-size:clamp(27px,3vw,38px);margin-bottom:14px}
+.sn-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.sn-episode,.sn-upcoming{display:flex;align-items:flex-start;flex-direction:column;gap:4px;border-top:1px solid #414044;padding-top:12px;text-decoration:none}
+.sn-episode.sn-current{border-color:#d4a853}
+.sn-episode img{width:100%;aspect-ratio:2.4;object-fit:cover;object-position:center 28%;border-radius:4px;margin-bottom:5px}
+.sn-episode h3,.sn-upcoming h3{font-size:22px;line-height:1.2}
+.sn-episode span,.sn-upcoming span,.sn-memory p{color:#b8b3ad;font-size:14px}
+.sn-upcoming{justify-content:center;background:#151517;padding:20px}
+.sn-upcoming button{margin-top:8px}
+.sn-memory{border-top:1px solid #414044;padding-top:24px;display:flex;align-items:center;gap:22px}
+.sn-memory>img{width:104px;height:104px;object-fit:cover;object-position:76% 30%;border-radius:5px}
+.sn-memory a,.lm-next,.sn-save a{color:inherit;text-decoration:underline;text-underline-offset:4px}
+.sn-memory .lm-tags{color:#d4a853}
+.sn-gate{background-image:linear-gradient(90deg,#0c0c0ef5,#0c0c0e70),url('./seven-nights/ep3_p1.webp')}
+.sn-gate-copy{padding-top:15vh}.sn-gate-copy p{margin:12px 0}
+.lm-next,.sn-save{display:inline-flex;align-items:center;gap:12px;padding:10px}
+@media(max-width:767px){.sn-rail{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}.sn-hero{background-position:60% center}.sn-hero-copy{padding:70px 0 32px}.sn-memory>img{width:74px;height:106px}.sn-theater h3{font-size:18px}.sn-memory{align-items:flex-start}.sn-hero-copy>p{max-width:30ch}}

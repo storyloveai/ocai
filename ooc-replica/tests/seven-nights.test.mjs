@@ -48,7 +48,7 @@ test('implicit analytics cannot expose handoff URLs, text or element attributes'
   }
   assert.equal(scrub({event:'$autocapture',properties:{$pathname:'/pilot/seven-nights',$elements_chain:'a[href="?draft=PRIVATE"]'}}),null);
 });
-test('reader to private chat restores draft and reader without a POST',async()=>{
+test('reader to private chat restores draft and returns to the season hub without a POST',async()=>{
   const sent=[];
   const fake={__SV:1, init(){}, capture:(name,props)=>sent.push([name,props])};
   const f=await boot({path:'/characters',entries:[['sd.lang','en']], configured:true, mockChat:true});
@@ -80,14 +80,15 @@ test('reader to private chat restores draft and reader without a POST',async()=>
     await waitFor(()=>f.chatBodies.length===1,'explicit send did not reach the mock chat transport');
     assert.equal(f.chatBodies[0].titleId,'sn-julian');
     await f.click('[data-session-back]');
-    await waitFor(()=>q('[data-scene=p4]'));
+    await waitFor(()=>q('.sn-memory'));
+    assert.equal(f.location.pathname,'/seven-nights');
     const funnel=sent.filter(([name])=>name.startsWith('living_manga_'));
-    assert.deepEqual(funnel.map(([name])=>name),['viewed','engaged','decision','decision','interlude_click','chat_turn'].map(k=>'living_manga_'+k));
+    assert.deepEqual(funnel.map(([name])=>name),['viewed','engaged','decision','episode_completed','decision','episode_completed','interlude_click','chat_turn','theater_viewed'].map(k=>'living_manga_'+k));
     assert.deepEqual(funnel.map(([,p])=>Object.keys(p).sort().join(' ')),[
       'episode_id lang viewport','episode_id input_method','branch_id episode_id input_kind lang',
-      'branch_id episode_id input_kind lang','branch_id character_id episode_id','character_id episode_id turn_index']);
-    assert.equal(funnel[3][1].input_kind,'free');
-    assert.equal(funnel[5][1].turn_index,1);
+      'branch_id episode_id lang','branch_id episode_id input_kind lang','branch_id episode_id lang','branch_id character_id episode_id','character_id episode_id turn_index','lang series_id viewport']);
+    assert.equal(funnel[4][1].input_kind,'free');
+    assert.equal(funnel[7][1].turn_index,1);
     assert.ok(!JSON.stringify(sent).includes('private'));
   } finally { clearInterval(f.window.carousel); }
 });
