@@ -164,6 +164,66 @@ body[data-reference=true] :is(.sd-home-stage,.fw-page,.story-entity-detail) butt
 @media (max-width: 359px) {
   .sd-stage-layout { --sd-stage-overlap: 56px; }
 }
+/* Chat keeps the profile's art treatment within the dialogue column. */
+.sg-chat-intro { width: min(100%, 740px); margin-inline: auto; }
+.sg-chat-stage {
+  display: grid;
+  grid-template-columns: 204px minmax(0, 1fr);
+  min-height: 168px;
+  margin-bottom: 24px;
+  box-shadow: 0 24px 48px -14px rgba(0,0,0,.58);
+  font-family: Inter, "PingFang SC", system-ui, sans-serif;
+}
+.sg-chat-art > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 14%;
+}
+.sg-chat-composite { background: var(--sd-stage-image) center / cover; }
+.sg-chat-composite > img { object-position: center top; transform: translateY(10px); }
+.sg-chat-art .sd-stage-fade {
+  background: linear-gradient(90deg, transparent 40%, rgba(22,22,24,.65) 78%, var(--sd-stage-bg) 100%);
+}
+.sg-chat-copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;
+  gap: 6px;
+  padding: 18px 26px 18px 18px;
+  background: linear-gradient(90deg, var(--sd-stage-bg), transparent 55%);
+}
+.sg-chat-eyebrow {
+  max-width: 100%;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #aaaab1;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+a.sg-chat-eyebrow:hover { color: #fafafa; text-decoration: underline; }
+a.sg-chat-eyebrow:focus-visible { outline: 2px solid #fafafa; outline-offset: 2px; }
+.sg-chat-copy h2 { margin: 0; font-size: 24px; line-height: 1.25; font-weight: 600; color: #fafafa; }
+.sg-chat-copy .sg-chat-tagline { margin: 0; color: #c2c2c5; font-size: 14px; line-height: 1.5; }
+@media (max-width: 767px) {
+  .sg-chat-stage {
+    grid-template-columns: 102px minmax(0, 1fr);
+    min-height: 116px;
+    margin-bottom: 18px;
+    border-radius: 14px;
+  }
+  .sg-chat-stage .sg-chat-art { height: auto; }
+  .sg-chat-copy { gap: 4px; padding: 12px 14px 12px 8px; }
+  .sg-chat-eyebrow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sg-chat-source { display: none; }
+  .sg-chat-copy h2 { font-size: 19px; }
+  .sg-chat-tagline { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+}
 /* The same person has the same cover and caption on Story and Characters. */
 body[data-reference=true] :is(.fw-card,.story-character-card) {gap:10px;color:#fafafa;text-decoration:none}
 body[data-reference=true] :is(.fw-card-portrait,.story-character-art) {

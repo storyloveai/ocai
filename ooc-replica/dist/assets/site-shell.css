@@ -38,3 +38,5 @@ img.storydate-brand-halo{background:radial-gradient(ellipse at 50% 48%,#d8c8abee
 
 .search-dialog-content .precision-grid{display:grid}
 .search-dialog-content .precision-grid > [data-story-card]{width:100%}
+
+.shell-signin-note{margin:0;font:400 11.5px/1.45 Inter,system-ui,sans-serif;color:#8e8e93;text-align:center}

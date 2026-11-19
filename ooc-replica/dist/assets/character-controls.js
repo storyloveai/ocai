@@ -125,6 +125,9 @@ export function attachCharacterControls({root, body, storyBar, profile, manager,
   };
   return {
     update,
+    rememberedBadge(at) {
+      return pinnedTurns.has(at) ? `<small class="character-remembered" data-character-remembered data-no-i18n><span aria-hidden="true">◆</span> ${l().kept}</small>` : '';
+    },
     tools(message, at) {
       if (!message.text?.trim() || message.streaming || message.failed) return '';
       const labels = l(), pinned = pinnedTurns.has(at);

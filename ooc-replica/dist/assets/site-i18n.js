@@ -167,7 +167,7 @@ const CSS = `.sd-lang{display:inline-flex;border:1px solid #3a3a3a;border-radius
 .sd-lang-side,.sd-lang-top,.sd-lang-legacy{margin:0;flex:none;width:max-content;border-color:#ffffff1a;border-radius:7px}
 .sd-lang-top{margin-left:0}.sd-lang-top button{padding:8px;min-height:32px}
 .sd-lang-chat{display:none}
-@media(max-width:1023px){.sd-lang-chat{display:inline-flex}#interaction-root [data-control=model]{max-width:96px;min-width:0}#interaction-root [data-control=model]>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+@media(max-width:1023px){.sd-lang-chat{display:inline-flex}#interaction-root :not(.character-session-actions)>[data-control=model]{max-width:96px;min-width:0}#interaction-root :not(.character-session-actions)>[data-control=model]>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 .signin .sd-lang-legacy{justify-self:center;margin-bottom:6px}
 [data-shrink=true] .sd-language-slot{padding:8px 5px 16px}
 [data-shrink=true] .sd-language-label{display:none}

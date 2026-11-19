@@ -173,8 +173,8 @@ test('captured chat shell keeps working suggestions, rich code copy, local histo
    document.documentElement.lang=lang;
    for(let visit=0;visit<2;visit++){
     show('/play/'+id,helpers);
-    assert.equal(document.querySelector('#session-messages>.session-message').textContent,lang==='zh'?selected.description_zh:selected.description);
-    assert.equal(document.querySelector('.session-empty-preview').getAttribute('src'),selected.image);
+    assert.equal(document.querySelector('.sg-chat-intro .character-prose').textContent,lang==='zh'?selected.description_zh:selected.description);
+    assert.equal(document.querySelector('.sg-chat-intro img').getAttribute('src'),selected.image);
     assert.equal(document.querySelector('[data-onboard]').lastChild.nodeValue,lang==='zh'?'你':'You');
    }
    assert.deepEqual(values.get('ooc-session-v2-'+id),before,'opening localization never rewrites the saved conversation');

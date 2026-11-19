@@ -249,6 +249,53 @@ test('chat settings expose actual controls in both layouts without changing conv
       await f.click('.message-tools [data-options]');openDialog(f).querySelector('textarea').value=before[1].text;await f.click('.interaction-modal[open] .save');
       assert.deepEqual(JSON.parse(f.values.get('ooc-session-v2-xc-zhiyao')),before,'only the explicit reply edit writes messages and it can be restored');
     });
+    await t.test('character actions stay outside the bubble, toggle on touch, and preserve a focused pin across renders',async()=>{
+      const doc=f.document, query=s=>doc.querySelector(s);
+      const key='ooc-session-v2-xc-jibai', dialogue=[{role:'user',text:'<quietly> **keep** this line'},previous[1]];
+      f.values.set(key,JSON.stringify(dialogue));
+      await f.go('/play/xc-jibai'); await waitFor(()=>input(f),'the chat did not mount');
+      const turn=i=>query(`#session-messages article[data-index="${i}"]`);
+      const panel=i=>turn(i).querySelector('.character-turn-actions');
+      const tap=element=>{
+        const event=new f.window.Event('click',{bubbles:true,cancelable:true});
+        Object.assign(event,{pointerType:'touch',detail:1,button:0});
+        element.dispatchEvent(event);
+      };
+      const open=i=>turn(i).hasAttribute('data-message-actions-open');
+      assert.equal(turn(0).querySelector('.message-content').textContent,dialogue[0].text);
+      assert.equal(turn(0).querySelector('.message-content button'),null);
+      assert.equal(panel(0).querySelectorAll('button').length,2);
+      assert.equal(panel(1).querySelectorAll('button').length,5);
+      assert.ok(!query('[data-message-actions-open],[data-character-remembered]'),'start collapsed and unpinned');
+      for(const button of doc.querySelectorAll('.character-turn-actions button')){
+        assert.equal(button.closest('[hidden],[aria-hidden=true],[inert]'),null);
+        assert.notEqual(button.getAttribute('tabindex'),'-1','the quiet strip remains in tab order');
+      }
+      tap(turn(0).querySelector('.message-content'));assert.ok(open(0));assert.equal(open(1),false);
+      tap(turn(1).querySelector('.message-content'));assert.ok(open(1));assert.equal(open(0),false);
+      tap(turn(1).querySelector('.message-content'));assert.equal(open(1),false);
+      tap(turn(1).querySelector('.message-content'));
+      const pin=panel(1).querySelector('[data-character-pin]');
+      pin.focus(); tap(pin);
+      assert.ok(open(1),'pinning keeps the active strip available on touch');
+      assert.ok(doc.activeElement===panel(1).querySelector('[data-character-pin]'),'focus follows the same action when the stream rerenders');
+      tap(query('#session-scroll'));
+      assert.equal(open(1),false);assert.ok(!doc.activeElement.closest('.character-turn-actions'),'tapping outside releases the touch action');
+      for(const lang of ['en','zh']){
+        language(lang);
+        const badge=turn(1).querySelector('[data-character-remembered]');
+        assert.ok(badge.parentElement.querySelector('.session-demo'),'remembered and demo labels share the metadata line');
+        assert.equal(badge.closest('.character-turn-actions'),null,'the saved state remains outside the progressive controls');
+        assert.match(badge.textContent,lang==='zh'?/◆ 已记住/:/◆ Remembered/);
+        assert.equal(panel(1).querySelector('[data-character-pin]').getAttribute('aria-pressed'),'true');
+      }
+      const keyPin=panel(1).querySelector('[data-character-pin]');
+      keyPin.focus();await f.click('[data-character-pin="1"]');
+      assert.ok(!turn(1).querySelector('[data-character-remembered]'),'removing a pin clears its persistent badge');
+      assert.ok(doc.activeElement===panel(1).querySelector('[data-character-pin]'),'keyboard focus survived toggling');
+      assert.equal(doc.activeElement.getAttribute('aria-pressed'),'false');
+      assert.deepEqual(JSON.parse(f.values.get(key)),dialogue);
+    });
     await t.test('published author tips share the chat-help dialog as escaped, untranslated original text',async () => {
       await f.go('/play/'+published.publishedId);
       await waitFor(() => input(f),'the existing published story did not mount');

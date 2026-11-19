@@ -9,7 +9,19 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
  const desktop=side.children[1];if(!desktop)return false;
  const user=account.user,profile=read('ooc-profile',{});
  const bottom=desktop.lastElementChild;
- if(!bottom.dataset.accountSlot){bottom.dataset.accountSlot='true';bottom.dataset.guestMarkup=bottom.innerHTML;}
+ if(!bottom.dataset.accountSlot){
+   const googleButton=bottom.querySelector('button');
+   if(googleButton){
+     bottom.querySelectorAll('[role="tooltip"]').forEach(tooltip=>tooltip.remove());
+     const note=bottom.ownerDocument.createElement('p');
+     note.id='shell-signin-note';note.className='shell-signin-note';
+     note.textContent='Sign in to save your stories';
+     googleButton.before(note);
+     googleButton.setAttribute('aria-describedby',note.id);
+   }
+   bottom.dataset.accountSlot='true';
+   bottom.dataset.guestMarkup=bottom.innerHTML;
+ }
  const group=desktop.children[1]?.children[2];
  group?.querySelector('[data-shell-notifications]')?.remove();
  if(group&&!group.querySelector('[data-shell-community]')){const credit=group.querySelector('a[href="/credit"]');if(credit){const link=credit.cloneNode(true);link.setAttribute('href','/community');link.dataset.shellCommunity='';link.removeAttribute('aria-current');link.innerHTML=`${symbol('person')}<span class="${credit.querySelector('span')?.className||''}">Community</span>`;credit.before(link);}}
@@ -24,7 +36,7 @@ export function paintSidebar(host,account,{read,data,navigate,show}){
   }
  }
  if(user){bottom.classList.add('shell-account-slot');bottom.innerHTML=`<a class="shell-account" href="/profile"><span class="shell-avatar">✱</span><span ${profile.name||user.displayName?'data-no-i18n':''}>${safe(profile.name||user.displayName||'My account')}</span>${symbol('arrow',14)}</a>`;}
- else {bottom.classList.remove('shell-account-slot');bottom.innerHTML=bottom.dataset.guestMarkup.replaceAll('Sign up and get 500 credits!','Sign in to save your stories');bottom.querySelectorAll('button').forEach(b=>{b.dataset.action='login';b.dataset.provider=/Apple/.test(b.textContent)?'apple':'google';b.hidden=b.dataset.provider==='apple'&&!account.providers.apple;});}
+ else {bottom.classList.remove('shell-account-slot');bottom.innerHTML=bottom.dataset.guestMarkup;bottom.querySelectorAll('button').forEach(b=>{b.dataset.action='login';b.dataset.provider=/Apple/.test(b.textContent)?'apple':'google';b.hidden=b.dataset.provider==='apple'&&!account.providers.apple;});}
  side.querySelectorAll('a[href]').forEach(a=>{const selected=a.getAttribute('href')===location.pathname||(a.getAttribute('href')===CHARACTER_HOME&&isCharacterArea(location.pathname));a.dataset.status=selected?'active':'inactive';if(selected)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  return true;
 }
