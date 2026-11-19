@@ -9,7 +9,7 @@ const ui = {
   back: words('返回 StoryDate', 'Back to StoryDate'),
   color: words('彩漫', 'Color'), ink: words('水墨', 'Ink'),
   view: words('视角与声音', 'View & sound'), auto: words('自动微晃', 'Auto motion'),
-  reset: words('正面复位', 'Center view'), sensor: words('启用倾斜', 'Enable tilt'),
+  reset: words('正面复位', 'Center view'), sensor: words('3D 倾斜', '3D Tilt'),
   rain: words('雨声', 'Rain sound'), free: words('自己说一句', 'In your own words'),
   send: words('写入下一格', 'Draw the next panel'), again: words('重选这一幕', 'Choose again'),
   you: words('你', 'You'), interlude: words('本集幕间', 'Interlude'),
@@ -20,8 +20,8 @@ const ui = {
     requesting: words('正在请求传感器权限…', 'Requesting sensor access…'),
     waiting: words('请轻轻倾斜手机。', 'Gently tilt your phone.'),
     active: words('已随手机倾斜。', 'Following your tilt.'),
-    denied: words('未获得体感权限，可在分镜上横向拖动。', 'Tilt permission was declined. Drag a panel sideways to look around.'),
-    unavailable: words('暂未收到体感数据，可横向拖动或重试。', 'No sensor readings yet. Drag sideways or try again.')
+    denied: words('体感权限未开启，仍可滚动或横拖分镜。', 'Tilt access declined. Scroll or drag a panel to look around.'),
+    unavailable: words('暂无体感数据，仍可滚动、横拖或重试。', 'No tilt readings. Scroll, drag sideways, or try again.')
   },
   silent: words('当前浏览器无法播放雨声。', 'Rain sound is unavailable in this browser.')
 };
@@ -86,10 +86,10 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
   const sensor = button('sensor',ui.sensor), sound = button('rain',ui.rain);
   const status = el('p','lm-feedback');
   status.setAttribute('role','status');
-  controls.append(auto, reset, sensor, sound, status);
+  controls.append(auto, reset, sound);
   settings.append(summary, controls);
   const language = button('language',words('EN','中文'));
-  toolbar.append(themes, settings, language);
+  toolbar.append(themes, sensor, settings, language);
   hud.append(home, toolbar);
   const book = el('div','lm-book');
   const head = el('header','lm-title');
@@ -124,14 +124,14 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
   result.append(tail,afterword);
   result.hidden = true;
   book.append(head, opening, decision, result);
-  page.append(hud, book);
+  page.append(hud, status, book);
   const stage = createDepthStage(page,{onEngage:engage,onMotionPreferenceChange:paintControls,onSensorChange(state) {
     if (disposed) return;
     sensorState = state;
     feedback = ui.sensorStates[state];
     paintControls();
   }});
-  sensor.hidden = !stage.canUseSensor;
+  sensor.hidden = !stage.canUseSensor && !(win.navigator?.maxTouchPoints > 0 || win.matchMedia?.('(pointer: coarse)')?.matches);
   const reactionEls = [];
 
   function paintControls() {
@@ -168,11 +168,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
         window.append(original, canvas);
         frame.append(window);
       } else frame.append(original,canvas);
-      for (const effect of panel.fx || []) {
-        const fx = el('span','lm-fx lm-' + effect);
-        fx.setAttribute('aria-hidden','true');
-        frame.append(fx);
-      }
+
       for (const overlay of panel.overlays) {
         const node = el('div','z-layer lm-overlay lm-' + overlay.type + ' ' + overlay.position + ' ' + overlay.style);
         node.dataset.z = overlay.z;
@@ -188,7 +184,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
         frame.append(node);
       }
       row.append(frame);
-      stage.addPanel(frame, asset);
+      stage.addPanel(frame, panel.fx?.length ? {...asset, rain: panel.fx.includes('rain'), thunder: panel.fx.includes('lightning')} : asset);
       if (isReaction) reactionEls.push(frame);
     }
   }
@@ -308,7 +304,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
       case 'language': changeLanguage(lang === 'zh'?'en':'zh'); break;
       case 'auto': stage.setAuto(!stage.autoEnabled); break;
       case 'reset': stage.reset(); break;
-      case 'sensor': if (sensorState === 'active') stage.reset(); else void stage.enableSensor(); break;
+      case 'sensor': if (sensorState === 'active') stage.stopSensor(); else void stage.enableSensor(); break;
       case 'rain': void toggleRain(); break;
       case 'choose': choose({optionId:b.dataset.lmOption},true); break;
       case 'again':

@@ -57,19 +57,22 @@ test('preview flag cannot open a paid season; repeated purchases debit one autho
   assert.equal(gateState(policy,await store.read('other'),true),'fund');
 });
 
-test('two episodes return through their own chat to a remembered season hub without automatic posts',async()=>{
+test('three episodes return through their own chat to a remembered season hub without automatic posts',async()=>{
   const f=await boot({path:'/seven-nights',entries:[['sd.lang','en']]});
   const q=s=>f.document.querySelector(s);
   try{
     await waitFor(()=>q('.sn-rail'));assert.equal(q('.sn-rail').children.length,4);
-    for(const ep of nights.slice(1)){
-      await f.go('/pilot/seven-nights/ep'+ep.number);
+    for(const ep of nights){
+      await f.go('/pilot/seven-nights'+(ep.number===1?'':'/ep'+ep.number));
       if(ep.number===3){await waitFor(()=>q('.sn-gate-copy .sn-primary'));await f.click('.sn-gate-copy .sn-primary');}
       await waitFor(()=>q('[data-scene=p2Full]'));await f.click('[data-lm-option]');
-      const a=q('[data-lm-character]');assert.ok(a.href.includes('scene='+ep.scene));
+      const a=q('[data-lm-character]');assert.ok(a.href.includes('scene='+ep.scene));assert.doesNotMatch(a.textContent,/→/);
       await f.click('[data-lm-character]');await waitFor(()=>q('.sg-chat-stage'));
-      assert.match(q('.sg-chat-stage').getAttribute('style'),new RegExp('ep'+ep.number+'_p4.webp'));
-      assert.match(q('.sg-chat-intro').textContent,ep.number===2?/10:15 PM/:/3:05 AM/);
+      const art = ep.number === 1 ? 'p2.webp' : 'ep'+ep.number+'_p4.webp';
+      assert.ok(q('.sg-chat-stage img').getAttribute('src').endsWith('/'+art));
+      assert.ok(q('.sg-chat-stage').getAttribute('style').includes('/'+(ep.number===1?'p5.webp':art)));
+      assert.equal(q('.sg-chat-tagline').textContent,['The key is yours.','Lock your door and sit closer.','Watch the harbor burn.'][ep.number-1]);
+      assert.match(q('.sg-chat-intro').textContent,[/2:15 AM/,/10:15 PM/,/3:05 AM/][ep.number-1]);
       await f.click('[data-session-back]');await waitFor(()=>q('.sn-memory'));
       assert.ok(q('.sn-memory').textContent.includes(ep.branches[ep.decision.options[0].id].consequenceTags[0].en));
     }

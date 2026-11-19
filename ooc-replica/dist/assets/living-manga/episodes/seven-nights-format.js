@@ -1,9 +1,19 @@
 export const line = (en, zh) => ({en, zh});
 const julian = line('Julian Vance', '纪沉');
 const base = '/assets/living-manga/seven-nights/';
+// Coordinates use the uncropped painting. Focus is the median depth at Julian's eyes.
+const eyePlanes = {
+  p1:[.70,.15,.165], p2:[.79,.19,.129], p3:[.62,.28,.361], p4:[.51,.27,.275],
+  ep2_p2:[.77,.19,.157], ep2_p3:[.65,.24,.165], ep2_p4:[.37,.27,.122],
+  ep3_p2:[.75,.21,.157], ep3_p3:[.64,.28,.133], ep3_p4:[.39,.14,.169]
+};
 export function art(id, alt, crop = [0, 0, 1, 1], alignX = .5, alignY = .5) {
   return {image: base + id + '.webp', depth: base + 'depth/' + id + '_depth.webp',
-    alt, crop, alignX, alignY, strength: .035, inset: .04};
+    alt, crop, alignX, alignY, strength: .085, inset: .09,
+    eyes: eyePlanes[id]?.slice(0,2), focus: eyePlanes[id]?.[2],
+    rain: !['ep2_p1','ep3_p1'].includes(id),
+    thunder: ['p3','ep3_p3','ep3_p4'].includes(id),
+    lights: ['p4','ep2_p4','ep3_p4'].includes(id)};
 }
 export function caption(type, position, text) {
   return {type, position, style: 'caption', z: .65, text};

@@ -16,11 +16,15 @@ export const scenes = {
   ep2_car: {number:2, branches:['claim_name','expose_ledger','cold_warning','custom'],
     scene:{en:'10:15 PM · The Rain-Soaked Backseat',zh:'晚 10:15 · 暴雨后座'},
     background:'/assets/living-manga/seven-nights/ep2_p4.webp',
+    image:'/assets/living-manga/seven-nights/ep2_p4.webp',
+    tagline:{en:'Lock your door and sit closer.',zh:'锁好车门，坐近一点。'},
     description:'*Julian watches the same headlights make a third turn behind the car.* “The collector let go of your wrist. His driver seems less willing to let the matter drop. What did you see at the auction?”',
     description_zh:'*纪沉看着后视镜，那对车灯跟着拐了第三个弯。*「拍卖行里那人松了你的手，他的司机可还不肯罢休。你当时看见了什么？」'},
   ep3_balcony: {number:3, branches:['burn_together','close_distance','walk_away_test','custom'],
     scene:{en:'3:05 AM · Midnight Balcony',zh:'凌晨 3:05 · 暴雨阳台'},
     background:'/assets/living-manga/seven-nights/ep3_p4.webp',
+    image:'/assets/living-manga/seven-nights/ep3_p4.webp',
+    tagline:{en:'Watch the harbor burn.',zh:'看着港口燃起来。'},
     description:'*A red flare gutters over the harbor. He opens his palm; the two halves of the silver signet fit.* “Three years ago I could give you only half the truth. The boat is nearly here. Ask me the rest.”',
     description_zh:'*港口那枚红色信号弹将熄。纪沉摊开手掌，两半银印严丝合缝。*「三年前，我只能给你一半真相。船快靠岸了，剩下的，你来问。」'}
 };

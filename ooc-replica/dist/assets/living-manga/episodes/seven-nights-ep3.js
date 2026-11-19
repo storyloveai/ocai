@@ -38,5 +38,5 @@ export default makeNight({
     line("3:02 AM. Across the storm-black harbor, a crimson flare ignites above the private pier—and a black speedboat cuts straight toward Maison Vance.", "凌晨 3:02。暴雨漆黑的海面上突然升起一道血红信号弹——一艘黑色快艇正全速劈开浪头逼近纪氏私港。"),
     line("“Looks like they couldn’t wait until morning. Stay by the fire—or stand on this balcony with me and watch the harbor burn.”", "「看来他们等不到天亮了。回壁炉边等我——或者站在这个阳台上，跟我一起看这场火。」")
   ],
-  cta:line("Step onto the balcony with Julian (1v1) →", "走上凌晨阳台和他私聊 →")
+  cta:line("Step onto the balcony with Julian (1v1)", "走上凌晨阳台和他私聊")
 });

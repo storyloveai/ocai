@@ -38,5 +38,5 @@ export default makeNight({
     line("Rain sheets across the tinted glass. Two blocks back, a dark sedan matches every turn through the midnight traffic.", "暴雨冲刷着深色车窗。两个街区外，一辆黑车死死咬着你们的尾灯。"),
     line("“Lock your door and sit closer. Tonight you see what’s buried under Maison Vance—and why I gave you my ring three years ago.”", "「落锁，坐近一点。今晚我带你去地下藏室——看看三年前我把印章留给你的真正原因。」")
   ],
-  cta:line("Talk in the rain-soaked backseat →", "留在暴雨车厢里和他聊 →")
+  cta:line("Talk in the rain-soaked backseat", "留在暴雨车厢里和他聊")
 });

@@ -42,6 +42,7 @@ function rig({ touch = 0, orientation, reduced = false, observe = true } = {}) {
     frames.clear();
     for (const fn of queued) fn(now);
   }
+  function advance() { for (let i = 0; i < 90; i++) tick(); }
   function settle() {
     for (let i = 0; frames.size && i < 90; i++) tick();
     assert.equal(frames.size, 0);
@@ -53,7 +54,7 @@ function rig({ touch = 0, orientation, reduced = false, observe = true } = {}) {
     assert.equal(event.defaultPrevented, false, 'drag leaves vertical scrolling to the browser');
   }
   return {
-    stage, win, el, image, layer, frames, timers, results, preference, canvas, tick, settle, pointer,
+    stage, win, el, image, layer, frames, timers, results, preference, canvas, tick, settle, advance, pointer,
     get glAttempts() { return glAttempts; }, get disconnected() { return disconnected; },
     visible(value) { intersection([{ target: el, isIntersecting: value }]); },
     hidden(value) { document.hidden = value; document.dispatchEvent(new dom.Event('visibilitychange')); },
@@ -64,6 +65,7 @@ function rig({ touch = 0, orientation, reduced = false, observe = true } = {}) {
 
 test('unavailable WebGL retains the cropped image and counter-moving overlays, then RAF sleeps', () => {
   const r = rig();
+  r.stage.setAuto(false);
   assert.equal(r.stage.canUseSensor, false);
   assert.equal(r.frames.size, 0);
   assert.equal(r.glAttempts, 0, 'offscreen panels never request GL');
@@ -129,6 +131,7 @@ test('auto animation pauses when invisible or hidden; reduced-motion changes res
 test('explicit permission, neutral calibration, screen axes, denial, silent device, and sensor cleanup', async () => {
   let choice = 'granted', calls = 0;
   const r = rig({ touch: 1, orientation: { requestPermission() { calls++; return Promise.resolve(choice); } } });
+  r.stage.setAuto(false);
   assert.equal(r.stage.canUseSensor, true);
   assert.equal(calls, 0);
   r.visible(true);
@@ -183,6 +186,7 @@ test('leaving the route during the native permission sheet cannot register a lat
 
 test('removing a panel while its depth map loads releases GL and disconnects late image callbacks', () => {
   const r = rig();
+  r.stage.setAuto(false);
   let pendingDepth, released = 0;
   r.win.Image = class {
     constructor() { pendingDepth = this; }
@@ -213,26 +217,27 @@ test('an upright phone can turn sideways; denial leaves auto mode and gestures u
   r.stage.setAuto(true);
   assert.equal(r.stage.autoEnabled, true);
   await r.stage.enableSensor();
-  assert.equal(r.stage.autoEnabled, false);
+  assert.equal(r.stage.autoEnabled, true);
   r.pointer('pointerdown', { clientX: 0, clientY: 0 });
   r.pointer('pointermove', { clientX: 70, clientY: 0 });
-  r.settle();
+  r.advance();
   assert.ok(parseFloat(r.layer.style.translate) > 8);
   response = 'granted';
   await r.stage.enableSensor();
   r.tilt(90, 0, 0);
-  r.settle();
+  r.advance();
   assert.equal(r.layer.style.translate, '0px 0px');
   r.tilt(90, 0, 23);
-  r.settle();
+  r.advance();
   assert.ok(parseFloat(r.layer.style.translate) > 12.9, 'portrait upright heading rotation moves horizontally');
   r.tilt(90, 0, 23);
-  assert.equal(r.frames.size, 0, 'identical sensor readings leave RAF asleep');
+  assert.equal(r.frames.size, 1, 'visible cinematic lighting stays animated');
   r.stage.destroy();
 });
 
 test('a missing depth asset immediately releases the allocated context and keeps the artwork', () => {
   const r = rig();
+  r.stage.setAuto(false);
   let depth, released = 0;
   r.win.Image = class { constructor() { depth = this; } };
   r.canvas.getContext = () => ({
@@ -251,6 +256,7 @@ test('a missing depth asset immediately releases the allocated context and keeps
 
 test('legacy viewport fallback toggles visual effects on scroll and removes the marker on disposal', () => {
   const r = rig({ observe: false });
+  r.stage.setAuto(false);
   assert.equal(r.el.hasAttribute('data-lm-visible'), true);
   r.settle();
   r.el.getBoundingClientRect = () => ({ top: 900, bottom: 1140, left: 0, right: 320 });
@@ -267,6 +273,7 @@ test('legacy viewport fallback toggles visual effects on scroll and removes the 
 
 test('shader compilation failure releases partial allocations before showing the original image', () => {
   const r = rig(), freed = [];
+  r.stage.setAuto(false);
   r.win.Image = class { complete = true; naturalWidth = 512; };
   r.canvas.getContext = () => ({
     createProgram: () => 'program', createShader: () => 'shader',
@@ -279,5 +286,36 @@ test('shader compilation failure releases partial allocations before showing the
   assert.deepEqual(freed, ['program', 'shader', 'context']);
   assert.equal(r.canvas.style.visibility, 'hidden');
   assert.ok(r.image.style.width);
+  r.stage.destroy();
+});
+
+test('ambient motion works before permission, tracks viewport position, and survives a silent sensor', async () => {
+  const r = rig({touch:1, orientation:{}});
+  r.visible(true);
+  r.advance();
+  const first = r.layer.style.translate;
+  assert.notEqual(first, '0px 0px');
+  r.tick();
+  assert.notEqual(r.layer.style.translate, first);
+  r.el.getBoundingClientRect = () => ({top:680,bottom:920,left:0,right:320,width:320,height:240});
+  r.win.dispatchEvent(new Event('scroll'));
+  r.advance();
+  assert.ok(parseFloat(r.layer.style.translate.split(' ')[1]) < -3);
+  await r.stage.enableSensor();
+  r.expire();
+  assert.equal(r.results.at(-1), 'unavailable');
+  assert.equal(r.stage.autoEnabled, true);
+  r.pointer('pointerdown', {clientX:10,clientY:30});
+  r.pointer('pointermove', {clientX:100,clientY:32});
+  r.advance();
+  assert.ok(parseFloat(r.layer.style.translate) > 10);
+  assert.ok(parseFloat(r.layer.style.getPropertyValue('--lm-shadow-x')) < 0);
+  r.pointer('pointerup',{});
+  r.advance();
+  assert.ok(parseFloat(r.layer.style.translate) < 2);
+  r.preference.matches=true;
+  r.preference.dispatchEvent(new Event('change'));
+  r.settle();
+  assert.equal(r.layer.style.translate,'0px 0px');
   r.stage.destroy();
 });

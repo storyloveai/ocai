@@ -15,7 +15,7 @@ function deviceAxes({ alpha, beta, gamma }) {
   };
 }
 
-export function createMotionInput(root, { panelAt, onEngage, onSensorChange, canMove, isAuto, onSensorStart, setView }) {
+export function createMotionInput(root, { panelAt, onEngage, onSensorChange, canMove, releaseView, setView }) {
   const doc = root.ownerDocument;
   const win = doc.defaultView || window;
   const orientation = win.DeviceOrientationEvent;
@@ -26,6 +26,7 @@ export function createMotionInput(root, { panelAt, onEngage, onSensorChange, can
 
   function report(state) {
     if (state === sensor) return;
+    if (sensor === 'active' && state !== 'active') releaseView();
     sensor = state;
     if (!destroyed) onSensorChange?.(state);
   }
@@ -85,7 +86,6 @@ export function createMotionInput(root, { panelAt, onEngage, onSensorChange, can
     if (!canUseSensor || !canMove()) { report('unavailable'); return false; }
     if (sensor === 'requesting' || sensor === 'waiting' || sensor === 'active') return true;
     const request = ++generation;
-    onSensorStart();
     report('requesting');
     try {
       // iOS requires this invocation synchronously within the button click.
@@ -100,18 +100,24 @@ export function createMotionInput(root, { panelAt, onEngage, onSensorChange, can
     }
   }
   function visibilityChange() {
-    drag = null;
+    endDrag();
     if (sensor !== 'waiting' && sensor !== 'active') return;
     if (doc.hidden) stopListening();
     else listen();
   }
-  function manual() { return canMove() && !isAuto() && sensor !== 'active'; }
+  function manual() { return canMove() && sensor !== 'active'; }
   function begin(id, x, y, target) {
     if (!manual() || !panelAt(target)) return;
     drag = { id, x, y, startX: dragX, startY: dragY };
   }
   function move(id, x, y) {
     if (!manual() || !drag || drag.id !== id) return;
+    if (!drag.horizontal) {
+      const dx = Math.abs(x - drag.x), dy = Math.abs(y - drag.y);
+      if (Math.max(dx, dy) < 4) return;
+      if (dy > dx) { endDrag(); return; }
+      drag.horizontal = true;
+    }
     dragX = clampAxis(drag.startX + (x - drag.x) / 95);
     dragY = clampAxis(drag.startY + (y - drag.y) / 95);
     onEngage?.('drag');
@@ -120,12 +126,17 @@ export function createMotionInput(root, { panelAt, onEngage, onSensorChange, can
   function mouse(event) {
     if (!manual()) return;
     const bounds = panelAt(event.target)?.getBoundingClientRect();
-    if (!bounds?.width || !bounds?.height) return;
+    if (!bounds?.width || !bounds?.height) { releaseView(); return; }
     onEngage?.('pointer');
     setView((event.clientX - bounds.left) / bounds.width * 2 - 1,
       (event.clientY - bounds.top) / bounds.height * 2 - 1);
   }
-  function mouseLeave() { if (manual() && !drag) setView(0, 0); }
+  function mouseLeave() { if (manual() && !drag) releaseView(); }
+  function endDrag() {
+    if (drag?.horizontal) releaseView();
+    drag = null;
+    dragX = dragY = 0;
+  }
   const bindings = [];
   function bind(type, fn) {
     root.addEventListener(type, fn, { passive: true });
@@ -139,7 +150,7 @@ export function createMotionInput(root, { panelAt, onEngage, onSensorChange, can
       if (e.pointerType === 'mouse') mouse(e);
       else move(e.pointerId, e.clientX, e.clientY);
     });
-    const end = e => { if (drag?.id === e.pointerId) drag = null; };
+    const end = e => { if (drag?.id === e.pointerId) endDrag(); };
     bind('pointerup', end);
     bind('pointercancel', end);
     bind('pointerleave', e => { if (e.pointerType === 'mouse') mouseLeave(); });
@@ -147,7 +158,7 @@ export function createMotionInput(root, { panelAt, onEngage, onSensorChange, can
     bind('mousemove', mouse);
     bind('mouseleave', mouseLeave);
     bind('touchstart', e => {
-      if (e.touches.length !== 1) { drag = null; return; }
+      if (e.touches.length !== 1) { endDrag(); return; }
       const t = e.touches[0];
       begin(t.identifier, t.clientX, t.clientY, e.target);
     });
@@ -156,8 +167,8 @@ export function createMotionInput(root, { panelAt, onEngage, onSensorChange, can
       const t = e.touches[0];
       move(t.identifier, t.clientX, t.clientY);
     });
-    bind('touchend', () => { drag = null; });
-    bind('touchcancel', () => { drag = null; });
+    bind('touchend', endDrag);
+    bind('touchcancel', endDrag);
   }
   return {
     canUseSensor, enableSensor, stopSensor, visibilityChange,

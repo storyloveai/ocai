@@ -1,0 +1,62 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Cinema depth-window pixel probe</title>
+<style>
+main,figure{margin:0}figure{position:relative;overflow:hidden;width:390px;height:220px}
+canvas,img{position:absolute;inset:0;width:100%;height:100%}
+</style>
+<main><figure><img class="lm-depth-image" alt=""><canvas class="lm-depth-canvas"></canvas><i class="z-layer" data-z="1"></i></figure></main>
+<output>Running</output>
+<script type="module">
+import { createDepthStage } from '../../dist/assets/living-manga/depth-window.js';
+
+// One vertical white line across three depth bands makes displacement measurable in pixels.
+// Use the shipping stage, input handler and shader, including their actual crop and uniforms.
+const panel = document.querySelector('figure'), canvas = panel.querySelector('canvas');
+const image = panel.querySelector('img'), output = document.querySelector('output');
+const map = document.createElement('canvas');
+map.width = 390; map.height = 220;
+const ctx = map.getContext('2d');
+const stage = createDepthStage(document.querySelector('main'));
+try {
+  ctx.fillStyle = 'black'; ctx.fillRect(0,0,390,220);
+  ctx.fillStyle = 'white'; ctx.fillRect(192,0,6,220);
+  image.src = map.toDataURL(); await image.decode();
+  ['#fff','#949494','#000'].forEach((gray,i)=>{
+    ctx.fillStyle=gray;ctx.fillRect(0,Math.floor(i*220/3),390,74);
+  });
+  stage.setAuto(false);
+  stage.addPanel(panel,{depth:map.toDataURL(), strength:.085, focus:.58});
+  const gl = canvas.getContext('webgl');
+  if (!gl) throw Error('WebGL unavailable');
+  const draw = gl.drawArrays.bind(gl);
+  let centers;
+  gl.drawArrays = (...args) => {
+    draw(...args);
+    const w = gl.drawingBufferWidth, h = gl.drawingBufferHeight;
+    centers = [.18,.50,.82].map(y=>{
+      const row = new Uint8Array(w*4);
+      gl.readPixels(0,Math.round((1-y)*h),w,1,gl.RGBA,gl.UNSIGNED_BYTE,row);
+      let weighted=0,total=0;
+      for(let x=0;x<w;x++){ weighted+=row[x*4]*x; total+=row[x*4]; }
+      if(!total) throw Error('Calibration stripe missing');
+      return weighted/total * 390/w;
+    });
+  };
+  const nextFrame = () => new Promise(resolve=>requestAnimationFrame(resolve));
+  const until = async check => {
+    const deadline = performance.now()+10000;
+    while(!check()) { if(performance.now()>deadline) throw Error('Stage did not settle'); await nextFrame(); }
+  };
+  await until(()=>centers);
+  const straight = centers.slice(), rect=panel.getBoundingClientRect();
+  panel.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,pointerType:'mouse',
+    clientX:rect.right,clientY:rect.top+rect.height/2}));
+  await until(()=>parseFloat(panel.querySelector('i').style.translate)>12.98);
+  const [near, focus, far] = centers.map((x,i)=>+(x-straight[i]).toFixed(2));
+  if(!(near < -10 && Math.abs(focus) < 1 && far > 10)) throw Error(JSON.stringify({near,focus,far}));
+  output.textContent=JSON.stringify({near,focus,far,unit:'CSS pixels',width:390});
+  output.dataset.result='pass';
+} catch(e) {output.textContent=e.message;output.dataset.result='fail';}
+finally { stage.destroy(); }
+</script>
