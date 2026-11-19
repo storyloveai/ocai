@@ -22,15 +22,16 @@
   "headers": [
     {
       "source": "/chat/sn-julian",
-      "headers": [{"key": "Referrer-Policy", "value": "origin"}]
+      "headers": [
+        {
+          "key": "Referrer-Policy",
+          "value": "origin"
+        }
+      ]
     },
     {
       "source": "/assets/media/(.*)",
       "headers": [
-    {
-      "source": "/chat/sn-julian",
-      "headers": [{"key": "Referrer-Policy", "value": "origin"}]
-    },
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
