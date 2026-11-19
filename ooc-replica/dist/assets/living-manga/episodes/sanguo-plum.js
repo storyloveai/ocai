@@ -60,7 +60,7 @@ export default {
     feast: {
       alt: { zh: '酒案前，灰袍门客背对灯火，曹操隔案望着他。', en: 'Beyond the scholar in grey, Cao Cao watches from the far side of the wine table.' },
       image: '/assets/sanguo-art/scenes/v2_cao_feast.webp', depth: '/assets/living-manga/depth/feast_depth.webp',
-      crop: [0.27, 0, 0.53, 0.82], strength: 0.04,
+      crop: [0.35, 0, 0.55, 0.43], strength: 0.04,
     },
     lamp: {
       alt: { zh: '关羽在灯下读书，纸窗上映着竹影。', en: 'Guan Yu reads by lamplight. Bamboo casts shadows across the paper windows.' },
