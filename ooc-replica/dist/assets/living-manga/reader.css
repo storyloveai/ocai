@@ -241,6 +241,7 @@ body.lm-reading vercel-live-feedback, body.lm-reading #vercel-live-feedback { di
 .sn-gate::after {content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(ellipse at 58% 46%,transparent 22%,#08080cca 100%),linear-gradient(90deg,#101017bc,transparent 80%)}
 .lm-reader [data-lm-action=sensor]:not([hidden]) {border:1px solid var(--muted);border-radius:6px;font-weight:600;white-space:nowrap}
+@media(min-width:768px) and (pointer:fine){.lm-reader [data-lm-action=sensor]:not([data-touch-device]){display:none}}
 .lm-reader>.lm-feedback:not([hidden]) {margin:4px auto;text-align:center;font-size:12px}
 @media(max-width:480px){.lm-hud:has([data-lm-action=sensor]:not([hidden])) .lm-home img{width:60px}
 .lm-toolbar:has([data-lm-action=sensor]:not([hidden])) summary{max-width:68px;line-height:1.15;white-space:normal}}

@@ -131,7 +131,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
     feedback = ui.sensorStates[state];
     paintControls();
   }});
-  sensor.hidden = !stage.canUseSensor && !(win.navigator?.maxTouchPoints > 0 || win.matchMedia?.('(pointer: coarse)')?.matches);
+  sensor.toggleAttribute('data-touch-device', stage.canUseSensor || win.navigator?.maxTouchPoints > 0);
   const reactionEls = [];
 
   function paintControls() {
