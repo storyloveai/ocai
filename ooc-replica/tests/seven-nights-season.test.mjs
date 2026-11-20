@@ -73,6 +73,7 @@ test('three episodes return through their own chat to a remembered season hub wi
       assert.ok(q('.lm-toolbar > [data-lm-action=rain]').getAttribute('aria-label'));
       const a=q('[data-lm-character]');assert.ok(a.href.includes('scene='+ep.scene));assert.doesNotMatch(a.textContent,/→/);
       await f.click('[data-lm-character]');await waitFor(()=>q('.sg-chat-stage'));
+      assert.equal(q('.sg-chat-intro').dataset.chatScene,ep.scene);
       const art = ep.number === 1 ? 'p2.webp' : 'ep'+ep.number+'_p4.webp';
       assert.ok(q('.sg-chat-stage img').getAttribute('src').endsWith('/'+art));
       assert.ok(q('.sg-chat-stage').getAttribute('style').includes('/'+(ep.number===1?'p5.webp':art)));

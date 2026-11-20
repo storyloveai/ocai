@@ -25,7 +25,7 @@ export const scenes = {
     description:'*Julian watches the same headlights make a third turn behind the car.* “The collector let go of your wrist. His driver seems less willing to let the matter drop. What did you see at the auction?”',
     description_zh:'*纪沉看着后视镜，那对车灯跟着拐了第三个弯。*「拍卖行里那人松了你的手，他的司机可还不肯罢休。你当时看见了什么？」'},
   ep3_balcony: {
-    starters:[{"en": "Who has the other half of the seal?", "zh": "另一半银印一直在谁手里？"}, {"en": "If I board that boat, will you come?", "zh": "如果我上船，你跟我走吗？"}],
+    starters:[{"en": "Who kept the other half of the seal?", "zh": "另一半银印一直在谁手里？"}, {"en": "If I board that boat, will you come?", "zh": "如果我上船，你跟我走吗？"}],
     number:3, branches:['burn_together','close_distance','walk_away_test','custom'],
     scene:{en:'3:05 AM · Midnight Balcony',zh:'凌晨 3:05 · 暴雨阳台'},
     background:'/assets/living-manga/seven-nights/ep3_p4.webp',

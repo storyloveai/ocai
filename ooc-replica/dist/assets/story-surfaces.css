@@ -288,9 +288,6 @@ body[data-reference=true] .story-cast-grid {grid-template-columns:repeat(auto-fi
 
 /* Interlude tools and draft cues are scoped to the private film set. */
 body:has(#session-settings[data-film-scene]) :is(vercel-live-feedback,#vercel-live-feedback) {display:none!important}
-body:has([data-film-scene="ep1_study"]) .sg-chat-art img {object-position:74% 18%}
-body:has([data-film-scene="ep2_car"]) .sg-chat-art img {object-position:34% 22%}
-body:has([data-film-scene="ep3_balcony"]) .sg-chat-art img {object-position:38% 18%}
 #session-settings[data-film-scene] [data-control=model] {display:inline-flex;margin:10px 0 0;width:100%;min-height:40px}
 .sn-draft-lines {display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px 2px}
 .sn-draft-lines button {text-align:start;border:1px solid #605747;border-radius:14px;padding:6px 11px;background:#242220;color:#e8ddc8;font:400 13px/1.4 system-ui}

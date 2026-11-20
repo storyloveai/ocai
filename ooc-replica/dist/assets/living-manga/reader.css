@@ -336,7 +336,7 @@ body.lm-reading vercel-live-feedback, body.lm-reading #vercel-live-feedback { di
   border-left-color:#e4c687;background:#262421;transform:translateY(-2px);
 }
 @media(prefers-reduced-motion:no-preference){
-  .lm-reader[data-lm-series][data-theme=color] .lm-frame[data-lm-entered] {animation:sn-arrive .45s ease-out both}
+  .lm-reader[data-lm-series] .lm-frame[data-lm-entered=color] {animation:sn-arrive .45s ease-out both}
   @keyframes sn-arrive {from{opacity:.78;filter:blur(1.2px)}to{opacity:1;filter:none}}
 }
 @media(prefers-reduced-motion:reduce){.lm-reader[data-lm-series] .lm-options button{transition:none;transform:none!important}}
