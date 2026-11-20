@@ -14,7 +14,7 @@ import {julian, julianAt, impressions, seasonKey, nightPath} from './seven-night
 import {characterIntroMarkup} from './sanguo-character-hub.js';
 import {FEATURED_CHARACTER_CARDS} from './flywheel/cards-data.js';
 import {SuggestionLoader,parseSuggestions} from './suggestions.js';
-import {historyIds,lastSessionText} from './history.js';
+import {historyIds,lastSessionText,historyDestination,recordVisit} from './history.js';
 import {loadPublicConfig} from './public-config.js';
 import {mountInteraction} from './reference.js';
 import {track} from './analytics.js';
@@ -72,16 +72,20 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
  if(id===julian.id&&titleLink)titleLink.href='/seven-nights';
  const onSet = isCharacter && (id === julian.id || /^seven-nights-ep[1-3]$/.test(new URLSearchParams(globalThis.location?.search).get('from')));
  if (onSet) settings.dataset.filmScene = title.sceneId || 'ep1_study';
+ if(id===julian.id){
+  recordVisit(h,id);
+  if(h.read('ooc-session-v2-sn-julian-last-scene',null)!==title.sceneId)h.save('ooc-session-v2-sn-julian-last-scene',title.sceneId);
+ }
  const pilotReturn=id===julian.id?nightPath(title.number):'/pilot/sanguo-manga';
- const interludeReturn=isCharacter&&globalThis.history?.state?.storydateNavigation===true&&globalThis.history.state.from===pilotReturn;
+ const interludeReturn=isCharacter&&globalThis.history?.state?.storydateNavigation===true&&globalThis.history.state.from?.split(/[?#]/,1)[0]===pilotReturn;
 
  const capturedBack=titleLink?.previousElementSibling;if(capturedBack?.matches('button')&&capturedBack.classList.contains('ts:hidden')){const back=document.createElement('a');back.setAttribute('href',titleLink.getAttribute('href'));if(back.getAttribute('href').startsWith('/story/'))back.dataset.fullInfo='';back.dataset.sessionBack='';back.dataset.noI18n='';back.className=capturedBack.className.replace('inline-block','inline-flex')+' items-center justify-center';back.style.cssText='min-width:44px;min-height:44px';back.innerHTML=capturedBack.innerHTML;back.querySelector('svg')?.setAttribute('aria-hidden','true');capturedBack.replaceWith(back);}
  if(interludeReturn||id===julian.id){
   const back=q('[data-session-back]');
   if(back){
-   back.href=id===julian.id?'/seven-nights':pilotReturn;
+   back.href=interludeReturn?pilotReturn:'/seven-nights';
    back.classList.remove('ts:hidden');
-   if(id!==julian.id)back.addEventListener('click',event=>{
+   if(interludeReturn)back.addEventListener('click',event=>{
     if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
     event.preventDefault();
     globalThis.history.back();
@@ -110,7 +114,7 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
   const zh=sessionLanguage()==='zh',image=settings.querySelector('[data-session-setting="View image"]'),help=settings.querySelector('[data-session-setting="Chat help"]');
   if(image)image.textContent=zh?(isCharacter?'查看立绘':'查看封面'):(isCharacter?'View portrait':'View cover');
   if(help)help.textContent=zh?'聊天操作说明':'Chat controls';
-  const back=q('[data-session-back]');if(back){const label=id===julian.id?(zh?'返回七夜剧场':'Back to Seven Nights'):interludeReturn?(zh?'返回分镜':'Back to the panels'):mine?(back.getAttribute('href')==='/my-title'?(zh?'返回我的作品':'Back to My Titles'):(zh?'返回社区':'Back to Community')):(isCharacter?(zh?'返回角色档案':'Back to character profile'):(zh?'返回作品详情':'Back to story details'));back.setAttribute('aria-label',label);back.title=label;}
+  const back=q('[data-session-back]');if(back){const label=interludeReturn?(zh?'返回分镜':'Back to the panels'):id===julian.id?(zh?'返回七夜剧场':'Back to Seven Nights'):mine?(back.getAttribute('href')==='/my-title'?(zh?'返回我的作品':'Back to My Titles'):(zh?'返回社区':'Back to Community')):(isCharacter?(zh?'返回角色档案':'Back to character profile'):(zh?'返回作品详情':'Back to story details'));back.setAttribute('aria-label',label);back.title=label;}
   settings.querySelectorAll('[data-session-memory-label]').forEach(node=>{node.textContent=zh?'补充记忆':'Additional memories';});
   settings.querySelector('[data-session-close]')?.setAttribute('aria-label',local('Close session settings'));
   root.querySelectorAll('[data-film-line]').forEach((chip,i)=>chip.textContent=title.starters[i][zh?'zh':'en']);
@@ -341,7 +345,7 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
   historyKind=kind;
   if(!history)return;
   const entries=[...new Set([id,...historyIds(h.read,h.data)])].map(storyId=>historyTitles.get(storyId)).filter(item=>item&&(item.type==='character'?'character':'story')===kind);
-  history.innerHTML=entries.length?entries.slice(0,12).map(item=>{const last=lastSessionText(h.read('ooc-session-v2-'+item.id,null));return `<li class="session-history-item"><a data-no-i18n href="/play/${safe(item.id)}" ${item.id===id?'aria-current="page"':''}><img src="${safe(item.image?.startsWith('assets/')?'/'+item.image:item.image||'')}" alt=""><span><strong>${safe(sessionLanguage()==='zh'?item.title_zh||item.title:item.title)}</strong><small>${safe(last?.replace(/[*#>\n]/g,' ').slice(0,85)||local(kind==='character'?'Start chatting':'Start your story'))}</small></span></a></li>`;}).join(''):`<li class="session-history-empty">${local('Your recent sessions will appear here.')}</li>`;
+  history.innerHTML=entries.length?entries.slice(0,12).map(item=>{const last=lastSessionText(h.read('ooc-session-v2-'+item.id,null));return `<li class="session-history-item"><a data-no-i18n href="${safe(historyDestination(item,h.read))}" ${item.id===id?'aria-current="page"':''}><img src="${safe(item.image?.startsWith('assets/')?'/'+item.image:item.image||'')}" alt=""><span><strong>${safe(sessionLanguage()==='zh'?item.title_zh||item.title:item.title)}</strong><small>${safe(last?.replace(/[*#>\n]/g,' ').slice(0,85)||local(kind==='character'?'Start chatting':'Start your story'))}</small></span></a></li>`;}).join(''):`<li class="session-history-empty">${local('Your recent sessions will appear here.')}</li>`;
   for(const button of historyTabs)button.setAttribute('aria-pressed',String(button.dataset.historyMode===kind));
  };renderHistory();
  sidebar.querySelectorAll('button').forEach(button=>{const label=button.textContent.trim();if(label==='Search')button.onclick=()=>h.navigate('/search');if(label==='Notifications')button.remove();});

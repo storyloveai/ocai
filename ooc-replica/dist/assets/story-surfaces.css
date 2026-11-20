@@ -305,3 +305,9 @@ body:has(#session-settings[data-film-scene]) [data-control=settings]::before {co
 /* A collapsed film-set rail exposes its toggle directly, including on touch laptops. */
 [data-film-rail][data-shrink=true] a:has(+[data-film-toggle]) {display:none}
 [data-film-rail][data-shrink=true] [data-film-toggle] {opacity:1;pointer-events:auto;width:42px;height:44px}
+
+.fw-card[data-story-card="sn-seven-nights"] .fw-card-portrait img { object-position: 25% 22%; }
+.fw-card[href="/chat/sn-julian"] .fw-card-portrait img,
+[data-search-profile="sn-julian"] .search-profile-figure { object-position: 94% 18%; }
+.sg-chat-copy .sn-watch-series { display: inline-flex; align-items: center; min-height: 32px; color: #dac29a; font-size: .875rem; }
+.sg-chat-copy .sn-watch-series:hover, .sg-chat-copy .sn-watch-series:focus-visible { text-decoration: underline; }

@@ -1,7 +1,7 @@
-// Private direct-link character. This record is never added to the discovery catalog.
+// Public discovery and the three private conversations share one character identity.
 export const julian = {
   id:'sn-julian', type:'character', title:'Julian Vance', title_zh:'纪沉',
-  image:'/assets/living-manga/seven-nights/p2.webp',
+  playUrl:'/chat/sn-julian', image:'/assets/living-manga/seven-nights/p2.webp',
   background:'/assets/living-manga/seven-nights/p5.webp',
   scene:{en:'2:15 AM · Maison Vance Study',zh:'凌晨 2:15 · 顶层书房'},
   workTitle:{en:'2:00 AM · Seven Nights',zh:'凌晨两点 · 七夜之约'},
@@ -9,6 +9,15 @@ export const julian = {
   description:'*He locks the heavy study door with a quiet click and sets a crystal glass beside the brass lamp.* “Rule one under my roof: never lie to me. Now—why were those two sedans really waiting on my street?”',
   description_zh:'*他轻轻锁上厚重的书房门，将一只水晶杯放在黄铜台灯旁。*「我屋檐下的第一条规矩：别骗我。现在告诉我，那两辆车为什么会等在我的街口？」'
 };
+
+export const sevenNights = {
+  id:'sn-seven-nights', type:'story', title:julian.workTitle.en, title_zh:julian.workTitle.zh,
+  image:'/assets/living-manga/seven-nights/ep2_p4.webp', genre:'Dark Romance', author:'StoryDate',
+  description:'Seven nights under his roof. One debt he refuses to name.',
+  description_zh:'在他屋檐下住满七夜，换一个他始终不肯说出口的真相。',
+  playUrl:'/seven-nights'
+};
+export const sevenNightsKeywords = [julian.title,julian.title_zh,sevenNights.title,sevenNights.title_zh,'Port Veyron','维伦港'];
 
 export const seasonKey = 'ooc-session-v2-seven-nights-season';
 export const scenes = {
@@ -48,5 +57,9 @@ export function impressions(value, until = 3) {
   return permitted.filter(code=>value.includes(code));
 }
 export function nightPath(n) {
-  return '/pilot/seven-nights' + (n===1?'':'/ep'+n);
+  return '/seven-nights/ep'+n;
+}
+
+export function canonicalNightUrl(value) {
+  return value.replace(/^\/pilot\/seven-nights(?:\/ep([123]))?\/?(?=[?#]|$)/, (_, n) => nightPath(Number(n || 1)));
 }

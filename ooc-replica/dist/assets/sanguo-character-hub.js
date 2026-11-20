@@ -84,6 +84,7 @@ export function characterIntroMarkup(c, card, lang, opening) {
         ${story ? `<a class="sg-chat-eyebrow" data-full-info href="${safe(story.informationUrl)}" aria-label="${label}">${eyebrow}</a>` : `<div class="sg-chat-eyebrow">${eyebrow}</div>`}
         <h2>${safe(nameOf(c, lang))}</h2>
         <p class="sg-chat-tagline">${safe(card.tagline[lang])}</p>
+        ${c.id==='sn-julian'?`<a class="sn-watch-series" data-full-info href="/seven-nights">${lang==='zh'?'看《七夜之约》剧集 →':'Watch Seven Nights →'}</a>`:''}
       </div>
     </header>
     ${characterReadingHTML(markdown(balanceCharacterAction(opening)),opening)}

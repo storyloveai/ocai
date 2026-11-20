@@ -218,7 +218,7 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.go('/characters?source=home#cast');
       const initialLength = f.history.length;
       await f.click('[data-fw-chat]');
-      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 15);
+      assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 16);
       await f.click('[data-fw-world="xichuan"]');
       assert.equal(f.history.length, initialLength + 2, 'each discrete choice gets a history entry');
       const directoryUrl = f.location.pathname + f.location.search + f.location.hash;
@@ -285,13 +285,13 @@ test('real app connects profiles, local chat, current story memory and reloads t
       await f.go('/characters?world=xichuan&chat=1&q=夏知遥');
       for (const world of ['__proto__', 'toString', 'constructor', 'not-a-world']) {
         await f.go('/characters?world=' + world);
-        assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 18);
+        assert.equal(f.document.querySelectorAll('#fw-lib-results .fw-card').length, 19);
         assert.equal(f.document.querySelector('[data-fw-chat]').getAttribute('aria-pressed'), 'false');
         assert.equal(f.document.querySelector('[data-fw-world="all"]').getAttribute('aria-pressed'), 'true');
       }
       const reloaded = await reload({path: '/characters?world=__proto__'});
       assert.equal(reloaded.directory.world, 'all'); assert.equal(reloaded.directory.chat, false);
-      assert.equal(reloaded.directory.cards.length, 18);
+      assert.equal(reloaded.directory.cards.length, 19);
       await f.go('/character?world=xichuan');
     });
 

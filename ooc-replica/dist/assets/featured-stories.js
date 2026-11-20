@@ -2,6 +2,8 @@ import {xichuan, ashenCrown, bakerStreet} from './ashen-crown.js';
 import {threeKingdoms} from './three-kingdoms.js';
 import {bookMetadata} from './book-catalog.js';
 
+import {sevenNights} from './seven-nights-character.js';
+
 const pair = (zh, en) => ({zh, en});
 
 export const STORY_FILTERS = [
@@ -17,6 +19,11 @@ const books = new Map(bookMetadata.map(book => [book.id, book]));
 // The public shelf has its own editorial order. The full catalogue still owns
 // routes, saves, biographies and bookmarks, including the alternate ink edition.
 export const FEATURED_STORIES = [
+  {
+    id:sevenNights.id, image:sevenNights.image, href:sevenNights.playUrl, category:'visual-novels', featured:true,
+    title:pair(sevenNights.title_zh,sevenNights.title), badge:pair('三夜连载 · 2.5D','3 Episodes · 2.5D'),
+    quote:pair(sevenNights.description_zh,sevenNights.description), meta:pair('暗黑言情 · 纪沉','Dark Romance · Julian Vance'),
+  },
   {
     id:xichuan.id, image:xichuan.image, category:'visual-novels', featured:true,
     title:pair(xichuan.title,'The Seventh Spring of Xichuan'),

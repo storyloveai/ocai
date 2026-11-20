@@ -38,7 +38,7 @@ test('all title kinds float, search preserves background, tabs update only conte
  assert.equal(routes.length,0);
  assert.deepEqual([...document.querySelectorAll('.sd-story-grid [data-story-card]')].map(card=>card.dataset.storyCard),['mortal-path','monte-cristo']);
  document.querySelector('[data-story-filter="all"]').click();
- assert.equal(document.querySelectorAll('.sd-story-grid [data-story-card]').length,6);
+ assert.equal(document.querySelectorAll('.sd-story-grid [data-story-card]').length,7);
  reference.openSearch(h,'#fantasy');assert.ok(document.querySelectorAll('[data-search-results] a').length>0);document.querySelector('[data-preview-close]').click();
  reference.openSearch(h,'三国');assert.equal(document.querySelector('[data-sd-hero="home"]'),hero);assert.match(document.querySelector('[data-search-results]').textContent,/三国/);assert.equal(document.querySelector('dialog[open]').getAttribute('aria-label'),'Search');document.querySelector('[data-preview-close]').click();
  for(const story of [h.data.find(d=>d.id==='three-kingdoms'),h.data.find(d=>d.type==='character'),h.data.find(d=>d.id==='sgc-007'),h.data.find(d=>d.id==='story-005')]){

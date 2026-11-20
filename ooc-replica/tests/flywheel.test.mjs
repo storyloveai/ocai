@@ -53,13 +53,13 @@ test('flywheel card data is complete, bilingual, and points at real assets and r
   const {storydateCharacters} = await import('../dist/assets/storydate-originals.js');
   const {roleFor} = await import('../server/roles.js');
   const chatIds = new Set(storydateCharacters.map((c) => c.id));
-  const publicIds = [
+  const publicIds = ['sn-julian',
     'xc-zhiyao', 'xc-shencheng', 'xc-jibai',
     'sg-caocao', 'sg-zhuge', 'sg-wenzhi', 'sg-liubei', 'sg-guanyu', 'sg-zhaoyun', 'sg-zhouyu', 'sg-lvbu', 'sg-diaochan',
     'oc-shen-yanzhou', 'oc-lu-wensheng', 'oc-lin-zhaowan', 'wn-lamp', 'wn-evelyn', 'bk-holmes',
   ];
   assert.deepEqual(FEATURED_CHARACTER_CARDS.map(card => card.id).sort(), publicIds.sort());
-  assert.equal(FEATURED_CHARACTER_CARDS.filter(card => card.chat).length, 15);
+  assert.equal(FEATURED_CHARACTER_CARDS.filter(card => card.chat).length, 16);
   assert.deepEqual(FEATURED_CHARACTER_CARDS.filter(card => !card.chat).map(card => card.id).sort(),
     ['bk-holmes', 'wn-evelyn', 'wn-lamp']);
   assert.equal(CHARACTER_CARDS.length, 33, 'old direct profile URLs retain their source records');
@@ -239,7 +239,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     for (const lang of ['en', 'zh']) {
       language(lang);
       for (const card of FEATURED_CHARACTER_CARDS) {
-        const node = page('characters').querySelector(`.fw-card[href="/characters/${card.id}"]`);
+        const node = page('characters').querySelector(`.fw-card[href="${card.href || `/characters/${card.id}`}"]`);
         const portrait = node.querySelector('.fw-card-portrait'), body = node.querySelector('.fw-card-body');
         assert.equal(portrait.nextElementSibling, body, `${card.id} readable information follows the image`);
         assert.equal(portrait.querySelector('.fw-card-name'), null);
@@ -279,7 +279,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
 
   await t.test('one bilingual world pill bar filters the public cast and keeps the shell navigation selected', () => {
     const filters = [
-      ['all', '全部', 'All', 18], ['chat', '可聊天', 'Chat available', 15],
+      ['all', '全部', 'All', 19], ['chat', '可聊天', 'Chat available', 16], ['veyron','凌晨两点 · 七夜之约','2:00 AM · Seven Nights',1],
       ['xichuan', '汐川的第七个春天', 'The Seventh Spring of Xichuan', 3], ['sanguo', '三国·谋士', 'The Strategist', 9],
       ['original', '原创相遇', 'StoryDate Originals', 3], ['westlin', '灰烬王冠', 'The Ashen Crown', 2], ['baker', '贝克街', 'Baker Street', 1],
     ];
@@ -330,7 +330,7 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(url().searchParams.has('world'), false);
     selectStory('all');
     assert.equal(url().searchParams.has('world') || url().searchParams.has('chat'), false);
-    assert.equal(listed().length, 18);
+    assert.equal(listed().length, 19);
     const arrow = new window.Event('keydown', {bubbles: true, cancelable: true});
     arrow.key = 'ArrowRight';
     pill('all').dispatchEvent(arrow);
@@ -340,10 +340,10 @@ test('character discovery stays useful without duplicate navigation or demo edit
     assert.equal(listed().length, 0);
     page('characters').querySelector('.fw-empty [data-fw-reset]').click();
     assert.equal(document.activeElement, pill('all'));
-    assert.equal(listed().length, 18);
+    assert.equal(listed().length, 19);
     for (const world of ['__proto__', 'constructor', 'toString', 'unknown-world']) {
       go('/characters?world=' + world);
-      assert.equal(listed().length, 18, world + ' never inherits a prior filter');
+      assert.equal(listed().length, 19, world + ' never inherits a prior filter');
       assert.equal(pill('all').getAttribute('aria-pressed'), 'true');
     }
     language('zh');

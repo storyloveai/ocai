@@ -7,7 +7,7 @@ import {storiesForCharacter} from '../dist/assets/character-stories.js';
 import {storydateCharacters} from '../dist/assets/storydate-originals.js';
 
 test('all 15 chat routes share their profile art, public caption, story destination and authored opening in both languages', async () => {
-  const cards = FEATURED_CHARACTER_CARDS.filter(card => card.chatId);
+  const cards = FEATURED_CHARACTER_CARDS.filter(card => card.chat?.startsWith('/play/'));
   assert.equal(cards.length, 15);
   const f = await boot({path:'/characters', configured:false});
   const {setLang} = await import('../dist/assets/site-i18n.js');

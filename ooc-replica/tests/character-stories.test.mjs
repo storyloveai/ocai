@@ -155,24 +155,24 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  setPath('/collection?name=Today');reference.show('/collection',helpers);
  assert.equal(document.querySelector('.collection-heading h1').textContent,'Most Played');
  assert.ok(document.querySelectorAll('[data-collection-grid] a').length>0,'legacy Today remains a usable played collection');
- const publicIds=['xichuan','three-kingdoms','ashen-crown','baker-street','mortal-path','monte-cristo'];
+ const publicIds=['sn-seven-nights','xichuan','three-kingdoms','ashen-crown','baker-street','mortal-path','monte-cristo'];
  const searchLinks=()=>[...document.querySelectorAll('[data-search-results] a')];
  setPath('/search');reference.show('/search',helpers);
  for(const kind of ['All','Story']){
   document.querySelector('[data-search-kind="'+kind+'"]').click();
   const links=searchLinks();
-  assert.deepEqual(links.map(link=>link.getAttribute('href')),publicIds.map(id=>'/story/'+id));
-  assert.equal(document.querySelector('[data-search-summary]').dataset.count,'6');
+  assert.deepEqual(links.map(link=>link.getAttribute('href')),publicIds.map(id=>id==='sn-seven-nights'?'/seven-nights':'/story/'+id));
+  assert.equal(document.querySelector('[data-search-summary]').dataset.count,'7');
   assert.ok(links.every(link=>link.hasAttribute('data-full-info')&&link.querySelector('.sd-card-quote')&&link.querySelector('.sd-capability')));
-  assert.equal(links[4].querySelector('.fw-card-name').textContent,'Mortal Path · Dust Outside the Valley');
+  assert.equal(links[5].querySelector('.fw-card-name').textContent,'Mortal Path · Dust Outside the Valley');
  }
- const fifth=searchLinks()[4];fifth.focus();
+ const mortal=searchLinks()[5];mortal.focus();
  setLang('zh',{win:globalThis,doc:document});
- assert.equal(searchLinks()[4],fifth,'changing language keeps the focused recommendation and its place');
- assert.equal(document.activeElement,fifth);assert.equal(fifth.querySelector('.fw-card-name').textContent,'凡人修仙传 · 谷外微尘');
- assert.equal(fifth.querySelector('.sd-card-meta').textContent,'名著互动 · 前两章试玩');
+ assert.equal(searchLinks()[5],mortal,'changing language keeps the focused recommendation and its place');
+ assert.equal(document.activeElement,mortal);assert.equal(mortal.querySelector('.fw-card-name').textContent,'凡人修仙传 · 谷外微尘');
+ assert.equal(mortal.querySelector('.sd-card-meta').textContent,'名著互动 · 前两章试玩');
  setLang('en',{win:globalThis,doc:document});
- assert.equal(fifth.querySelector('.sd-capability').textContent,'Cultivation · Rule campaign');
+ assert.equal(mortal.querySelector('.sd-capability').textContent,'Cultivation · Rule campaign');
  const input=document.querySelector('.search-dialog input');
  const typeQuery=value=>{input.value=value;input.dispatchEvent(new window.Event('input',{bubbles:true}));};
  typeQuery('我替巨龙送信');
@@ -181,12 +181,12 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  typeQuery('no-such-title-0149');
  assert.equal(document.querySelector('[data-search-summary]').textContent,'0 results');
  typeQuery('   ');
- assert.deepEqual(searchLinks().map(link=>link.dataset.storyCard),publicIds,'clearing an active query restores just the six recommendations');
+ assert.deepEqual(searchLinks().map(link=>link.dataset.storyCard),publicIds,'clearing an active query restores just the seven recommendations');
  assert.equal(document.querySelector('[data-search-summary]').textContent,'Popular titles');
  closeTitlePreview();setPath('/story/mortal-path');reference.show('/story/mortal-path',helpers);
  reference.openSearch(helpers);
  const selected=new window.Event('click',{bubbles:true,cancelable:true});Object.assign(selected,{button:0});
- searchLinks()[4].dispatchEvent(selected);
+ searchLinks()[5].dispatchEvent(selected);
  assert.equal(document.querySelector('dialog.search-dialog'),null,'selecting the currently open Story still dismisses search');
  assert.ok(document.querySelector('.sd-stage-card [data-story-play="mortal-path"]'));
  setPath('/search?q='+encodeURIComponent('我替巨龙送信'));reference.show('/search',helpers);
@@ -204,14 +204,19 @@ test('existing Story detail and preview expose the same cast, metadata and one r
   closeTitlePreview();reference.openSearch(helpers,query);
   assert.ok(searchLinks().some(link=>link.getAttribute('href')==='/story/mortal-path'),query+' finds the same new or historic title');
  }
+ for(const query of ['Julian','Vance','Seven Nights','Port Veyron','纪沉','七夜','凌晨两点']){
+  closeTitlePreview();reference.openSearch(helpers,query);
+  const hits=searchLinks().map(link=>link.getAttribute('href'));
+  for(const href of ['/seven-nights','/chat/sn-julian'])assert.ok(hits.includes(href),query+' finds '+href);
+ }
  const characterResults=query=>{
   closeTitlePreview();reference.openSearch(helpers,query);
   document.querySelector('[data-search-kind="Character"]').click();
   return [...document.querySelectorAll('[data-search-results] [data-search-profile]')];
  };
  const allProfiles=characterResults('');
- assert.deepEqual(allProfiles.map(a=>a.getAttribute('href')),FEATURED_CHARACTER_CARDS.map(c=>'/characters/'+c.id));
- assert.equal(new Set(allProfiles.map(a=>a.dataset.searchProfile)).size,18);
+ assert.deepEqual(allProfiles.map(a=>a.getAttribute('href')),FEATURED_CHARACTER_CARDS.map(c=>c.href || '/characters/'+c.id));
+ assert.equal(new Set(allProfiles.map(a=>a.dataset.searchProfile)).size,19);
  for(const [query,id] of [['夏知遥','xc-zhiyao'],['Xia Zhiyao','xc-zhiyao'],['沈澄','xc-shencheng'],['Cao Cao','sg-caocao'],['曹操','sg-caocao'],['曹操传','sg-caocao']]){
   assert.deepEqual(characterResults(query).map(a=>a.dataset.searchProfile),[id],query);
   setPath('/search?q='+encodeURIComponent(query));closeTitlePreview();reference.show('/search',helpers);
@@ -229,7 +234,7 @@ test('existing Story detail and preview expose the same cast, metadata and one r
  assert.equal(document.querySelector('[data-search-profile="sg-caocao"]'),cao,'language changes preserve the same profile link');
  assert.equal(cao.querySelector('[data-search-profile-name]').textContent,'曹操');
  assert.equal(document.querySelector('[data-search-summary]').textContent,'找到 1 项');
- assert.deepEqual(reference.extraStories.filter(d=>d.type==='character').map(d=>d.id),storydateCharacters.map(d=>d.id),'display profiles never replace the real session/model catalogue');
+ assert.deepEqual(reference.extraStories.filter(d=>d.type==='character').map(d=>d.id),[...storydateCharacters.map(d=>d.id),'sn-julian'],'display profiles never replace the real session/model catalogue');
  assert.equal(reference.extraStories.some(d=>d.id==='sg-caocao'),false);
  for (const id of ['xc-shencheng','xc-jibai']) assert.equal(reference.extraStories.filter(d=>d.id===id&&d.type==='character').length,1);
  closeTitlePreview();assert.deepEqual(writes,['en','zh','en','zh','en','zh'].map(lang=>['sd.lang',lang]),'only explicit language choices write preferences; public relationships/search never create or migrate private state');

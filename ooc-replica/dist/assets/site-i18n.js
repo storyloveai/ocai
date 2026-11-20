@@ -11,12 +11,13 @@ import {bookMetadata} from './book-catalog.js';
 export const LANGS = ['en', 'zh'];
 export function getLang(win = globalThis) {
   try { const v = win.localStorage?.getItem('sd.lang'); if (LANGS.includes(v)) return v; } catch {}
-  if (['/seven-nights','/pilot/seven-nights','/pilot/seven-nights/ep2','/pilot/seven-nights/ep3', '/chat/sn-julian'].includes(win.location?.pathname)) return 'en';
+  if (['/seven-nights','/seven-nights/ep1','/seven-nights/ep2','/seven-nights/ep3','/pilot/seven-nights','/pilot/seven-nights/ep2','/pilot/seven-nights/ep3', '/chat/sn-julian'].includes(win.location?.pathname)) return 'en';
   return /^zh/i.test(win.navigator?.language || '') ? 'zh' : 'en';
 }
 
 // [English, Chinese]; extra English spellings of the same thing follow the Chinese.
 const UI = [
+  ['Julian Vance','纪沉'],['2:00 AM · Seven Nights','凌晨两点 · 七夜之约'],
   ['Daily check-in: +100 credits', '每日签到：+100 积分'], ['Continue with Google', '使用 Google 继续'], ['● Continue with Apple', '● 使用 Apple 继续'],
   ['Continue with Apple', '使用 Apple 继续'], ['Sign in to save your stories', '登录后保存你的故事'], ['Sign up and get 500 credits!', '登录后保存你的故事'],
   ['Added to bookmarks', '已加入收藏'], ['Removed from bookmarks', '已取消收藏'],
