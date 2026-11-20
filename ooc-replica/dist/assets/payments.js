@@ -1,3 +1,4 @@
+import {ledgerLabel} from './credit-details.js';
 function paymentError(error){
  const message=String(error?.message||'');
  if(!/[\u3400-\u9fff]/.test(message))return message||'Something went wrong. Please try again.';
@@ -18,6 +19,7 @@ export function createPayments({ account, show, modal, notify, storage = session
   const current = version => version === generation && owner === account.user?.uid;
   function draw() {
     if (!root?.isConnected) return;
+    if(cfg().billing?.enabled&&tab==='auto')tab='buy';
     const packs = cfg().creditPacks || [];
     if (!packs.some(p => p.credits === selected)) selected = packs[1]?.credits || packs[0]?.credits;
     root.innerHTML = renderCredits({config:cfg(),wallet,user:account.user,error,notice,busy,tab,selected});
@@ -25,14 +27,15 @@ export function createPayments({ account, show, modal, notify, storage = session
     root.querySelectorAll('[data-credit-tab]').forEach(button=>button.addEventListener('click',()=>selectTab(button.dataset.creditTab)));
     root.querySelector('[role=tablist]')?.addEventListener('keydown',event=>{
       if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-      event.preventDefault();const tabs=['buy','auto','free'];selectTab(event.key==='Home'?'buy':event.key==='End'?'free':tabs[(tabs.indexOf(tab)+(event.key==='ArrowRight'?1:2))%3]);
+      event.preventDefault();const tabs=cfg().billing?.enabled?['buy','free']:['buy','auto','free'];selectTab(event.key==='Home'?'buy':event.key==='End'?'free':tabs[(tabs.indexOf(tab)+(event.key==='ArrowRight'?1:tabs.length-1))%tabs.length]);
     });
     root.querySelectorAll('[name=credits-pack]').forEach(input=>input.addEventListener('change',()=>{selected=Number(input.value);root.querySelectorAll('.credits-pack').forEach(row=>row.classList.toggle('is-selected',Number(row.querySelector('input').value)===selected));}));
     root.querySelector('[data-buy-selected]')?.addEventListener('click',()=>checkout(selected));
-    root.querySelector('[data-credit-history]')?.addEventListener('click',()=>show(`<div class="credits-history-dialog"><h2>Credit History</h2>${error?`<p role="alert">${esc(error)}</p>`:''}${wallet?`<p>Current balance: ${wallet.balance.toLocaleString()} Credits</p>`:'<p>Balance unavailable. Sign in or refresh your balance to load your history.</p>'}${(wallet?.ledger||[]).map(item=>`<div class="credits-ledger-row"><span>${item.type==='purchase'?'Credit purchase':'Daily check-in'}<small>${esc(item.at)}</small></span><strong>+${esc(item.amount)}</strong></div>`).join('')||'<p>No transactions to show.</p>'}</div>`));
-    root.querySelector('[data-credit-info]')?.addEventListener('click',()=>show('<h2>About Credits</h2><p>Credits belong to your signed-in account. Payments are securely processed by Stripe. Current chats do not deduct credits.</p>'));
+    root.querySelector('[data-credit-history]')?.addEventListener('click',()=>show(`<div class="credits-history-dialog"><h2>Credit History</h2>${error?`<p role="alert">${esc(error)}</p>`:''}${wallet?`<p>Current balance: ${wallet.balance.toLocaleString()} Credits</p>`:'<p>Balance unavailable. Sign in or refresh your balance to load your history.</p>'}${(wallet?.ledger||[]).map(item=>`<div class="credits-ledger-row"><span>${ledgerLabel(item)}<small>${esc(item.at)}</small></span><strong>${item.type==='spend'?esc(item.charged)+' settled':(item.amount>0?'+':'')+esc(item.amount)}</strong></div>`).join('')||'<p>No transactions to show.</p>'}</div>`));
+    root.querySelector('[data-credit-info]')?.addEventListener('click',()=>show('<h2>About Credits</h2><p>'+ (cfg().billing?.enabled?'Replies use the price shown before sending. Gifts are spent first; purchases do not expire. The latest 50 ledger entries are shown.':'Credits belong to your account. Chat currently does not deduct credits.')+'</p>'));
     root.querySelector('[data-wallet-refresh]')?.addEventListener('click', async () => { await refresh(true); await verify(); });
     root.querySelector('[data-checkin]')?.addEventListener('click', checkin);
+    root.querySelector('[data-credit-claim]')?.addEventListener('submit',async event=>{event.preventDefault();if(busy)return;const campaign=new FormData(event.target).get('campaign'),version=generation;busy=true;draw();try{const result=await account.api('wallet',{action:'claim',campaign});if(current(version)){wallet=result;error='';notice=result.claimed?'Bonus credits added.':'Already claimed; no duplicate grant.';}}catch(e){if(current(version))error=e.message;}finally{if(current(version)){busy=false;draw();}}});
     root.querySelectorAll('[data-pack]').forEach(button => button.addEventListener('click', () => checkout(Number(button.dataset.pack))));
   }
   async function refresh(force=false) {
@@ -46,6 +49,7 @@ export function createPayments({ account, show, modal, notify, storage = session
     if (current(version)) draw();
     })();walletRequest=request;try{await request;}finally{if(walletRequest===request)walletRequest=null;}
   }
+  globalThis.addEventListener?.('sd-wallet-changed',()=>{if(account.user)void refresh(true);});
   async function checkin() {
     if (busy) return;
     const version = generation; busy = true; draw();
@@ -95,7 +99,8 @@ export function createPayments({ account, show, modal, notify, storage = session
   return {
     mount(element) { const requestedTab=new URL(location.href).searchParams.get('creditTab');tab=['buy','auto','free'].includes(requestedTab)?requestedTab:'buy';root = element; root.classList.add('credits-root'); const doc=root.ownerDocument;if (!doc.querySelector('link[data-credits-style]')) { const link=doc.createElement('link');link.rel='stylesheet';link.href='/assets/credits.css';link.dataset.creditsStyle='';doc.head.append(link); } draw(); void refresh(); void verify(); },
     sync() {
-      if (observedConfig !== cfg()) { observedConfig = cfg(); draw(); }
+      const configChanged = observedConfig !== cfg();
+      if (configChanged) { observedConfig = cfg(); draw(); }
       if (owner !== account.user?.uid) {
         owner = account.user?.uid; generation++; wallet = null; error = ''; notice = ''; busy = false; polling = false;
         const url = new URL(location.href), session = url.searchParams.get('session_id');
@@ -105,6 +110,8 @@ export function createPayments({ account, show, modal, notify, storage = session
           url.searchParams.delete('session_id'); url.searchParams.delete('checkout'); history.replaceState({}, '', url);
         }
         draw(); void refresh(); void verify();
+      } else if (configChanged && account.user && cfg().walletConfigured) {
+        void refresh(); void verify();
       }
     },
   };

@@ -11,10 +11,11 @@ test('all ORIGINAL badge images use our book mark, including repeated hydration'
  const {document}=parseHTML('<div><img alt="ORIGINAL" data-asset="old-star" src="old.webp"><img alt="OOC" width="120"></div>');paintBrand(document);paintBrand(document);
  assert.equal(document.querySelector('[alt=ORIGINAL]').getAttribute('src'),'/assets/original-badge.svg');assert.equal(document.querySelector('[alt=ORIGINAL]').hasAttribute('data-asset'),false);assert.equal(document.querySelector('[alt=StoryDate]').getAttribute('src'),'/assets/storydate-dialogue-logo.svg');
 });
-test('notification sidebar copies the Credits typography rather than inheriting body size',async()=>{
+test('sidebar omits fictional notifications and preserves the real Credits navigation and typography',async()=>{
  const {document}=parseHTML(JSON.parse(await file('dist/assets/reference-pages.json')).pages.home);globalThis.location={pathname:'/'};
+ const originalCredit=document.querySelector('[data-shrink] a[href="/credit"]'),originalClass=originalCredit.querySelector('span').className;
  const h={read:(k,f)=>f,data:[],navigate(){},show(){}};paintSidebar(document,{user:{uid:'test'},providers:{}},h);
- const notification=document.querySelector('[data-shell-notifications] span'),credit=document.querySelector('[data-shrink] a[href="/credit"] span');assert.ok(notification);assert.equal(notification.className,credit.className);assert.ok(notification.className.includes('typo-text-sm_'));
+ const credit=document.querySelector('[data-shrink] a[href="/credit"]');assert.equal(document.querySelector('[data-shell-notifications]'),null);assert.equal(credit,originalCredit);assert.equal(credit.querySelector('span').className,originalClass);assert.ok(originalClass.includes('typo-text-sm_'));
 });
 test('announcement back returns to its owned source entry and direct visits have safe fallbacks',()=>{
  let back=0;const destinations=[],h={navigate:path=>destinations.push(path)};

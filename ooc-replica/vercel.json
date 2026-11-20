@@ -29,5 +29,19 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/assets/xichuan/index.html",
+      "missing": [
+        {
+          "type": "query",
+          "key": "site",
+          "value": "1"
+        }
+      ],
+      "destination": "/play/xichuan",
+      "permanent": false
+    }
   ]
 }

@@ -1,0 +1,59 @@
+name: credits-check
+
+on:
+  pull_request:
+    paths: ["ooc-replica/**", ".github/workflows/credits-check.yml"]
+  push:
+    branches: [main]
+    paths: ["ooc-replica/**", ".github/workflows/credits-check.yml"]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: credits-check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  website-and-wallet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: ooc-replica
+    # Tests supply in-memory accounts, wallets and providers; no secrets needed.
+    env:
+      CREDIT_BILLING_MODE: "off"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ooc-replica/package-lock.json
+      - run: npm ci --ignore-scripts
+      - run: npm run build
+      - run: npm run check
+
+  firebase-emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: ooc-replica
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: ooc-replica/package-lock.json
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - run: npm ci --ignore-scripts
+      - name: Real SDK auth, Firestore concurrency, rules and recovery (demo project only)
+        env:
+          GCLOUD_PROJECT: demo-storydate-credits
+        run: npm exec --yes --package=firebase-tools@15.36.0 -- firebase emulators:exec --config firebase.emulators.json --project demo-storydate-credits --only auth,firestore 'node --test tests/integration/*.test.mjs'

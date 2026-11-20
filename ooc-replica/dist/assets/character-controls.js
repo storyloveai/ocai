@@ -14,10 +14,22 @@ const words = {
     memoryLimit: 'You have kept six memories. Remove one you no longer need before adding another.', branchLimit: 'You have sixteen branches. Remove one you no longer need before starting another.',
     failure: 'The change could not be saved. Your previous conversation is still kept. Please try again.', error: 'Unable to save', original: 'Your original conversation stays available. You can return to it.'}
 };
-export function attachCharacterControls({root, body, profile, manager, getMessages, isReady, reopen, modal, render, onLocate}) {
+export function attachCharacterControls({root, body, storyBar, profile, manager, getMessages, isReady, reopen, modal, render, onLocate}) {
   let pinnedTurns = new Set();
   const toolbar = document.createElement('nav'); toolbar.className = 'character-conversation-tools'; toolbar.setAttribute('data-no-i18n', '');
-  body.before(toolbar);
+  if (storyBar) storyBar.append(toolbar);
+  else body.before(toolbar);
+  // A fixed scene can still be restarted, without repeating its name above the chat.
+  let restart;
+  if (storyBar && profile.scenes?.length === 1) {
+    const help = root.querySelector('[data-session-setting="Chat help"]');
+    restart = document.createElement('button');
+    restart.type = 'button'; restart.className = help.className;
+    restart.dataset.characterRestart = ''; restart.dataset.noI18n = '';
+    help.after(restart);
+    restart.onclick = () => { if (isReady()) showEncounters(); };
+  }
+  let previousControls;
   const lang = () => document.documentElement.lang?.startsWith('zh') ? 'zh' : 'en';
   const l = () => words[lang()];
   const message = error => error?.code === 'CHARACTER_MEMORY_LIMIT' ? l().memoryLimit : error?.code === 'CHARACTER_BRANCH_LIMIT' ? l().branchLimit : l().failure;
@@ -79,16 +91,31 @@ export function attachCharacterControls({root, body, profile, manager, getMessag
     };
   }
   function update() {
-    const state = manager.metadata(), labels = l(), pins = manager.pins(getMessages());
+    const state = manager.metadata(), labels = l(), messages = getMessages(), pins = manager.pins(messages);
+    const hasDialogue = messages.some(message => message.text?.trim()), hasConversation = characterRecap({messages}).hasConversation;
+    const canChooseEncounter = profile.scenes?.length > 1 || (!storyBar && profile.scenes?.length === 1 && hasDialogue);
+    const showMemories = pins.length > 0, showBranches = state.threads.length > 1;
     pinnedTurns = new Set(pins.map(p => p.turn));
     toolbar.setAttribute('aria-label', lang() === 'zh' ? '对话与记事' : 'Conversation and memories');
-    toolbar.innerHTML = `${profile.scenes ? `<button type="button" data-character-encounters><span>${safe(sceneName(state.thread))}</span><span aria-hidden="true">⌄</span></button>` : `<span class="character-encounter-name">${safe(sceneName(state.thread))}</span>`}<div><button type="button" data-character-recap>${labels.recap}</button><button type="button" data-character-memories>${labels.memories}${pins.length ? ' · ' + pins.length : ''}</button><button type="button" data-character-branches>${labels.branches}${state.threads.length > 1 ? ' · ' + state.threads.length : ''}</button></div>`;
+    toolbar.hidden = !canChooseEncounter && !hasConversation && !showMemories && !showBranches;
+    const encounter = canChooseEncounter ? `<button type="button" data-character-encounters><span>${safe(sceneName(state.thread))}</span><span aria-hidden="true">⌄</span></button>` : '';
+    const actions = [
+      hasConversation && `<button type="button" data-character-recap>${labels.recap}</button>`,
+      showMemories && `<button type="button" data-character-memories>${labels.memories} · ${pins.length}</button>`,
+      showBranches && `<button type="button" data-character-branches>${labels.branches} · ${state.threads.length}</button>`
+    ].filter(Boolean).join('');
+    const controls = encounter + (actions ? `<div class="character-context-actions">${actions}</div>` : '');
+    if (controls !== previousControls) {
+      toolbar.innerHTML = controls;
+      previousControls = controls;
+    }
     const busy = !isReady();
+    if (restart) {
+      restart.hidden = !hasDialogue;
+      restart.disabled = busy;
+      restart.textContent = lang() === 'zh' ? '重新开始这场相遇' : 'Restart this encounter';
+    }
     for (const b of [...toolbar.querySelectorAll('button'), ...root.querySelectorAll('[data-character-pin],[data-character-fork]')]) b.disabled = busy;
-    const recapButton = toolbar.querySelector('[data-character-recap]');
-    const hasConversation = characterRecap({messages: getMessages()}).hasConversation;
-    recapButton.disabled = busy || !hasConversation;
-    if (!hasConversation) recapButton.title = labels.recapWait;
   }
   toolbar.onclick = event => {if(event.target.closest('button'))event.stopPropagation();if (!isReady()) return;
     if (event.target.closest('[data-character-recap]')) showRecap();
@@ -98,6 +125,9 @@ export function attachCharacterControls({root, body, profile, manager, getMessag
   };
   return {
     update,
+    rememberedBadge(at) {
+      return pinnedTurns.has(at) ? `<small class="character-remembered" data-character-remembered data-no-i18n><span aria-hidden="true">◆</span> ${l().kept}</small>` : '';
+    },
     tools(message, at) {
       if (!message.text?.trim() || message.streaming || message.failed) return '';
       const labels = l(), pinned = pinnedTurns.has(at);

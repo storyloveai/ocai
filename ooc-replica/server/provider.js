@@ -21,7 +21,7 @@ export function providerConfig(env=process.env){
 export function createModel(config,hooks={}){
  const transport=async(url,init)=>{hooks.onConnecting?.();const response=await fetch(url,init);hooks.onHeaders?.(response.status);return response;};
  if(config.kind==='google')return createGoogle({apiKey:config.key,fetch:transport})(config.model);
- return createOpenAICompatible({fetch:transport,baseURL:config.baseURL,name:config.name,apiKey:config.key}).chatModel(config.model);
+ return createOpenAICompatible({fetch:transport,baseURL:config.baseURL,name:config.name,apiKey:config.key,includeUsage:config.name==='deepseek'}).chatModel(config.model);
 }
 // Provider-specific latency policy stays outside model-independent narrative prompts.
 export function generationOptions(config){

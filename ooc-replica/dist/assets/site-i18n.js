@@ -6,6 +6,7 @@ import {storydateOriginals, storydateCharacters} from './storydate-originals.js'
 import {threeKingdoms, threeKingdomsInk} from './three-kingdoms.js';
 import {ashenCrown, ashenCrownEn, bakerStreet, bakerStreetEn, xichuan, xichuanEn} from './ashen-crown.js';
 import announcements from './announcements.js';
+import {bookMetadata} from './book-catalog.js';
 
 export const LANGS = ['en', 'zh'];
 export function getLang(win = globalThis) {
@@ -17,8 +18,9 @@ export function getLang(win = globalThis) {
 const UI = [
   ['Daily check-in: +100 credits', '每日签到：+100 积分'], ['Continue with Google', '使用 Google 继续'], ['● Continue with Apple', '● 使用 Apple 继续'],
   ['Continue with Apple', '使用 Apple 继续'], ['Sign in to save your stories', '登录后保存你的故事'], ['Sign up and get 500 credits!', '登录后保存你的故事'],
-  ['Home', '首页'], ['History', '历史'], ['My Titles', '我的作品'], ['My titles', '我的作品'], ['MY', '我的'], ['Search', '搜索'], ['Story', '故事'],
-  ['Character', '角色'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
+  ['Added to bookmarks', '已加入收藏'], ['Removed from bookmarks', '已取消收藏'],
+  ['Home', '首页'], ['History', '历史'], ['View all history', '查看全部历史'], ['My Titles', '我的作品'], ['My titles', '我的作品'], ['MY', '我的'], ['Search', '搜索'], ['Story', '故事'],
+  ['Character', '角色'], ['Characters', '角色库'], ['Universe', '宇宙'], ['Frameworks', '框架'], ['Studio', '工作台'], ['Community', '社区'], ['Credits', '积分'], ['Credit', '积分'], ['Notifications', '通知'], ['Notice', '公告'], ['Update', '更新'], ['Event', '活动'],
   ['Explore', '探索'], ['Previous slide', '上一张'], ['Next slide', '下一张'], ['Main', '精选'], ['New Ranking', '新作榜'], ['Rankings', '排行榜'], ['Today', '今日'],
   ['Browse by genre','按题材浏览'], ['Start chatting','开始对话'],
   ['You','你'], ['Send a message','发送消息'], ['Continue the scene.','继续当前对话。'], ['Continue the conversation','继续对话'],
@@ -87,7 +89,16 @@ const UI = [
   ['For a payment or refund question, keep your Stripe receipt and contact the site owner.', '如有付款或退款问题，请保留 Stripe 收据并联系站点管理员。'],
 ];
 // StoryDate's own catalog: titles and blurbs come in both languages.
+const mortal = bookMetadata.find(book => book.id === 'mortal-path');
+const monte = bookMetadata.find(book => book.id === 'monte-cristo');
 const OWN = [
+  ['StoryDate · Classics Interactive', mortal.author],
+  ["A Record of a Mortal's Journey to Immortality · Dust Beyond the Valley", mortal.title],
+  ["You are Shen Weichen, a new disciple at Yellow Maple Valley. Your gifts are ordinary and your allowance is meagre. A contract offers a shortcut by letting you borrow spiritual energy. A shortage in the herb fields, a broken promise at the trials and an evacuation list draw you between getting ahead and standing by your companions. Either choice comes at a price.", mortal.description],
+  ['Eight-chapter campaign · The cost of cultivation', mortal.plays],
+  ['The Count of Monte Cristo · Embers and Tides', monte.title],
+  ['A letter missing from the archives brings Noël, a document restorer, face to face with the Count of Monte Cristo. An old case in Marseille leads to money changing hands in Paris. When you have enough evidence to ruin a man, there is one more question to ask. Who else will fall with him?', monte.description],
+  ['Eight-chapter campaign · Evidence and revenge', monte.plays],
   ...[...storydateOriginals, ...storydateCharacters].flatMap(d => [[d.title, d.title_zh], [d.description, d.description_zh]]),
   ['Three Kingdoms: The Strategist', threeKingdoms.title], ['Three Kingdoms: The Strategist (Ink Edition)', threeKingdomsInk.title],
   [ashenCrownEn.title, ashenCrown.title], [ashenCrownEn.plays, ashenCrown.plays],
@@ -156,7 +167,7 @@ const CSS = `.sd-lang{display:inline-flex;border:1px solid #3a3a3a;border-radius
 .sd-lang-side,.sd-lang-top,.sd-lang-legacy{margin:0;flex:none;width:max-content;border-color:#ffffff1a;border-radius:7px}
 .sd-lang-top{margin-left:0}.sd-lang-top button{padding:8px;min-height:32px}
 .sd-lang-chat{display:none}
-@media(max-width:1023px){.sd-lang-chat{display:inline-flex}#interaction-root [data-control=model]{max-width:96px;min-width:0}#interaction-root [data-control=model]>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+@media(max-width:1023px){.sd-lang-chat{display:inline-flex}#interaction-root :not(.character-session-actions)>[data-control=model]{max-width:96px;min-width:0}#interaction-root :not(.character-session-actions)>[data-control=model]>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
 .signin .sd-lang-legacy{justify-self:center;margin-bottom:6px}
 [data-shrink=true] .sd-language-slot{padding:8px 5px 16px}
 [data-shrink=true] .sd-language-label{display:none}

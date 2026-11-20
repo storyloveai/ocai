@@ -4,6 +4,9 @@ import {originalCharacters} from './original-characters.js';
 import {characterById} from './character-profiles.js';
 import {escapeHTML as safe, markdown} from './stream.js';
 import {getLang} from './site-i18n.js';
+import {characterArt} from './flywheel/character-art.js';
+import {WORKS, UNIVERSES} from './flywheel/cards-data.js';
+import {storiesForCharacter} from './character-stories.js';
 
 const copy = {
   zh: {eyebrow: 'STORYDATE · CHARACTERS', title: '找一个人，聊一段故事',
@@ -63,9 +66,28 @@ export function characterPreview(c, lang = 'zh') {
   const l = copy[lang];
   return {type: 'character', html: `<header><h2>${l.preview}</h2><button data-preview-close aria-label="Close information">×</button></header><div>${characterDetailMarkup(c, lang)}</div><footer><button data-preview-play="${safe(c.id)}" class="shell-white-button">${l.start}</button></footer>`};
 }
-export function characterIntroMarkup(c, lang = 'zh') {
+export function characterIntroMarkup(c, card, lang, opening) {
   ensureStyles();
-  return `<section class="sg-chat-intro" data-no-i18n><header><img src="${safe(c.image)}" alt="" width="60" height="80"><div><span>${safe(c.scene[lang])}</span><h2>${safe(nameOf(c, lang))}</h2></div></header>${characterReadingHTML(markdown(balanceCharacterAction(c.opening[lang])),c.opening[lang])}</section>`;
+  const background = characterArt(card)?.background;
+  const story = storiesForCharacter(card.id)[0];
+  const scene = c.scene?.[lang] || UNIVERSES[card.source.universe].name[lang];
+  const source = story?.title[lang] || WORKS[card.source.work].title[lang];
+  const label = safe(scene + ' · ' + source);
+  const eyebrow = `<span class="sg-chat-location">${safe(scene)}</span><span class="sg-chat-source"> · ${safe(source)}${story ? ' ↗' : ''}</span>`;
+  return `<section class="sg-chat-intro" data-no-i18n>
+    <header class="sg-chat-stage sd-stage-card" style="--sd-stage-image:url('${safe(background || c.image)}')">
+      <div class="sg-chat-art sd-stage-art${background ? ' sg-chat-composite' : ''}">
+        <img src="${safe(c.image)}" alt="" width="204" height="168">
+        <span class="sd-stage-fade" aria-hidden="true"></span>
+      </div>
+      <div class="sg-chat-copy">
+        ${story ? `<a class="sg-chat-eyebrow" data-full-info href="${safe(story.informationUrl)}" aria-label="${label}">${eyebrow}</a>` : `<div class="sg-chat-eyebrow">${eyebrow}</div>`}
+        <h2>${safe(nameOf(c, lang))}</h2>
+        <p class="sg-chat-tagline">${safe(card.tagline[lang])}</p>
+      </div>
+    </header>
+    ${characterReadingHTML(markdown(balanceCharacterAction(opening)),opening)}
+  </section>`;
 }
 export function mountCharacterPage(container, {characters, read, save}, id) {
   ensureStyles();

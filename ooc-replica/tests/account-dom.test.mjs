@@ -10,6 +10,8 @@ test('real app renders captured home with unavailable Firebase, keeps browsing, 
  const append=window.HTMLElement.prototype.append;
  window.HTMLElement.prototype.append=function(...nodes){const r=append.apply(this,nodes);for(const node of nodes)if(node.tagName==='LINK')queueMicrotask(()=>node.onload?.());return r;};
  Object.assign(globalThis,{document,window,DOMParser,sessionStorage:{getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,v),removeItem:k=>memory.delete(k)},localStorage:{getItem:k=>memory.get(k)??null,setItem:(k,v)=>memory.set(k,v)},location:{pathname:'/',search:'',href:'http://localhost/'},matchMedia:()=>({matches:true}),fetch:async path=>{if(path==='/api/config')return Response.json({auth:null,configured:false});return new Response(await readFile(join(dist,path)),{headers:{'Content-Type':'application/json'}});}});
+ location.hash='';
+ window.history={state:null,replaceState(state){this.state=state;},pushState(state){this.state=state;},go(){}};
  document.getElementById('modal').showModal=function(){this.open=true;};document.getElementById('modal').close=function(){this.open=false;};
  try{
   await import('../dist/app.js');await new Promise(r=>setTimeout(r,50));

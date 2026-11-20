@@ -1,0 +1,287 @@
+/* Story and Characters share detail stages, catalogue covers and controls. */
+body[data-reference=true] :is(.sd-home-stage,.fw-page,.story-entity-detail) {
+  --sd-cover:192px;
+  --sd-card-gap:16px;
+  --sd-control-radius:8px;
+  --sd-control-ink:#fafafa;
+  --sd-control-muted:#a1a1a1;
+  --sd-control-focus:#c5a46c;
+}
+body[data-reference=true] :is(
+  .sd-home-stage .sd-hero-form button,
+  .fw-page .sd-hero-form button,
+  .fw-page .fw-btn:not(.fw-btn-secondary),
+  .story-entity-detail .story-entity-actions :is(a,button):not(.story-bookmark)
+) {
+  box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center;
+  gap:8px; min-width:144px; min-height:48px; height:auto; padding:12px 20px;
+  border:1px solid transparent; border-radius:var(--sd-control-radius);
+  background:#fafafa; color:#171717;
+  font:500 14px/22px Inter,"PingFang SC",system-ui,sans-serif;
+  text-align:center; text-decoration:none; cursor:pointer;
+  transition:background-color .15s ease,color .15s ease,border-color .15s ease;
+}
+body[data-reference=true] :is(
+  .sd-home-stage .sd-hero-form button,
+  .fw-page .sd-hero-form button,
+  .fw-page .fw-btn:not(.fw-btn-secondary),
+  .story-entity-detail .story-entity-actions :is(a,button):not(.story-bookmark)
+):hover {background:#e5e5e5}
+body[data-reference=true] :is(
+  .sd-home-stage .sd-hero-form button,
+  .fw-page .sd-hero-form button,
+  .fw-page .fw-btn:not(.fw-btn-secondary),
+  .story-entity-detail .story-entity-actions :is(a,button):not(.story-bookmark)
+):active {background:#c8c8c8}
+
+/* A reply option has the same feedback whether it starts a chapter or a chat. */
+body[data-reference=true] :is(.sd-home-stage .sd-hero-choice,.fw-page .sd-hero-choice) {
+  box-sizing:border-box; min-height:48px; height:auto; padding:11px 14px;
+  border:1px solid #3a3a3a; border-radius:var(--sd-control-radius);
+  background:rgba(31,31,31,.85); color:#fafafa;
+  font:500 14px/1.6 Inter,"PingFang SC",system-ui,sans-serif;
+  text-align:left; cursor:pointer;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+body[data-reference=true] :is(.sd-home-stage .sd-hero-choice,.fw-page .sd-hero-choice):hover {background:#ffffff14;border-color:#777}
+body[data-reference=true] :is(.sd-home-stage .sd-hero-choice,.fw-page .sd-hero-choice):active {background:#ffffff20;border-color:#a1a1a1}
+body[data-reference=true] :is(.sd-home-stage .sd-hero-choice,.fw-page .sd-hero-choice)[aria-pressed=true] {background:#fafafa;color:#1a1a1a;border-color:#fafafa}
+body[data-reference=true] :is(.sd-home-stage,.fw-page) .sd-hero-choice-label {font-size:14px;line-height:1.6}
+
+body[data-reference=true] :is(.fw-page .fw-btn-secondary,.story-entity-detail .story-bookmark) {
+  box-sizing:border-box; display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; height:auto; padding:12px 18px;
+  border:1px solid #3a3a3a; border-radius:var(--sd-control-radius);
+  background:transparent; color:#c7c7c7;
+  font:500 14px/22px Inter,"PingFang SC",system-ui,sans-serif;
+  text-decoration:none; cursor:pointer;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+body[data-reference=true] :is(.fw-page .fw-btn-secondary,.story-entity-detail .story-bookmark):hover {background:#ffffff14;border-color:#777;color:#fafafa}
+body[data-reference=true] :is(.fw-page .fw-btn-secondary,.story-entity-detail .story-bookmark):active {background:#ffffff20;border-color:#a1a1a1}
+body[data-reference=true] .story-entity-detail .story-bookmark[aria-pressed=true] {border-color:#d4a853;color:#c5a46c;background:#303033}
+
+/* A gold outline communicates an active filter, just as on Story's shelf. */
+body[data-reference=true] .fw-page .fw-chip {
+  min-height:44px; padding:8px 12px; border:1px solid #ffffff1a;
+  border-radius:var(--sd-control-radius); background:#121212; color:#a1a1a1;
+  font:500 13px/1.4 Inter,"PingFang SC",system-ui,sans-serif;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+body[data-reference=true] .fw-page .fw-chip:hover {background:#ffffff14;color:#fafafa;border-color:#777}
+body[data-reference=true] .fw-page .fw-chip:active {background:#ffffff20}
+body[data-reference=true] .fw-page .fw-chip[aria-pressed=true] {background:#303033;color:#fafafa;border-color:#d4a853;box-shadow:0 0 0 1px #d4a853}
+body[data-reference=true] :is(.sd-home-stage .sd-hero-form input,.fw-page .sd-hero-form input,.fw-page [data-fw-profile-draft]) {
+  box-sizing:border-box; min-height:48px; height:48px; padding:0 14px;
+  border:1px solid #3a3a3a; border-radius:var(--sd-control-radius);
+  background:#1f1f1fe6; color:#fafafa;
+  font:400 14px/1.5 Inter,"PingFang SC",system-ui,sans-serif;
+  transition:border-color .15s ease,background-color .15s ease;
+}
+body[data-reference=true] :is(.fw-page .fw-world-select,.fw-page .fw-search) {background:#1b1b1b;border-color:#484848}
+body[data-reference=true] .fw-page .fw-search:focus-within {border-color:#c5a46c}
+body[data-reference=true] :is(.sd-home-stage .sd-hero-form input,.fw-page .sd-hero-form input,.fw-page [data-fw-profile-draft]):focus {border-color:#8a8a8a}
+body[data-reference=true] :is(.sd-home-stage,.fw-page,.story-entity-detail) :is(a,button,input,select,summary):focus-visible {outline:2px solid var(--sd-control-focus);outline-offset:3px;filter:none}
+body[data-reference=true] .fw-page .fw-search input:focus-visible {outline:0}
+body[data-reference=true] :is(.sd-home-stage,.fw-page,.story-entity-detail) button:disabled {opacity:.45;cursor:default;pointer-events:none}
+/* Both kinds of detail page use the same art plane and reading order. */
+.sd-stage-card {
+  --sd-stage-bg: #161618;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 16px;
+  background: var(--sd-stage-bg);
+  box-shadow: 0 24px 48px -12px rgba(0,0,0,.6);
+}
+.sd-stage-card::before {
+  content: '';
+  position: absolute;
+  inset: -40px;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--sd-stage-image,none) center / cover;
+  filter: blur(40px) saturate(.55);
+  opacity: .2;
+}
+.sd-stage-layout {
+  display: grid;
+  grid-template-columns: 340px minmax(0,1fr);
+  min-height: 440px;
+}
+.sd-stage-art { position: relative; min-width: 0; overflow: hidden; }
+.sd-stage-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 62%, var(--sd-stage-bg) 100%);
+}
+.sd-stage-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  gap: 24px;
+  padding: 32px 36px;
+  background: linear-gradient(90deg,var(--sd-stage-bg),transparent 48%);
+}
+.sd-capability {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  padding: 2px 10px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
+  background: #262629;
+  color: #c2c2c5;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+.sd-capability.is-chat {
+  border-color: rgba(212,168,83,.28);
+  background: rgba(212,168,83,.12);
+  color: #d8be8b;
+}
+.sd-capability.is-chat::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: currentColor;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .sd-stage-layout { grid-template-columns: 260px minmax(0,1fr); }
+}
+@media (max-width: 767px) {
+  .sd-stage-layout { --sd-stage-overlap: 40px; grid-template-columns: minmax(0,1fr); min-height: 0; }
+  .sd-stage-art { height: clamp(260px,66vw,300px); }
+  .sd-stage-fade { background: linear-gradient(180deg,transparent 42%,var(--sd-stage-bg) 100%); }
+  .sd-stage-body { position: relative; margin-top: calc(-1 * var(--sd-stage-overlap)); padding: 20px; gap: 12px; background: linear-gradient(transparent,var(--sd-stage-bg) var(--sd-stage-overlap),transparent 48%); }
+}
+@media (max-width: 359px) {
+  .sd-stage-layout { --sd-stage-overlap: 56px; }
+}
+/* Chat keeps the profile's art treatment within the dialogue column. */
+.sg-chat-intro { width: min(100%, 740px); margin-inline: auto; }
+.sg-chat-stage {
+  display: grid;
+  grid-template-columns: 204px minmax(0, 1fr);
+  min-height: 168px;
+  margin-bottom: 24px;
+  box-shadow: 0 24px 48px -14px rgba(0,0,0,.58);
+  font-family: Inter, "PingFang SC", system-ui, sans-serif;
+}
+.sg-chat-art > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 14%;
+}
+.sg-chat-composite { background: var(--sd-stage-image) center / cover; }
+.sg-chat-composite > img { object-position: center top; transform: translateY(10px); }
+.sg-chat-art .sd-stage-fade {
+  background: linear-gradient(90deg, transparent 40%, rgba(22,22,24,.65) 78%, var(--sd-stage-bg) 100%);
+}
+.sg-chat-copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-width: 0;
+  gap: 6px;
+  padding: 18px 26px 18px 18px;
+  background: linear-gradient(90deg, var(--sd-stage-bg), transparent 55%);
+}
+.sg-chat-eyebrow {
+  max-width: 100%;
+  font-size: 11px;
+  line-height: 1.5;
+  color: #aaaab1;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+a.sg-chat-eyebrow:hover { color: #fafafa; text-decoration: underline; }
+a.sg-chat-eyebrow:focus-visible { outline: 2px solid #fafafa; outline-offset: 2px; }
+.sg-chat-copy h2 { margin: 0; font-size: 24px; line-height: 1.25; font-weight: 600; color: #fafafa; }
+.sg-chat-copy .sg-chat-tagline { margin: 0; color: #c2c2c5; font-size: 14px; line-height: 1.5; }
+@media (max-width: 767px) {
+  .sg-chat-stage {
+    grid-template-columns: 102px minmax(0, 1fr);
+    min-height: 116px;
+    margin-bottom: 18px;
+    border-radius: 14px;
+  }
+  .sg-chat-stage .sg-chat-art { height: auto; }
+  .sg-chat-copy { gap: 4px; padding: 12px 14px 12px 8px; }
+  .sg-chat-eyebrow { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sg-chat-source { display: none; }
+  .sg-chat-copy h2 { font-size: 19px; }
+  .sg-chat-tagline { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+}
+/* The same person has the same cover and caption on Story and Characters. */
+body[data-reference=true] :is(.fw-card,.story-character-card) {gap:10px;color:#fafafa;text-decoration:none}
+body[data-reference=true] :is(.fw-card-portrait,.story-character-art) {
+  box-sizing:border-box;aspect-ratio:2/3;border:0;border-radius:12px;
+  background:#171717;box-shadow:0 20px 25px -5px #0003,0 8px 10px -6px #0003;
+}
+/* Leave room for the capability badge above a transparent sprite's face. */
+.fw-card-portrait > .fw-scene-background + img,
+.story-character-art > .story-character-background + img {transform:translateY(22px)}
+:is(.fw-card-portrait,.story-character-art) > .sd-capability {
+  position:absolute;
+  z-index:1;
+  top:10px;
+  left:10px;
+  max-width:calc(100% - 20px);
+  background:rgba(24,24,27,.88);
+  color:#e6e5e3;
+}
+:is(.fw-card-portrait,.story-character-art) > .sd-capability.is-chat {
+  background:rgba(49,38,24,.94);
+  color:#f0d294;
+}
+.sd-card-quote {
+  position:absolute;
+  inset:auto 0 0;
+  padding:28px 12px 12px;
+  background:linear-gradient(180deg,transparent 0%,rgba(12,12,14,.72) 45%,rgba(12,12,14,.94) 100%);
+  color:#f1efeb;
+  font-size:12px;
+  line-height:1.45;
+  pointer-events:none;
+}
+.sd-card-quote > span,.sd-card-meta {
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+  overflow:hidden;
+  overflow-wrap:anywhere;
+}
+body[data-reference=true] :is(.fw-card-body,.story-character-caption) {display:flex;min-width:0;flex-direction:column;gap:3px}
+body[data-reference=true] :is(.fw-card-name,.story-character-card strong) {display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:0;font-size:16px;line-height:1.5;font-weight:500}
+body[data-reference=true] .sd-card-meta {margin:0;color:#a1a1a1;font-size:13px;line-height:1.5}
+body[data-reference=true] .story-cast-grid {grid-template-columns:repeat(auto-fill,var(--sd-cover));gap:32px var(--sd-card-gap)}
+@media(min-width:1024px) and (max-width:1250px) {
+  body[data-reference=true] :is(.fw-page,.story-entity-detail) {--sd-cover:176px}
+}
+@media(max-width:1023px) {
+  body[data-reference=true] :is(.fw-page,.story-entity-detail) {--sd-cover:clamp(128px,36vw,148px);--sd-card-gap:12px}
+  body[data-reference=true] :is(.sd-home-stage .sd-hero-choice,.fw-page .sd-hero-choice) {padding:10px 12px;font-size:13px}
+}
+@media(prefers-reduced-motion:reduce) {
+  body[data-reference=true] :is(.sd-home-stage,.fw-page,.story-entity-detail) :is(a,button,input,select) {transition:none!important}
+}
+/* Long gameplay labels stay legible above the artwork on narrow Story covers. */
+@media (max-width:767px) {
+  [data-story-card] .fw-card-portrait > .sd-capability {
+    top:6px;left:6px;max-width:calc(100% - 12px);padding:3px 6px;
+    gap:4px;font-size:11px;line-height:1.25;
+  }
+  [data-story-card] .sd-capability.is-chat::before {width:4px;height:4px}
+}
