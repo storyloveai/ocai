@@ -22,13 +22,13 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  }});
  await import('../dist/app.js');
  assert.ok(document.querySelector('#precision-view a[href^="/story/"]'));
- const allIds=['xichuan','three-kingdoms','ashen-crown','baker-street','mortal-path','monte-cristo'];
+ const allIds=['sn-seven-nights','xichuan','three-kingdoms','ashen-crown','baker-street','mortal-path','monte-cristo'];
  const cardIds=()=>[...document.querySelectorAll('.sd-story-grid a[data-full-info]')].map(a=>a.dataset.storyCard);
  assert.deepEqual(cardIds(),allIds);
  assert.ok(document.querySelector('[data-sd-hero="home"] [data-hero-choice]'));
  assert.equal(document.querySelector('#fw-home-strip, .sd-genre-select, .sd-shelf, [data-category-label], a[href="/story/three-kingdoms-ink"]'),null);
- assert.equal(document.querySelectorAll('.sd-story-grid .sd-capability.is-chat').length,4);
- assert.equal(document.querySelectorAll('.sd-story-grid .sd-card-quote > span').length,6);
+ assert.equal(document.querySelectorAll('.sd-story-grid .sd-capability.is-chat').length,5);
+ assert.equal(document.querySelectorAll('.sd-story-grid .sd-card-quote > span').length,7);
  assert.equal(document.querySelector('.sd-story-grid [href="/story/three-kingdoms"] img').getAttribute('src'),'/assets/sanguo-art/cover.webp');
  assert.equal(document.body.hasAttribute('data-booting'),false);
  assert.equal(document.querySelector('#precision-view').inert,false);
@@ -48,10 +48,10 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.equal(document.querySelector('[data-fw-page="characters"] .sd-hero-name').textContent,document.documentElement.lang.startsWith('zh')?'貂蝉':'Diaochan');
  assert.equal(document.querySelectorAll('[data-fw-page="characters"] [data-hero-choice]').length,2);
  assert.ok(document.querySelector('[data-fw-page="characters"] [data-hero-form] input'));
- assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,18);
+ assert.equal(document.querySelectorAll('[data-fw-page="characters"] .fw-card').length,19);
  assert.ok(document.querySelector('.fw-card[href="/characters/oc-shen-yanzhou"]'),'existing original characters remain discoverable');
  assert.equal(document.querySelector('#fw-search,[data-fw-world-select],.fw-library-heading'),null);
- assert.equal(document.querySelectorAll('.fw-filter-bar button').length,7,'all worlds are usable while login is restoring');
+ assert.equal(document.querySelectorAll('.fw-filter-bar button').length,8,'all worlds are usable while login is restoring');
  assert.equal(document.querySelector('[data-fw-world="all"]').getAttribute('aria-pressed'),'true');
  const oldLink=document.createElement('a');oldLink.href='/character?world=xichuan';document.body.append(oldLink);
  navigate('/character?world=xichuan');oldLink.remove();
@@ -75,7 +75,7 @@ test('catalog and credit navigation work while auth is unreachable and do not lo
  assert.equal(location.pathname,'/');
  assertNoNotice();
  assert.ok(document.querySelector('[data-sd-hero=home]'));
- const expectedFilters={'visual-novels':['xichuan','ashen-crown'],strategy:['three-kingdoms'],detective:['baker-street'],classics:['mortal-path','monte-cristo'],all:allIds};
+ const expectedFilters={'visual-novels':['sn-seven-nights','xichuan','ashen-crown'],strategy:['three-kingdoms'],detective:['baker-street'],classics:['mortal-path','monte-cristo'],all:allIds};
  assert.equal(document.querySelectorAll('.sd-story-filter-bar .fw-chip').length,5);
  for(const [filter,ids] of Object.entries(expectedFilters)){
   const chip=document.querySelector(`[data-story-filter="${filter}"]`);

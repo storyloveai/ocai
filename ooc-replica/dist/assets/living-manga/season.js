@@ -34,7 +34,8 @@ function bar(home=true) {
   const b=node('header',null,'sn-bar');
   if (home) b.append(link('← '+c('Season hub','七夜剧场'),'/seven-nights'));
   else {
-    const brand = node('span',null,'sn-brand');
+    const brand = link('', '/');
+    brand.className='sn-brand';
     const logo = node('img');
     logo.src = '/assets/storydate-dialogue-logo.svg';
     logo.alt = 'StoryDate';
@@ -50,7 +51,8 @@ export function mountHub(host,h) {
   function paint() {
     const lang=currentLang(); const collected=marks(h);
     const completed=n=>collected.some(v=>v.startsWith(n+':'));
-    const next=nights.find(n=>!completed(n.number)) || third;
+    const lastRead=nights.find(n=>n.number===h.read('ooc-session-v2-seven-nights-last-episode',0));
+    const next=(lastRead && !completed(lastRead.number) && lastRead) || nights.find(n=>!completed(n.number)) || third;
     const current=[...nights].reverse().find(n=>completed(n.number)) || first;
     root.lang=lang;document.title=c('Seven Nights · Season One','七夜之约 · 第一季');
     const hero=node('section',null,'sn-hero');

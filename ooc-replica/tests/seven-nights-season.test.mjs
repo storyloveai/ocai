@@ -65,8 +65,9 @@ test('three episodes return through their own chat to a remembered season hub wi
     assert.deepEqual([...f.document.querySelectorAll('.sn-episode img')].map(img=>img.getAttribute('src')),nights.map(ep=>ep.assets.p4.image));
     assert.equal(q('.sn-brand img').alt,'StoryDate');
     for(const ep of nights){
-      await f.go('/pilot/seven-nights'+(ep.number===1?'':'/ep'+ep.number));
+      await f.go('/pilot/seven-nights'+(ep.number===1?'':'/ep'+ep.number)+'?ref=cast#panels');
       if(ep.number===3){await waitFor(()=>q('.sn-gate-copy .sn-primary'));await f.click('.sn-gate-copy .sn-primary');}
+      assert.equal(f.location.pathname,'/seven-nights/ep'+ep.number);
       await waitFor(()=>q('[data-scene=p2Full]'));await f.click('[data-lm-option]');
       assert.equal(q('.lm-interlude-heading h2').textContent,ep.interludeHeading.en);
       assert.equal(q('[aria-pressed=true][data-lm-option]').dataset.number,'01');
@@ -85,7 +86,10 @@ test('three episodes return through their own chat to a remembered season hub wi
       await f.click('[data-film-line]');
       assert.equal(q('#session-input').value,chips[0].textContent);
       assert.match(q('[data-banner-reply]').textContent,/Ready to send/);
-      await f.click('[data-session-back]');await waitFor(()=>q('.sn-memory'));
+      assert.equal(q('.sn-watch-series').getAttribute('href'),'/seven-nights');
+      await f.click('[data-session-back]');await waitFor(()=>q('[data-scene=p4]'));
+      assert.equal(f.location.pathname,'/seven-nights/ep'+ep.number);
+      await f.go('/seven-nights');await waitFor(()=>q('.sn-memory'));
       assert.ok(q('.sn-memory').textContent.includes(ep.branches[ep.decision.options[0].id].consequenceTags[0].en));
     }
     assert.equal(f.requests.filter(([,method])=>method==='POST').length,0);

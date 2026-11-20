@@ -1,3 +1,4 @@
+import {julian,sevenNights,sevenNightsKeywords} from './seven-nights-character.js';
 import {syncCharacterLinks, characterReturnUrl} from './character-links.js';
 import {charactersForStory, storiesForCharacter, storyById, linkedStoryCatalog} from './character-stories.js';
 import {characterArt} from './flywheel/character-art.js';
@@ -151,21 +152,22 @@ for(const [kind,doc]of [['story',templateDocument],['character',characterDocumen
   if(ids.length)collections.set(kind+':'+text(heading),[...new Set(ids)]);
  }
 }
-export const extraStories = catalog.map(d => ({...d, image:source(d),genre:d.genre||'Others'}));
+export const extraStories = [...catalog,sevenNights,julian].map(d => ({...d, image:source(d),genre:d.genre||'Others'}));
 // Search profiles share the curated directory identity. These display-only
 // records never enter catalog/extraStories or become new chat/model IDs.
 const searchProfiles=FEATURED_CHARACTER_CARDS.map(card=>{
  const existing=catalog.find(d=>d.type==='character'&&d.id===card.chatId);
- return {id:card.id,type:'character',searchProfile:true,href:'/characters/'+card.id,
+ return {id:card.id,type:'character',searchProfile:true,href:card.href || '/characters/'+card.id,
   title:card.name.en,title_zh:card.name.zh,description:card.tagline.en,description_zh:card.tagline.zh,
   image:card.portrait,background:characterArt(card)?.background||'',author:existing?.author||''};
 });
-const searchCatalog=[...catalog.filter(d=>d.type!=='character'),...searchProfiles];
+const searchCatalog=[sevenNights,...catalog.filter(d=>d.type!=='character'),...searchProfiles];
 const searchIndex=new Map(searchCatalog.map(d=>{
  const linked=storyById(d.id), featured=featuredStoryById.get(d.id);
  const fields=[d.title,d.title_zh,translate(d.title,'en'),translate(d.title,'zh'),d.author,d.description,d.description_zh,d.genre,
   ...Object.values(linked?.title||{}),...Object.values(linked?.description||{}),
   ...storiesForCharacter(d.id).flatMap(story=>Object.values(story.title))];
+ if(d.id===julian.id || d.id===sevenNights.id)fields.push(...sevenNightsKeywords);
  if(featured)fields.push(...[featured.title,featured.quote,featured.meta,featured.badge].flatMap(pair=>Object.values(pair)));
  return [d.id,fields.filter(Boolean).join(' ').toLowerCase()];
 }));
@@ -619,7 +621,7 @@ function bindSearch() {
     if(!results){results=document.createElement('section');results.id='precision-results';results.className='precision-search-results';const content=q('[class*="space-y-4"]');(content||q('#reference-root')).prepend(results);}
     const query=normalizedQuery(i.value);
     const found=matchingTitles(query);
-    results.innerHTML=query?`${searchSummaryMarkup(query,found.length,'h2')}${found.length?grid(found):'<p>No matching stories found.</p>'}`:'';
+    results.innerHTML=query?`${searchSummaryMarkup(query,found.length,'h2')}${found.length?searchGrid(found):'<p>No matching stories found.</p>'}`:'';
     [...results.parentElement.children].filter(e=>e!==results).forEach(e=>e.style.display=query?'none':'');
     hydrate();
   };});
@@ -716,7 +718,7 @@ export function show(path, helpers) {
   if(curated){
     activeHomeLibrary=mountHomeSystem(host);
     if(!mountHeroScene(host,page,{navigate:context.navigate})){
-      const features=FEATURED_STORIES.map(story=>({...catalog.find(item=>item.id===story.id),href:'/story/'+story.id}));
+      const features=FEATURED_STORIES.map(story=>({...extraStories.find(item=>item.id===story.id),href:story.href || '/story/'+story.id}));
       bindHome(page,features);bindCarousels(host,updateHero);
     }
   }else if(page==='home'||page==='character'){bindHome(page);bindExploreSort(page);bindCarousels(host,updateHero);}

@@ -7,7 +7,10 @@
 //   例句: 各作品 content/campaign.json 的 say 节点原文（生成文件，出处=原剧本）
 // 立绘路径全部指向站点现有静态资源，不复制图片。
 
+import {julian,sevenNights} from '../seven-nights-character.js';
+
 export const WORKS = {
+  sevenNights: {id:'sevenNights', title:julian.workTitle, kind:{en:'Interactive comic',zh:'互动漫剧'}, url:sevenNights.playUrl, cover:sevenNights.image},
   sanguo: {
     id: "sanguo",
     title: { zh: "三国·谋士", en: "The Strategist" },
@@ -53,6 +56,7 @@ export const WORKS = {
 };
 
 export const UNIVERSES = {
+  veyron: {id:'veyron',name:{zh:'维伦港',en:'Port Veyron'},tagline:{zh:sevenNights.description_zh,en:sevenNights.description}},
   xichuan: {
     id: "xichuan",
     name: { zh: "汐川", en: "Xichuan" },
@@ -954,7 +958,15 @@ const featuredIds = [
   'wn-lamp', 'wn-evelyn', 'bk-holmes',
 ];
 
-export const FEATURED_CHARACTER_CARDS = featuredIds.map(cardById);
+// Julian's full destination is the authored chat stage. The other discovery
+// cards have separate profiles and keep their original profile destinations.
+const julianCard = {
+  id:julian.id, chatId:julian.id, chat:julian.playUrl, href:julian.playUrl,
+  name:{en:julian.title,zh:julian.title_zh}, portrait:julian.image, tagline:julian.tagline,
+  source:{work:'sevenNights',universe:'veyron'}, appearances:[{work:'sevenNights',role:{en:'Julian Vance',zh:'纪沉'},url:sevenNights.playUrl}],
+  voice:{samples:[{en:'“The key is yours.”',zh:'“钥匙在你手里。”',from:julian.scene}]},
+};
+export const FEATURED_CHARACTER_CARDS = [julianCard,...featuredIds.map(cardById)];
 
 export function characterCardQuote(card, lang) {
   const sample = card.voice?.samples?.[0]?.[lang];

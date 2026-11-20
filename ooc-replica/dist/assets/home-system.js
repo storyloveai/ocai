@@ -3,7 +3,7 @@ import {getLang} from './site-i18n.js';
 import {escapeHTML as safe} from './stream.js';
 
 export function featuredStoryCard(story, lang) {
-  return `<a class="fw-card" href="/story/${safe(story.id)}" data-story-card="${safe(story.id)}" data-full-info data-no-i18n>
+  return `<a class="fw-card" href="${safe(story.href || `/story/${story.id}`)}" data-story-card="${safe(story.id)}" data-full-info data-no-i18n>
     <span class="fw-card-portrait">
       <img src="${safe(story.image)}" alt="" width="300" height="450" loading="lazy">
       <span class="sd-capability${story.featured ? ' is-chat' : ''}">${safe(story.badge[lang])}</span>

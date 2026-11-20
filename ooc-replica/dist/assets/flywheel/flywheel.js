@@ -184,7 +184,7 @@ const ext = (url) => (isStandalone(url) ? ' target="_top" rel="noopener"' : '');
 
 function cardMarkup(c) {
   const lang = getLang();
-  return `<a class="fw-card" href="/characters/${safe(c.id)}">
+  return `<a class="fw-card" href="${safe(c.href || `/characters/${c.id}`)}">
     <span class="fw-card-portrait">${sceneArt(c)}${cardArt(c)}
       <span class="sd-capability${c.chat ? ' is-chat' : ''}">${safe(characterCapabilityLabel(c, lang))}</span>
       <span class="sd-card-quote"><span>${safe(characterCardQuote(c, lang))}</span></span>
@@ -199,6 +199,7 @@ const grid = (cards) => `<div class="fw-grid">${cards.map(cardMarkup).join('')}<
 
 // —— /characters ——
 const worldTitles = {
+  veyron:WORKS.sevenNights.title,
   xichuan: WORKS.xichuan.title,
   sanguo: WORKS.sanguo.title,
   original: WORKS.character.title,

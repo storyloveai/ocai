@@ -2,6 +2,10 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
+      "source": "/seven-nights/:episode(ep[1-3])",
+      "destination": "/index.html"
+    },
+    {
       "source": "/((?!api/|assets/|app\\.js|style\\.css|data\\.json).*)",
       "destination": "/index.html"
     }
@@ -50,6 +54,16 @@
         }
       ],
       "destination": "/play/xichuan",
+      "permanent": false
+    },
+    {
+      "source": "/pilot/seven-nights",
+      "destination": "/seven-nights/ep1",
+      "permanent": false
+    },
+    {
+      "source": "/pilot/seven-nights/:episode(ep[1-3])",
+      "destination": "/seven-nights/:episode",
       "permanent": false
     }
   ]

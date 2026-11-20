@@ -46,6 +46,7 @@ test('implicit analytics cannot expose handoff URLs, text or element attributes'
     const captured=scrub({event,properties:{$current_url:url,$referrer:url,$set_once:{$initial_current_url:url}}});
     assert.ok(!JSON.stringify(captured).includes('PRIVATE'));
   }
+  assert.equal(scrub({event:'$autocapture',properties:{$pathname:'/seven-nights/ep1',$elements_chain:'private'}}),null);
   assert.equal(scrub({event:'$autocapture',properties:{$pathname:'/pilot/seven-nights',$elements_chain:'a[href="?draft=PRIVATE"]'}}),null);
 });
 test('reader to private chat restores draft and returns to the season hub without a POST',async()=>{
@@ -79,7 +80,7 @@ test('reader to private chat restores draft and returns to the season hub withou
     await f.click('[data-control=send]');
     await waitFor(()=>f.chatBodies.length===1,'explicit send did not reach the mock chat transport');
     assert.equal(f.chatBodies[0].titleId,'sn-julian');
-    await f.click('[data-session-back]');
+    await f.click('.sn-watch-series');
     await waitFor(()=>q('.sn-memory'));
     assert.equal(f.location.pathname,'/seven-nights');
     const funnel=sent.filter(([name])=>name.startsWith('living_manga_'));
