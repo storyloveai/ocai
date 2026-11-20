@@ -301,3 +301,7 @@ body:has(#session-settings[data-film-scene]) [data-control=settings]::before {co
 @media(max-width:1023px){
   #interaction-root:has(#session-settings[data-film-scene]) [data-shrink]+div {margin-left:0!important}
 }
+
+/* A collapsed film-set rail exposes its toggle directly, including on touch laptops. */
+[data-film-rail][data-shrink=true] a:has(+[data-film-toggle]) {display:none}
+[data-film-rail][data-shrink=true] [data-film-toggle] {opacity:1;pointer-events:auto;width:42px;height:44px}

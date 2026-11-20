@@ -346,7 +346,11 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
  };renderHistory();
  sidebar.querySelectorAll('button').forEach(button=>{const label=button.textContent.trim();if(label==='Search')button.onclick=()=>h.navigate('/search');if(label==='Notifications')button.remove();});
   const toggleSidebar=()=>{const small=sidebar.dataset.shrink!=='true';sidebar.dataset.shrink=String(small);sidebar.nextElementSibling.style.marginLeft=matchMedia('(min-width:1024px)').matches?(small?'48px':'256px'):'';};if(sidebar){const toggle=sidebar.querySelector('button');toggle.onclick=toggleSidebar;toggle.setAttribute('aria-label','Toggle Side Navigation');sidebar.querySelectorAll('button').forEach(button=>{if(button!==toggle&&!button.textContent.trim()&&!button.getAttribute('aria-label'))button.remove();});}
- if(onSet && matchMedia('(min-width:1024px)').matches && sidebar.dataset.shrink !== 'true') toggleSidebar();
+ if (onSet) {
+  sidebar.dataset.filmRail = '';
+  sidebar.querySelector('button').dataset.filmToggle = '';
+  if (matchMedia('(min-width:1024px)').matches && sidebar.dataset.shrink !== 'true') toggleSidebar();
+ }
  const settingsToggle=q('[data-control=settings]');settingsToggle?.querySelectorAll('.bg-destructive').forEach(badge=>badge.remove());
  const showSettings=()=>{const open=settings.classList.toggle('session-open');settings.inert=!open;settingsToggle?.setAttribute('aria-expanded',String(open));if(open&&matchMedia('(max-width:767px)').matches)settings.querySelector('button')?.focus();};settings.inert=true;settingsToggle?.setAttribute('aria-controls','session-settings');settingsToggle?.setAttribute('aria-expanded','false');
  const closeSettings=document.createElement('button');closeSettings.type='button';closeSettings.className='session-settings-close';closeSettings.dataset.sessionClose='';closeSettings.textContent='×';closeSettings.style.cssText='min-width:44px;min-height:44px;flex:none';(settingsTitle?.parentElement||settings).append(closeSettings);closeSettings.setAttribute('aria-label',local('Close session settings'));closeSettings.onclick=()=>{if(settings.classList.contains('session-open'))showSettings();settingsToggle?.focus();};
