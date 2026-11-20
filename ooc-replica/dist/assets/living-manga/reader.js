@@ -86,10 +86,13 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
   const sensor = button('sensor',ui.sensor), sound = button('rain',ui.rain);
   const status = el('p','lm-feedback');
   status.setAttribute('role','status');
-  controls.append(auto, reset, sound);
+  controls.append(auto, reset);
+  if (!measured) controls.append(sound);
   settings.append(summary, controls);
   const language = button('language',words('EN','中文'));
-  toolbar.append(themes, sensor, settings, language);
+  toolbar.append(themes, sensor, settings);
+  if (measured) toolbar.append(sound);
+  toolbar.append(language);
   hud.append(home, toolbar);
   const book = el('div','lm-book');
   const head = el('header','lm-title');
@@ -102,6 +105,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
   for (const option of episode.decision.options) {
     const b = button('choose',option.label);
     b.dataset.lmOption = option.id;
+    b.dataset.number = String(options.children.length + 1).padStart(2,'0');
     options.append(b);
   }
   const form = el('form','lm-free'), field = el('input');
@@ -116,7 +120,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
   const result = el('section','lm-result');
   result.tabIndex = -1;
   const tail = el('div','lm-tail'), afterword = el('footer','lm-interlude');
-  const tags = el('ul','lm-tags'), chatHeading = copy('h2','',ui.chat);
+  const tags = el('ul','lm-tags'), chatHeading = copy('h2','',episode.interludeHeading || ui.chat);
   const again = button('again',ui.again), links = el('div','lm-links');
   const interludeHeading = el('div','lm-interlude-heading');
   interludeHeading.append(copy('p','lm-interlude-label',ui.interlude),chatHeading);
@@ -238,6 +242,9 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
     clearResult();
     selection = input;
     choice = resolved;
+    if (measured) {
+      for (const button of options.children) button.setAttribute('aria-pressed', String(button.dataset.lmOption === input.optionId));
+    }
     branch = episode.branches[choice.branchId];
     result.hidden = false;
     decision.hidden = true;
@@ -269,6 +276,10 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
     field.placeholder = episode.decision.freeInput.placeholder[lang];
     field.setAttribute('aria-label',ui.free[lang]);
     home.setAttribute('aria-label',measured?words('返回七夜剧场','Back to Seven Nights')[lang]:ui.back[lang]);
+    summary.setAttribute('aria-label',ui.view[lang]);
+    sound.setAttribute('aria-label',ui.rain[lang]);
+    summary.title = ui.view[lang];
+    sound.title = ui.rain[lang];
     language.setAttribute('aria-label',lang === 'zh'?'English':'中文');
     result.setAttribute('aria-label',ui.result[lang]);
     tags.setAttribute('aria-label',ui.remembered[lang]);
@@ -309,7 +320,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage, account
       case 'choose': choose({optionId:b.dataset.lmOption},true); break;
       case 'again':
         clearResult();persist();
-        options.firstElementChild.focus({preventScroll:true});
+        (options.querySelector('[aria-pressed=true]') || options.firstElementChild).focus({preventScroll:true});
         decision.scrollIntoView({block:'center'});
         break;
     }

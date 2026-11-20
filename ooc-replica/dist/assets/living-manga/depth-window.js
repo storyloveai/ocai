@@ -385,6 +385,7 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
   });
   function setVisible(el, panel, visible) {
     if (visible && !panel.visible) { panel.resize(); geometryDirty = true; }
+    if (visible && !doc.hidden) el.setAttribute('data-lm-entered','');
     panel.visible = visible;
     el.toggleAttribute('data-lm-visible', visible && !doc.hidden);
   }

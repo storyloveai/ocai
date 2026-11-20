@@ -32,7 +32,16 @@ function button(label,act,css) {
 }
 function bar(home=true) {
   const b=node('header',null,'sn-bar');
-  b.append(home?link('← '+c('Season hub','七夜剧场'),'/seven-nights'):node('span',c('Port Veyron','维伦港')),button(c('中文','EN'),toggle));
+  if (home) b.append(link('← '+c('Season hub','七夜剧场'),'/seven-nights'));
+  else {
+    const brand = node('span',null,'sn-brand');
+    const logo = node('img');
+    logo.src = '/assets/storydate-dialogue-logo.svg';
+    logo.alt = 'StoryDate';
+    brand.append(logo,node('span',c('Port Veyron','维伦港')));
+    b.append(brand);
+  }
+  b.append(button(c('中文','EN'),toggle));
   return b;
 }
 
@@ -54,7 +63,8 @@ export function mountHub(host,h) {
     const rail=node('div',null,'sn-rail');shelf.append(rail);
     for(const ep of nights) {
       const a=link('',nightPath(ep.number)); a.className='sn-episode';
-      const img=node('img');img.alt='';img.src=ep.assets.p2Full.image;
+      const img=node('img');img.alt='';img.src=ep.assets.p4.image;
+      img.style.objectPosition=ep.assets.p4.eyes.map(v=>Math.round(v*100)+'%').join(' ');
       const label=[c('Free · Instant Play','免费 · 立即阅读'),c('Free · Save Progress','免费 · 可存进度'),c('Season Climax','季末高潮')][ep.number-1];
       a.append(img,node('small','Ep. 0'+ep.number),node('h3',ep.title[lang]),node('span',completed(ep.number)?c('Read · Revisit','已读 · 重温'):label));
       if(next===ep)a.classList.add('sn-current');rail.append(a);

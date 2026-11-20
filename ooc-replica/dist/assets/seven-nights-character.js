@@ -12,15 +12,21 @@ export const julian = {
 
 export const seasonKey = 'ooc-session-v2-seven-nights-season';
 export const scenes = {
-  ep1_study: {number:1, branches:['stand_ground','probe_close','hide_truth','custom']},
-  ep2_car: {number:2, branches:['claim_name','expose_ledger','cold_warning','custom'],
+  ep1_study: {
+    starters:[{"en": "Then why give me the key?", "zh": "那你为什么把钥匙给我？"}, {"en": "Turn out the lamp. They can see us.", "zh": "把灯关了。他们看得见我们。"}],
+    number:1, branches:['stand_ground','probe_close','hide_truth','custom']},
+  ep2_car: {
+    starters:[{"en": "That driver knows your name.", "zh": "那个司机知道你的名字。"}, {"en": "Let me see the ledger.", "zh": "把账本给我看。"}],
+    number:2, branches:['claim_name','expose_ledger','cold_warning','custom'],
     scene:{en:'10:15 PM · The Rain-Soaked Backseat',zh:'晚 10:15 · 暴雨后座'},
     background:'/assets/living-manga/seven-nights/ep2_p4.webp',
     image:'/assets/living-manga/seven-nights/ep2_p4.webp',
     tagline:{en:'Lock your door and sit closer.',zh:'锁好车门，坐近一点。'},
     description:'*Julian watches the same headlights make a third turn behind the car.* “The collector let go of your wrist. His driver seems less willing to let the matter drop. What did you see at the auction?”',
     description_zh:'*纪沉看着后视镜，那对车灯跟着拐了第三个弯。*「拍卖行里那人松了你的手，他的司机可还不肯罢休。你当时看见了什么？」'},
-  ep3_balcony: {number:3, branches:['burn_together','close_distance','walk_away_test','custom'],
+  ep3_balcony: {
+    starters:[{"en": "Who has the other half of the seal?", "zh": "另一半银印一直在谁手里？"}, {"en": "If I board that boat, will you come?", "zh": "如果我上船，你跟我走吗？"}],
+    number:3, branches:['burn_together','close_distance','walk_away_test','custom'],
     scene:{en:'3:05 AM · Midnight Balcony',zh:'凌晨 3:05 · 暴雨阳台'},
     background:'/assets/living-manga/seven-nights/ep3_p4.webp',
     image:'/assets/living-manga/seven-nights/ep3_p4.webp',

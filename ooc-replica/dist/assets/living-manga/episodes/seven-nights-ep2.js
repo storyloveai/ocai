@@ -1,6 +1,7 @@
 import {line, makeNight} from './seven-nights-format.js';
 
 export default makeNight({
+  interludeHeading:line("Continue with Julian · 10:15 PM", "和纪沉留在车内 · 晚 10:15"),
   number:2, scene:'ep2_car',
   title:line("Night Two · The Ledger", "第二夜 · 暗账"),
   subtitle:line("Maison Vance Private Auction · 9:40 PM", "纪氏私人拍卖行 · 晚 9:40"),

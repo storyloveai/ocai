@@ -272,3 +272,71 @@ body.lm-reading vercel-live-feedback, body.lm-reading #vercel-live-feedback { di
     bottom:27%;max-width:60%;font-size:12px;line-height:1.25;
   }
 }
+
+/* Seven Nights subtitles sit on the painting; the paper-and-ink edition keeps its own palette. */
+.lm-reader[data-lm-series="seven-nights"][data-theme=color] :is(.lm-narration,.lm-bubble,.lm-player-bubble) {
+  -webkit-backdrop-filter:blur(var(--frost,16px)); backdrop-filter:blur(var(--frost,16px));
+  font-weight:400; box-shadow:none;
+}
+.lm-reader[data-lm-series="seven-nights"][data-theme=color] .lm-narration {
+  --frost:14px; background:rgba(11,11,15,.78); color:#f3f1ec;
+  border:1px solid rgba(255,255,255,.12); border-left:2.5px solid #d4a853; border-radius:8px;
+}
+.lm-reader[data-lm-series="seven-nights"][data-theme=color] .lm-bubble {
+  background:rgba(20,20,25,.84); color:#fafafa;
+  border:1px solid rgba(255,255,255,.16); border-radius:14px;
+}
+.lm-reader[data-lm-series="seven-nights"][data-theme=color] .lm-player-bubble {
+  background:rgba(14,14,18,.88); color:#f5ebd6;
+  border:1px solid rgba(212,168,83,.42); border-radius:14px;
+}
+.lm-reader[data-lm-series="seven-nights"][data-theme=color] .lm-bubble::after { content:none; }
+.lm-reader[data-lm-series="seven-nights"][data-theme=color] .lm-speaker {
+  color:#e4c687; text-transform:uppercase; letter-spacing:.11em;
+}
+.lm-reader[data-lm-series="seven-nights"][data-theme=color] [data-scene] .lm-speaker {background:transparent}
+@media(min-width:768px){
+  .lm-reader[data-lm-series="seven-nights"][data-theme=color] [data-scene=p2Close] .lm-speaker {background:rgba(20,20,25,.92)}
+}
+@media(max-width:360px){
+  .lm-reader[data-lm-series="seven-nights"][data-theme=color] [data-scene=p4] .lm-speaker {background:rgba(20,20,25,.92)}
+}
+.sn-hero {background-position:center 10%}
+.sn-brand {display:inline-flex;align-items:center;gap:14px}
+.sn-brand img {width:100px;height:auto}
+.sn-brand span {border-left:1px solid #ffffff40;padding-left:14px;font:500 12px/1.4 system-ui;letter-spacing:.1em}
+.sn-theater:lang(en) .sn-hero h1 {font-variant-numeric:lining-nums;letter-spacing:-.034em;line-height:1.06}
+.sn-theater:lang(en) .sn-hero h1+p {color:#e4ded4;line-height:1.55;letter-spacing:.012em}
+@media(max-width:767px){.sn-hero{background-position:68% 8%}}
+@media(max-width:520px){
+  .lm-reader[data-lm-series] .lm-toolbar {white-space:nowrap}
+  .lm-reader[data-lm-series] .lm-settings summary,.lm-reader[data-lm-series] .lm-toolbar>[data-lm-action=rain] {
+    display:grid;place-items:center;width:36px;min-height:44px;font-size:0;padding:0;
+  }
+  .lm-reader[data-lm-series] .lm-settings summary::after {display:none}
+  .lm-reader[data-lm-series] .lm-settings summary::before,.lm-reader[data-lm-series] [data-lm-action=rain]::before {
+    content:"";width:19px;height:19px;background:currentColor;mask:var(--icon) center/contain no-repeat;
+  }
+  .lm-reader[data-lm-series] .lm-settings summary {
+    --icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M3 6h8m4 0h6M3 12h2m4 0h12M3 18h10m4 0h4'/%3E%3Ccircle cx='13' cy='6' r='2'/%3E%3Ccircle cx='7' cy='12' r='2'/%3E%3Ccircle cx='15' cy='18' r='2'/%3E%3C/svg%3E");
+  }
+  .lm-reader[data-lm-series] [data-lm-action=rain] {
+    --icon:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M6 14a4 4 0 0 1 0-8 6 6 0 0 1 11.4 1.4A3.3 3.3 0 0 1 18 14H6zm1 3-1 2m6-2-2 4m7-4-1 2'/%3E%3C/svg%3E");
+  }
+}
+.lm-toolbar>[data-lm-action=rain][aria-pressed=true] {background:var(--type);color:var(--ground)}
+.lm-reader[data-lm-series][data-theme=color] .lm-options button {
+  display:flex;align-items:baseline;gap:12px;border-left:2px solid var(--rule);
+  transition:border-color .16s,transform .16s,background-color .16s;
+}
+.lm-reader[data-lm-series][data-theme=color] .lm-options button::before {
+  content:attr(data-number);color:#e4c687;font:500 11px/1.4 system-ui;letter-spacing:.09em;
+}
+.lm-reader[data-lm-series][data-theme=color] .lm-options button:is(:hover,:focus-visible,:active,[aria-pressed=true]) {
+  border-left-color:#e4c687;background:#262421;transform:translateY(-2px);
+}
+@media(prefers-reduced-motion:no-preference){
+  .lm-reader[data-lm-series][data-theme=color] .lm-frame[data-lm-entered] {animation:sn-arrive .45s ease-out both}
+  @keyframes sn-arrive {from{opacity:.78;filter:blur(1.2px)}to{opacity:1;filter:none}}
+}
+@media(prefers-reduced-motion:reduce){.lm-reader[data-lm-series] .lm-options button{transition:none;transform:none!important}}

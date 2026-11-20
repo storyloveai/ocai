@@ -23,7 +23,8 @@ const choices = [
 const custom = {id:'custom', reaction: line('“I heard you.” His gaze flicks to the glass. “Now listen.”','「我听见了。」他望向窗玻璃。「现在，听。」'),
   tags:[line('Your Own Terms','自定条件')], draft:line('{playerText}','{playerText}')};
 export default {
-  id:'seven-nights', series:'seven-nights', number:1, scene:'ep1_study', title:line('2:00 AM · Seven Nights','凌晨两点 · 七夜之约'),
+  id:'seven-nights', series:'seven-nights', interludeHeading:line("Continue with Julian · 2:15 AM", "和纪沉留在书房 · 凌晨 2:15"),
+  number:1, scene:'ep1_study', title:line('2:00 AM · Seven Nights','凌晨两点 · 七夜之约'),
   subtitle:line('Port Veyron · Maison Vance Penthouse','维伦港 · 纪氏顶层私邸'), theme:'color',
   assets:{
     p1:art('p1',line('From the wet doorway, Julian turns beside the brass lamp.','雨湿的门框内，纪沉从黄铜台灯旁回头。'),undefined,.68,0),

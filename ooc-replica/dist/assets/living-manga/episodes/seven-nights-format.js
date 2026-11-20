@@ -22,13 +22,13 @@ export function speech(position, text) {
   return {type: 'bubble', position, style: 'speech', z: 1, speaker: julian, text};
 }
 
-export function makeNight({number, scene, title, subtitle, artDescriptions, location, narration, close, wide, prompt, options, custom, ending, cta}) {
+export function makeNight({interludeHeading, number, scene, title, subtitle, artDescriptions, location, narration, close, wide, prompt, options, custom, ending, cta}) {
   const id = 'seven-nights-ep' + number;
   const image = n => 'ep' + number + '_p' + n;
   const lastPanel = {scene:'p4', heightClass:'ending', captionRails:true,
     overlays:[caption('narration','top-right',ending[0]), speech('bottom-left',ending[1])]};
   return {
-    id, series:'seven-nights', number, scene, title, subtitle, theme:'color',
+    id, series:'seven-nights', interludeHeading, number, scene, title, subtitle, theme:'color',
     assets:{
       p1:art(image(1),artDescriptions[0]),
       p2Close:art(image(2),artDescriptions[1],[.54,0,.45,.88],.62,.05),
