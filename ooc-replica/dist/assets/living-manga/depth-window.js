@@ -18,21 +18,25 @@ precision mediump float;
 varying vec2 v_uv;
 uniform sampler2D u_img, u_depth;
 uniform vec4 u_crop;
-uniform vec2 u_tilt;
-uniform float u_ink, u_pixelRatio, u_inset;
+uniform vec2 u_tilt, u_eyes;
+uniform float u_ink, u_pixelRatio, u_inset, u_focus, u_time, u_motion;
+uniform vec3 u_weather; // rain, lightning, distant vehicle / flare lights
 
 vec2 intersectDepth(vec2 uv, vec2 ray) {
   if (dot(ray, ray) < 0.00000001) return uv;
   // March from the near plane to the back of the depth field (white = near).
-  vec2 prevUV = uv + ray;
+  vec2 prevUV = uv + (1.0 - u_focus) * ray;
   float prevGap = 1.0 - texture2D(u_depth, prevUV).r;
-  for (int i = 1; i <= 8; i++) {
-    float plane = 1.0 - float(i) / 8.0;
-    vec2 nextUV = uv + plane * ray;
+  for (int i = 1; i <= 14; i++) {
+    float plane = 1.0 - float(i) / 14.0;
+    vec2 nextUV = uv + (plane - u_focus) * ray;
     float nextGap = plane - texture2D(u_depth, nextUV).r;
     if (nextGap <= 0.0) {
       float fraction = prevGap / max(prevGap - nextGap, 0.00001);
-      return mix(prevUV, nextUV, clamp(fraction, 0.0, 1.0));
+      vec2 hit = mix(prevUV, nextUV, clamp(fraction, 0.0, 1.0));
+      // A discontinuity can stretch a single foreground texel across the silhouette.
+      float edge = smoothstep(0.12, 0.45, abs(nextGap - prevGap));
+      return mix(hit, mix(prevUV, nextUV, 0.5), edge * 0.4);
     }
     prevUV = nextUV;
     prevGap = nextGap;
@@ -43,7 +47,34 @@ vec2 intersectDepth(vec2 uv, vec2 ray) {
 void main() {
   // Reserve enough overscan for the largest ray in this panel.
   vec2 uv = u_crop.xy + u_crop.zw * (u_inset + v_uv * (1.0 - 2.0 * u_inset));
-  vec3 color = texture2D(u_img, intersectDepth(uv, u_crop.zw * u_tilt)).rgb;
+  vec2 hit = intersectDepth(uv, u_crop.zw * u_tilt);
+  vec3 color = texture2D(u_img, hit).rgb;
+  if (u_motion > 0.5) {
+    float depth = texture2D(u_depth, hit).r;
+    float farMask = 1.0 - smoothstep(0.26, 0.42, depth);
+    float cool = smoothstep(-0.04, 0.04, color.b - color.r);
+    // Face depth varies between paintings; exclude the portrait even when its raw depth is low.
+    float portraitGap = length((hit - u_eyes) / vec2(0.15, 0.31));
+    farMask *= smoothstep(0.92, 1.16, portraitGap);
+    float glass = farMask * cool * u_weather.x;
+    float column = hit.x * 150.0 + hit.y * 2.0;
+    float seed = fract(sin(floor(column) * 19.43) * 4821.7);
+    float bead = fract(hit.y * 9.0 - u_time * (0.35 + seed * 0.55) + seed);
+    float streak = (1.0 - smoothstep(0.015, 0.12, abs(fract(column) - 0.5)))
+                 * smoothstep(0.65, 0.98, bead) * glass;
+    color = mix(color, texture2D(u_img, hit + vec2(0.0015, 0.001) * streak).rgb, glass);
+    color += vec3(0.06, 0.08, 0.10) * streak;
+    float warm = smoothstep(0.13, 0.32, color.r - color.b) * smoothstep(0.38, 0.80, color.r);
+    color *= 1.0 + warm * 0.023 * sin(u_time * 1.4);
+    float beat = mod(u_time, 6.8);
+    float flash = (1.0 - smoothstep(0.0, 0.16, abs(beat - 5.5)))
+                + 0.55 * (1.0 - smoothstep(0.0, 0.22, abs(beat - 5.85)));
+    color += farMask * u_weather.y * flash * vec3(0.032, 0.055, 0.09);
+    float lights = max(smoothstep(0.20, 0.48, color.r - color.g), smoothstep(0.52, 0.84, min(color.b,color.r)));
+    color *= 1.0 + farMask * u_weather.z * lights * 0.095 * sin(2.7*u_time + hit.x*17.0);
+    float sheen = 1.0 - smoothstep(0.0, 0.15, abs(v_uv.x + v_uv.y*0.30 - 0.58 - u_tilt.x*4.0));
+    color += vec3(0.027) * sheen * min(1.0, length(u_tilt)*10.0);
+  }
   if (u_ink > 0.5) {
     float tone = dot(color, vec3(0.299, 0.587, 0.114));
     vec2 paper = gl_FragCoord.xy / (3.8 * u_pixelRatio);
@@ -67,7 +98,7 @@ export function coverCrop(asset, width, height, image) {
 }
 
 // Own every allocation, including partially compiled programs or failed texture uploads.
-function makeSurface(gl, image, depth, inset) {
+function makeSurface(gl, image, depth, inset, asset) {
   const program = gl.createProgram();
   const shaders = [], textures = [];
   let buffer;
@@ -113,8 +144,16 @@ function makeSurface(gl, image, depth, inset) {
     const tilt = gl.getUniformLocation(program, 'u_tilt');
     const ink = gl.getUniformLocation(program, 'u_ink');
     const pixelRatio = gl.getUniformLocation(program, 'u_pixelRatio');
+    const time = gl.getUniformLocation(program, 'u_time');
+    const motion = gl.getUniformLocation(program, 'u_motion');
+    gl.uniform1f(gl.getUniformLocation(program, 'u_focus'), clamp(asset.focus ?? .58, 0, 1));
+    const eyes = asset.eyes || [-2, -2];
+    gl.uniform2f(gl.getUniformLocation(program, 'u_eyes'), eyes[0], eyes[1]);
+    gl.uniform3f(gl.getUniformLocation(program, 'u_weather'), +!!asset.rain, +!!asset.thunder, +!!asset.lights);
     return {
-      draw(rect, dx, dy, monochrome, dpr) {
+      draw(rect, dx, dy, monochrome, dpr, seconds, animate) {
+        gl.uniform1f(time, seconds);
+        gl.uniform1f(motion, Number(animate));
         gl.viewport(0, 0, gl.drawingBufferWidth, gl.drawingBufferHeight);
         gl.uniform4fv(crop, rect);
         gl.uniform2f(tilt, dx, dy);
@@ -152,14 +191,14 @@ function createPanel(element, asset, win, invalidate) {
   const image = element.querySelector('img.lm-depth-image, .lm-depth-image img');
   const canvas = element.querySelector('canvas.lm-depth-canvas');
   const layers = [...element.querySelectorAll('.z-layer[data-z]')].map(node => ({
-    offset: layerOffset(node, win), z: clamp(Number(node.dataset.z) || 0, -2, 2),
+    node, offset: layerOffset(node, win), z: clamp(Number(node.dataset.z) || 0, -2, 2),
   }));
   const imageOffset = image && layerOffset(image, win);
   const strength = clamp(asset.strength ?? 0.07, 0, 0.088);
-  const inset = clamp(asset.inset ?? .09, strength, .2);
+  const inset = clamp(asset.inset ?? .09, .09, .2);
   const artWindow = element.querySelector('.lm-art-window') || element;
   let gl, depth, surface, failed = false, lost = false, resized = true;
-  let rect = [0, 0, 1, 1], width = 0, height = 0, dpr = 1;
+  let rect = [0, 0, 1, 1], width = 0, height = 0, dpr = 1, quality = 1;
   element.removeAttribute('data-lm-visible');
   if (canvas) canvas.style.visibility = 'hidden';
   function handleImage() { resized = true; invalidate(); }
@@ -199,7 +238,7 @@ function createPanel(element, asset, win, invalidate) {
         depth.onerror = fallback;
         depth.src = asset.depth;
       }
-      if (depth.complete && depth.naturalWidth) surface = makeSurface(gl, image, depth, inset);
+      if (depth.complete && depth.naturalWidth) surface = makeSurface(gl, image, depth, inset, asset);
     } catch {
       fallback();
     }
@@ -221,7 +260,7 @@ function createPanel(element, asset, win, invalidate) {
     });
     if (canvas) {
       // Limit fill rate on large, high-DPR screens.
-      dpr = Math.min(win.devicePixelRatio || 1, 1.5, 1600 / Math.max(width, height));
+      dpr = Math.min(win.devicePixelRatio || 1, 1.5, 1600 / Math.max(width, height)) * quality;
       const cw = Math.max(1, Math.round(width * dpr)), ch = Math.max(1, Math.round(height * dpr));
       if (canvas.width !== cw) canvas.width = cw;
       if (canvas.height !== ch) canvas.height = ch;
@@ -229,21 +268,27 @@ function createPanel(element, asset, win, invalidate) {
     resized = false;
   }
   return {
-    visible: false,
+    visible: false, scroll: 0, x: 0, y: 0,
     resize() { resized = true; },
-    draw(tx, ty, ink) {
+    draw(tx, ty, ink, seconds, animate, resolution) {
+      if (quality !== resolution) { quality = resolution; resized = true; }
       if (resized) measure();
       if (!resized) prepare();
       if (surface && !lost) {
-        const side = Math.min(width, height);
-        surface.draw(rect, tx * strength * side / width, ty * strength * side / height, ink, dpr);
+        surface.draw(rect, tx * strength, ty * strength, ink, dpr, seconds, animate);
         canvas.style.visibility = 'visible';
       }
       if (image) {
         imageOffset.move(surface ? 0 : -4 * tx, surface ? 0 : -4 * ty);
         image.style.filter = ink ? 'grayscale(1) contrast(1.22)' : '';
       }
-      for (const { offset, z } of layers) offset.move(tx * z * 13, ty * z * 13);
+      element.style.setProperty('--lm-wall-x', (tx * 5).toFixed(2) + 'px');
+      element.style.setProperty('--lm-wall-y', (ty * 4).toFixed(2) + 'px');
+      for (const { node, offset, z } of layers) {
+        offset.move(tx * z * 13, ty * z * 13);
+        node.style.setProperty('--lm-shadow-x', (-tx * z * 9).toFixed(2) + 'px');
+        node.style.setProperty('--lm-shadow-y', (3 - ty * z * 7).toFixed(2) + 'px');
+      }
     },
     dispose() {
       element.removeAttribute('data-lm-visible');
@@ -266,8 +311,10 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
   const win = doc.defaultView || window;
   const panels = new Map();
   const preference = win.matchMedia?.('(prefers-reduced-motion: reduce)');
-  let reduced = !!preference?.matches, ink = false, auto = false, destroyed = false;
-  let x = 0, y = 0, targetX = 0, targetY = 0, frame = 0, last = 0, phase = 0;
+  let reduced = !!preference?.matches, ink = false, auto = !reduced, destroyed = false;
+  let manual = false, geometryDirty = true;
+  let resolution = 1, slowFrames = 0, fastFrames = 0;
+  let targetX = 0, targetY = 0, frame = 0, last = 0, phase = 0;
   function canDraw() {
     return !destroyed && !doc.hidden && [...panels.values()].some(p => p.visible);
   }
@@ -283,19 +330,41 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
     frame = 0;
     if (!canDraw()) return;
     const dt = last ? Math.min(64, now - last) : 16;
-    if (auto && !reduced) {
-      phase += dt * 0.00065;
-      targetX = 0.36 * Math.sin(phase);
-      targetY = 0.22 * Math.sin(phase * 0.73);
+    const animate = !reduced && auto;
+    // Downsample the paint surface under sustained GPU load; text remains native-resolution.
+    if (animate && last) {
+      slowFrames = dt > 22 ? slowFrames + 1 : 0;
+      fastFrames = dt < 18 ? fastFrames + 1 : 0;
+      if (slowFrames >= 16 || fastFrames >= 180) {
+        resolution = clamp(resolution + (slowFrames >= 16 ? -.125 : .125), .625, 1);
+        slowFrames = fastFrames = 0;
+      }
     }
+    if (animate) phase = (phase + dt / 1000) % 680;
     const blend = 1 - Math.exp(-dt / 85);
-    x += (targetX - x) * blend;
-    y += (targetY - y) * blend;
-    if (Math.abs(targetX - x) < 0.001) x = targetX;
-    if (Math.abs(targetY - y) < 0.001) y = targetY;
-    for (const p of panels.values()) if (p.visible) p.draw(x, y, ink);
+    let settling = false;
+    // Read all visible rectangles before writing transforms to any panel.
+    if (geometryDirty) {
+      for (const [el, panel] of panels) if (panel.visible) {
+        const box = el.getBoundingClientRect?.();
+        panel.scroll = box && win.innerHeight ? clamp((win.innerHeight - box.bottom - box.top) /
+          (win.innerHeight + box.bottom - box.top), -1, 1) : 0;
+      }
+      geometryDirty = false;
+    }
+    for (const panel of panels.values()) if (panel.visible) {
+      const drift = animate && !manual;
+      const sx = drift ? panel.scroll * .40 + .15 * Math.sin(phase * .70) : targetX;
+      const sy = drift ? panel.scroll * .88 + .10 * Math.sin(phase * .51) : targetY;
+      panel.x += (sx - panel.x) * blend;
+      panel.y += (sy - panel.y) * blend;
+      if (Math.abs(sx - panel.x) < .001 || reduced) panel.x = sx;
+      if (Math.abs(sy - panel.y) < .001 || reduced) panel.y = sy;
+      panel.draw(panel.x, panel.y, ink, phase, animate, resolution);
+      settling ||= panel.x !== sx || panel.y !== sy;
+    }
     last = now;
-    if ((!reduced && auto) || x !== targetX || y !== targetY) invalidate();
+    if (animate || settling) invalidate();
     else last = 0;
   }
   const motion = createMotionInput(root, {
@@ -305,9 +374,9 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
       return null;
     },
     canMove: () => !reduced && !doc.hidden,
-    isAuto: () => auto,
-    onSensorStart() { auto = false; targetX = targetY = 0; invalidate(); },
+    releaseView() { manual = false; targetX = targetY = 0; invalidate(); },
     setView(tx, ty) {
+      if (!manual) { manual = true; invalidate(); }
       const nextX = clamp(tx, -1, 1), nextY = clamp(ty, -1, 1);
       if (Math.abs(nextX - targetX) < 0.001 && Math.abs(nextY - targetY) < 0.001) return;
       targetX = nextX; targetY = nextY;
@@ -315,7 +384,8 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
     },
   });
   function setVisible(el, panel, visible) {
-    if (visible && !panel.visible) panel.resize();
+    if (visible && !panel.visible) { panel.resize(); geometryDirty = true; }
+    if (visible && !doc.hidden && !el.hasAttribute('data-lm-entered')) el.setAttribute('data-lm-entered',root.dataset.theme || 'color');
     panel.visible = visible;
     el.toggleAttribute('data-lm-visible', visible && !doc.hidden);
   }
@@ -328,10 +398,17 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
   });
   const resize = win.ResizeObserver && new win.ResizeObserver(entries => {
     if (!intersection) { viewportChange(); return; }
+    geometryDirty = true;
     for (const entry of entries) panels.get(entry.target)?.resize();
     invalidate();
   });
+  function scrollChange() {
+    geometryDirty = true;
+    if (!intersection) viewportChange();
+    else invalidate();
+  }
   function viewportChange() {
+    geometryDirty = true;
     for (const [el, p] of panels) {
       p.resize();
       if (!intersection) {
@@ -344,12 +421,13 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
   function reset() {
     motion.stopSensor();
     auto = false;
-    x = y = targetX = targetY = phase = 0;
+    manual = false; targetX = targetY = phase = 0;
     invalidate();
   }
   function changePreference() {
     reduced = !!preference.matches;
     reset();
+    auto = !reduced;
     onMotionPreferenceChange?.();
   }
   function changeVisibility() {
@@ -361,7 +439,7 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
   else preference?.addListener?.(changePreference);
   doc.addEventListener('visibilitychange', changeVisibility);
   win.addEventListener('resize', viewportChange, { passive: true });
-  if (!intersection) win.addEventListener('scroll', viewportChange, { passive: true, capture: true });
+  win.addEventListener('scroll', scrollChange, { passive: true, capture: true });
   function removePanel(el) {
     const panel = panels.get(el);
     if (!panel) return;
@@ -375,7 +453,7 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
     canUseSensor: motion.canUseSensor,
     get autoEnabled() { return auto; },
     get reducedMotion() { return reduced; },
-    enableSensor: motion.enableSensor,
+    enableSensor: motion.enableSensor, stopSensor: motion.stopSensor,
     addPanel(el, asset) {
       if (destroyed || panels.has(el)) return;
       panels.set(el, createPanel(el, asset, win, invalidate));
@@ -400,7 +478,7 @@ export function createDepthStage(root, { onSensorChange, onMotionPreferenceChang
       else preference?.removeListener?.(changePreference);
       doc.removeEventListener('visibilitychange', changeVisibility);
       win.removeEventListener('resize', viewportChange);
-      if (!intersection) win.removeEventListener('scroll', viewportChange, true);
+      win.removeEventListener('scroll', scrollChange, true);
     },
   };
 }

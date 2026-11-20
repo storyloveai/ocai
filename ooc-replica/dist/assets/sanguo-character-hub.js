@@ -74,7 +74,7 @@ export function characterIntroMarkup(c, card, lang, opening) {
   const source = story?.title[lang] || card.workTitle?.[lang] || WORKS[card.source.work].title[lang];
   const label = safe(scene + ' · ' + source);
   const eyebrow = `<span class="sg-chat-location">${safe(scene)}</span><span class="sg-chat-source"> · ${safe(source)}${story ? ' ↗' : ''}</span>`;
-  return `<section class="sg-chat-intro" data-chat-id="${safe(c.id)}" data-no-i18n>
+  return `<section class="sg-chat-intro" data-chat-id="${safe(c.id)}"${c.sceneId ? ` data-chat-scene="${safe(c.sceneId)}"` : ''} data-no-i18n>
     <header class="sg-chat-stage sd-stage-card" style="--sd-stage-image:url('${safe(background || c.image)}')">
       <div class="sg-chat-art sd-stage-art${background ? ' sg-chat-composite' : ''}">
         <img src="${safe(c.image)}" alt="" width="204" height="168">

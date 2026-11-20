@@ -30,6 +30,7 @@ export function creditPolicy(env = process.env) {
       image: 80,
       gameUnderstand: 1,
       gameExpress: 1,
+      episodeUnlock: 15,
     },
     checkinCredits: mode === "off" ? 100 : 3,
     checkinDays: 7,

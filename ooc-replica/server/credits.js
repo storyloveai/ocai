@@ -154,6 +154,31 @@ function normalize(raw, now) {
     throw Error("Invalid balance");
   return data;
 }
+function allocate(data, amount) {
+  const rank = { grant: 0, legacy: 1, purchased: 2 };
+  data.lots.sort(
+    (a, b) =>
+      rank[a.source] - rank[b.source] ||
+      (a.expiresAt || Infinity) - (b.expiresAt || Infinity),
+  );
+  let remaining = amount;
+  const allocations = [];
+  for (const lot of data.lots) {
+    const taken = Math.min(remaining, lot.remaining);
+    if (taken) {
+      allocations.push({
+        id: lot.id,
+        source: lot.source,
+        expiresAt: lot.expiresAt,
+        amount: taken,
+      });
+      lot.remaining -= taken;
+      remaining -= taken;
+    }
+    if (!remaining) break;
+  }
+  return allocations;
+}
 function view(data, now) {
   return {
     schema: 2,
@@ -162,6 +187,7 @@ function view(data, now) {
       (data.debt || 0) > 0 || Object.keys(data.fundingHolds || {}).length > 0,
     balance: data.balance,
     available: data.balance,
+    unlockedEpisodes: data.seasonClimax === true ? ["seven-nights-ep3"] : [],
     reserved: Object.values(data.holds).reduce((n, h) => n + h.amount, 0),
     breakdown: totals(data.lots),
     checked: data.checkedDay === day(now),
@@ -246,6 +272,20 @@ export function createCredits(
     });
   return {
     read: (uid) => mutate(uid, () => {}),
+    unlockEpisode(uid, episode, policy) {
+      if (episode !== "seven-nights-ep3") fail(400,"UNKNOWN_EPISODE","Unknown episode.");
+      const amount = policy.prices.episodeUnlock;
+      if (!policy.ready || policy.mode !== mode || !integer(amount)) fail(503,"BILLING_CONFIGURATION","Unlock unavailable.");
+      return mutate(uid, (_tx, data, now) => {
+        if (data.seasonClimax === true) return;
+        if (data.debt || Object.keys(data.fundingHolds).length) fail(403,"FUNDING_REVIEW_REQUIRED","Funding review required.");
+        if (data.balance < amount) fail(402,"INSUFFICIENT_CREDITS","Insufficient credits.");
+        for (const lot of allocate(data,amount)) data.stats.spent[lot.source] += lot.amount;
+        data.balance -= amount;
+        data.seasonClimax = true;
+        record(data,{type:"episode_unlock",id:episode,amount:-amount},now);
+      });
+    },
     async purchase(uid, session, amount) {
       if (
         !/^cs_[\w]+$/.test(session || "") ||
@@ -473,28 +513,7 @@ export function createCredits(
           fail(402, "INSUFFICIENT_CREDITS", "积分不足，请领取赠送积分或充值。");
         if (Object.keys(data.holds).length >= 4)
           fail(429, "TOO_MANY_PENDING", "请等待正在生成的回复。");
-        const rank = { grant: 0, legacy: 1, purchased: 2 };
-        data.lots.sort(
-          (a, b) =>
-            rank[a.source] - rank[b.source] ||
-            (a.expiresAt || Infinity) - (b.expiresAt || Infinity),
-        );
-        let remaining = amount;
-        const allocations = [];
-        for (const lot of data.lots) {
-          const taken = Math.min(remaining, lot.remaining);
-          if (taken) {
-            allocations.push({
-              id: lot.id,
-              source: lot.source,
-              expiresAt: lot.expiresAt,
-              amount: taken,
-            });
-            lot.remaining -= taken;
-            remaining -= taken;
-          }
-          if (!remaining) break;
-        }
+        const allocations = allocate(data, amount);
         const until = now + holdSeconds * 1000;
         data.holds[id] = { amount, allocations, until };
         data.balance -= amount;

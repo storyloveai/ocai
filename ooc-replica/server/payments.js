@@ -191,6 +191,7 @@ export function createPlatform({ env = process.env, fetchImpl = fetch, services 
         if(!body||typeof body!=='object'||Array.isArray(body))throw new HttpError(400,'Invalid wallet request.');
         if(!policy.enabled||!policy.ready||policy.mode!==stripeMode(env))throw new HttpError(503,'积分消费尚未启用。');
         const store=createCredits(services().db,policy.mode);
+        if(body.action==='episode-unlock')return response(await store.unlockEpisode(u.id,body.episodeId,policy));
         if(body.action==='status')return response(await store.status(u.id,body.id));
         if(body.action==='claim')return response(await store.grant(u.id,body.campaign));
         if(body.action==='quote')return response({...quote(body,env,body.route||'chat'),wallet:await store.read(u.id)});

@@ -91,7 +91,7 @@ export async function boot({path = '/characters', entries = [], configured = fal
           await waitFor(() => document.querySelector('[data-fw-restoring]'), 'profile did not mount its account-restoration state');
           observedRestoring = true;
         }
-        return Response.json({auth: null, configured, model: configured ? 'Fixture model' : '', billing: {enabled: false}});
+        return Response.json({auth: null, configured, model: configured ? 'Fixture model' : '', billing: {mode:'off',ready:true,enabled:false}});
       }
       if (path === '/api/chat' && mockChat) {
         const body = JSON.parse(options.body);

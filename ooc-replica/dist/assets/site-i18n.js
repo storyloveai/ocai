@@ -11,7 +11,7 @@ import {bookMetadata} from './book-catalog.js';
 export const LANGS = ['en', 'zh'];
 export function getLang(win = globalThis) {
   try { const v = win.localStorage?.getItem('sd.lang'); if (LANGS.includes(v)) return v; } catch {}
-  if (['/pilot/seven-nights', '/chat/sn-julian'].includes(win.location?.pathname)) return 'en';
+  if (['/seven-nights','/pilot/seven-nights','/pilot/seven-nights/ep2','/pilot/seven-nights/ep3', '/chat/sn-julian'].includes(win.location?.pathname)) return 'en';
   return /^zh/i.test(win.navigator?.language || '') ? 'zh' : 'en';
 }
 

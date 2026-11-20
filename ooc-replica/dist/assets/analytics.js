@@ -25,7 +25,7 @@ export function scrub(event) {
     }
   }
   const path = event.properties.$pathname || event.properties.$current_url || globalThis.location?.pathname || '';
-  if (event.event === '$autocapture' && /\/(?:pilot\/seven-nights|chat\/sn-julian)(?:[?#]|$)/.test(path)) return null;
+  if (event.event === '$autocapture' && /\/(?:(?:pilot\/)?seven-nights(?:\/ep[23])?|chat\/sn-julian)(?:[?#]|$)/.test(path)) return null;
   stripQuery(event.properties);
   if (event.event === '$autocapture') {
     const p = event.properties;

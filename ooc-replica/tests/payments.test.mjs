@@ -102,3 +102,19 @@ test('signed malformed webhook JSON is a client error and never calls Stripe',as
  const result=await f.platform.webhook(new Request('https://replica.example/api/webhook',{method:'POST',headers:{'stripe-signature':`t=${t},v1=${sig}`},body:raw}));
  assert.equal(result.status,400);assert.equal((await(await f.platform.wallet(request('wallet'))).json()).balance,0);
 });
+
+test('season unlock uses signed identity and policy price, and rejects writes when billing is off',async()=>{
+ const body={action:'episode-unlock',episodeId:'seven-nights-ep3',amount:0,user_id:'bob'};
+ assert.equal((await fixture().platform.wallet(request('wallet',body))).status,503);
+ const {platform,db,calls}=fixture({CREDIT_BILLING_MODE:'test',STRIPE_SECRET_KEY:'sk_test_fixture',STRIPE_PUBLISHABLE_KEY:'pk_test_fixture'});
+ assert.equal((await platform.wallet(request('wallet',body,'bad'))).status,401);
+ assert.equal((await platform.wallet(request('wallet',body))).status,402);
+ const store=createWallet(db,'test');
+ await store.rpc('storylove_purchase',{p_user:'alice',p_session:'cs_fixture_unlock',p_credits:200});
+ for(let i=0;i<2;i++){
+  const result=await platform.wallet(request('wallet',body));
+  assert.equal(result.status,200);assert.equal((await result.json()).balance,185);
+ }
+ const other=await (await platform.wallet(request('wallet',null,'bob'))).json();
+ assert.deepEqual(other.unlockedEpisodes,[]);assert.equal(calls.length,0);
+});

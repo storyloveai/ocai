@@ -10,7 +10,7 @@ import {openCharacterSession} from './character-session.js';
 import {attachCharacterControls} from './character-controls.js';
 import {characterReadingHTML,balanceCharacterAction} from './character-reading.js';
 import {translate} from './site-i18n.js';
-import {julian} from './seven-nights-character.js';
+import {julian, julianAt, impressions, seasonKey, nightPath} from './seven-nights-character.js';
 import {characterIntroMarkup} from './sanguo-character-hub.js';
 import {FEATURED_CHARACTER_CARDS} from './flywheel/cards-data.js';
 import {SuggestionLoader,parseSuggestions} from './suggestions.js';
@@ -64,22 +64,24 @@ function storyReturnIntro(id, lang) {
  if(id===JIBAI_ID)return lang==='zh'?'*她关掉检片灯，转过身等你开口。*':'*She switches off the film inspection lamp and turns to hear what you have to say.*';
  return lang==='zh'?'*她放下手里的东西，等你开口。*':'*She sets down what she is holding and waits for you to speak.*';
 }
-function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[]).find(d=>d&&d.status==='published'&&d.publishedId===id)||remote||null):null;const custom=mine?{type:mine.type==='character'?'character':'story',title:String(mine.title||'').slice(0,50),description:String(mine.description||'').slice(0,50),details:String(mine.details||'').slice(0,6000),prologue:String(mine.prologue||'').slice(0,2000),opening:String(mine.opening||'').slice(0,2000),scenario:String(mine.scenario||'').slice(0,25)}:null;const title=mine?{id,title:mine.title,description:mine.description,type:custom.type,image:mine.image||'assets/cover-0.webp',genre:'Custom'}:id===julian.id?julian:h.data.find(d=>d.id===id);if(!title){mountInteraction('<div class="shell-empty"><h1>Story unavailable</h1><a href="/">Back to stories</a></div>',h);return true;}const isCharacter=title.type==='character'||id==='6a808dbe8cc39ab3d8abaf5e';const characterState=isCharacter?openCharacterSession(id,h):null;const root=mountInteraction(pages[isCharacter?'character':'story'],h);const q=s=>root.querySelector(s);const body=q('#session-messages'),scroll=q('#session-scroll'),input=q('#session-input'),send=q('[data-control=send]'),settings=q('#session-settings');body.classList.toggle('character',isCharacter);if(isCharacter)track('character_chat_opened',{character:id});const profile=h.read('ooc-profile',{name:''});const name=profile.name||'You';const sessionConfiguration=aiConfiguration,creditClient=createCreditClient(h.account,{config:()=>Promise.resolve(sessionConfiguration)});const billingOn=!!aiConfiguration?.billing?.enabled;const key='ooc-session-v2-'+id;let messages=characterState?characterState.state.messages:h.read(key,[]),controller,state='ready',follow=true,disposed=false,suggestionsVisible=h.read('ooc-suggestions-visible',false);const liveCharacter=isCharacter&&id!=='6a808dbe8cc39ab3d8abaf5e';const xichuanChat=isXichuanCharacterId(id);const modeKey=xichuanChat?'ooc-response-mode-'+id:'ooc-response-mode';let transport=xichuanChat?(h.read(modeKey,'demo')==='ai'&&aiConfiguration?.configured?'ai':'demo'):liveCharacter||aiConfiguration?.configured?'ai':h.read(modeKey,'demo');
+function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[]).find(d=>d&&d.status==='published'&&d.publishedId===id)||remote||null):null;const custom=mine?{type:mine.type==='character'?'character':'story',title:String(mine.title||'').slice(0,50),description:String(mine.description||'').slice(0,50),details:String(mine.details||'').slice(0,6000),prologue:String(mine.prologue||'').slice(0,2000),opening:String(mine.opening||'').slice(0,2000),scenario:String(mine.scenario||'').slice(0,25)}:null;const title=mine?{id,title:mine.title,description:mine.description,type:custom.type,image:mine.image||'assets/cover-0.webp',genre:'Custom'}:id===julian.id?julianAt(new URLSearchParams(location.search).get('scene')):h.data.find(d=>d.id===id);if(!title){mountInteraction('<div class="shell-empty"><h1>Story unavailable</h1><a href="/">Back to stories</a></div>',h);return true;}const isCharacter=title.type==='character'||id==='6a808dbe8cc39ab3d8abaf5e';const characterState=isCharacter?openCharacterSession(id,h):null;const root=mountInteraction(pages[isCharacter?'character':'story'],h);const q=s=>root.querySelector(s);const body=q('#session-messages'),scroll=q('#session-scroll'),input=q('#session-input'),send=q('[data-control=send]'),settings=q('#session-settings');body.classList.toggle('character',isCharacter);if(isCharacter)track('character_chat_opened',{character:id});const profile=h.read('ooc-profile',{name:''});const name=profile.name||'You';const sessionConfiguration=aiConfiguration,creditClient=createCreditClient(h.account,{config:()=>Promise.resolve(sessionConfiguration)});const billingOn=!!aiConfiguration?.billing?.enabled;const key='ooc-session-v2-'+id+(id===julian.id&&title.number>1?'-'+title.sceneId:'');let messages=characterState?characterState.state.messages:h.read(key,[]),controller,state='ready',follow=true,disposed=false,suggestionsVisible=h.read('ooc-suggestions-visible',false);const liveCharacter=isCharacter&&id!=='6a808dbe8cc39ab3d8abaf5e';const xichuanChat=isXichuanCharacterId(id);const modeKey=xichuanChat?'ooc-response-mode-'+id:'ooc-response-mode';let transport=xichuanChat?(h.read(modeKey,'demo')==='ai'&&aiConfiguration?.configured?'ai':'demo'):liveCharacter||aiConfiguration?.configured?'ai':h.read(modeKey,'demo');
  const authorGuide=typeof mine?.guide==='string'?mine.guide.slice(0,1000).trim():'';
  const jump=q('[data-control=bottom]'),paintJump=()=>{if(jump){jump.hidden=follow;jump.tabIndex=follow?-1:0;}};paintJump();
  const titleLink=root.querySelector(`a[href="/${isCharacter?'character':'story'}/${isCharacter?'6a808dbe8cc39ab3d8abaf5e':'69f414d90abbab6f6a2c8131'}"]`);if(titleLink){titleLink.href=mine?(h.read('ooc-custom',[]).some(d=>d&&d.status==='published'&&d.publishedId===id)?'/my-title':'/community'):isCharacter?(characterProfileUrl(id)||`/character/${id}`):`/story/${id}`;if(mine)titleLink.title=titleLink.href.endsWith('/my-title')?'Back to My Titles':'Browse Community';const label=[...titleLink.querySelectorAll('*')].find(e=>e.children.length===0&&e.textContent.trim()===(isCharacter?'Your New beautiful neighbour':'Lumencia Academy'));if(label){label.textContent=title.title;label.dataset.sessionTitle='';}}
  titleLink?.classList.add('session-title-link');
- if(id===julian.id&&titleLink)titleLink.href='/pilot/seven-nights';
- const pilotReturn=id===julian.id?'/pilot/seven-nights':'/pilot/sanguo-manga';
+ if(id===julian.id&&titleLink)titleLink.href='/seven-nights';
+ const onSet = isCharacter && (id === julian.id || /^seven-nights-ep[1-3]$/.test(new URLSearchParams(globalThis.location?.search).get('from')));
+ if (onSet) settings.dataset.filmScene = title.sceneId || 'ep1_study';
+ const pilotReturn=id===julian.id?nightPath(title.number):'/pilot/sanguo-manga';
  const interludeReturn=isCharacter&&globalThis.history?.state?.storydateNavigation===true&&globalThis.history.state.from===pilotReturn;
 
  const capturedBack=titleLink?.previousElementSibling;if(capturedBack?.matches('button')&&capturedBack.classList.contains('ts:hidden')){const back=document.createElement('a');back.setAttribute('href',titleLink.getAttribute('href'));if(back.getAttribute('href').startsWith('/story/'))back.dataset.fullInfo='';back.dataset.sessionBack='';back.dataset.noI18n='';back.className=capturedBack.className.replace('inline-block','inline-flex')+' items-center justify-center';back.style.cssText='min-width:44px;min-height:44px';back.innerHTML=capturedBack.innerHTML;back.querySelector('svg')?.setAttribute('aria-hidden','true');capturedBack.replaceWith(back);}
- if(interludeReturn){
+ if(interludeReturn||id===julian.id){
   const back=q('[data-session-back]');
   if(back){
-   back.href=pilotReturn;
+   back.href=id===julian.id?'/seven-nights':pilotReturn;
    back.classList.remove('ts:hidden');
-   back.addEventListener('click',event=>{
+   if(id!==julian.id)back.addEventListener('click',event=>{
     if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
     event.preventDefault();
     globalThis.history.back();
@@ -99,13 +101,19 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
  });
  settings.querySelectorAll('[role=region]').forEach(region=>region.remove());
  settings.querySelectorAll('[role=switch]').forEach(button=>button.parentElement.remove());
+ if (onSet) {
+  const model = q('[data-control=model]');
+  const portrait = settings.querySelector('img');
+  portrait?.closest('[class~="group/item"]')?.after(model);
+ }
  const paintSettingsLanguage=()=>{
   const zh=sessionLanguage()==='zh',image=settings.querySelector('[data-session-setting="View image"]'),help=settings.querySelector('[data-session-setting="Chat help"]');
   if(image)image.textContent=zh?(isCharacter?'查看立绘':'查看封面'):(isCharacter?'View portrait':'View cover');
   if(help)help.textContent=zh?'聊天操作说明':'Chat controls';
-  const back=q('[data-session-back]');if(back){const label=interludeReturn?(zh?'返回分镜':'Back to the panels'):mine?(back.getAttribute('href')==='/my-title'?(zh?'返回我的作品':'Back to My Titles'):(zh?'返回社区':'Back to Community')):(isCharacter?(zh?'返回角色档案':'Back to character profile'):(zh?'返回作品详情':'Back to story details'));back.setAttribute('aria-label',label);back.title=label;}
+  const back=q('[data-session-back]');if(back){const label=id===julian.id?(zh?'返回七夜剧场':'Back to Seven Nights'):interludeReturn?(zh?'返回分镜':'Back to the panels'):mine?(back.getAttribute('href')==='/my-title'?(zh?'返回我的作品':'Back to My Titles'):(zh?'返回社区':'Back to Community')):(isCharacter?(zh?'返回角色档案':'Back to character profile'):(zh?'返回作品详情':'Back to story details'));back.setAttribute('aria-label',label);back.title=label;}
   settings.querySelectorAll('[data-session-memory-label]').forEach(node=>{node.textContent=zh?'补充记忆':'Additional memories';});
   settings.querySelector('[data-session-close]')?.setAttribute('aria-label',local('Close session settings'));
+  root.querySelectorAll('[data-film-line]').forEach((chip,i)=>chip.textContent=title.starters[i][zh?'zh':'en']);
   document.querySelectorAll('[data-chat-help]').forEach(paintChatHelp);
  };
  const syncSessionLanguage=()=>{const name=sessionLanguage()==='zh'?title.title_zh||title.title:title.title;root.querySelectorAll('[data-session-title]').forEach(el=>el.textContent=name);const person=root.querySelector('[data-onboard]');if(person){const label=[...person.childNodes].find(n=>n.nodeType===3);if(label)label.nodeValue=profile.name||local('You');if(person.firstElementChild)person.firstElementChild.textContent=(profile.name||local('You')).slice(0,1).toUpperCase();}input.setAttribute('data-placeholder',local('Send a message'));input.setAttribute('aria-label',local('Send a message'));if(input.tagName==='TEXTAREA')input.placeholder=local('Send a message');if(transport==='demo'){const model=q('[data-control=model]');const label=model?.querySelector('span span')||model?.querySelector('span');if(label){label.textContent=sessionLanguage()==='zh'?'演示对话':'Demo replies';label.dataset.noI18n='';}}paintComposerDraft();paintAIAvailability();paintSettingsLanguage();document.title=name+' · StoryDate';};
@@ -119,9 +127,9 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
  // Unsent character text stays in the account-scoped device cache, separated
  // by conversation branch. It never enters messages, memory or cloud sync.
  // A returning banner reply joins this same draft flow instead of disappearing.
- const draftBranch=characterState?.state.active||'main',draftKey='ooc-composer-draft-'+id+'-'+draftBranch,draftOwner=h.account?.user?.uid||null;
+ const draftBranch=characterState?.state.active||(id===julian.id&&title.number>1?title.sceneId:'main'),draftKey='ooc-composer-draft-'+id+'-'+draftBranch,draftOwner=h.account?.user?.uid||null;
  const entryQuery=new URLSearchParams(globalThis.location?.search||''),draftEntry=isCharacter&&entryQuery.has('draft');
- let awaitingDraftSend=draftEntry;
+ let awaitingDraftSend=draftEntry||id===julian.id;
  let deviceDraft=null,bannerAlternative='',draftSaveFailed=false,lastDraftMarkup='';
  const draftScopeCurrent=()=>!disposed&&(!h.account||!h.account.busy&&h.account.restored&&(h.account.user?.uid||null)===draftOwner)&&(!characterState||characterState.manager.isCurrent());
  function saveComposerDraft(text){
@@ -132,12 +140,34 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
   deviceDraft=next;
   try{h.save(draftKey,deviceDraft);draftSaveFailed=false;}catch{draftSaveFailed=true;}
  }
+ if (id === julian.id) {
+  const lines = document.createElement('div');
+  lines.className = 'sn-draft-lines';
+  lines.dataset.noI18n = '';
+  for (const line of title.starters) {
+   const chip = document.createElement('button');
+   chip.type = 'button';
+   chip.dataset.filmLine = '';
+   chip.textContent = line[sessionLanguage()];
+   chip.onclick = () => {
+    if (!draftScopeCurrent() || state !== 'ready') return;
+    bannerAlternative = '';
+    setValue(chip.textContent);
+    saveComposerDraft(value());
+    if (draftEntry && !draftSaveFailed) consumeEntryReply();
+    paintComposerDraft();
+    input.focus();
+   };
+   lines.append(chip);
+  }
+  input.before(lines);
+ }
  function paintComposerDraft(){
   let note=root.querySelector('[data-banner-reply]');
   if(!deviceDraft&&!bannerAlternative){note?.remove();lastDraftMarkup='';return;}
   if(!note){note=document.createElement('div');note.dataset.bannerReply='';note.dataset.noI18n='';note.setAttribute('role','status');note.style.cssText='margin:10px 12px 0;font-size:12px;line-height:1.6;color:#bcbcbc';input.before(note);}
   const zh=sessionLanguage()==='zh';
-  const markup=`<p style="margin:0">${zh?'本设备草稿 · 尚未发送':'Device draft · not sent'}</p>${bannerAlternative?`<p style="margin:6px 0">${zh?'另有一句尚未选择的回复：':'There is also a new reply to choose:'}</p><blockquote tabindex="0" aria-label="${zh?'待选择的回复':'Reply to choose'}" style="margin:6px 0;white-space:pre-wrap">${safe(bannerAlternative)}</blockquote><div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" data-banner-use style="min-height:44px;padding:8px 12px;border:1px solid #484848;border-radius:8px;background:transparent;color:inherit">${zh?'改用这句回复':'Use the new reply'}</button><button type="button" data-banner-keep style="min-height:44px;padding:8px 12px;border:1px solid #484848;border-radius:8px;background:transparent;color:inherit">${zh?'保留原草稿':'Keep my draft'}</button></div>`:''}${draftSaveFailed?`<p style="margin:6px 0">${zh?'此设备暂时无法保存草稿，请先复制这段文字。':'This device could not save the draft. Copy the text before leaving.'}</p>`:''}`;
+  const markup=`<p style="margin:0">${onSet?(zh?'草稿已备好 · 可直接编辑或发送':'Ready to send · Edit or tap →'):(zh?'本设备草稿 · 尚未发送':'Device draft · not sent')}</p>${bannerAlternative?`<p style="margin:6px 0">${zh?'另有一句尚未选择的回复：':'There is also a new reply to choose:'}</p><blockquote tabindex="0" aria-label="${zh?'待选择的回复':'Reply to choose'}" style="margin:6px 0;white-space:pre-wrap">${safe(bannerAlternative)}</blockquote><div style="display:flex;flex-wrap:wrap;gap:8px"><button type="button" data-banner-use style="min-height:44px;padding:8px 12px;border:1px solid #484848;border-radius:8px;background:transparent;color:inherit">${zh?'改用这句回复':'Use the new reply'}</button><button type="button" data-banner-keep style="min-height:44px;padding:8px 12px;border:1px solid #484848;border-radius:8px;background:transparent;color:inherit">${zh?'保留原草稿':'Keep my draft'}</button></div>`:''}${draftSaveFailed?`<p style="margin:6px 0">${zh?'此设备暂时无法保存草稿，请先复制这段文字。':'This device could not save the draft. Copy the text before leaving.'}</p>`:''}`;
   if(markup===lastDraftMarkup)return;note.innerHTML=markup;lastDraftMarkup=markup;
   note.querySelector('[data-banner-use]')?.addEventListener('click',()=>{if(!draftScopeCurrent())return;const text=bannerAlternative;bannerAlternative='';setValue(text);saveComposerDraft(text);if(draftEntry&&!draftSaveFailed)consumeEntryReply();paintComposerDraft();input.focus();});
   note.querySelector('[data-banner-keep]')?.addEventListener('click',()=>{if(!draftScopeCurrent())return;bannerAlternative='';saveComposerDraft(value());if(draftEntry&&!draftSaveFailed)consumeEntryReply();paintComposerDraft();input.focus();});
@@ -202,7 +232,7 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
  if(xichuanChat)syncStoryBar();
  if(returnedFromStory)track('xichuan_chat_returned',{character:id});
  root.addEventListener('click',event=>{if(xichuanChat&&event.target.closest('[data-xichuan-entry]'))track('xichuan_story_invitation_opened',{character:id});});
- const sceneContext=campaignCharacter?.selectedScene?{characterScene:campaignCharacter.selectedScene}:{};const continuity=()=>characterState?[characterState.manager.memory(messages),String(h.read('ooc-Memories-'+id,'')||'').slice(0,350)].filter(Boolean).join('\n').slice(0,2000):isCharacter?String(h.read('ooc-Memories-'+id,'')||'').slice(0,350):h.read('ooc-Memories-'+id,'');
+ const sceneContext=id===julian.id?{scene:title.sceneId,impressions:impressions(h.read(seasonKey,[]),title.number)}:campaignCharacter?.selectedScene?{characterScene:campaignCharacter.selectedScene}:{};const continuity=()=>characterState?[characterState.manager.memory(messages),String(h.read('ooc-Memories-'+id,'')||'').slice(0,350)].filter(Boolean).join('\n').slice(0,2000):isCharacter?String(h.read('ooc-Memories-'+id,'')||'').slice(0,350):h.read('ooc-Memories-'+id,'');
  const suggestionLoader=new SuggestionLoader((context,signal)=>httpStream(context.messages,signal,{task:'suggestions',titleId:id,...sceneContext,...xichuanContext(),memory:continuity(),...(custom?{custom}:{}),timeOfDay,language:context.language,opening:context.opening,previousSuggestions:context.previousSuggestions}));
  async function refreshSuggestions(){
   suggestionLoader.cancel();
@@ -274,7 +304,7 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
   const actions = isCharacter && tools ? `<div class="character-turn-actions" role="group" aria-label="${sceneLang === 'zh' ? '消息操作' : 'Message actions'}">${tools}</div>` : tools;
   return `<article class="session-message ${user ? 'user' : ''} ${message.streaming ? 'streaming' : ''}" data-index="${index}"${openMessage === message ? ' data-message-actions-open' : ''}>${meta}<div class="message-content">${content}</div>${actions}${isCharacter ? '' : stopped}</article>`;
  }
- const stageCard = id === julian.id ? julian : isCharacter && FEATURED_CHARACTER_CARDS.find(card => card.chatId === id);
+ const stageCard = id === julian.id ? title : isCharacter && FEATURED_CHARACTER_CARDS.find(card => card.chatId === id);
  const openingMarkup = () => {
   if (stageCard) {
    let opening = intro;
@@ -298,7 +328,7 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
   if(id===julian.id && interludeReturn && !regenerate && replaceIndex===null){
    const turn=(globalThis.history.state.sevenNightsTurn || 0)+1;
    globalThis.history.replaceState({...globalThis.history.state,sevenNightsTurn:turn},'');
-   track('living_manga_chat_turn',{episode_id:'seven-nights',character_id:id,turn_index:turn});
+   track('living_manga_chat_turn',{episode_id:'seven-nights-ep'+title.number,character_id:id,turn_index:turn});
   }
   const attempt=chatAttempt(id,transport);track('chat_message_sent',{title_id:id,transport});try{const source=transport==='demo'?demoStream(reply,controller.signal):httpStream(conversationForRequest(messages.filter(m=>m!==answer)),controller.signal,context,status=>{if(disposed)return;const progress=body.querySelector('.response-progress');if(progress){const label=({connecting:local('Connecting to the model'), 'waiting-model':local('Waiting for the reply'),thinking:local('Preparing the reply')})[status.phase];progress.textContent=sessionLanguage()==='zh'?label+'（'+status.elapsedSeconds+' 秒），可随时取消。':label+' ('+status.elapsedSeconds+' seconds). You can cancel at any time.';}},payment);await typeStream(source,{signal:controller.signal,onText:t=>{if(disposed)return;attempt.receivedText();answer.text=t;const el=body.querySelector(`[data-index="${messages.length-1}"] .message-content`);if(el)el.innerHTML=isCharacter?characterReadingHTML(narrative(balanceCharacterAction(t)),t):narrative(t);if(follow)scroll.scrollTop=scroll.scrollHeight;},onState:s=>{if(disposed)return;state=s;updateSend();},revealOnStop:()=>Boolean(payment?.settled),step:matchMedia('(prefers-reduced-motion: reduce)').matches?24:3});answer.stopped=controller.signal.aborted&&!payment?.settled;}catch(e){if(!disposed){answer.failed=true;answer.errorCode=e.code||null;answer.error=replyError(e);answer.text=answer.text||'';modal('Response unavailable',`<p>${safe(replyError(e))}</p>${e.code?`<p class="session-demo">${safe(e.code)}${e.requestId?' · '+safe(e.requestId):''}</p>`:''}<p>${local('Your message is saved. Retry the reply without sending it again.')}</p>`);}}finally{if(!disposed)attempt.finish(answer.failed?'failed':controller.signal.aborted?'cancelled':answer.text.trim()?'completed':'failed',answer.errorCode);answer.streaming=false;save();if(!disposed){state='ready';renderMessages();updateSend();void refreshSuggestions();}}}
  if(transport==='ai'){const model=q('[data-control=model]');const label=model.querySelector('span span')||model.querySelector('span');label.textContent=aiConfiguration?.configured?aiConfiguration.model.replace(/^gemini-/,'Gemini ').replace(/-flash$/,' Flash'):'AI';model.title='Model comes from the server configuration';}root.querySelectorAll('a[href]').forEach(a=>{const before=a.getAttribute('href');const after=canonicalCharacterUrl(before);if(after!==before)a.setAttribute('href',after);});const sidebar=root.querySelector('[data-shrink]');sidebar.insertAdjacentHTML('beforeend',`<button class="session-profile" data-onboard><span>${safe(name.slice(0,1).toUpperCase())}</span>${safe(name)}</button>`);const history=sidebar.querySelector('ol');
@@ -315,7 +345,13 @@ function session(id,h,remote){const mine=/^u-/.test(id)?(h.read('ooc-custom',[])
   for(const button of historyTabs)button.setAttribute('aria-pressed',String(button.dataset.historyMode===kind));
  };renderHistory();
  sidebar.querySelectorAll('button').forEach(button=>{const label=button.textContent.trim();if(label==='Search')button.onclick=()=>h.navigate('/search');if(label==='Notifications')button.remove();});
-  const toggleSidebar=()=>{const small=sidebar.dataset.shrink!=='true';sidebar.dataset.shrink=String(small);sidebar.nextElementSibling.style.marginLeft=matchMedia('(min-width:1024px)').matches?(small?'48px':'256px'):'';};if(sidebar){const toggle=sidebar.querySelector('button');toggle.onclick=toggleSidebar;toggle.setAttribute('aria-label','Toggle Side Navigation');sidebar.querySelectorAll('button').forEach(button=>{if(button!==toggle&&!button.textContent.trim()&&!button.getAttribute('aria-label'))button.remove();});}const settingsToggle=q('[data-control=settings]');settingsToggle?.querySelectorAll('.bg-destructive').forEach(badge=>badge.remove());
+  const toggleSidebar=()=>{const small=sidebar.dataset.shrink!=='true';sidebar.dataset.shrink=String(small);sidebar.nextElementSibling.style.marginLeft=matchMedia('(min-width:1024px)').matches?(small?'48px':'256px'):'';};if(sidebar){const toggle=sidebar.querySelector('button');toggle.onclick=toggleSidebar;toggle.setAttribute('aria-label','Toggle Side Navigation');sidebar.querySelectorAll('button').forEach(button=>{if(button!==toggle&&!button.textContent.trim()&&!button.getAttribute('aria-label'))button.remove();});}
+ if (onSet) {
+  sidebar.dataset.filmRail = '';
+  sidebar.querySelector('button').dataset.filmToggle = '';
+  if (matchMedia('(min-width:1024px)').matches && sidebar.dataset.shrink !== 'true') toggleSidebar();
+ }
+ const settingsToggle=q('[data-control=settings]');settingsToggle?.querySelectorAll('.bg-destructive').forEach(badge=>badge.remove());
  const showSettings=()=>{const open=settings.classList.toggle('session-open');settings.inert=!open;settingsToggle?.setAttribute('aria-expanded',String(open));if(open&&matchMedia('(max-width:767px)').matches)settings.querySelector('button')?.focus();};settings.inert=true;settingsToggle?.setAttribute('aria-controls','session-settings');settingsToggle?.setAttribute('aria-expanded','false');
  const closeSettings=document.createElement('button');closeSettings.type='button';closeSettings.className='session-settings-close';closeSettings.dataset.sessionClose='';closeSettings.textContent='×';closeSettings.style.cssText='min-width:44px;min-height:44px;flex:none';(settingsTitle?.parentElement||settings).append(closeSettings);closeSettings.setAttribute('aria-label',local('Close session settings'));closeSettings.onclick=()=>{if(settings.classList.contains('session-open'))showSettings();settingsToggle?.focus();};
  const suggestButton=q('[data-control=suggest]');suggestButton?.setAttribute('aria-pressed',String(suggestionsVisible));
