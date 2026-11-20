@@ -1,10 +1,12 @@
-import episode from './episodes/sanguo-plum.js';
+import sevenNights from './episodes/seven-nights.js';
+import sanguo from './episodes/sanguo-plum.js';
 import {mountReader} from './reader.js';
 import {currentLang, setLang} from '../site-i18n.js';
 
 export function startLivingManga(host) {
   const doc = host.ownerDocument;
   const win = doc.defaultView;
+  const episode = win.location.pathname === '/pilot/seven-nights' ? sevenNights : sanguo;
   const style = doc.createElement('link');
   style.rel = 'stylesheet';
   style.href = new URL('./reader.css', import.meta.url).href;

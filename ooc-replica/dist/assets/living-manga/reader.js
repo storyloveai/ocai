@@ -1,3 +1,4 @@
+import {track} from '../analytics.js';
 import {createDepthStage} from './depth-window.js';
 import {resolveChoice, interludeDraft} from './episode.js';
 import {createRain} from './rain.js';
@@ -24,11 +25,24 @@ const ui = {
   silent: words('当前浏览器无法播放雨声。', 'Rain sound is unavailable in this browser.')
 };
 
-export function mountReader(host, episode, {getLanguage, changeLanguage}) {
+export function mountReader(host, episode, {getLanguage, changeLanguage, sendEvent = track}) {
   const doc = host.ownerDocument, win = doc.defaultView;
   let lang = getLanguage(), disposed = false;
   const prior = win.history?.state?.livingManga;
   const saved = prior?.episodeId === episode.id ? prior : {};
+  const measured = episode.id === 'seven-nights';
+  const emit = (step, fields) => {
+    if (measured) sendEvent('living_manga_' + step, {episode_id:episode.id, ...fields});
+  };
+  let viewed = Boolean(saved.viewed), engaged = false;
+  const engagementKey = 'sd.living-manga.engaged.' + episode.id;
+  try { engaged = win.sessionStorage?.getItem(engagementKey) === '1'; } catch {}
+  function engage(method) {
+    if (!measured || engaged) return;
+    engaged = true;
+    try { win.sessionStorage?.setItem(engagementKey, '1'); } catch {}
+    emit('engaged', {input_method:method});
+  }
   let theme = saved.theme === 'ink' ? 'ink' : episode.theme;
   let selection, choice, branch, sensorState = 'idle', audioOn = false;
   let soundVersion = 0, audioPending = false, feedback;
@@ -109,7 +123,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
   result.hidden = true;
   book.append(head, opening, decision, result);
   page.append(hud, book);
-  const stage = createDepthStage(page,{onMotionPreferenceChange:paintControls,onSensorChange(state) {
+  const stage = createDepthStage(page,{onEngage:engage,onMotionPreferenceChange:paintControls,onSensorChange(state) {
     if (disposed) return;
     sensorState = state;
     feedback = ui.sensorStates[state];
@@ -132,7 +146,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
   }
   function persist() {
     if (!win.history) return;
-    win.history.replaceState({...win.history.state,livingManga:{episodeId:episode.id,theme,selection}}, '');
+    win.history.replaceState({...win.history.state,livingManga:{episodeId:episode.id,theme,selection,viewed}}, '');
   }
   function addRow(container, layout, panels, isReaction = false) {
     const row = el('div','lm-row ' + layout);
@@ -147,7 +161,11 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
       original.draggable = false;
       const canvas = el('canvas','lm-depth-canvas');
       canvas.setAttribute('aria-hidden','true');
-      frame.append(original,canvas);
+      if (panel.captionRails) {
+        const window = el('div','lm-art-window');
+        window.append(original, canvas);
+        frame.append(window);
+      } else frame.append(original,canvas);
       for (const effect of panel.fx || []) {
         const fx = el('span','lm-fx lm-' + effect);
         fx.setAttribute('aria-hidden','true');
@@ -178,7 +196,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
       const a = el('a','lm-chat');
       a.dataset.fullInfo = '';
       a.dataset.lmCharacter = entry.characterId;
-      a.href = '/play/' + encodeURIComponent(entry.characterId) + '?' + new URLSearchParams({draft:interludeDraft(entry,choice,lang)});
+      a.href = (entry.path || '/play/' + encodeURIComponent(entry.characterId)) + '?' + new URLSearchParams({draft:interludeDraft(entry,choice,lang)});
       a.append(copy('span','',entry.label));
       const arrow = el('span');
       arrow.setAttribute('aria-hidden','true');
@@ -211,6 +229,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
     updateLinks();
     persist();
     if (jump) {
+      emit('decision', {branch_id:choice.branchId, input_kind:input.optionId ? 'preset' : 'free', lang});
       result.focus({preventScroll:true});
       result.scrollIntoView({behavior:win.matchMedia?.('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'start'});
     }
@@ -253,6 +272,8 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
     paintControls();
   }
   function onClick(event) {
+    const chatLink = event.target.closest('[data-lm-character]');
+    if (chatLink && choice) emit('interlude_click', {branch_id:choice.branchId, character_id:chatLink.dataset.lmCharacter});
     if (!settings.contains(event.target)) settings.open = false;
     const b = event.target.closest('button[data-lm-action]');
     if (!b) return;
@@ -290,6 +311,19 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
   win.addEventListener('sd-lang',localize);
   doc.addEventListener('visibilitychange',onHide);
   for (const row of episode.openingRows) addRow(opening,row.layout,row.panels);
+  let rowObserver;
+  if (measured && !viewed) {
+    viewed = true;
+    emit('viewed', {lang, viewport:win.innerWidth <= 767 ? 'mobile' : 'desktop'});
+    // Retain an existing selection while a restored reader is mounting.
+    win.history.replaceState({...win.history.state, livingManga:{...saved, episodeId:episode.id, viewed}}, '');
+  }
+  if (measured && !engaged && win.IntersectionObserver && opening.children[1]) {
+    rowObserver = new win.IntersectionObserver(entries => {
+      if (entries.some(entry => entry.isIntersecting)) { engage('read'); rowObserver.disconnect(); }
+    }, {threshold:.25});
+    rowObserver.observe(opening.children[1]);
+  }
   if (saved.selection) choose(saved.selection,false);
   stage.setInk(theme === 'ink');
   localize();
@@ -301,6 +335,7 @@ export function mountReader(host, episode, {getLanguage, changeLanguage}) {
     page.removeEventListener('click',onClick);
     page.removeEventListener('keydown',onKey);
     rain.stop();
+    rowObserver?.disconnect();
     stage.destroy();
     page.remove();
   };

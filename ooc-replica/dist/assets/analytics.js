@@ -15,6 +15,18 @@ export function analyticsAllowed(win = globalThis) {
 // $autocapture records which element was clicked; strip the element's text so story and chat words never leave
 export function scrub(event) {
   if (!event || !event.properties) return event;
+  // The interlude link briefly carries a private draft. PostHog also attaches
+  // current/initial/referrer URLs to pageviews, clicks and nested person updates.
+  function stripQuery(object) {
+    for (const [key, value] of Object.entries(object)) {
+      if (value && typeof value === 'object') stripQuery(value);
+      else if (typeof value === 'string' && /url|referrer|href|pathname/i.test(key))
+        object[key] = value.split(/[?#]/, 1)[0];
+    }
+  }
+  const path = event.properties.$pathname || event.properties.$current_url || globalThis.location?.pathname || '';
+  if (event.event === '$autocapture' && /\/(?:pilot\/seven-nights|chat\/sn-julian)(?:[?#]|$)/.test(path)) return null;
+  stripQuery(event.properties);
   if (event.event === '$autocapture') {
     const p = event.properties;
     delete p.$el_text;

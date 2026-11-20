@@ -21,6 +21,15 @@
   "buildCommand": "npm run build && npm run check",
   "headers": [
     {
+      "source": "/chat/sn-julian",
+      "headers": [
+        {
+          "key": "Referrer-Policy",
+          "value": "origin"
+        }
+      ]
+    },
+    {
       "source": "/assets/media/(.*)",
       "headers": [
         {
